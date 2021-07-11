@@ -46,7 +46,8 @@ endif()
 enable_testing()
 
 # Note: doctest and similar testing frameworks can automatically configure CMake tests. For other
-# testing frameworks add the tests target instead: add_test(NAME physdesTests COMMAND PhysDesCppTests)
+# testing frameworks add the tests target instead: add_test(NAME physdesTests COMMAND
+# PhysDesCppTests)
 
 include(${doctest_SOURCE_DIR}/scripts/cmake/doctest.cmake)
 doctest_discover_tests(PhysDesCppTests)
