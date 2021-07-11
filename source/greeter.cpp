@@ -1,11 +1,11 @@
 #include <fmt/format.h>
-#include <greeter/greeter.h>
+#include <recti/greeter.h>
 
-using namespace greeter;
+using namespace physdes;
 
-Greeter::Greeter(std::string _name) : name(std::move(_name)) {}
+PhysDesCpp::PhysDesCpp(std::string _name) : name(std::move(_name)) {}
 
-std::string Greeter::greet(LanguageCode lang) const {
+std::string PhysDesCpp::greet(LanguageCode lang) const {
   switch (lang) {
     default:
     case LanguageCode::EN:

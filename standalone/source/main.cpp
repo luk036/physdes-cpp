@@ -1,5 +1,5 @@
-#include <greeter/greeter.h>
-#include <greeter/version.h>
+#include <recti/greeter.h>
+#include <recti/version.h>
 
 #include <cxxopts.hpp>
 #include <iostream>
@@ -7,11 +7,11 @@
 #include <unordered_map>
 
 auto main(int argc, char** argv) -> int {
-  const std::unordered_map<std::string, greeter::LanguageCode> languages{
-      {"en", greeter::LanguageCode::EN},
-      {"de", greeter::LanguageCode::DE},
-      {"es", greeter::LanguageCode::ES},
-      {"fr", greeter::LanguageCode::FR},
+  const std::unordered_map<std::string, physdes::LanguageCode> languages{
+      {"en", physdes::LanguageCode::EN},
+      {"de", physdes::LanguageCode::DE},
+      {"es", physdes::LanguageCode::ES},
+      {"fr", physdes::LanguageCode::FR},
   };
 
   cxxopts::Options options(*argv, "A program to welcome the world!");
@@ -36,7 +36,7 @@ auto main(int argc, char** argv) -> int {
   }
 
   if (result["version"].as<bool>()) {
-    std::cout << "Greeter, version " << GREETER_VERSION << std::endl;
+    std::cout << "PhysDesCpp, version " << physdes_VERSION << std::endl;
     return 0;
   }
 
@@ -46,8 +46,8 @@ auto main(int argc, char** argv) -> int {
     return 1;
   }
 
-  greeter::Greeter greeter(name);
-  std::cout << greeter.greet(langIt->second) << std::endl;
+  physdes::PhysDesCpp physdes(name);
+  std::cout << physdes.greet(langIt->second) << std::endl;
 
   return 0;
 }
