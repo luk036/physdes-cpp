@@ -33,4 +33,4 @@ add_executable(PhysDesCppStandalone ${sources})
 
 set_target_properties(PhysDesCppStandalone PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "PhysDesCpp")
 
-target_link_libraries(PhysDesCppStandalone PhysDesCpp::PhysDesCpp cxxopts PRIVATE GSL)
+target_link_libraries(PhysDesCppStandalone PhysDesCpp::PhysDesCpp cxxopts GSL)
