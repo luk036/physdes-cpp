@@ -18,6 +18,15 @@ include(../cmake/CPM.cmake)
 CPMAddPackage("gh:onqtam/doctest#2.4.5")
 CPMAddPackage("gh:TheLartians/Format.cmake@1.7.0")
 
+# find_package (Boost REQUIRED)
+# if (Boost_FOUND)
+#     message(STATUS "Found boost: ${Boost_INCLUDE_DIRS}")
+#     CPMAddPackage(NAME PhysDesCpp SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
+# endif (Boost_FOUND)
+
+# boost-cmake currently doesn't tag versions, so we use the according boost version
+CPMAddPackage("gh:Orphis/boost-cmake#7f97a08b64bd5d2e53e932ddf80c40544cf45edf@1.71.0")
+
 if(TEST_INSTALLED_VERSION)
   find_package(PhysDesCpp REQUIRED)
 else()
@@ -29,7 +38,7 @@ endif()
 file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 add_executable(PhysDesCppTests ${sources})
 target_link_libraries(PhysDesCppTests doctest::doctest PhysDesCpp::PhysDesCpp)
-set_target_properties(PhysDesCppTests PROPERTIES CXX_STANDARD 17)
+set_target_properties(PhysDesCppTests PROPERTIES CXX_STANDARD 20)
 
 # enable compiler warnings
 if(NOT TEST_INSTALLED_VERSION)

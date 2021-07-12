@@ -5,7 +5,7 @@
 #include <string>
 
 TEST_CASE("PhysDesCpp") {
-    using namespace physdes;
+    using namespace recti;
 
     PhysDesCpp physdes("Tests");
 

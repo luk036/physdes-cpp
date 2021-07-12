@@ -1,7 +1,7 @@
 #include <fmt/format.h>
 #include <recti/greeter.h>
 
-using namespace physdes;
+using namespace recti;
 
 PhysDesCpp::PhysDesCpp(std::string _name) : name(std::move(_name)) {}
 

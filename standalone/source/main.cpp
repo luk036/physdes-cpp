@@ -7,11 +7,11 @@
 #include <unordered_map>
 
 auto main(int argc, char** argv) -> int {
-    const std::unordered_map<std::string, physdes::LanguageCode> languages{
-        {"en", physdes::LanguageCode::EN},
-        {"de", physdes::LanguageCode::DE},
-        {"es", physdes::LanguageCode::ES},
-        {"fr", physdes::LanguageCode::FR},
+    const std::unordered_map<std::string, recti::LanguageCode> languages{
+        {"en", recti::LanguageCode::EN},
+        {"de", recti::LanguageCode::DE},
+        {"es", recti::LanguageCode::ES},
+        {"fr", recti::LanguageCode::FR},
     };
 
     cxxopts::Options options(*argv, "A program to welcome the world!");
@@ -46,7 +46,7 @@ auto main(int argc, char** argv) -> int {
         return 1;
     }
 
-    physdes::PhysDesCpp physdes(name);
+    recti::PhysDesCpp physdes(name);
     std::cout << physdes.greet(langIt->second) << std::endl;
 
     return 0;

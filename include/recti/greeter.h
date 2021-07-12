@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace physdes {
+namespace recti {
 
     /**  Language codes to be used with the PhysDesCpp class */
     enum class LanguageCode { EN, DE, ES, FR };
@@ -28,4 +28,4 @@ namespace physdes {
         std::string greet(LanguageCode lang = LanguageCode::EN) const;
     };
 
-}  // namespace physdes
+}  // namespace recti
