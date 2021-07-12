@@ -15,7 +15,7 @@ env:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -27,8 +27,12 @@ jobs:
 
       - name: Install format dependencies
         run: |
-          brew install clang-format
+          sudo apt-get install clang-format
           pip3 install cmake_format==0.6.11 pyyaml
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install libboost-dev
 
       - name: configure
         run: cmake -Stest -Bbuild
