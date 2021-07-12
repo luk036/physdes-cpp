@@ -3,7 +3,7 @@
 // #include <boost/operators.hpp>
 #include "recti.hpp"
 #include <algorithm>
-#include <span>
+#include <gsl/span>
 #include <vector>
 
 namespace recti
@@ -27,7 +27,7 @@ class polygon
      *
      * @param pointset
      */
-    explicit constexpr polygon(std::span<const point<T>> pointset)
+    explicit constexpr polygon(gsl::span<const point<T>> pointset)
         : _origin {pointset.front()}
     {
         auto it = pointset.begin();
@@ -184,7 +184,7 @@ inline void create_ymono_polygon(FwIter&& first, FwIter&& last)
  * @return false
  */
 template <typename T>
-inline auto point_in_polygon(std::span<const point<T>> S, const point<T>& q)
+inline auto point_in_polygon(gsl::span<const point<T>> S, const point<T>& q)
     -> bool
 {
     auto c = false;

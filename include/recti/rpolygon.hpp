@@ -2,7 +2,7 @@
 
 #include "recti.hpp"
 #include <algorithm>
-#include <span>
+#include <gsl/span>
 #include <vector>
 
 namespace recti
@@ -26,7 +26,7 @@ class rpolygon
      *
      * @param pointset
      */
-    explicit constexpr rpolygon(std::span<const point<T>> pointset)
+    explicit constexpr rpolygon(gsl::span<const point<T>> pointset)
         : _origin {pointset.front()}
     {
         auto it = pointset.begin();
@@ -226,7 +226,7 @@ inline void create_test_rpolygon(FwIter&& first, FwIter&& last)
  * @return false
  */
 template <typename T>
-inline auto point_in_rpolygon(std::span<const point<T>> S, const point<T>& q)
+inline auto point_in_rpolygon(gsl::span<const point<T>> S, const point<T>& q)
     -> bool
 {
     auto c = false;

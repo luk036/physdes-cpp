@@ -33,6 +33,15 @@ CPMAddPackage(
   OPTIONS "FMT_INSTALL YES" # create an installable target
 )
 
+CPMAddPackage("gh:microsoft/GSL@3.1.0")
+
+find_package(Boost REQUIRED)
+if(Boost_FOUND)
+    message(STATUS "Found boost: ${Boost_INCLUDE_DIRS}")
+    include_directories(${BOOST_INCLUDE_DIRS})
+    add_definitions(${Boost_DEFINITIONS})
+endif()
+
 # ---- Add source files ----
 
 # Note: globbing sources is considered bad practice as CMake's generators may not detect new files
@@ -46,7 +55,7 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/
 # target: add_library(PhysDesCpp INTERFACE)
 add_library(PhysDesCpp ${headers} ${sources})
 
-set_target_properties(PhysDesCpp PROPERTIES CXX_STANDARD 20)
+set_target_properties(PhysDesCpp PROPERTIES CXX_STANDARD 17)
 
 # being a cross-platform target, we enforce standards conformance on MSVC
 target_compile_options(PhysDesCpp PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
