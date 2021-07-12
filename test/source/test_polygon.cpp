@@ -1,5 +1,5 @@
 #include <doctest/doctest.h>
-#include <fmt/core.h>
+// #include <fmt/core.h>
 #include <recti/halton_int.hpp>
 #include <recti/polygon.hpp>
 #include <recti/recti.hpp>

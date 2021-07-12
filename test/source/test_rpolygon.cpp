@@ -1,6 +1,6 @@
 #include <cstdio>
 #include <doctest/doctest.h>
-#include <fmt/core.h>
+// #include <fmt/core.h>
 #include <recti/halton_int.hpp>
 #include <recti/recti.hpp>
 #include <recti/rpolygon.hpp>
