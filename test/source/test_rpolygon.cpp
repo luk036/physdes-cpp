@@ -1,5 +1,6 @@
-#include <cstdio>
 #include <doctest/doctest.h>
+
+#include <cstdio>
 // #include <fmt/core.h>
 #include <recti/halton_int.hpp>
 #include <recti/recti.hpp>
@@ -9,36 +10,30 @@
 // using std::randint;
 using namespace recti;
 
-TEST_CASE("Rectilinear Polygon test (y-mono)")
-{
-    auto S = std::vector<point<int>> {{-2, 2}, {0, -1}, {-5, 1}, {-2, 4},
-        {0, -4}, {-4, 3}, {-6, -2}, {5, 1}, {2, 2}, {3, -3}, {-3, -4}, {1, 4}};
+TEST_CASE("Rectilinear Polygon test (y-mono)") {
+    auto S = std::vector<point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
+                                     {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
     auto is_anticlockwise = create_ymono_rpolygon(S.begin(), S.end());
     auto P = rpolygon<int>(S);
     CHECK(is_anticlockwise);
     CHECK(P.signed_area() == 45);
-    CHECK(!point_in_rpolygon<int>(S, point {4, 5}));
+    CHECK(!point_in_rpolygon<int>(S, point{4, 5}));
 }
 
-
-TEST_CASE("Rectilinear Polygon test (x-mono)")
-{
-    auto S = std::vector<point<int>> {{-2, 2}, {0, -1}, {-5, 1}, {-2, 4},
-        {0, -4}, {-4, 3}, {-6, -2}, {5, 1}, {2, 2}, {3, -3}, {-3, -4}, {1, 4}};
+TEST_CASE("Rectilinear Polygon test (x-mono)") {
+    auto S = std::vector<point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
+                                     {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
     auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
     auto P = rpolygon<int>(S);
     CHECK(!is_anticlockwise);
     CHECK(P.signed_area() == -53);
 }
 
-
-TEST_CASE("Rectilinear Polygon test (y-mono 50)")
-{
+TEST_CASE("Rectilinear Polygon test (y-mono 50)") {
     auto hgenX = vdcorput(3, 7);
     auto hgenY = vdcorput(2, 11);
-    auto S = std::vector<point<int>> {};
-    for (auto i = 0; i != 50; ++i)
-    {
+    auto S = std::vector<point<int>>{};
+    for (auto i = 0; i != 50; ++i) {
         S.emplace_back(point<int>(hgenX(), hgenY()));
     }
     auto is_anticlockwise = create_ymono_rpolygon(S.begin(), S.end());

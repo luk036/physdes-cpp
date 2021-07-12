@@ -20,9 +20,9 @@ CPMAddPackage("gh:microsoft/GSL@3.1.0")
 
 find_package(Boost REQUIRED)
 if(Boost_FOUND)
-    message(STATUS "Found boost: ${Boost_INCLUDE_DIRS}")
-    include_directories(${BOOST_INCLUDE_DIRS})
-    add_definitions(${Boost_DEFINITIONS})
+  message(STATUS "Found boost: ${Boost_INCLUDE_DIRS}")
+  include_directories(${BOOST_INCLUDE_DIRS})
+  add_definitions(${Boost_DEFINITIONS})
 endif()
 
 # ---- Create standalone executable ----

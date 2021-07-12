@@ -60,7 +60,6 @@
 //     return {std::move(pointset)};
 // }
 
-
 // /**
 //  * @brief
 //  *
@@ -148,7 +147,6 @@
 //     }
 //     return sum;
 // }
-
 
 // namespace recti
 // {

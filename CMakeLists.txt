@@ -37,16 +37,18 @@ CPMAddPackage("gh:microsoft/GSL@3.1.0")
 
 find_package(Boost REQUIRED)
 if(Boost_FOUND)
-    message(STATUS "Found boost: ${Boost_INCLUDE_DIRS}")
-    include_directories(${BOOST_INCLUDE_DIRS})
-    add_definitions(${Boost_DEFINITIONS})
+  message(STATUS "Found boost: ${Boost_INCLUDE_DIRS}")
+  include_directories(${BOOST_INCLUDE_DIRS})
+  add_definitions(${Boost_DEFINITIONS})
 endif()
 
 # ---- Add source files ----
 
 # Note: globbing sources is considered bad practice as CMake's generators may not detect new files
 # automatically. Keep that in mind when changing files, or explicitly mention them here.
-file(GLOB_RECURSE headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
+file(GLOB_RECURSE headers CONFIGURE_DEPENDS
+     "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp"
+)
 file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp")
 
 # ---- Create library ----

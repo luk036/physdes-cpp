@@ -8,35 +8,31 @@
 // using std::randint;
 using namespace recti;
 
-TEST_CASE("Polygon test (y-mono)")
-{
-    auto S = std::vector<point<int>> {{-2, 2}, {0, -1}, {-5, 1}, {-2, 4},
-        {0, -4}, {-4, 3}, {-6, -2}, {5, 1}, {2, 2}, {3, -3}, {-3, -4}, {1, 4}};
+TEST_CASE("Polygon test (y-mono)") {
+    auto S = std::vector<point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
+                                     {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
 
     create_ymono_polygon(S.begin(), S.end());
     auto P = polygon<int>(S);
     CHECK(P.signed_area_x2() == 102);
-    CHECK(!point_in_polygon<int>(S, point {4, 5}));
+    CHECK(!point_in_polygon<int>(S, point{4, 5}));
 }
 
 // 106980095362
 
-TEST_CASE("Polygon test (x-mono)")
-{
-    auto S = std::vector<point<int>> {{-2, 2}, {0, -1}, {-5, 1}, {-2, 4},
-        {0, -4}, {-4, 3}, {-6, -2}, {5, 1}, {2, 2}, {3, -3}, {-3, -4}, {1, 4}};
+TEST_CASE("Polygon test (x-mono)") {
+    auto S = std::vector<point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
+                                     {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
     create_xmono_polygon(S.begin(), S.end());
     auto P = polygon<int>(S);
     CHECK(P.signed_area_x2() == 110);
 }
 
-TEST_CASE("Polygon test (y-mono 50)")
-{
+TEST_CASE("Polygon test (y-mono 50)") {
     auto hgenX = vdcorput(3, 7);
     auto hgenY = vdcorput(2, 11);
-    auto S = std::vector<point<int>> {};
-    for (auto i = 0U; i != 50; ++i)
-    {
+    auto S = std::vector<point<int>>{};
+    for (auto i = 0U; i != 50; ++i) {
         S.emplace_back(point<int>(hgenX(), hgenY()));
     }
     create_ymono_polygon(S.begin(), S.end());
