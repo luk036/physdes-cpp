@@ -1,0 +1,7 @@
+name: phydes-cpp
+channels:
+  - conda-forge
+dependencies:
+  # - cmake
+  - boost
+  - benchmark

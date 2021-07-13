@@ -35,11 +35,29 @@ CPMAddPackage(
 
 CPMAddPackage("gh:microsoft/GSL@3.1.0")
 
+# CPMAddPackage(
+#   NAME Boost
+#   VERSION 1.76.0
+#   URL https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.gz
+#   DOWNLOAD_ONLY True 
+# )
+# if(Boost_ADDED)
+#   # Define the header-only Boost target
+#   add_library(Boost::boost INTERFACE IMPORTED GLOBAL)
+#   target_include_directories(Boost::boost SYSTEM INTERFACE ${Boost_SOURCE_DIR})
+
+#   # Disable autolink
+#   target_compile_definitions(Boost::boost INTERFACE BOOST_ALL_NO_LIB=1)
+# endif()
+
+
 find_package(Boost REQUIRED)
 if(Boost_FOUND)
   message(STATUS "Found boost: ${Boost_INCLUDE_DIRS}")
-  include_directories(${BOOST_INCLUDE_DIRS})
-  add_definitions(${Boost_DEFINITIONS})
+  # add_library(Boost::boost INTERFACE IMPORTED GLOBAL)
+  target_include_directories(Boost::boost SYSTEM INTERFACE ${Boost_INCLUDE_DIRS})
+  # Disable autolink
+  target_compile_definitions(Boost::boost INTERFACE BOOST_ALL_NO_LIB=1)
 endif()
 
 # ---- Add source files ----
@@ -63,7 +81,7 @@ set_target_properties(PhysDesCpp PROPERTIES CXX_STANDARD 17)
 target_compile_options(PhysDesCpp PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
 
 # Link dependencies
-target_link_libraries(PhysDesCpp PRIVATE fmt::fmt)
+target_link_libraries(PhysDesCpp PRIVATE fmt::fmt Boost::boost)
 
 target_include_directories(
   PhysDesCpp PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>

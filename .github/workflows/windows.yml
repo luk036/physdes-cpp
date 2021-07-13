@@ -26,6 +26,22 @@ jobs:
           path: "**/cpm_modules"
           key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
 
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Add conda to system path
+        run: |
+          # $CONDA is an environment variable pointing to the root of the miniconda directory
+          # echo $CONDA/bin >> $GITHUB_PATH
+          set GITHUB_PATH "$CONDA/bin;$GITHUB_PATH"
+
+      - name: Before Install
+        run: |
+          # conda update -q conda
+          conda env update --file environment-dev.yml --name base
+
       - name: configure
         run: cmake -Stest -Bbuild
 
