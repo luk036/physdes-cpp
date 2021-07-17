@@ -48,8 +48,7 @@ add_executable(RectiTests ${sources})
 target_link_libraries(RectiTests doctest::doctest Recti::Recti GSL Boost::boost)
 set_target_properties(RectiTests PROPERTIES CXX_STANDARD 17)
 
-# target_include_directories( RectiTests PUBLIC
-# $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+# target_include_directories( RectiTests PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 # $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}> PRIVATE  ${BOOST_INCLUDE_DIRS} )
 
 # enable compiler warnings
@@ -67,8 +66,7 @@ endif()
 enable_testing()
 
 # Note: doctest and similar testing frameworks can automatically configure CMake tests. For other
-# testing frameworks add the tests target instead: add_test(NAME rectiTests COMMAND
-# RectiTests)
+# testing frameworks add the tests target instead: add_test(NAME rectiTests COMMAND RectiTests)
 
 include(${doctest_SOURCE_DIR}/scripts/cmake/doctest.cmake)
 doctest_discover_tests(RectiTests)
