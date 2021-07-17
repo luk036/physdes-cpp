@@ -33,7 +33,7 @@ CPMAddPackage(
   OPTIONS "FMT_INSTALL YES" # create an installable target
 )
 
-# include(specific.cmake)
+include(specific.cmake)
 
 # ---- Add source files ----
 
@@ -56,7 +56,7 @@ set_target_properties(Recti PROPERTIES CXX_STANDARD 17)
 target_compile_options(Recti PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
 
 # Link dependencies
-target_link_libraries(Recti PRIVATE fmt::fmt)
+target_link_libraries(Recti PRIVATE fmt::fmt Boost::boost)
 
 target_include_directories(
   Recti PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
