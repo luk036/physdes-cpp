@@ -4,21 +4,21 @@
 
 namespace recti {
 
-    /**  Language codes to be used with the PhysDesCpp class */
+    /**  Language codes to be used with the Recti class */
     enum class LanguageCode { EN, DE, ES, FR };
 
     /**
      * @brief A class for saying hello in multiple languages
      */
-    class PhysDesCpp {
+    class Recti {
         std::string name;
 
       public:
         /**
-         * @brief Creates a new physdes
+         * @brief Creates a new recti
          * @param name the name to greet
          */
-        PhysDesCpp(std::string name);
+        Recti(std::string name);
 
         /**
          * @brief Creates a localized string containing the greeting

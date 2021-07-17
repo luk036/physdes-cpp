@@ -1,19 +1,19 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
-project(PhysDesCppDocs)
+project(RectiDocs)
 
 # ---- Dependencies ----
 
 include(../cmake/CPM.cmake)
 
 CPMAddPackage("gh:mosra/m.css#42d4a9a48f31f5df6e246c948403b54b50574a2a")
-CPMAddPackage(NAME PhysDesCpp SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
+CPMAddPackage(NAME Recti SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
 
 # ---- Doxygen variables ----
 
 # set Doxyfile variables
-set(DOXYGEN_PROJECT_NAME PhysDesCpp)
-set(DOXYGEN_PROJECT_VERSION ${PhysDesCpp_VERSION})
+set(DOXYGEN_PROJECT_NAME Recti)
+set(DOXYGEN_PROJECT_VERSION ${RECTI_VERSION})
 set(DOXYGEN_PROJECT_ROOT "${CMAKE_CURRENT_LIST_DIR}/..")
 set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/doxygen")
 

@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 # Note: update this to your new project's name and version
 project(
-  PhysDesCpp
+  Recti
   VERSION 1.0
   LANGUAGES CXX
 )
@@ -63,19 +63,19 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/
 # ---- Create library ----
 
 # Note: for header-only libraries change all PUBLIC flags to INTERFACE and create an interface
-# target: add_library(PhysDesCpp INTERFACE)
-add_library(PhysDesCpp ${headers} ${sources})
+# target: add_library(Recti INTERFACE)
+add_library(Recti ${headers} ${sources})
 
-set_target_properties(PhysDesCpp PROPERTIES CXX_STANDARD 17)
+set_target_properties(Recti PROPERTIES CXX_STANDARD 17)
 
 # being a cross-platform target, we enforce standards conformance on MSVC
-target_compile_options(PhysDesCpp PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
+target_compile_options(Recti PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
 
 # Link dependencies
-target_link_libraries(PhysDesCpp PRIVATE fmt::fmt Boost::boost)
+target_link_libraries(Recti PRIVATE fmt::fmt Boost::boost)
 
 target_include_directories(
-  PhysDesCpp PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+  Recti PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
                     $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}>
 )
 

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
-project(PhysDesCppStandalone LANGUAGES CXX)
+project(RectiStandalone LANGUAGES CXX)
 
 # --- Import tools ----
 
@@ -15,7 +15,7 @@ CPMAddPackage(
   VERSION 2.2.1
   OPTIONS "CXXOPTS_BUILD_EXAMPLES NO" "CXXOPTS_BUILD_TESTS NO" "CXXOPTS_ENABLE_INSTALL YES"
 )
-CPMAddPackage(NAME PhysDesCpp SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
+CPMAddPackage(NAME Recti SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
 CPMAddPackage("gh:microsoft/GSL@3.1.0")
 
 # CPMAddPackage( NAME Boost VERSION 1.76.0 URL
@@ -38,12 +38,12 @@ endif()
 
 file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 
-add_executable(PhysDesCppStandalone ${sources})
+add_executable(RectiStandalone ${sources})
 
-set_target_properties(PhysDesCppStandalone PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "PhysDesCpp")
+set_target_properties(RectiStandalone PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "Recti")
 
-target_link_libraries(PhysDesCppStandalone PhysDesCpp::PhysDesCpp cxxopts GSL Boost::boost)
+target_link_libraries(RectiStandalone Recti::Recti cxxopts GSL Boost::boost)
 
-# target_include_directories( PhysDesCppStandalone PUBLIC
+# target_include_directories( RectiStandalone PUBLIC
 # $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 # $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}> PRIVATE ${BOOST_INCLUDE_DIRS} )
