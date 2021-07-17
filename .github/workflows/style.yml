@@ -28,7 +28,7 @@ jobs:
       - name: Install format dependencies
         run: |
           sudo apt-get install clang-format
-          pip3 install cmake_format==0.6.11 pyyaml
+          pip3 install cmake_format pyyaml
 
       - name: Install dependencies
         run: |
