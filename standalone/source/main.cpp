@@ -36,7 +36,7 @@ auto main(int argc, char** argv) -> int {
     }
 
     if (result["version"].as<bool>()) {
-        std::cout << "PhysDesCpp, version " << physdes_VERSION << std::endl;
+        std::cout << "Recti, version " << RECTI_VERSION << std::endl;
         return 0;
     }
 
@@ -46,8 +46,8 @@ auto main(int argc, char** argv) -> int {
         return 1;
     }
 
-    recti::PhysDesCpp physdes(name);
-    std::cout << physdes.greet(langIt->second) << std::endl;
+    recti::Recti recti(name);
+    std::cout << recti.greet(langIt->second) << std::endl;
 
     return 0;
 }

@@ -3,9 +3,9 @@
 
 using namespace recti;
 
-PhysDesCpp::PhysDesCpp(std::string _name) : name(std::move(_name)) {}
+Recti::Recti(std::string _name) : name(std::move(_name)) {}
 
-std::string PhysDesCpp::greet(LanguageCode lang) const {
+std::string Recti::greet(LanguageCode lang) const {
     switch (lang) {
         default:
         case LanguageCode::EN:
