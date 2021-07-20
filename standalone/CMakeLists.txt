@@ -16,23 +16,7 @@ CPMAddPackage(
   OPTIONS "CXXOPTS_BUILD_EXAMPLES NO" "CXXOPTS_BUILD_TESTS NO" "CXXOPTS_ENABLE_INSTALL YES"
 )
 CPMAddPackage(NAME Recti SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
-CPMAddPackage("gh:microsoft/GSL@3.1.0")
-
-# CPMAddPackage( NAME Boost VERSION 1.76.0 URL
-# https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.gz DOWNLOAD_ONLY
-# True ) if(Boost_ADDED) # Define the header-only Boost target add_library(Boost::boost INTERFACE
-# IMPORTED GLOBAL) target_include_directories(Boost::boost SYSTEM INTERFACE ${Boost_SOURCE_DIR})
-
-# # Disable autolink target_compile_definitions(Boost::boost INTERFACE BOOST_ALL_NO_LIB=1) endif()
-
-find_package(Boost REQUIRED)
-if(Boost_FOUND)
-  message(STATUS "Found boost: ${Boost_INCLUDE_DIRS}")
-  # add_library(Boost::boost INTERFACE IMPORTED GLOBAL)
-  target_include_directories(Boost::boost SYSTEM INTERFACE ${Boost_INCLUDE_DIRS})
-  # Disable autolink
-  target_compile_definitions(Boost::boost INTERFACE BOOST_ALL_NO_LIB=1)
-endif()
+include(../specific.cmake)
 
 # ---- Create standalone executable ----
 
@@ -42,7 +26,7 @@ add_executable(RectiStandalone ${sources})
 
 set_target_properties(RectiStandalone PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "Recti")
 
-target_link_libraries(RectiStandalone Recti::Recti cxxopts GSL Boost::boost)
+target_link_libraries(RectiStandalone Recti::Recti cxxopts ${SPECIFIC_LIBS})
 
 # target_include_directories( RectiStandalone PUBLIC
 # $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
