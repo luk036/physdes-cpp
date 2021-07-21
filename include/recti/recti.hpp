@@ -11,11 +11,7 @@ namespace recti {
      * @brief vector2
      *
      */
-    template <typename T = int> class vector2
-        : boost::totally_ordered<vector2<T>,
-                                 boost::additive<vector2<T>, boost::multiplicative<vector2<T>, T>>>
-    // note: private inheritance is OK here!
-    {
+    template <typename T = int> class vector2 {
       private:
         T _x;
         T _y;
@@ -51,7 +47,7 @@ namespace recti {
          * @brief
          *
          * @param rhs
-         * @return constexpr vector2&
+         * @return T
          */
         [[nodiscard]] constexpr auto cross(const vector2& rhs) const -> T {
             return this->_x * rhs._y - rhs._x * this->_y;
@@ -60,8 +56,15 @@ namespace recti {
         /**
          * @brief
          *
+         * @return vector2
+         */
+        constexpr auto operator-() const -> vector2 { return vector2(-this->_x, -this->_y); }
+
+        /**
+         * @brief
+         *
          * @param rhs
-         * @return constexpr vector2&
+         * @return vector2&
          */
         constexpr auto operator+=(const vector2& rhs) -> vector2& {
             this->_x += rhs.x();
@@ -73,7 +76,7 @@ namespace recti {
          * @brief
          *
          * @param rhs
-         * @return constexpr vector2&
+         * @return vector2&
          */
         constexpr auto operator-=(const vector2& rhs) -> vector2& {
             this->_x -= rhs.x();
@@ -85,7 +88,7 @@ namespace recti {
          * @brief
          *
          * @param alpha
-         * @return constexpr vector2&
+         * @return vector2&
          */
         constexpr auto operator*=(const T& alpha) -> vector2& {
             this->_x *= alpha;
@@ -97,7 +100,7 @@ namespace recti {
          * @brief
          *
          * @param alpha
-         * @return constexpr vector2&
+         * @return vector2&
          */
         constexpr auto operator/=(const T& alpha) -> vector2& {
             this->_x /= alpha;
@@ -112,7 +115,7 @@ namespace recti {
          * @return true
          * @return false
          */
-        constexpr auto operator==(const vector2<T>& rhs) const -> bool {
+        constexpr auto operator==(const vector2& rhs) const -> bool {
             return std::tie(this->x(), this->y()) == std::tie(rhs.x(), rhs.y());
         }
 
@@ -123,18 +126,111 @@ namespace recti {
          * @return true
          * @return false
          */
-        constexpr auto operator<(const vector2<T>& rhs) const -> bool {
+        constexpr auto operator<(const vector2& rhs) const -> bool {
             return std::tie(this->x(), this->y()) < std::tie(rhs.x(), rhs.y());
         }
+
+        /// totally_ordered
+
+        /**
+         * @brief
+         *
+         * @param x
+         * @param y
+         * @return true
+         * @return false
+         */
+        friend auto operator!=(const vector2& x, const vector2& y) -> bool { return !(x == y); }
+
+        /**
+         * @brief
+         *
+         * @param x
+         * @param y
+         * @return true
+         * @return false
+         */
+        friend constexpr auto operator>(const vector2& x, const vector2& y) -> bool {
+            return y < x;
+        }
+
+        /**
+         * @brief
+         *
+         * @param x
+         * @param y
+         * @return true
+         * @return false
+         */
+        friend constexpr auto operator<=(const vector2& x, const vector2& y) -> bool {
+            return !(y < x);
+        }
+
+        /**
+         * @brief
+         *
+         * @param x
+         * @param y
+         * @return true
+         * @return false
+         */
+        friend constexpr auto operator>=(const vector2& x, const vector2& y) -> bool {
+            return !(x < y);
+        }
+
+        /**
+         * @brief
+         *
+         * @param x
+         * @param y
+         * @return vector2
+         */
+        friend constexpr auto operator+(vector2 x, const vector2& y) -> vector2 { return x += y; }
+
+        /**
+         * @brief
+         *
+         * @param x
+         * @param y
+         * @return vector2
+         */
+        friend constexpr auto operator-(vector2 x, const vector2& y) -> vector2 { return x -= y; }
+
+        /**
+         * @brief
+         *
+         * @param x
+         * @param alpha
+         * @return vector2
+         */
+        friend constexpr auto operator*(vector2 x, const T& alpha) -> vector2 { return x *= alpha; }
+
+        /**
+         * @brief
+         *
+         * @param alpha
+         * @param x
+         * @return vector2
+         */
+        friend constexpr auto operator*(const T& alpha, vector2 x) -> vector2 { return x *= alpha; }
+
+        /**
+         * @brief
+         *
+         * @param x
+         * @param alpha
+         * @return vector2
+         */
+        friend constexpr auto operator/(vector2 x, const T& alpha) -> vector2 { return x /= alpha; }
     };
 
-/**
- * @brief 2D point
- *
- * @tparam T1
- * @tparam T2
- */
 #pragma pack(push, 1)
+    /**
+     * @brief 2D point
+     *
+     * @tparam T1
+     * @tparam T2
+     */
     template <typename T1, typename T2 = T1> class point
         : boost::totally_ordered<point<T1, T2>, boost::additive2<point<T1, T2>, vector2<T1>>> {
       protected:
