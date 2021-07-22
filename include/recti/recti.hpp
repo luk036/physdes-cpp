@@ -2,6 +2,7 @@
 
 #include <boost/operators.hpp>
 #include <cassert>
+#include <compare>  // for <=> operators
 #include <tuple>    // import std::tie()
 #include <utility>  // import std::move
 

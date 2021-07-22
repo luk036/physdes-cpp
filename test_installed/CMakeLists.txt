@@ -19,6 +19,7 @@ include(../cmake/tools.cmake)
 
 include(../cmake/CPM.cmake)
 
+include(../specific.cmake)
 find_package(${PROJECT_NAME} REQUIRED)
 
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../standalone ${CMAKE_BINARY_DIR}/test_installed)
