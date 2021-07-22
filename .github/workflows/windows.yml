@@ -42,12 +42,12 @@ jobs:
           conda install -c conda-forge cmake boost
   
       - name: configure
-        run: cmake -Stest -Bbuild
+        run: cmake -S. -Bbuild
 
       - name: build
         run: cmake --build build --config Debug -j4
 
       - name: test
         run: |
-          cd build
+          cd build/test
           ctest --build-config Debug

@@ -233,6 +233,9 @@ namespace recti {
      */
     template <typename T1, typename T2 = T1> class point
         : boost::additive2<point<T1, T2>, vector2<T1>> {
+
+        using Self = point<T1, T2>;
+
       protected:
         T1 _x;  //!< x coordinate
         T2 _y;  //!< y coordinate
@@ -274,7 +277,7 @@ namespace recti {
          * @param rhs
          * @return constexpr point&
          */
-        constexpr auto operator+=(const vector2<T1>& rhs) -> point& {
+        constexpr auto operator+=(const vector2<T1>& rhs) -> Self& {
             this->_x += rhs.x();
             this->_y += rhs.y();
             return *this;
@@ -286,7 +289,7 @@ namespace recti {
          * @param rhs
          * @return constexpr point&
          */
-        constexpr auto operator-=(const vector2<T1>& rhs) -> point& {
+        constexpr auto operator-=(const vector2<T1>& rhs) -> Self& {
             this->_x -= rhs.x();
             this->_y -= rhs.y();
             return *this;
@@ -298,11 +301,11 @@ namespace recti {
          * @param rhs
          * @return vector2<T1>
          */
-        constexpr auto operator-(const point& rhs) const -> vector2<T1> {
+        constexpr auto operator-(const Self& rhs) const -> vector2<T1> {
             return {this->x() - rhs.x(), this->y() - rhs.y()};
         }
 
-        constexpr auto operator==(const point&) const -> bool = default;
+        constexpr auto operator==(const Self&) const -> bool = default;
 
         template <typename U1, typename U2>
         constexpr auto operator<=>(const point<U1, U2>& rhs) const {

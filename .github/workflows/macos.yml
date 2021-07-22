@@ -29,12 +29,12 @@ jobs:
       - name: configure
         run: |
           brew install boost
-          cmake -Stest -Bbuild -DCMAKE_BUILD_TYPE=Debug
+          cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Debug
 
       - name: build
         run: cmake --build build -j4
 
       - name: test
         run: |
-          cd build
+          cd build/test
           ctest --build-config Debug

@@ -36,17 +36,15 @@ jobs:
 
       - name: build and install library
         run: |
-          cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
+          cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DINSTALL_ONLY=ON
           sudo cmake --build build --target install
           rm -rf build
 
       - name: configure
-        run: cmake -Stest -Bbuild -DTEST_INSTALLED_VERSION=1
+        run: cmake -Stest_installed -Bbuild2
 
       - name: build
-        run: cmake --build build --config Debug -j4
+        run: cmake --build build2 --config Debug -j4
 
-      - name: test
-        run: |
-          cd build
-          ctest --build-config Debug
+      - name: run
+        run: ./build2/test_installed/Recti
