@@ -9,7 +9,7 @@ if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
   )
 endif()
 
-project(Recti2 LANGUAGES CXX)
+project(Recti LANGUAGES CXX)
 
 # --- Import tools ----
 

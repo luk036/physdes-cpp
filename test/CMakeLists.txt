@@ -12,10 +12,13 @@ CPMAddPackage("gh:TheLartians/Format.cmake@1.7.0")
 
 file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 add_executable(${PROJECT_NAME}Tests ${sources})
-target_link_libraries(${PROJECT_NAME}Tests doctest::doctest ${PROJECT_NAME}::${PROJECT_NAME} ${SPECIFIC_LIBS})
+target_link_libraries(
+  ${PROJECT_NAME}Tests doctest::doctest ${PROJECT_NAME}::${PROJECT_NAME} ${SPECIFIC_LIBS}
+)
 set_target_properties(${PROJECT_NAME}Tests PROPERTIES CXX_STANDARD 20)
 
-# target_include_directories( ${PROJECT_NAME}Tests PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+# target_include_directories( ${PROJECT_NAME}Tests PUBLIC
+# $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 # $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}> PRIVATE  ${BOOST_INCLUDE_DIRS} )
 
 # enable compiler warnings
@@ -31,7 +34,8 @@ endif()
 enable_testing()
 
 # Note: doctest and similar testing frameworks can automatically configure CMake tests. For other
-# testing frameworks add the tests target instead: add_test(NAME rectiTests COMMAND ${PROJECT_NAME}Tests)
+# testing frameworks add the tests target instead: add_test(NAME rectiTests COMMAND
+# ${PROJECT_NAME}Tests)
 
 string(TOLOWER ${PROJECT_NAME} PROJECT_FILE_NAME)
 add_test(NAME ${PROJECT_FILE_NAME}Tests COMMAND ${PROJECT_NAME}Tests)

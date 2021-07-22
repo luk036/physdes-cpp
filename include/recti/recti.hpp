@@ -115,9 +115,7 @@ namespace recti {
          * @return true
          * @return false
          */
-        constexpr auto operator==(const vector2& rhs) const -> bool {
-            return std::tie(this->x(), this->y()) == std::tie(rhs.x(), rhs.y());
-        }
+        constexpr auto operator==(const vector2& rhs) const -> bool = default;
 
         /**
          * @brief
@@ -126,57 +124,61 @@ namespace recti {
          * @return true
          * @return false
          */
-        constexpr auto operator<(const vector2& rhs) const -> bool {
-            return std::tie(this->x(), this->y()) < std::tie(rhs.x(), rhs.y());
-        }
+        constexpr auto operator!=(const vector2& rhs) const -> bool = default;
+
+        /**
+         * @brief
+         *
+         */
+        constexpr auto operator<=>(const vector2& rhs) const = default;
 
         /// totally_ordered
 
-        /**
-         * @brief
-         *
-         * @param x
-         * @param y
-         * @return true
-         * @return false
-         */
-        friend auto operator!=(const vector2& x, const vector2& y) -> bool { return !(x == y); }
+        // /**
+        //  * @brief
+        //  *
+        //  * @param x
+        //  * @param y
+        //  * @return true
+        //  * @return false
+        //  */
+        // friend auto operator!=(const vector2& x, const vector2& y) -> bool { return !(x == y); }
 
-        /**
-         * @brief
-         *
-         * @param x
-         * @param y
-         * @return true
-         * @return false
-         */
-        friend constexpr auto operator>(const vector2& x, const vector2& y) -> bool {
-            return y < x;
-        }
+        // /**
+        //  * @brief
+        //  *
+        //  * @param x
+        //  * @param y
+        //  * @return true
+        //  * @return false
+        //  */
+        // friend constexpr auto operator>(const vector2& x, const vector2& y) -> bool {
+        //     return y < x;
+        // }
 
-        /**
-         * @brief
-         *
-         * @param x
-         * @param y
-         * @return true
-         * @return false
-         */
-        friend constexpr auto operator<=(const vector2& x, const vector2& y) -> bool {
-            return !(y < x);
-        }
+        // /**
+        //  * @brief
+        //  *
+        //  * @param x
+        //  * @param y
+        //  * @return true
+        //  * @return false
+        //  */
+        // friend constexpr auto operator<=(const vector2& x, const vector2& y) -> bool {
+        //     return !(y < x);
+        // }
 
-        /**
-         * @brief
-         *
-         * @param x
-         * @param y
-         * @return true
-         * @return false
-         */
-        friend constexpr auto operator>=(const vector2& x, const vector2& y) -> bool {
-            return !(x < y);
-        }
+        // /**
+        //  * @brief
+        //  *
+        //  * @param x
+        //  * @param y
+        //  * @return true
+        //  * @return false
+        //  */
+        // friend constexpr auto operator>=(const vector2& x, const vector2& y) -> bool {
+        //     return !(x < y);
+        // }
 
         /**
          * @brief
@@ -233,7 +235,6 @@ namespace recti {
      */
     template <typename T1, typename T2 = T1> class point
         : boost::additive2<point<T1, T2>, vector2<T1>> {
-
         using Self = point<T1, T2>;
 
       protected:
@@ -305,11 +306,56 @@ namespace recti {
             return {this->x() - rhs.x(), this->y() - rhs.y()};
         }
 
-        constexpr auto operator==(const Self&) const -> bool = default;
+        constexpr auto operator==(const Self& rhs) const -> bool {
+            return std::tie(this->x(), this->y()) == std::tie(rhs.x(), rhs.y());
+        }
 
         template <typename U1, typename U2>
-        constexpr auto operator<=>(const point<U1, U2>& rhs) const {
-            return std::tie(this->x(), this->y()) <=> std::tie(rhs.x(), rhs.y());
+        constexpr auto operator<(const point<U1, U2>& rhs) const {
+            return std::tie(this->x(), this->y()) < std::tie(rhs.x(), rhs.y());
+        }
+
+        /**
+         * @brief
+         *
+         * @param x
+         * @param y
+         * @return true
+         * @return false
+         */
+        friend auto operator!=(const Self& x, const Self& y) -> bool { return !(x == y); }
+
+        /**
+         * @brief
+         *
+         * @tparam U1
+         * @tparam U2
+         * @param x
+         * @param y
+         * @return true
+         * @return false
+         */
+        template <typename U1, typename U2>
+        friend constexpr auto operator>(const Self& x, const point<U1, U2>& y) -> bool {
+            return y < x;
+        }
+
+        template <typename U1, typename U2>
+        friend constexpr auto operator<=(const Self& x, const point<U1, U2>& y) -> bool {
+            return !(y < x);
+        }
+
+        /**
+         * @brief
+         *
+         * @param x
+         * @param y
+         * @return true
+         * @return false
+         */
+        template <typename U1, typename U2>
+        friend constexpr auto operator>=(const Self& x, const point<U1, U2>& y) -> bool {
+            return !(x < y);
         }
 
         // /**
