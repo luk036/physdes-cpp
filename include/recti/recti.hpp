@@ -232,7 +232,7 @@ namespace recti {
      * @tparam T2
      */
     template <typename T1, typename T2 = T1> class point
-        : boost::totally_ordered<point<T1, T2>, boost::additive2<point<T1, T2>, vector2<T1>>> {
+        : boost::additive2<point<T1, T2>, vector2<T1>> {
       protected:
         T1 _x;  //!< x coordinate
         T2 _y;  //!< y coordinate
@@ -302,33 +302,41 @@ namespace recti {
             return {this->x() - rhs.x(), this->y() - rhs.y()};
         }
 
-        /**
-         * @brief
-         *
-         * @tparam U1
-         * @tparam U2
-         * @param rhs
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2> constexpr auto operator<(const point<U1, U2>& rhs) const
-            -> bool {
-            return std::tie(this->x(), this->y()) < std::tie(rhs.x(), rhs.y());
+        constexpr auto operator==(const point&) const -> bool = default;
+
+        template <typename U1, typename U2>
+        constexpr auto operator<=>(const point<U1, U2>& rhs) const {
+            return std::tie(this->x(), this->y()) <=> std::tie(rhs.x(), rhs.y());
         }
 
-        /**
-         * @brief
-         *
-         * @tparam U1
-         * @tparam U2
-         * @param rhs
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2>
-        constexpr auto operator==(const point<U1, U2>& rhs) const -> bool {
-            return std::tie(this->x(), this->y()) == std::tie(rhs.x(), rhs.y());
-        }
+        // /**
+        //  * @brief
+        //  *
+        //  * @tparam U1
+        //  * @tparam U2
+        //  * @param rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U1, typename U2> constexpr auto operator<(const point<U1, U2>& rhs)
+        // const
+        //     -> bool {
+        //     return std::tie(this->x(), this->y()) < std::tie(rhs.x(), rhs.y());
+        // }
+
+        // /**
+        //  * @brief
+        //  *
+        //  * @tparam U1
+        //  * @tparam U2
+        //  * @param rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U1, typename U2>
+        // constexpr auto operator==(const point<U1, U2>& rhs) const -> bool {
+        //     return std::tie(this->x(), this->y()) == std::tie(rhs.x(), rhs.y());
+        // }
 
         /**
          * @brief
@@ -339,20 +347,20 @@ namespace recti {
             return {this->y(), this->x()};
         }
 
-        /**
-         * @brief
-         *
-         * @tparam Stream
-         * @tparam T1
-         * @tparam T2
-         * @param out
-         * @param p
-         * @return Stream&
-         */
-        template <class Stream> friend auto operator<<(Stream& out, const point& p) -> Stream& {
-            out << '(' << p.x() << ", " << p.y() << ')';
-            return out;
-        }
+        // /**
+        //  * @brief
+        //  *
+        //  * @tparam Stream
+        //  * @tparam T1
+        //  * @tparam T2
+        //  * @param out
+        //  * @param p
+        //  * @return Stream&
+        //  */
+        // template <class Stream> friend auto operator<<(Stream& out, const point& p) -> Stream& {
+        //     out << '(' << p.x() << ", " << p.y() << ')';
+        //     return out;
+        // }
     };
 #pragma pack(pop)
 
@@ -578,19 +586,20 @@ namespace recti {
          */
         [[nodiscard]] constexpr auto area() const -> T { return this->x().len() * this->y().len(); }
 
-        /**
-         * @brief
-         *
-         * @tparam Stream
-         * @tparam T
-         * @param out
-         * @param r
-         * @return Stream&
-         */
-        template <class Stream> friend auto operator<<(Stream& out, const rectangle& r) -> Stream& {
-            out << r.lower() << " rectangle " << r.upper();
-            return out;
-        }
+        // /**
+        //  * @brief
+        //  *
+        //  * @tparam Stream
+        //  * @tparam T
+        //  * @param out
+        //  * @param r
+        //  * @return Stream&
+        //  */
+        // template <class Stream> friend auto operator<<(Stream& out, const rectangle& r) ->
+        // Stream& {
+        //     out << r.lower() << " rectangle " << r.upper();
+        //     return out;
+        // }
     };
 #pragma pack(pop)
 

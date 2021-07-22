@@ -31,7 +31,7 @@ endif()
 file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 add_executable(RectiTests ${sources})
 target_link_libraries(RectiTests doctest::doctest Recti::Recti ${SPECIFIC_LIBS})
-set_target_properties(RectiTests PROPERTIES CXX_STANDARD 17)
+set_target_properties(RectiTests PROPERTIES CXX_STANDARD 20)
 
 # target_include_directories( RectiTests PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 # $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}> PRIVATE  ${BOOST_INCLUDE_DIRS} )

@@ -24,7 +24,7 @@ file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 
 add_executable(RectiStandalone ${sources})
 
-set_target_properties(RectiStandalone PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "Recti")
+set_target_properties(RectiStandalone PROPERTIES CXX_STANDARD 20 OUTPUT_NAME "Recti")
 
 target_link_libraries(RectiStandalone Recti::Recti cxxopts ${SPECIFIC_LIBS})
 

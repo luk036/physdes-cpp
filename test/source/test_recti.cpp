@@ -1,6 +1,6 @@
 #include <doctest/doctest.h>
 // #include <random>
-#include <iostream>
+// #include <iostream>
 #include <list>
 #include <recti/recti.hpp>
 #include <set>
@@ -8,11 +8,11 @@
 // using std::randint;
 using namespace recti;
 
-template <typename T> struct my_point : point<T, T> { double data; };
+// template <typename T> struct my_point : point<T, T> { double data; };
 
 TEST_CASE("Point test") {
-    auto a = my_point<int>{{4, 8}, 3.4};
-    auto b = my_point<int>{{5, 6}, 1.0};
+    auto a = point<int>{4, 8};
+    auto b = point<int>{5, 6};
 
     CHECK(a < b);
     CHECK(a <= b);

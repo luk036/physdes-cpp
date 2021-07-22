@@ -43,7 +43,7 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/
 # target: add_library(Recti INTERFACE)
 add_library(Recti ${headers} ${sources})
 
-set_target_properties(Recti PROPERTIES CXX_STANDARD 17)
+set_target_properties(Recti PROPERTIES CXX_STANDARD 20)
 
 # being a cross-platform target, we enforce standards conformance on MSVC
 target_compile_options(Recti PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
