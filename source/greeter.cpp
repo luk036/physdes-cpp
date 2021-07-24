@@ -5,7 +5,7 @@ using namespace recti;
 
 Recti::Recti(std::string _name) : name(std::move(_name)) {}
 
-std::string Recti::greet(LanguageCode lang) const {
+auto Recti::greet(LanguageCode lang) const -> std::string {
     switch (lang) {
         default:
         case LanguageCode::EN:

@@ -34,7 +34,7 @@ TEST_CASE("Rectilinear Polygon test (y-mono 50)") {
     auto hgenY = vdcorput(2, 11);
     auto S = std::vector<point<int>>{};
     for (auto i = 0; i != 50; ++i) {
-        S.emplace_back(point<int>(hgenX(), hgenY()));
+        S.emplace_back(point<int>(int(hgenX()), int(hgenY())));
     }
     auto is_anticlockwise = create_ymono_rpolygon(S.begin(), S.end());
     // fmt::print(
@@ -53,7 +53,7 @@ TEST_CASE("Rectilinear Polygon test (y-mono 50)") {
     //     fmt::print("  <circle cx='{}' cy='{}' r='10' />\n", p.x(), p.y());
     // }
 
-    auto q = point<int>(hgenX(), hgenY());
+    auto q = point<int>(int(hgenX()), int(hgenY()));
     // fmt::print(
     //     "  <circle cx='{}' cy='{}' r='10' fill='#BF616A' />\n", q.x(), q.y());
     // fmt::print("</svg>\n");

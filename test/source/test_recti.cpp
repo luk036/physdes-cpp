@@ -4,6 +4,7 @@
 #include <list>
 #include <recti/recti.hpp>
 #include <set>
+#include <experimental/random>
 
 // using std::randint;
 using namespace recti;
@@ -67,8 +68,8 @@ TEST_CASE("Rectilinear test") {
             int jj = j * 100;
             // auto xrng = interval {ii, ii + randint(50, 110)};
             // auto yrng = interval {jj, jj + randint(50, 110)};
-            auto xrng = interval{ii, ii + std::rand() % 100};
-            auto yrng = interval{jj, jj + std::rand() % 100};
+            auto xrng = interval{ii, ii + std::experimental::randint(0, 100)};
+            auto yrng = interval{jj, jj + std::experimental::randint(0, 100)};
             auto r = rectangle{xrng, yrng};
             lst.push_back(r);
         }
