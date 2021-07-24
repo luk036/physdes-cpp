@@ -470,6 +470,8 @@ namespace recti {
         T _lower;  //> lower bound
         T _upper;  //> upper bound
 
+        auto _tie() const { return std::tie(_lower, _upper); }
+
       public:
         /**
          * @brief Construct a new interval object
@@ -520,7 +522,9 @@ namespace recti {
          * @return true
          * @return false
          */
-        constexpr auto operator==(const interval& rhs) const -> bool = default;
+        constexpr auto operator==(const interval& rhs) const -> bool {
+            return this->_tie() == rhs._tie();
+        }
 
         /**
          * @brief
