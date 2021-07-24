@@ -112,24 +112,6 @@ namespace recti {
         /**
          * @brief
          *
-         * @param rhs
-         * @return true
-         * @return false
-         */
-        constexpr auto operator==(const vector2& rhs) const -> bool = default;
-
-        /**
-         * @brief
-         *
-         * @param rhs
-         * @return true
-         * @return false
-         */
-        constexpr auto operator!=(const vector2& rhs) const -> bool = default;
-
-        /**
-         * @brief
-         *
          */
         constexpr auto operator<=>(const vector2& rhs) const = default;
 
