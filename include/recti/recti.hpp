@@ -17,6 +17,8 @@ namespace recti {
         T _x;
         T _y;
 
+        auto _tie() const { return std::tie(_x, _y); }
+
       public:
         /**
          * @brief
@@ -50,24 +52,26 @@ namespace recti {
          * @param rhs
          * @return T
          */
-        [[nodiscard]] constexpr auto cross(const vector2& rhs) const -> T {
+        template <typename U>  //
+        [[nodiscard]] constexpr auto cross(const vector2<U>& rhs) const {
             return this->_x * rhs._y - rhs._x * this->_y;
         }
 
         /**
          * @brief
          *
-         * @return vector2
+         * @return vector2<T>
          */
-        constexpr auto operator-() const -> vector2 { return vector2(-this->_x, -this->_y); }
+        constexpr auto operator-() const -> vector2<T> { return vector2<T>(-this->_x, -this->_y); }
 
         /**
          * @brief
          *
+         * @tparam U
          * @param rhs
-         * @return vector2&
+         * @return vector2<T>&
          */
-        constexpr auto operator+=(const vector2& rhs) -> vector2& {
+        template <typename U> constexpr auto operator+=(const vector2<U>& rhs) -> vector2<T>& {
             this->_x += rhs.x();
             this->_y += rhs.y();
             return *this;
@@ -76,10 +80,11 @@ namespace recti {
         /**
          * @brief
          *
+         * @tparam U
          * @param rhs
-         * @return vector2&
+         * @return vector2<T>&
          */
-        constexpr auto operator-=(const vector2& rhs) -> vector2& {
+        template <typename U> constexpr auto operator-=(const vector2<U>& rhs) -> vector2<T>& {
             this->_x -= rhs.x();
             this->_y -= rhs.y();
             return *this;
@@ -88,10 +93,10 @@ namespace recti {
         /**
          * @brief
          *
-         * @param alpha
-         * @return vector2&
+         * @param[in] alpha
+         * @return vector2<T>&
          */
-        constexpr auto operator*=(const T& alpha) -> vector2& {
+        constexpr auto operator*=(const T& alpha) -> vector2<T>& {
             this->_x *= alpha;
             this->_y *= alpha;
             return *this;
@@ -100,10 +105,10 @@ namespace recti {
         /**
          * @brief
          *
-         * @param alpha
-         * @return vector2&
+         * @param[in] alpha
+         * @return vector2<T>&
          */
-        constexpr auto operator/=(const T& alpha) -> vector2& {
+        constexpr auto operator/=(const T& alpha) -> vector2<T>& {
             this->_x /= alpha;
             this->_y /= alpha;
             return *this;
@@ -112,56 +117,76 @@ namespace recti {
         /**
          * @brief
          *
+         * @tparam U
+         * @param rhs
+         * @return true
+         * @return false
          */
-        constexpr auto operator<=>(const vector2& rhs) const = default;
+        template <typename U>  //
+        constexpr auto operator==(const vector2<U>& rhs) const -> bool {
+            return this->_tie() == rhs._tie();
+        }
 
-        /// totally_ordered
+        /**
+         * @brief
+         *
+         * @tparam U
+         * @param rhs
+         * @return true
+         * @return false
+         */
+        template <typename U>  //
+        constexpr auto operator!=(const vector2<U>& rhs) const -> bool {
+            return this->_tie() != rhs._tie();
+        }
 
-        // /**
-        //  * @brief
-        //  *
-        //  * @param x
-        //  * @param y
-        //  * @return true
-        //  * @return false
-        //  */
-        // friend auto operator!=(const vector2& x, const vector2& y) -> bool { return !(x == y); }
+        /**
+         * @brief
+         *
+         * @param x
+         * @param y
+         * @return true
+         * @return false
+         */
+        friend constexpr auto operator<(const vector2& x, const vector2& y) -> bool {
+            return x._tie() < y._tie();
+        }
 
-        // /**
-        //  * @brief
-        //  *
-        //  * @param x
-        //  * @param y
-        //  * @return true
-        //  * @return false
-        //  */
-        // friend constexpr auto operator>(const vector2& x, const vector2& y) -> bool {
-        //     return y < x;
-        // }
+        /**
+         * @brief
+         *
+         * @param x
+         * @param y
+         * @return true
+         * @return false
+         */
+        friend constexpr auto operator>(const vector2& x, const vector2& y) -> bool {
+            return y < x;
+        }
 
-        // /**
-        //  * @brief
-        //  *
-        //  * @param x
-        //  * @param y
-        //  * @return true
-        //  * @return false
-        //  */
-        // friend constexpr auto operator<=(const vector2& x, const vector2& y) -> bool {
-        //     return !(y < x);
-        // }
+        /**
+         * @brief
+         *
+         * @param x
+         * @param y
+         * @return true
+         * @return false
+         */
+        friend constexpr auto operator<=(const vector2& x, const vector2& y) -> bool {
+            return !(y < x);
+        }
 
-        // /**
-        //  * @brief
-        //  *
-        //  * @param x
-        //  * @param y
-        //  * @return true
-        //  * @return false
-        //  */
-        // friend constexpr auto operator>=(const vector2& x, const vector2& y) -> bool {
-        //     return !(x < y);
-        // }
+        /**
+         * @brief
+         *
+         * @param x
+         * @param y
+         * @return true
+         * @return false
+         */
+        friend constexpr auto operator>=(const vector2& x, const vector2& y) -> bool {
+            return !(x < y);
+        }
 
         /**
          * @brief
@@ -185,7 +210,7 @@ namespace recti {
          * @brief
          *
          * @param x
-         * @param alpha
+         * @param[in] alpha
          * @return vector2
          */
         friend constexpr auto operator*(vector2 x, const T& alpha) -> vector2 { return x *= alpha; }
@@ -193,7 +218,7 @@ namespace recti {
         /**
          * @brief
          *
-         * @param alpha
+         * @param[in] alpha
          * @param x
          * @return vector2
          */
@@ -203,7 +228,7 @@ namespace recti {
          * @brief
          *
          * @param x
-         * @param alpha
+         * @param[in] alpha
          * @return vector2
          */
         friend constexpr auto operator/(vector2 x, const T& alpha) -> vector2 { return x /= alpha; }
@@ -223,6 +248,9 @@ namespace recti {
       protected:
         T1 _x;  //!< x coordinate
         T2 _y;  //!< y coordinate
+
+      private:
+        const auto _tie() const { return std::tie(_x, _y); }
 
       public:
         /**
@@ -289,24 +317,24 @@ namespace recti {
             return {this->x() - rhs.x(), this->y() - rhs.y()};
         }
 
-        constexpr auto operator==(const Self& rhs) const -> bool {
-            return std::tie(this->x(), this->y()) == std::tie(rhs.x(), rhs.y());
-        }
+        constexpr auto operator==(const Self& rhs) const -> bool = default;
 
         template <typename U1, typename U2>
         constexpr auto operator<(const point<U1, U2>& rhs) const {
-            return std::tie(this->x(), this->y()) < std::tie(rhs.x(), rhs.y());
+            return this->_tie() < rhs._tie();
         }
 
-        /**
-         * @brief
-         *
-         * @param x
-         * @param y
-         * @return true
-         * @return false
-         */
-        friend auto operator!=(const Self& x, const Self& y) -> bool { return !(x == y); }
+        // constexpr auto operator<=>(const Self& rhs) const = default;
+
+        // /**
+        //  * @brief
+        //  *
+        //  * @param x
+        //  * @param y
+        //  * @return true
+        //  * @return false
+        //  */
+        // friend auto operator!=(const Self& x, const Self& y) -> bool { return !(x == y); }
 
         /**
          * @brief
@@ -340,35 +368,6 @@ namespace recti {
         friend constexpr auto operator>=(const Self& x, const point<U1, U2>& y) -> bool {
             return !(x < y);
         }
-
-        // /**
-        //  * @brief
-        //  *
-        //  * @tparam U1
-        //  * @tparam U2
-        //  * @param rhs
-        //  * @return true
-        //  * @return false
-        //  */
-        // template <typename U1, typename U2> constexpr auto operator<(const point<U1, U2>& rhs)
-        // const
-        //     -> bool {
-        //     return std::tie(this->x(), this->y()) < std::tie(rhs.x(), rhs.y());
-        // }
-
-        // /**
-        //  * @brief
-        //  *
-        //  * @tparam U1
-        //  * @tparam U2
-        //  * @param rhs
-        //  * @return true
-        //  * @return false
-        //  */
-        // template <typename U1, typename U2>
-        // constexpr auto operator==(const point<U1, U2>& rhs) const -> bool {
-        //     return std::tie(this->x(), this->y()) == std::tie(rhs.x(), rhs.y());
-        // }
 
         /**
          * @brief
@@ -513,9 +512,7 @@ namespace recti {
          * @return true
          * @return false
          */
-        constexpr auto operator==(const interval& rhs) const -> bool {
-            return this->lower() == rhs.lower() && this->upper() == rhs.upper();
-        }
+        constexpr auto operator==(const interval& rhs) const -> bool = default;
 
         /**
          * @brief
