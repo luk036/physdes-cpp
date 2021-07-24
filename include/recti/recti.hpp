@@ -317,7 +317,10 @@ namespace recti {
             return {this->x() - rhs.x(), this->y() - rhs.y()};
         }
 
-        constexpr auto operator==(const Self& rhs) const -> bool = default;
+        template <typename U1, typename U2>
+        constexpr auto operator==(const point<U1, U2>& rhs) const {
+            return this->_tie() == rhs._tie();
+        }
 
         template <typename U1, typename U2>
         constexpr auto operator<(const point<U1, U2>& rhs) const {
