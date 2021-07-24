@@ -250,7 +250,7 @@ namespace recti {
         T2 _y;  //!< y coordinate
 
       private:
-        const auto _tie() const { return std::tie(_x, _y); }
+        auto _tie() const { return std::tie(_x, _y); }
 
       public:
         /**
@@ -338,6 +338,11 @@ namespace recti {
         //  * @return false
         //  */
         // friend auto operator!=(const Self& x, const Self& y) -> bool { return !(x == y); }
+
+        template <typename U1, typename U2>
+        friend constexpr auto operator!=(const Self& x, const point<U1, U2>& y) -> bool {
+            return !(x == y);
+        }
 
         /**
          * @brief
