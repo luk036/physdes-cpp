@@ -81,15 +81,10 @@
             </dt>
             <dd>Halton sequence generator.</dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename T&gt;</div>
-              class <a href="classrecti_1_1polygon.html" class="m-doc">polygon</a>
-            </dt>
-            <dd>Polygon.</dd>
-            <dt>
               <div class="m-doc-template">template&lt;typename T = int&gt;</div>
-              class <a href="classrecti_1_1vector2.html" class="m-doc">vector2</a>
+              class <a href="classrecti_1_1interval.html" class="m-doc">interval</a>
             </dt>
-            <dd><a href="classrecti_1_1vector2.html" class="m-doc">vector2</a></dd>
+            <dd>Interval.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename T1, typename T2 = T1&gt;</div>
               class <a href="classrecti_1_1point.html" class="m-doc">point</a>
@@ -106,10 +101,10 @@
             </dt>
             <dd>adapter for containers of point</dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename T = int&gt;</div>
-              class <a href="classrecti_1_1interval.html" class="m-doc">interval</a>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              class <a href="classrecti_1_1polygon.html" class="m-doc">polygon</a>
             </dt>
-            <dd>Interval.</dd>
+            <dd>Polygon.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename T&gt;</div>
               struct <a href="structrecti_1_1rectangle.html" class="m-doc">rectangle</a>
@@ -130,6 +125,11 @@
               class <a href="classrecti_1_1rpolygon.html" class="m-doc">rpolygon</a>
             </dt>
             <dd>Rectilinear Polygon.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = int&gt;</div>
+              class <a href="classrecti_1_1vector2.html" class="m-doc">vector2</a>
+            </dt>
+            <dd><a href="classrecti_1_1vector2.html" class="m-doc">vector2</a></dd>
           </dl>
         </section>
         <section id="enum-members">
@@ -153,6 +153,18 @@
               unsigned scale = 10) noexcept -&gt; unsigned -&gt; auto</span>
             </dt>
             <dd>van der Corput sequence</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T, class Stream&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae4c22629bff3c073a5b89adebac13534" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
+              const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;T&gt;&amp; Intv) -&gt; Stream &amp; -&gt; auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T1, typename T2, class Stream&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa970ee90d8ebc48b8104bdef191cb164" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
+              const <a href="classrecti_1_1point.html" class="m-doc">point</a>&lt;T1, T2&gt;&amp; p) -&gt; Stream &amp; -&gt; auto</span>
+            </dt>
+            <dd></dd>
             <dt>
               <div class="m-doc-template">template&lt;class Stream, typename T&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#ae17a593810a99bc6eaac91ef2f281a4e" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
@@ -208,6 +220,12 @@
               const <a href="classrecti_1_1point.html" class="m-doc">point</a>&lt;T&gt;&amp; q) -&gt; bool -&gt; auto</span>
             </dt>
             <dd>determine if a point is within a polygon</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T, class Stream&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#af2fb4de7de064f23b31d129e8e4d6a6d" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
+              const <a href="classrecti_1_1vector2.html" class="m-doc">vector2</a>&lt;T&gt;&amp; v) -&gt; Stream &amp; -&gt; auto</span>
+            </dt>
+            <dd></dd>
           </dl>
         </section>
         <section>
@@ -236,11 +254,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">k</td>
+                  <td style="width: 1%">k&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>base</td>
+                  <td>base&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
@@ -252,6 +270,98 @@
                 <tr>
                   <th>Returns</th>
                   <td>unsigned</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae4c22629bff3c073a5b89adebac13534"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="interval_8hpp.html">&lt;recti/interval.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename T, class Stream&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae4c22629bff3c073a5b89adebac13534" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
+              const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;T&gt;&amp; Intv) -&gt; Stream &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Stream</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>out&nbsp;<span class="m-label m-flat m-warning">out</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Intv</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Stream&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa970ee90d8ebc48b8104bdef191cb164"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="point_8hpp.html">&lt;recti/point.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2, class Stream&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa970ee90d8ebc48b8104bdef191cb164" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
+              const <a href="classrecti_1_1point.html" class="m-doc">point</a>&lt;T1, T2&gt;&amp; p) -&gt; Stream &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>T2</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Stream</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>out&nbsp;<span class="m-label m-flat m-warning">out</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>p&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Stream&amp;</td>
                 </tr>
               </tfoot>
             </table>
@@ -284,11 +394,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>out</td>
+                  <td>out&nbsp;<span class="m-label m-flat m-warning">out</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>r</td>
+                  <td>r&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -330,11 +440,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>first</td>
+                  <td>first&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>last</td>
+                  <td>last&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
@@ -369,11 +479,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>first</td>
+                  <td>first&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>last</td>
+                  <td>last&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -404,11 +514,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>first</td>
+                  <td>first&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>last</td>
+                  <td>last&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -439,11 +549,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>S</td>
+                  <td>S&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>q</td>
+                  <td>q&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -481,11 +591,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>first</td>
+                  <td>first&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>last</td>
+                  <td>last&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -522,11 +632,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>first</td>
+                  <td>first&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>last</td>
+                  <td>last&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -562,11 +672,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>first</td>
+                  <td>first&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>last</td>
+                  <td>last&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -597,11 +707,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>S</td>
+                  <td>S&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>q</td>
+                  <td>q&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -613,6 +723,50 @@
               </tfoot>
             </table>
 <p>The code below is from Wm. Randolph Franklin <a href="mailto:wrf@ecse.rpi.edu">wrf@ecse.rpi.edu</a> (see URL below) with some minor modifications for rectilinear. It returns true for strictly interior points, false for strictly exterior, and ub for points on the boundary. The boundary behavior is complex but determined; in particular, for a partition of a region into polygons, each point is &quot;in&quot; exactly one polygon. (See p.243 of [O&#x27;Rourke (C)] for a discussion of boundary behavior.)</p><p>See <a href="http://www.faqs.org/faqs/graphics/algorithms-faq/">http:/<wbr />/<wbr />www.faqs.org/<wbr />faqs/<wbr />graphics/<wbr />algorithms-faq/<wbr /></a> Subject 2.03</p>
+          </div></section>
+          <section class="m-doc-details" id="af2fb4de7de064f23b31d129e8e4d6a6d"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="vector2_8hpp.html">&lt;recti/vector2.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename T, class Stream&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af2fb4de7de064f23b31d129e8e4d6a6d" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
+              const <a href="classrecti_1_1vector2.html" class="m-doc">vector2</a>&lt;T&gt;&amp; v) -&gt; Stream &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">T</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Stream</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>out&nbsp;<span class="m-label m-flat m-warning">out</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>v&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Stream&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
           </div></section>
         </section>
       </div>

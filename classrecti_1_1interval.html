@@ -49,7 +49,7 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="recti_8hpp.html">&lt;recti/recti.hpp&gt;</a></div>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="interval_8hpp.html">&lt;recti/interval.hpp&gt;</a></div>
           <div class="m-doc-template">template&lt;typename T = int&gt;</div>
           <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>interval <span class="m-thin">class</span>
         </h1>
@@ -73,6 +73,7 @@
               <ul>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#comparison-operators">Comparison operators</a></li>
               </ul>
             </li>
           </ul>
@@ -108,11 +109,8 @@
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a2e2ee4db1abfbf88d735d184844ba6f4" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a63cdd20da0acf0931e76fec95edb669d" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <div class="m-doc-template">template&lt;typename U&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0bda2ac38600ea47856d99ee6c7f9708" class="m-doc">intersects</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; a) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd></dd>
             <dt>
@@ -124,6 +122,42 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a34da4d848738278809157409e7d91a9b" class="m-doc">contains</a>(</span><span class="m-doc-wrap">const T&amp; a) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd></dd>
+          </dl>
+        </section>
+        <section id="comparison-operators">
+          <h2><a href="#comparison-operators">Comparison operators</a></h2>
+<p>definie ==, !=, &lt;, &gt;, &lt;=, &gt;=.</p>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename U&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab3bcbf119afa3b8954a4200920f1b161" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Equal to.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a754647dbfa77caa7e45ce201df7ccf2f" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Less than.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a709c2d6568d4566b5a60c2eba7250cac" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Not equal to.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1263ea630f108acfa733095f9785835a" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Greater than.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aed63124ea0c5defc4ee5a171b78d402d" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Less than or euqual to.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3d835021a52f78b553ebcef5b8562490" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Greater than or equal to.</dd>
           </dl>
         </section>
         <section>
@@ -143,11 +177,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">lower</td>
+                  <td style="width: 1%">lower&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>upper</td>
+                  <td>upper&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -168,11 +202,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">lower</td>
+                  <td style="width: 1%">lower&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>upper</td>
+                  <td>upper&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -226,45 +260,30 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a2e2ee4db1abfbf88d735d184844ba6f4"><div>
+          <section class="m-doc-details" id="a0bda2ac38600ea47856d99ee6c7f9708"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
+                template&lt;typename U&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2e2ee4db1abfbf88d735d184844ba6f4" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0bda2ac38600ea47856d99ee6c7f9708" class="m-doc-self">intersects</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; a) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <table class="m-table m-fullwidth m-flat">
               <thead>
-                <tr><th colspan="2">Parameters</th></tr>
+                <tr><th colspan="2">Template parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">rhs</td>
+                  <td style="width: 1%">U</td>
                   <td></td>
                 </tr>
               </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>true</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="a63cdd20da0acf0931e76fec95edb669d"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename T&gt;
-              </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a63cdd20da0acf0931e76fec95edb669d" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
-            </h3>
-            <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">rhs</td>
+                  <td>a&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -299,7 +318,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>a</td>
+                  <td>a&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -322,6 +341,222 @@
               <tfoot>
                 <tr>
                   <th style="width: 1%">Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab3bcbf119afa3b8954a4200920f1b161"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename U&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab3bcbf119afa3b8954a4200920f1b161" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a754647dbfa77caa7e45ce201df7ccf2f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename U&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a754647dbfa77caa7e45ce201df7ccf2f" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Less than.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a709c2d6568d4566b5a60c2eba7250cac"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename U&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a709c2d6568d4566b5a60c2eba7250cac" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Not equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1263ea630f108acfa733095f9785835a"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename U&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1263ea630f108acfa733095f9785835a" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Greater than.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aed63124ea0c5defc4ee5a171b78d402d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename U&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aed63124ea0c5defc4ee5a171b78d402d" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Less than or euqual to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3d835021a52f78b553ebcef5b8562490"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+                template&lt;typename U&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3d835021a52f78b553ebcef5b8562490" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Greater than or equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
                   <td>true</td>
                 </tr>
               </tfoot>
