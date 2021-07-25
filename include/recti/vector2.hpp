@@ -55,7 +55,7 @@ namespace recti {
         }
 
         /** @name Comparison operators
-         *  definie ==, !=, <, >, <=, >=. 
+         *  definie ==, !=, <, >, <=, >=.
          */
         ///@{
 
@@ -75,10 +75,10 @@ namespace recti {
         /**
          * @brief Less than
          *
-         * @tparam U 
-         * @param rhs 
-         * @return true 
-         * @return false 
+         * @tparam U
+         * @param rhs
+         * @return true
+         * @return false
          */
         template <typename U>  //
         constexpr auto operator<(const vector2<U>& rhs) const -> bool {
@@ -95,7 +95,7 @@ namespace recti {
          */
         template <typename U>  //
         constexpr auto operator!=(const vector2<U>& rhs) const -> bool {
-            return this->_tie() != rhs._tie();
+            return !(*this == rhs);
         }
 
         /**
@@ -140,14 +140,14 @@ namespace recti {
         ///@}
 
         /** @name Arithmetic operators
-         *  definie +, -, *, /, +=, -=, *=, /=, etc. 
+         *  definie +, -, *, /, +=, -=, *=, /=, etc.
          */
         ///@{
 
         /**
          * @brief Negate
-         * 
-         * @return vector2<T> 
+         *
+         * @return vector2<T>
          */
         constexpr auto operator-() const -> vector2<T> { return vector2<T>(-this->_x, -this->_y); }
 
@@ -171,7 +171,7 @@ namespace recti {
          * @param[in] rhs
          * @return vector2<T>&
          */
-        template <typename U> //
+        template <typename U>  //
         constexpr auto operator-=(const vector2<U>& rhs) -> vector2<T>& {
             this->_x -= rhs.x();
             this->_y -= rhs.y();
@@ -210,7 +210,7 @@ namespace recti {
          * @param[in] y
          * @return vector2<T>
          */
-        template <typename U> //
+        template <typename U>  //
         friend constexpr auto operator+(vector2<T> x, const vector2<U>& y) -> vector2<T> {
             return x += y;
         }
@@ -223,7 +223,7 @@ namespace recti {
          * @param[in] y
          * @return vector2<T>
          */
-        template <typename U> //
+        template <typename U>  //
         friend constexpr auto operator-(vector2<T> x, const vector2<U>& y) -> vector2<T> {
             return x -= y;
         }
@@ -264,16 +264,16 @@ namespace recti {
         ///@}
     };
 
-/**
- * @brief
- *
- * @tparam Stream
- * @tparam T
- * @param[in] out
- * @param[in] v
- * @return Stream&
- */
-template <typename T, class Stream> 
-auto operator<<(Stream& out, const vector2<T>& v) -> Stream&;
+    /**
+     * @brief
+     *
+     * @tparam Stream
+     * @tparam T
+     * @param[in] out
+     * @param[in] v
+     * @return Stream&
+     */
+    template <typename T, class Stream> auto operator<<(Stream& out, const vector2<T>& v)
+        -> Stream&;
 
-}
+}  // namespace recti

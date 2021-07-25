@@ -1,6 +1,7 @@
 #include <doctest/doctest.h>
 // #include <random>
 // #include <iostream>
+#include <cstdlib>
 #include <list>
 #include <recti/recti.hpp>
 #include <set>
@@ -13,7 +14,7 @@ using namespace recti;
 TEST_CASE("Point test") {
     auto a = point<int>{4, 8};
     auto b = point<int>{5, 6};
-    auto v = (b - a) / 2; // integer division
+    auto v = (b - a) / 2;  // integer division
 
     CHECK(a < b);
     CHECK(a <= b);
@@ -21,7 +22,8 @@ TEST_CASE("Point test") {
     CHECK(a != b);
     CHECK(b > a);
     CHECK(b >= a);
-    CHECK((a + v) + v != b);
+    CHECK((a + v) + v != b);  // due to integer division
+    CHECK((a - v) + v == a);
 
     CHECK(a.flip_xy().flip_xy() == a);
     CHECK(a.flip_y().flip_y() == a);
