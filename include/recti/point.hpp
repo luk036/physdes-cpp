@@ -240,7 +240,7 @@ namespace recti {
      * @tparam Stream
      * @tparam T1
      * @tparam T2
-     * @param[in] out
+     * @param[out] out
      * @param[in] p
      * @return Stream&
      */

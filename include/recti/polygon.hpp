@@ -88,7 +88,7 @@ namespace recti {
      *
      * @tparam Stream
      * @tparam T
-     * @param[in] out
+     * @param[out] out
      * @param[in] r
      * @return Stream&
      */

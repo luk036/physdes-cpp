@@ -8,7 +8,7 @@ namespace recti {
      *
      * @tparam T
      * @tparam Stream
-     * @param[in] out
+     * @param[out] out
      * @param[in] p
      * @return Stream&
      */
@@ -24,7 +24,7 @@ namespace recti {
      * @tparam T1
      * @tparam T2
      * @tparam Stream
-     * @param[in] out
+     * @param[out] out
      * @param[in] p
      * @return Stream&
      */
@@ -39,7 +39,7 @@ namespace recti {
      *
      * @tparam T
      * @tparam Stream
-     * @param[in] out
+     * @param[out] out
      * @param[in] p
      * @return Stream&
      */

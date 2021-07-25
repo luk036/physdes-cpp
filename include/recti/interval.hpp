@@ -195,10 +195,10 @@ namespace recti {
      *
      * @tparam Stream
      * @tparam T
-     * @param[in] out
+     * @param[out] out
      * @param[in] p
      * @return Stream&
      */
-    template <typename T, class Stream> auto operator<<(Stream& out, const interval<T>& p)
+    template <typename T, class Stream> auto operator<<(Stream& out, const interval<T>& Intv)
         -> Stream&;
 }  // namespace recti
