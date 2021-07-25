@@ -8,8 +8,8 @@ namespace recti {
      *
      * @tparam T
      * @tparam Stream
-     * @param out
-     * @param p
+     * @param[in] out
+     * @param[in] p
      * @return Stream&
      */
     template <typename T, class Stream> auto operator<<(Stream& out, const vector2<T>& v)
@@ -24,8 +24,8 @@ namespace recti {
      * @tparam T1
      * @tparam T2
      * @tparam Stream
-     * @param out
-     * @param p
+     * @param[in] out
+     * @param[in] p
      * @return Stream&
      */
     template <typename T1, typename T2, class Stream>
@@ -39,8 +39,8 @@ namespace recti {
      *
      * @tparam T
      * @tparam Stream
-     * @param out
-     * @param p
+     * @param[in] out
+     * @param[in] p
      * @return Stream&
      */
     template <typename T, class Stream> auto operator<<(Stream& out, const interval<T>& I)

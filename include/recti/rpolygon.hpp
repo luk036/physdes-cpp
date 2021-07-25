@@ -22,7 +22,7 @@ namespace recti {
         /**
          * @brief Construct a new rpolygon object
          *
-         * @param pointset
+         * @param[in] pointset
          */
         explicit constexpr rpolygon(gsl::span<const point<T>> pointset)
             : _origin{pointset.front()} {
@@ -35,7 +35,7 @@ namespace recti {
         /**
          * @brief
          *
-         * @param rhs
+         * @param[in] rhs
          * @return constexpr point&
          */
         constexpr auto operator+=(const vector2<T>& rhs) -> rpolygon& {
@@ -63,7 +63,7 @@ namespace recti {
          * @brief
          *
          * @tparam U
-         * @param rhs
+         * @param[in] rhs
          * @return true
          * @return false
          */
@@ -88,8 +88,8 @@ namespace recti {
      * @brief Create a xmono rpolygon object
      *
      * @tparam FwIter
-     * @param first
-     * @param last
+     * @param[in] first
+     * @param[in] last
      * @return true
      * @return false
      */
@@ -113,8 +113,8 @@ namespace recti {
      * @brief Create a ymono rpolygon object
      *
      * @tparam FwIter
-     * @param first
-     * @param last
+     * @param[in] first
+     * @param[in] last
      * @return true
      * @return false
      */
@@ -145,8 +145,8 @@ namespace recti {
      *
      * @tparam T
      * @tparam FwIter
-     * @param first
-     * @param last
+     * @param[in] first
+     * @param[in] last
      */
     template <typename FwIter> inline void create_test_rpolygon(FwIter&& first, FwIter&& last) {
         assert(first != last);
@@ -209,8 +209,8 @@ namespace recti {
      * See http://www.faqs.org/faqs/graphics/algorithms-faq/ Subject 2.03
      *
      * @tparam T
-     * @param S
-     * @param q
+     * @param[in] S
+     * @param[in] q
      * @return true
      * @return false
      */

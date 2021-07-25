@@ -9,7 +9,7 @@
 //  * @brief
 //  *
 //  * @tparam T
-//  * @param pointset
+//  * @param[in] pointset
 //  * @return rpolygon<T>
 //  */
 // template <typename FwIter>
@@ -33,7 +33,7 @@
 //  * @brief
 //  *
 //  * @tparam T
-//  * @param pointset
+//  * @param[in] pointset
 //  * @return rpolygon<T>
 //  */
 // template <typename T>
@@ -47,7 +47,7 @@
 //  * @brief
 //  *
 //  * @tparam T
-//  * @param pointset
+//  * @param[in] pointset
 //  * @return rpolygon<T>
 //  */
 // template <typename T>
@@ -64,7 +64,7 @@
 //  * @brief
 //  *
 //  * @tparam T
-//  * @param pointset
+//  * @param[in] pointset
 //  * @return rpolygon<T>
 //  */
 // // template <typename FwIter>
@@ -90,7 +90,7 @@
 //  * @brief
 //  *
 //  * @tparam T
-//  * @param pointset
+//  * @param[in] pointset
 //  * @return rpolygon<T>
 //  */
 // // template <typename FwIter>
@@ -114,7 +114,7 @@
 //  * @brief
 //  *
 //  * @tparam T
-//  * @param pointset
+//  * @param[in] pointset
 //  * @return rpolygon<T>
 //  */
 // // template <typename T>

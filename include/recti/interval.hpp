@@ -81,7 +81,7 @@ namespace recti {
          * @brief Less than
          *
          * @tparam U
-         * @param rhs
+         * @param[in] rhs
          * @return true
          * @return false
          */

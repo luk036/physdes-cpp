@@ -8,8 +8,8 @@ namespace recti {
     /**
      * @brief van der Corput sequence
      *
-     * @param k
-     * @param base
+     * @param[in] k
+     * @param[in] base
      * @return unsigned
      */
     inline auto vdc(unsigned k, unsigned base = 2, unsigned scale = 10) noexcept -> unsigned {
@@ -38,7 +38,7 @@ namespace recti {
         /**
          * @brief Construct a new vdcorput object
          *
-         * @param base
+         * @param[in] base
          */
         constexpr vdcorput(unsigned base = 2, unsigned scale = 10) noexcept
             : _base{base}, _scale{scale} {}
@@ -56,7 +56,7 @@ namespace recti {
         /**
          * @brief
          *
-         * @param seed
+         * @param[in] seed
          */
         constexpr auto reseed(unsigned seed) noexcept -> void { this->_count = seed; }
     };
@@ -74,7 +74,7 @@ namespace recti {
         /**
          * @brief Construct a new halton object
          *
-         * @param base
+         * @param[in] base
          */
         explicit constexpr halton(const unsigned base[], const unsigned scale[]) noexcept
             : _vdc0(base[0], scale[0]), _vdc1(base[1], scale[1]) {}
@@ -89,7 +89,7 @@ namespace recti {
         /**
          * @brief
          *
-         * @param seed
+         * @param[in] seed
          */
         constexpr auto reseed(unsigned seed) noexcept -> void {
             this->_vdc0.reseed(seed);

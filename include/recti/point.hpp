@@ -156,7 +156,7 @@ namespace recti {
          * @brief Add a vector (translation)
          *
          * @tparam U
-         * @param rhs
+         * @param[in] rhs
          * @return Self&
          */
         template <typename U> constexpr auto operator+=(const vector2<U>& rhs) -> Self& {
@@ -169,7 +169,7 @@ namespace recti {
          * @brief Substract a vector (translation)
          *
          * @tparam U
-         * @param rhs
+         * @param[in] rhs
          * @return Self&
          */
         template <typename U> constexpr auto operator-=(const vector2<U>& rhs) -> Self& {
@@ -207,7 +207,7 @@ namespace recti {
         /**
          * @brief Different
          *
-         * @param rhs
+         * @param[in] rhs
          * @return vector2
          */
         constexpr auto operator-(const Self& rhs) const -> vector2<T1> {

@@ -15,11 +15,7 @@ add_executable(${PROJECT_NAME}Tests ${sources})
 target_link_libraries(
   ${PROJECT_NAME}Tests doctest::doctest ${PROJECT_NAME}::${PROJECT_NAME} ${SPECIFIC_LIBS}
 )
-set_target_properties(${PROJECT_NAME}Tests PROPERTIES CXX_STANDARD 20)
-
-# target_include_directories( ${PROJECT_NAME}Tests PUBLIC
-# $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-# $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}> PRIVATE  ${BOOST_INCLUDE_DIRS} )
+set_target_properties(${PROJECT_NAME}Tests PROPERTIES CXX_STANDARD 17)
 
 # enable compiler warnings
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")

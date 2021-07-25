@@ -1,6 +1,5 @@
 #pragma once
 
-// #include <boost/operators.hpp>
 #include <algorithm>
 #include <gsl/span>
 #include <vector>
@@ -23,7 +22,7 @@ namespace recti {
         /**
          * @brief Construct a new polygon object
          *
-         * @param pointset
+         * @param[in] pointset
          */
         explicit constexpr polygon(gsl::span<const point<T>> pointset) : _origin{pointset.front()} {
             auto it = pointset.begin();
@@ -35,7 +34,7 @@ namespace recti {
         /**
          * @brief
          *
-         * @param rhs
+         * @param[in] rhs
          * @return constexpr point&
          */
         constexpr auto operator+=(const vector2<T>& rhs) -> polygon& {
@@ -63,7 +62,7 @@ namespace recti {
          * @brief
          *
          * @tparam U
-         * @param rhs
+         * @param[in] rhs
          * @return true
          * @return false
          */
@@ -89,8 +88,8 @@ namespace recti {
      *
      * @tparam Stream
      * @tparam T
-     * @param out
-     * @param r
+     * @param[in] out
+     * @param[in] r
      * @return Stream&
      */
     template <class Stream, typename T> auto operator<<(Stream& out, const polygon<T>& r)
@@ -105,8 +104,8 @@ namespace recti {
      * @brief Create a ymono polygon object
      *
      * @tparam FwIter
-     * @param first
-     * @param last
+     * @param[in] first
+     * @param[in] last
      */
     template <typename FwIter, typename Compare>
     inline void create_mono_polygon(FwIter&& first, FwIter&& last, Compare&& dir) {
@@ -126,8 +125,8 @@ namespace recti {
      * @brief Create a xmono polygon object
      *
      * @tparam FwIter
-     * @param first
-     * @param last
+     * @param[in] first
+     * @param[in] last
      */
     template <typename FwIter> inline void create_xmono_polygon(FwIter&& first, FwIter&& last) {
         return create_mono_polygon(first, last, std::less<>());
@@ -137,8 +136,8 @@ namespace recti {
      * @brief Create a ymono polygon object
      *
      * @tparam FwIter
-     * @param first
-     * @param last
+     * @param[in] first
+     * @param[in] last
      */
     template <typename FwIter> inline void create_ymono_polygon(FwIter&& first, FwIter&& last) {
         return create_mono_polygon(first, last, [](const auto& a, const auto& b) {
@@ -160,8 +159,8 @@ namespace recti {
      * See http://www.faqs.org/faqs/graphics/algorithms-faq/ Subject 2.03
      *
      * @tparam T
-     * @param S
-     * @param q
+     * @param[in] S
+     * @param[in] q
      * @return true
      * @return false
      */

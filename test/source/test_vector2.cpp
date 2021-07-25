@@ -8,8 +8,6 @@
 using namespace recti;
 
 TEST_CASE("vector2") {
-    // using boost::multiprecision::cpp_int;
-    // static_assert(Integral<cpp_int>);
     const auto a = 3;
     const auto b = 4;
     const auto c = 5;
