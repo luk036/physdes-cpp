@@ -2,237 +2,13 @@
 
 #include <boost/operators.hpp>
 #include <cassert>
-#include <compare>  // for <=> operators
+// #include <compare>  // for <=> operators
 #include <tuple>    // import std::tie()
 #include <utility>  // import std::move
 
+#include "vector2.hpp"
+
 namespace recti {
-
-    /**
-     * @brief vector2
-     *
-     */
-    template <typename T = int> class vector2 {
-      private:
-        T _x;
-        T _y;
-
-        auto _tie() const { return std::tie(_x, _y); }
-
-      public:
-        /**
-         * @brief
-         *
-         */
-        constexpr vector2(T&& x, T&& y) noexcept : _x{std::move(x)}, _y{std::move(y)} {}
-
-        /**
-         * @brief
-         *
-         */
-        constexpr vector2(const T& x, const T& y) : _x{x}, _y{y} {}
-
-        /**
-         * @brief
-         *
-         * @return constexpr const T&
-         */
-        [[nodiscard]] constexpr auto x() const noexcept -> const T& { return this->_x; }
-
-        /**
-         * @brief
-         *
-         * @return constexpr const T&
-         */
-        [[nodiscard]] constexpr auto y() const noexcept -> const T& { return this->_y; }
-
-        /**
-         * @brief
-         *
-         * @param rhs
-         * @return T
-         */
-        template <typename U>  //
-        [[nodiscard]] constexpr auto cross(const vector2<U>& rhs) const {
-            return this->_x * rhs._y - rhs._x * this->_y;
-        }
-
-        /**
-         * @brief
-         *
-         * @return vector2<T>
-         */
-        constexpr auto operator-() const -> vector2<T> { return vector2<T>(-this->_x, -this->_y); }
-
-        /**
-         * @brief
-         *
-         * @tparam U
-         * @param rhs
-         * @return vector2<T>&
-         */
-        template <typename U> constexpr auto operator+=(const vector2<U>& rhs) -> vector2<T>& {
-            this->_x += rhs.x();
-            this->_y += rhs.y();
-            return *this;
-        }
-
-        /**
-         * @brief
-         *
-         * @tparam U
-         * @param rhs
-         * @return vector2<T>&
-         */
-        template <typename U> constexpr auto operator-=(const vector2<U>& rhs) -> vector2<T>& {
-            this->_x -= rhs.x();
-            this->_y -= rhs.y();
-            return *this;
-        }
-
-        /**
-         * @brief
-         *
-         * @param[in] alpha
-         * @return vector2<T>&
-         */
-        constexpr auto operator*=(const T& alpha) -> vector2<T>& {
-            this->_x *= alpha;
-            this->_y *= alpha;
-            return *this;
-        }
-
-        /**
-         * @brief
-         *
-         * @param[in] alpha
-         * @return vector2<T>&
-         */
-        constexpr auto operator/=(const T& alpha) -> vector2<T>& {
-            this->_x /= alpha;
-            this->_y /= alpha;
-            return *this;
-        }
-
-        /**
-         * @brief
-         *
-         * @tparam U
-         * @param rhs
-         * @return true
-         * @return false
-         */
-        template <typename U>  //
-        constexpr auto operator==(const vector2<U>& rhs) const -> bool {
-            return this->_tie() == rhs._tie();
-        }
-
-        /**
-         * @brief
-         *
-         * @tparam U
-         * @param rhs
-         * @return true
-         * @return false
-         */
-        template <typename U>  //
-        constexpr auto operator!=(const vector2<U>& rhs) const -> bool {
-            return this->_tie() != rhs._tie();
-        }
-
-        /**
-         * @brief
-         *
-         * @param x
-         * @param y
-         * @return true
-         * @return false
-         */
-        friend constexpr auto operator<(const vector2& x, const vector2& y) -> bool {
-            return x._tie() < y._tie();
-        }
-
-        /**
-         * @brief
-         *
-         * @param x
-         * @param y
-         * @return true
-         * @return false
-         */
-        friend constexpr auto operator>(const vector2& x, const vector2& y) -> bool {
-            return y < x;
-        }
-
-        /**
-         * @brief
-         *
-         * @param x
-         * @param y
-         * @return true
-         * @return false
-         */
-        friend constexpr auto operator<=(const vector2& x, const vector2& y) -> bool {
-            return !(y < x);
-        }
-
-        /**
-         * @brief
-         *
-         * @param x
-         * @param y
-         * @return true
-         * @return false
-         */
-        friend constexpr auto operator>=(const vector2& x, const vector2& y) -> bool {
-            return !(x < y);
-        }
-
-        /**
-         * @brief
-         *
-         * @param x
-         * @param y
-         * @return vector2
-         */
-        friend constexpr auto operator+(vector2 x, const vector2& y) -> vector2 { return x += y; }
-
-        /**
-         * @brief
-         *
-         * @param x
-         * @param y
-         * @return vector2
-         */
-        friend constexpr auto operator-(vector2 x, const vector2& y) -> vector2 { return x -= y; }
-
-        /**
-         * @brief
-         *
-         * @param x
-         * @param[in] alpha
-         * @return vector2
-         */
-        friend constexpr auto operator*(vector2 x, const T& alpha) -> vector2 { return x *= alpha; }
-
-        /**
-         * @brief
-         *
-         * @param[in] alpha
-         * @param x
-         * @return vector2
-         */
-        friend constexpr auto operator*(const T& alpha, vector2 x) -> vector2 { return x *= alpha; }
-
-        /**
-         * @brief
-         *
-         * @param x
-         * @param[in] alpha
-         * @return vector2
-         */
-        friend constexpr auto operator/(vector2 x, const T& alpha) -> vector2 { return x /= alpha; }
-    };
 
 #pragma pack(push, 1)
     /**
@@ -256,16 +32,16 @@ namespace recti {
         /**
          * @brief Construct a new point object
          *
-         * @param x
-         * @param y
+         * @param[in] x
+         * @param[in] y
          */
         constexpr point(T1&& x, T2&& y) noexcept : _x{std::move(x)}, _y{std::move(y)} {}
 
         /**
          * @brief Construct a new point object
          *
-         * @param x
-         * @param y
+         * @param[in] x
+         * @param[in] y
          */
         constexpr point(const T1& x, const T2& y) : _x{x}, _y{y} {}
 
@@ -283,74 +59,60 @@ namespace recti {
          */
         [[nodiscard]] constexpr auto y() const noexcept -> const T2& { return this->_y; }
 
-        /**
-         * @brief
-         *
-         * @param rhs
-         * @return constexpr point&
+        /** @name Comparison operators
+         *  definie ==, !=, <, >, <=, >=.
          */
-        constexpr auto operator+=(const vector2<T1>& rhs) -> Self& {
-            this->_x += rhs.x();
-            this->_y += rhs.y();
-            return *this;
-        }
+        ///@{
 
         /**
-         * @brief
-         *
-         * @param rhs
-         * @return constexpr point&
-         */
-        constexpr auto operator-=(const vector2<T1>& rhs) -> Self& {
-            this->_x -= rhs.x();
-            this->_y -= rhs.y();
-            return *this;
-        }
-
-        /**
-         * @brief
-         *
-         * @param rhs
-         * @return vector2<T1>
-         */
-        constexpr auto operator-(const Self& rhs) const -> vector2<T1> {
-            return {this->x() - rhs.x(), this->y() - rhs.y()};
-        }
-
-        template <typename U1, typename U2>
-        constexpr auto operator==(const point<U1, U2>& rhs) const {
-            return this->_tie() == rhs._tie();
-        }
-
-        template <typename U1, typename U2>
-        constexpr auto operator<(const point<U1, U2>& rhs) const {
-            return this->_tie() < rhs._tie();
-        }
-
-        // constexpr auto operator<=>(const Self& rhs) const = default;
-
-        // /**
-        //  * @brief
-        //  *
-        //  * @param x
-        //  * @param y
-        //  * @return true
-        //  * @return false
-        //  */
-        // friend auto operator!=(const Self& x, const Self& y) -> bool { return !(x == y); }
-
-        template <typename U1, typename U2>
-        friend constexpr auto operator!=(const Self& x, const point<U1, U2>& y) -> bool {
-            return !(x == y);
-        }
-
-        /**
-         * @brief
+         * @brief Equal to
          *
          * @tparam U1
          * @tparam U2
-         * @param x
-         * @param y
+         * @param[in] rhs
+         * @return true
+         * @return false
+         */
+        template <typename U1, typename U2>
+        constexpr auto operator==(const point<U1, U2>& rhs) const -> bool {
+            return this->_tie() == rhs._tie();
+        }
+
+        /**
+         * @brief Less than
+         *
+         * @tparam U1
+         * @tparam U2
+         * @param[in] rhs
+         * @return true
+         * @return false
+         */
+        template <typename U1, typename U2> constexpr auto operator<(const point<U1, U2>& rhs) const
+            -> bool {
+            return this->_tie() < rhs._tie();
+        }
+
+        /**
+         * @brief Not equal to
+         *
+         * @tparam U1
+         * @tparam U2
+         * @param[in] rhs
+         * @return true
+         * @return false
+         */
+        template <typename U1, typename U2>
+        constexpr auto operator!=(const point<U1, U2>& rhs) const -> bool {
+            return !(*this == rhs);
+        }
+
+        /**
+         * @brief Greater than
+         *
+         * @tparam U1
+         * @tparam U2
+         * @param[in] x
+         * @param[in] y
          * @return true
          * @return false
          */
@@ -359,16 +121,26 @@ namespace recti {
             return y < x;
         }
 
+        /**
+         * @brief Less than or equal to
+         *
+         * @tparam U1
+         * @tparam U2
+         * @param[in] x
+         * @param[in] y
+         * @return true
+         * @return false
+         */
         template <typename U1, typename U2>
         friend constexpr auto operator<=(const Self& x, const point<U1, U2>& y) -> bool {
             return !(y < x);
         }
 
         /**
-         * @brief
+         * @brief Greater than or equal to
          *
-         * @param x
-         * @param y
+         * @param[in] x
+         * @param[in] y
          * @return true
          * @return false
          */
@@ -377,31 +149,81 @@ namespace recti {
             return !(x < y);
         }
 
+        ///@}
+
+        /** @name Arithmetic operators
+         *  definie +, -, *, /, +=, -=, *=, /=, etc.
+         */
+        ///@{
+
         /**
-         * @brief
+         * @brief Add a vector (translation)
+         *
+         * @tparam U
+         * @param rhs
+         * @return Self&
+         */
+        template <typename U> constexpr auto operator+=(const vector2<U>& rhs) -> Self& {
+            this->_x += rhs.x();
+            this->_y += rhs.y();
+            return *this;
+        }
+
+        /**
+         * @brief Substract a vector (translation)
+         *
+         * @tparam U
+         * @param rhs
+         * @return Self&
+         */
+        template <typename U> constexpr auto operator-=(const vector2<U>& rhs) -> Self& {
+            this->_x -= rhs.x();
+            this->_y -= rhs.y();
+            return *this;
+        }
+
+        /**
+         * @brief Different
+         *
+         * @param rhs
+         * @return vector2
+         */
+        constexpr auto operator-(const Self& rhs) const -> vector2<T1> {
+            return {this->x() - rhs.x(), this->y() - rhs.y()};
+        }
+
+        /**
+         * @brief flip_xy according to x-y diagonal line
          *
          * @return point<T2, T1>
          */
-        [[nodiscard]] constexpr auto flip() const -> point<T2, T1> {
+        [[nodiscard]] constexpr auto flip_xy() const -> point<T2, T1> {
             return {this->y(), this->x()};
         }
 
-        // /**
-        //  * @brief
-        //  *
-        //  * @tparam Stream
-        //  * @tparam T1
-        //  * @tparam T2
-        //  * @param out
-        //  * @param p
-        //  * @return Stream&
-        //  */
-        // template <class Stream> friend auto operator<<(Stream& out, const point& p) -> Stream& {
-        //     out << '(' << p.x() << ", " << p.y() << ')';
-        //     return out;
-        // }
+        /**
+         * @brief flip according to y-axis
+         *
+         * @return point<T2, T1>
+         */
+        [[nodiscard]] constexpr auto flip_y() const -> point<T1, T2> {
+            return {-this->x(), this->y()};
+        }
     };
 #pragma pack(pop)
+
+    /**
+     * @brief
+     *
+     * @tparam Stream
+     * @tparam T1
+     * @tparam T2
+     * @param[in] out
+     * @param[in] p
+     * @return Stream&
+     */
+    template <typename T1, typename T2, class Stream>
+    auto operator<<(Stream& out, const point<T1, T2>& p) -> Stream&;
 
 /**
  * @brief 2D point
@@ -476,8 +298,8 @@ namespace recti {
         /**
          * @brief Construct a new interval object
          *
-         * @param lower
-         * @param upper
+         * @param[in] lower
+         * @param[in] upper
          */
         constexpr interval(T&& lower, T&& upper) noexcept
             : _lower{std::move(lower)}, _upper{std::move(upper)} {
@@ -487,8 +309,8 @@ namespace recti {
         /**
          * @brief Construct a new interval object
          *
-         * @param lower
-         * @param upper
+         * @param[in] lower
+         * @param[in] upper
          */
         constexpr interval(const T& lower, const T& upper) : _lower{lower}, _upper{upper} {
             assert(!(_upper < _lower));
@@ -518,7 +340,7 @@ namespace recti {
         /**
          * @brief
          *
-         * @param rhs
+         * @param[in] rhs
          * @return true
          * @return false
          */
@@ -529,7 +351,7 @@ namespace recti {
         /**
          * @brief
          *
-         * @param rhs
+         * @param[in] rhs
          * @return true
          * @return false
          */
@@ -541,19 +363,19 @@ namespace recti {
          * @brief
          *
          * @tparam U
-         * @param a
+         * @param[in] a
          * @return true
          * @return false
          */
-        template <typename U> [[nodiscard]] constexpr auto contains(const interval<U>& a) const
-            -> bool {
+        template <typename U> //
+        [[nodiscard]] constexpr auto contains(const interval<U>& a) const -> bool {
             return !(a.lower() < this->lower() || this->upper() < a.upper());
         }
 
         /**
          * @brief
          *
-         * @param x
+         * @param[in] x
          * @return true
          * @return false
          */
@@ -562,6 +384,18 @@ namespace recti {
         }
     };
 #pragma pack(pop)
+
+    /**
+     * @brief
+     *
+     * @tparam Stream
+     * @tparam T
+     * @param[in] out
+     * @param[in] p
+     * @return Stream&
+     */
+    template <typename T, class Stream> auto operator<<(Stream& out, const interval<T>& p)
+        -> Stream&;
 
 /**
  * @brief Rectangle (Rectilinear)
@@ -575,8 +409,8 @@ namespace recti {
         /**
          * @brief Construct a new rectangle object
          *
-         * @param x
-         * @param y
+         * @param[in] x
+         * @param[in] y
          */
         constexpr rectangle(interval<T>&& x, interval<T>&& y) noexcept
             : point<interval<T>>{std::move(x), std::move(y)} {}
@@ -584,8 +418,8 @@ namespace recti {
         /**
          * @brief Construct a new rectangle object
          *
-         * @param x
-         * @param y
+         * @param[in] x
+         * @param[in] y
          */
         constexpr rectangle(const interval<T>& x, const interval<T>& y)
             : point<interval<T>>{x, y} {}
@@ -593,7 +427,7 @@ namespace recti {
         /**
          * @brief
          *
-         * @param rhs
+         * @param[in] rhs
          * @return true
          * @return false
          */
@@ -632,8 +466,8 @@ namespace recti {
         //  *
         //  * @tparam Stream
         //  * @tparam T
-        //  * @param out
-        //  * @param r
+        //  * @param[in] out
+        //  * @param[in] r
         //  * @return Stream&
         //  */
         // template <class Stream> friend auto operator<<(Stream& out, const rectangle& r) ->
@@ -655,8 +489,8 @@ namespace recti {
         /**
          * @brief Construct a new hsegment object
          *
-         * @param x
-         * @param y
+         * @param[in] x
+         * @param[in] y
          */
         constexpr hsegment(interval<T>&& x, T&& y) noexcept
             : point<interval<T>, T>{std::move(x), std::move(y)} {}
@@ -664,8 +498,8 @@ namespace recti {
         /**
          * @brief Construct a new hsegment object
          *
-         * @param x
-         * @param y
+         * @param[in] x
+         * @param[in] y
          */
         constexpr hsegment(const interval<T>& x, const T& y) : point<interval<T>, T>{x, y} {}
 
@@ -673,7 +507,7 @@ namespace recti {
          * @brief
          *
          * @tparam U
-         * @param rhs
+         * @param[in] rhs
          * @return true
          * @return false
          */
@@ -694,8 +528,8 @@ namespace recti {
         /**
          * @brief Construct a new vsegment object
          *
-         * @param x
-         * @param y
+         * @param[in] x
+         * @param[in] y
          */
         constexpr vsegment(T&& x, interval<T>&& y) noexcept
             : point<T, interval<T>>{std::move(x), std::move(y)} {}
@@ -703,8 +537,8 @@ namespace recti {
         /**
          * @brief Construct a new vsegment object
          *
-         * @param x
-         * @param y
+         * @param[in] x
+         * @param[in] y
          */
         constexpr vsegment(const T& x, const interval<T>& y) : point<T, interval<T>>{x, y} {}
 
@@ -712,7 +546,7 @@ namespace recti {
          * @brief
          *
          * @tparam U
-         * @param rhs
+         * @param[in] rhs
          * @return true
          * @return false
          */
