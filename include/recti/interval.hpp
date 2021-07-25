@@ -78,19 +78,6 @@ namespace recti {
         }
 
         /**
-         * @brief Less than
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U>  //
-        constexpr auto operator<(const interval<U>& rhs) const -> bool {
-            return this->upper() < rhs.lower();
-        }
-
-        /**
          * @brief Not equal to
          *
          * @tparam U
@@ -104,6 +91,31 @@ namespace recti {
         }
 
         /**
+         * @brief Less than
+         *
+         * @tparam U
+         * @param[in] rhs
+         * @return true
+         * @return false
+         */
+        template <typename U>  //
+        constexpr auto operator<(const U& rhs) const -> bool {
+            return this->upper() < rhs;
+        }
+
+        /**
+         * @brief
+         *
+         * @param lhs
+         * @param rhs
+         * @return true
+         * @return false
+         */
+        friend constexpr auto operator<(const T& lhs, const interval& rhs) -> bool {
+            return lhs < rhs.lower();
+        }
+
+        /**
          * @brief Greater than
          *
          * @tparam U
@@ -112,8 +124,20 @@ namespace recti {
          * @return false
          */
         template <typename U>  //
-        constexpr auto operator>(const interval<U>& rhs) const -> bool {
+        constexpr auto operator>(const U& rhs) const -> bool {
             return rhs < *this;
+        }
+
+        /**
+         * @brief
+         *
+         * @param lhs
+         * @param rhs
+         * @return true
+         * @return false
+         */
+        friend constexpr auto operator>(const T& lhs, const interval& rhs) -> bool {
+            return rhs < lhs;
         }
 
         /**
@@ -125,8 +149,21 @@ namespace recti {
          * @return false
          */
         template <typename U>  //
-        constexpr auto operator<=(const interval<U>& rhs) const -> bool {
+        constexpr auto operator<=(const U& rhs) const -> bool {
             return !(rhs < *this);
+        }
+
+        /**
+         * @brief
+         *
+         * @param lhs
+         * @param rhs
+         * @return true
+         * @return false
+         */
+        friend constexpr auto operator<=(const T& lhs, const interval& rhs) -> bool {
+            return !(rhs < lhs);
+            ;
         }
 
         /**
@@ -138,8 +175,20 @@ namespace recti {
          * @return false
          */
         template <typename U>  //
-        constexpr auto operator>=(const interval<U>& rhs) const -> bool {
+        constexpr auto operator>=(const U& rhs) const -> bool {
             return !(*this < rhs);
+        }
+
+        /**
+         * @brief
+         *
+         * @param lhs
+         * @param rhs
+         * @return true
+         * @return false
+         */
+        friend constexpr auto operator>=(const T& lhs, const interval& rhs) -> bool {
+            return !(lhs < rhs);
         }
 
         ///@}
@@ -160,7 +209,7 @@ namespace recti {
          * @return false
          */
         template <typename U>  //
-        [[nodiscard]] constexpr auto intersects(const interval<U>& a) const -> bool {
+        [[nodiscard]] constexpr auto overlaps(const U& a) const -> bool {
             return !(a < *this || *this < a);
         }
 
@@ -174,18 +223,18 @@ namespace recti {
          */
         template <typename U>  //
         [[nodiscard]] constexpr auto contains(const interval<U>& a) const -> bool {
-            return !(a.lower() < this->lower() || this->upper() < a.upper());
+            return this->lower() <= a.lower() && a.upper() <= this->upper();
         }
 
         /**
-         * @brief
+         * @brief contains
          *
          * @param[in] x
          * @return true
          * @return false
          */
         [[nodiscard]] constexpr auto contains(const T& a) const -> bool {
-            return !(a < this->lower() || this->upper() < a);
+            return this->lower() <= a && a <= this->upper();
         }
     };
 #pragma pack(pop)

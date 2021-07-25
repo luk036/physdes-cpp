@@ -49,47 +49,51 @@ TEST_CASE("Interval test") {
     CHECK(a.contains(8));
     CHECK(a.contains(b));
     CHECK(!b.contains(a));
+    CHECK(a.overlaps(b));
+    CHECK(b.overlaps(a));
 }
 
 TEST_CASE("Rectangle test") {
     auto xrng1 = interval{4, 8};
     auto yrng1 = interval{5, 7};
     auto r1 = rectangle{xrng1, yrng1};
-    // auto xrng2 = interval {5, 7};
-    // auto yrng2 = interval {6, 6};
-    // auto r2 = rectangle {xrng2, yrng2};
+    auto xrng2 = interval{5, 7};
+    auto yrng2 = interval{6, 6};
+    auto r2 = rectangle{xrng2, yrng2};
     auto p = point{7, 6};
 
     CHECK(r1.contains(p));
-    // CHECK(r1.contains(r2));
+    CHECK(r1.contains(r2));
+    CHECK(r1.overlaps(r2));
 }
 
-TEST_CASE("Rectilinear test") {
+TEST_CASE("Segment test") {
+    auto xrng1 = interval{4, 8};
+    auto yrng1 = interval{5, 7};
+    auto s1 = hsegment{xrng1, 6};
+    auto s2 = vsegment{5, yrng1};
+
+    CHECK(s1.overlaps(s2));
+}
+
+TEST_CASE("Interval overlapping test") {
     constexpr auto N = 20;
-    auto lst = std::list<rectangle<int>>{};
+    auto lst = std::list<interval<int>>{};
 
     for (auto i = 0; i != N; ++i) {
         int ii = i * 100;
-        for (auto j = 0; j != N; ++j) {
-            int jj = j * 100;
-            // auto xrng = interval {ii, ii + randint(50, 110)};
-            // auto yrng = interval {jj, jj + randint(50, 110)};
-            auto xrng = interval{ii, ii + std::rand() % 100};
-            auto yrng = interval{jj, jj + std::rand() % 100};
-            auto r = rectangle{xrng, yrng};
-            lst.push_back(r);
-        }
+        auto intvl = interval{ii, ii + std::rand() % 100};
+        lst.push_back(intvl);
     }
 
-    std::set<rectangle<int>> S;   // set of maximal non-overlapped rectangles
-    std::list<rectangle<int>> L;  // list of the removed rectangles
+    std::set<interval<int>> S;   // set of maximal non-overlapped intervals
+    std::list<interval<int>> L;  // list of the removed intervals
 
-    for (const auto& r : lst) {
-        auto search = S.find(r);
-        if (search != S.end()) {
-            L.push_back(r);
+    for (const auto& intvl : lst) {
+        if (S.find(intvl) != S.end()) {
+            L.push_back(intvl);
         } else {
-            S.insert(r);
+            S.insert(intvl);
         }
     }
 

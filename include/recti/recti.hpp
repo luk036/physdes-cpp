@@ -37,6 +37,20 @@ namespace recti {
         /**
          * @brief
          *
+         * @tparam U1
+         * @tparam U2
+         * @param rhs
+         * @return true
+         * @return false
+         */
+        template <typename U1, typename U2>
+        [[nodiscard]] constexpr auto overlaps(const point<U1, U2>& rhs) const -> bool {
+            return this->x().overlaps(rhs.x()) && this->y().overlaps(rhs.y());
+        }
+
+        /**
+         * @brief
+         *
          * @param[in] rhs
          * @return true
          * @return false
@@ -70,31 +84,16 @@ namespace recti {
          * @return constexpr T
          */
         [[nodiscard]] constexpr auto area() const -> T { return this->x().len() * this->y().len(); }
-
-        // /**
-        //  * @brief
-        //  *
-        //  * @tparam Stream
-        //  * @tparam T
-        //  * @param[in] out
-        //  * @param[in] r
-        //  * @return Stream&
-        //  */
-        // template <class Stream> friend auto operator<<(Stream& out, const rectangle& r) ->
-        // Stream& {
-        //     out << r.lower() << " rectangle " << r.upper();
-        //     return out;
-        // }
     };
 #pragma pack(pop)
 
-/**
- * @brief Horizontal Line Segment
- *
- * @tparam T
- * @todo pack
- */
 #pragma pack(push, 1)
+    /**
+     * @brief Horizontal Line Segment
+     *
+     * @tparam T
+     * @todo pack
+     */
     template <typename T> struct hsegment : point<interval<T>, T> {
         /**
          * @brief Construct a new hsegment object
@@ -116,6 +115,20 @@ namespace recti {
         /**
          * @brief
          *
+         * @tparam U1
+         * @tparam U2
+         * @param rhs
+         * @return true
+         * @return false
+         */
+        template <typename U1, typename U2>
+        [[nodiscard]] constexpr auto overlaps(const point<U1, U2>& rhs) const -> bool {
+            return this->x().overlaps(rhs.x()) && rhs.y().overlaps(this->y());
+        }
+
+        /**
+         * @brief
+         *
          * @tparam U
          * @param[in] rhs
          * @return true
@@ -127,13 +140,13 @@ namespace recti {
     };
 #pragma pack(pop)
 
-/**
- * @brief vsegment Line Segment
- *
- * @tparam T
- * @todo pack
- */
 #pragma pack(push, 1)
+    /**
+     * @brief vsegment Line Segment
+     *
+     * @tparam T
+     * @todo pack
+     */
     template <typename T> struct vsegment : point<T, interval<T>> {
         /**
          * @brief Construct a new vsegment object
@@ -151,6 +164,20 @@ namespace recti {
          * @param[in] y
          */
         constexpr vsegment(const T& x, const interval<T>& y) : point<T, interval<T>>{x, y} {}
+
+        /**
+         * @brief
+         *
+         * @tparam U1
+         * @tparam U2
+         * @param rhs
+         * @return true
+         * @return false
+         */
+        template <typename U1, typename U2>
+        [[nodiscard]] constexpr auto overlaps(const point<U1, U2>& rhs) const -> bool {
+            return rhs.x().overlaps(this->x()) && this->y().overlaps(rhs.y());
+        }
 
         /**
          * @brief
