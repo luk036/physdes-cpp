@@ -2,7 +2,7 @@
 
 #include <tuple>    // import std::tie()
 #include <utility>  // import std::move
-
+#include <type_traits> // import std::is_scalar_v
 #include "vector2.hpp"
 
 namespace recti {
@@ -231,6 +231,107 @@ namespace recti {
         [[nodiscard]] constexpr auto flip_y() const -> point<T1, T2> {
             return {-this->x(), this->y()};
         }
+
+        /**
+         * @brief
+         *
+         * @tparam U
+         * @param[in] a
+         * @return true
+         * @return false
+         */
+        template <typename U1, typename U2>  //
+        [[nodiscard]] constexpr auto overlaps(const point<U1, U2>& a) const -> bool {
+            if constexpr (std::is_scalar_v<T1>) {
+                if constexpr (std::is_scalar_v<U1>) {
+                    if (this->x() != a.x()) return false;
+                }
+                else {
+                    if (!a.x().overlaps(this->x())) return false;
+                }
+            } else {
+                if (!this->x().overlaps(a.x())) return false;
+            }
+
+            if constexpr (std::is_scalar_v<T2>) {
+                if constexpr (std::is_scalar_v<U2>) {
+                    if (this->y() != a.y()) return false;
+                }
+                else {
+                    if (!a.y().overlaps(this->y())) return false;
+                }
+            } else {
+                if (!this->y().overlaps(a.y())) return false;
+            }
+
+            return true;
+        }
+
+        /**
+         * @brief
+         *
+         * @tparam U
+         * @param[in] a
+         * @return true
+         * @return false
+         */
+        template <typename U1, typename U2>  //
+        [[nodiscard]] constexpr auto contains(const point<U1, U2>& a) const -> bool {
+            if constexpr (std::is_scalar_v<T1>) {
+                if constexpr (std::is_scalar_v<U1>) {
+                    if constexpr (std::is_scalar_v<T2>) {
+                        if constexpr (std::is_scalar_v<U2>) {
+                            if (this->x() != a.x()) return false;
+                            if (this->y() != a.y()) return false;
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    } else {
+                        if (this->x() != a.x()) return false;
+                        if (!this->y().contains(a.y())) return false;
+                        return true;
+                    }
+                }
+                else {
+                    return false;
+                }
+            } else {
+                if constexpr (std::is_scalar_v<U1>) {
+                    if constexpr (std::is_scalar_v<T2>) {
+                        if constexpr (std::is_scalar_v<U2>) {
+                            if (!this->x().contains(a.x())) return false;
+                            if (this->y() != a.y()) return false;
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    } else {
+                        if (!this->x().contains(a.x())) return false;
+                        if (!this->y().contains(a.y())) return false;
+                        return true;
+                    }
+                }
+                else {
+                    if constexpr (std::is_scalar_v<T2>) {
+                        if constexpr (std::is_scalar_v<U2>) {
+                            if (!this->x().contains(a.x())) return false;
+                            if (this->y() != a.y()) return false;
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    } else {
+                        if (!this->x().contains(a.x())) return false;
+                        if (!this->y().contains(a.y())) return false;
+                        return true;
+                    }
+                }
+            }
+        }
     };
 #pragma pack(pop)
 
@@ -247,13 +348,14 @@ namespace recti {
     template <typename T1, typename T2, class Stream>
     auto operator<<(Stream& out, const point<T1, T2>& p) -> Stream&;
 
+
+#pragma pack(push, 1)
 /**
  * @brief 2D point
  *
  * @tparam T1
  * @tparam T2
  */
-#pragma pack(push, 1)
     template <typename T1, typename T2 = T1> class dualpoint : public point<T1, T2> {
       public:
         /**

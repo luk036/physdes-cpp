@@ -194,9 +194,75 @@ namespace recti {
         ///@}
 
         /** @name Arithmetic operators
-         *  definie +, -, *, /, +=, -=, *=, /=, etc.
+         *  definie +, -, *, /, +=, -=, +=, /=, etc.
          */
         ///@{
+
+        /**
+         * @brief Negate
+         *
+         * @return interval<T>
+         */
+        constexpr auto operator-() const -> interval<T> {
+            return interval<T>(-this->_upper, -this->_lower); 
+        }
+
+        /**
+         * @brief Add
+         *
+         * @param[in] alpha
+         * @return interval<T>&
+         */
+        constexpr auto operator+=(const T& alpha) -> interval<T>& {
+            this->_lower += alpha;
+            this->_upper += alpha;
+            return *this;
+        }
+
+        /**
+         * @brief Add by a scalar
+         *
+         * @param[in] x
+         * @param[in] alpha
+         * @return interval<T>
+         */
+        friend constexpr auto operator+(interval<T> x, const T& alpha) -> interval<T> {
+            return x += alpha;
+        }
+
+        /**
+         * @brief Add (by a scalar)
+         *
+         * @param[in] alpha
+         * @param[in] x
+         * @return interval<T>
+         */
+        friend constexpr auto operator+(const T& alpha, interval<T> x) -> interval<T> {
+            return x += alpha;
+        }
+
+        /**
+         * @brief Substract
+         *
+         * @param[in] alpha
+         * @return interval<T>&
+         */
+        constexpr auto operator-=(const T& alpha) -> interval<T>& {
+            this->_lower -= alpha;
+            this->_upper -= alpha;
+            return *this;
+        }
+
+        /**
+         * @brief Subtract by a scalar
+         *
+         * @param[in] x
+         * @param[in] alpha
+         * @return interval<T>
+         */
+        friend constexpr auto operator-(interval<T> x, const T& alpha) -> interval<T> {
+            return x -= alpha;
+        }
 
         ///@}
 

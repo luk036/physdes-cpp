@@ -37,32 +37,6 @@ namespace recti {
         /**
          * @brief
          *
-         * @tparam U1
-         * @tparam U2
-         * @param rhs
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2>
-        [[nodiscard]] constexpr auto overlaps(const point<U1, U2>& rhs) const -> bool {
-            return this->x().overlaps(rhs.x()) && this->y().overlaps(rhs.y());
-        }
-
-        /**
-         * @brief
-         *
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2>
-        [[nodiscard]] constexpr auto contains(const point<U1, U2>& rhs) const -> bool {
-            return this->x().contains(rhs.x()) && this->y().contains(rhs.y());
-        }
-
-        /**
-         * @brief
-         *
          * @return point<T>
          */
         [[nodiscard]] constexpr auto lower() const -> point<T> {
@@ -111,34 +85,9 @@ namespace recti {
          * @param[in] y
          */
         constexpr hsegment(const interval<T>& x, const T& y) : point<interval<T>, T>{x, y} {}
-
-        /**
-         * @brief
-         *
-         * @tparam U1
-         * @tparam U2
-         * @param rhs
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2>
-        [[nodiscard]] constexpr auto overlaps(const point<U1, U2>& rhs) const -> bool {
-            return this->x().overlaps(rhs.x()) && rhs.y().overlaps(this->y());
-        }
-
-        /**
-         * @brief
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U> constexpr auto contains(const point<U>& rhs) const -> bool {
-            return this->y() == rhs.y() && this->x().contains(rhs.x());
-        }
     };
 #pragma pack(pop)
+
 
 #pragma pack(push, 1)
     /**
@@ -164,32 +113,6 @@ namespace recti {
          * @param[in] y
          */
         constexpr vsegment(const T& x, const interval<T>& y) : point<T, interval<T>>{x, y} {}
-
-        /**
-         * @brief
-         *
-         * @tparam U1
-         * @tparam U2
-         * @param rhs
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2>
-        [[nodiscard]] constexpr auto overlaps(const point<U1, U2>& rhs) const -> bool {
-            return rhs.x().overlaps(this->x()) && this->y().overlaps(rhs.y());
-        }
-
-        /**
-         * @brief
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U> constexpr auto contains(const point<U>& rhs) const -> bool {
-            return this->x() == rhs.x() && this->y().contains(rhs.y());
-        }
     };
 #pragma pack(pop)
 

@@ -32,6 +32,7 @@ TEST_CASE("Point test") {
 TEST_CASE("Interval test") {
     auto a = interval{4, 8};
     auto b = interval{5, 6};
+    auto v = 3;
 
     CHECK(!(a < b));
     CHECK(!(b < a));
@@ -44,6 +45,8 @@ TEST_CASE("Interval test") {
 
     CHECK(!(b == a));
     CHECK(b != a);
+
+    CHECK((a - v) + v == a);
 
     CHECK(a.contains(4));
     CHECK(a.contains(8));
@@ -61,6 +64,10 @@ TEST_CASE("Rectangle test") {
     auto yrng2 = interval{6, 6};
     auto r2 = rectangle{xrng2, yrng2};
     auto p = point{7, 6};
+    auto v = vector2{5, 6};
+
+    CHECK(r1 != r2);
+    CHECK((r1 - v) + v == r1);
 
     CHECK(r1.contains(p));
     CHECK(r1.contains(r2));
