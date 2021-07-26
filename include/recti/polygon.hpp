@@ -49,10 +49,10 @@ namespace recti {
          */
         [[nodiscard]] constexpr auto signed_area_x2() const -> T {
             auto&& vs = this->_vecs;
-            auto n = int(vs.size());
+            auto n = vs.size();
             assert(n >= 2);
             auto res = vs[0].x() * vs[1].y() - vs[n - 1].x() * vs[n - 2].y();
-            for (auto i = 1; i != n - 1; ++i) {
+            for (auto i = 1U; i != n - 1; ++i) {
                 res += vs[i].x() * (vs[i + 1].y() - vs[i - 1].y());
             }
             return res;

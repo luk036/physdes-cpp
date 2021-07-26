@@ -13,7 +13,7 @@ namespace recti {
      * @return unsigned
      */
     inline auto vdc(unsigned k, unsigned base = 2, unsigned scale = 10) noexcept -> unsigned {
-        auto vdc = 0;
+        auto vdc = 0U;
         auto factor = unsigned(std::pow(base, scale));
         while (k != 0) {
             factor /= base;

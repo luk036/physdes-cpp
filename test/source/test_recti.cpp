@@ -3,6 +3,7 @@
 // #include <iostream>
 #include <cstdlib>
 #include <list>
+#include <recti/halton_int.hpp>
 #include <recti/recti.hpp>
 #include <set>
 
@@ -66,23 +67,23 @@ TEST_CASE("Rectangle test") {
 
 TEST_CASE("Rectilinear test") {
     constexpr auto N = 20;
-    auto lst = std::list<rectangle<int>>{};
+    auto lst = std::list<rectangle<unsigned int>>{};
+    auto hgenX = vdcorput(3, 7);
+    auto hgenY = vdcorput(2, 11);
 
     for (auto i = 0; i != N; ++i) {
-        int ii = i * 100;
         for (auto j = 0; j != N; ++j) {
-            int jj = j * 100;
-            // auto xrng = interval {ii, ii + randint(50, 110)};
-            // auto yrng = interval {jj, jj + randint(50, 110)};
-            auto xrng = interval{ii, ii + std::rand() % 100};
-            auto yrng = interval{jj, jj + std::rand() % 100};
+            auto x = hgenX();
+            auto y = hgenY();
+            auto xrng = interval{x, x + 100};
+            auto yrng = interval{y, y + 100};
             auto r = rectangle{xrng, yrng};
             lst.push_back(r);
         }
     }
 
-    std::set<rectangle<int>> S;   // set of maximal non-overlapped rectangles
-    std::list<rectangle<int>> L;  // list of the removed rectangles
+    std::set<rectangle<unsigned int>> S;   // set of maximal non-overlapped rectangles
+    std::list<rectangle<unsigned int>> L;  // list of the removed rectangles
 
     for (const auto& r : lst) {
         auto search = S.find(r);
