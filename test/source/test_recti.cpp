@@ -33,6 +33,7 @@ TEST_CASE("Point test") {
 TEST_CASE("Interval test") {
     auto a = interval{4, 8};
     auto b = interval{5, 6};
+    auto v = 3;
 
     CHECK(!(a < b));
     CHECK(!(b < a));
@@ -46,26 +47,44 @@ TEST_CASE("Interval test") {
     CHECK(!(b == a));
     CHECK(b != a);
 
+    CHECK((a - v) + v == a);
+
     CHECK(a.contains(4));
     CHECK(a.contains(8));
     CHECK(a.contains(b));
     CHECK(!b.contains(a));
+    CHECK(a.overlaps(b));
+    CHECK(b.overlaps(a));
 }
 
 TEST_CASE("Rectangle test") {
     auto xrng1 = interval{4, 8};
     auto yrng1 = interval{5, 7};
     auto r1 = rectangle{xrng1, yrng1};
-    // auto xrng2 = interval {5, 7};
-    // auto yrng2 = interval {6, 6};
-    // auto r2 = rectangle {xrng2, yrng2};
+    auto xrng2 = interval{5, 7};
+    auto yrng2 = interval{6, 6};
+    auto r2 = rectangle{xrng2, yrng2};
     auto p = point{7, 6};
+    auto v = vector2{5, 6};
+
+    CHECK(r1 != r2);
+    CHECK((r1 - v) + v == r1);
 
     CHECK(r1.contains(p));
-    // CHECK(r1.contains(r2));
+    CHECK(r1.contains(r2));
+    CHECK(r1.overlaps(r2));
 }
 
-TEST_CASE("Rectilinear test") {
+TEST_CASE("Segment test") {
+    auto xrng1 = interval{4, 8};
+    auto yrng1 = interval{5, 7};
+    auto s1 = hsegment{xrng1, 6};
+    auto s2 = vsegment{5, yrng1};
+
+    CHECK(s1.overlaps(s2));
+}
+
+TEST_CASE("Interval overlapping test") {
     constexpr auto N = 20;
     auto lst = std::list<rectangle<unsigned int>>{};
     auto hgenX = vdcorput(3, 7);
@@ -85,12 +104,11 @@ TEST_CASE("Rectilinear test") {
     std::set<rectangle<unsigned int>> S;   // set of maximal non-overlapped rectangles
     std::list<rectangle<unsigned int>> L;  // list of the removed rectangles
 
-    for (const auto& r : lst) {
-        auto search = S.find(r);
-        if (search != S.end()) {
-            L.push_back(r);
+    for (const auto& intvl : lst) {
+        if (S.find(intvl) != S.end()) {
+            L.push_back(intvl);
         } else {
-            S.insert(r);
+            S.insert(intvl);
         }
     }
 

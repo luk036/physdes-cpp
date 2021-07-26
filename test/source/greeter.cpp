@@ -4,13 +4,6 @@
 
 #include <string>
 
-TEST_CASE("undefined behavior") {
-    int a = 125;
-    int c = 32;
-    [[maybe_unused]] int b = a >> c;  // see if your tool can catch the problem
-    // std::cout << "125 >> 32 = " << b << "\n";
-}
-
 TEST_CASE("Recti") {
     using namespace recti;
 

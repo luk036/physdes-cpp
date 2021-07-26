@@ -18,16 +18,27 @@ namespace recti {
 
       public:
         /**
-         * @brief
+         * @brief Construct a new vector2 object
          *
+         * @param x
+         * @param y
          */
         constexpr vector2(T&& x, T&& y) noexcept : _x{std::move(x)}, _y{std::move(y)} {}
 
         /**
-         * @brief
+         * @brief Construct a new vector2 object
          *
+         * @param x
+         * @param y
          */
         constexpr vector2(const T& x, const T& y) : _x{x}, _y{y} {}
+
+        /**
+         * @brief Construct a new vector2 object
+         *
+         * @tparam U
+         */
+        template <typename U> constexpr vector2(const vector2<U>& rhs) : _x(rhs.x()), _y(rhs.y()) {}
 
         /**
          * @brief

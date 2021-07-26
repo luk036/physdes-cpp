@@ -37,18 +37,6 @@ namespace recti {
         /**
          * @brief
          *
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2>
-        [[nodiscard]] constexpr auto contains(const point<U1, U2>& rhs) const -> bool {
-            return this->x().contains(rhs.x()) && this->y().contains(rhs.y());
-        }
-
-        /**
-         * @brief
-         *
          * @return point<T>
          */
         [[nodiscard]] constexpr auto lower() const -> point<T> {
@@ -70,31 +58,16 @@ namespace recti {
          * @return constexpr T
          */
         [[nodiscard]] constexpr auto area() const -> T { return this->x().len() * this->y().len(); }
-
-        // /**
-        //  * @brief
-        //  *
-        //  * @tparam Stream
-        //  * @tparam T
-        //  * @param[in] out
-        //  * @param[in] r
-        //  * @return Stream&
-        //  */
-        // template <class Stream> friend auto operator<<(Stream& out, const rectangle& r) ->
-        // Stream& {
-        //     out << r.lower() << " rectangle " << r.upper();
-        //     return out;
-        // }
     };
 #pragma pack(pop)
 
-/**
- * @brief Horizontal Line Segment
- *
- * @tparam T
- * @todo pack
- */
 #pragma pack(push, 1)
+    /**
+     * @brief Horizontal Line Segment
+     *
+     * @tparam T
+     * @todo pack
+     */
     template <typename T> struct hsegment : point<interval<T>, T> {
         /**
          * @brief Construct a new hsegment object
@@ -112,28 +85,16 @@ namespace recti {
          * @param[in] y
          */
         constexpr hsegment(const interval<T>& x, const T& y) : point<interval<T>, T>{x, y} {}
-
-        /**
-         * @brief
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U> constexpr auto contains(const point<U>& rhs) const -> bool {
-            return this->y() == rhs.y() && this->x().contains(rhs.x());
-        }
     };
 #pragma pack(pop)
 
-/**
- * @brief vsegment Line Segment
- *
- * @tparam T
- * @todo pack
- */
 #pragma pack(push, 1)
+    /**
+     * @brief vsegment Line Segment
+     *
+     * @tparam T
+     * @todo pack
+     */
     template <typename T> struct vsegment : point<T, interval<T>> {
         /**
          * @brief Construct a new vsegment object
@@ -151,18 +112,6 @@ namespace recti {
          * @param[in] y
          */
         constexpr vsegment(const T& x, const interval<T>& y) : point<T, interval<T>>{x, y} {}
-
-        /**
-         * @brief
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U> constexpr auto contains(const point<U>& rhs) const -> bool {
-            return this->x() == rhs.x() && this->y().contains(rhs.y());
-        }
     };
 #pragma pack(pop)
 
