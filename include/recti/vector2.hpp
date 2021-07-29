@@ -1,8 +1,8 @@
 #pragma once
 
+#include <compare>
 #include <tuple>    // import std::tie()
 #include <utility>  // import std::move
-#include <compare>
 
 namespace recti {
 
@@ -282,7 +282,7 @@ namespace recti {
      * @tparam T
      * @tparam Stream
      * @param[out] out
-     * @param[in] p
+     * @param[in] v
      * @return Stream&
      */
     template <typename T, class Stream> auto operator<<(Stream& out, const vector2<T>& v)

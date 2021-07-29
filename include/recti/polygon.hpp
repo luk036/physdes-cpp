@@ -101,11 +101,13 @@ namespace recti {
     }
 
     /**
-     * @brief Create a ymono polygon object
+     * @brief Create a mono polygon object
      *
      * @tparam FwIter
+     * @tparam Compare
      * @param[in] first
      * @param[in] last
+     * @param dir
      */
     template <typename FwIter, typename Compare>
     inline void create_mono_polygon(FwIter&& first, FwIter&& last, Compare&& dir) {

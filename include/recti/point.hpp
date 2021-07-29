@@ -41,8 +41,8 @@ namespace recti {
 
         /**
          * @brief tie
-         * 
-         * @return auto 
+         *
+         * @return auto
          */
         constexpr auto _tie() const { return std::tie(_x, _y); }
 
@@ -88,7 +88,7 @@ namespace recti {
          * @return true
          * @return false
          */
-        template <typename U1, typename U2> //
+        template <typename U1, typename U2>  //
         constexpr auto operator<=>(const point<U1, U2>& rhs) const {
             return this->_tie() <=> rhs._tie();
         }
