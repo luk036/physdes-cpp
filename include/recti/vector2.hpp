@@ -2,6 +2,7 @@
 
 #include <tuple>    // import std::tie()
 #include <utility>  // import std::move
+#include <compare>
 
 namespace recti {
 
@@ -92,61 +93,61 @@ namespace recti {
          * @return false
          */
         template <typename U>  //
-        constexpr auto operator<(const vector2<U>& rhs) const -> bool {
-            return this->_tie() < rhs._tie();
+        constexpr auto operator<=>(const vector2<U>& rhs) const {
+            return this->_tie() <=> rhs._tie();
         }
 
-        /**
-         * @brief Not equal to
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U>  //
-        constexpr auto operator!=(const vector2<U>& rhs) const -> bool {
-            return !(*this == rhs);
-        }
+        // /**
+        //  * @brief Not equal to
+        //  *
+        //  * @tparam U
+        //  * @param[in] rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U>  //
+        // constexpr auto operator!=(const vector2<U>& rhs) const -> bool {
+        //     return !(*this == rhs);
+        // }
 
-        /**
-         * @brief Greater than
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U>  //
-        constexpr auto operator>(const vector2<U>& rhs) const -> bool {
-            return rhs < *this;
-        }
+        // /**
+        //  * @brief Greater than
+        //  *
+        //  * @tparam U
+        //  * @param[in] rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U>  //
+        // constexpr auto operator>(const vector2<U>& rhs) const -> bool {
+        //     return rhs < *this;
+        // }
 
-        /**
-         * @brief Less than or euqual to
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U>  //
-        constexpr auto operator<=(const vector2<U>& rhs) const -> bool {
-            return !(rhs < *this);
-        }
+        // /**
+        //  * @brief Less than or euqual to
+        //  *
+        //  * @tparam U
+        //  * @param[in] rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U>  //
+        // constexpr auto operator<=(const vector2<U>& rhs) const -> bool {
+        //     return !(rhs < *this);
+        // }
 
-        /**
-         * @brief Greater than or equal to
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U>  //
-        constexpr auto operator>=(const vector2<U>& rhs) const -> bool {
-            return !(*this < rhs);
-        }
+        // /**
+        //  * @brief Greater than or equal to
+        //  *
+        //  * @tparam U
+        //  * @param[in] rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U>  //
+        // constexpr auto operator>=(const vector2<U>& rhs) const -> bool {
+        //     return !(*this < rhs);
+        // }
 
         ///@}
 
@@ -278,13 +279,15 @@ namespace recti {
     /**
      * @brief
      *
-     * @tparam Stream
      * @tparam T
+     * @tparam Stream
      * @param[out] out
-     * @param[in] v
+     * @param[in] p
      * @return Stream&
      */
     template <typename T, class Stream> auto operator<<(Stream& out, const vector2<T>& v)
-        -> Stream&;
-
+        -> Stream& {
+        out << "{" << v.x() << ", " << v.y() << "}";
+        return out;
+    }
 }  // namespace recti

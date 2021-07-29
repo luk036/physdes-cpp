@@ -1,6 +1,6 @@
 #include <doctest/doctest.h>
 // #include <random>
-// #include <iostream>
+#include <ostream>
 #include <cstdlib>
 #include <list>
 #include <recti/halton_int.hpp>
@@ -70,6 +70,7 @@ TEST_CASE("Rectangle test") {
     CHECK(r1 != r2);
     CHECK((r1 - v) + v == r1);
 
+    CHECK(r1 <= p);
     CHECK(r1.contains(p));
     CHECK(r1.contains(r2));
     CHECK(r1.overlaps(r2));
