@@ -1,6 +1,5 @@
 #pragma once
 
-#include <compare>
 #include <tuple>    // import std::tie()
 #include <utility>  // import std::move
 
