@@ -1,8 +1,8 @@
 #include <doctest/doctest.h>
 // #include <random>
-#include <ostream>
 #include <cstdlib>
 #include <list>
+#include <ostream>
 #include <recti/halton_int.hpp>
 #include <recti/recti.hpp>
 #include <set>

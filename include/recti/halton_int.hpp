@@ -10,6 +10,7 @@ namespace recti {
      *
      * @param[in] k
      * @param[in] base
+     * @param[in] scale
      * @return unsigned
      */
     inline auto vdc(unsigned k, unsigned base = 2, unsigned scale = 10) noexcept -> unsigned {
@@ -39,6 +40,7 @@ namespace recti {
          * @brief Construct a new vdcorput object
          *
          * @param[in] base
+         * @param[in] scale
          */
         constexpr vdcorput(unsigned base = 2, unsigned scale = 10) noexcept
             : _base{base}, _scale{scale} {}
@@ -75,6 +77,7 @@ namespace recti {
          * @brief Construct a new halton object
          *
          * @param[in] base
+         * @param[in] scale
          */
         explicit constexpr halton(const unsigned base[], const unsigned scale[]) noexcept
             : _vdc0(base[0], scale[0]), _vdc1(base[1], scale[1]) {}

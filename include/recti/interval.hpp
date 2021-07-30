@@ -1,8 +1,8 @@
 #pragma once
 
 #include <cassert>
-#include <utility>  // import std::move
 #include <compare>
+#include <utility>  // import std::move
 
 namespace recti {
 
@@ -323,7 +323,7 @@ namespace recti {
         /**
          * @brief contains
          *
-         * @param[in] x
+         * @param[in] a
          * @return true
          * @return false
          */
@@ -339,7 +339,7 @@ namespace recti {
      * @tparam T
      * @tparam Stream
      * @param[out] out
-     * @param[in] p
+     * @param[in] I
      * @return Stream&
      */
     template <typename T, class Stream> auto operator<<(Stream& out, const interval<T>& I)

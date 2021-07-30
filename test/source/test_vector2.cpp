@@ -2,8 +2,9 @@
  *  Distributed under the MIT License (See accompanying file /LICENSE )
  */
 #include <doctest/doctest.h>
-#include <recti/vector2.hpp>
+
 #include <ostream>
+#include <recti/vector2.hpp>
 
 using namespace recti;
 
