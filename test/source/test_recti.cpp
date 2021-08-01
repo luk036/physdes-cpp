@@ -4,6 +4,7 @@
 #include <list>
 #include <ostream>
 #include <recti/halton_int.hpp>
+#include <recti/merge_obj.hpp>
 #include <recti/recti.hpp>
 #include <set>
 
@@ -51,7 +52,9 @@ TEST_CASE("Interval test") {
 
     CHECK(a.contains(4));
     CHECK(a.contains(8));
+    CHECK(a.intersection(8) == interval{8, 8});
     CHECK(a.contains(b));
+    CHECK(a.intersection(b) == b);
     CHECK(!b.contains(a));
     CHECK(a.overlaps(b));
     CHECK(b.overlaps(a));
@@ -93,23 +96,24 @@ TEST_CASE("Segment test") {
 
 TEST_CASE("Interval overlapping test") {
     constexpr auto N = 20;
-    auto lst = std::list<rectangle<unsigned int>>{};
+    auto lst = std::list<interval<unsigned int>>{};
     auto hgenX = vdcorput(3, 7);
-    auto hgenY = vdcorput(2, 11);
+    // auto hgenY = vdcorput(2, 11);
 
     for (auto i = 0; i != N; ++i) {
         for (auto j = 0; j != N; ++j) {
             auto x = hgenX();
-            auto y = hgenY();
+            // auto y = hgenY();
             auto xrng = interval{x, x + 100};
-            auto yrng = interval{y, y + 100};
-            auto r = rectangle{xrng, yrng};
-            lst.push_back(r);
+            // auto yrng = interval{y, y + 100};
+            // auto r = rectangle{xrng, yrng};
+            // lst.push_back(r);
+            lst.push_back(xrng);
         }
     }
 
-    std::set<rectangle<unsigned int>> S;   // set of maximal non-overlapped rectangles
-    std::list<rectangle<unsigned int>> L;  // list of the removed rectangles
+    std::set<interval<unsigned int>> S;   // set of maximal non-overlapped rectangles
+    std::list<interval<unsigned int>> L;  // list of the removed rectangles
 
     for (const auto& intvl : lst) {
         if (S.find(intvl) != S.end()) {
@@ -127,4 +131,16 @@ TEST_CASE("Interval overlapping test") {
     // {
     //     cout << "  \\draw[color=red] " << r << ";\n";
     // }
+}
+
+TEST_CASE("merge_obj test") {
+    auto r1 = merge_obj{4, 5};
+    auto r2 = merge_obj{7, 9};
+    auto v = vector2{5, 6};
+
+    CHECK(r1 != r2);
+    CHECK((r1 - v) + v == r1);
+    CHECK(!overlap(r1, r2));
+    CHECK(r1.min_dist_with(r2) == 7);
+    CHECK(min_dist(r1, r2) == 7);
 }

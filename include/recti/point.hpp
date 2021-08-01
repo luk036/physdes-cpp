@@ -5,6 +5,7 @@
 #include <utility>      // import std::move
 
 #include "vector2.hpp"
+#include "interval.hpp"
 
 namespace recti {
 
@@ -252,6 +253,20 @@ namespace recti {
         }
 
         /**
+         * @brief intersection
+         *
+         * @tparam U1
+         * @tparam U2
+         * @param other
+         * @return true
+         * @return false
+         */
+        template <typename U1, typename U2>  //
+        [[nodiscard]] constexpr auto intersection(const point<U1, U2>& other) const -> point {
+            return {intersection(this->x(), other.x()), intersection(this->y(), other.y())};
+        }
+
+        /**
          * @brief
          *
          * @tparam U1
@@ -265,6 +280,7 @@ namespace recti {
             return contain(this->x(), other.x()) && contain(this->y(), other.y());
         }
 
+
         /**
          * @brief overlap
          *
@@ -275,8 +291,22 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        [[nodiscard]] constexpr auto min_dist_with(point<U1, U2>& other) {
+        [[nodiscard]] constexpr auto min_dist_with(const point<U1, U2>& other) const {
             return min_dist(this->_x, other._x) + min_dist(this->_y, other._y);
+        }
+
+        /**
+         * @brief overlap
+         *
+         * @tparam U1
+         * @tparam U2
+         * @param other
+         * @return true
+         * @return false
+         */
+        template <typename U1, typename U2>  //
+        [[nodiscard]] constexpr auto min_dist_change_with(point<U1, U2>& other) {
+            return min_dist_change(this->_x, other._x) + min_dist_change(this->_y, other._y);
         }
     };
 #pragma pack(pop)
