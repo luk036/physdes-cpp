@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cassert>
-#include <compare>
 #include <utility>  // import std::move
 #include <algorithm> // import std::min, std::max
 
