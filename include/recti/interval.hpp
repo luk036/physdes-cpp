@@ -333,12 +333,10 @@ namespace recti {
         }
 
         /**
-         * @brief
-         *
-         * @tparam U
-         * @param[in] a
-         * @return true
-         * @return false
+         * @brief minimum distance with
+         * 
+         * @param[in] other 
+         * @return constexpr auto 
          */
         [[nodiscard]] constexpr auto min_dist_with(interval& other) {
             if (*this < other) {
@@ -357,12 +355,10 @@ namespace recti {
         }
 
         /**
-         * @brief
-         *
-         * @tparam U
-         * @param[in] a
-         * @return true
-         * @return false
+         * @brief minimum distance with
+         * 
+         * @param[in] other 
+         * @return constexpr auto 
          */
         [[nodiscard]] constexpr auto min_dist_with(T& other) {
             if (*this < other) {
