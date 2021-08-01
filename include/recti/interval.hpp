@@ -1,8 +1,8 @@
 #pragma once
 
+#include <algorithm>  // import std::min, std::max
 #include <cassert>
 #include <utility>  // import std::move
-#include <algorithm> // import std::min, std::max
 
 namespace recti {
 
@@ -112,7 +112,8 @@ namespace recti {
         //  * @param[in] rhs
         //  * @return std::weak_ordering
         //  */
-        // friend constexpr auto operator<=>(const T& lhs, const interval& rhs) -> std::weak_ordering {
+        // friend constexpr auto operator<=>(const T& lhs, const interval& rhs) ->
+        // std::weak_ordering {
         //     if (lhs < rhs.lower()) return std::weak_ordering::less;
         //     if (lhs > rhs.upper()) return std::weak_ordering::greater;
         //     return std::weak_ordering::equivalent;
@@ -128,7 +129,7 @@ namespace recti {
          */
         template <typename U>  //
         constexpr auto operator<(const U& rhs) const -> bool {
-            return this->upper() < rhs; 
+            return this->upper() < rhs;
         }
 
         /**
@@ -343,11 +344,11 @@ namespace recti {
             if (*this < other) {
                 this->_lower = this->_upper;
                 return other.min_dist_with(this->_upper);
-            } 
+            }
             if (other < *this) {
                 this->_upper = this->_lower;
                 return other.min_dist_with(this->_lower);
-            } 
+            }
             auto lower = std::max(this->_lower, other._lower);
             this->_lower = other._lower = lower;
             auto upper = std::min(this->_upper, other._upper);
@@ -371,7 +372,7 @@ namespace recti {
             if (other < *this) {
                 this->_upper = this->_lower;
                 return this->_lower - other;
-            }            
+            }
             this->_upper = this->_lower = other;
             return T(0);
         }
@@ -407,7 +408,6 @@ namespace recti {
             return lhs.min_dist_with(rhs);
         }
     }
-
 
     template <typename U1, typename U2>  //
     inline constexpr auto contain(const U1& lhs, const U2& rhs) -> bool {

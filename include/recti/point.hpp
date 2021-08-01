@@ -55,8 +55,8 @@ namespace recti {
 
         /**
          * @brief tie
-         * 
-         * @return auto 
+         *
+         * @return auto
          */
         constexpr auto _tie() const { return std::tie(_x, _y); }
 
@@ -88,7 +88,7 @@ namespace recti {
          * @return true
          * @return false
          */
-        template <typename U1, typename U2> //
+        template <typename U1, typename U2>  //
         constexpr auto operator<(const point<U1, U2>& rhs) const -> bool {
             return this->_tie() < rhs._tie();
         }
@@ -239,12 +239,12 @@ namespace recti {
 
         /**
          * @brief overlap
-         * 
-         * @tparam U1 
-         * @tparam U2 
-         * @param other 
-         * @return true 
-         * @return false 
+         *
+         * @tparam U1
+         * @tparam U2
+         * @param other
+         * @return true
+         * @return false
          */
         template <typename U1, typename U2>  //
         [[nodiscard]] constexpr auto overlaps(const point<U1, U2>& other) const -> bool {
@@ -252,13 +252,13 @@ namespace recti {
         }
 
         /**
-         * @brief 
-         * 
-         * @tparam U1 
-         * @tparam U2 
+         * @brief
+         *
+         * @tparam U1
+         * @tparam U2
          * @param other
-         * @return true 
-         * @return false 
+         * @return true
+         * @return false
          */
         template <typename U1, typename U2>  //
         [[nodiscard]] constexpr auto contains(const point<U1, U2>& other) const -> bool {
@@ -267,12 +267,12 @@ namespace recti {
 
         /**
          * @brief overlap
-         * 
-         * @tparam U1 
-         * @tparam U2 
-         * @param other 
-         * @return true 
-         * @return false 
+         *
+         * @tparam U1
+         * @tparam U2
+         * @param other
+         * @return true
+         * @return false
          */
         template <typename U1, typename U2>  //
         [[nodiscard]] constexpr auto min_dist_with(point<U1, U2>& other) {
