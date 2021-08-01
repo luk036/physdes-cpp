@@ -3,6 +3,7 @@
 #include <cassert>
 #include <compare>
 #include <utility>  // import std::move
+#include <algorithm> // import std::min, std::max
 
 namespace recti {
 
@@ -330,8 +331,97 @@ namespace recti {
         [[nodiscard]] constexpr auto contains(const T& a) const -> bool {
             return this->lower() <= a && a <= this->upper();
         }
+
+        /**
+         * @brief
+         *
+         * @tparam U
+         * @param[in] a
+         * @return true
+         * @return false
+         */
+        [[nodiscard]] constexpr auto min_dist_with(interval& other) {
+            if (*this < other) {
+                this->_lower = this->_upper;
+                return other.min_dist_with(this->_upper);
+            } 
+            if (other < *this) {
+                this->_upper = this->_lower;
+                return other.min_dist_with(this->_lower);
+            } 
+            auto lower = std::max(this->_lower, other._lower);
+            this->_lower = other._lower = lower;
+            auto upper = std::min(this->_upper, other._upper);
+            this->_upper = other._upper = upper;
+            return 0;
+        }
+
+        /**
+         * @brief
+         *
+         * @tparam U
+         * @param[in] a
+         * @return true
+         * @return false
+         */
+        [[nodiscard]] constexpr auto min_dist_with(T& other) {
+            if (*this < other) {
+                this->_lower = this->_upper;
+                return other - this->_upper;
+            }
+            if (other < *this) {
+                this->_upper = this->_lower;
+                return this->_lower - other;
+            }            
+            this->_upper = this->_lower = other;
+            return T(0);
+        }
+
+        template <typename U1, typename U2>  //
+        friend inline constexpr auto min_dist(U1& lhs, U2& rhs);
     };
 #pragma pack(pop)
+
+    template <typename U1, typename U2>  //
+    inline constexpr auto overlap(const U1& lhs, const U2& rhs) -> bool {
+        if constexpr (std::is_scalar_v<U1>) {
+            if constexpr (std::is_scalar_v<U2>) {
+                if (lhs != rhs) return false;
+            } else {
+                if (!rhs.overlaps(lhs)) return false;
+            }
+        } else {
+            if (!lhs.overlaps(rhs)) return false;
+        }
+        return true;
+    }
+
+    template <typename U1, typename U2>  //
+    inline constexpr auto min_dist(U1& lhs, U2& rhs) {
+        if constexpr (std::is_scalar_v<U1>) {
+            if constexpr (std::is_scalar_v<U2>) {
+                return std::abs(lhs - rhs);
+            } else {
+                return rhs.min_dist_with(lhs);
+            }
+        } else {
+            return lhs.min_dist_with(rhs);
+        }
+    }
+
+
+    template <typename U1, typename U2>  //
+    inline constexpr auto contain(const U1& lhs, const U2& rhs) -> bool {
+        if constexpr (std::is_scalar_v<U1>) {
+            if constexpr (std::is_scalar_v<U2>) {
+                return lhs == rhs;
+            } else {
+                return false;
+            }
+        } else {
+            return lhs.contains(rhs);
+        }
+    }
 
     /**
      * @brief

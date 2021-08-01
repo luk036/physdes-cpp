@@ -55,6 +55,8 @@ TEST_CASE("Interval test") {
     CHECK(!b.contains(a));
     CHECK(a.overlaps(b));
     CHECK(b.overlaps(a));
+
+    CHECK(min_dist(a, b) == 0);
 }
 
 TEST_CASE("Rectangle test") {
@@ -74,6 +76,10 @@ TEST_CASE("Rectangle test") {
     CHECK(r1.contains(p));
     CHECK(r1.contains(r2));
     CHECK(r1.overlaps(r2));
+    CHECK(overlap(r1, r2));
+
+    CHECK(r1.min_dist_with(r2) == 0);
+    CHECK(min_dist(r1, r2) == 0);
 }
 
 TEST_CASE("Segment test") {

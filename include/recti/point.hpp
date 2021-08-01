@@ -238,97 +238,45 @@ namespace recti {
         }
 
         /**
-         * @brief
-         *
-         * @tparam U
-         * @param[in] a
-         * @return true
-         * @return false
+         * @brief overlap
+         * 
+         * @tparam U1 
+         * @tparam U2 
+         * @param other 
+         * @return true 
+         * @return false 
          */
         template <typename U1, typename U2>  //
-        [[nodiscard]] constexpr auto overlaps(const point<U1, U2>& a) const -> bool {
-            if constexpr (std::is_scalar_v<T1>) {
-                if constexpr (std::is_scalar_v<U1>) {
-                    if (this->x() != a.x()) return false;
-                } else {
-                    if (!a.x().overlaps(this->x())) return false;
-                }
-            } else {
-                if (!this->x().overlaps(a.x())) return false;
-            }
-
-            if constexpr (std::is_scalar_v<T2>) {
-                if constexpr (std::is_scalar_v<U2>) {
-                    if (this->y() != a.y()) return false;
-                } else {
-                    if (!a.y().overlaps(this->y())) return false;
-                }
-            } else {
-                if (!this->y().overlaps(a.y())) return false;
-            }
-
-            return true;
+        [[nodiscard]] constexpr auto overlaps(const point<U1, U2>& other) const -> bool {
+            return overlap(this->x(), other.x()) && overlap(this->y(), other.y());
         }
 
         /**
-         * @brief
-         *
-         * @tparam U
-         * @param[in] a
-         * @return true
-         * @return false
+         * @brief 
+         * 
+         * @tparam U1 
+         * @tparam U2 
+         * @param other
+         * @return true 
+         * @return false 
          */
         template <typename U1, typename U2>  //
-        [[nodiscard]] constexpr auto contains(const point<U1, U2>& a) const -> bool {
-            if constexpr (std::is_scalar_v<T1>) {
-                if constexpr (std::is_scalar_v<U1>) {
-                    if constexpr (std::is_scalar_v<T2>) {
-                        if constexpr (std::is_scalar_v<U2>) {
-                            if (this->x() != a.x()) return false;
-                            if (this->y() != a.y()) return false;
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    } else {
-                        if (this->x() != a.x()) return false;
-                        if (!this->y().contains(a.y())) return false;
-                        return true;
-                    }
-                } else {
-                    return false;
-                }
-            } else {
-                if constexpr (std::is_scalar_v<U1>) {
-                    if constexpr (std::is_scalar_v<T2>) {
-                        if constexpr (std::is_scalar_v<U2>) {
-                            if (!this->x().contains(a.x())) return false;
-                            if (this->y() != a.y()) return false;
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    } else {
-                        if (!this->x().contains(a.x())) return false;
-                        if (!this->y().contains(a.y())) return false;
-                        return true;
-                    }
-                } else {
-                    if constexpr (std::is_scalar_v<T2>) {
-                        if constexpr (std::is_scalar_v<U2>) {
-                            if (!this->x().contains(a.x())) return false;
-                            if (this->y() != a.y()) return false;
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    } else {
-                        if (!this->x().contains(a.x())) return false;
-                        if (!this->y().contains(a.y())) return false;
-                        return true;
-                    }
-                }
-            }
+        [[nodiscard]] constexpr auto contains(const point<U1, U2>& other) const -> bool {
+            return contain(this->x(), other.x()) && contain(this->y(), other.y());
+        }
+
+        /**
+         * @brief overlap
+         * 
+         * @tparam U1 
+         * @tparam U2 
+         * @param other 
+         * @return true 
+         * @return false 
+         */
+        template <typename U1, typename U2>  //
+        [[nodiscard]] constexpr auto min_dist_with(point<U1, U2>& other) {
+            return min_dist(this->_x, other._x) + min_dist(this->_y, other._y);
         }
     };
 #pragma pack(pop)
