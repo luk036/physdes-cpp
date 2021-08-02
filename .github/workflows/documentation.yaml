@@ -32,7 +32,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt install install doxygen
+          sudo apt install doxygen
           pip3 install jinja2 Pygments
 
       - name: Build

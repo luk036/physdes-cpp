@@ -230,19 +230,19 @@ namespace recti {
         /**
          * @brief Negate
          *
-         * @return interval<T>
+         * @return interval
          */
-        constexpr auto operator-() const -> interval<T> {
-            return interval<T>(-this->_upper, -this->_lower);
+        constexpr auto operator-() const -> interval {
+            return {-this->_upper, -this->_lower};
         }
 
         /**
          * @brief Add
          *
          * @param[in] alpha
-         * @return interval<T>&
+         * @return interval&
          */
-        constexpr auto operator+=(const T& alpha) -> interval<T>& {
+        constexpr auto operator+=(const T& alpha) -> interval& {
             this->_lower += alpha;
             this->_upper += alpha;
             return *this;
@@ -253,9 +253,9 @@ namespace recti {
          *
          * @param[in] x
          * @param[in] alpha
-         * @return interval<T>
+         * @return interval
          */
-        friend constexpr auto operator+(interval<T> x, const T& alpha) -> interval<T> {
+        friend constexpr auto operator+(interval x, const T& alpha) -> interval {
             return x += alpha;
         }
 
@@ -264,9 +264,9 @@ namespace recti {
          *
          * @param[in] alpha
          * @param[in] x
-         * @return interval<T>
+         * @return interval
          */
-        friend constexpr auto operator+(const T& alpha, interval<T> x) -> interval<T> {
+        friend constexpr auto operator+(const T& alpha, interval x) -> interval {
             return x += alpha;
         }
 
@@ -274,9 +274,9 @@ namespace recti {
          * @brief Substract
          *
          * @param[in] alpha
-         * @return interval<T>&
+         * @return interval&
          */
-        constexpr auto operator-=(const T& alpha) -> interval<T>& {
+        constexpr auto operator-=(const T& alpha) -> interval& {
             this->_lower -= alpha;
             this->_upper -= alpha;
             return *this;
@@ -287,9 +287,9 @@ namespace recti {
          *
          * @param[in] x
          * @param[in] alpha
-         * @return interval<T>
+         * @return interval
          */
-        friend constexpr auto operator-(interval<T> x, const T& alpha) -> interval<T> {
+        friend constexpr auto operator-(interval x, const T& alpha) -> interval {
             return x -= alpha;
         }
 
@@ -297,9 +297,9 @@ namespace recti {
          * @brief Enlarge with
          *
          * @param[in] alpha
-         * @return interval<T>&
+         * @return interval&
          */
-        constexpr auto enlarge_with(const T& alpha) -> interval<T>& {
+        constexpr auto enlarge_with(const T& alpha) -> interval& {
             this->_lower -= alpha;
             this->_upper += alpha;
             return *this;
@@ -323,59 +323,59 @@ namespace recti {
         /**
          * @brief contains
          *
-         * @param[in] a
-         * @return true
-         * @return false
-         */
-        [[nodiscard]] constexpr auto contains(const T& a) const -> bool {
-            return this->lower() <= a && a <= this->upper();
-        }
-
-        /**
-         * @brief
-         *
          * @tparam U
          * @param[in] a
          * @return true
          * @return false
          */
         template <typename U>  //
-        [[nodiscard]] constexpr auto contains(const interval<U>& a) const -> bool {
-            return this->lower() <= a.lower() && a.upper() <= this->upper();
-        }
-
-        /**
-         * @brief minimum distance with
-         *
-         * @param[in] other
-         * @return constexpr auto
-         */
-        constexpr auto intersection_with(const T& other) const -> interval {
-            return {other, other};
-        }
-
-        /**
-         * @brief intersection with
-         *
-         * @param[in] other
-         * @return constexpr auto
-         */
-        constexpr auto intersection_with(const interval& other) const -> interval {
-            return {std::max(this->_lower, other._lower), std::min(this->_upper, other._upper)};
-        }
-
-        /**
-         * @brief minimum distance with
-         *
-         * @param[in] other
-         * @return constexpr auto
-         */
-        [[nodiscard]] constexpr auto min_dist_with(const T& other) const -> T {
-            if (*this < other) {
-                return other - this->_upper;
+        [[nodiscard]] constexpr auto contains(const U& a) const -> bool {
+            if constexpr (std::is_scalar_v<U>) {
+                return this->lower() <= a && a <= this->upper();
+            } else {
+                return this->lower() <= a.lower() && a.upper() <= this->upper();
             }
-            if (other < *this) {
-                return this->_lower - other;
+        }
+
+        /**
+         * @brief minimum distance with
+         *
+         * @tparam U
+         * @param[in] other
+         * @return constexpr auto
+         */
+        template <typename U>  //
+        constexpr auto intersection_with(const U& other) const -> interval {
+            if constexpr (std::is_scalar_v<U>) {
+                return {other, other};
+            } else {
+                return {std::max(this->_lower, other._lower), std::min(this->_upper, other._upper)};
+            }
+        }
+
+        /**
+         * @brief minimum distance with
+         *
+         * @tparam U
+         * @param[in] other
+         * @return constexpr auto
+         */
+        template <typename U>
+        [[nodiscard]] constexpr auto min_dist_with(const U& other) const {
+            if constexpr (std::is_scalar_v<U>) {
+                if (*this < other) {
+                    return other - this->_upper;
+                }
+                if (other < *this) {
+                    return this->_lower - other;
+                }
+            } else {
+                if (*this < other) {
+                    return other._lower - this->_upper;
+                }
+                if (other < *this) {
+                    return this->_lower - other._upper;
+                }
             }
             return 0;
         }
@@ -383,56 +383,50 @@ namespace recti {
         /**
          * @brief minimum distance with
          *
+         * @tparam U
          * @param[in] other
          * @return constexpr auto
          */
-        [[nodiscard]] constexpr auto min_dist_with(const interval& other) const -> T {
-            if (*this < other) {
-                return other.min_dist_with(this->_upper);
-            }
-            if (other < *this) {
-                return other.min_dist_with(this->_lower);
+        template <typename U>
+        [[nodiscard]] constexpr auto min_dist_change_with(U& other) {
+            if constexpr (std::is_scalar_v<U>) {
+                if (*this < other) {
+                    this->_lower = this->_upper;
+                    return other - this->_upper;
+                }
+                if (other < *this) {
+                    this->_upper = this->_lower;
+                    return this->_lower - other;
+                }
+                this->_upper = this->_lower = other;
+            } else {
+                if (*this < other) {
+                    this->_lower = this->_upper;
+                    return other._lower - this->_upper;
+                }
+                if (other < *this) {
+                    this->_upper = this->_lower;
+                    return this->_lower - other._upper;
+                }
+                *this = other = this->intersection_with(other);
             }
             return 0;
         }
 
         /**
-         * @brief minimum distance with
+         * @brief
          *
-         * @param[in] other
-         * @return constexpr auto
+         * @tparam Stream
+         * @param[out] out
+         * @param[in] I
+         * @return Stream&
          */
-        [[nodiscard]] constexpr auto min_dist_change_with(T& other) -> T {
-            if (*this < other) {
-                this->_lower = this->_upper;
-                return other - this->_upper;
-            }
-            if (other < *this) {
-                this->_upper = this->_lower;
-                return this->_lower - other;
-            }
-            this->_upper = this->_lower = other;
-            return 0;
+        template <class Stream> friend auto operator<<(Stream& out, const interval& I)
+            -> Stream& {
+            out << "[" << I.lower() << ", " << I.upper() << "]";
+            return out;
         }
 
-        /**
-         * @brief minimum distance with
-         *
-         * @param[in] other
-         * @return constexpr auto
-         */
-        [[nodiscard]] constexpr auto min_dist_change_with(interval& other) -> T {
-            if (*this < other) {
-                this->_lower = this->_upper;
-                return other.min_dist_change_with(this->_upper);
-            }
-            if (other < *this) {
-                this->_upper = this->_lower;
-                return other.min_dist_change_with(this->_lower);
-            }
-            *this = other = this->intersection(other);
-            return 0;
-        }
     };
 #pragma pack(pop)
 
@@ -495,7 +489,8 @@ namespace recti {
         if constexpr (std::is_scalar_v<U1>) {
             return interval<U1>{lhs - rhs, lhs + rhs};
         } else {
-            return lhs.enlarge_with(rhs);
+            lhs.enlarge_with(rhs); 
+            return lhs;
         }
     }
 
@@ -525,18 +520,4 @@ namespace recti {
     //     }
     // }
 
-    /**
-     * @brief
-     *
-     * @tparam T
-     * @tparam Stream
-     * @param[out] out
-     * @param[in] I
-     * @return Stream&
-     */
-    template <typename T, class Stream> auto operator<<(Stream& out, const interval<T>& I)
-        -> Stream& {
-        out << "[" << I.lower() << ", " << I.upper() << "]";
-        return out;
-    }
 }  // namespace recti
