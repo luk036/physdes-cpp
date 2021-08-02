@@ -135,14 +135,17 @@ TEST_CASE("Rectangle 3D test") {
 //     // }
 // }
 
-// TEST_CASE("merge_obj test") {
-//     auto r1 = merge_obj{4, 5};
-//     auto r2 = merge_obj{7, 9};
-//     auto v = vector2{5, 6};
+TEST_CASE("merge_obj test") {
+    auto a = point{40000, 80000};
+    auto b = point{50000, 60000};
 
-//     CHECK(r1 != r2);
-//     CHECK((r1 - v) + v == r1);
-//     CHECK(!overlap(r1, r2));
-//     CHECK(r1.min_dist_with(r2) == 7);
-//     CHECK(min_dist(r1, r2) == 7);
-// }
+    auto m1 = merge_obj{a + 50000, a - 50000};
+    auto m2 = merge_obj{b + 90000, b - 90000};
+    // auto v = vector2{vector2{50000, 60000}, 0};
+
+    CHECK(m1 != m2);
+    // CHECK((m1 - v) + v == m1);
+    CHECK(!overlap(m1, m2));
+    CHECK(m1.min_dist_with(m2) == m2.min_dist_with(m1));
+    CHECK(min_dist(m1, m2) == min_dist(m2, m1));
+}

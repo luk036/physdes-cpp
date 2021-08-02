@@ -235,6 +235,48 @@ namespace recti {
         }
 
         /**
+         * @brief Add a vector (translation)
+         *
+         * @param[in] alpha
+         * @return Self&
+         */
+        constexpr auto operator+=(const T1& alpha) -> Self& {
+            this->_x += alpha;
+            this->_y += alpha;
+            return *this;
+        }
+
+        /**
+         * @brief Substract
+         *
+         * @param[in] alpha
+         * @return Self&
+         */
+        constexpr auto operator-=(const T1& alpha) -> Self& {
+            this->_x -= alpha;
+            this->_y -= alpha;
+            return *this;
+        }
+
+        /**
+         * @brief Add
+         *
+         * @param[in] x
+         * @param[in] alpha
+         * @return point
+         */
+        friend constexpr auto operator+(point x, const T1& alpha) -> point { return x += alpha; }
+
+        /**
+         * @brief Substract
+         *
+         * @param[in] x
+         * @param[in] alpha
+         * @return point
+         */
+        friend constexpr auto operator-(point x, const T1& alpha) -> point { return x -= alpha; }
+
+        /**
          * @brief Different
          *
          * @param[in] rhs
