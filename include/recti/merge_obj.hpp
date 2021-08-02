@@ -86,8 +86,6 @@ namespace recti {
             return x -= y;
         }
 
-        ///@}
-
         /**
          * @brief overlap
          *
