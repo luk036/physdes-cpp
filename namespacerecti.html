@@ -69,37 +69,39 @@
           <h2><a href="#nested-classes">Classes</a></h2>
           <dl class="m-doc">
             <dt>
-              class <a href="classrecti_1_1_recti.html" class="m-doc">Recti</a>
+              <div class="m-doc-template">template&lt;typename iterator&gt;</div>
+              class <a href="classrecti_1_1dual__iterator.html" class="m-doc">dual_iterator</a>
             </dt>
-            <dd>A class for saying hello in multiple languages.</dd>
-            <dt>
-              class <a href="classrecti_1_1vdcorput.html" class="m-doc">vdcorput</a>
-            </dt>
-            <dd>van der Corput sequence generator</dd>
-            <dt>
-              class <a href="classrecti_1_1halton.html" class="m-doc">halton</a>
-            </dt>
-            <dd>Halton sequence generator.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;typename T = int&gt;</div>
-              class <a href="classrecti_1_1interval.html" class="m-doc">interval</a>
-            </dt>
-            <dd>Interval.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;typename T1, typename T2 = T1&gt;</div>
-              class <a href="classrecti_1_1point.html" class="m-doc">point</a>
-            </dt>
-            <dd>2D point</dd>
+            <dd>adapter for containers of point</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename T1, typename T2 = T1&gt;</div>
               class <a href="classrecti_1_1dualpoint.html" class="m-doc">dualpoint</a>
             </dt>
             <dd>2D point</dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename iterator&gt;</div>
-              class <a href="classrecti_1_1dual__iterator.html" class="m-doc">dual_iterator</a>
+              class <a href="classrecti_1_1halton.html" class="m-doc">halton</a>
             </dt>
-            <dd>adapter for containers of point</dd>
+            <dd>Halton sequence generator.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              struct <a href="structrecti_1_1hsegment.html" class="m-doc">hsegment</a>
+            </dt>
+            <dd>Horizontal Line Segment.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T = int&gt;</div>
+              class <a href="classrecti_1_1interval.html" class="m-doc">interval</a>
+            </dt>
+            <dd>Interval.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T1, typename T2&gt;</div>
+              class <a href="classrecti_1_1merge__obj.html" class="m-doc">merge_obj</a>
+            </dt>
+            <dd><a href="classrecti_1_1merge__obj.html" class="m-doc">merge_<wbr />obj</a></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T1, typename T2 = T1&gt;</div>
+              class <a href="classrecti_1_1point.html" class="m-doc">point</a>
+            </dt>
+            <dd>Forward declaration.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename T&gt;</div>
               class <a href="classrecti_1_1polygon.html" class="m-doc">polygon</a>
@@ -111,25 +113,28 @@
             </dt>
             <dd>Rectangle (Rectilinear)</dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename T&gt;</div>
-              struct <a href="structrecti_1_1hsegment.html" class="m-doc">hsegment</a>
+              class <a href="classrecti_1_1Recti.html" class="m-doc">Recti</a>
             </dt>
-            <dd>Horizontal Line Segment.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;typename T&gt;</div>
-              struct <a href="structrecti_1_1vsegment.html" class="m-doc">vsegment</a>
-            </dt>
-            <dd>vsegment Line Segment</dd>
+            <dd>A class for saying hello in multiple languages.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename T&gt;</div>
               class <a href="classrecti_1_1rpolygon.html" class="m-doc">rpolygon</a>
             </dt>
             <dd>Rectilinear Polygon.</dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename T = int&gt;</div>
+              class <a href="classrecti_1_1vdcorput.html" class="m-doc">vdcorput</a>
+            </dt>
+            <dd>van der Corput sequence generator</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T1, typename T2 = T1&gt;</div>
               class <a href="classrecti_1_1vector2.html" class="m-doc">vector2</a>
             </dt>
             <dd><a href="classrecti_1_1vector2.html" class="m-doc">vector2</a></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename T&gt;</div>
+              struct <a href="structrecti_1_1vsegment.html" class="m-doc">vsegment</a>
+            </dt>
+            <dd>vsegment Line Segment</dd>
           </dl>
         </section>
         <section id="enum-members">
@@ -154,17 +159,41 @@
             </dt>
             <dd>van der Corput sequence</dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename T, class Stream&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ae4c22629bff3c073a5b89adebac13534" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
-              const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;T&gt;&amp; Intv) -&gt; Stream &amp; -&gt; auto</span>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a79f5954b1cfcae746ff6707dd44b1abd" class="m-doc">overlap</a>(</span><span class="m-doc-wrap">const U1&amp; lhs,
+              const U2&amp; rhs) -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd></dd>
+            <dd><span></span></dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename T1, typename T2, class Stream&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#aa970ee90d8ebc48b8104bdef191cb164" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
-              const <a href="classrecti_1_1point.html" class="m-doc">point</a>&lt;T1, T2&gt;&amp; p) -&gt; Stream &amp; -&gt; auto</span>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0493662f27bb0678d2986b20fcc05d9d" class="m-doc">contain</a>(</span><span class="m-doc-wrap">const U1&amp; lhs,
+              const U2&amp; rhs) -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd></dd>
+            <dd><span></span></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6211777af679752908652203cf55390b" class="m-doc">intersection</a>(</span><span class="m-doc-wrap">const U1&amp; lhs,
+              const U2&amp; rhs) -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6eef925dba9e394d68d40bd52c1215f2" class="m-doc">min_dist</a>(</span><span class="m-doc-wrap">const U1&amp; lhs,
+              const U2&amp; rhs) -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a59b02afad3ab90026df9824968b924da" class="m-doc">enlarge</a>(</span><span class="m-doc-wrap">U1 lhs,
+              const U2&amp; rhs) -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6b88b1e6870369f57775c92f2e2faa05" class="m-doc">min_dist_change</a>(</span><span class="m-doc-wrap">U1&amp; lhs,
+              U2&amp; rhs) -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd><span></span></dd>
             <dt>
               <div class="m-doc-template">template&lt;class Stream, typename T&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#ae17a593810a99bc6eaac91ef2f281a4e" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
@@ -177,7 +206,7 @@
               FwIter&amp;&amp; last,
               Compare&amp;&amp; dir)</span>
             </dt>
-            <dd>Create a ymono polygon object.</dd>
+            <dd>Create a mono polygon object.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename FwIter&gt;</div>
               <span class="m-doc-wrap-bumper">void <a href="#a2334b39c89b060911fae91d2b934e665" class="m-doc">create_xmono_polygon</a>(</span><span class="m-doc-wrap">FwIter&amp;&amp; first,
@@ -220,12 +249,6 @@
               const <a href="classrecti_1_1point.html" class="m-doc">point</a>&lt;T&gt;&amp; q) -&gt; bool -&gt; auto</span>
             </dt>
             <dd>determine if a point is within a polygon</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;typename T, class Stream&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#af2fb4de7de064f23b31d129e8e4d6a6d" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
-              const <a href="classrecti_1_1vector2.html" class="m-doc">vector2</a>&lt;T&gt;&amp; v) -&gt; Stream &amp; -&gt; auto</span>
-            </dt>
-            <dd></dd>
           </dl>
         </section>
         <section>
@@ -235,7 +258,7 @@
               enum class recti::<wbr /><a href="#ab67387d7e15b82422717a7b3b58f9e5f" class="m-doc-self">LanguageCode</a>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="greeter_8h.html">&lt;recti/greeter.h&gt;</a></div>
             </h3>
-<p>Language codes to be used with the <a href="classrecti_1_1_recti.html" class="m-doc">Recti</a> class</p>
+<p>Language codes to be used with the <a href="classrecti_1_1Recti.html" class="m-doc">Recti</a> class</p>
           </div></section>
         </section>
         <section>
@@ -262,7 +285,7 @@
                   <td></td>
                 </tr>
                 <tr>
-                  <td>scale</td>
+                  <td>scale&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -274,97 +297,71 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ae4c22629bff3c073a5b89adebac13534"><div>
+          <section class="m-doc-details" id="a79f5954b1cfcae746ff6707dd44b1abd"><div>
             <h3>
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="interval_8hpp.html">&lt;recti/interval.hpp&gt;</a></div>
               <div class="m-doc-template">
-                template&lt;typename T, class Stream&gt;
+                template&lt;typename U1, typename U2&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae4c22629bff3c073a5b89adebac13534" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
-              const <a href="classrecti_1_1interval.html" class="m-doc">interval</a>&lt;T&gt;&amp; Intv) -&gt; Stream &amp;</span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a79f5954b1cfcae746ff6707dd44b1abd" class="m-doc-self">overlap</a>(</span><span class="m-doc-wrap">const U1&amp; lhs,
+              const U2&amp; rhs) -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Template parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Stream</td>
-                  <td></td>
-                </tr>
-              </tbody>
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>out&nbsp;<span class="m-label m-flat m-warning">out</span></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Intv</td>
-                  <td></td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Stream&amp;</td>
-                </tr>
-              </tfoot>
-            </table>
+            <p><span></span></p>
           </div></section>
-          <section class="m-doc-details" id="aa970ee90d8ebc48b8104bdef191cb164"><div>
+          <section class="m-doc-details" id="a0493662f27bb0678d2986b20fcc05d9d"><div>
             <h3>
-              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="point_8hpp.html">&lt;recti/point.hpp&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="interval_8hpp.html">&lt;recti/interval.hpp&gt;</a></div>
               <div class="m-doc-template">
-                template&lt;typename T1, typename T2, class Stream&gt;
+                template&lt;typename U1, typename U2&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa970ee90d8ebc48b8104bdef191cb164" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
-              const <a href="classrecti_1_1point.html" class="m-doc">point</a>&lt;T1, T2&gt;&amp; p) -&gt; Stream &amp;</span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0493662f27bb0678d2986b20fcc05d9d" class="m-doc-self">contain</a>(</span><span class="m-doc-wrap">const U1&amp; lhs,
+              const U2&amp; rhs) -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Template parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T1</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>T2</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Stream</td>
-                  <td></td>
-                </tr>
-              </tbody>
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>out&nbsp;<span class="m-label m-flat m-warning">out</span></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>p&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Stream&amp;</td>
-                </tr>
-              </tfoot>
-            </table>
+            <p><span></span></p>
+          </div></section>
+          <section class="m-doc-details" id="a6211777af679752908652203cf55390b"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="interval_8hpp.html">&lt;recti/interval.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6211777af679752908652203cf55390b" class="m-doc-self">intersection</a>(</span><span class="m-doc-wrap">const U1&amp; lhs,
+              const U2&amp; rhs) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p><span></span></p>
+          </div></section>
+          <section class="m-doc-details" id="a6eef925dba9e394d68d40bd52c1215f2"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="interval_8hpp.html">&lt;recti/interval.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6eef925dba9e394d68d40bd52c1215f2" class="m-doc-self">min_dist</a>(</span><span class="m-doc-wrap">const U1&amp; lhs,
+              const U2&amp; rhs) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p><span></span></p>
+          </div></section>
+          <section class="m-doc-details" id="a59b02afad3ab90026df9824968b924da"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="interval_8hpp.html">&lt;recti/interval.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a59b02afad3ab90026df9824968b924da" class="m-doc-self">enlarge</a>(</span><span class="m-doc-wrap">U1 lhs,
+              const U2&amp; rhs) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p><span></span></p>
+          </div></section>
+          <section class="m-doc-details" id="a6b88b1e6870369f57775c92f2e2faa05"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="interval_8hpp.html">&lt;recti/interval.hpp&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6b88b1e6870369f57775c92f2e2faa05" class="m-doc-self">min_dist_change</a>(</span><span class="m-doc-wrap">U1&amp; lhs,
+              U2&amp; rhs) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p><span></span></p>
           </div></section>
           <section class="m-doc-details" id="ae17a593810a99bc6eaac91ef2f281a4e"><div>
             <h3>
@@ -420,7 +417,7 @@
               FwIter&amp;&amp; last,
               Compare&amp;&amp; dir)</span></span>
             </h3>
-            <p>Create a ymono polygon object.</p>
+            <p>Create a mono polygon object.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Template parameters</th></tr>
@@ -724,50 +721,6 @@
             </table>
 <p>The code below is from Wm. Randolph Franklin <a href="mailto:wrf@ecse.rpi.edu">wrf@ecse.rpi.edu</a> (see URL below) with some minor modifications for rectilinear. It returns true for strictly interior points, false for strictly exterior, and ub for points on the boundary. The boundary behavior is complex but determined; in particular, for a partition of a region into polygons, each point is &quot;in&quot; exactly one polygon. (See p.243 of [O&#x27;Rourke (C)] for a discussion of boundary behavior.)</p><p>See <a href="http://www.faqs.org/faqs/graphics/algorithms-faq/">http:/<wbr />/<wbr />www.faqs.org/<wbr />faqs/<wbr />graphics/<wbr />algorithms-faq/<wbr /></a> Subject 2.03</p>
           </div></section>
-          <section class="m-doc-details" id="af2fb4de7de064f23b31d129e8e4d6a6d"><div>
-            <h3>
-              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="vector2_8hpp.html">&lt;recti/vector2.hpp&gt;</a></div>
-              <div class="m-doc-template">
-                template&lt;typename T, class Stream&gt;
-              </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af2fb4de7de064f23b31d129e8e4d6a6d" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
-              const <a href="classrecti_1_1vector2.html" class="m-doc">vector2</a>&lt;T&gt;&amp; v) -&gt; Stream &amp;</span></span>
-            </h3>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Template parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">T</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Stream</td>
-                  <td></td>
-                </tr>
-              </tbody>
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>out&nbsp;<span class="m-label m-flat m-warning">out</span></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>v&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Stream&amp;</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
         </section>
       </div>
     </div>
@@ -813,7 +766,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
