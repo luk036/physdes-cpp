@@ -52,9 +52,9 @@ TEST_CASE("Interval test") {
 
     CHECK(a.contains(4));
     CHECK(a.contains(8));
-    CHECK(a.intersection(8) == interval{8, 8});
+    CHECK(a.intersection_with(8) == interval{8, 8});
     CHECK(a.contains(b));
-    CHECK(a.intersection(b) == b);
+    CHECK(a.intersection_with(b) == b);
     CHECK(!b.contains(a));
     CHECK(a.overlaps(b));
     CHECK(b.overlaps(a));
@@ -134,8 +134,8 @@ TEST_CASE("Interval overlapping test") {
 }
 
 TEST_CASE("merge_obj test") {
-    auto r1 = merge_obj{4, 5};
-    auto r2 = merge_obj{7, 9};
+    auto r1 = merge_obj{4 + 5, 4 - 5};
+    auto r2 = merge_obj{7 + 9, 7 - 9};
     auto v = vector2{5, 6};
 
     CHECK(r1 != r2);

@@ -3,6 +3,7 @@
 #include <algorithm>  // import std::min, std::max
 #include <cassert>
 #include <utility>  // import std::move
+
 #include "point.hpp"
 
 namespace recti {
@@ -23,7 +24,15 @@ namespace recti {
          * @param[in] x
          * @param[in] y
          */
-        constexpr merge_obj(const T1& x, const T2& y) :  point<T1, T2>{x + y, x - y} {}
+        constexpr merge_obj(T1&& x, T2&& y) noexcept : point<T1, T2>{std::move(x), std::move(y)} {}
+
+        // /**
+        //  * @brief Construct a new point object
+        //  *
+        //  * @param[in] x
+        //  * @param[in] y
+        //  */
+        // constexpr merge_obj(const T1& x, const T2& y) : point<T1, T2>{x + y, x - y} {}
 
         /**
          * @brief Add a vector (translation)
@@ -93,11 +102,36 @@ namespace recti {
             return std::max(min_dist(this->_x, other._x), min_dist(this->_y, other._y));
         }
 
+        template <typename R>  //
+        friend constexpr auto enlarge(const merge_obj& lhs, const R& alpha) {
+            auto x = enlarge(lhs.x(), alpha);
+            auto y = enlarge(lhs.y(), alpha);
+            return merge_obj<decltype(x), decltype(y)>{std::move(x), std::move(y)};
+        }
+
+        /**
+         * @brief overlap
+         *
+         * @tparam U1
+         * @tparam U2
+         * @param other
+         * @return true
+         * @return false
+         */
+        template <typename U1, typename U2>  //
+        [[nodiscard]] constexpr auto merge(const merge_obj<U1, U2>& other) const {
+            auto alpha = this->min_dist_with(other);
+            auto half = alpha / 2;
+            auto trr1 = enlarge(*this, half);
+            auto trr2 = ehlarge(other, alpha - half);
+            return trr1.intersection_with(trr2);
+        }
+
         // /**
         //  * @brief minimum distance with
-        //  * 
-        //  * @param[in] other 
-        //  * @return constexpr auto 
+        //  *
+        //  * @param[in] other
+        //  * @return constexpr auto
         //  */
         // [[nodiscard]] constexpr auto min_dist_change_with(merge_obj& other) {
         //     auto minDist = this->min_dist_with(other);

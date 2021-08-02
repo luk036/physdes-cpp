@@ -293,6 +293,18 @@ namespace recti {
             return x -= alpha;
         }
 
+        /**
+         * @brief Enlarge with
+         *
+         * @param[in] alpha
+         * @return interval<T>&
+         */
+        constexpr auto enlarge_with(const T& alpha) -> interval<T>& {
+            this->_lower -= alpha;
+            this->_upper += alpha;
+            return *this;
+        }
+
         ///@}
 
         /**
@@ -338,7 +350,9 @@ namespace recti {
          * @param[in] other
          * @return constexpr auto
          */
-        constexpr auto intersection(const T& other) const -> interval { return {other, other}; }
+        constexpr auto intersection_with(const T& other) const -> interval {
+            return {other, other};
+        }
 
         /**
          * @brief intersection with
@@ -346,7 +360,7 @@ namespace recti {
          * @param[in] other
          * @return constexpr auto
          */
-        constexpr auto intersection(const interval& other) const -> interval {
+        constexpr auto intersection_with(const interval& other) const -> interval {
             return {std::max(this->_lower, other._lower), std::min(this->_upper, other._upper)};
         }
 
@@ -419,10 +433,6 @@ namespace recti {
             *this = other = this->intersection(other);
             return 0;
         }
-
-        // ???
-        template <typename U1, typename U2>  //
-        friend inline constexpr auto min_dist_change(U1& lhs, U2& rhs);
     };
 #pragma pack(pop)
 
@@ -477,6 +487,15 @@ namespace recti {
             }
         } else {
             return lhs.min_dist_with(rhs);
+        }
+    }
+
+    template <typename U1, typename U2>  //
+    inline constexpr auto enlarge(U1 lhs, const U2& rhs) {
+        if constexpr (std::is_scalar_v<U1>) {
+            return interval<U1>{lhs - rhs, lhs + rhs};
+        } else {
+            return lhs.enlarge_with(rhs);
         }
     }
 

@@ -4,10 +4,18 @@
 #include <type_traits>  // import std::is_scalar_v
 #include <utility>      // import std::move
 
-#include "vector2.hpp"
 #include "interval.hpp"
+#include "vector2.hpp"
 
 namespace recti {
+
+    /**
+     * @brief Forward declaration
+     *
+     * @tparam U1
+     * @tparam U2
+     */
+    template <typename U1, typename U2> class point;
 
 #pragma pack(push, 1)
     /**
@@ -18,6 +26,14 @@ namespace recti {
      */
     template <typename T1, typename T2 = T1> class point {
         using Self = point<T1, T2>;
+
+        /**
+         * @brief
+         *
+         * @tparam U1
+         * @tparam U2
+         */
+        template <typename U1, typename U2> friend class point;
 
       protected:
         T1 _x;  //!< x coordinate
@@ -59,7 +75,7 @@ namespace recti {
          *
          * @return auto
          */
-        constexpr auto _tie() const { return std::tie(_x, _y); }
+        constexpr auto _tie() const { return std::tie(this->_x, this->_y); }
 
         /** @name Comparison operators
          *  definie ==, !=, <, >, <=, >=.
@@ -141,6 +157,8 @@ namespace recti {
         /**
          * @brief Greater than or equal to
          *
+         * @tparam U1
+         * @tparam U2
          * @param[in] x
          * @param[in] y
          * @return true
@@ -161,11 +179,13 @@ namespace recti {
         /**
          * @brief Add a vector (translation)
          *
-         * @tparam U
+         * @tparam U1
+         * @tparam U2
          * @param[in] rhs
          * @return Self&
          */
-        template <typename U> constexpr auto operator+=(const vector2<U>& rhs) -> Self& {
+        template <typename U1, typename U2> constexpr auto operator+=(const vector2<U1, U2>& rhs)
+            -> Self& {
             this->_x += rhs.x();
             this->_y += rhs.y();
             return *this;
@@ -174,11 +194,13 @@ namespace recti {
         /**
          * @brief Substract a vector (translation)
          *
-         * @tparam U
+         * @tparam U1
+         * @tparam U2
          * @param[in] rhs
          * @return Self&
          */
-        template <typename U> constexpr auto operator-=(const vector2<U>& rhs) -> Self& {
+        template <typename U1, typename U2> constexpr auto operator-=(const vector2<U1, U2>& rhs)
+            -> Self& {
             this->_x -= rhs.x();
             this->_y -= rhs.y();
             return *this;
@@ -187,26 +209,28 @@ namespace recti {
         /**
          * @brief Add
          *
-         * @tparam U
+         * @tparam U1
+         * @tparam U2
          * @param[in] x
          * @param[in] y
          * @return vector2<T>
          */
-        template <typename U>  //
-        friend constexpr auto operator+(point x, const vector2<U>& y) -> point {
+        template <typename U1, typename U2>  //
+        friend constexpr auto operator+(point x, const vector2<U1, U2>& y) -> point {
             return x += y;
         }
 
         /**
          * @brief Substract
          *
-         * @tparam U
+         * @tparam U1
+         * @tparam U2
          * @param[in] x
          * @param[in] y
          * @return vector2<T>
          */
-        template <typename U>  //
-        friend constexpr auto operator-(point x, const vector2<U>& y) -> point {
+        template <typename U1, typename U2>  //
+        friend constexpr auto operator-(point x, const vector2<U1, U2>& y) -> point {
             return x -= y;
         }
 
@@ -214,10 +238,12 @@ namespace recti {
          * @brief Different
          *
          * @param[in] rhs
-         * @return vector2
+         * @return constexpr auto
          */
-        constexpr auto operator-(const Self& rhs) const -> vector2<T1> {
-            return {this->x() - rhs.x(), this->y() - rhs.y()};
+        constexpr auto operator-(const Self& rhs) const {
+            auto x = this->x() - rhs.x();
+            auto y = this->y() - rhs.y();
+            return vector2<decltype(x), decltype(y)>{std::move(x), std::move(y)};
         }
 
         /**
@@ -280,7 +306,6 @@ namespace recti {
             return contain(this->x(), other.x()) && contain(this->y(), other.y());
         }
 
-
         /**
          * @brief overlap
          *
@@ -292,7 +317,7 @@ namespace recti {
          */
         template <typename U1, typename U2>  //
         [[nodiscard]] constexpr auto min_dist_with(const point<U1, U2>& other) const {
-            return min_dist(this->_x, other._x) + min_dist(this->_y, other._y);
+            return min_dist(this->x(), other.x()) + min_dist(this->y(), other.y());
         }
 
         /**
@@ -308,24 +333,30 @@ namespace recti {
         [[nodiscard]] constexpr auto min_dist_change_with(point<U1, U2>& other) {
             return min_dist_change(this->_x, other._x) + min_dist_change(this->_y, other._y);
         }
+
+        template <typename R>  //
+        friend constexpr auto enlarge(const point& lhs, const R& alpha) {
+            auto x = enlarge(lhs.x(), alpha);
+            auto y = enlarge(lhs.y(), alpha);
+            return point<decltype(x), decltype(y)>{std::move(x), std::move(y)};
+        }
+
+        /**
+         * @brief
+         *
+         * @tparam T1
+         * @tparam T2
+         * @tparam Stream
+         * @param[out] out
+         * @param[in] p
+         * @return Stream&
+         */
+        template <class Stream> friend auto operator<<(Stream& out, const point& p) -> Stream& {
+            out << "(" << p.x() << ", " << p.y() << ")";
+            return out;
+        }
     };
 #pragma pack(pop)
-
-    /**
-     * @brief
-     *
-     * @tparam T1
-     * @tparam T2
-     * @tparam Stream
-     * @param[out] out
-     * @param[in] p
-     * @return Stream&
-     */
-    template <typename T1, typename T2, class Stream>
-    auto operator<<(Stream& out, const point<T1, T2>& p) -> Stream& {
-        out << "(" << p.x() << ", " << p.y() << ")";
-        return out;
-    }
 
 #pragma pack(push, 1)
     /**
