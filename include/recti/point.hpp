@@ -288,7 +288,7 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        [[nodiscard]] constexpr auto intersection(const point<U1, U2>& other) const -> point {
+        [[nodiscard]] constexpr auto intersection_with(const point<U1, U2>& other) const -> point {
             return {intersection(this->x(), other.x()), intersection(this->y(), other.y())};
         }
 

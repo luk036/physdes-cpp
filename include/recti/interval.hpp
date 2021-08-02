@@ -232,9 +232,7 @@ namespace recti {
          *
          * @return interval
          */
-        constexpr auto operator-() const -> interval {
-            return {-this->_upper, -this->_lower};
-        }
+        constexpr auto operator-() const -> interval { return {-this->_upper, -this->_lower}; }
 
         /**
          * @brief Add
@@ -360,8 +358,7 @@ namespace recti {
          * @param[in] other
          * @return constexpr auto
          */
-        template <typename U>
-        [[nodiscard]] constexpr auto min_dist_with(const U& other) const {
+        template <typename U> [[nodiscard]] constexpr auto min_dist_with(const U& other) const {
             if constexpr (std::is_scalar_v<U>) {
                 if (*this < other) {
                     return other - this->_upper;
@@ -387,8 +384,7 @@ namespace recti {
          * @param[in] other
          * @return constexpr auto
          */
-        template <typename U>
-        [[nodiscard]] constexpr auto min_dist_change_with(U& other) {
+        template <typename U> [[nodiscard]] constexpr auto min_dist_change_with(U& other) {
             if constexpr (std::is_scalar_v<U>) {
                 if (*this < other) {
                     this->_lower = this->_upper;
@@ -421,12 +417,10 @@ namespace recti {
          * @param[in] I
          * @return Stream&
          */
-        template <class Stream> friend auto operator<<(Stream& out, const interval& I)
-            -> Stream& {
+        template <class Stream> friend auto operator<<(Stream& out, const interval& I) -> Stream& {
             out << "[" << I.lower() << ", " << I.upper() << "]";
             return out;
         }
-
     };
 #pragma pack(pop)
 
@@ -464,10 +458,10 @@ namespace recti {
                 assert(lhs == rhs);
                 return lhs;
             } else {
-                return rhs.intersection(lhs);
+                return rhs.intersection_with(lhs);
             }
         } else {
-            return lhs.intersection(rhs);
+            return lhs.intersection_with(rhs);
         }
     }
 
@@ -489,7 +483,7 @@ namespace recti {
         if constexpr (std::is_scalar_v<U1>) {
             return interval<U1>{lhs - rhs, lhs + rhs};
         } else {
-            lhs.enlarge_with(rhs); 
+            lhs.enlarge_with(rhs);
             return lhs;
         }
     }

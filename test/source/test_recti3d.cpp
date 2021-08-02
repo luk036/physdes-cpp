@@ -31,36 +31,33 @@ TEST_CASE("Point 3D test") {
     // CHECK(a.flip_y().flip_y() == a);
 }
 
-// TEST_CASE("Interval test") {
-//     auto a = interval{4, 8};
-//     auto b = interval{5, 6};
-//     auto v = 3;
+TEST_CASE("Interval test") {
+    auto a = point{interval{4, 8}, 1};
+    auto b = point{interval{5, 6}, 1};
+    auto v = vector2{3, 0};
 
-//     CHECK(!(a < b));
-//     CHECK(!(b < a));
-//     CHECK(!(a > b));
-//     CHECK(!(b > a));
-//     CHECK(a <= b);
-//     CHECK(b <= a);
-//     CHECK(a >= b);
-//     CHECK(b >= a);
+    CHECK(!(a < b));
+    CHECK(!(b < a));
+    CHECK(!(a > b));
+    CHECK(!(b > a));
+    CHECK(a <= b);
+    CHECK(b <= a);
+    CHECK(a >= b);
+    CHECK(b >= a);
 
-//     CHECK(!(b == a));
-//     CHECK(b != a);
+    CHECK(!(b == a));
+    CHECK(b != a);
 
-//     CHECK((a - v) + v == a);
+    CHECK((a - v) + v == a);
 
-//     CHECK(a.contains(4));
-//     CHECK(a.contains(8));
-//     CHECK(a.intersection(8) == interval{8, 8});
-//     CHECK(a.contains(b));
-//     CHECK(a.intersection(b) == b);
-//     CHECK(!b.contains(a));
-//     CHECK(a.overlaps(b));
-//     CHECK(b.overlaps(a));
+    CHECK(a.contains(b));
+    CHECK(a.intersection_with(b) == b);
+    CHECK(!b.contains(a));
+    CHECK(a.overlaps(b));
+    CHECK(b.overlaps(a));
 
-//     CHECK(min_dist(a, b) == 0);
-// }
+    CHECK(min_dist(a, b) == 0);
+}
 
 TEST_CASE("Rectangle 3D test") {
     auto xrng1 = interval{40000, 80000};
