@@ -316,7 +316,8 @@ namespace recti {
          * @param[in] alpha
          * @return interval&
          */
-        constexpr auto operator+=(const T& alpha) -> interval& {
+        template <typename U>
+        constexpr auto operator+=(const U& alpha) -> interval& {
             this->_lower += alpha;
             this->_upper += alpha;
             return *this;
@@ -329,7 +330,8 @@ namespace recti {
          * @param[in] alpha
          * @return interval
          */
-        friend constexpr auto operator+(interval x, const T& alpha) -> interval {
+        template <typename U>
+        friend constexpr auto operator+(interval x, const U& alpha) -> interval {
             return x += alpha;
         }
 
@@ -350,7 +352,8 @@ namespace recti {
          * @param[in] alpha
          * @return interval&
          */
-        constexpr auto operator-=(const T& alpha) -> interval& {
+        template <typename U>
+        constexpr auto operator-=(const U& alpha) -> interval& {
             this->_lower -= alpha;
             this->_upper -= alpha;
             return *this;
@@ -363,7 +366,8 @@ namespace recti {
          * @param[in] alpha
          * @return interval
          */
-        friend constexpr auto operator-(interval x, const T& alpha) -> interval {
+        template <typename U>
+        friend constexpr auto operator-(interval x, const U& alpha) -> interval {
             return x -= alpha;
         }
 

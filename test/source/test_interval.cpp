@@ -46,7 +46,7 @@ TEST_CASE("Interval test") {
 TEST_CASE("Interval of interval test") {
     auto a = interval{interval{3, 4}, interval{8, 9}};
     auto b = interval{interval{5, 6}, interval{6, 7}};
-    // auto v = 3;
+    auto v = 3;
 
     CHECK(!(a < b));
     CHECK(!(b < a));
@@ -60,7 +60,7 @@ TEST_CASE("Interval of interval test") {
     CHECK(!(b == a));
     CHECK(b != a);
 
-    // CHECK((a - v) + v == a);
+    CHECK((a - v) + v == a);
 
     CHECK(a.contains(interval{4, 5}));
     CHECK(a.contains(interval{7, 8}));
