@@ -215,7 +215,6 @@ namespace recti {
          * @return true
          * @return false
          */
-        template <typename T>  //
         friend constexpr auto operator<(const T& lhs, const interval& rhs) -> bool {
             return lhs < rhs.lower();
         }
