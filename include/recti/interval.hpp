@@ -9,13 +9,12 @@ namespace recti {
     template <typename U1, typename U2>  //
     inline constexpr auto overlap(const U1& lhs, const U2& rhs) -> bool {
         if constexpr (!std::is_scalar_v<U1>) {
-            if (!lhs.overlaps(rhs)) return false;
+            return lhs.overlaps(rhs);
         } else if constexpr (!std::is_scalar_v<U2>) {
-            if (!rhs.overlaps(lhs)) return false;
+            return rhs.overlaps(lhs);
         } else {
-            if (lhs != rhs) return false;
+            return lhs == rhs;
         }
-        return true;
     }
 
     template <typename U1, typename U2>  //
@@ -229,7 +228,7 @@ namespace recti {
          */
         template <typename U>  //
         constexpr auto operator>(const U& rhs) const -> bool {
-            return rhs < *this;
+            return this->lower() > rhs;
         }
 
         /**
@@ -315,8 +314,7 @@ namespace recti {
          * @param[in] alpha
          * @return interval&
          */
-        template <typename U>
-        constexpr auto operator+=(const U& alpha) -> interval& {
+        template <typename U> constexpr auto operator+=(const U& alpha) -> interval& {
             this->_lower += alpha;
             this->_upper += alpha;
             return *this;
@@ -329,8 +327,8 @@ namespace recti {
          * @param[in] alpha
          * @return interval
          */
-        template <typename U>
-        friend constexpr auto operator+(interval x, const U& alpha) -> interval {
+        template <typename U> friend constexpr auto operator+(interval x, const U& alpha)
+            -> interval {
             return x += alpha;
         }
 
@@ -351,8 +349,7 @@ namespace recti {
          * @param[in] alpha
          * @return interval&
          */
-        template <typename U>
-        constexpr auto operator-=(const U& alpha) -> interval& {
+        template <typename U> constexpr auto operator-=(const U& alpha) -> interval& {
             this->_lower -= alpha;
             this->_upper -= alpha;
             return *this;
@@ -365,9 +362,11 @@ namespace recti {
          * @param[in] alpha
          * @return interval
          */
-        template <typename U>
-        friend constexpr auto operator-(interval x, const U& alpha) -> interval {
-            return x -= alpha;
+        template <typename U> friend constexpr auto operator-(interval x, const U& alpha)
+            -> interval {
+            auto lower = x.lower() - alpha;
+            auto upper = x.upper() - alpha;
+            return interval<decltype(lower)>{std::move(lower), std::move(upper)};
         }
 
         /**
@@ -422,11 +421,11 @@ namespace recti {
          * @return constexpr auto
          */
         template <typename U>  //
-        constexpr auto intersection_with(const U& other) const -> interval {
+        [[nodiscard]] constexpr auto intersection_with(const U& other) const {
             if constexpr (std::is_scalar_v<U>) {
-                return {other, other};
+                return other;
             } else {
-                return {std::max(this->_lower, other._lower), std::min(this->_upper, other._upper)};
+                return interval<T>{std::max(this->_lower, other._lower), std::min(this->_upper, other._upper)};
             }
         }
 

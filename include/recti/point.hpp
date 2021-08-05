@@ -211,13 +211,15 @@ namespace recti {
          *
          * @tparam U1
          * @tparam U2
-         * @param[in] x
-         * @param[in] y
+         * @param[in] p
+         * @param[in] v
          * @return vector2<T>
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator+(point x, const vector2<U1, U2>& y) -> point {
-            return x += y;
+        friend constexpr auto operator+(point p, const vector2<U1, U2>& v) {
+            auto x = p.x() + v.x();
+            auto y = p.y() + v.y();
+            return point<decltype(x), decltype(y)>{std::move(x), std::move(y)};
         }
 
         /**
@@ -330,8 +332,10 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        [[nodiscard]] constexpr auto intersection_with(const point<U1, U2>& other) const -> point {
-            return {intersection(this->x(), other.x()), intersection(this->y(), other.y())};
+        [[nodiscard]] constexpr auto intersection_with(const point<U1, U2>& other) const {
+            auto x = intersection(this->x(), other.x());
+            auto y = intersection(this->y(), other.y());
+            return point<decltype(x), decltype(y)>{std::move(x), std::move(y)};
         }
 
         /**
