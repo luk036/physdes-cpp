@@ -425,7 +425,8 @@ namespace recti {
             if constexpr (std::is_scalar_v<U>) {
                 return other;
             } else {
-                return interval<T>{std::max(this->_lower, other._lower), std::min(this->_upper, other._upper)};
+                return interval<T>{std::max(this->_lower, other._lower),
+                                   std::min(this->_upper, other._upper)};
             }
         }
 

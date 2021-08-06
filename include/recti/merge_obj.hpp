@@ -4,6 +4,7 @@
 #include <cassert>
 #include <utility>  // import std::move
 
+#include "interval.hpp"
 #include "point.hpp"
 
 namespace recti {
@@ -117,12 +118,12 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        [[nodiscard]] constexpr auto merge(const merge_obj<U1, U2>& other) const {
+        [[nodiscard]] constexpr auto merge_with(const merge_obj<U1, U2>& other) const {
             auto alpha = this->min_dist_with(other);
             auto half = alpha / 2;
             auto trr1 = enlarge(*this, half);
-            auto trr2 = ehlarge(other, alpha - half);
-            return trr1.intersection_with(trr2);
+            auto trr2 = enlarge(other, alpha - half);
+            return intersection(trr1, trr2);
         }
 
         // /**
