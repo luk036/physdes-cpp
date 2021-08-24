@@ -33,7 +33,7 @@ TEST_CASE("Interval test") {
 
     CHECK(a.contains(4));
     CHECK(a.contains(8));
-    CHECK(a.intersection_with(8) == 8);
+    CHECK(a.intersection_with(8) == interval{8, 8});
     CHECK(a.contains(b));
     CHECK(a.intersection_with(b) == b);
     CHECK(!b.contains(a));
@@ -64,7 +64,9 @@ TEST_CASE("Interval of interval test") {
 
     CHECK(a.contains(interval{4, 5}));
     CHECK(a.contains(interval{7, 8}));
-    // CHECK(a.intersection_with(interval{7, 8}) == interval{8, 8});
+
+    CHECK(a.intersection_with(interval{7, 8}) == interval{interval{7, 7}, interval{8, 9}});
+
     CHECK(a.contains(b));
     CHECK(a.intersection_with(b) == b);
     CHECK(!b.contains(a));

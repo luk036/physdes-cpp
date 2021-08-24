@@ -8,7 +8,6 @@
 // using std::randint;
 using namespace recti;
 
-
 TEST_CASE("merge_obj test") {
     auto r1 = merge_obj{4 + 5, 4 - 5};
     auto r2 = merge_obj{7 + 9, 7 - 9};

@@ -423,10 +423,10 @@ namespace recti {
         template <typename U>  //
         [[nodiscard]] constexpr auto intersection_with(const U& other) const {
             if constexpr (std::is_scalar_v<U>) {
-                return other;
+                return interval<U>{other, other};
             } else {
-                return interval<T>{std::max(this->_lower, other._lower),
-                                   std::min(this->_upper, other._upper)};
+                return interval<T>{std::max(this->lower(), T(other.lower())),
+                                   std::min(this->upper(), T(other.upper()))};
             }
         }
 
@@ -463,7 +463,6 @@ namespace recti {
                 this->_upper = this->_lower;
                 return min_dist_change(this->_lower, other);
             }
-
             if constexpr (std::is_scalar_v<U>) {
                 this->_upper = this->_lower = other;
             } else {
