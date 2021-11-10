@@ -6,6 +6,16 @@
 
 namespace recti {
 
+    /**
+     * @brief overlap
+     * 
+     * @tparam U1 
+     * @tparam U2 
+     * @param lhs 
+     * @param rhs 
+     * @return true 
+     * @return false 
+     */
     template <typename U1, typename U2>  //
     inline constexpr auto overlap(const U1& lhs, const U2& rhs) -> bool {
         if constexpr (!std::is_scalar_v<U1>) {
@@ -17,6 +27,16 @@ namespace recti {
         }
     }
 
+    /**
+     * @brief contain
+     * 
+     * @tparam U1 
+     * @tparam U2 
+     * @param lhs 
+     * @param rhs 
+     * @return true 
+     * @return false 
+     */
     template <typename U1, typename U2>  //
     inline constexpr auto contain(const U1& lhs, const U2& rhs) -> bool {
         if constexpr (!std::is_scalar_v<U1>) {
@@ -28,6 +48,15 @@ namespace recti {
         }
     }
 
+    /**
+     * @brief intersection
+     * 
+     * @tparam U1 
+     * @tparam U2 
+     * @param lhs 
+     * @param rhs 
+     * @return constexpr auto 
+     */
     template <typename U1, typename U2>  //
     inline constexpr auto intersection(const U1& lhs, const U2& rhs) {
         if constexpr (!std::is_scalar_v<U1>) {
@@ -40,6 +69,15 @@ namespace recti {
         }
     }
 
+    /**
+     * @brief min_dist
+     * 
+     * @tparam U1 
+     * @tparam U2 
+     * @param lhs 
+     * @param rhs 
+     * @return constexpr auto 
+     */
     template <typename U1, typename U2>  //
     inline constexpr auto min_dist(const U1& lhs, const U2& rhs) {
         if constexpr (!std::is_scalar_v<U1>) {
@@ -51,6 +89,15 @@ namespace recti {
         }
     }
 
+    /**
+     * @brief min_dist with change
+     * 
+     * @tparam U1 
+     * @tparam U2 
+     * @param lhs 
+     * @param rhs 
+     * @return constexpr auto 
+     */
     template <typename U1, typename U2>  //
     inline constexpr auto min_dist_change(U1& lhs, U2& rhs) {
         if constexpr (!std::is_scalar_v<U1>) {

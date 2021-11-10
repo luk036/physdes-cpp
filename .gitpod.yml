@@ -11,8 +11,8 @@ ports:
 #       ./envconfig.sh
 #   - command: >
 #       export CMAKE_PREFIX=/opt/conda
-
 vscode:
   extensions:
     - ms-vscode.cmake-tools
     - twxs.cmake
+    - cschlosser.doxdocgen
