@@ -17,3 +17,4 @@ vscode:
   extensions:
     - ms-vscode.cmake-tools
     - twxs.cmake
+    - cschlosser.doxdocgen
