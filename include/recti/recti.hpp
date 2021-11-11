@@ -12,8 +12,6 @@ namespace recti {
      * @brief Rectangle (Rectilinear)
      *
      * @tparam T
-     * @todo use "__attribute__((aligned(0)))" to align struct 'rectangle<int>' to 0
-     * bytes
      */
     template <typename T> struct rectangle : point<interval<T>> {
         /**
@@ -66,7 +64,6 @@ namespace recti {
      * @brief Horizontal Line Segment
      *
      * @tparam T
-     * @todo pack
      */
     template <typename T> struct hsegment : point<interval<T>, T> {
         /**
@@ -93,7 +90,6 @@ namespace recti {
      * @brief vsegment Line Segment
      *
      * @tparam T
-     * @todo pack
      */
     template <typename T> struct vsegment : point<T, interval<T>> {
         /**
