@@ -13,6 +13,7 @@ export CONDA_PREFIX=/workspace/conda
 export PATH=$CONDA_PREFIX/bin:$PATH &&
 source ~/.bashrc
 export SHELL=/bin/bash
+source /workspace/physdes-cpp/conda-config.sh
 
 #Install conda packages for to run jupyterlab
 # hash -r
