@@ -19,11 +19,11 @@ RUN apt-get update \
   kcachegrind-converters \
   kcachegrind \
   lcov \
-  libbenchmark-dev \
-  libboost-dev \
-  libfmt-dev \
-#  libjsoncpp-dev \
-#  libopenblas-dev \
+  # libbenchmark-dev \
+  # libboost-dev \
+  # libfmt-dev \
+  # libjsoncpp-dev \
+  # libopenblas-dev \
   librange-v3-dev \
   libspdlog-dev \
   ninja-build \
