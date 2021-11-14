@@ -3,12 +3,10 @@ name: Windows
 on:
   push:
     branches:
-      - master
-      - main
+      - develop
   pull_request:
     branches:
-      - master
-      - main
+      - develop
 
 env:
   CTEST_OUTPUT_ON_FAILURE: 1

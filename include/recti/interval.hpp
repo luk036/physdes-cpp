@@ -2,6 +2,7 @@
 
 #include <algorithm>  // import std::min, std::max
 #include <cassert>
+#include <compare>
 #include <utility>  // import std::move
 
 namespace recti {
@@ -199,147 +200,146 @@ namespace recti {
             return this->lower() == rhs.lower() && this->upper() == rhs.upper();
         }
 
-        /**
-         * @brief Not equal to
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U>  //
-        constexpr auto operator!=(const interval<U>& rhs) const -> bool {
-            return !(*this == rhs);
-        }
-
         // /**
-        //  * @brief Spaceship operator
+        //  * @brief Not equal to
         //  *
         //  * @tparam U
         //  * @param[in] rhs
-        //  * @return std::weak_ordering
+        //  * @return true
+        //  * @return false
         //  */
         // template <typename U>  //
-        // constexpr auto operator<=>(const U& rhs) const -> std::weak_ordering {
-        //     if (this->upper() < rhs) return std::weak_ordering::less;
-        //     if (this->lower() > rhs) return std::weak_ordering::greater;
-        //     return std::weak_ordering::equivalent;
-        // }
-
-        // /**
-        //  * @brief Spaceship operator
-        //  *
-        //  * @param[in] lhs
-        //  * @param[in] rhs
-        //  * @return std::weak_ordering
-        //  */
-        // friend constexpr auto operator<=>(const T& lhs, const interval& rhs) ->
-        // std::weak_ordering {
-        //     if (lhs < rhs.lower()) return std::weak_ordering::less;
-        //     if (lhs > rhs.upper()) return std::weak_ordering::greater;
-        //     return std::weak_ordering::equivalent;
+        // constexpr auto operator!=(const interval<U>& rhs) const -> bool {
+        //     return !(*this == rhs);
         // }
 
         /**
-         * @brief Less than other
+         * @brief Spaceship operator
          *
          * @tparam U
          * @param[in] rhs
-         * @return true
-         * @return false
+         * @return std::weak_ordering
          */
         template <typename U>  //
-        constexpr auto operator<(const U& rhs) const -> bool {
-            return this->upper() < rhs;
+        constexpr auto operator<=>(const U& rhs) const -> std::weak_ordering {
+            if (this->upper() < rhs) return std::weak_ordering::less;
+            if (this->lower() > rhs) return std::weak_ordering::greater;
+            return std::weak_ordering::equivalent;
         }
 
         /**
-         * @brief Left less than
+         * @brief Spaceship operator
          *
          * @param[in] lhs
          * @param[in] rhs
-         * @return true
-         * @return false
+         * @return std::weak_ordering
          */
-        friend constexpr auto operator<(const T& lhs, const interval& rhs) -> bool {
-            return lhs < rhs.lower();
+        friend constexpr auto operator<=>(const T& lhs, const interval& rhs) -> std::weak_ordering {
+            if (lhs < rhs.lower()) return std::weak_ordering::less;
+            if (lhs > rhs.upper()) return std::weak_ordering::greater;
+            return std::weak_ordering::equivalent;
         }
 
-        /**
-         * @brief Greater than
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U>  //
-        constexpr auto operator>(const U& rhs) const -> bool {
-            return this->lower() > rhs;
-        }
+        // /**
+        //  * @brief Less than other
+        //  *
+        //  * @tparam U
+        //  * @param[in] rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U>  //
+        // constexpr auto operator<(const U& rhs) const -> bool {
+        //     return this->upper() < rhs;
+        // }
 
-        /**
-         * @brief
-         *
-         * @param lhs
-         * @param rhs
-         * @return true
-         * @return false
-         */
-        friend constexpr auto operator>(const T& lhs, const interval& rhs) -> bool {
-            return rhs < lhs;
-        }
+        // /**
+        //  * @brief Left less than
+        //  *
+        //  * @param[in] lhs
+        //  * @param[in] rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // friend constexpr auto operator<(const T& lhs, const interval& rhs) -> bool {
+        //     return lhs < rhs.lower();
+        // }
 
-        /**
-         * @brief Less than or euqual to
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U>  //
-        constexpr auto operator<=(const U& rhs) const -> bool {
-            return !(rhs < *this);
-        }
+        // /**
+        //  * @brief Greater than
+        //  *
+        //  * @tparam U
+        //  * @param[in] rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U>  //
+        // constexpr auto operator>(const U& rhs) const -> bool {
+        //     return this->lower() > rhs;
+        // }
 
-        /**
-         * @brief
-         *
-         * @param lhs
-         * @param rhs
-         * @return true
-         * @return false
-         */
-        friend constexpr auto operator<=(const T& lhs, const interval& rhs) -> bool {
-            return !(rhs < lhs);
-            ;
-        }
+        // /**
+        //  * @brief
+        //  *
+        //  * @param lhs
+        //  * @param rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // friend constexpr auto operator>(const T& lhs, const interval& rhs) -> bool {
+        //     return rhs < lhs;
+        // }
 
-        /**
-         * @brief Greater than or equal to
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U>  //
-        constexpr auto operator>=(const U& rhs) const -> bool {
-            return !(*this < rhs);
-        }
+        // /**
+        //  * @brief Less than or euqual to
+        //  *
+        //  * @tparam U
+        //  * @param[in] rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U>  //
+        // constexpr auto operator<=(const U& rhs) const -> bool {
+        //     return !(rhs < *this);
+        // }
 
-        /**
-         * @brief
-         *
-         * @param lhs
-         * @param rhs
-         * @return true
-         * @return false
-         */
-        friend constexpr auto operator>=(const T& lhs, const interval& rhs) -> bool {
-            return !(lhs < rhs);
-        }
+        // /**
+        //  * @brief
+        //  *
+        //  * @param lhs
+        //  * @param rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // friend constexpr auto operator<=(const T& lhs, const interval& rhs) -> bool {
+        //     return !(rhs < lhs);
+        //     ;
+        // }
+
+        // /**
+        //  * @brief Greater than or equal to
+        //  *
+        //  * @tparam U
+        //  * @param[in] rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U>  //
+        // constexpr auto operator>=(const U& rhs) const -> bool {
+        //     return !(*this < rhs);
+        // }
+
+        // /**
+        //  * @brief
+        //  *
+        //  * @param lhs
+        //  * @param rhs
+        //  * @return true
+        //  * @return false
+        //  */
+        // friend constexpr auto operator>=(const T& lhs, const interval& rhs) -> bool {
+        //     return !(lhs < rhs);
+        // }
 
         ///@}
 
@@ -440,7 +440,7 @@ namespace recti {
          */
         template <typename U>  //
         [[nodiscard]] constexpr auto overlaps(const U& a) const -> bool {
-            return !(*this < a || a < *this);
+            return (*this <=> a) == std::weak_ordering::equivalent;
         }
 
         /**

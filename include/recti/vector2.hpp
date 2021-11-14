@@ -98,65 +98,65 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        constexpr auto operator<(const vector2<U1, U2>& other) const -> bool {
-            return this->_tie() < other._tie();
+        constexpr auto operator<=>(const vector2<U1, U2>& other) const {
+            return this->_tie() <=> other._tie();
         }
 
-        /**
-         * @brief Not equal to
-         *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] other
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2>  //
-        constexpr auto operator!=(const vector2<U1, U2>& other) const -> bool {
-            return !(*this == other);
-        }
+        // /**
+        //  * @brief Not equal to
+        //  *
+        //  * @tparam U1
+        //  * @tparam U2
+        //  * @param[in] other
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U1, typename U2>  //
+        // constexpr auto operator!=(const vector2<U1, U2>& other) const -> bool {
+        //     return !(*this == other);
+        // }
 
-        /**
-         * @brief Greater than
-         *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] other
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2>  //
-        constexpr auto operator>(const vector2<U1, U2>& other) const -> bool {
-            return other < *this;
-        }
+        // /**
+        //  * @brief Greater than
+        //  *
+        //  * @tparam U1
+        //  * @tparam U2
+        //  * @param[in] other
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U1, typename U2>  //
+        // constexpr auto operator>(const vector2<U1, U2>& other) const -> bool {
+        //     return other < *this;
+        // }
 
-        /**
-         * @brief Less than or euqual to
-         *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] other
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2>  //
-        constexpr auto operator<=(const vector2<U1, U2>& other) const -> bool {
-            return !(other < *this);
-        }
+        // /**
+        //  * @brief Less than or euqual to
+        //  *
+        //  * @tparam U1
+        //  * @tparam U2
+        //  * @param[in] other
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U1, typename U2>  //
+        // constexpr auto operator<=(const vector2<U1, U2>& other) const -> bool {
+        //     return !(other < *this);
+        // }
 
-        /**
-         * @brief Greater than or equal to
-         *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] other
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2>  //
-        constexpr auto operator>=(const vector2<U1, U2>& other) const -> bool {
-            return !(*this < other);
-        }
+        // /**
+        //  * @brief Greater than or equal to
+        //  *
+        //  * @tparam U1
+        //  * @tparam U2
+        //  * @param[in] other
+        //  * @return true
+        //  * @return false
+        //  */
+        // template <typename U1, typename U2>  //
+        // constexpr auto operator>=(const vector2<U1, U2>& other) const -> bool {
+        //     return !(*this < other);
+        // }
 
         ///@}
 
