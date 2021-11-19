@@ -229,4 +229,22 @@ namespace recti {
         return c;
     }
 
+    /**
+     * @brief polygon is clockwise
+     *
+     * @tparam T
+     * @param[in] S
+     * @return true
+     * @return false
+     */
+    template <typename T> inline auto rpolygon_is_clockwise(gsl::span<const point<T>> S) -> bool {
+        auto it1 = std::min_element(S.begin(), S.end());
+        auto it0 = it1 != S.begin() ? std::prev(it1) : S.end() - 1;
+        if (it1->y() < it0->y()) return false;
+        if (it1->y() > it0->y()) return true;
+        // it1->y() == it0->y()
+        auto it2 = std::next(it1) != S.end() ? std::next(it1) : S.begin();
+        return it2->y() > it1->y();
+    }
+
 }  // namespace recti

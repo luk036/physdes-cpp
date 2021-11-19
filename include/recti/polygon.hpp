@@ -52,21 +52,12 @@ namespace recti {
             auto n = vs.size();
             assert(n >= 2);
             auto res = vs[0].x() * vs[1].y() - vs[n - 1].x() * vs[n - 2].y();
-            for (auto i = 1U; i != n - 1; ++i) {
-                res += vs[i].x() * (vs[i + 1].y() - vs[i - 1].y());
+            auto it = vs.begin();
+            for (++it; it != std::prev(vs.end()); ++it) {
+                res += it->x() * (std::next(it)->y() - std::prev(it)->y());
             }
             return res;
         }
-
-        /**
-         * @brief
-         *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
-         */
-        template <typename U> auto contains(const point<U>& rhs) const -> bool;
 
         /**
          * @brief
@@ -186,6 +177,21 @@ namespace recti {
             p0 = p1;
         }
         return c;
+    }
+
+    /**
+     * @brief polygon is clockwise
+     *
+     * @tparam T
+     * @param[in] S
+     * @return true
+     * @return false
+     */
+    template <typename T> inline auto polygon_is_clockwise(gsl::span<const point<T>> S) -> bool {
+        auto it1 = std::min_element(S.begin(), S.end());
+        auto it0 = it1 != S.begin() ? std::prev(it1) : S.end() - 1;
+        auto it2 = std::next(it1) != S.end() ? std::next(it1) : S.begin();
+        return (*it1 - *it0).cross(*it2 - *it1) < 0;
     }
 
 }  // namespace recti

@@ -15,6 +15,7 @@ TEST_CASE("Polygon test (y-mono)") {
     create_ymono_polygon(S.begin(), S.end());
     auto P = polygon<int>(S);
     CHECK(P.signed_area_x2() == 102);
+    CHECK(!polygon_is_clockwise<int>(S));
     CHECK(!point_in_polygon<int>(S, point{4, 5}));
 }
 
@@ -26,6 +27,7 @@ TEST_CASE("Polygon test (x-mono)") {
     create_xmono_polygon(S.begin(), S.end());
     auto P = polygon<int>(S);
     CHECK(P.signed_area_x2() == 110);
+    CHECK(!polygon_is_clockwise<int>(S));
 }
 
 TEST_CASE("Polygon test (y-mono 50)") {
@@ -57,5 +59,6 @@ TEST_CASE("Polygon test (y-mono 50)") {
 
     auto P = polygon<int>(S);
     CHECK(P.signed_area_x2() == 4409856);
+    CHECK(!polygon_is_clockwise<int>(S));
     CHECK(point_in_polygon<int>(S, q));
 }
