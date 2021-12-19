@@ -28,7 +28,7 @@ jobs:
       - name: Before Install
         run: |
           sudo apt-get install g++-11
-          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 90 
+          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 90
 
       - name: Install dependence
         run: sudo apt-get install lcov
