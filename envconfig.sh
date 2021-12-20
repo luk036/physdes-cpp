@@ -11,7 +11,7 @@ echo Initializing...
 # echo "conda activate /workspace/conda/arcw" >> ~/.bashrc &&
 export CONDA_PREFIX=/workspace/conda
 export PATH=$CONDA_PREFIX/bin:$PATH &&
-source ~/.bashrc
+	source ~/.bashrc
 export SHELL=/bin/bash
 source /workspace/physdes-cpp/conda-config.sh
 
