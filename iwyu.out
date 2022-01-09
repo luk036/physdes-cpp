@@ -1,0 +1,186 @@
+[  6%] Building CXX object CMakeFiles/Recti.dir/source/greeter.cpp.o
+Warning: include-what-you-use reported diagnostics:
+
+/data/data/com.termux/files/home/github/physdes-cpp/source/greeter.cpp should add these lines:
+#include <iosfwd>           // for string
+#include <string>           // for basic_string
+#include <type_traits>      // for move
+
+/data/data/com.termux/files/home/github/physdes-cpp/source/greeter.cpp should remove these lines:
+
+The full include-list for /data/data/com.termux/files/home/github/physdes-cpp/source/greeter.cpp:
+#include <fmt/format.h>     // for format
+#include <recti/greeter.h>  // for Recti, LanguageCode, LanguageCode::DE
+#include <iosfwd>           // for string
+#include <string>           // for basic_string
+#include <type_traits>      // for move
+---
+
+[ 13%] Building CXX object CMakeFiles/Recti.dir/source/recti.cpp.o
+Warning: include-what-you-use reported diagnostics:
+
+/data/data/com.termux/files/home/github/physdes-cpp/include/recti/recti.hpp should add these lines:
+
+/data/data/com.termux/files/home/github/physdes-cpp/include/recti/recti.hpp should remove these lines:
+- #include <utility>  // lines 3-3
+
+The full include-list for /data/data/com.termux/files/home/github/physdes-cpp/include/recti/recti.hpp:
+#include "interval.hpp"  // for interval
+#include "point.hpp"     // for point
+---
+
+(/data/data/com.termux/files/home/github/physdes-cpp/source/recti.cpp has correct #includes/fwd-decls)
+
+[ 20%] Building CXX object CMakeFiles/Recti.dir/source/rpolygon.cpp.o
+[ 26%] Linking CXX static library libRecti.a
+[ 26%] Built target Recti
+[ 33%] Building CXX object test/CMakeFiles/RectiTests.dir/source/main.cpp.o
+[ 40%] Building CXX object test/CMakeFiles/RectiTests.dir/source/test_interval.cpp.o
+Warning: include-what-you-use reported diagnostics:
+
+/data/data/com.termux/files/home/github/physdes-cpp/test/source/test_interval.cpp should add these lines:
+#include <__tree>                // for operator!=
+
+/data/data/com.termux/files/home/github/physdes-cpp/test/source/test_interval.cpp should remove these lines:
+- #include <cstdlib>  // lines 3-3
+
+The full include-list for /data/data/com.termux/files/home/github/physdes-cpp/test/source/test_interval.cpp:
+#include <doctest/doctest.h>     // for ResultBuilder, CHECK, Expression_lhs
+#include <__tree>                // for operator!=
+#include <list>                  // for list, __list_iterator, operator!=
+#include <ostream>               // for operator<<
+#include <recti/halton_int.hpp>  // for vdcorput, recti
+#include <recti/interval.hpp>    // for interval, operator<<, operator+, ope...
+#include <set>                   // for set, set<>::iterator
+---
+
+[ 46%] Building CXX object test/CMakeFiles/RectiTests.dir/source/test_merge.cpp.o
+Warning: include-what-you-use reported diagnostics:
+
+/data/data/com.termux/files/home/github/physdes-cpp/test/source/test_merge.cpp should add these lines:
+#include "recti/interval.hpp"    // for min_dist, overlap, interval
+#include "recti/point.hpp"       // for operator<<, point
+#include "recti/vector2.hpp"     // for vector2
+
+/data/data/com.termux/files/home/github/physdes-cpp/test/source/test_merge.cpp should remove these lines:
+- #include <recti/recti.hpp>  // lines 6-6
+
+The full include-list for /data/data/com.termux/files/home/github/physdes-cpp/test/source/test_merge.cpp:
+#include <doctest/doctest.h>     // for ResultBuilder, CHECK, TestCase, TEST...
+#include <iostream>              // for operator<<, ostream, basic_ostream
+#include <recti/halton_int.hpp>  // for recti
+#include <recti/merge_obj.hpp>   // for merge_obj, operator+, operator-
+#include "recti/interval.hpp"    // for min_dist, overlap, interval
+#include "recti/point.hpp"       // for operator<<, point
+#include "recti/vector2.hpp"     // for vector2
+---
+
+[ 53%] Building CXX object test/CMakeFiles/RectiTests.dir/source/test_polygon.cpp.o
+Warning: include-what-you-use reported diagnostics:
+
+/data/data/com.termux/files/home/github/physdes-cpp/test/source/test_polygon.cpp should add these lines:
+#include <gsl/span>              // for span
+#include "recti/point.hpp"       // for point
+
+/data/data/com.termux/files/home/github/physdes-cpp/test/source/test_polygon.cpp should remove these lines:
+- #include <recti/recti.hpp>  // lines 5-5
+
+The full include-list for /data/data/com.termux/files/home/github/physdes-cpp/test/source/test_polygon.cpp:
+#include <doctest/doctest.h>     // for ResultBuilder, CHECK, TestCase, Expr...
+#include <gsl/span>              // for span
+#include <recti/halton_int.hpp>  // for vdcorput, recti
+#include <recti/polygon.hpp>     // for polygon, polygon_is_clockwise, creat...
+#include <vector>                // for vector
+#include "recti/point.hpp"       // for point
+---
+
+[ 60%] Building CXX object test/CMakeFiles/RectiTests.dir/source/test_recti.cpp.o
+Warning: include-what-you-use reported diagnostics:
+
+/data/data/com.termux/files/home/github/physdes-cpp/test/source/test_recti.cpp should add these lines:
+#include "recti/interval.hpp"    // for interval, min_dist, overlap
+#include "recti/point.hpp"       // for point, operator<<, operator+, operat...
+#include "recti/vector2.hpp"     // for operator/, vector2
+
+/data/data/com.termux/files/home/github/physdes-cpp/test/source/test_recti.cpp should remove these lines:
+- #include <recti/merge_obj.hpp>  // lines 5-5
+
+The full include-list for /data/data/com.termux/files/home/github/physdes-cpp/test/source/test_recti.cpp:
+#include <doctest/doctest.h>     // for ResultBuilder, CHECK, Expression_lhs
+#include <ostream>               // for operator<<
+#include <recti/halton_int.hpp>  // for recti
+#include <recti/recti.hpp>       // for rectangle, hsegment, vsegment
+#include "recti/interval.hpp"    // for interval, min_dist, overlap
+#include "recti/point.hpp"       // for point, operator<<, operator+, operat...
+#include "recti/vector2.hpp"     // for operator/, vector2
+---
+
+[ 66%] Building CXX object test/CMakeFiles/RectiTests.dir/source/test_recti3d.cpp.o
+Warning: include-what-you-use reported diagnostics:
+
+/data/data/com.termux/files/home/github/physdes-cpp/test/source/test_recti3d.cpp should add these lines:
+#include "recti/interval.hpp"    // for min_dist, interval, overlap
+#include "recti/point.hpp"       // for point, operator<<, operator+, operator-
+#include "recti/vector2.hpp"     // for vector2, operator/
+
+/data/data/com.termux/files/home/github/physdes-cpp/test/source/test_recti3d.cpp should remove these lines:
+- #include <cstdlib>  // lines 3-3
+- #include <list>  // lines 4-4
+- #include <set>  // lines 9-9
+
+The full include-list for /data/data/com.termux/files/home/github/physdes-cpp/test/source/test_recti3d.cpp:
+#include <doctest/doctest.h>     // for ResultBuilder, CHECK, Expression_lhs
+#include <ostream>               // for operator<<
+#include <recti/halton_int.hpp>  // for recti
+#include <recti/merge_obj.hpp>   // for merge_obj
+#include <recti/recti.hpp>       // for rectangle
+#include "recti/interval.hpp"    // for min_dist, interval, overlap
+#include "recti/point.hpp"       // for point, operator<<, operator+, operator-
+#include "recti/vector2.hpp"     // for vector2, operator/
+---
+
+[ 73%] Building CXX object test/CMakeFiles/RectiTests.dir/source/test_rpolygon.cpp.o
+Warning: include-what-you-use reported diagnostics:
+
+/data/data/com.termux/files/home/github/physdes-cpp/test/source/test_rpolygon.cpp should add these lines:
+#include <gsl/span>              // for span
+#include "recti/point.hpp"       // for point, operator>
+
+/data/data/com.termux/files/home/github/physdes-cpp/test/source/test_rpolygon.cpp should remove these lines:
+- #include <cstdio>  // lines 3-3
+- #include <recti/recti.hpp>  // lines 6-6
+
+The full include-list for /data/data/com.termux/files/home/github/physdes-cpp/test/source/test_rpolygon.cpp:
+#include <doctest/doctest.h>     // for ResultBuilder, CHECK, Expression_lhs
+#include <gsl/span>              // for span
+#include <recti/halton_int.hpp>  // for vdcorput, recti
+#include <recti/rpolygon.hpp>    // for rpolygon, rpolygon_is_clockwise, cre...
+#include <vector>                // for vector
+#include "recti/point.hpp"       // for point, operator>
+---
+
+[ 80%] Building CXX object test/CMakeFiles/RectiTests.dir/source/test_vector2.cpp.o
+[ 86%] Linking CXX executable RectiTests
+[ 86%] Built target RectiTests
+[ 93%] Building CXX object standalone/CMakeFiles/RectiStandalone.dir/source/main.cpp.o
+Warning: include-what-you-use reported diagnostics:
+
+/data/data/com.termux/files/home/github/physdes-cpp/standalone/source/main.cpp should add these lines:
+#include <memory>           // for shared_ptr
+#include <utility>          // for pair
+
+/data/data/com.termux/files/home/github/physdes-cpp/standalone/source/main.cpp should remove these lines:
+
+The full include-list for /data/data/com.termux/files/home/github/physdes-cpp/standalone/source/main.cpp:
+#include <recti/greeter.h>  // for LanguageCode, LanguageCode::DE, LanguageC...
+#include <recti/version.h>  // for RECTI_VERSION
+#include <cxxopts.hpp>      // for value, OptionAdder, Options, OptionValue
+#include <iostream>         // for string, operator<<, endl, basic_ostream
+#include <memory>           // for shared_ptr
+#include <string>           // for char_traits, hash, operator==
+#include <unordered_map>    // for operator==, unordered_map, __hash_map_con...
+#include <utility>          // for pair
+---
+
+[100%] Linking CXX executable Recti
+[100%] Built target RectiStandalone
