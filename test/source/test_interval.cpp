@@ -1,11 +1,10 @@
-#include <doctest/doctest.h>
-// #include <random>
-#include <cstdlib>
-#include <list>
-#include <ostream>
-#include <recti/halton_int.hpp>
-#include <recti/interval.hpp>
-#include <set>
+#include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
+
+#include <list>                  // for list, __list_iterator, operator!=
+#include <ostream>               // for operator<<
+#include <recti/halton_int.hpp>  // for vdcorput, recti
+#include <recti/interval.hpp>    // for interval, operator<<, operator+, ope...
+#include <set>                   // for set, set<>::iterator
 
 // using std::randint;
 using namespace recti;

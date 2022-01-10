@@ -1,5 +1,9 @@
-#include <fmt/format.h>
-#include <recti/greeter.h>
+#include <fmt/format.h>     // for format
+#include <recti/greeter.h>  // for Recti, LanguageCode, LanguageCode::DE
+
+#include <iosfwd>       // for string
+#include <string>       // for basic_string
+#include <type_traits>  // for move
 
 using namespace recti;
 

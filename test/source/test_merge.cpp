@@ -1,9 +1,13 @@
-#include <doctest/doctest.h>
+#include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, TEST...
+
+#include <recti/halton_int.hpp>  // for recti
+#include <recti/merge_obj.hpp>   // for merge_obj, operator+, operator-
 // #include <random>
-#include <iostream>
-#include <recti/halton_int.hpp>
-#include <recti/merge_obj.hpp>
-#include <recti/recti.hpp>
+#include <iostream>  // for operator<<, ostream, basic_ostream
+
+#include "recti/interval.hpp"  // for min_dist, overlap, interval
+#include "recti/point.hpp"     // for operator<<, point
+#include "recti/vector2.hpp"   // for vector2
 
 // using std::randint;
 using namespace recti;

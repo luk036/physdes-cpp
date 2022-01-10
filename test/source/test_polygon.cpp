@@ -1,9 +1,11 @@
-#include <doctest/doctest.h>
+#include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, Expr...
 // #include <fmt/core.h>
-#include <recti/halton_int.hpp>
-#include <recti/polygon.hpp>
-#include <recti/recti.hpp>
-#include <vector>
+#include <gsl/span>              // for span
+#include <recti/halton_int.hpp>  // for vdcorput, recti
+#include <recti/polygon.hpp>     // for polygon, polygon_is_clockwise, creat...
+#include <vector>                // for vector
+
+#include "recti/point.hpp"  // for point
 
 // using std::randint;
 using namespace recti;

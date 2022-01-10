@@ -1,9 +1,7 @@
 #pragma once
 
-#include <utility>  // import std::move
-
-#include "interval.hpp"
-#include "point.hpp"
+#include "interval.hpp"  // for interval
+#include "point.hpp"     // for point
 
 namespace recti {
 
