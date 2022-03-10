@@ -9,7 +9,7 @@
 // using std::randint;
 using namespace recti;
 
-// template <typename T> struct my_point : point<T, T> { double data; };
+// template <typename T> struct my_point : Point<T, T> { double data; };
 
 TEST_CASE("Interval test") {
     auto a = interval{4, 8};
@@ -87,7 +87,7 @@ TEST_CASE("Interval overlapping test") {
             // auto y = hgenY();
             auto xrng = interval{x, x + 100};
             // auto yrng = interval{y, y + 100};
-            // auto r = rectangle{xrng, yrng};
+            // auto r = Rect{xrng, yrng};
             // lst.push_back(r);
             lst.push_back(xrng);
         }

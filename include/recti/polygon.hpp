@@ -13,18 +13,18 @@ namespace recti {
      *
      * @tparam T
      */
-    template <typename T> class polygon {
+    template <typename T> class Polygon {
       private:
-        point<T> _origin;
-        std::vector<vector2<T>> _vecs;
+        Point<T> _origin;
+        std::vector<Vector2<T>> _vecs;
 
       public:
         /**
-         * @brief Construct a new polygon object
+         * @brief Construct a new Polygon object
          *
          * @param[in] pointset
          */
-        explicit constexpr polygon(gsl::span<const point<T>> pointset) : _origin{pointset.front()} {
+        explicit constexpr Polygon(gsl::span<const Point<T>> pointset) : _origin{pointset.front()} {
             auto it = pointset.begin();
             for (++it; it != pointset.end(); ++it) {
                 this->_vecs.push_back(*it - this->_origin);
@@ -35,9 +35,9 @@ namespace recti {
          * @brief
          *
          * @param[in] rhs
-         * @return constexpr point&
+         * @return constexpr Point&
          */
-        constexpr auto operator+=(const vector2<T>& rhs) -> polygon& {
+        constexpr auto operator+=(const Vector2<T>& rhs) -> Polygon& {
             this->_origin += rhs;
             return *this;
         }
@@ -62,16 +62,16 @@ namespace recti {
         /**
          * @brief
          *
-         * @return point<T>
+         * @return Point<T>
          */
-        [[nodiscard]] auto lower() const -> point<T>;
+        [[nodiscard]] auto lb() const -> Point<T>;
 
         /**
          * @brief
          *
-         * @return point<T>
+         * @return Point<T>
          */
-        [[nodiscard]] auto upper() const -> point<T>;
+        [[nodiscard]] auto ub() const -> Point<T>;
     };
 
     /**
@@ -83,7 +83,7 @@ namespace recti {
      * @param[in] r
      * @return Stream&
      */
-    template <class Stream, typename T> auto operator<<(Stream& out, const polygon<T>& r)
+    template <class Stream, typename T> auto operator<<(Stream& out, const Polygon<T>& r)
         -> Stream& {
         for (auto&& p : r) {
             out << "  \\draw " << p << ";\n";
@@ -92,7 +92,7 @@ namespace recti {
     }
 
     /**
-     * @brief Create a mono polygon object
+     * @brief Create a mono Polygon object
      *
      * @tparam FwIter
      * @tparam Compare
@@ -115,7 +115,7 @@ namespace recti {
     }
 
     /**
-     * @brief Create a xmono polygon object
+     * @brief Create a xmono Polygon object
      *
      * @tparam FwIter
      * @param[in] first
@@ -126,7 +126,7 @@ namespace recti {
     }
 
     /**
-     * @brief Create a ymono polygon object
+     * @brief Create a ymono Polygon object
      *
      * @tparam FwIter
      * @param[in] first
@@ -139,14 +139,14 @@ namespace recti {
     }
 
     /**
-     * @brief determine if a point is within a polygon
+     * @brief determine if a Point is within a Polygon
      *
      * The code below is from Wm. Randolph Franklin <wrf@ecse.rpi.edu>
      * (see URL below) with some minor modifications for integer. It returns
      * true for strictly interior points, false for strictly exterior, and ub
      * for points on the boundary.  The boundary behavior is complex but
      * determined; in particular, for a partition of a region into polygons,
-     * each point is "in" exactly one polygon.
+     * each Point is "in" exactly one Polygon.
      * (See p.243 of [O'Rourke (C)] for a discussion of boundary behavior.)
      *
      * See http://www.faqs.org/faqs/graphics/algorithms-faq/ Subject 2.03
@@ -158,7 +158,7 @@ namespace recti {
      * @return false
      */
     template <typename T>
-    inline auto point_in_polygon(gsl::span<const point<T>> S, const point<T>& q) -> bool {
+    inline auto point_in_polygon(gsl::span<const Point<T>> S, const Point<T>& q) -> bool {
         auto c = false;
         auto p0 = S.back();
         for (auto&& p1 : S) {
@@ -180,14 +180,14 @@ namespace recti {
     }
 
     /**
-     * @brief polygon is clockwise
+     * @brief Polygon is clockwise
      *
      * @tparam T
      * @param[in] S
      * @return true
      * @return false
      */
-    template <typename T> inline auto polygon_is_clockwise(gsl::span<const point<T>> S) -> bool {
+    template <typename T> inline auto polygon_is_clockwise(gsl::span<const Point<T>> S) -> bool {
         auto it1 = std::min_element(S.begin(), S.end());
         auto it0 = it1 != S.begin() ? std::prev(it1) : S.end() - 1;
         auto it2 = std::next(it1) != S.end() ? std::next(it1) : S.begin();

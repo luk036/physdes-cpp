@@ -1,22 +1,22 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 
 #include <recti/halton_int.hpp>  // for recti
-#include <recti/recti.hpp>       // for rectangle, hsegment, vsegment
+#include <recti/recti.hpp>       // for Rect, HSegment, VSegment
 // #include <random>
 #include <ostream>  // for operator<<
 
 #include "recti/interval.hpp"  // for interval, min_dist, overlap
-#include "recti/point.hpp"     // for point, operator<<, operator+, operat...
+#include "recti/point.hpp"     // for Point, operator<<, operator+, operat...
 #include "recti/vector2.hpp"   // for operator/, vector2
 
 // using std::randint;
 using namespace recti;
 
-// template <typename T> struct my_point : point<T, T> { double data; };
+// template <typename T> struct my_point : Point<T, T> { double data; };
 
 TEST_CASE("Point test") {
-    auto a = point<int>{4, 8};
-    auto b = point<int>{5, 6};
+    auto a = Point<int>{4, 8};
+    auto b = Point<int>{5, 6};
     auto v = (b - a) / 2;  // integer division
 
     CHECK(a < b);
@@ -35,12 +35,12 @@ TEST_CASE("Point test") {
 TEST_CASE("Rectangle test") {
     auto xrng1 = interval{4, 8};
     auto yrng1 = interval{5, 7};
-    auto r1 = rectangle{xrng1, yrng1};
+    auto r1 = Rect{xrng1, yrng1};
     auto xrng2 = interval{5, 7};
     auto yrng2 = interval{6, 6};
-    auto r2 = rectangle{xrng2, yrng2};
-    auto p = point{7, 6};
-    auto v = vector2{5, 6};
+    auto r2 = Rect{xrng2, yrng2};
+    auto p = Point{7, 6};
+    auto v = Vector2{5, 6};
 
     CHECK(r1 != r2);
     CHECK((r1 - v) + v == r1);
@@ -58,8 +58,8 @@ TEST_CASE("Rectangle test") {
 TEST_CASE("Segment test") {
     auto xrng1 = interval{4, 8};
     auto yrng1 = interval{5, 7};
-    auto s1 = hsegment{xrng1, 6};
-    auto s2 = vsegment{5, yrng1};
+    auto s1 = HSegment{xrng1, 6};
+    auto s2 = VSegment{5, yrng1};
 
     CHECK(s1.overlaps(s2));
 }
