@@ -20,9 +20,18 @@ jobs:
           path: "**/cpm_modules"
           key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
 
+      - name: Add conda to system path
+        run: |
+          # $CONDA is an environment variable pointing to the root of the miniconda directory
+          echo $CONDA/bin >> $GITHUB_PATH
+
+      - name: Install dependent software
+        run: |
+          conda info
+          conda env update --file doc-dev.yml --name base
+
       - name: Install dependencies
         run: |
-          sudo apt install doxygen
           pip3 install jinja2 Pygments
 
       - name: Build

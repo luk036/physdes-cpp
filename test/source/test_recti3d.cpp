@@ -3,20 +3,20 @@
 #include <ostream>               // for operator<<
 #include <recti/halton_int.hpp>  // for recti
 #include <recti/merge_obj.hpp>   // for merge_obj
-#include <recti/recti.hpp>       // for rectangle
+#include <recti/recti.hpp>       // for Rect
 
 #include "recti/interval.hpp"  // for min_dist, interval, overlap
-#include "recti/point.hpp"     // for point, operator<<, operator+, operator-
-#include "recti/vector2.hpp"   // for vector2, operator/
+#include "recti/point.hpp"     // for Point, operator<<, operator+, operator-
+#include "recti/vector2.hpp"   // for Vector2, operator/
 
 // using std::randint;
 using namespace recti;
 
-// template <typename T> struct my_point : point<T, T> { double data; };
+// template <typename T> struct my_point : Point<T, T> { double data; };
 
 TEST_CASE("Point 3D test") {
-    auto a = point{point{40000, 80000}, 20000};
-    auto b = point{point{50000, 60000}, 10000};
+    auto a = Point{Point{40000, 80000}, 20000};
+    auto b = Point{Point{50000, 60000}, 10000};
     auto v = (b - a) / 2;  // integer division
 
     CHECK(a < b);
@@ -33,9 +33,9 @@ TEST_CASE("Point 3D test") {
 }
 
 TEST_CASE("Interval test") {
-    auto a = point{interval{4, 8}, 1};
-    auto b = point{interval{5, 6}, 1};
-    auto v = vector2{3, 0};
+    auto a = Point{interval{4, 8}, 1};
+    auto b = Point{interval{5, 6}, 1};
+    auto v = Vector2{3, 0};
 
     CHECK(!(a < b));
     CHECK(!(b < a));
@@ -63,13 +63,13 @@ TEST_CASE("Interval test") {
 TEST_CASE("Rectangle 3D test") {
     auto xrng1 = interval{40000, 80000};
     auto yrng1 = interval{50000, 70000};
-    auto r1 = point{rectangle{xrng1, yrng1}, 1000};
+    auto r1 = Point{Rect{xrng1, yrng1}, 1000};
     auto xrng2 = interval{50000, 70000};
     auto yrng2 = interval{60000, 60000};
-    auto r2 = point{rectangle{xrng2, yrng2}, 1000};
-    auto v = vector2{vector2{50000, 60000}, 0};
-    auto p1 = point{point{70000, 60000}, 1000};
-    auto p2 = point{point{70000, 60000}, 2000};
+    auto r2 = Point{Rect{xrng2, yrng2}, 1000};
+    auto v = Vector2{Vector2{50000, 60000}, 0};
+    auto p1 = Point{Point{70000, 60000}, 1000};
+    auto p2 = Point{Point{70000, 60000}, 2000};
 
     CHECK(r1 != r2);
     CHECK((r1 - v) + v == r1);
@@ -91,8 +91,8 @@ TEST_CASE("Rectangle 3D test") {
 // TEST_CASE("Segment test") {
 //     auto xrng1 = interval{4, 8};
 //     auto yrng1 = interval{5, 7};
-//     auto s1 = hsegment{xrng1, 6};
-//     auto s2 = vsegment{5, yrng1};
+//     auto s1 = HSegment{xrng1, 6};
+//     auto s2 = VSegment{5, yrng1};
 
 //     CHECK(s1.overlaps(s2));
 // }
@@ -109,7 +109,7 @@ TEST_CASE("Rectangle 3D test") {
 //             // auto y = hgenY();
 //             auto xrng = interval{x, x + 100};
 //             // auto yrng = interval{y, y + 100};
-//             // auto r = rectangle{xrng, yrng};
+//             // auto r = Rect{xrng, yrng};
 //             // lst.push_back(r);
 //             lst.push_back(xrng);
 //         }
@@ -136,13 +136,13 @@ TEST_CASE("Rectangle 3D test") {
 //     // }
 // }
 
-TEST_CASE("merge_obj test") {
-    auto a = point{40000, 80000};
-    auto b = point{50000, 60000};
+TEST_CASE("MergeObj test") {
+    auto a = Point{40000, 80000};
+    auto b = Point{50000, 60000};
 
-    auto m1 = merge_obj{a + 50000, a - 50000};
-    auto m2 = merge_obj{b + 90000, b - 90000};
-    // auto v = vector2{vector2{50000, 60000}, 0};
+    auto m1 = MergeObj{a + 50000, a - 50000};
+    auto m2 = MergeObj{b + 90000, b - 90000};
+    // auto v = Vector2{Vector2{50000, 60000}, 0};
 
     CHECK(m1 != m2);
     // CHECK((m1 - v) + v == m1);

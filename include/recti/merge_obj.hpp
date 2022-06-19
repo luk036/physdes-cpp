@@ -13,36 +13,36 @@ namespace recti {
     /**
      * @brief merge_obj
      *
-     * object includes a single point, segment, or a region
+     * object includes a single Point, segment, or a region
      *
      * @tparam T
      */
-    template <typename T1, typename T2> class merge_obj : public point<T1, T2> {
+    template <typename T1, typename T2> class MergeObj : public Point<T1, T2> {
       public:
         /**
-         * @brief Construct a new point object
+         * @brief Construct a new Point object
          *
          * @param[in] x
          * @param[in] y
          */
-        constexpr merge_obj(T1&& x, T2&& y) noexcept : point<T1, T2>{std::move(x), std::move(y)} {}
+        constexpr MergeObj(T1&& x, T2&& y) noexcept : Point<T1, T2>{std::move(x), std::move(y)} {}
 
         // /**
-        //  * @brief Construct a new point object
+        //  * @brief Construct a new Point object
         //  *
         //  * @param[in] x
         //  * @param[in] y
         //  */
-        // constexpr merge_obj(const T1& x, const T2& y) : point<T1, T2>{x + y, x - y} {}
+        // constexpr MergeObj(const T1& x, const T2& y) : Point<T1, T2>{x + y, x - y} {}
 
         /**
          * @brief Add a vector (translation)
          *
          * @tparam U
          * @param[in] rhs
-         * @return merge_obj&
+         * @return MergeObj&
          */
-        template <typename U> constexpr auto operator+=(const vector2<U>& rhs) -> merge_obj& {
+        template <typename U> constexpr auto operator+=(const Vector2<U>& rhs) -> MergeObj& {
             this->_x += rhs.x() + rhs.y();
             this->_y += rhs.x() - rhs.y();
             return *this;
@@ -53,9 +53,9 @@ namespace recti {
          *
          * @tparam U
          * @param[in] rhs
-         * @return merge_obj&
+         * @return MergeObj&
          */
-        template <typename U> constexpr auto operator-=(const vector2<U>& rhs) -> merge_obj& {
+        template <typename U> constexpr auto operator-=(const Vector2<U>& rhs) -> MergeObj& {
             this->_x -= rhs.x() + rhs.y();
             this->_y -= rhs.x() - rhs.y();
             return *this;
@@ -67,10 +67,10 @@ namespace recti {
          * @tparam U
          * @param[in] x
          * @param[in] y
-         * @return vector2<T>
+         * @return Vector2<T>
          */
         template <typename U>  //
-        friend constexpr auto operator+(merge_obj x, const vector2<U>& y) -> merge_obj {
+        friend constexpr auto operator+(MergeObj x, const Vector2<U>& y) -> MergeObj {
             return x += y;
         }
 
@@ -80,10 +80,10 @@ namespace recti {
          * @tparam U
          * @param[in] x
          * @param[in] y
-         * @return vector2<T>
+         * @return Vector2<T>
          */
         template <typename U>  //
-        friend constexpr auto operator-(merge_obj x, const vector2<U>& y) -> merge_obj {
+        friend constexpr auto operator-(MergeObj x, const Vector2<U>& y) -> MergeObj {
             return x -= y;
         }
 
@@ -97,15 +97,15 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        [[nodiscard]] constexpr auto min_dist_with(const merge_obj<U1, U2>& other) const {
+        [[nodiscard]] constexpr auto min_dist_with(const MergeObj<U1, U2>& other) const {
             return std::max(min_dist(this->_x, other._x), min_dist(this->_y, other._y));
         }
 
         template <typename R>  //
-        friend constexpr auto enlarge(const merge_obj& lhs, const R& alpha) {
+        friend constexpr auto enlarge(const MergeObj& lhs, const R& alpha) {
             auto x = enlarge(lhs.x(), alpha);
             auto y = enlarge(lhs.y(), alpha);
-            return merge_obj<decltype(x), decltype(y)>{std::move(x), std::move(y)};
+            return MergeObj<decltype(x), decltype(y)>{std::move(x), std::move(y)};
         }
 
         /**
@@ -118,7 +118,7 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        [[nodiscard]] constexpr auto merge_with(const merge_obj<U1, U2>& other) const {
+        [[nodiscard]] constexpr auto merge_with(const MergeObj<U1, U2>& other) const {
             auto alpha = this->min_dist_with(other);
             auto half = alpha / 2;
             auto trr1 = enlarge(*this, half);
@@ -132,7 +132,7 @@ namespace recti {
         //  * @param[in] other
         //  * @return constexpr auto
         //  */
-        // [[nodiscard]] constexpr auto min_dist_change_with(merge_obj& other) {
+        // [[nodiscard]] constexpr auto min_dist_change_with(MergeObj& other) {
         //     auto minDist = this->min_dist_with(other);
         //     auto mobj1 = this->enlarge_with(minDist);
         //     auto mobj2 = other.enlarge_with(minDist);

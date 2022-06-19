@@ -15,17 +15,17 @@ namespace recti {
      * @tparam U1
      * @tparam U2
      */
-    template <typename U1, typename U2> class point;
+    template <typename U1, typename U2> class Point;
 
 #pragma pack(push, 1)
     /**
-     * @brief 2D point
+     * @brief 2D Point
      *
      * @tparam T1
      * @tparam T2
      */
-    template <typename T1, typename T2 = T1> class point {
-        using Self = point<T1, T2>;
+    template <typename T1, typename T2 = T1> class Point {
+        using Self = Point<T1, T2>;
 
         /**
          * @brief
@@ -33,7 +33,7 @@ namespace recti {
          * @tparam U1
          * @tparam U2
          */
-        template <typename U1, typename U2> friend class point;
+        template <typename U1, typename U2> friend class Point;
 
       protected:
         T1 _x;  //!< x coordinate
@@ -41,20 +41,20 @@ namespace recti {
 
       public:
         /**
-         * @brief Construct a new point object
+         * @brief Construct a new Point object
          *
          * @param[in] x
          * @param[in] y
          */
-        constexpr point(T1&& x, T2&& y) noexcept : _x{std::move(x)}, _y{std::move(y)} {}
+        constexpr Point(T1&& x, T2&& y) noexcept : _x{std::move(x)}, _y{std::move(y)} {}
 
         /**
-         * @brief Construct a new point object
+         * @brief Construct a new Point object
          *
          * @param[in] x
          * @param[in] y
          */
-        constexpr point(const T1& x, const T2& y) : _x{x}, _y{y} {}
+        constexpr Point(const T1& x, const T2& y) : _x{x}, _y{y} {}
 
         /**
          * @brief
@@ -92,7 +92,7 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>
-        constexpr auto operator==(const point<U1, U2>& rhs) const -> bool {
+        constexpr auto operator==(const Point<U1, U2>& rhs) const -> bool {
             return this->_tie() == rhs._tie();
         }
 
@@ -106,7 +106,7 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        constexpr auto operator<(const point<U1, U2>& rhs) const -> bool {
+        constexpr auto operator<(const Point<U1, U2>& rhs) const -> bool {
             return this->_tie() < rhs._tie();
         }
 
@@ -120,7 +120,7 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>
-        constexpr auto operator!=(const point<U1, U2>& rhs) const -> bool {
+        constexpr auto operator!=(const Point<U1, U2>& rhs) const -> bool {
             return !(*this == rhs);
         }
 
@@ -135,7 +135,7 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>
-        friend constexpr auto operator>(const Self& x, const point<U1, U2>& y) -> bool {
+        friend constexpr auto operator>(const Self& x, const Point<U1, U2>& y) -> bool {
             return y < x;
         }
 
@@ -150,7 +150,7 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>
-        friend constexpr auto operator<=(const Self& x, const point<U1, U2>& y) -> bool {
+        friend constexpr auto operator<=(const Self& x, const Point<U1, U2>& y) -> bool {
             return !(y < x);
         }
 
@@ -165,7 +165,7 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>
-        friend constexpr auto operator>=(const Self& x, const point<U1, U2>& y) -> bool {
+        friend constexpr auto operator>=(const Self& x, const Point<U1, U2>& y) -> bool {
             return !(x < y);
         }
 
@@ -184,7 +184,7 @@ namespace recti {
          * @param[in] rhs
          * @return Self&
          */
-        template <typename U1, typename U2> constexpr auto operator+=(const vector2<U1, U2>& rhs)
+        template <typename U1, typename U2> constexpr auto operator+=(const Vector2<U1, U2>& rhs)
             -> Self& {
             this->_x += rhs.x();
             this->_y += rhs.y();
@@ -199,7 +199,7 @@ namespace recti {
          * @param[in] rhs
          * @return Self&
          */
-        template <typename U1, typename U2> constexpr auto operator-=(const vector2<U1, U2>& rhs)
+        template <typename U1, typename U2> constexpr auto operator-=(const Vector2<U1, U2>& rhs)
             -> Self& {
             this->_x -= rhs.x();
             this->_y -= rhs.y();
@@ -213,13 +213,13 @@ namespace recti {
          * @tparam U2
          * @param[in] p
          * @param[in] v
-         * @return vector2<T>
+         * @return Vector2<T>
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator+(point p, const vector2<U1, U2>& v) {
+        friend constexpr auto operator+(Point p, const Vector2<U1, U2>& v) {
             auto x = p.x() + v.x();
             auto y = p.y() + v.y();
-            return point<decltype(x), decltype(y)>{std::move(x), std::move(y)};
+            return Point<decltype(x), decltype(y)>{std::move(x), std::move(y)};
         }
 
         /**
@@ -229,10 +229,10 @@ namespace recti {
          * @tparam U2
          * @param[in] x
          * @param[in] y
-         * @return vector2<T>
+         * @return Vector2<T>
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator-(point x, const vector2<U1, U2>& y) -> point {
+        friend constexpr auto operator-(Point x, const Vector2<U1, U2>& y) -> Point {
             return x -= y;
         }
 
@@ -265,18 +265,18 @@ namespace recti {
          *
          * @param[in] x
          * @param[in] alpha
-         * @return point
+         * @return Point
          */
-        friend constexpr auto operator+(point x, const T1& alpha) -> point { return x += alpha; }
+        friend constexpr auto operator+(Point x, const T1& alpha) -> Point { return x += alpha; }
 
         /**
          * @brief Substract
          *
          * @param[in] x
          * @param[in] alpha
-         * @return point
+         * @return Point
          */
-        friend constexpr auto operator-(point x, const T1& alpha) -> point { return x -= alpha; }
+        friend constexpr auto operator-(Point x, const T1& alpha) -> Point { return x -= alpha; }
 
         /**
          * @brief Different
@@ -287,24 +287,24 @@ namespace recti {
         constexpr auto operator-(const Self& rhs) const {
             auto x = this->x() - rhs.x();
             auto y = this->y() - rhs.y();
-            return vector2<decltype(x), decltype(y)>{std::move(x), std::move(y)};
+            return Vector2<decltype(x), decltype(y)>{std::move(x), std::move(y)};
         }
 
         /**
          * @brief flip_xy according to x-y diagonal line
          *
-         * @return point<T2, T1>
+         * @return Point<T2, T1>
          */
-        [[nodiscard]] constexpr auto flip_xy() const -> point<T2, T1> {
+        [[nodiscard]] constexpr auto flip_xy() const -> Point<T2, T1> {
             return {this->y(), this->x()};
         }
 
         /**
          * @brief flip according to y-axis
          *
-         * @return point<T2, T1>
+         * @return Point<T2, T1>
          */
-        [[nodiscard]] constexpr auto flip_y() const -> point<T1, T2> {
+        [[nodiscard]] constexpr auto flip_y() const -> Point<T1, T2> {
             return {-this->x(), this->y()};
         }
 
@@ -318,7 +318,7 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        [[nodiscard]] constexpr auto overlaps(const point<U1, U2>& other) const -> bool {
+        [[nodiscard]] constexpr auto overlaps(const Point<U1, U2>& other) const -> bool {
             return overlap(this->x(), other.x()) && overlap(this->y(), other.y());
         }
 
@@ -332,10 +332,10 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        [[nodiscard]] constexpr auto intersection_with(const point<U1, U2>& other) const {
+        [[nodiscard]] constexpr auto intersection_with(const Point<U1, U2>& other) const {
             auto x = intersection(this->x(), other.x());
             auto y = intersection(this->y(), other.y());
-            return point<decltype(x), decltype(y)>{std::move(x), std::move(y)};
+            return Point<decltype(x), decltype(y)>{std::move(x), std::move(y)};
         }
 
         /**
@@ -348,7 +348,7 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        [[nodiscard]] constexpr auto contains(const point<U1, U2>& other) const -> bool {
+        [[nodiscard]] constexpr auto contains(const Point<U1, U2>& other) const -> bool {
             return contain(this->x(), other.x()) && contain(this->y(), other.y());
         }
 
@@ -362,7 +362,7 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        [[nodiscard]] constexpr auto min_dist_with(const point<U1, U2>& other) const {
+        [[nodiscard]] constexpr auto min_dist_with(const Point<U1, U2>& other) const {
             return min_dist(this->x(), other.x()) + min_dist(this->y(), other.y());
         }
 
@@ -376,15 +376,15 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        [[nodiscard]] constexpr auto min_dist_change_with(point<U1, U2>& other) {
+        [[nodiscard]] constexpr auto min_dist_change_with(Point<U1, U2>& other) {
             return min_dist_change(this->_x, other._x) + min_dist_change(this->_y, other._y);
         }
 
         template <typename R>  //
-        friend constexpr auto enlarge(const point& lhs, const R& alpha) {
+        friend constexpr auto enlarge(const Point& lhs, const R& alpha) {
             auto x = enlarge(lhs.x(), alpha);
             auto y = enlarge(lhs.y(), alpha);
-            return point<decltype(x), decltype(y)>{std::move(x), std::move(y)};
+            return Point<decltype(x), decltype(y)>{std::move(x), std::move(y)};
         }
 
         /**
@@ -397,7 +397,7 @@ namespace recti {
          * @param[in] p
          * @return Stream&
          */
-        template <class Stream> friend auto operator<<(Stream& out, const point& p) -> Stream& {
+        template <class Stream> friend auto operator<<(Stream& out, const Point& p) -> Stream& {
             out << "(" << p.x() << ", " << p.y() << ")";
             return out;
         }
@@ -406,12 +406,12 @@ namespace recti {
 
 #pragma pack(push, 1)
     /**
-     * @brief 2D point
+     * @brief 2D Point
      *
      * @tparam T1
      * @tparam T2
      */
-    template <typename T1, typename T2 = T1> class dualpoint : public point<T1, T2> {
+    template <typename T1, typename T2 = T1> class dualpoint : public Point<T1, T2> {
       public:
         /**
          * @brief
@@ -436,7 +436,7 @@ namespace recti {
 #pragma pack(pop)
 
     /**
-     * @brief adapter for containers of point
+     * @brief adapter for containers of Point
      *
      * @tparam iter
      */

@@ -10,7 +10,7 @@
 //  *
 //  * @tparam T
 //  * @param[in] pointset
-//  * @return rpolygon<T>
+//  * @return RPolygon<T>
 //  */
 // template <typename FwIter>
 // static void create_xmonotone_i(FwIter&& first, FwIter&& last)
@@ -20,7 +20,7 @@
 //     auto [min, max] = std::minmax_element(first, last, l2r);
 //     auto pivot = max->y();
 
-//     using Fn = std::function<bool(const point<int>&)>;
+//     using Fn = std::function<bool(const Point<int>&)>;
 //     Fn downup = [&pivot](const auto& a) { return a.y() < pivot; };
 //     Fn updown = [&pivot](const auto& a) { return pivot < a.y(); };
 //     auto middle =
@@ -34,10 +34,10 @@
 //  *
 //  * @tparam T
 //  * @param[in] pointset
-//  * @return rpolygon<T>
+//  * @return RPolygon<T>
 //  */
 // template <typename T>
-// rpolygon<T> rpolygon<T>::create_xmonotone(std::vector<point<T>> pointset)
+// RPolygon<T> RPolygon<T>::create_xmonotone(std::vector<Point<T>> pointset)
 // {
 //     create_xmonotone_i(pointset.begin(), pointset.end());
 //     return {std::move(pointset)};
@@ -48,10 +48,10 @@
 //  *
 //  * @tparam T
 //  * @param[in] pointset
-//  * @return rpolygon<T>
+//  * @return RPolygon<T>
 //  */
 // template <typename T>
-// rpolygon<T> rpolygon<T>::create_ymonotone(std::vector<point<T>> pointset)
+// RPolygon<T> RPolygon<T>::create_ymonotone(std::vector<Point<T>> pointset)
 // {
 //     using D = std::vector<dualpoint<T>>; // x <-> y
 //     auto first = reinterpret_cast<D&>(pointset).begin();
@@ -65,7 +65,7 @@
 //  *
 //  * @tparam T
 //  * @param[in] pointset
-//  * @return rpolygon<T>
+//  * @return RPolygon<T>
 //  */
 // // template <typename FwIter>
 // // static void create_regular_recur(FwIter&& first, FwIter&& last)
@@ -77,7 +77,7 @@
 // //     auto [min, max] = std::minmax_element(first, last, l2r);
 // //     auto pivot = max->y();
 
-// //     using Fn = std::function<bool(const point<int>&)>;
+// //     using Fn = std::function<bool(const Point<int>&)>;
 // //     Fn downup = [&pivot](const auto& a) { return a.y() < pivot; };
 // //     Fn updown = [&pivot](const auto& a) { return pivot < a.y(); };
 // //     auto middle =
@@ -91,7 +91,7 @@
 //  *
 //  * @tparam T
 //  * @param[in] pointset
-//  * @return rpolygon<T>
+//  * @return RPolygon<T>
 //  */
 // // template <typename FwIter>
 // // static void create_regular_i(FwIter&& first, FwIter&& last)
@@ -101,7 +101,7 @@
 // //     auto [min, max] = std::minmax_element(first, last, l2r);
 // //     auto pivot = max->y();
 
-// //     using Fn = std::function<bool(const point<int>&)>;
+// //     using Fn = std::function<bool(const Point<int>&)>;
 // //     Fn downup = [&pivot](const auto& a) { return a.y() < pivot; };
 // //     Fn updown = [&pivot](const auto& a) { return pivot < a.y(); };
 // //     auto middle =
@@ -115,10 +115,10 @@
 //  *
 //  * @tparam T
 //  * @param[in] pointset
-//  * @return rpolygon<T>
+//  * @return RPolygon<T>
 //  */
 // // template <typename T>
-// // rpolygon<T> rpolygon<T>::create_regular(std::vector<point<T>> pointset)
+// // RPolygon<T> RPolygon<T>::create_regular(std::vector<Point<T>> pointset)
 // // {
 // //     using D = std::vector<dualpoint<T>>; // x <-> y
 // //     auto first = reinterpret_cast<D&>(pointset).begin();
@@ -134,7 +134,7 @@
 //  * @return T
 //  */
 // template <typename T>
-// T rpolygon<T>::area() const
+// T RPolygon<T>::area() const
 // {
 //     auto it = this->begin();
 //     const auto x0 = it->x();
@@ -152,6 +152,6 @@
 // {
 
 // // Instantiation
-// template class rpolygon<int>;
+// template class RPolygon<int>;
 
 // } // namespace recti

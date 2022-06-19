@@ -2,30 +2,30 @@
 // #include <fmt/core.h>
 #include <gsl/span>              // for span
 #include <recti/halton_int.hpp>  // for vdcorput, recti
-#include <recti/rpolygon.hpp>    // for rpolygon, rpolygon_is_clockwise, cre...
+#include <recti/rpolygon.hpp>    // for RPolygon, RPolygon_is_clockwise, cre...
 #include <vector>                // for vector
 
-#include "recti/point.hpp"  // for point, operator>
+#include "recti/point.hpp"  // for Point, operator>
 
 // using std::randint;
 using namespace recti;
 
 TEST_CASE("Rectilinear Polygon test (y-mono)") {
-    auto S = std::vector<point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
+    auto S = std::vector<Point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
                                      {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
     auto is_anticlockwise = create_ymono_rpolygon(S.begin(), S.end());
-    auto P = rpolygon<int>(S);
+    auto P = RPolygon<int>(S);
     CHECK(is_anticlockwise);
     CHECK(P.signed_area() == 45);
     CHECK(!rpolygon_is_clockwise<int>(S));
-    CHECK(!point_in_rpolygon<int>(S, point{4, 5}));
+    CHECK(!point_in_rpolygon<int>(S, Point{4, 5}));
 }
 
 TEST_CASE("Rectilinear Polygon test (x-mono)") {
-    auto S = std::vector<point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
+    auto S = std::vector<Point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
                                      {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
     auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
-    auto P = rpolygon<int>(S);
+    auto P = RPolygon<int>(S);
     CHECK(!is_anticlockwise);
     CHECK(P.signed_area() == -53);
     CHECK(rpolygon_is_clockwise<int>(S));
@@ -34,9 +34,9 @@ TEST_CASE("Rectilinear Polygon test (x-mono)") {
 TEST_CASE("Rectilinear Polygon test (y-mono 50)") {
     auto hgenX = vdcorput(3, 7);
     auto hgenY = vdcorput(2, 11);
-    auto S = std::vector<point<int>>{};
+    auto S = std::vector<Point<int>>{};
     for (auto i = 0; i != 50; ++i) {
-        S.emplace_back(point<int>(int(hgenX()), int(hgenY())));
+        S.emplace_back(Point<int>(int(hgenX()), int(hgenY())));
     }
     auto is_anticlockwise = create_ymono_rpolygon(S.begin(), S.end());
     // fmt::print(
@@ -55,12 +55,12 @@ TEST_CASE("Rectilinear Polygon test (y-mono 50)") {
     //     fmt::print("  <circle cx='{}' cy='{}' r='10' />\n", p.x(), p.y());
     // }
 
-    auto q = point<int>(int(hgenX()), int(hgenY()));
+    auto q = Point<int>(int(hgenX()), int(hgenY()));
     // fmt::print(
     //     "  <circle cx='{}' cy='{}' r='10' fill='#BF616A' />\n", q.x(), q.y());
     // fmt::print("</svg>\n");
 
-    auto P = rpolygon<int>(S);
+    auto P = RPolygon<int>(S);
     CHECK(!is_anticlockwise);
     CHECK(P.signed_area() == -2032128);
     CHECK(rpolygon_is_clockwise<int>(S));
