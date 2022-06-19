@@ -18,3 +18,4 @@ vscode:
     - ms-vscode.cmake-tools
     - twxs.cmake
     - cschlosser.doxdocgen
+    - matklad.rust-analyzer
