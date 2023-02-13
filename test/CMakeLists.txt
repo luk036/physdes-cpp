@@ -5,7 +5,7 @@ option(TEST_INSTALLED_VERSION "Test the version found by find_package" OFF)
 
 # ---- Dependencies ----
 
-cpmaddpackage("gh:doctest/doctest#v2.4.9")
+cpmaddpackage("gh:doctest/doctest#v2.4.8")
 cpmaddpackage("gh:TheLartians/Format.cmake@1.7.0")
 
 # ---- Create binary ----
