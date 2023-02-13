@@ -4,7 +4,7 @@ cpmaddpackage(
   GITHUB_REPOSITORY
   jarro2783/cxxopts
   VERSION
-  2.2.1
+  3.0.0
   OPTIONS
   "CXXOPTS_BUILD_EXAMPLES NO"
   "CXXOPTS_BUILD_TESTS NO"

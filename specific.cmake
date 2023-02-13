@@ -9,7 +9,9 @@ cpmaddpackage(
   "FMT_INSTALL YES" # create an installable target
 )
 
-#cpmaddpackage("gh:microsoft/GSL@3.1.0")
+cpmaddpackage("gh:microsoft/GSL@3.1.0")
+set(SPECIFIC_LIBS fmt::fmt GSL)
+
 # cpmaddpackage(
 #   NAME GSL
 #   GITHUB_REPOSITORY "microsoft/GSL"
@@ -27,6 +29,6 @@ cpmaddpackage(
 
 # FetchContent_MakeAvailable(GSL)
 
-find_package(Microsoft.GSL CONFIG REQUIRED)
+# find_package(Microsoft.GSL CONFIG REQUIRED)
 
-set(SPECIFIC_LIBS fmt::fmt Microsoft.GSL::GSL)
+# set(SPECIFIC_LIBS fmt::fmt Microsoft.GSL::GSL)
