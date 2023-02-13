@@ -17,10 +17,12 @@ target_link_libraries(
 )
 set_target_properties(${PROJECT_NAME}Tests PROPERTIES CXX_STANDARD 17)
 
-# enable compiler warnings
-# For macOS, use -Wdeprecated-declarations for fixing the std::sprint() problem in doctest
+# enable compiler warnings For macOS, use -Wno-deprecated-declarations for fixing the std::sprint()
+# problem in doctest
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-  target_compile_options(${PROJECT_NAME} PUBLIC -Wall -Wpedantic -Wextra -Werror -Wdeprecated-declarations)
+  target_compile_options(
+    ${PROJECT_NAME} PUBLIC -Wall -Wpedantic -Wextra -Werror -Wno-deprecated-declarations
+  )
 elseif(MSVC)
   target_compile_options(${PROJECT_NAME} PUBLIC /W4 /WX /wd4819)
   target_compile_definitions(${PROJECT_NAME}Tests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
