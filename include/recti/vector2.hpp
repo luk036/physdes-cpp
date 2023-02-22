@@ -1,20 +1,27 @@
 #pragma once
 
 #include <tuple>    // import std::tie()
-#include <utility>  // import std::move
+#include <utility>  // import std::move, std::pair
 
 namespace recti {
 
     /**
-     * @brief vector2
-     *
+     * @brief 
+     * 
+     * @tparam T1 
+     * @tparam T2 
      */
     template <typename T1, typename T2 = T1> class Vector2 {
       private:
         T1 _x;
         T2 _y;
 
-        auto _tie() const { return std::tie(_x, _y); }
+        /**
+         * @brief 
+         * 
+         * @return std::pair<T1, T2> 
+         */
+        auto _tie() const -> std::pair<T1, T2> { return std::make_pair(_x, _y); }
 
       public:
         /**
