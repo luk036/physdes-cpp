@@ -12,8 +12,8 @@ using namespace recti;
 // template <typename T> struct my_point : Point<T, T> { double data; };
 
 TEST_CASE("Interval test") {
-  auto a = Interval<int>{4, 8};
-  auto b = Interval<int>{5, 6};
+  auto a = Interval{4, 8};
+  auto b = Interval{5, 6};
   auto v = 3;
 
   CHECK(!(a < b));
@@ -32,7 +32,7 @@ TEST_CASE("Interval test") {
 
   CHECK(a.contains(4));
   CHECK(a.contains(8));
-  CHECK(a.intersection_with(8) == Interval<int>{8, 8});
+  CHECK(a.intersection_with(8) == Interval{8, 8});
   CHECK(a.contains(b));
   CHECK(a.intersection_with(b) == b);
   CHECK(!b.contains(a));
@@ -43,8 +43,8 @@ TEST_CASE("Interval test") {
 }
 
 TEST_CASE("Interval of Interval test") {
-  auto a = Interval<Interval<int>>{Interval<int>{3, 4}, Interval<int>{8, 9}};
-  auto b = Interval<Interval<int>>{Interval<int>{5, 6}, Interval<int>{6, 7}};
+  auto a = Interval{Interval{3, 4}, Interval{8, 9}};
+  auto b = Interval{Interval{5, 6}, Interval{6, 7}};
   auto v = 3;
 
   CHECK(!(a < b));
@@ -61,12 +61,11 @@ TEST_CASE("Interval of Interval test") {
 
   CHECK((a - v) + v == a);
 
-  CHECK(a.contains(Interval<int>{4, 5}));
-  CHECK(a.contains(Interval<int>{7, 8}));
+  CHECK(a.contains(Interval{4, 5}));
+  CHECK(a.contains(Interval{7, 8}));
 
-  CHECK(
-      a.intersection_with(Interval<int>{7, 8}) ==
-      Interval<Interval<int>>{Interval<int>{7, 7}, Interval<int>{8, 8}}); // ???
+  CHECK(a.intersection_with(Interval{7, 8}) ==
+        Interval{Interval{7, 7}, Interval{8, 8}}); // ???
 
   CHECK(a.contains(b));
   CHECK(a.intersection_with(b) == b);
@@ -87,7 +86,7 @@ TEST_CASE("Interval overlapping test") {
     for (auto j = 0; j != N; ++j) {
       auto x = hgenX();
       // auto y = hgenY();
-      auto xrng = Interval<unsigned int>{x, x + 100};
+      auto xrng = Interval{x, x + 100};
       // auto yrng = Interval{y, y + 100};
       // auto r = Rectangle{xrng, yrng};
       // lst.push_back(r);

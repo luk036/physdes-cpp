@@ -20,7 +20,7 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono)") {
   CHECK(!is_clockwise);
   CHECK_EQ(P.signed_area(), 45);
   CHECK(!rpolygon_is_clockwise<int>(S));
-  CHECK(!point_in_rpolygon<int>(S, Point{4, 5}));
+  CHECK(!point_in_rpolygon<int>(S, Point<int>{4, 5}));
 }
 
 TEST_CASE("Rectilinear Polygon test (xcoord-mono)") {

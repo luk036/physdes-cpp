@@ -19,7 +19,7 @@ TEST_CASE("Polygon test (ycoord-mono)") {
   auto P = Polygon<int>(S);
   CHECK(P.signed_area_x2() == 102);
   CHECK(!polygon_is_clockwise<int>(S));
-  CHECK(!point_in_polygon<int>(S, Point{4, 5}));
+  CHECK(!point_in_polygon<int>(S, Point<int>{4, 5}));
 }
 
 // 106980095362

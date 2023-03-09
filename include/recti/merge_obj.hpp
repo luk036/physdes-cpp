@@ -17,7 +17,8 @@ namespace recti {
  *
  * @tparam T
  */
-template <typename T1, typename T2> class MergeObj : private Point<T1, T2> {
+template <typename T1 = int, typename T2 = T1>
+class MergeObj : private Point<T1, T2> {
 public:
   /**
    * @brief Construct a new Point object
@@ -137,8 +138,7 @@ public:
    * @return false
    */
   template <typename U1, typename U2> //
-  [[nodiscard]] constexpr auto overlaps(const MergeObj<U1, U2> &other) const
-      -> bool {
+  constexpr auto overlaps(const MergeObj<U1, U2> &other) const -> bool {
     return overlap(this->xcoord(), other.xcoord()) &&
            overlap(this->ycoord(), other.ycoord());
   }
@@ -153,8 +153,7 @@ public:
    * @return false
    */
   template <typename U1, typename U2> //
-  [[nodiscard]] constexpr auto
-  intersection_with(const MergeObj<U1, U2> &other) const {
+  constexpr auto intersection_with(const MergeObj<U1, U2> &other) const {
     auto xcoord = intersection(this->xcoord(), other.xcoord());
     auto ycoord = intersection(this->ycoord(), other.ycoord());
     return MergeObj<decltype(xcoord), decltype(ycoord)>{std::move(xcoord),
@@ -171,8 +170,7 @@ public:
    * @return false
    */
   template <typename U1, typename U2> //
-  [[nodiscard]] constexpr auto
-  min_dist_with(const MergeObj<U1, U2> &other) const {
+  constexpr auto min_dist_with(const MergeObj<U1, U2> &other) const {
     return std::max(min_dist(this->xcoord(), other.xcoord()),
                     min_dist(this->ycoord(), other.ycoord()));
     // auto min_dist_x = min_dist(this->xcoord(), other.xcoord());
@@ -198,7 +196,7 @@ public:
    * @return false
    */
   template <typename U1, typename U2> //
-  [[nodiscard]] constexpr auto merge_with(const MergeObj<U1, U2> &other) const {
+  constexpr auto merge_with(const MergeObj<U1, U2> &other) const {
     auto alpha = this->min_dist_with(other);
     auto half = alpha / 2;
     auto trr1 = enlarge(*this, half);
@@ -228,7 +226,7 @@ public:
   //  * @param[in] other
   //  * @return constexpr auto
   //  */
-  // [[nodiscard]] constexpr auto min_dist_change_with(MergeObj& other) {
+  // constexpr auto min_dist_change_with(MergeObj& other) {
   //     auto minDist = this->min_dist_with(other);
   //     auto mobj1 = this->enlarge_with(minDist);
   //     auto mobj2 = other.enlarge_with(minDist);

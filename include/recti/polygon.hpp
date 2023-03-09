@@ -49,7 +49,7 @@ public:
    *
    * @return T
    */
-  [[nodiscard]] constexpr auto signed_area_x2() const -> T {
+  constexpr auto signed_area_x2() const -> T {
     auto first = this->_vecs.begin();
     auto second = std::next(first);
     auto end = this->_vecs.end();
@@ -66,14 +66,14 @@ public:
    *
    * @return Point<T>
    */
-  [[nodiscard]] auto lb() const -> Point<T>;
+  auto lb() const -> Point<T>;
 
   /**
    * @brief
    *
    * @return Point<T>
    */
-  [[nodiscard]] auto ub() const -> Point<T>;
+  auto ub() const -> Point<T>;
 };
 
 /**
@@ -106,9 +106,9 @@ template <typename FwIter, typename Compare>
 inline void create_mono_polygon(FwIter &&first, FwIter &&last, Compare &&dir) {
   assert(first != last);
 
-  auto [min, max] = std::minmax_element(first, last, dir);
-  auto min_pt = *min;
-  auto max_pt = *max;
+  auto result = std::minmax_element(first, last, dir);
+  auto min_pt = *result.first;
+  auto max_pt = *result.second;
   auto displace = max_pt - min_pt;
   auto middle = std::partition(first, last,
                                [&displace, &min_pt](const auto &elem) -> bool {
@@ -128,11 +128,11 @@ inline void create_mono_polygon(FwIter &&first, FwIter &&last, Compare &&dir) {
  */
 template <typename FwIter>
 inline auto create_xmono_polygon(FwIter &&first, FwIter &&last) -> void {
-  return create_mono_polygon(first, last,
-                             [](const auto &lhs, const auto &rhs) -> bool {
-                               return std::pair(lhs.xcoord(), lhs.ycoord()) <
-                                      std::pair(rhs.xcoord(), rhs.ycoord());
-                             });
+  return create_mono_polygon(
+      first, last, [](const auto &lhs, const auto &rhs) -> bool {
+        return std::make_pair(lhs.xcoord(), lhs.ycoord()) <
+               std::make_pair(rhs.xcoord(), rhs.ycoord());
+      });
 }
 
 /**
@@ -144,11 +144,11 @@ inline auto create_xmono_polygon(FwIter &&first, FwIter &&last) -> void {
  */
 template <typename FwIter>
 inline auto create_ymono_polygon(FwIter &&first, FwIter &&last) -> void {
-  return create_mono_polygon(first, last,
-                             [](const auto &lhs, const auto &rhs) -> bool {
-                               return std::pair(lhs.ycoord(), lhs.xcoord()) <
-                                      std::pair(rhs.ycoord(), rhs.xcoord());
-                             });
+  return create_mono_polygon(
+      first, last, [](const auto &lhs, const auto &rhs) -> bool {
+        return std::make_pair(lhs.ycoord(), lhs.xcoord()) <
+               std::make_pair(rhs.ycoord(), rhs.xcoord());
+      });
 }
 
 /**

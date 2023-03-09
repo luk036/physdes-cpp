@@ -33,15 +33,15 @@ TEST_CASE("Point test") {
 }
 
 TEST_CASE("Rectangle test") {
-  auto xrng1 = Interval<int>{4, 8};
-  auto yrng1 = Interval<int>{5, 7};
-  auto r1 = Rectangle<int>{xrng1, yrng1};
-  auto xrng2 = Interval<int>{5, 7};
-  auto yrng2 = Interval<int>{6, 6};
-  auto r2 = Rectangle<int>{xrng2, yrng2};
-  auto p = Point<int>{7, 6};
-  auto v = Vector2<int>{5, 6};
-  Rectangle<int> r3 = r1 - v;
+  auto xrng1 = Interval{4, 8};
+  auto yrng1 = Interval{5, 7};
+  auto r1 = Rectangle{xrng1, yrng1};
+  auto xrng2 = Interval{5, 7};
+  auto yrng2 = Interval{6, 6};
+  auto r2 = Rectangle{xrng2, yrng2};
+  auto p = Point{7, 6};
+  auto v = Vector2{5, 6};
+  Rectangle r3 = r1 - v;
 
   CHECK(r1 != r2);
   CHECK(r3 + v == r1);
@@ -57,10 +57,10 @@ TEST_CASE("Rectangle test") {
 }
 
 TEST_CASE("Segment test") {
-  auto xrng1 = Interval<int>{4, 8};
-  auto yrng1 = Interval<int>{5, 7};
-  auto s1 = HSegment<int>{xrng1, 6};
-  auto s2 = VSegment<int>{5, yrng1};
+  auto xrng1 = Interval{4, 8};
+  auto yrng1 = Interval{5, 7};
+  auto s1 = HSegment{xrng1, 6};
+  auto s2 = VSegment{5, yrng1};
 
   CHECK(s1.overlaps(s2));
 }

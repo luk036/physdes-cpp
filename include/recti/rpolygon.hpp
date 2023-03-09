@@ -48,7 +48,7 @@ public:
    *
    * @return T
    */
-  [[nodiscard]] constexpr auto signed_area() const -> T {
+  constexpr auto signed_area() const -> T {
     assert(this->_vecs.size() >= 1);
     auto first = this->_vecs.begin();
     auto res = first->x() * first->y();
@@ -73,14 +73,14 @@ public:
    *
    * @return Point<T>
    */
-  [[nodiscard]] auto lb() const -> Point<T>;
+  auto lb() const -> Point<T>;
 
   /**
    * @brief
    *
    * @return Point<T>
    */
-  [[nodiscard]] auto ub() const -> Point<T>;
+  auto ub() const -> Point<T>;
 };
 
 /**
@@ -101,9 +101,10 @@ inline auto create_mono_rpolygon(FwIter &&first, FwIter &&last, KeyFn &&dir)
   auto leftward = [&dir](const auto &rhs, const auto &lhs) -> bool {
     return dir(rhs) < dir(lhs);
   };
-  auto [min, max] = std::minmax_element(first, last, leftward);
-  const auto leftmost = *min;
-  const auto rightmost = *max;
+  auto result = std::minmax_element(first, last, leftward);
+  const auto leftmost = *result.first;
+  const auto rightmost = *result.second;
+
   const auto is_anticw = dir(rightmost).second <= dir(leftmost).second;
   auto r2l = [&leftmost, &dir](const auto &elem) -> bool {
     return dir(elem).second <= dir(leftmost).second;
@@ -131,7 +132,7 @@ inline auto create_mono_rpolygon(FwIter &&first, FwIter &&last, KeyFn &&dir)
 template <typename FwIter>
 inline auto create_xmono_rpolygon(FwIter &&first, FwIter &&last) -> bool {
   return create_mono_rpolygon(first, last, [](const auto &pt) {
-    return std::pair(pt.xcoord(), pt.ycoord());
+    return std::make_pair(pt.xcoord(), pt.ycoord());
   });
 }
 
@@ -147,7 +148,7 @@ inline auto create_xmono_rpolygon(FwIter &&first, FwIter &&last) -> bool {
 template <typename FwIter>
 inline auto create_ymono_rpolygon(FwIter &&first, FwIter &&last) -> bool {
   return create_mono_rpolygon(first, last, [](const auto &pt) {
-    return std::pair(pt.ycoord(), pt.xcoord());
+    return std::make_pair(pt.ycoord(), pt.xcoord());
   });
 }
 
@@ -164,25 +165,25 @@ inline void create_test_rpolygon(FwIter &&first, FwIter &&last) {
   assert(first != last);
 
   auto upwd = [](const auto &rhs, const auto &lhs) -> bool {
-    return std::pair(rhs.ycoord(), rhs.xcoord()) <
-           std::pair(lhs.ycoord(), lhs.xcoord());
+    return std::make_pair(rhs.ycoord(), rhs.xcoord()) <
+           std::make_pair(lhs.ycoord(), lhs.xcoord());
   };
   auto down = [](const auto &rhs, const auto &lhs) -> bool {
-    return std::pair(rhs.ycoord(), rhs.xcoord()) >
-           std::pair(lhs.ycoord(), lhs.xcoord());
+    return std::make_pair(rhs.ycoord(), rhs.xcoord()) >
+           std::make_pair(lhs.ycoord(), lhs.xcoord());
   };
   auto left = [](const auto &rhs, const auto &lhs) {
-    return std::pair(rhs.xcoord(), rhs.ycoord()) <
-           std::pair(lhs.xcoord(), lhs.ycoord());
+    return std::make_pair(rhs.xcoord(), rhs.ycoord()) <
+           std::make_pair(lhs.xcoord(), lhs.ycoord());
   };
   auto right = [](const auto &rhs, const auto &lhs) {
-    return std::pair(rhs.xcoord(), rhs.ycoord()) >
-           std::pair(lhs.xcoord(), lhs.ycoord());
+    return std::make_pair(rhs.xcoord(), rhs.ycoord()) >
+           std::make_pair(lhs.xcoord(), lhs.ycoord());
   };
 
-  auto [min, max] = std::minmax_element(first, last, upwd);
-  auto min_pt = *min;
-  auto max_pt = *max;
+  auto result = std::minmax_element(first, last, upwd);
+  auto min_pt = *result.first;
+  auto max_pt = *result.second;
   auto d_x = max_pt.xcoord() - min_pt.xcoord();
   auto d_y = max_pt.ycoord() - min_pt.ycoord();
   auto middle = std::partition(

@@ -23,7 +23,7 @@ template <typename T1, typename T2> class Point;
  * @tparam T1 int, Interval, or Point
  * @tparam T2 int or Interval
  */
-template <typename T1, typename T2 = T1> class Point {
+template <typename T1 = int, typename T2 = T1> class Point {
   using Self = Point<T1, T2>;
 
   /**

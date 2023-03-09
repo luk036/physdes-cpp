@@ -15,8 +15,8 @@ using namespace recti;
 // template <typename T> struct my_point : Point<T, T> { double data; };
 
 TEST_CASE("Point 3D test") {
-  auto a = Point<Point<int>, int>{Point<int>{40000, 80000}, 20000};
-  auto b = Point<Point<int>, int>{Point<int>{50000, 60000}, 10000};
+  auto a = Point{Point{40000, 80000}, 20000};
+  auto b = Point{Point{50000, 60000}, 10000};
   auto v = (b - a) / 2; // integer division
 
   CHECK(a < b);
@@ -33,9 +33,9 @@ TEST_CASE("Point 3D test") {
 }
 
 TEST_CASE("Interval test") {
-  auto a = Point<Interval<int>, int>{Interval<int>{4, 8}, 1};
-  auto b = Point<Interval<int>, int>{Interval<int>{5, 6}, 1};
-  auto v = Vector2<int>{3, 0};
+  auto a = Point{Interval{4, 8}, 1};
+  auto b = Point{Interval{5, 6}, 1};
+  auto v = Vector2{3, 0};
 
   CHECK(!(a < b));
   CHECK(!(b < a));
@@ -61,15 +61,15 @@ TEST_CASE("Interval test") {
 }
 
 TEST_CASE("Rectangle 3D test") {
-  auto xrng1 = Interval<int>{40000, 80000};
-  auto yrng1 = Interval<int>{50000, 70000};
-  auto r1 = Point<Rectangle<int>, int>{Rectangle<int>{xrng1, yrng1}, 1000};
-  auto xrng2 = Interval<int>{50000, 70000};
-  auto yrng2 = Interval<int>{60000, 60000};
-  auto r2 = Point<Rectangle<int>, int>{Rectangle<int>{xrng2, yrng2}, 1000};
-  auto v = Vector2<Vector2<int>, int>{Vector2<int>{50000, 60000}, 0};
-  auto p1 = Point<Point<int>, int>{Point<int>{70000, 60000}, 1000};
-  auto p2 = Point<Point<int>, int>{Point<int>{70000, 60000}, 2000};
+  auto xrng1 = Interval{40000, 80000};
+  auto yrng1 = Interval{50000, 70000};
+  auto r1 = Point{Rectangle{xrng1, yrng1}, 1000};
+  auto xrng2 = Interval{50000, 70000};
+  auto yrng2 = Interval{60000, 60000};
+  auto r2 = Point{Rectangle{xrng2, yrng2}, 1000};
+  auto v = Vector2{Vector2{50000, 60000}, 0};
+  auto p1 = Point{Point{70000, 60000}, 1000};
+  auto p2 = Point{Point{70000, 60000}, 2000};
 
   CHECK(r1 != r2);
   CHECK((r1 - v) + v == r1);
@@ -138,11 +138,11 @@ TEST_CASE("Rectangle 3D test") {
 // }
 
 TEST_CASE("MergeObj test") {
-  auto a = Point<int>{40000, 80000};
-  auto b = Point<int>{50000, 60000};
+  auto a = Point{40000, 80000};
+  auto b = Point{50000, 60000};
 
-  auto m1 = MergeObj<Point<int>>{a + 50000, a - 50000};
-  auto m2 = MergeObj<Point<int>>{b + 90000, b - 90000};
+  auto m1 = MergeObj{a + 50000, a - 50000};
+  auto m2 = MergeObj{b + 90000, b - 90000};
   // auto v = Vector2{Vector2{50000, 60000}, 0};
 
   CHECK(m1 != m2);
