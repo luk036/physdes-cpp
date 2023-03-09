@@ -49,18 +49,14 @@ public:
    *
    * @return constexpr const T1&
    */
-  [[nodiscard]] constexpr auto x() const noexcept -> const T1 & {
-    return this->_x;
-  }
+  constexpr auto x() const noexcept -> const T1 & { return this->_x; }
 
   /**
    * @brief
    *
    * @return constexpr const T2&
    */
-  [[nodiscard]] constexpr auto y() const noexcept -> const T2 & {
-    return this->_y;
-  }
+  constexpr auto y() const noexcept -> const T2 & { return this->_y; }
 
   /**
    * @brief
@@ -71,7 +67,7 @@ public:
    * @return constexpr auto
    */
   template <typename U1, typename U2> //
-  [[nodiscard]] constexpr auto cross(const Vector2<U1, U2> &other) const {
+  constexpr auto cross(const Vector2<U1, U2> &other) const {
     return this->_x * other._y - other._x * this->_y;
   }
 

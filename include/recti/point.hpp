@@ -61,14 +61,14 @@ public:
    *
    * @return const T1&
    */
-  [[nodiscard]] constexpr auto xcoord() const -> const T1 & { return this->_x; }
+  constexpr auto xcoord() const -> const T1 & { return this->_x; }
 
   /**
    * @brief
    *
    * @return const T2&
    */
-  [[nodiscard]] constexpr auto ycoord() const -> const T2 & { return this->_y; }
+  constexpr auto ycoord() const -> const T2 & { return this->_y; }
 
   /**
    * @brief tie
@@ -305,7 +305,7 @@ public:
    *
    * @return Point<T2, T1>
    */
-  [[nodiscard]] constexpr auto flip_xy() const -> Point<T2, T1> {
+  constexpr auto flip_xy() const -> Point<T2, T1> {
     return {this->ycoord(), this->xcoord()};
   }
 
@@ -314,7 +314,7 @@ public:
    *
    * @return Point<T2, T1>
    */
-  [[nodiscard]] constexpr auto flip_y() const -> Point<T1, T2> {
+  constexpr auto flip_y() const -> Point<T1, T2> {
     return {-this->xcoord(), this->ycoord()};
   }
 
@@ -328,8 +328,7 @@ public:
    * @return false
    */
   template <typename U1, typename U2> //
-  [[nodiscard]] constexpr auto overlaps(const Point<U1, U2> &other) const
-      -> bool {
+  constexpr auto overlaps(const Point<U1, U2> &other) const -> bool {
     return overlap(this->xcoord(), other.xcoord()) &&
            overlap(this->ycoord(), other.ycoord());
   }
@@ -344,8 +343,7 @@ public:
    * @return false
    */
   template <typename U1, typename U2> //
-  [[nodiscard]] constexpr auto
-  intersection_with(const Point<U1, U2> &other) const {
+  constexpr auto intersection_with(const Point<U1, U2> &other) const {
     auto xcoord = intersection(this->xcoord(), other.xcoord());
     auto ycoord = intersection(this->ycoord(), other.ycoord());
     return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord),
@@ -362,8 +360,7 @@ public:
    * @return false
    */
   template <typename U1, typename U2> //
-  [[nodiscard]] constexpr auto contains(const Point<U1, U2> &other) const
-      -> bool {
+  constexpr auto contains(const Point<U1, U2> &other) const -> bool {
     return contain(this->xcoord(), other.xcoord()) &&
            contain(this->ycoord(), other.ycoord());
   }
@@ -378,7 +375,7 @@ public:
    * @return false
    */
   template <typename U1, typename U2> //
-  [[nodiscard]] constexpr auto min_dist_with(const Point<U1, U2> &other) const {
+  constexpr auto min_dist_with(const Point<U1, U2> &other) const {
     return min_dist(this->xcoord(), other.xcoord()) +
            min_dist(this->ycoord(), other.ycoord());
   }
@@ -393,7 +390,7 @@ public:
    * @return false
    */
   template <typename U1, typename U2> //
-  [[nodiscard]] constexpr auto min_dist_change_with(Point<U1, U2> &other) {
+  constexpr auto min_dist_change_with(Point<U1, U2> &other) {
     return min_dist_change(this->_x, other._x) +
            min_dist_change(this->_y, other._y);
   }
@@ -428,14 +425,14 @@ protected:
    *
    * @return const T1&
    */
-  [[nodiscard]] constexpr auto get_xcoord() -> T1 & { return this->_x; }
+  constexpr auto get_xcoord() -> T1 & { return this->_x; }
 
   /**
    * @brief
    *
    * @return const T2&
    */
-  [[nodiscard]] constexpr auto get_ycoord() -> T2 & { return this->_y; }
+  constexpr auto get_ycoord() -> T2 & { return this->_y; }
 };
 #pragma pack(pop)
 

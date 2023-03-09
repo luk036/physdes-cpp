@@ -55,7 +55,7 @@ template <typename T> struct Rectangle : Point<Interval<T>> {
    *
    * @return Point<T>
    */
-  [[nodiscard]] constexpr auto ll() const -> Point<T> {
+  constexpr auto ll() const -> Point<T> {
     return {this->xcoord().lb(), this->ycoord().lb()};
   }
 
@@ -64,7 +64,7 @@ template <typename T> struct Rectangle : Point<Interval<T>> {
    *
    * @return Point<T>
    */
-  [[nodiscard]] constexpr auto ur() const -> Point<T> {
+  constexpr auto ur() const -> Point<T> {
     return {this->xcoord().ub(), this->ycoord().ub()};
   }
 
@@ -73,7 +73,7 @@ template <typename T> struct Rectangle : Point<Interval<T>> {
    *
    * @return constexpr T
    */
-  [[nodiscard]] constexpr auto area() const -> T {
+  constexpr auto area() const -> T {
     return this->xcoord().len() * this->ycoord().len();
   }
 };
