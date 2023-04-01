@@ -45,7 +45,7 @@ public:
    */
   template <typename U1, typename U2>
   constexpr auto operator==(const MergeObj<U1, U2> &rhs) const -> bool {
-    return this->_tie() == rhs._tie();
+    return Point<T1, T2>::operator==(rhs);
   }
 
   /**
@@ -59,7 +59,7 @@ public:
    */
   template <typename U1, typename U2>
   constexpr auto operator!=(const MergeObj<U1, U2> &rhs) const -> bool {
-    return this->_tie() != rhs._tie();
+    return Point<T1, T2>::operator!=(rhs);
   }
 
   // /**

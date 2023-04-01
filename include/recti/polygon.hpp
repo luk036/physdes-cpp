@@ -56,7 +56,8 @@ public:
     auto last = std::prev(end);
     auto res = first->x() * second->y() - last->x() * std::prev(last)->y();
     for (auto itr = second; itr != last; ++itr) {
-      res += itr->x() * (std::next(itr)->y() - std::prev(itr)->y());
+      res = std::move(res) +
+            itr->x() * (std::next(itr)->y() - std::prev(itr)->y());
     }
     return res;
   }

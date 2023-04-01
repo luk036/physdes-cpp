@@ -52,10 +52,20 @@ public:
     assert(this->_vecs.size() >= 1);
     auto first = this->_vecs.begin();
     auto res = first->x() * first->y();
+    auto y0 = first->y();
     for (auto itr = std::next(first); itr != this->_vecs.end(); ++itr) {
-      res += itr->x() * (itr->y() - std::prev(itr)->y());
+      auto y1 = itr->y();
+      res = std::move(res) + itr->x() * (y1 - y0);
+      y0 = std::move(y1);
     }
     return res;
+    // return std::accumulate(++first, this->_vecs.end(), std::move(res),
+    //                        [&y0](auto init, const auto &elem) {
+    //                          auto y1 = y0;
+    //                          y0 = elem.y();
+    //                          return std::move(init) +
+    //                                 elem.x() * (y0 - std::move(y1));
+    //                        });
   }
 
   /**

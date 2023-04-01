@@ -3,6 +3,11 @@
 #include <tuple>   // import std::tie()
 #include <utility> // import std::move
 
+#if __cpp_constexpr >= 201304
+#define CONSTEXPR14 constexpr
+#else
+#define CONSTEXPR14 inline
+#endif
 namespace recti {
 
 /**
@@ -14,7 +19,7 @@ private:
   T1 _x;
   T2 _y;
 
-  auto _tie() const { return std::tie(_x, _y); }
+  // auto _tie() const { return std::tie(_x, _y); }
 
 public:
   /**
@@ -67,7 +72,8 @@ public:
    * @return constexpr auto
    */
   template <typename U1, typename U2> //
-  constexpr auto cross(const Vector2<U1, U2> &other) const {
+  constexpr auto cross(const Vector2<U1, U2> &other) const
+      -> decltype(this->_x * other._y) {
     return this->_x * other._y - other._x * this->_y;
   }
 
@@ -87,22 +93,22 @@ public:
    */
   template <typename U1, typename U2> //
   constexpr auto operator==(const Vector2<U1, U2> &other) const -> bool {
-    return this->_tie() == other._tie();
+    return std::tie(this->x(), this->y()) == std::tie(other.x(), other.y());
   }
 
-  /**
-   * @brief Less than
-   *
-   * @tparam U1
-   * @tparam U2
-   * @param[in] other
-   * @return true
-   * @return false
-   */
-  template <typename U1, typename U2> //
-  constexpr auto operator<(const Vector2<U1, U2> &other) const -> bool {
-    return this->_tie() < other._tie();
-  }
+  // /**
+  //  * @brief Less than
+  //  *
+  //  * @tparam U1
+  //  * @tparam U2
+  //  * @param[in] other
+  //  * @return true
+  //  * @return false
+  //  */
+  // template <typename U1, typename U2> //
+  // constexpr auto operator<(const Vector2<U1, U2> &other) const -> bool {
+  //   return std::tie(this->x(), this->y()) < std::tie(other.x(), other.y());
+  // }
 
   /**
    * @brief Not equal to
@@ -185,7 +191,7 @@ public:
    * @return Vector2&
    */
   template <typename U1, typename U2>
-  constexpr auto operator+=(const Vector2<U1, U2> &other) -> Vector2 & {
+  CONSTEXPR14 auto operator+=(const Vector2<U1, U2> &other) -> Vector2 & {
     this->_x += other.x();
     this->_y += other.y();
     return *this;
@@ -200,7 +206,7 @@ public:
    * @return Vector2&
    */
   template <typename U1, typename U2> //
-  constexpr auto operator-=(const Vector2<U1, U2> &other) -> Vector2 & {
+  CONSTEXPR14 auto operator-=(const Vector2<U1, U2> &other) -> Vector2 & {
     this->_x -= other.x();
     this->_y -= other.y();
     return *this;
@@ -213,7 +219,8 @@ public:
    * @param[in] alpha
    * @return Vector2&
    */
-  template <typename R> constexpr auto operator*=(const R &alpha) -> Vector2 & {
+  template <typename R>
+  CONSTEXPR14 auto operator*=(const R &alpha) -> Vector2 & {
     this->_x *= alpha;
     this->_y *= alpha;
     return *this;
@@ -226,7 +233,8 @@ public:
    * @param[in] alpha
    * @return Vector2&
    */
-  template <typename R> constexpr auto operator/=(const R &alpha) -> Vector2 & {
+  template <typename R>
+  CONSTEXPR14 auto operator/=(const R &alpha) -> Vector2 & {
     this->_x /= alpha;
     this->_y /= alpha;
     return *this;

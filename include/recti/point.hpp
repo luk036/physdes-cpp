@@ -34,8 +34,8 @@ template <typename T1 = int, typename T2 = T1> class Point {
    */
   template <typename U1, typename U2> friend class Point;
 
-  T1 _x; //!< xcoord coordinate
-  T2 _y; //!< ycoord coordinate
+  T1 _xcoord; //!< xcoord coordinate
+  T2 _ycoord; //!< ycoord coordinate
 
 public:
   /**
@@ -45,7 +45,7 @@ public:
    * @param[in] ycoord
    */
   constexpr Point(T1 &&xcoord, T2 &&ycoord) noexcept
-      : _x{std::move(xcoord)}, _y{std::move(ycoord)} {}
+      : _xcoord{std::move(xcoord)}, _ycoord{std::move(ycoord)} {}
 
   /**
    * @brief Construct a new Point object
@@ -54,28 +54,29 @@ public:
    * @param[in] ycoord
    */
   constexpr Point(const T1 &xcoord, const T2 &ycoord)
-      : _x{xcoord}, _y{ycoord} {}
+      : _xcoord{xcoord}, _ycoord{ycoord} {}
 
   /**
    * @brief
    *
    * @return const T1&
    */
-  constexpr auto xcoord() const -> const T1 & { return this->_x; }
+  constexpr auto xcoord() const -> const T1 & { return this->_xcoord; }
 
   /**
    * @brief
    *
    * @return const T2&
    */
-  constexpr auto ycoord() const -> const T2 & { return this->_y; }
+  constexpr auto ycoord() const -> const T2 & { return this->_ycoord; }
 
   /**
    * @brief tie
    *
    * @return auto
    */
-  constexpr auto _tie() const { return std::tie(this->_x, this->_y); }
+  // constexpr auto _tie() const { return std::tie(this->_xcoord,
+  // this->_ycoord); }
 
   /** @name Comparison operators
    *  definie ==, !=, <, >, <=, >=.
@@ -93,7 +94,8 @@ public:
    */
   template <typename U1, typename U2>
   constexpr auto operator==(const Point<U1, U2> &rhs) const -> bool {
-    return this->_tie() == rhs._tie();
+    return std::tie(this->xcoord(), this->ycoord()) ==
+           std::tie(rhs.xcoord(), rhs.ycoord());
   }
 
   /**
@@ -107,7 +109,8 @@ public:
    */
   template <typename U1, typename U2> //
   constexpr auto operator<(const Point<U1, U2> &rhs) const -> bool {
-    return this->_tie() < rhs._tie();
+    return std::tie(this->xcoord(), this->ycoord()) <
+           std::tie(rhs.xcoord(), rhs.ycoord());
   }
 
   /**
@@ -188,9 +191,9 @@ public:
    * @return Self&
    */
   template <typename U1, typename U2>
-  constexpr auto operator+=(const Vector2<U1, U2> &rhs) -> Self & {
-    this->_x += rhs.x();
-    this->_y += rhs.y();
+  CONSTEXPR14 auto operator+=(const Vector2<U1, U2> &rhs) -> Self & {
+    this->_xcoord += rhs.x();
+    this->_ycoord += rhs.y();
     return *this;
   }
 
@@ -203,9 +206,9 @@ public:
    * @return Self&
    */
   template <typename U1, typename U2>
-  constexpr auto operator-=(const Vector2<U1, U2> &rhs) -> Self & {
-    this->_x -= rhs.x();
-    this->_y -= rhs.y();
+  CONSTEXPR14 auto operator-=(const Vector2<U1, U2> &rhs) -> Self & {
+    this->_xcoord -= rhs.x();
+    this->_ycoord -= rhs.y();
     return *this;
   }
 
@@ -247,9 +250,9 @@ public:
    * @param[in] alpha
    * @return Self&
    */
-  constexpr auto operator+=(const T2 &alpha) -> Self & {
-    this->_x += alpha;
-    this->_y += alpha;
+  CONSTEXPR14 auto operator+=(const T2 &alpha) -> Self & {
+    this->_xcoord += alpha;
+    this->_ycoord += alpha;
     return *this;
   }
 
@@ -259,9 +262,9 @@ public:
    * @param[in] alpha
    * @return Self&
    */
-  constexpr auto operator-=(const T1 &alpha) -> Self & {
-    this->_x -= alpha;
-    this->_y -= alpha;
+  CONSTEXPR14 auto operator-=(const T1 &alpha) -> Self & {
+    this->_xcoord -= alpha;
+    this->_ycoord -= alpha;
     return *this;
   }
 
@@ -301,7 +304,7 @@ public:
   }
 
   /**
-   * @brief flip_xy according to xcoord-ycoord diagonal line
+   * @brief flip_xcoordy according to xcoord-ycoord diagonal line
    *
    * @return Point<T2, T1>
    */
@@ -391,8 +394,8 @@ public:
    */
   template <typename U1, typename U2> //
   constexpr auto min_dist_change_with(Point<U1, U2> &other) {
-    return min_dist_change(this->_x, other._x) +
-           min_dist_change(this->_y, other._y);
+    return min_dist_change(this->_xcoord, other._xcoord) +
+           min_dist_change(this->_ycoord, other._ycoord);
   }
 
   template <typename R> //
@@ -425,14 +428,14 @@ protected:
    *
    * @return const T1&
    */
-  constexpr auto get_xcoord() -> T1 & { return this->_x; }
+  CONSTEXPR14 auto get_xcoord() -> T1 & { return this->_xcoord; }
 
   /**
    * @brief
    *
    * @return const T2&
    */
-  constexpr auto get_ycoord() -> T2 & { return this->_y; }
+  CONSTEXPR14 auto get_ycoord() -> T2 & { return this->_ycoord; }
 };
 #pragma pack(pop)
 
@@ -453,7 +456,7 @@ public:
    */
   constexpr auto ycoord() const -> const T1 & // override intentionally
   {
-    return this->_x;
+    return this->_xcoord;
   }
 
   /**
@@ -463,7 +466,7 @@ public:
    */
   constexpr auto xcoord() const -> const T2 & // override intentionally
   {
-    return this->_y;
+    return this->_ycoord;
   }
 };
 #pragma pack(pop)
@@ -481,13 +484,13 @@ template <typename iterator> class dual_iterator : public iterator {
   constexpr explicit dual_iterator(iterator &&itr)
       : iterator{std::forward<iterator>(itr)} {}
 
-  constexpr auto operator*() const noexcept -> const dualpoint<T2, T1> & {
+  CONSTEXPR14 auto operator*() const noexcept -> const dualpoint<T2, T1> & {
     return dualpoint<T2, T1>{};
     // return std::reinterpret_cast<const dualpoint<T2,
     // T1>&>(*iterator::operator*());
   }
 
-  constexpr auto operator*() noexcept -> dualpoint<T2, T1> & {
+  CONSTEXPR14 auto operator*() noexcept -> dualpoint<T2, T1> & {
     return dualpoint<T2, T1>{};
     // return std::reinterpret_cast<dualpoint<T2,
     // T1>&>(*iterator::operator*());

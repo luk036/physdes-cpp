@@ -61,7 +61,7 @@ public:
    *
    * @param[in] seed
    */
-  constexpr auto reseed(unsigned seed) noexcept -> void { this->_count = seed; }
+  auto reseed(unsigned seed) noexcept -> void { this->_count = seed; }
 };
 
 /**
@@ -98,7 +98,7 @@ public:
    *
    * @param[in] seed
    */
-  constexpr auto reseed(unsigned seed) noexcept -> void {
+  auto reseed(unsigned seed) noexcept -> void {
     this->_vdc0.reseed(seed);
     this->_vdc1.reseed(seed);
   }
