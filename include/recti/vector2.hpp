@@ -72,8 +72,7 @@ public:
    * @return constexpr auto
    */
   template <typename U1, typename U2> //
-  constexpr auto cross(const Vector2<U1, U2> &other) const
-      -> decltype(this->_x * other._y) {
+  constexpr auto cross(const Vector2<U1, U2> &other) const {
     return this->_x * other._y - other._x * this->_y;
   }
 
@@ -124,47 +123,47 @@ public:
     return !(*this == other);
   }
 
-  /**
-   * @brief Greater than
-   *
-   * @tparam U1
-   * @tparam U2
-   * @param[in] other
-   * @return true
-   * @return false
-   */
-  template <typename U1, typename U2> //
-  constexpr auto operator>(const Vector2<U1, U2> &other) const -> bool {
-    return other < *this;
-  }
+  // /**
+  //  * @brief Greater than
+  //  *
+  //  * @tparam U1
+  //  * @tparam U2
+  //  * @param[in] other
+  //  * @return true
+  //  * @return false
+  //  */
+  // template <typename U1, typename U2> //
+  // constexpr auto operator>(const Vector2<U1, U2> &other) const -> bool {
+  //   return other < *this;
+  // }
 
-  /**
-   * @brief Less than or euqual to
-   *
-   * @tparam U1
-   * @tparam U2
-   * @param[in] other
-   * @return true
-   * @return false
-   */
-  template <typename U1, typename U2> //
-  constexpr auto operator<=(const Vector2<U1, U2> &other) const -> bool {
-    return !(other < *this);
-  }
+  // /**
+  //  * @brief Less than or euqual to
+  //  *
+  //  * @tparam U1
+  //  * @tparam U2
+  //  * @param[in] other
+  //  * @return true
+  //  * @return false
+  //  */
+  // template <typename U1, typename U2> //
+  // constexpr auto operator<=(const Vector2<U1, U2> &other) const -> bool {
+  //   return !(other < *this);
+  // }
 
-  /**
-   * @brief Greater than or equal to
-   *
-   * @tparam U1
-   * @tparam U2
-   * @param[in] other
-   * @return true
-   * @return false
-   */
-  template <typename U1, typename U2> //
-  constexpr auto operator>=(const Vector2<U1, U2> &other) const -> bool {
-    return !(*this < other);
-  }
+  // /**
+  //  * @brief Greater than or equal to
+  //  *
+  //  * @tparam U1
+  //  * @tparam U2
+  //  * @param[in] other
+  //  * @return true
+  //  * @return false
+  //  */
+  // template <typename U1, typename U2> //
+  // constexpr auto operator>=(const Vector2<U1, U2> &other) const -> bool {
+  //   return !(*this < other);
+  // }
 
   ///@}
 

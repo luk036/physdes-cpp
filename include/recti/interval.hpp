@@ -10,12 +10,12 @@ namespace recti {
 
 // /**
 //  * @brief overlap 1
-//  * 
-//  * @tparam U1 
-//  * @tparam U2 
-//  * @param lhs 
-//  * @param rhs 
-//  * @return std::enable_if<!std::is_scalar<U1>::value, bool>::type 
+//  *
+//  * @tparam U1
+//  * @tparam U2
+//  * @param lhs
+//  * @param rhs
+//  * @return std::enable_if<!std::is_scalar<U1>::value, bool>::type
 //  */
 // template <typename U1, typename U2> //
 // inline constexpr auto overlap(const U1 &lhs, const U2 &rhs) ->
@@ -25,30 +25,31 @@ namespace recti {
 
 // /**
 //  * @brief overlap 2
-//  * 
-//  * @tparam U1 
-//  * @tparam U2 
-//  * @param lhs 
-//  * @param rhs 
+//  *
+//  * @tparam U1
+//  * @tparam U2
+//  * @param lhs
+//  * @param rhs
 //  * @return std::enable_if<
-//  * std::is_scalar<U1>::value && !std::is_scalar<U2>::value, bool>::type 
+//  * std::is_scalar<U1>::value && !std::is_scalar<U2>::value, bool>::type
 //  */
 // template <typename U1, typename U2> //
 // inline constexpr auto overlap(const U1 &lhs, const U2 &rhs) ->
 //     typename std::enable_if<
-//         std::is_scalar<U1>::value && !std::is_scalar<U2>::value, bool>::type {
+//         std::is_scalar<U1>::value && !std::is_scalar<U2>::value, bool>::type
+//         {
 //   return rhs.overlaps(lhs);
 // }
 
 // /**
 //  * @brief overlap 3
-//  * 
-//  * @tparam U1 
-//  * @tparam U2 
-//  * @param lhs 
-//  * @param rhs 
+//  *
+//  * @tparam U1
+//  * @tparam U2
+//  * @param lhs
+//  * @param rhs
 //  * @return std::enable_if<
-//  * std::is_scalar<U1>::value && std::is_scalar<U2>::value, bool>::type 
+//  * std::is_scalar<U1>::value && std::is_scalar<U2>::value, bool>::type
 //  */
 // template <typename U1, typename U2> //
 // inline constexpr auto overlap(const U1 &lhs, const U2 &rhs) ->
@@ -78,171 +79,172 @@ inline constexpr auto overlap(const U1 &lhs, const U2 &rhs) -> bool {
   }
 }
 
-template <typename U1, typename U2> //
-inline constexpr auto contain(const U1 &lhs, const U2 &rhs) ->
-    typename std::enable_if<!std::is_scalar<U1>::value, bool>::type {
-  return lhs.contains(rhs);
-}
-
-template <typename U1, typename U2> //
-inline constexpr auto contain(const U1 &, const U2 &) ->
-    typename std::enable_if<
-        std::is_scalar<U1>::value && !std::is_scalar<U2>::value, bool>::type {
-  return false;
-}
-
-template <typename U1, typename U2> //
-inline constexpr auto contain(const U1 &lhs, const U2 &rhs) ->
-    typename std::enable_if<
-        std::is_scalar<U1>::value && std::is_scalar<U2>::value, bool>::type {
-  return lhs == rhs;
-}
-
-// /**
-//  * @brief contain
-//  *
-//  * @tparam U1
-//  * @tparam U2
-//  * @param lhs
-//  * @param rhs
-//  * @return true
-//  * @return false
-//  */
 // template <typename U1, typename U2> //
-// inline constexpr auto contain(const U1 &lhs, const U2 &rhs) -> bool {
-//   if constexpr (!std::is_scalar<U1>::value) {
-//     return lhs.contains(rhs);
-//   } else if constexpr (!std::is_scalar<U2>::value) {
-//     return false;
-//   } else {
-//     return lhs == rhs;
-//   }
+// inline constexpr auto contain(const U1 &lhs, const U2 &rhs) ->
+//     typename std::enable_if<!std::is_scalar<U1>::value, bool>::type {
+//   return lhs.contains(rhs);
 // }
 
-template <typename U1, typename U2> //
-constexpr auto intersection(const U1 &lhs, const U2 &rhs) ->
-    typename std::enable_if<!std::is_scalar<U1>::value,
-                            decltype(lhs.intersection_with(rhs))>::type {
-  return lhs.intersection_with(rhs);
-}
-
-template <typename U1, typename U2> //
-constexpr auto intersection(const U1 &lhs, const U2 &rhs) ->
-    typename std::enable_if<
-        std::is_scalar<U1>::value && !std::is_scalar<U2>::value, U1>::type {
-  return rhs.intersection_with(lhs);
-}
-
-template <typename U1, typename U2> //
-constexpr auto intersection(const U1 &lhs, const U2 &) ->
-    typename std::enable_if<
-        std::is_scalar<U1>::value && std::is_scalar<U2>::value, U1>::type {
-  // assert(lhs == rhs);
-  return lhs;
-}
-
-// /**
-//  * @brief intersection
-//  *
-//  * @tparam U1
-//  * @tparam U2
-//  * @param lhs
-//  * @param rhs
-//  * @return constexpr auto
-//  */
 // template <typename U1, typename U2> //
-// constexpr auto intersection(const U1 &lhs, const U2 &rhs) {
-//   if constexpr (!std::is_scalar<U1>::value) {
-//     return lhs.intersection_with(rhs);
-//   } else if constexpr (!std::is_scalar<U2>::value) {
-//     return rhs.intersection_with(lhs);
-//   } else {
-//     assert(lhs == rhs);
-//     return lhs;
-//   }
+// inline constexpr auto contain(const U1 &, const U2 &) ->
+//     typename std::enable_if<
+//         std::is_scalar<U1>::value && !std::is_scalar<U2>::value, bool>::type
+//         {
+//   return false;
 // }
 
-template <typename U1, typename U2> //
-constexpr auto min_dist(const U1 &lhs, const U2 &rhs) ->
-    typename std::enable_if<!std::is_scalar<U1>::value,
-                            decltype(lhs.min_dist_with(rhs))>::type {
-  return lhs.min_dist_with(rhs);
-}
-
-template <typename U1, typename U2> //
-constexpr auto min_dist(const U1 &lhs, const U2 &rhs) ->
-    typename std::enable_if<
-        std::is_scalar<U1>::value && !std::is_scalar<U2>::value, U1>::type {
-  return rhs.min_dist_with(lhs);
-}
-
-template <typename U1, typename U2> //
-constexpr auto min_dist(const U1 &lhs, const U2 &rhs) ->
-    typename std::enable_if<
-        std::is_scalar<U1>::value && std::is_scalar<U2>::value, U1>::type {
-  return std::abs(lhs - rhs);
-}
-
-// /**
-//  * @brief min_dist
-//  *
-//  * @tparam U1
-//  * @tparam U2
-//  * @param lhs
-//  * @param rhs
-//  * @return constexpr auto
-//  */
 // template <typename U1, typename U2> //
-// inline constexpr auto min_dist(const U1 &lhs, const U2 &rhs) {
-//   if constexpr (!std::is_scalar<U1>::value) {
-//     return lhs.min_dist_with(rhs);
-//   } else if constexpr (!std::is_scalar<U2>::value) {
-//     return rhs.min_dist_with(lhs);
-//   } else {
-//     return std::abs(lhs - rhs);
-//   }
+// inline constexpr auto contain(const U1 &lhs, const U2 &rhs) ->
+//     typename std::enable_if<
+//         std::is_scalar<U1>::value && std::is_scalar<U2>::value, bool>::type {
+//   return lhs == rhs;
 // }
 
+/**
+ * @brief contain
+ *
+ * @tparam U1
+ * @tparam U2
+ * @param lhs
+ * @param rhs
+ * @return true
+ * @return false
+ */
 template <typename U1, typename U2> //
-constexpr auto min_dist_change(const U1 &lhs, const U2 &rhs) ->
-    typename std::enable_if<!std::is_scalar<U1>::value,
-                            decltype(lhs.min_dist_change_with(rhs))>::type {
-  return lhs.min_dist_with(rhs);
+inline constexpr auto contain(const U1 &lhs, const U2 &rhs) -> bool {
+  if constexpr (requires { lhs.contains(rhs); }) {
+    return lhs.contains(rhs);
+  } else if constexpr (requires { rhs.contains(lhs); }) {
+    return false;
+  } else {
+    return lhs == rhs;
+  }
 }
 
-template <typename U1, typename U2> //
-constexpr auto min_dist_change(const U1 &lhs, const U2 &rhs) ->
-    typename std::enable_if<
-        std::is_scalar<U1>::value && !std::is_scalar<U2>::value, U1>::type {
-  return rhs.min_dist_change_with(lhs);
-}
-
-template <typename U1, typename U2> //
-constexpr auto min_dist_change(const U1 &lhs, const U2 &rhs) ->
-    typename std::enable_if<
-        std::is_scalar<U1>::value && std::is_scalar<U2>::value, U1>::type {
-  return std::abs(lhs - rhs);
-}
-
-// /**
-//  * @brief min_dist with change
-//  *
-//  * @tparam U1
-//  * @tparam U2
-//  * @param lhs
-//  * @param rhs
-//  * @return constexpr auto
-//  */
 // template <typename U1, typename U2> //
-// inline constexpr auto min_dist_change(U1 &lhs, U2 &rhs) {
-//   if constexpr (!std::is_scalar<U1>::value) {
-//     return lhs.min_dist_change_with(rhs);
-//   } else if constexpr (!std::is_scalar<U2>::value) {
-//     return rhs.min_dist_change_with(lhs);
-//   } else {
-//     return std::abs(lhs - rhs);
-//   }
+// constexpr auto intersection(const U1 &lhs, const U2 &rhs) ->
+//     typename std::enable_if<!std::is_scalar<U1>::value,
+//                             decltype(lhs.intersection_with(rhs))>::type {
+//   return lhs.intersection_with(rhs);
 // }
+
+// template <typename U1, typename U2> //
+// constexpr auto intersection(const U1 &lhs, const U2 &rhs) ->
+//     typename std::enable_if<
+//         std::is_scalar<U1>::value && !std::is_scalar<U2>::value, U1>::type {
+//   return rhs.intersection_with(lhs);
+// }
+
+// template <typename U1, typename U2> //
+// constexpr auto intersection(const U1 &lhs, const U2 &) ->
+//     typename std::enable_if<
+//         std::is_scalar<U1>::value && std::is_scalar<U2>::value, U1>::type {
+//   // assert(lhs == rhs);
+//   return lhs;
+// }
+
+/**
+ * @brief intersection
+ *
+ * @tparam U1
+ * @tparam U2
+ * @param lhs
+ * @param rhs
+ * @return constexpr auto
+ */
+template <typename U1, typename U2> //
+constexpr auto intersection(const U1 &lhs, const U2 &rhs) {
+  if constexpr (requires { lhs.intersection_with(rhs); }) {
+    return lhs.intersection_with(rhs);
+  } else if constexpr (requires { rhs.intersection_with(lhs); }) {
+    return rhs.intersection_with(lhs);
+  } else {
+    assert(lhs == rhs);
+    return lhs;
+  }
+}
+
+// template <typename U1, typename U2> //
+// constexpr auto min_dist(const U1 &lhs, const U2 &rhs) ->
+//     typename std::enable_if<!std::is_scalar<U1>::value,
+//                             decltype(lhs.min_dist_with(rhs))>::type {
+//   return lhs.min_dist_with(rhs);
+// }
+
+// template <typename U1, typename U2> //
+// constexpr auto min_dist(const U1 &lhs, const U2 &rhs) ->
+//     typename std::enable_if<
+//         std::is_scalar<U1>::value && !std::is_scalar<U2>::value, U1>::type {
+//   return rhs.min_dist_with(lhs);
+// }
+
+// template <typename U1, typename U2> //
+// constexpr auto min_dist(const U1 &lhs, const U2 &rhs) ->
+//     typename std::enable_if<
+//         std::is_scalar<U1>::value && std::is_scalar<U2>::value, U1>::type {
+//   return std::abs(lhs - rhs);
+// }
+
+/**
+ * @brief min_dist
+ *
+ * @tparam U1
+ * @tparam U2
+ * @param lhs
+ * @param rhs
+ * @return constexpr auto
+ */
+template <typename U1, typename U2> //
+inline constexpr auto min_dist(const U1 &lhs, const U2 &rhs) {
+  if constexpr (requires { lhs.min_dist_with(rhs); }) {
+    return lhs.min_dist_with(rhs);
+  } else if constexpr (requires { rhs.min_dist_with(lhs); }) {
+    return rhs.min_dist_with(lhs);
+  } else {
+    return std::abs(lhs - rhs);
+  }
+}
+
+// template <typename U1, typename U2> //
+// constexpr auto min_dist_change(const U1 &lhs, const U2 &rhs) ->
+//     typename std::enable_if<!std::is_scalar<U1>::value,
+//                             decltype(lhs.min_dist_change_with(rhs))>::type {
+//   return lhs.min_dist_with(rhs);
+// }
+
+// template <typename U1, typename U2> //
+// constexpr auto min_dist_change(const U1 &lhs, const U2 &rhs) ->
+//     typename std::enable_if<
+//         std::is_scalar<U1>::value && !std::is_scalar<U2>::value, U1>::type {
+//   return rhs.min_dist_change_with(lhs);
+// }
+
+// template <typename U1, typename U2> //
+// constexpr auto min_dist_change(const U1 &lhs, const U2 &rhs) ->
+//     typename std::enable_if<
+//         std::is_scalar<U1>::value && std::is_scalar<U2>::value, U1>::type {
+//   return std::abs(lhs - rhs);
+// }
+
+/**
+ * @brief min_dist with change
+ *
+ * @tparam U1
+ * @tparam U2
+ * @param lhs
+ * @param rhs
+ * @return constexpr auto
+ */
+template <typename U1, typename U2> //
+inline constexpr auto min_dist_change(U1 &lhs, U2 &rhs) {
+  if constexpr (requires { lhs.min_dist_change_with(rhs); }) {
+    return lhs.min_dist_change_with(rhs);
+  } else if constexpr (requires { rhs.min_dist_change_with(lhs); }) {
+    return rhs.min_dist_change_with(lhs);
+  } else {
+    return std::abs(lhs - rhs);
+  }
+}
 
 #pragma pack(push, 1)
 /**
@@ -345,134 +347,134 @@ public:
     return !(*this == rhs);
   }
 
-  // /**
-  //  * @brief Spaceship operator
-  //  *
-  //  * @tparam U
-  //  * @param[in] rhs
-  //  * @return std::weak_ordering
-  //  */
-  // template <typename U>  //
-  // constexpr auto operator<=>(const U& rhs) const -> std::weak_ordering {
-  //     if (this->ub() < rhs) return std::weak_ordering::less;
-  //     if (this->lb() > rhs) return std::weak_ordering::greater;
-  //     return std::weak_ordering::equivalent;
-  // }
-
-  // /**
-  //  * @brief Spaceship operator
-  //  *
-  //  * @param[in] lhs
-  //  * @param[in] rhs
-  //  * @return std::weak_ordering
-  //  */
-  // friend constexpr auto operator<=>(const T& lhs, const Interval& rhs) ->
-  // std::weak_ordering {
-  //     if (lhs < rhs.lb()) return std::weak_ordering::less;
-  //     if (lhs > rhs.ub()) return std::weak_ordering::greater;
-  //     return std::weak_ordering::equivalent;
-  // }
-
   /**
-   * @brief Less than other
+   * @brief Spaceship operator
    *
    * @tparam U
    * @param[in] rhs
-   * @return true
-   * @return false
+   * @return std::weak_ordering
    */
-  template <typename U> //
-  constexpr auto operator<(const U &rhs) const -> bool {
-    return this->ub() < rhs;
+  template <typename U>  //
+  constexpr auto operator<=>(const U& rhs) const -> std::weak_ordering {
+      if (this->ub() < rhs) return std::weak_ordering::less;
+      if (this->lb() > rhs) return std::weak_ordering::greater;
+      return std::weak_ordering::equivalent;
   }
 
   /**
-   * @brief Left less than
+   * @brief Spaceship operator
    *
    * @param[in] lhs
    * @param[in] rhs
-   * @return true
-   * @return false
+   * @return std::weak_ordering
    */
-  friend constexpr auto operator<(const T &lhs, const Interval &rhs) -> bool {
-    return lhs < rhs.lb();
+  friend constexpr auto operator<=>(const T& lhs, const Interval& rhs) ->
+  std::weak_ordering {
+      if (lhs < rhs.lb()) return std::weak_ordering::less;
+      if (lhs > rhs.ub()) return std::weak_ordering::greater;
+      return std::weak_ordering::equivalent;
   }
 
-  /**
-   * @brief Greater than
-   *
-   * @tparam U
-   * @param[in] rhs
-   * @return true
-   * @return false
-   */
-  template <typename U> //
-  constexpr auto operator>(const U &rhs) const -> bool {
-    return this->lb() > rhs;
-  }
+  // /**
+  //  * @brief Less than other
+  //  *
+  //  * @tparam U
+  //  * @param[in] rhs
+  //  * @return true
+  //  * @return false
+  //  */
+  // template <typename U> //
+  // constexpr auto operator<(const U &rhs) const -> bool {
+  //   return this->ub() < rhs;
+  // }
 
-  /**
-   * @brief
-   *
-   * @param lhs
-   * @param rhs
-   * @return true
-   * @return false
-   */
-  friend constexpr auto operator>(const T &lhs, const Interval &rhs) -> bool {
-    return rhs < lhs;
-  }
+  // /**
+  //  * @brief Left less than
+  //  *
+  //  * @param[in] lhs
+  //  * @param[in] rhs
+  //  * @return true
+  //  * @return false
+  //  */
+  // friend constexpr auto operator<(const T &lhs, const Interval &rhs) -> bool {
+  //   return lhs < rhs.lb();
+  // }
 
-  /**
-   * @brief Less than or euqual to
-   *
-   * @tparam U
-   * @param[in] rhs
-   * @return true
-   * @return false
-   */
-  template <typename U> //
-  constexpr auto operator<=(const U &rhs) const -> bool {
-    return !(rhs < *this);
-  }
+  // /**
+  //  * @brief Greater than
+  //  *
+  //  * @tparam U
+  //  * @param[in] rhs
+  //  * @return true
+  //  * @return false
+  //  */
+  // template <typename U> //
+  // constexpr auto operator>(const U &rhs) const -> bool {
+  //   return this->lb() > rhs;
+  // }
 
-  /**
-   * @brief
-   *
-   * @param lhs
-   * @param rhs
-   * @return true
-   * @return false
-   */
-  friend constexpr auto operator<=(const T &lhs, const Interval &rhs) -> bool {
-    return !(rhs < lhs);
-    ;
-  }
+  // /**
+  //  * @brief
+  //  *
+  //  * @param lhs
+  //  * @param rhs
+  //  * @return true
+  //  * @return false
+  //  */
+  // friend constexpr auto operator>(const T &lhs, const Interval &rhs) -> bool {
+  //   return rhs < lhs;
+  // }
 
-  /**
-   * @brief Greater than or equal to
-   *
-   * @tparam U
-   * @param[in] rhs
-   * @return true
-   * @return false
-   */
-  template <typename U> //
-  constexpr auto operator>=(const U &rhs) const -> bool {
-    return !(*this < rhs);
-  }
+  // /**
+  //  * @brief Less than or euqual to
+  //  *
+  //  * @tparam U
+  //  * @param[in] rhs
+  //  * @return true
+  //  * @return false
+  //  */
+  // template <typename U> //
+  // constexpr auto operator<=(const U &rhs) const -> bool {
+  //   return !(rhs < *this);
+  // }
 
-  /**
-   * @brief
-   *
-   * @param lhs
-   * @param rhs
-   * @return true
-   * @return false
-   */
-  friend constexpr auto operator>=(const T &lhs, const Interval &rhs) -> bool {
-    return !(lhs < rhs);
-  }
+  // /**
+  //  * @brief
+  //  *
+  //  * @param lhs
+  //  * @param rhs
+  //  * @return true
+  //  * @return false
+  //  */
+  // friend constexpr auto operator<=(const T &lhs, const Interval &rhs) -> bool {
+  //   return !(rhs < lhs);
+  //   ;
+  // }
+
+  // /**
+  //  * @brief Greater than or equal to
+  //  *
+  //  * @tparam U
+  //  * @param[in] rhs
+  //  * @return true
+  //  * @return false
+  //  */
+  // template <typename U> //
+  // constexpr auto operator>=(const U &rhs) const -> bool {
+  //   return !(*this < rhs);
+  // }
+
+  // /**
+  //  * @brief
+  //  *
+  //  * @param lhs
+  //  * @param rhs
+  //  * @return true
+  //  * @return false
+  //  */
+  // friend constexpr auto operator>=(const T &lhs, const Interval &rhs) -> bool {
+  //   return !(lhs < rhs);
+  // }
 
   ///@}
 
@@ -581,68 +583,64 @@ public:
     return !(*this < other || other < *this);
   }
 
-  template <typename U> //
-  constexpr auto contains(const U &other) const ->
-      typename std::enable_if<std::is_scalar<U>::value, bool>::type {
-    return this->lb() <= other && other <= this->ub();
-  }
-
-  template <typename U> //
-  constexpr auto contains(const U &other) const ->
-      typename std::enable_if<!std::is_scalar<U>::value, bool>::type {
-    return this->lb() <= other.lb() && other.ub() <= this->ub();
-  }
-
-  // /**
-  //  * @brief contains
-  //  *
-  //  * @tparam U
-  //  * @param[in] a
-  //  * @return true
-  //  * @return false
-  //  */
-  // template <typename U> // cppcheck-suppress internalAstError
-  // constexpr auto contains(const U &other) const -> bool {
-  //   if constexpr (std::is_scalar<U>::value) {
-  //     return this->lb() <= other && other <= this->ub();
-  //   } else {
-  //     return this->lb() <= other.lb() && other.ub() <= this->ub();
-  //   }
-  // }
-
-  template <typename U> //
-  constexpr auto intersection_with(const U &other) const ->
-      typename std::enable_if<std::is_scalar<U>::value, Interval<U>>::type {
-    return Interval<U>{other, other};
-  }
-
-  template <typename U> //
-  constexpr auto intersection_with(const U &other) const ->
-      typename std::enable_if<!std::is_scalar<U>::value, Interval<T>>::type {
-    return Interval<T>{this->lb() > other.lb() ? this->lb() : T(other.lb()),
-                       this->ub() < other.ub() ? this->ub() : T(other.ub())};
-  }
-
-  // /**
-  //  * @brief minimum distance with
-  //  *
-  //  * @tparam U
-  //  * @param[in] other
-  //  * @return constexpr auto
-  //  */
   // template <typename U> //
-  // constexpr auto intersection_with(const U &other) const {
-  //   if constexpr (std::is_scalar<U>::value) {
-  //     return Interval<U>{other, other};
-  //   } else {
-  //     // return Interval<T>{std::max(this->lb(), T(other.lb())),
-  //     //                    std::min(this->ub(), T(other.ub()))};
-  //     return Interval<T>{this->lb() > other.lb() ? this->lb() :
-  //     T(other.lb()),
-  //                        this->ub() < other.ub() ? this->ub() :
-  //                        T(other.ub())};
-  //   }
+  // constexpr auto contains(const U &other) const ->
+  //     typename std::enable_if<std::is_scalar<U>::value, bool>::type {
+  //   return this->lb() <= other && other <= this->ub();
   // }
+
+  // template <typename U> //
+  // constexpr auto contains(const U &other) const ->
+  //     typename std::enable_if<!std::is_scalar<U>::value, bool>::type {
+  //   return this->lb() <= other.lb() && other.ub() <= this->ub();
+  // }
+
+  /**
+   * @brief contains
+   *
+   * @tparam U
+   * @param[in] a
+   * @return true
+   * @return false
+   */
+  template <typename U> // cppcheck-suppress internalAstError
+  constexpr auto contains(const U &other) const -> bool {
+    if constexpr (requires { other.lb(); }) {
+      return this->lb() <= other.lb() && other.ub() <= this->ub();
+    } else { // assume scalar
+      return this->lb() <= other && other <= this->ub();
+    }
+  }
+
+  // template <typename U> //
+  // constexpr auto intersection_with(const U &other) const ->
+  //     typename std::enable_if<std::is_scalar<U>::value, Interval<U>>::type {
+  //   return Interval<U>{other, other};
+  // }
+
+  // template <typename U> //
+  // constexpr auto intersection_with(const U &other) const ->
+  //     typename std::enable_if<!std::is_scalar<U>::value, Interval<T>>::type {
+  //   return Interval<T>{this->lb() > other.lb() ? this->lb() : T(other.lb()),
+  //                      this->ub() < other.ub() ? this->ub() : T(other.ub())};
+  // }
+
+  /**
+   * @brief minimum distance with
+   *
+   * @tparam U
+   * @param[in] other
+   * @return constexpr auto
+   */
+  template <typename U> //
+  constexpr auto intersection_with(const U &other) const {
+    if constexpr (requires { other.lb(); }) {
+      return Interval<T>{this->lb() > other.lb() ? this->lb() : T(other.lb()),
+                         this->ub() < other.ub() ? this->ub() : T(other.ub())};
+    } else { // assume scalar
+      return Interval<U>{other, other};
+    }
+  }
 
   /**
    * @brief minimum distance with
@@ -662,35 +660,6 @@ public:
     return T(0);
   }
 
-  template <typename U>
-  constexpr auto min_dist_change_with(U &other) ->
-      typename std::enable_if<std::is_scalar<U>::value, T>::type {
-    if (*this < other) {
-      this->_lb = this->_ub;
-      return min_dist_change(this->_ub, other);
-    }
-    if (other < *this) {
-      this->_ub = this->_lb;
-      return min_dist_change(this->_lb, other);
-    }
-    this->_ub = this->_lb = other;
-    return T(0);
-  }
-
-  template <typename U>
-  constexpr auto min_dist_change_with(U &other) ->
-      typename std::enable_if<!std::is_scalar<U>::value, T>::type {
-    if (*this < other) {
-      this->_lb = this->_ub;
-      return min_dist_change(this->_ub, other);
-    }
-    if (other < *this) {
-      this->_ub = this->_lb;
-      return min_dist_change(this->_lb, other);
-    }
-    *this = other = this->intersection_with(other);
-    return T(0);
-  }
 
   // /**
   //  * @brief minimum distance with
@@ -717,6 +686,32 @@ public:
   // }
 
   /**
+   * @brief minimum distance with
+   *
+   * @tparam U
+   * @param[in] other
+   * @return constexpr auto
+   */
+  template <typename U>
+  constexpr auto min_dist_change_with(U &other) const -> T {
+    if (*this < other) {
+      this->_lb = this->_ub;
+      return min_dist_change(this->_ub, other);
+    }
+    if (other < *this) {
+      this->_ub = this->_lb;
+      return min_dist_change(this->_lb, other);
+    }
+
+    if constexpr (requires { other.lb(); }) {
+      *this = other = this->intersection_with(other);
+    } else { // assume scalar
+      this->_ub = this->_lb = other;
+    }
+    return T(0);
+  }
+
+  /**
    * @brief
    *
    * @tparam Stream
@@ -732,28 +727,29 @@ public:
 };
 #pragma pack(pop)
 
-template <typename U1, typename U2> //
-inline constexpr auto enlarge(U1 lhs, const U2 &rhs) ->
-    typename std::enable_if<std::is_scalar<U1>::value, Interval<U1>>::type {
-  return Interval<U1>{lhs - rhs, lhs + rhs};
-}
-
-template <typename U1, typename U2> //
-inline constexpr auto enlarge(U1 lhs, const U2 &rhs) ->
-    typename std::enable_if<!std::is_scalar<U1>::value, U1>::type {
-  lhs.enlarge_with(rhs);
-  return lhs;
-}
+// template <typename U1, typename U2> //
+// inline constexpr auto enlarge(U1 lhs, const U2 &rhs) ->
+//     typename std::enable_if<std::is_scalar<U1>::value, Interval<U1>>::type {
+//   return Interval<U1>{lhs - rhs, lhs + rhs};
+// }
 
 // template <typename U1, typename U2> //
-// inline constexpr auto enlarge(U1 lhs, const U2 &rhs) {
-//   if constexpr (std::is_scalar<U1>::value) {
-//     return Interval<U1>{lhs - rhs, lhs + rhs};
-//   } else {
-//     lhs.enlarge_with(rhs);
-//     return lhs;
-//   }
+// inline constexpr auto enlarge(U1 lhs, const U2 &rhs) ->
+//     typename std::enable_if<!std::is_scalar<U1>::value, U1>::type {
+//   lhs.enlarge_with(rhs);
+//   return lhs;
 // }
+
+template <typename U1, typename U2> //
+inline constexpr auto enlarge(const U1& lhs, const U2 &rhs) {
+  if constexpr (requires { lhs.intersection_with(rhs); }) {
+    auto res{lhs};
+    res.enlarge_with(rhs);
+    return res;
+  } else {
+    return Interval<U1>{lhs - rhs, lhs + rhs};
+  }
+}
 
 // template <typename U1, typename U2>  //
 // inline constexpr auto min_dist_change_merge(U1& lhs, U2& rhs) {

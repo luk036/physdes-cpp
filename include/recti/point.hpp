@@ -402,8 +402,7 @@ public:
   friend constexpr auto enlarge(const Point &lhs, const R &alpha) {
     auto xcoord = enlarge(lhs.xcoord(), alpha);
     auto ycoord = enlarge(lhs.ycoord(), alpha);
-    return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord),
-                                                     std::move(ycoord)};
+    return Point{std::move(xcoord), std::move(ycoord)};
   }
 
   /**
