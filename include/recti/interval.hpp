@@ -3,7 +3,6 @@
 // #include <algorithm> // import std::min, std::max
 #include <cassert>
 #include <cmath>
-#include <type_traits> // import std::is_scalar_v
 #include <utility>     // import std::move
 
 namespace recti {
@@ -74,7 +73,7 @@ inline constexpr auto overlap(const U1 &lhs, const U2 &rhs) -> bool {
     return lhs.overlaps(rhs);
   } else if constexpr (requires { rhs.overlaps(lhs); }) {
     return rhs.overlaps(lhs);
-  } else {
+  } else /* constexpr */ {
     return lhs == rhs;
   }
 }
@@ -116,7 +115,7 @@ inline constexpr auto contain(const U1 &lhs, const U2 &rhs) -> bool {
     return lhs.contains(rhs);
   } else if constexpr (requires { rhs.contains(lhs); }) {
     return false;
-  } else {
+  } else /* constexpr */ {
     return lhs == rhs;
   }
 }
@@ -158,7 +157,7 @@ constexpr auto intersection(const U1 &lhs, const U2 &rhs) {
     return lhs.intersection_with(rhs);
   } else if constexpr (requires { rhs.intersection_with(lhs); }) {
     return rhs.intersection_with(lhs);
-  } else {
+  } else /* constexpr */ {
     assert(lhs == rhs);
     return lhs;
   }
@@ -200,7 +199,7 @@ inline constexpr auto min_dist(const U1 &lhs, const U2 &rhs) {
     return lhs.min_dist_with(rhs);
   } else if constexpr (requires { rhs.min_dist_with(lhs); }) {
     return rhs.min_dist_with(lhs);
-  } else {
+  } else /* constexpr */ {
     return std::abs(lhs - rhs);
   }
 }
@@ -241,7 +240,7 @@ inline constexpr auto min_dist_change(U1 &lhs, U2 &rhs) {
     return lhs.min_dist_change_with(rhs);
   } else if constexpr (requires { rhs.min_dist_change_with(lhs); }) {
     return rhs.min_dist_change_with(lhs);
-  } else {
+  } else /* constexpr */ {
     return std::abs(lhs - rhs);
   }
 }
@@ -607,7 +606,7 @@ public:
   constexpr auto contains(const U &other) const -> bool {
     if constexpr (requires { other.lb(); }) {
       return this->lb() <= other.lb() && other.ub() <= this->ub();
-    } else { // assume scalar
+    } else /* constexpr */ { // assume scalar
       return this->lb() <= other && other <= this->ub();
     }
   }
@@ -637,7 +636,7 @@ public:
     if constexpr (requires { other.lb(); }) {
       return Interval<T>{this->lb() > other.lb() ? this->lb() : T(other.lb()),
                          this->ub() < other.ub() ? this->ub() : T(other.ub())};
-    } else { // assume scalar
+    } else /* constexpr */ { // assume scalar
       return Interval<U>{other, other};
     }
   }
@@ -705,7 +704,7 @@ public:
 
     if constexpr (requires { other.lb(); }) {
       *this = other = this->intersection_with(other);
-    } else { // assume scalar
+    } else /* constexpr */ { // assume scalar
       this->_ub = this->_lb = other;
     }
     return T(0);
@@ -742,11 +741,11 @@ public:
 
 template <typename U1, typename U2> //
 inline constexpr auto enlarge(const U1& lhs, const U2 &rhs) {
-  if constexpr (requires { lhs.intersection_with(rhs); }) {
+  if constexpr (requires { lhs.enlarge_with(rhs); }) {
     auto res{lhs};
     res.enlarge_with(rhs);
     return res;
-  } else {
+  } else /* constexpr */ {
     return Interval<U1>{lhs - rhs, lhs + rhs};
   }
 }
@@ -756,10 +755,10 @@ inline constexpr auto enlarge(const U1& lhs, const U2 &rhs) {
 //     if constexpr (std::is_scalar<U1>::value) {
 //         if constexpr (std::is_scalar<U2>::value) {
 //             return std::abs(lhs - rhs);
-//         } else {
+//         } else /* constexpr */ {
 //             return rhs.min_dist_change_merge_with(lhs);
 //         }
-//     } else {
+//     } else /* constexpr */ {
 //         return lhs.min_dist_change_with(rhs);
 //     }
 // }
