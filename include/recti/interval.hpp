@@ -8,46 +8,75 @@
 
 namespace recti {
 
-template <typename U1, typename U2> //
-inline constexpr auto overlap(const U1 &lhs, const U2 &rhs) ->
-    typename std::enable_if<!std::is_scalar<U1>::value, bool>::type {
-  return lhs.overlaps(rhs);
-}
-
-template <typename U1, typename U2> //
-inline constexpr auto overlap(const U1 &lhs, const U2 &rhs) ->
-    typename std::enable_if<
-        std::is_scalar<U1>::value && !std::is_scalar<U2>::value, bool>::type {
-  return rhs.overlaps(lhs);
-}
-
-template <typename U1, typename U2> //
-inline constexpr auto overlap(const U1 &lhs, const U2 &rhs) ->
-    typename std::enable_if<
-        std::is_scalar<U1>::value && std::is_scalar<U2>::value, bool>::type {
-  return lhs == rhs;
-}
-
 // /**
-//  * @brief overlap
-//  *
-//  * @tparam U1
-//  * @tparam U2
-//  * @param lhs
-//  * @param rhs
-//  * @return true
-//  * @return false
+//  * @brief overlap 1
+//  * 
+//  * @tparam U1 
+//  * @tparam U2 
+//  * @param lhs 
+//  * @param rhs 
+//  * @return std::enable_if<!std::is_scalar<U1>::value, bool>::type 
 //  */
 // template <typename U1, typename U2> //
-// inline constexpr auto overlap(const U1 &lhs, const U2 &rhs) -> bool {
-//   if constexpr (!std::is_scalar<U1>::value) {
-//     return lhs.overlaps(rhs);
-//   } else if constexpr (!std::is_scalar<U2>::value) {
-//     return rhs.overlaps(lhs);
-//   } else {
-//     return lhs == rhs;
-//   }
+// inline constexpr auto overlap(const U1 &lhs, const U2 &rhs) ->
+//     typename std::enable_if<!std::is_scalar<U1>::value, bool>::type {
+//   return lhs.overlaps(rhs);
 // }
+
+// /**
+//  * @brief overlap 2
+//  * 
+//  * @tparam U1 
+//  * @tparam U2 
+//  * @param lhs 
+//  * @param rhs 
+//  * @return std::enable_if<
+//  * std::is_scalar<U1>::value && !std::is_scalar<U2>::value, bool>::type 
+//  */
+// template <typename U1, typename U2> //
+// inline constexpr auto overlap(const U1 &lhs, const U2 &rhs) ->
+//     typename std::enable_if<
+//         std::is_scalar<U1>::value && !std::is_scalar<U2>::value, bool>::type {
+//   return rhs.overlaps(lhs);
+// }
+
+// /**
+//  * @brief overlap 3
+//  * 
+//  * @tparam U1 
+//  * @tparam U2 
+//  * @param lhs 
+//  * @param rhs 
+//  * @return std::enable_if<
+//  * std::is_scalar<U1>::value && std::is_scalar<U2>::value, bool>::type 
+//  */
+// template <typename U1, typename U2> //
+// inline constexpr auto overlap(const U1 &lhs, const U2 &rhs) ->
+//     typename std::enable_if<
+//         std::is_scalar<U1>::value && std::is_scalar<U2>::value, bool>::type {
+//   return lhs == rhs;
+// }
+
+/**
+ * @brief overlap
+ *
+ * @tparam U1
+ * @tparam U2
+ * @param lhs
+ * @param rhs
+ * @return true
+ * @return false
+ */
+template <typename U1, typename U2> //
+inline constexpr auto overlap(const U1 &lhs, const U2 &rhs) -> bool {
+  if constexpr (requires { lhs.overlaps(rhs); }) {
+    return lhs.overlaps(rhs);
+  } else if constexpr (requires { rhs.overlaps(lhs); }) {
+    return rhs.overlaps(lhs);
+  } else {
+    return lhs == rhs;
+  }
+}
 
 template <typename U1, typename U2> //
 inline constexpr auto contain(const U1 &lhs, const U2 &rhs) ->
