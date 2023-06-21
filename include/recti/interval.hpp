@@ -3,7 +3,7 @@
 // #include <algorithm> // import std::min, std::max
 #include <cassert>
 #include <cmath>
-#include <utility>     // import std::move
+#include <utility> // import std::move
 
 namespace recti {
 
@@ -353,11 +353,13 @@ public:
    * @param[in] rhs
    * @return std::weak_ordering
    */
-  template <typename U>  //
-  constexpr auto operator<=>(const U& rhs) const -> std::weak_ordering {
-      if (this->ub() < rhs) return std::weak_ordering::less;
-      if (this->lb() > rhs) return std::weak_ordering::greater;
-      return std::weak_ordering::equivalent;
+  template <typename U> //
+  constexpr auto operator<=>(const U &rhs) const -> std::weak_ordering {
+    if (this->ub() < rhs)
+      return std::weak_ordering::less;
+    if (this->lb() > rhs)
+      return std::weak_ordering::greater;
+    return std::weak_ordering::equivalent;
   }
 
   /**
@@ -367,11 +369,13 @@ public:
    * @param[in] rhs
    * @return std::weak_ordering
    */
-  friend constexpr auto operator<=>(const T& lhs, const Interval& rhs) ->
-  std::weak_ordering {
-      if (lhs < rhs.lb()) return std::weak_ordering::less;
-      if (lhs > rhs.ub()) return std::weak_ordering::greater;
-      return std::weak_ordering::equivalent;
+  friend constexpr auto operator<=>(const T &lhs, const Interval &rhs)
+      -> std::weak_ordering {
+    if (lhs < rhs.lb())
+      return std::weak_ordering::less;
+    if (lhs > rhs.ub())
+      return std::weak_ordering::greater;
+    return std::weak_ordering::equivalent;
   }
 
   // /**
@@ -395,7 +399,8 @@ public:
   //  * @return true
   //  * @return false
   //  */
-  // friend constexpr auto operator<(const T &lhs, const Interval &rhs) -> bool {
+  // friend constexpr auto operator<(const T &lhs, const Interval &rhs) -> bool
+  // {
   //   return lhs < rhs.lb();
   // }
 
@@ -420,7 +425,8 @@ public:
   //  * @return true
   //  * @return false
   //  */
-  // friend constexpr auto operator>(const T &lhs, const Interval &rhs) -> bool {
+  // friend constexpr auto operator>(const T &lhs, const Interval &rhs) -> bool
+  // {
   //   return rhs < lhs;
   // }
 
@@ -445,7 +451,8 @@ public:
   //  * @return true
   //  * @return false
   //  */
-  // friend constexpr auto operator<=(const T &lhs, const Interval &rhs) -> bool {
+  // friend constexpr auto operator<=(const T &lhs, const Interval &rhs) -> bool
+  // {
   //   return !(rhs < lhs);
   //   ;
   // }
@@ -471,7 +478,8 @@ public:
   //  * @return true
   //  * @return false
   //  */
-  // friend constexpr auto operator>=(const T &lhs, const Interval &rhs) -> bool {
+  // friend constexpr auto operator>=(const T &lhs, const Interval &rhs) -> bool
+  // {
   //   return !(lhs < rhs);
   // }
 
@@ -659,7 +667,6 @@ public:
     return T(0);
   }
 
-
   // /**
   //  * @brief minimum distance with
   //  *
@@ -740,7 +747,7 @@ public:
 // }
 
 template <typename U1, typename U2> //
-inline constexpr auto enlarge(const U1& lhs, const U2 &rhs) {
+inline constexpr auto enlarge(const U1 &lhs, const U2 &rhs) {
   if constexpr (requires { lhs.enlarge_with(rhs); }) {
     auto res{lhs};
     res.enlarge_with(rhs);
