@@ -12,6 +12,10 @@ namespace recti {
 /**
  * @brief Rectilinear Polygon
  *
+ * `RPolygon` is a class template that represents a rectilinear polygon. It
+ * stores the origin point and a vector of edges that define the polygon. The
+ * template parameter `T` specifies the type of the coordinates of the points.
+ *
  * @tparam T
  */
 template <typename T> class RPolygon {
