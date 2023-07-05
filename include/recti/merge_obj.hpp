@@ -41,6 +41,12 @@ public:
   /**
    * @brief Construct a new Point object
    *
+   * This code defines a constructor for the `MergeObj` class template. The
+   * constructor takes two parameters `xcoord` and `ycoord`, which are of type
+   * `T1` and `T2` respectively. The constructor is marked as `constexpr` and
+   * `noexcept`, indicating that it can be evaluated at compile-time and it does
+   * not throw any exceptions.
+   *
    * @param[in] xcoord
    * @param[in] ycoord
    */
