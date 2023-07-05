@@ -199,6 +199,10 @@ inline constexpr auto min_dist_change(U1 &lhs, U2 &rhs) {
 /**
  * @brief Interval
  *
+ * The above code is defining a template class called "Interval" with a default
+ * template parameter of type "int". The class has two private member variables:
+ * "_lb" (lower bound) and "_ub" (upper bound).
+ *
  * @tparam T
  */
 template <typename T = int> class Interval {

@@ -12,6 +12,10 @@ namespace recti {
 /**
  * @brief Polygon
  *
+ * `Polygon` is a class template that represents an arbitrary polygon. It
+ * stores the origin point and a vector of edges that define the polygon. The
+ * template parameter `T` specifies the type of the coordinates of the points.
+ *
  * @tparam T
  */
 template <typename T> class Polygon {

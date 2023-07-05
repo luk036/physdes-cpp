@@ -11,11 +11,29 @@ namespace recti {
 
 #pragma pack(push, 1)
 /**
- * @brief merge_obj
+ * @brief Merging Object (for deferred-merge embedding (DME) algorithm)
  *
- * object includes a single Point, segment, or a region
+ * The code is defining a class template called `MergeObj` that represents a
+ * merging segment. The merging segment can include a single point, segment, or
+ * region. The template has two type parameters `T1` and `T2`, which default to
+ * `int` if not specified. The class inherits from the `Point` class, which
+ * represents a point in a 2D coordinate system. The `MergeObj` class provides
+ * various operations and functions for manipulating and comparing merging
+ * segments, such as adding and subtracting vectors, checking for overlap and
+ * intersection with other merging segments, calculating the minimum distance
+ * between merging segments, and merging two merging segments. The class also
+ * provides comparison operators and a stream insertion operator for convenient
+ * usage. The purpose of the `MergeObj` class is to support the deferred-merge
+ * embedding (DME) algorithm, as referenced in the code comments.
+ *
+ * Reference:
+ *  - Ting-Hai Chao, Yu-Chin Hsu, Jan-Ming Ho and A. B. Kahng, "Zero skew clock
+ * routing with minimum wirelength," in IEEE Transactions on Circuits and
+ * Systems II: Analog and Digital Signal Processing, vol. 39, no. 11, pp.
+ * 799-814, Nov. 1992, doi: 10.1109/82.204128.
  *
  * @tparam T
+ * @todo support for the 3rd-dimension (i.e. the cost of via)
  */
 template <typename T1 = int, typename T2 = T1>
 class MergeObj : private Point<T1, T2> {

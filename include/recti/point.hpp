@@ -8,17 +8,18 @@
 
 namespace recti {
 
-/**
- * @brief Forward declaration
- *
- * @tparam T1 int, Interval, or Point
- * @tparam T2 int or Interval
- */
 template <typename T1, typename T2> class Point;
 
 #pragma pack(push, 1)
 /**
  * @brief Point
+ *
+ * The `Point` class is a template class that represents a point in a 2D
+ * coordinate system. It has two template parameters, `T1` and `T2`, which can
+ * be either `int`, `Interval`, or another `Point`. The `Point` class provides
+ * various operations and functionalities for working with points, such as
+ * comparison operators, arithmetic operators, flipping, overlap checking,
+ * distance calculation, and more.
  *
  * @tparam T1 int, Interval, or Point
  * @tparam T2 int or Interval
@@ -41,11 +42,19 @@ public:
   /**
    * @brief Construct a new Point object
    *
+   * This is a constructor for the `Point` class. It takes two parameters,
+   * `xcoord` and `ycoord`, and constructs a new `Point` object with those
+   * values. The parameters are passed as rvalue references (`T1&&` and `T2&&`)
+   * to allow for efficient move semantics. The constructor is marked as `constexpr`
+   * to indicate that it can be evaluated at compile-time if the arguments are
+   * compile-time constants. The `noexcept` specifier indicates that the
+   * constructor does not throw any exceptions.
+   *
    * @param[in] xcoord
    * @param[in] ycoord
    */
   constexpr Point(T1 &&xcoord, T2 &&ycoord) noexcept
-      : _xcoord{std::move(xcoord)}, _ycoord{std::move(ycoord)} {}
+      : _xcoord{xcoord}, _ycoord{ycoord} {}
 
   /**
    * @brief Construct a new Point object
@@ -69,14 +78,6 @@ public:
    * @return const T2&
    */
   constexpr auto ycoord() const -> const T2 & { return this->_ycoord; }
-
-  /**
-   * @brief tie
-   *
-   * @return auto
-   */
-  // constexpr auto _tie() const { return std::tie(this->_xcoord,
-  // this->_ycoord); }
 
   /** @name Comparison operators
    *  definie ==, !=, <, >, <=, >=.
