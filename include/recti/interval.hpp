@@ -10,6 +10,10 @@ namespace recti {
 /**
  * @brief overlap
  *
+ * The above code defines a template function called `overlap` that takes two
+ * arguments `lhs` and `rhs`. The function checks if the two arguments overlap
+ * with each other.
+ *
  * @tparam U1
  * @tparam U2
  * @param lhs
