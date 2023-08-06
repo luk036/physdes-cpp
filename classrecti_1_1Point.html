@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>recti::Point class | Recti</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Recti</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li>
+              <a href="pages.html">Pages</a>
+              <ol>
+                <li><a href="about.html">About</a></li>
+              </ol>
+            </li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="point_8hpp.html">&lt;recti/point.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename T1 = int, typename T2 = T1&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>Point <span class="m-thin">class</span>
+        </h1>
+        <p><a href="classrecti_1_1Point.html" class="m-doc">Point</a>.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">T1</td>
+              <td>int, <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>, or <a href="classrecti_1_1Point.html" class="m-doc">Point</a></td>
+            </tr>
+            <tr>
+              <td>T2</td>
+              <td>int or <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#comparison-operators">Comparison operators</a></li>
+                <li><a href="#arithmetic-operators">Arithmetic operators</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p>The <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a></code> class is a template class that represents a point in a 2D coordinate system. It has two template parameters, <code>T1</code> and <code>T2</code>, which can be either <code>int</code>, <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code>, or another <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a></code>. The <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a></code> class provides various operations and functionalities for working with points, such as comparison operators, arithmetic operators, flipping, overlap checking, distance calculation, and more.</p>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ab47fbd599a6edc3f9757eeccd56d9496" class="m-doc">Point</a>(</span><span class="m-doc-wrap">T1&amp;&amp; xcoord,
+              T2&amp;&amp; ycoord) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Construct a new <a href="classrecti_1_1Point.html" class="m-doc">Point</a> object.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a2345164c79d64af6742490eda4b888f2" class="m-doc">Point</a>(</span><span class="m-doc-wrap">const T1&amp; xcoord,
+              const T2&amp; ycoord) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Construct a new <a href="classrecti_1_1Point.html" class="m-doc">Point</a> object.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a375e984834754c84d7a0534b7227cfbc" class="m-doc">xcoord</a>(</span><span class="m-doc-wrap">) const -&gt; const T1 &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aefcd6bdf06cbde541121f02866fea423" class="m-doc">ycoord</a>(</span><span class="m-doc-wrap">) const -&gt; const T2 &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="comparison-operators">
+          <h2><a href="#comparison-operators">Comparison operators</a></h2>
+<p>definie ==, !=, &lt;, &gt;, &lt;=, &gt;=.</p>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a28b94545baf835085433614c6e98a96d" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Self</a>&amp; xcoord,
+              const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; ycoord) -&gt; bool -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Greater than.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a01970bbbb2f06d8b7d7e8b0fa56cc4a9" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Self</a>&amp; xcoord,
+              const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; ycoord) -&gt; bool -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Less than or equal to.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a60495bd09dd516d5a39653ee34aac246" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Self</a>&amp; xcoord,
+              const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; ycoord) -&gt; bool -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Greater than or equal to.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a36b9c505e0d15aae1e88600f6fa78c8e" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Equal to.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a81890d442b6925aef353a309fbba4679" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Less than.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae9230efafab3067b6ac0db322c7329b1" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Not equal to.</dd>
+          </dl>
+        </section>
+        <section id="arithmetic-operators">
+          <h2><a href="#arithmetic-operators">Arithmetic operators</a></h2>
+<p>definie +, -, *, /, +=, -=, *=, /=, etc.</p>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa278a1fd3d5ca53e88348f8cc46691a0" class="m-doc">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a> lhs,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; vec2) -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Add.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad30dabfb6ff1de1018e01dfb01f2b20c" class="m-doc">operator-</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a> lhs,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; vec2) -&gt; Point -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Substract.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad882ecc53eb272e13399ccca40e295fe" class="m-doc">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a> lhs,
+              const T1&amp; alpha) -&gt; Point -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Add.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5ae6a658e8b790f55517182bc86c637f" class="m-doc">operator-</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a> lhs,
+              const T1&amp; alpha) -&gt; Point -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Substract.</dd>
+            <dt id="a5a22b220397d408fbb923d57e6bf4866">
+              <div class="m-doc-template">template&lt;typename R&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5a22b220397d408fbb923d57e6bf4866" class="m-doc-self">enlarge</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&amp; lhs,
+              const R&amp; alpha) -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd><span></span></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;class Stream&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8679b5ced35fcce1d4f42244654f0d97" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
+              const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&amp; obj) -&gt; Stream &amp; -&gt; auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad7b69487d97f6ce7f4a2fab9a5700892" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; rhs) -&gt; Self &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Add a vector (translation)</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#adddb6e587e8e2ca2cfec2d8b918fc46b" class="m-doc">operator-=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; rhs) -&gt; Self &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Substract a vector (translation)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8db32bd4e78de3121fc918f5553154bd" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const T2&amp; alpha) -&gt; Self &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Add a vector (translation)</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3713af457478b0f1d0dfc9588aa1aeee" class="m-doc">operator-=</a>(</span><span class="m-doc-wrap">const T1&amp; alpha) -&gt; Self &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Substract.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6217e048db9f2cc7371340d4d96cf003" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Self</a>&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Different.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad82704977556c24d4839d2bcb39bc9f9" class="m-doc">flip_xy</a>(</span><span class="m-doc-wrap">) const -&gt; Point&lt; T2, T1 &gt; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>flip_xcoordy according to xcoord-ycoord diagonal line</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#afa98413c7dae5548d04a97f643283049" class="m-doc">flip_y</a>(</span><span class="m-doc-wrap">) const -&gt; Point&lt; T1, T2 &gt; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>flip according to ycoord-axis</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#accce34ff4ab0c0bd9044d7c56703bbcf" class="m-doc">overlaps</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; other) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>overlap</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4fffe830c314eecc9d616415d1299c76" class="m-doc">intersection_with</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>intersection</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a82a2bb6333e9a8fd285639c0de4487d1" class="m-doc">contains</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; other) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a146c8d611690bf222040c5d72b5c299d" class="m-doc">min_dist_with</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>overlap</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aafec16380036a57466d1f4664d6aa3c0" class="m-doc">min_dist_change_with</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; other) -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>overlap</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a693c8ffa86e3561e9de1db6bf3c85067" class="m-doc">get_xcoord</a>(</span><span class="m-doc-wrap">) -&gt; T1 &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto <span class="m-label m-flat m-warning">protected</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#afc04fe08ded96c7fbe8bed1c009ad404" class="m-doc">get_ycoord</a>(</span><span class="m-doc-wrap">) -&gt; T2 &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto <span class="m-label m-flat m-warning">protected</span></span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ab47fbd599a6edc3f9757eeccd56d9496"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab47fbd599a6edc3f9757eeccd56d9496" class="m-doc-self">Point</a>(</span><span class="m-doc-wrap">T1&amp;&amp; xcoord,
+              T2&amp;&amp; ycoord) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Construct a new <a href="classrecti_1_1Point.html" class="m-doc">Point</a> object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">xcoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>ycoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+<p>This is a constructor for the <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a></code> class. It takes two parameters, <code>xcoord</code> and <code>ycoord</code>, and constructs a new <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a></code> object with those values. The parameters are passed as rvalue references (<code>T1&amp;&amp;</code> and <code>T2&amp;&amp;</code>) to allow for efficient move semantics. The constructor is marked as <code>constexpr</code> to indicate that it can be evaluated at compile-time if the arguments are compile-time constants. The <code>noexcept</code> specifier indicates that the constructor does not throw any exceptions.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2345164c79d64af6742490eda4b888f2"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2345164c79d64af6742490eda4b888f2" class="m-doc-self">Point</a>(</span><span class="m-doc-wrap">const T1&amp; xcoord,
+              const T2&amp; ycoord) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Construct a new <a href="classrecti_1_1Point.html" class="m-doc">Point</a> object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">xcoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>ycoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a375e984834754c84d7a0534b7227cfbc"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a375e984834754c84d7a0534b7227cfbc" class="m-doc-self">xcoord</a>(</span><span class="m-doc-wrap">) const -&gt; const T1 &amp; <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>const T1&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aefcd6bdf06cbde541121f02866fea423"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aefcd6bdf06cbde541121f02866fea423" class="m-doc-self">ycoord</a>(</span><span class="m-doc-wrap">) const -&gt; const T2 &amp; <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>const T2&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a28b94545baf835085433614c6e98a96d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a28b94545baf835085433614c6e98a96d" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Self</a>&amp; xcoord,
+              const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; ycoord) -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Greater than.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>xcoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>ycoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a01970bbbb2f06d8b7d7e8b0fa56cc4a9"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a01970bbbb2f06d8b7d7e8b0fa56cc4a9" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Self</a>&amp; xcoord,
+              const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; ycoord) -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Less than or equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>xcoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>ycoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a60495bd09dd516d5a39653ee34aac246"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a60495bd09dd516d5a39653ee34aac246" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Self</a>&amp; xcoord,
+              const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; ycoord) -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Greater than or equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>xcoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>ycoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a36b9c505e0d15aae1e88600f6fa78c8e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a36b9c505e0d15aae1e88600f6fa78c8e" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a81890d442b6925aef353a309fbba4679"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a81890d442b6925aef353a309fbba4679" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Less than.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae9230efafab3067b6ac0db322c7329b1"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae9230efafab3067b6ac0db322c7329b1" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Not equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa278a1fd3d5ca53e88348f8cc46691a0"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa278a1fd3d5ca53e88348f8cc46691a0" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a> lhs,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; vec2) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Add.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Vector2&lt;T&gt;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad30dabfb6ff1de1018e01dfb01f2b20c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad30dabfb6ff1de1018e01dfb01f2b20c" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a> lhs,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; vec2) -&gt; Point <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Substract.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Vector2&lt;T&gt;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad882ecc53eb272e13399ccca40e295fe"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad882ecc53eb272e13399ccca40e295fe" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a> lhs,
+              const T1&amp; alpha) -&gt; Point <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Add.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classrecti_1_1Point.html" class="m-doc">Point</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5ae6a658e8b790f55517182bc86c637f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5ae6a658e8b790f55517182bc86c637f" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a> lhs,
+              const T1&amp; alpha) -&gt; Point <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Substract.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lhs</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classrecti_1_1Point.html" class="m-doc">Point</a></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8679b5ced35fcce1d4f42244654f0d97"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;class Stream&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8679b5ced35fcce1d4f42244654f0d97" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
+              const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&amp; obj) -&gt; Stream &amp;</span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">Stream</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>out&nbsp;<span class="m-label m-flat m-warning">out</span></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>obj</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Stream&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad7b69487d97f6ce7f4a2fab9a5700892"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad7b69487d97f6ce7f4a2fab9a5700892" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; rhs) -&gt; Self &amp;</span></span>
+            </h3>
+            <p>Add a vector (translation)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Self&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="adddb6e587e8e2ca2cfec2d8b918fc46b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adddb6e587e8e2ca2cfec2d8b918fc46b" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; rhs) -&gt; Self &amp;</span></span>
+            </h3>
+            <p>Substract a vector (translation)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Self&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8db32bd4e78de3121fc918f5553154bd"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8db32bd4e78de3121fc918f5553154bd" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const T2&amp; alpha) -&gt; Self &amp;</span></span>
+            </h3>
+            <p>Add a vector (translation)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Self&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3713af457478b0f1d0dfc9588aa1aeee"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3713af457478b0f1d0dfc9588aa1aeee" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">const T1&amp; alpha) -&gt; Self &amp;</span></span>
+            </h3>
+            <p>Substract.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Self&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6217e048db9f2cc7371340d4d96cf003"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6217e048db9f2cc7371340d4d96cf003" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Self</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Different.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>constexpr auto</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad82704977556c24d4839d2bcb39bc9f9"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad82704977556c24d4839d2bcb39bc9f9" class="m-doc-self">flip_xy</a>(</span><span class="m-doc-wrap">) const -&gt; Point&lt; T2, T1 &gt; <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>flip_xcoordy according to xcoord-ycoord diagonal line</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>Point&lt;T2, T1&gt;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afa98413c7dae5548d04a97f643283049"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afa98413c7dae5548d04a97f643283049" class="m-doc-self">flip_y</a>(</span><span class="m-doc-wrap">) const -&gt; Point&lt; T1, T2 &gt; <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>flip according to ycoord-axis</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>Point&lt;T2, T1&gt;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="accce34ff4ab0c0bd9044d7c56703bbcf"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#accce34ff4ab0c0bd9044d7c56703bbcf" class="m-doc-self">overlaps</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; other) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>overlap</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4fffe830c314eecc9d616415d1299c76"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4fffe830c314eecc9d616415d1299c76" class="m-doc-self">intersection_with</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>intersection</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a82a2bb6333e9a8fd285639c0de4487d1"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a82a2bb6333e9a8fd285639c0de4487d1" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; other) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a146c8d611690bf222040c5d72b5c299d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a146c8d611690bf222040c5d72b5c299d" class="m-doc-self">min_dist_with</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>overlap</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aafec16380036a57466d1f4664d6aa3c0"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aafec16380036a57466d1f4664d6aa3c0" class="m-doc-self">min_dist_change_with</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U1, U2&gt;&amp; other) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>overlap</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>true</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a693c8ffa86e3561e9de1db6bf3c85067"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a693c8ffa86e3561e9de1db6bf3c85067" class="m-doc-self">get_xcoord</a>(</span><span class="m-doc-wrap">) -&gt; T1 &amp; <span class="m-label m-warning">protected</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>const T1&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afc04fe08ded96c7fbe8bed1c009ad404"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Point&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afc04fe08ded96c7fbe8bed1c009ad404" class="m-doc-self">get_ycoord</a>(</span><span class="m-doc-wrap">) -&gt; T2 &amp; <span class="m-label m-warning">protected</span></span></span>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>const T2&amp;</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
