@@ -1,0 +1,25 @@
+name: Test w/ XMake
+
+on:
+  - push
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        version: [latest, branch@master, branch@dev]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: xmake-io/github-action-setup-xmake@master
+        with:
+          xmake-version: ${{ matrix.version }}
+      - name: Run tests
+        run: |
+          xmake --version
+          xmake f -m release -y
+          xmake
+          xmake run test_recti

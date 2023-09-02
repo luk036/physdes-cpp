@@ -1,12 +1,10 @@
-#include <recti/greeter.h>  // for LanguageCode, LanguageCode::DE, LanguageC...
-#include <recti/version.h>  // for RECTI_VERSION
+#include <recti/greeter.h>
+#include <recti/version.h>
 
-#include <cxxopts.hpp>    // for value, OptionAdder, Options, OptionValue
-#include <iostream>       // for string, operator<<, endl, basic_ostream
-#include <memory>         // for shared_ptr
-#include <string>         // for char_traits, hash, operator==
-#include <unordered_map>  // for operator==, unordered_map, __hash_map_con...
-#include <utility>        // for pair
+#include <cxxopts.hpp>
+#include <iostream>
+#include <string>
+#include <unordered_map>
 
 auto main(int argc, char **argv) -> int {
     const std::unordered_map<std::string, recti::LanguageCode> languages{
@@ -48,8 +46,8 @@ auto main(int argc, char **argv) -> int {
         return 1;
     }
 
-    recti::Recti recti(name);
-    std::cout << recti.greet(langIt->second) << std::endl;
+    // recti::Recti recti(name);
+    // std::cout << recti.greet(langIt->second) << std::endl;
 
     return 0;
 }

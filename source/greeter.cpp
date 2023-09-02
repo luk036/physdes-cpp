@@ -1,15 +1,11 @@
-#include <fmt/format.h>     // for format
-#include <recti/greeter.h>  // for Recti, LanguageCode, LanguageCode::DE
-
-#include <iosfwd>       // for string
-#include <string>       // for basic_string
-#include <type_traits>  // for move
+#include <fmt/format.h>
+#include <recti/greeter.h>
 
 using namespace recti;
 
 Recti::Recti(std::string _name) : name(std::move(_name)) {}
 
-auto Recti::greet(LanguageCode lang) const -> std::string {
+std::string Recti::greet(LanguageCode lang) const {
     switch (lang) {
         default:
         case LanguageCode::EN:

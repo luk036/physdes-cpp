@@ -11,7 +11,7 @@ env:
 jobs:
   build:
     name: Build and publish documentation
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -22,16 +22,16 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get install doxygen
+          brew install doxygen
           pip3 install jinja2 Pygments
 
       - name: Build
         run: |
-          cmake -S. -Bbuild
+          cmake -Sdocumentation -Bbuild
           cmake --build build --target GenerateDocs
 
       - name: Publish
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/documentation/doxygen/html
+          publish_dir: ./build/doxygen/html

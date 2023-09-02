@@ -6,17 +6,13 @@
 [![codecov](https://codecov.io/gh/luk036/physdes-cpp/branch/master/graph/badge.svg)](https://codecov.io/gh/luk036/physdes-cpp)
 
 <p align="center">
-  <img src="./rectilinear-shapes-for-vlsi-physical-desgin.svg"/>
+  <img src="https://repository-images.githubusercontent.com/254842585/4dfa7580-7ffb-11ea-99d0-46b8fe2f4170" height="175" width="auto" />
 </p>
 
-# 🏼 PhysDesCpp
+# recti
 
-> Physical Design in Modern C++
 
-Setting up a new C++ project usually requires a significant amount of preparation and boilerplate code, even more so for modern C++ projects with tests, executables and continuous integration.
-This template is the result of learnings from many previous projects and should help reduce the work required to setup up a modern C++ project.
-
-## ✨ Features
+## Features
 
 - [Modern CMake practices](https://pabloariasal.github.io/2018/02/19/its-time-to-do-cmake-right/)
 - Suited for single header libraries and projects of any scale
@@ -27,7 +23,7 @@ This template is the result of learnings from many previous projects and should 
 - Code formatting enforced by [clang-format](https://clang.llvm.org/docs/ClangFormat.html) and [cmake-format](https://github.com/cheshirekow/cmake_format) via [Format.cmake](https://github.com/TheLartians/Format.cmake)
 - Reproducible dependency management via [CPM.cmake](https://github.com/TheLartians/CPM.cmake)
 - Installable target with automatic versioning information and header generation via [PackageProject.cmake](https://github.com/TheLartians/PackageProject.cmake)
-- Automatic [documentation](https://luk036.github.io/physdes-cpp) and deployment with [Doxygen](https://www.doxygen.nl) and [GitHub Pages](https://pages.github.com)
+- Automatic [documentation](https://thelartians.github.io/ModernCppStarter) and deployment with [Doxygen](https://www.doxygen.nl) and [GitHub Pages](https://pages.github.com)
 - Support for [sanitizer tools, and more](#additional-tools)
 
 ## Usage
@@ -46,7 +42,7 @@ This template is the result of learnings from many previous projects and should 
 Eventually, you can remove any unused files, such as the standalone directory or irrelevant github workflows for your project.
 Feel free to replace the License with one suited for your project.
 
-To cleanly separate the library and subproject code, the outer `CMakeList.txt` only defines the library itself while the tests and other subprojects are self-contained in their own directories.
+To cleanly separate the library and subproject code, the outer `CMakeList.txt` only defines the library itself while the tests and other subprojects are self-contained in their own directories. 
 During development it is usually convenient to [build all subprojects at once](#build-everything-at-once).
 
 ### Build and run the standalone target
@@ -68,7 +64,7 @@ cmake -S test -B build/test
 cmake --build build/test
 CTEST_OUTPUT_ON_FAILURE=1 cmake --build build/test --target test
 
-# or simply call the executable:
+# or simply call the executable: 
 ./build/test/RectiTests
 ```
 
@@ -90,6 +86,11 @@ cmake --build build/test --target fix-format
 ```
 
 See [Format.cmake](https://github.com/TheLartians/Format.cmake) for details.
+These dependencies can be easily installed using pip.
+
+```bash
+pip install clang-format==14.0.6 cmake_format==0.6.11 pyyaml
+```
 
 ### Build the documentation
 
@@ -103,7 +104,7 @@ cmake --build build/doc --target GenerateDocs
 open build/doc/doxygen/html/index.html
 ```
 
-To build the documentation locally, you will need Doxygen, jinja2 and Pygments on installed your system.
+To build the documentation locally, you will need Doxygen, jinja2 and Pygments installed on your system.
 
 ### Build everything at once
 
@@ -164,7 +165,7 @@ Use this as the main directory for best IDE support.
 > I see you are using `GLOB` to add source files in CMakeLists.txt. Isn't that evil?
 
 Glob is considered bad because any changes to the source file structure [might not be automatically caught](https://cmake.org/cmake/help/latest/command/file.html#filesystem) by CMake's builders and you will need to manually invoke CMake on changes.
-I personally prefer the `GLOB` solution for its simplicity, but feel free to change it to explicitly listing sources.
+  I personally prefer the `GLOB` solution for its simplicity, but feel free to change it to explicitly listing sources.
 
 > I want create additional targets that depend on my library. Should I modify the main CMakeLists to include them?
 
@@ -196,6 +197,10 @@ Perhaps the [MiniCppStarter](https://github.com/TheLartians/MiniCppStarter) is s
 ## Related projects and alternatives
 
 - [**ModernCppStarter & PVS-Studio Static Code Analyzer**](https://github.com/viva64/pvs-studio-cmake-examples/tree/master/modern-cpp-starter): Official instructions on how to use the ModernCppStarter with the PVS-Studio Static Code Analyzer.
-- [**lefticus/cpp_starter_project**](https://github.com/lefticus/cpp_starter_project/): A popular C++ starter project, created in 2017.
+- [**cpp-best-practices/gui_starter_template**](https://github.com/cpp-best-practices/gui_starter_template/): A popular C++ starter project, created in 2017.
 - [**filipdutescu/modern-cpp-template**](https://github.com/filipdutescu/modern-cpp-template): A recent starter using a more traditional approach for CMake structure and dependency management.
 - [**vector-of-bool/pitchfork**](https://github.com/vector-of-bool/pitchfork/): Pitchfork is a Set of C++ Project Conventions.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=TheLartians/ModernCppStarter,cpp-best-practices/gui_starter_template,filipdutescu/modern-cpp-template&type=Date)](https://star-history.com/#TheLartians/ModernCppStarter&cpp-best-practices/gui_starter_template&filipdutescu/modern-cpp-template&Date)
