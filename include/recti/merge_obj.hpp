@@ -33,7 +33,6 @@ namespace recti {
      * 799-814, Nov. 1992, doi: 10.1109/82.204128.
      *
      * @tparam T
-     * @todo support for the 3rd-dimension (i.e. the cost of via)
      */
     template <typename T1 = int, typename T2 = T1> class MergeObj : private Point<T1, T2> {
       public:
@@ -84,16 +83,6 @@ namespace recti {
         constexpr auto operator!=(const MergeObj<U1, U2> &rhs) const -> bool {
             return Point<T1, T2>::operator!=(rhs);
         }
-
-        // /**
-        //  * @brief Construct a new Point object
-        //  *
-        //  * @param[in] xcoord
-        //  * @param[in] ycoord
-        //  */
-        // constexpr MergeObj(const T1& xcoord, const T2& ycoord) : Point<T1,
-        // T2>{xcoord + ycoord, xcoord - ycoord}
-        // {}
 
         /**
          * @brief Add a vector (translation)
@@ -257,7 +246,7 @@ namespace recti {
 #pragma pack(pop)
 
     // template <typename U1, typename U2>  //
-    // inline constexpr auto min_dist_change_merge(U1& lhs, U2& rhs) {
+    // constexpr auto min_dist_change_merge(U1& lhs, U2& rhs) {
     //     if constexpr (std::is_scalar<U1>::value) {
     //         if constexpr (std::is_scalar<U2>::value) {
     //             return std::abs(lhs - rhs);
