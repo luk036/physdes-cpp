@@ -32,7 +32,8 @@ namespace recti {
      * Systems II: Analog and Digital Signal Processing, vol. 39, no. 11, pp.
      * 799-814, Nov. 1992, doi: 10.1109/82.204128.
      *
-     * @tparam T
+     * @tparam T1
+     * @tparam T2
      */
     template <typename T1 = int, typename T2 = T1> class MergeObj : private Point<T1, T2> {
       public:

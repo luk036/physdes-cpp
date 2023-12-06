@@ -1,15 +1,12 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 
-#include <list>                  // for list, __list_iterator, operator!=
-#include <ostream>               // for operator<<
-#include <recti/halton_int.hpp>  // for Vdcorput, recti
-#include <recti/interval.hpp>    // for Interval, operator<<, operator+, ope...
-#include <set>                   // for set, set<>::iterator
+#include <ldsgen/ild.hpp>      // for Vdcorput
+#include <list>                // for list, __list_iterator, operator!=
+#include <ostream>             // for operator<<
+#include <recti/interval.hpp>  // for Interval, operator<<, operator+, ope...
+#include <set>                 // for set, set<>::iterator
 
-// using std::randint;
-using namespace recti;
-
-// template <typename T> struct my_point : Point<T, T> { double data; };
+using recti::Interval;
 
 TEST_CASE("Interval test") {
     auto a = Interval{4, 8};
@@ -71,24 +68,17 @@ TEST_CASE("Interval of Interval test") {
     CHECK(!b.contains(a));
     CHECK(a.overlaps(b));
     CHECK(b.overlaps(a));
-
-    // CHECK(min_dist(a, b) == 0);
 }
 
 TEST_CASE("Interval overlapping test") {
     constexpr auto N = 20;
     auto lst = std::list<Interval<unsigned int>>{};
-    auto hgenX = Vdcorput(3, 7);
-    // auto hgenY = Vdcorput(2, 11);
+    auto hgenX = ildsgen::VdCorput(3, 7);
 
     for (auto i = 0; i != N; ++i) {
         for (auto j = 0; j != N; ++j) {
-            auto x = hgenX();
-            // auto y = hgenY();
+            auto x = hgenX.pop();
             auto xrng = Interval{x, x + 100};
-            // auto yrng = Interval{y, y + 100};
-            // auto r = Rectangle{xrng, yrng};
-            // lst.push_back(r);
             lst.push_back(xrng);
         }
     }
@@ -97,19 +87,10 @@ TEST_CASE("Interval overlapping test") {
     std::list<Interval<unsigned int>> L;  // list of the removed rectangles
 
     for (const auto &intvl : lst) {
-        if (S.find(intvl) != S.end()) {
+        if (S.contains(intvl)) {
             L.push_back(intvl);
         } else {
             S.insert(intvl);
         }
     }
-
-    // for (const auto& r : S)
-    // {
-    //     cout << "  \\draw " << r << ";\n";
-    // }
-    // for (const auto& r : L)
-    // {
-    //     cout << "  \\draw[color=red] " << r << ";\n";
-    // }
 }

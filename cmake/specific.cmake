@@ -6,7 +6,16 @@ CPMAddPackage(
 )
 
 CPMAddPackage("gh:microsoft/GSL@3.1.0")
-set(SPECIFIC_LIBS fmt::fmt GSL)
+
+CPMAddPackage(
+  NAME LdsGen
+  GIT_TAG 1.0.1
+  GITHUB_REPOSITORY luk036/lds-gen-cpp
+  OPTIONS "INSTALL_ONLY YES" # create an installable target
+)
+
+set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt GSL)
+
 
 # cpmaddpackage( NAME GSL GITHUB_REPOSITORY "microsoft/GSL" GIT_TAG "v4.0.0" GIT_SHALLOW ON )
 

@@ -1,13 +1,12 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, Expr...
-// #include <fmt/core.h>
-#include <gsl/span>              // for span
-#include <recti/halton_int.hpp>  // for Vdcorput, recti
-#include <recti/polygon.hpp>     // for Polygon, polygon_is_clockwise, creat...
-#include <vector>                // for vector
+
+#include <gsl/span>           // for span
+#include <ldsgen/ilds.hpp>    // for VdCorput
+#include <recti/polygon.hpp>  // for Polygon, polygon_is_clockwise, creat...
+#include <vector>             // for vector
 
 #include "recti/point.hpp"  // for Point
 
-// using std::randint;
 using namespace recti;
 
 TEST_CASE("Polygon test (ycoord-mono)") {
@@ -33,13 +32,15 @@ TEST_CASE("Polygon test (xcoord-mono)") {
 }
 
 TEST_CASE("Polygon test (ycoord-mono 50)") {
-    auto hgenX = Vdcorput(3, 7);
-    auto hgenY = Vdcorput(2, 11);
+    auto hgenX = ildsgen::VdCorput(3, 7);
+    auto hgenY = ildsgen::VdCorput(2, 11);
     auto S = std::vector<Point<int>>{};
     for (auto i = 0U; i != 50; ++i) {
-        S.emplace_back(Point<int>(int(hgenX()), int(hgenY())));
+        S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
     }
     create_ymono_polygon(S.begin(), S.end());
+    auto q = Point<int>(int(hgenX.pop()), int(hgenY.pop()));
+
     // fmt::print(
     //     "\n<svg viewBox='0 0 2187 2048'
     //     xmlns='http://www.w3.org/2000/svg'>\n");
@@ -55,8 +56,6 @@ TEST_CASE("Polygon test (ycoord-mono 50)") {
     //     fmt::print("  <circle cx='{}' cy='{}' r='10' />\n", p.xcoord(),
     //     p.ycoord());
     // }
-
-    auto q = Point<int>(int(hgenX()), int(hgenY()));
     // fmt::print(
     //     "  <circle cx='{}' cy='{}' r='10' fill='#BF616A' />\n", q.xcoord(),
     //     q.ycoord());

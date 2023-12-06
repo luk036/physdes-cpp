@@ -36,7 +36,7 @@ namespace recti {
      * @brief contain
      *
      * The above code is defining a template function called `contain` that checks if one object
-     * contains another object. 
+     * contains another object.
      *
      * @tparam U1
      * @tparam U2
@@ -56,8 +56,8 @@ namespace recti {
         }
     }
 
-    /* The above code is defining a template function called `intersection` that takes two parameters
-    `lhs` and `rhs`. The function returns the intersection of `lhs` and `rhs`. */
+    /* The above code is defining a template function called `intersection` that takes two
+    parameters `lhs` and `rhs`. The function returns the intersection of `lhs` and `rhs`. */
     /**
      * @brief intersection
      *
@@ -78,7 +78,6 @@ namespace recti {
             return lhs;
         }
     }
-
 
     /* The above code is defining a template function called `min_dist` that calculates the minimum
     distance between two objects `lhs` and `rhs`. */
@@ -144,10 +143,10 @@ namespace recti {
          * @brief Construct a new Interval object
          *
          * The function constructs a new Interval object with given lower and upper values.
-         * 
+         *
          * @param[in] lower The lower bound of the interval.
-         * @param[in] upper The "upper" parameter is the upper bound of the interval. It represents the
-         * maximum value that can be included in the interval.
+         * @param[in] upper The "upper" parameter is the upper bound of the interval. It represents
+         * the maximum value that can be included in the interval.
          */
         constexpr Interval(T &&lower, T &&upper) noexcept
             : _lb{std::move(lower)}, _ub{std::move(upper)} {}
@@ -156,11 +155,11 @@ namespace recti {
          * @brief Construct a new Interval object
          *
          * The function constructs a new Interval object with given lower and upper bounds.
-         * 
-         * @param[in] lower The lower bound of the interval. It represents the minimum value that can be
-         * included in the interval.
-         * @param[in] upper The "upper" parameter represents the upper bound of the interval. It is the
-         * maximum value that can be included in the interval.
+         *
+         * @param[in] lower The lower bound of the interval. It represents the minimum value that
+         * can be included in the interval.
+         * @param[in] upper The "upper" parameter represents the upper bound of the interval. It is
+         * the maximum value that can be included in the interval.
          */
         constexpr Interval(const T &lower, const T &upper) : _lb{lower}, _ub{upper} {}
 
@@ -168,22 +167,22 @@ namespace recti {
          * @brief Construct a new Interval object
          *
          * The function constructs a new Interval object with the same lower and upper bounds.
-         * 
-         * @param[in] alpha The parameter "alpha" is of type T, which is a template parameter for the
-         * Interval class. It represents the value that will be used as both the lower bound and upper
-         * bound of the interval.
+         *
+         * @param[in] alpha The parameter "alpha" is of type T, which is a template parameter for
+         * the Interval class. It represents the value that will be used as both the lower bound and
+         * upper bound of the interval.
          */
         explicit constexpr Interval(const T &alpha) : _lb{alpha}, _ub{alpha} {}
 
         /**
          * @brief Assignment operator
          *
-         * The assignment operator sets the lower and upper bounds of an Interval object to the given
-         * value.
-         * 
-         * @param[in] alpha The parameter "alpha" is of type T, which is the type of the object being
-         * assigned to the Interval object.
-         * 
+         * The assignment operator sets the lower and upper bounds of an Interval object to the
+         * given value.
+         *
+         * @param[in] alpha The parameter "alpha" is of type T, which is the type of the object
+         * being assigned to the Interval object.
+         *
          * @return The assignment operator is returning a reference to the Interval object.
          */
         constexpr auto operator=(const T &alpha) -> Interval & {
@@ -195,7 +194,7 @@ namespace recti {
          * @brief lower bound
          *
          * The function returns a constant reference to the lower bound value.
-         * 
+         *
          * @return a reference to a constant object of type T.
          */
         constexpr auto lb() const -> const T & { return this->_lb; }
@@ -204,7 +203,7 @@ namespace recti {
          * @brief upper bound
          *
          * The function returns a constant reference to the upper bound value.
-         * 
+         *
          * @return a reference to a constant object of type T.
          */
         constexpr auto ub() const -> const T & { return this->_ub; }
@@ -214,7 +213,7 @@ namespace recti {
          *
          * The function returns the length of a range by subtracting the upper bound from the lower
          * bound.
-         * 
+         *
          * @return a value of type T.
          */
         constexpr auto len() const -> T { return this->ub() - this->lb(); }
@@ -227,10 +226,10 @@ namespace recti {
         /**
          * @brief Equal to
          *
-         * The above code is defining the equality operator (==) for a class template called Interval.
-         * The operator compares two Interval objects for equality by checking if their lower bounds
-         * (lb) and upper bounds (ub) are equal. If both the lower bounds and upper bounds are equal,
-         * the operator returns true, otherwise it returns false.
+         * The above code is defining the equality operator (==) for a class template called
+         * Interval. The operator compares two Interval objects for equality by checking if their
+         * lower bounds (lb) and upper bounds (ub) are equal. If both the lower bounds and upper
+         * bounds are equal, the operator returns true, otherwise it returns false.
          *
          * @tparam U
          * @param[in] rhs
@@ -246,10 +245,10 @@ namespace recti {
          * @brief Not equal to
          *
          * The above code is defining the "!=" (not equal to) operator for a class template called
-         * "Interval". This operator compares two Interval objects for inequality. It takes a reference
-         * to an Interval object "rhs" as a parameter and returns a boolean value. It uses the "=="
-         * (equal to) operator to determine if the two objects are equal, and then negates the result
-         * to return the opposite.
+         * "Interval". This operator compares two Interval objects for inequality. It takes a
+         * reference to an Interval object "rhs" as a parameter and returns a boolean value. It uses
+         * the "==" (equal to) operator to determine if the two objects are equal, and then negates
+         * the result to return the opposite.
          *
          * @tparam U
          * @param[in] rhs
@@ -264,9 +263,9 @@ namespace recti {
         /**
          * @brief Spaceship operator
          *
-         * The above code is defining a spaceship operator for a template class. The spaceship operator
-         * is a three-way comparison operator introduced in C++20. It compares the object on the
-         * left-hand side (LHS) with the object on the right-hand side (RHS) and returns a
+         * The above code is defining a spaceship operator for a template class. The spaceship
+         * operator is a three-way comparison operator introduced in C++20. It compares the object
+         * on the left-hand side (LHS) with the object on the right-hand side (RHS) and returns a
          * std::weak_ordering value indicating the relationship between the two objects.
          *
          * @tparam U
@@ -308,7 +307,7 @@ namespace recti {
          * @brief Negation
          *
          * The above function returns the negation of an interval.
-         * 
+         *
          * @return The `operator-` function is returning an `Interval` object.
          */
         constexpr auto operator-() const -> Interval { return {-this->_ub, -this->_lb}; }
@@ -316,10 +315,10 @@ namespace recti {
         /**
          * @brief Add
          *
-         * The above code is defining an `operator+=` function for the `Interval` class. This function
-         * takes a parameter `alpha` of type `U` and adds it to both the lower bound (`_lb`) and upper
-         * bound (`_ub`) of the `Interval` object. It then returns a reference to the modified
-         * `Interval` object.
+         * The above code is defining an `operator+=` function for the `Interval` class. This
+         * function takes a parameter `alpha` of type `U` and adds it to both the lower bound
+         * (`_lb`) and upper bound (`_ub`) of the `Interval` object. It then returns a reference to
+         * the modified `Interval` object.
          *
          * @param[in] alpha
          * @return Interval&
@@ -334,11 +333,11 @@ namespace recti {
          * @brief Add by a scalar
          *
          * The above code is defining a friend function named `operator+` for the `Interval` class.
-         * This function takes an `Interval` object `rhs` and a scalar value `alpha` as parameters. It
-         * returns a new `Interval` object that is the result of adding `rhs` and `alpha`.
+         * This function takes an `Interval` object `rhs` and a scalar value `alpha` as parameters.
+         * It returns a new `Interval` object that is the result of adding `rhs` and `alpha`.
          *
-         * @param[in] rhs The parameter `rhs` represents the right-hand side of the addition operation. It
-         * is an object of type `Interval`.
+         * @param[in] rhs The parameter `rhs` represents the right-hand side of the addition
+         * operation. It is an object of type `Interval`.
          * @param[in] alpha The parameter `alpha` is a scalar value that will be added to the `rhs`
          * interval.
          *
@@ -353,12 +352,12 @@ namespace recti {
          * @brief Add (by a scalar)
          *
          * The function adds a scalar value to an interval.
-         * 
+         *
          * @param[in] alpha The parameter `alpha` is a scalar value that will be added to the `rhs`
          * interval.
-         * @param[in] rhs The parameter `rhs` represents the right-hand side of the addition operation. It
-         * is an object of type `Interval`.
-         * 
+         * @param[in] rhs The parameter `rhs` represents the right-hand side of the addition
+         * operation. It is an object of type `Interval`.
+         *
          * @return an `Interval` object.
          */
         friend constexpr auto operator+(const T &alpha, Interval rhs) -> Interval {
@@ -368,10 +367,10 @@ namespace recti {
         /**
          * @brief Subtract
          *
-         * The above code is defining an `operator-=` function for the `Interval` class. This function
-         * takes a parameter `alpha` of type `U` and subtracts it to both the lower bound (`_lb`) and upper
-         * bound (`_ub`) of the `Interval` object. It then returns a reference to the modified
-         * `Interval` object.
+         * The above code is defining an `operator-=` function for the `Interval` class. This
+         * function takes a parameter `alpha` of type `U` and subtracts it to both the lower bound
+         * (`_lb`) and upper bound (`_ub`) of the `Interval` object. It then returns a reference to
+         * the modified `Interval` object.
          *
          * @param[in] alpha
          * @return Interval&
@@ -386,13 +385,13 @@ namespace recti {
          * @brief Subtract by a scalar
          *
          * The above code is defining a friend function named `operator-` for the `Interval` class.
-         * This function takes an `Interval` object `rhs` and a scalar value `alpha` as parameters. It
-         * returns a new `Interval` object that is the result of subtracting `rhs` by `alpha`.
+         * This function takes an `Interval` object `rhs` and a scalar value `alpha` as parameters.
+         * It returns a new `Interval` object that is the result of subtracting `rhs` by `alpha`.
          *
-         * @param[in] rhs The parameter `rhs` represents the right-hand side of the subtraction operation. It
-         * is an object of type `Interval`.
-         * @param[in] alpha The parameter `alpha` is a scalar value that will be subtracted to the `rhs`
-         * interval.
+         * @param[in] rhs The parameter `rhs` represents the right-hand side of the subtraction
+         * operation. It is an object of type `Interval`.
+         * @param[in] alpha The parameter `alpha` is a scalar value that will be subtracted to the
+         * `rhs` interval.
          *
          * @return an `Interval` object.
          */
@@ -408,10 +407,10 @@ namespace recti {
          *
          * The `enlarge_with` function enlarges the interval by subtracting `alpha` from the lower
          * bound and adding `alpha` to the upper bound.
-         * 
-         * @param[in] alpha The parameter "alpha" is of type T, which is not specified in the code snippet.
-         * It could be any data type, such as int, float, double, etc.
-         * 
+         *
+         * @param[in] alpha The parameter "alpha" is of type T, which is not specified in the code
+         * snippet. It could be any data type, such as int, float, double, etc.
+         *
          * @return a reference to the current object, which is an instance of the `Interval` class.
          */
         constexpr auto enlarge_with(const T &alpha) -> Interval & {
@@ -502,8 +501,8 @@ namespace recti {
         /**
          * @brief minimum distance with
          *
-         * The above code is a C++ template function called `min_dist_change_with`. It takes a parameter
-         * `other` of type `U` and returns a value of type `T`.
+         * The above code is a C++ template function called `min_dist_change_with`. It takes a
+         * parameter `other` of type `U` and returns a value of type `T`.
          *
          * @tparam U
          * @param[in] other

@@ -28,6 +28,7 @@ target("test_recti")
     set_kind("binary")
     -- add_deps("Recti")
     add_includedirs("include", {public = true})
+    add_includedirs("../lds-gen-cpp/include", {public = true})
     add_files("test/source/*.cpp")
     add_packages("fmt", "doctest", "ms-gsl")
 

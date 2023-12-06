@@ -1,14 +1,13 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 #include <fmt/core.h>
 
-#include <gsl/span>              // for span
-#include <recti/halton_int.hpp>  // for Vdcorput, recti
-#include <recti/rpolygon.hpp>    // for RPolygon, RPolygon_is_clockwise, cre...
-#include <vector>                // for vector
+#include <gsl/span>            // for span
+#include <ldsgen/ilds.hpp>     // for VdCorput
+#include <recti/rpolygon.hpp>  // for RPolygon, RPolygon_is_clockwise, cre...
+#include <vector>              // for vector
 
 #include "recti/point.hpp"  // for Point, operator>
 
-// using std::randint;
 using namespace recti;
 
 TEST_CASE("Rectilinear Polygon test (ycoord-mono)") {
@@ -33,13 +32,15 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono)") {
 }
 
 TEST_CASE("Rectilinear Polygon test (ycoord-mono 50)") {
-    auto hgenX = Vdcorput(3, 7);
-    auto hgenY = Vdcorput(2, 11);
+    auto hgenX = ildsgen::VdCorput(3, 7);
+    auto hgenY = ildsgen::VdCorput(2, 11);
     auto S = std::vector<Point<int>>{};
     for (auto i = 0; i != 50; ++i) {
-        S.emplace_back(Point<int>(int(hgenX()), int(hgenY())));
+        S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
     }
     auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
+    auto q = Point<int>(int(hgenX.pop()), int(hgenY.pop()));
+
     // fmt::print(
     //     "\n<svg viewBox='0 0 2187 2048'
     //     xmlns='http://www.w3.org/2000/svg'>\n");
@@ -57,17 +58,14 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono 50)") {
     //     fmt::print("  <circle cx='{}' cy='{}' r='10' />\n", p.xcoord(),
     //     p.ycoord());
     // }
-
-    auto q = Point<int>(int(hgenX()), int(hgenY()));
     // fmt::print(
     //     "  <circle cx='{}' cy='{}' r='10' fill='#BF616A' />\n", q.xcoord(),
     //     q.ycoord());
-    fmt::print("</svg>\n");
+    // fmt::print("</svg>\n");
 
     auto P = RPolygon<int>(S);
     CHECK(is_clockwise);
     CHECK_EQ(P.signed_area(), -2032128);
     CHECK(rpolygon_is_clockwise<int>(S));
     CHECK(!point_in_rpolygon<int>(S, q));
-    // puts("Hello world1\n");
 }

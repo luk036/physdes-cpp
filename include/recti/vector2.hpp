@@ -8,6 +8,7 @@
 #else
 #    define CONSTEXPR14 inline
 #endif
+
 namespace recti {
 
     /**
@@ -18,8 +19,6 @@ namespace recti {
       private:
         T1 _x;
         T2 _y;
-
-        // auto _tie() const { return std::tie(_x, _y); }
 
       public:
         /**
