@@ -54,12 +54,11 @@ namespace recti {
          */
         constexpr auto signed_area() const -> T {
             assert(this->_vecs.size() >= 1);
-            auto first = this->_vecs.begin();
-            auto res = first->x() * first->y();
-            auto itr0 = first;
-            for (auto itr = std::next(first); itr != this->_vecs.end(); ++itr) {
-                res = std::move(res) + itr->x() * (itr->y() - itr0->y());
-                itr0 = itr;
+            auto itr1 = this->_vecs.begin();
+            auto itr0 = itr1++;
+            auto res = itr0->x() * itr0->y();
+            for (; itr1 != this->_vecs.end(); ++itr1, ++itr0) {
+                res = std::move(res) + itr1->x() * (itr1->y() - itr0->y());
             }
             return res;
             // return std::accumulate(++first, this->_vecs.end(), std::move(res),
