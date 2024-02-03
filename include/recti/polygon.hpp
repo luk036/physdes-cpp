@@ -104,7 +104,7 @@ namespace recti {
      * @tparam Compare
      * @param[in] first
      * @param[in] last
-     * @param dir
+     * @param[in] dir
      */
     template <typename FwIter, typename Compare>
     inline void create_mono_polygon(FwIter &&first, FwIter &&last, Compare &&dir) {

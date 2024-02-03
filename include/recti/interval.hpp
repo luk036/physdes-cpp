@@ -16,8 +16,8 @@ namespace recti {
      *
      * @tparam U1
      * @tparam U2
-     * @param lhs
-     * @param rhs
+     * @param[in] lhs
+     * @param[in] rhs
      * @return true
      * @return false
      */
@@ -40,8 +40,8 @@ namespace recti {
      *
      * @tparam U1
      * @tparam U2
-     * @param lhs
-     * @param rhs
+     * @param[in] lhs
+     * @param[in] rhs
      * @return true
      * @return false
      */
@@ -63,8 +63,8 @@ namespace recti {
      *
      * @tparam U1
      * @tparam U2
-     * @param lhs
-     * @param rhs
+     * @param[in] lhs
+     * @param[in] rhs
      * @return constexpr auto
      */
     template <typename U1, typename U2>  //
@@ -86,8 +86,8 @@ namespace recti {
      *
      * @tparam U1
      * @tparam U2
-     * @param lhs
-     * @param rhs
+     * @param[in] lhs
+     * @param[in] rhs
      * @return constexpr auto
      */
     template <typename U1, typename U2>  //
@@ -106,8 +106,8 @@ namespace recti {
      *
      * @tparam U1
      * @tparam U2
-     * @param lhs
-     * @param rhs
+     * @param[in] lhs
+     * @param[in] rhs
      * @return constexpr auto
      */
     template <typename U1, typename U2>  //

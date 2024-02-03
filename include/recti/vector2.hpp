@@ -30,8 +30,8 @@ namespace recti {
          * evaluated at compile-time. The constructor is also marked as `noexcept`,
          * indicating that it does not throw any exceptions.
          *
-         * @param x
-         * @param y
+         * @param[in] x
+         * @param[in] y
          */
         constexpr Vector2(T1 &&vec_x, T2 &&vec_y) noexcept
             : _x{std::move(vec_x)}, _y{std::move(vec_y)} {}
@@ -39,8 +39,8 @@ namespace recti {
         /**
          * @brief Construct a new Vector2 object
          *
-         * @param x
-         * @param y
+         * @param[in] x
+         * @param[in] y
          */
         constexpr Vector2(const T1 &vec_x, const T2 &vec_y) : _x{vec_x}, _y{vec_y} {}
 

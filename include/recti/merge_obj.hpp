@@ -142,7 +142,7 @@ namespace recti {
          *
          * @tparam U1
          * @tparam U2
-         * @param other
+         * @param[in] other
          * @return true
          * @return false
          */
@@ -157,7 +157,7 @@ namespace recti {
          *
          * @tparam U1
          * @tparam U2
-         * @param other
+         * @param[in] other
          * @return true
          * @return false
          */
@@ -174,7 +174,7 @@ namespace recti {
          *
          * @tparam U1
          * @tparam U2
-         * @param other
+         * @param[in] other
          * @return true
          * @return false
          */
@@ -200,7 +200,7 @@ namespace recti {
          *
          * @tparam U1
          * @tparam U2
-         * @param other
+         * @param[in] other
          * @return true
          * @return false
          */
