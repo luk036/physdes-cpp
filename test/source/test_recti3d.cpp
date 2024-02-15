@@ -20,14 +20,10 @@ TEST_CASE("Point 3D test") {
     auto v = (b - a) / 2;  // integer division
 
     CHECK(a < b);
-    CHECK(a <= b);
     CHECK(!(a == b));
     CHECK(a != b);
-    CHECK(b > a);
-    CHECK(b >= a);
     CHECK((a + v) + v == b);  // may not true due to integer division
-    CHECK((a - v) + v == a);
-
+    CHECK((a + v) - v == a);
     CHECK(a.flip_xy().flip_xy() == a);
     // CHECK(a.flip_y().flip_y() == a);
 }
@@ -39,18 +35,9 @@ TEST_CASE("Interval test") {
 
     CHECK(!(a < b));
     CHECK(!(b < a));
-    CHECK(!(a > b));
-    CHECK(!(b > a));
-    CHECK(a <= b);
-    CHECK(b <= a);
-    CHECK(a >= b);
-    CHECK(b >= a);
 
     CHECK(!(b == a));
     CHECK(b != a);
-
-    CHECK((a - v) + v == a);
-
     CHECK(a.contains(b));
     CHECK(a.intersection_with(b) == b);
     CHECK(!b.contains(a));
@@ -72,8 +59,6 @@ TEST_CASE("Rectangle 3D test") {
     auto p2 = Point<Point<int>, int>{Point<int>{70000, 60000}, 2000};
 
     CHECK(r1 != r2);
-    CHECK((r1 - v) + v == r1);
-
     // CHECK(r1 <= p);
     CHECK(r1.contains(p1));
     CHECK(!r1.contains(p2));

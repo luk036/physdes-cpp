@@ -56,24 +56,25 @@ namespace recti {
         constexpr Point(T1 &&xcoord, T2 &&ycoord) noexcept : _xcoord{xcoord}, _ycoord{ycoord} {}
 
         /**
-         * @brief Construct a new Point object
+         * Copy constructor for Point class.
+         * Constructs a new Point by copying the x and y coordinates from an existing Point object.
          *
-         * @param[in] xcoord
-         * @param[in] ycoord
+         * @param[in] xcoord - x coordinate to copy.
+         * @param[in] ycoord - y coordinate to copy.
          */
         constexpr Point(const T1 &xcoord, const T2 &ycoord) : _xcoord{xcoord}, _ycoord{ycoord} {}
 
         /**
-         * @brief
+         * Gets the x coordinate of this Point.
          *
-         * @return const T1&
+         * @return Const reference to the x coordinate.
          */
         constexpr auto xcoord() const -> const T1 & { return this->_xcoord; }
 
         /**
-         * @brief
+         * Gets the y coordinate of this Point.
          *
-         * @return const T2&
+         * @return Const reference to the y coordinate.
          */
         constexpr auto ycoord() const -> const T2 & { return this->_ycoord; }
 
@@ -83,13 +84,16 @@ namespace recti {
         ///@{
 
         /**
-         * @brief Equal to
+         * Compares this Point object with another Point object for equality.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] rhs
-         * @return true
-         * @return false
+         * This operator checks if the x and y coordinates of this Point are equal
+         * to the x and y coordinates of the given Point object. It allows Points
+         * to be compared for equality in a generic way.
+         *
+         * @tparam U1 - The type of x coordinate for this Point.
+         * @tparam U2 - The type of y coordinate for this Point.
+         * @param[in] rhs - The other Point object to compare against.
+         * @return True if the two Point objects have equal x and y coordinates, false otherwise.
          */
         template <typename U1, typename U2>
         constexpr auto operator==(const Point<U1, U2> &rhs) const -> bool {
@@ -97,13 +101,15 @@ namespace recti {
         }
 
         /**
-         * @brief Less than
+         * Compares this Point object with another Point object to check if it is less than.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] rhs
-         * @return true
-         * @return false
+         * This operator checks if this Point is less than the given Point by comparing
+         * their x and y coordinates. It allows Points to be compared in a generic way.
+         *
+         * @tparam U1 - The type of x coordinate for this Point.
+         * @tparam U2 - The type of y coordinate for this Point.
+         * @param[in] rhs - The other Point to compare against.
+         * @return True if this Point is less than rhs, false otherwise.
          */
         template <typename U1, typename U2>  //
         constexpr auto operator<(const Point<U1, U2> &rhs) const -> bool {
@@ -111,62 +117,20 @@ namespace recti {
         }
 
         /**
-         * @brief Not equal to
+         * Compares this Point object with another Point object for equality.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] rhs
-         * @return true
-         * @return false
+         * This operator checks if the x and y coordinates of this Point are not equal
+         * to the x and y coordinates of the given Point object. It allows Points
+         * to be compared for equality in a generic way.
+         *
+         * @tparam U1 - The type of x coordinate for this Point.
+         * @tparam U2 - The type of y coordinate for this Point.
+         * @param[in] rhs - The other Point object to compare against.
+         * @return False if the two Point objects have equal x and y coordinates, true otherwise.
          */
         template <typename U1, typename U2>
         constexpr auto operator!=(const Point<U1, U2> &rhs) const -> bool {
             return !(*this == rhs);
-        }
-
-        /**
-         * @brief Greater than
-         *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] xcoord
-         * @param[in] ycoord
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2>
-        friend constexpr auto operator>(const Self &xcoord, const Point<U1, U2> &ycoord) -> bool {
-            return ycoord < xcoord;
-        }
-
-        /**
-         * @brief Less than or equal to
-         *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] xcoord
-         * @param[in] ycoord
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2>
-        friend constexpr auto operator<=(const Self &xcoord, const Point<U1, U2> &ycoord) -> bool {
-            return !(ycoord < xcoord);
-        }
-
-        /**
-         * @brief Greater than or equal to
-         *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] xcoord
-         * @param[in] ycoord
-         * @return true
-         * @return false
-         */
-        template <typename U1, typename U2>
-        friend constexpr auto operator>=(const Self &xcoord, const Point<U1, U2> &ycoord) -> bool {
-            return !(xcoord < ycoord);
         }
 
         ///@}
@@ -177,12 +141,14 @@ namespace recti {
         ///@{
 
         /**
-         * @brief Add a vector (translation)
+         * Adds a vector (translation) to this Point.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] rhs
-         * @return Self&
+         * Translates this Point by the given vector's x and y components.
+         *
+         * @tparam U1 - The x coordinate type of this Point.
+         * @tparam U2 - The y coordinate type of this Point.
+         * @param[in] rhs - The vector to translate this Point by.
+         * @return Reference to this Point after translation.
          */
         template <typename U1, typename U2> CONSTEXPR14 auto operator+=(const Vector2<U1, U2> &rhs)
             -> Self & {
@@ -192,28 +158,14 @@ namespace recti {
         }
 
         /**
-         * @brief Substract a vector (translation)
+         * Adds a vector (translation) to this Point.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] rhs
-         * @return Self&
-         */
-        template <typename U1, typename U2> CONSTEXPR14 auto operator-=(const Vector2<U1, U2> &rhs)
-            -> Self & {
-            this->_xcoord -= rhs.x();
-            this->_ycoord -= rhs.y();
-            return *this;
-        }
-
-        /**
-         * @brief Add
+         * Translates this Point by the given vector's x and y components.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] p
-         * @param[in] v
-         * @return Vector2<T>
+         * @tparam U1 - The x coordinate type of this Point.
+         * @tparam U2 - The y coordinate type of this Point.
+         * @param[in] rhs - The vector to translate this Point by.
+         * @return A new Point after translation.
          */
         template <typename U1, typename U2>  //
         friend constexpr auto operator+(Point lhs, const Vector2<U1, U2> &vec2) {
@@ -223,17 +175,37 @@ namespace recti {
         }
 
         /**
-         * @brief Substract
+         * Subtracts a vector (translation) from this Point.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] xcoord
-         * @param[in] ycoord
-         * @return Vector2<T>
+         * Translates this Point by the given vector's x and y components.
+         *
+         * @tparam U1 - The x coordinate type of this Point.
+         * @tparam U2 - The y coordinate type of this Point.
+         * @param[in] rhs - The vector to translate this Point by.
+         * @return Reference to this Point after translation.
+         */
+        template <typename U1, typename U2> CONSTEXPR14 auto operator-=(const Vector2<U1, U2> &rhs)
+            -> Self & {
+            this->_xcoord -= rhs.x();
+            this->_ycoord -= rhs.y();
+            return *this;
+        }
+
+        /**
+         * Subtracts a vector (translation) from this Point.
+         *
+         * Translates this Point by the given vector's x and y components.
+         *
+         * @tparam U1 - The x coordinate type of this Point.
+         * @tparam U2 - The y coordinate type of this Point.
+         * @param[in] rhs - The vector to translate this Point by.
+         * @return A new Point after translation.
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator-(Point lhs, const Vector2<U1, U2> &vec2) -> Point {
-            return lhs -= vec2;
+        friend constexpr auto operator-(Point lhs, const Vector2<U1, U2> &vec2) {
+            auto xcoord = lhs.xcoord() - vec2.x();
+            auto ycoord = lhs.ycoord() - vec2.y();
+            return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord), std::move(ycoord)};
         }
 
         /**
