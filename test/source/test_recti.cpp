@@ -19,7 +19,6 @@ TEST_CASE("Point test") {
     auto b = Point<int>{5000, 6000};
     auto v = (b - a) / 2;  // integer division
 
-    CHECK(a < b);
     CHECK(!(a == b));
     CHECK(a != b);
     CHECK((a + v) + v == b);

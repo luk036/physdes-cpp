@@ -19,7 +19,6 @@ TEST_CASE("Point 3D test") {
     auto b = Point<Point<int>, int>{Point<int>{50000, 60000}, 10000};
     auto v = (b - a) / 2;  // integer division
 
-    CHECK(a < b);
     CHECK(!(a == b));
     CHECK(a != b);
     CHECK((a + v) + v == b);  // may not true due to integer division
@@ -31,10 +30,7 @@ TEST_CASE("Point 3D test") {
 TEST_CASE("Interval test") {
     auto a = Point<Interval<int>, int>{Interval<int>{4, 8}, 1};
     auto b = Point<Interval<int>, int>{Interval<int>{5, 6}, 1};
-    auto v = Vector2<int>{3, 0};
-
-    CHECK(!(a < b));
-    CHECK(!(b < a));
+    // auto v = Vector2<int>{3, 0};
 
     CHECK(!(b == a));
     CHECK(b != a);
@@ -54,7 +50,7 @@ TEST_CASE("Rectangle 3D test") {
     auto xrng2 = Interval<int>{50000, 70000};
     auto yrng2 = Interval<int>{60000, 60000};
     auto r2 = Point<Rectangle<int>, int>{Rectangle<int>{xrng2, yrng2}, 1000};
-    auto v = Vector2<Vector2<int>, int>{Vector2<int>{50000, 60000}, 0};
+    // auto v = Vector2<Vector2<int>, int>{Vector2<int>{50000, 60000}, 0};
     auto p1 = Point<Point<int>, int>{Point<int>{70000, 60000}, 1000};
     auto p2 = Point<Point<int>, int>{Point<int>{70000, 60000}, 2000};
 

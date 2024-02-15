@@ -1,9 +1,9 @@
 #pragma once
 
-#include <tuple>    // import std::tie()
-#include <utility>  // import std::move
+#include <tuple>    // for std::tie()
+#include <utility>  // for std::move
 
-#include "interval.hpp"
+#include "generic.hpp"
 #include "vector2.hpp"
 
 namespace recti {
@@ -22,7 +22,7 @@ namespace recti {
      * distance calculation, and more.
      *
      * @tparam T1 int, Interval, or Point
-     * @tparam T2 int or Interval
+     * @tparam T2 int, Interval, or Point
      */
     template <typename T1 = int, typename T2 = T1> class Point {
         using Self = Point<T1, T2>;
@@ -357,12 +357,12 @@ namespace recti {
                    + min_dist_change(this->_ycoord, other._ycoord);
         }
 
-        template <typename R>  //
-        friend constexpr auto enlarge(const Point &lhs, const R &alpha) {
-            auto xcoord = enlarge(lhs.xcoord(), alpha);
-            auto ycoord = enlarge(lhs.ycoord(), alpha);
-            return Point{std::move(xcoord), std::move(ycoord)};
-        }
+        // template <typename R>  //
+        // friend constexpr auto enlarge(const Point &lhs, const R &alpha) {
+        //     auto xcoord = enlarge(lhs.xcoord(), alpha);
+        //     auto ycoord = enlarge(lhs.ycoord(), alpha);
+        //     return Point{std::move(xcoord), std::move(ycoord)};
+        // }
 
         /**
          * @brief
@@ -427,28 +427,28 @@ namespace recti {
     };
 #pragma pack(pop)
 
-    /**
-     * @brief adapter for containers of Point (deprecated)
-     *
-     * @tparam iter
-     */
-    template <typename iterator> class dual_iterator : public iterator {
-        using value_type = typename iterator::value_type;
-        using T1 = decltype(std::declval(iterator::value_type).xcoord());
-        using T2 = decltype(std::declval(iterator::value_type).ycoord());
+    // /**
+    //  * @brief adapter for containers of Point (deprecated)
+    //  *
+    //  * @tparam iter
+    //  */
+    // template <typename iterator> class dual_iterator : public iterator {
+    //     using value_type = typename iterator::value_type;
+    //     using T1 = decltype(std::declval(iterator::value_type).xcoord());
+    //     using T2 = decltype(std::declval(iterator::value_type).ycoord());
 
-        constexpr explicit dual_iterator(iterator &&itr) : iterator{std::forward<iterator>(itr)} {}
+    //     constexpr explicit dual_iterator(iterator &&itr) : iterator{std::forward<iterator>(itr)} {}
 
-        CONSTEXPR14 auto operator*() const noexcept -> const dualpoint<T2, T1> & {
-            return dualpoint<T2, T1>{};
-            // return std::reinterpret_cast<const dualpoint<T2,
-            // T1>&>(*iterator::operator*());
-        }
+    //     CONSTEXPR14 auto operator*() const noexcept -> const dualpoint<T2, T1> & {
+    //         return dualpoint<T2, T1>{};
+    //         // return std::reinterpret_cast<const dualpoint<T2,
+    //         // T1>&>(*iterator::operator*());
+    //     }
 
-        CONSTEXPR14 auto operator*() noexcept -> dualpoint<T2, T1> & {
-            return dualpoint<T2, T1>{};
-            // return std::reinterpret_cast<dualpoint<T2,
-            // T1>&>(*iterator::operator*());
-        }
-    };
+    //     CONSTEXPR14 auto operator*() noexcept -> dualpoint<T2, T1> & {
+    //         return dualpoint<T2, T1>{};
+    //         // return std::reinterpret_cast<dualpoint<T2,
+    //         // T1>&>(*iterator::operator*());
+    //     }
+    // };
 }  // namespace recti

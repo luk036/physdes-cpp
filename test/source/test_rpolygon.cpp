@@ -1,7 +1,7 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 #include <fmt/core.h>
 
-#include <gsl/span>            // for span
+// #include <gsl/span>            // for span
 #include <ldsgen/ilds.hpp>     // for VdCorput
 #include <recti/rpolygon.hpp>  // for RPolygon, RPolygon_is_clockwise, cre...
 #include <vector>              // for vector

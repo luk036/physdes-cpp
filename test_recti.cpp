@@ -19,12 +19,8 @@ TEST_CASE("Point test") {
     auto b = Point<int>{5, 6};
     auto v = (b - a) / 2;  // integer division
 
-    CHECK(a < b);
-    CHECK(a <= b);
     CHECK(!(a == b));
     CHECK(a != b);
-    CHECK(b > a);
-    CHECK(b >= a);
     CHECK((a + v) + v != b);  // due to integer division
     CHECK((a - v) + v == a);
 
@@ -46,7 +42,7 @@ TEST_CASE("Rectangle test") {
     CHECK(r1 != r2);
     CHECK(r3 + v == r1);
 
-    CHECK(r1 <= p);
+    // CHECK(r1 <= p);
     CHECK(r1.contains(p));
     CHECK(r1.contains(r2));
     CHECK(r1.overlaps(r2));

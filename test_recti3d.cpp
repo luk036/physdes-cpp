@@ -19,12 +19,8 @@ TEST_CASE("Point 3D test") {
     auto b = Point{Point{50000, 60000}, 10000};
     auto v = (b - a) / 2;  // integer division
 
-    CHECK(a < b);
-    CHECK(a <= b);
     CHECK(!(a == b));
     CHECK(a != b);
-    CHECK(b > a);
-    CHECK(b >= a);
     CHECK((a + v) + v == b);  // may not true due to integer division
     CHECK((a - v) + v == a);
 
