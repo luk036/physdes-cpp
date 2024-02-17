@@ -53,5 +53,9 @@ Placement -> STA -> Clock skew scheduling -> CTS -> Routing
   - Linear delay
   - Elmore delay
 
+min_dist() - minimum distance
+enlarge()
+intersection()
+
 
 

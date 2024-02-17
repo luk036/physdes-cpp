@@ -2,8 +2,6 @@
 
 // #include <algorithm> // import std::min, std::max
 #include "generic.hpp"
-#include <cassert>
-#include <cmath>
 #include <utility>  // import std::move
 
 namespace recti {

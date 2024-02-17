@@ -38,7 +38,7 @@ namespace recti {
     template <typename T1 = int, typename T2 = T1> class MergeObj : private Point<T1, T2> {
       public:
         /**
-         * @brief Construct a new Point object
+         * @brief Construct a new MergeObj object
          *
          * This code defines a constructor for the `MergeObj` class template. The
          * constructor takes two parameters `xcoord` and `ycoord`, which are of type
@@ -46,11 +46,21 @@ namespace recti {
          * `noexcept`, indicating that it can be evaluated at compile-time and it does
          * not throw any exceptions.
          *
-         * @param[in] xcoord
-         * @param[in] ycoord
+         * @param[in] xcoord x coordinate
+         * @param[in] ycoord y coordinate
          */
         constexpr MergeObj(T1 &&xcoord, T2 &&ycoord) noexcept
             : Point<T1, T2>{std::move(xcoord), std::move(ycoord)} {}
+
+        /**
+         * @brief Construct a new MergeObj object
+         *
+         * @param[in] xcoord x coordinate
+         * @param[in] ycoord y coordinate
+         */
+        static constexpr auto construct(T1 &&xcoord, T2 &&ycoord) -> MergeObj {
+            return MergeObj{xcoord + ycoord, xcoord - ycoord};
+        }
 
         /** @name Comparison operators
          *  definie ==, !=, <, >, <=, >=.

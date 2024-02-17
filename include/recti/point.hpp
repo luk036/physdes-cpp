@@ -208,57 +208,57 @@ namespace recti {
             return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord), std::move(ycoord)};
         }
 
-        /**
-         * @brief Add a vector (translation)
-         *
-         * @param[in] alpha
-         * @return Self&
-         */
-        CONSTEXPR14 auto operator+=(const T2 &alpha) -> Self & {
-            this->_xcoord += alpha;
-            this->_ycoord += alpha;
-            return *this;
-        }
+        // /**
+        //  * @brief Add a vector (translation)
+        //  *
+        //  * @param[in] alpha
+        //  * @return Self&
+        //  */
+        // CONSTEXPR14 auto operator+=(const T2 &alpha) -> Self & {
+        //     this->_xcoord += alpha;
+        //     this->_ycoord += alpha;
+        //     return *this;
+        // }
+
+        // /**
+        //  * @brief Substract
+        //  *
+        //  * @param[in] alpha
+        //  * @return Self&
+        //  */
+        // CONSTEXPR14 auto operator-=(const T1 &alpha) -> Self & {
+        //     this->_xcoord -= alpha;
+        //     this->_ycoord -= alpha;
+        //     return *this;
+        // }
+
+        // /**
+        //  * @brief Add
+        //  *
+        //  * @param[in] xcoord
+        //  * @param[in] alpha
+        //  * @return Point
+        //  */
+        // friend constexpr auto operator+(Point lhs, const T1 &alpha) -> Point {
+        //     return lhs += alpha;
+        // }
+
+        // /**
+        //  * @brief Substract
+        //  *
+        //  * @param[in] xcoord
+        //  * @param[in] alpha
+        //  * @return Point
+        //  */
+        // friend constexpr auto operator-(Point lhs, const T1 &alpha) -> Point {
+        //     return lhs -= alpha;
+        // }
 
         /**
-         * @brief Substract
+         * @brief Calculates the displacement vector between this point and another point
          *
-         * @param[in] alpha
-         * @return Self&
-         */
-        CONSTEXPR14 auto operator-=(const T1 &alpha) -> Self & {
-            this->_xcoord -= alpha;
-            this->_ycoord -= alpha;
-            return *this;
-        }
-
-        /**
-         * @brief Add
-         *
-         * @param[in] xcoord
-         * @param[in] alpha
-         * @return Point
-         */
-        friend constexpr auto operator+(Point lhs, const T1 &alpha) -> Point {
-            return lhs += alpha;
-        }
-
-        /**
-         * @brief Substract
-         *
-         * @param[in] xcoord
-         * @param[in] alpha
-         * @return Point
-         */
-        friend constexpr auto operator-(Point lhs, const T1 &alpha) -> Point {
-            return lhs -= alpha;
-        }
-
-        /**
-         * @brief Different
-         *
-         * @param[in] rhs
-         * @return constexpr auto
+         * @param[in] other The other point to calculate the displacement from
+         * @return The displacement vector from other to this point
          */
         constexpr auto operator-(const Self &other) const {
             auto xcoord = this->xcoord() - other.xcoord();
@@ -282,13 +282,12 @@ namespace recti {
         constexpr auto flip_y() const -> Point<T1, T2> { return {-this->xcoord(), this->ycoord()}; }
 
         /**
-         * @brief overlap
+         * Checks if this point overlaps with another point.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] other
-         * @return true
-         * @return false
+         * @tparam U1 - The type of the x-coordinate for this point.
+         * @tparam U2 - The type of the y-coordinate for this point.
+         * @param other - The other point to check for overlap.
+         * @return true if the x and y coordinates overlap, false otherwise.
          */
         template <typename U1, typename U2>  //
         constexpr auto overlaps(const Point<U1, U2> &other) const -> bool {
@@ -297,13 +296,12 @@ namespace recti {
         }
 
         /**
-         * @brief intersection
+         * Checks if this point intersects with another point.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] other
-         * @return true
-         * @return false
+         * @tparam U1 - The x-coordinate type of the other point.
+         * @tparam U2 - The y-coordinate type of the other point.
+         * @param other - The other point to check for intersection.
+         * @return The intersection point if the points intersect.
          */
         template <typename U1, typename U2>  //
         constexpr auto intersection_with(const Point<U1, U2> &other) const {
@@ -313,13 +311,12 @@ namespace recti {
         }
 
         /**
-         * @brief
+         * Checks if this point contains another point.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] other
-         * @return true
-         * @return false
+         * @tparam U1 - The type of the x-coordinate for this point.
+         * @tparam U2 - The type of the y-coordinate for this point.
+         * @param other - The other point to check for containment.
+         * @return true if the x and y coordinates contain, false otherwise.
          */
         template <typename U1, typename U2>  //
         constexpr auto contains(const Point<U1, U2> &other) const -> bool {
@@ -328,13 +325,12 @@ namespace recti {
         }
 
         /**
-         * @brief overlap
+         * @brief minimum distance between this point and another point
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] other
-         * @return true
-         * @return false
+         * @tparam U1 - The x-coordinate type of the other point.
+         * @tparam U2 - The y-coordinate type of the other point.
+         * @param other - The other point to calculate the minimum distance from.
+         * @return The minimum distance between this point and the other point.
          */
         template <typename U1, typename U2>  //
         constexpr auto min_dist_with(const Point<U1, U2> &other) const {
@@ -343,13 +339,12 @@ namespace recti {
         }
 
         /**
-         * @brief overlap
+         * @brief minimum distance between this point and another point
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] other
-         * @return true
-         * @return false
+         * @tparam U1 - The x-coordinate type of the other point.
+         * @tparam U2 - The y-coordinate type of the other point.
+         * @param other - The other point to calculate the minimum distance from.
+         * @return The minimum distance between this point and the other point.
          */
         template <typename U1, typename U2>  //
         constexpr auto min_dist_change_with(Point<U1, U2> &other) {
@@ -365,14 +360,11 @@ namespace recti {
         // }
 
         /**
-         * @brief
+         * Outputs the point obj to the output stream out.
          *
-         * @tparam T1
-         * @tparam T2
-         * @tparam Stream
-         * @param[out] out
-         * @param[in] p
-         * @return Stream&
+         * @param[out] out The output stream.
+         * @param[in] obj The point to output.
+         * @return The output stream.
          */
         template <class Stream> friend auto operator<<(Stream &out, const Point &obj) -> Stream & {
             out << "(" << obj.xcoord() << ", " << obj.ycoord() << ")";
@@ -396,36 +388,36 @@ namespace recti {
     };
 #pragma pack(pop)
 
-#pragma pack(push, 1)
-    /**
-     * @brief 2D Point
-     *
-     * @tparam T1
-     * @tparam T2
-     */
-    template <typename T1, typename T2 = T1> class dualpoint : public Point<T1, T2> {
-      public:
-        /**
-         * @brief
-         *
-         * @return const T1&
-         */
-        constexpr auto ycoord() const -> const T1 &  // override intentionally
-        {
-            return this->_xcoord;
-        }
+// #pragma pack(push, 1)
+//     /**
+//      * @brief 2D Point
+//      *
+//      * @tparam T1
+//      * @tparam T2
+//      */
+//     template <typename T1, typename T2 = T1> class dualpoint : public Point<T1, T2> {
+//       public:
+//         /**
+//          * @brief
+//          *
+//          * @return const T1&
+//          */
+//         constexpr auto ycoord() const -> const T1 &  // override intentionally
+//         {
+//             return this->_xcoord;
+//         }
 
-        /**
-         * @brief
-         *
-         * @return const T2&
-         */
-        constexpr auto xcoord() const -> const T2 &  // override intentionally
-        {
-            return this->_ycoord;
-        }
-    };
-#pragma pack(pop)
+//         /**
+//          * @brief
+//          *
+//          * @return const T2&
+//          */
+//         constexpr auto xcoord() const -> const T2 &  // override intentionally
+//         {
+//             return this->_ycoord;
+//         }
+//     };
+// #pragma pack(pop)
 
     // /**
     //  * @brief adapter for containers of Point (deprecated)

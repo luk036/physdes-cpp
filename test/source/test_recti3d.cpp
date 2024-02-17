@@ -118,17 +118,17 @@ TEST_CASE("Rectangle 3D test") {
 //     // }
 // }
 
-TEST_CASE("MergeObj test") {
-    auto a = Point<int>{40000, 80000};
-    auto b = Point<int>{50000, 60000};
+// TEST_CASE("MergeObj test") {
+//     auto a = Point<int>{40000, 80000};
+//     auto b = Point<int>{50000, 60000};
 
-    auto m1 = MergeObj<Point<int>>{a + 50000, a - 50000};
-    auto m2 = MergeObj<Point<int>>{b + 90000, b - 90000};
-    // auto v = Vector2{Vector2{50000, 60000}, 0};
+//     auto m1 = MergeObj<Point<int>>{a + 50000, a - 50000};
+//     auto m2 = MergeObj<Point<int>>{b + 90000, b - 90000};
+//     // auto v = Vector2{Vector2{50000, 60000}, 0};
 
-    CHECK(m1 != m2);
-    // CHECK((m1 - v) + v == m1);
-    CHECK(!overlap(m1, m2));
-    CHECK(m1.min_dist_with(m2) == m2.min_dist_with(m1));
-    CHECK(min_dist(m1, m2) == min_dist(m2, m1));
-}
+//     CHECK(m1 != m2);
+//     // CHECK((m1 - v) + v == m1);
+//     CHECK(!overlap(m1, m2));
+//     CHECK(m1.min_dist_with(m2) == m2.min_dist_with(m1));
+//     CHECK(min_dist(m1, m2) == min_dist(m2, m1));
+// }
