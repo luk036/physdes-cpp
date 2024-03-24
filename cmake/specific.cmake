@@ -16,7 +16,6 @@ CPMAddPackage(
 
 set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt Microsoft.GSL::GSL)
 
-
 # cpmaddpackage( NAME GSL GITHUB_REPOSITORY "microsoft/GSL" GIT_TAG "v4.0.0" GIT_SHALLOW ON )
 
 # include(FetchContent)

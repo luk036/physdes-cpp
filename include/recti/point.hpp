@@ -388,36 +388,36 @@ namespace recti {
     };
 #pragma pack(pop)
 
-// #pragma pack(push, 1)
-//     /**
-//      * @brief 2D Point
-//      *
-//      * @tparam T1
-//      * @tparam T2
-//      */
-//     template <typename T1, typename T2 = T1> class dualpoint : public Point<T1, T2> {
-//       public:
-//         /**
-//          * @brief
-//          *
-//          * @return const T1&
-//          */
-//         constexpr auto ycoord() const -> const T1 &  // override intentionally
-//         {
-//             return this->_xcoord;
-//         }
+    // #pragma pack(push, 1)
+    //     /**
+    //      * @brief 2D Point
+    //      *
+    //      * @tparam T1
+    //      * @tparam T2
+    //      */
+    //     template <typename T1, typename T2 = T1> class dualpoint : public Point<T1, T2> {
+    //       public:
+    //         /**
+    //          * @brief
+    //          *
+    //          * @return const T1&
+    //          */
+    //         constexpr auto ycoord() const -> const T1 &  // override intentionally
+    //         {
+    //             return this->_xcoord;
+    //         }
 
-//         /**
-//          * @brief
-//          *
-//          * @return const T2&
-//          */
-//         constexpr auto xcoord() const -> const T2 &  // override intentionally
-//         {
-//             return this->_ycoord;
-//         }
-//     };
-// #pragma pack(pop)
+    //         /**
+    //          * @brief
+    //          *
+    //          * @return const T2&
+    //          */
+    //         constexpr auto xcoord() const -> const T2 &  // override intentionally
+    //         {
+    //             return this->_ycoord;
+    //         }
+    //     };
+    // #pragma pack(pop)
 
     // /**
     //  * @brief adapter for containers of Point (deprecated)
@@ -429,7 +429,8 @@ namespace recti {
     //     using T1 = decltype(std::declval(iterator::value_type).xcoord());
     //     using T2 = decltype(std::declval(iterator::value_type).ycoord());
 
-    //     constexpr explicit dual_iterator(iterator &&itr) : iterator{std::forward<iterator>(itr)} {}
+    //     constexpr explicit dual_iterator(iterator &&itr) : iterator{std::forward<iterator>(itr)}
+    //     {}
 
     //     CONSTEXPR14 auto operator*() const noexcept -> const dualpoint<T2, T1> & {
     //         return dualpoint<T2, T1>{};

@@ -1,8 +1,9 @@
 #pragma once
 
 // #include <algorithm> // import std::min, std::max
-#include "generic.hpp"
 #include <utility>  // import std::move
+
+#include "generic.hpp"
 
 namespace recti {
 

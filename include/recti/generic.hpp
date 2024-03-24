@@ -2,7 +2,7 @@
 
 // #include <algorithm> // import std::min, std::max
 #include <cassert>
-#include <cmath> // for abs
+#include <cmath>  // for abs
 
 namespace recti {
 
