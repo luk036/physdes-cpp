@@ -39,7 +39,7 @@ if(NOT TEST_INSTALLED_VERSION)
       Recti INTERFACE -Wall -Wpedantic -Wextra -Werror -Wno-deprecated-declarations
     )
   elseif(MSVC)
-    target_compile_options(Recti INTERFACE /W4 /WX /wd4819)
+    target_compile_options(Recti INTERFACE /W4 /WX /wd4819 /wd4996)
     target_compile_definitions(${PROJECT_NAME} INTERFACE DOCTEST_CONFIG_USE_STD_HEADERS)
   endif()
 endif()
