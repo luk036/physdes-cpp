@@ -1,11 +1,9 @@
 set_languages("c++20")
 
 add_rules("mode.debug", "mode.release", "mode.coverage")
-add_requires("fmt 9.1.0", {alias = "fmt"})
+add_requires("fmt", {alias = "fmt"})
 add_requires("doctest", {alias = "doctest"})
--- add_requires("conan::ms-gsl/3.1.0", {alias = "ms-gsl"})
 add_requires("microsoft-gsl", {alias = "ms-gsl"})
--- add_requires("apt::libboost-dev", {alias = "boost"})
 
 if is_mode("coverage") then
     add_cxflags("-ftest-coverage", "-fprofile-arcs", {force = true})
