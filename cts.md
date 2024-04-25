@@ -34,10 +34,10 @@ Placement -> STA -> Clock skew scheduling -> CTS -> Routing
 ## Tree topology generation
 
 - Top down (partition)
-    - MMM (Method of means and medians)
-    - BB (balanced bipartition)
+  - MMM (Method of means and medians)
+  - BB (balanced bipartition)
 - Bottom up
-    - Matching based
+  - Matching based
 - Enumerate all binary trees
 - Local refinement
 - Simulated Annealing
@@ -56,6 +56,3 @@ Placement -> STA -> Clock skew scheduling -> CTS -> Routing
 min_dist() - minimum distance
 enlarge()
 intersection()
-
-
-

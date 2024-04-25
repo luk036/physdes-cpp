@@ -18,7 +18,7 @@ int main() {
         std::cout << i << std::endl;
     }
     std::cout << i << std::endl;
-    
+
     int j;
     for (j = 0; j < 100; j++) {
         if (j > i) {
@@ -29,7 +29,7 @@ int main() {
     if (j == 100) {
         std::cout << j << std::endl;
     }
-    
+
     return 0;
 }
 ```
