@@ -233,8 +233,8 @@ namespace recti {
          * @param[in] p
          * @return Stream&
          */
-        template <class Stream>
-        friend auto operator<<(Stream &out, const MergeObj &merge_obj) -> Stream & {
+        template <class Stream> friend auto operator<<(Stream &out, const MergeObj &merge_obj)
+            -> Stream & {
             out << "/" << merge_obj.xcoord() << ", " << merge_obj.ycoord() << "/";
             return out;
         }

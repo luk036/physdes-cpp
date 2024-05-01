@@ -150,8 +150,8 @@ namespace recti {
          * @param[in] rhs - The vector to translate this Point by.
          * @return Reference to this Point after translation.
          */
-        template <typename U1, typename U2>
-        CONSTEXPR14 auto operator+=(const Vector2<U1, U2> &rhs) -> Self & {
+        template <typename U1, typename U2> CONSTEXPR14 auto operator+=(const Vector2<U1, U2> &rhs)
+            -> Self & {
             this->_xcoord += rhs.x();
             this->_ycoord += rhs.y();
             return *this;
@@ -184,8 +184,8 @@ namespace recti {
          * @param[in] rhs - The vector to translate this Point by.
          * @return Reference to this Point after translation.
          */
-        template <typename U1, typename U2>
-        CONSTEXPR14 auto operator-=(const Vector2<U1, U2> &rhs) -> Self & {
+        template <typename U1, typename U2> CONSTEXPR14 auto operator-=(const Vector2<U1, U2> &rhs)
+            -> Self & {
             this->_xcoord -= rhs.x();
             this->_ycoord -= rhs.y();
             return *this;
