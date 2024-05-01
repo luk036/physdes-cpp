@@ -229,8 +229,8 @@ namespace recti {
          *
          * @return an `Interval` object.
          */
-        template <typename U> friend constexpr auto operator+(Interval rhs, const U &alpha)
-            -> Interval {
+        template <typename U>
+        friend constexpr auto operator+(Interval rhs, const U &alpha) -> Interval {
             return rhs += alpha;
         }
 
@@ -281,8 +281,8 @@ namespace recti {
          *
          * @return an `Interval` object.
          */
-        template <typename U> friend constexpr auto operator-(const Interval &rhs, const U &alpha)
-            -> Interval {
+        template <typename U>
+        friend constexpr auto operator-(const Interval &rhs, const U &alpha) -> Interval {
             auto lower = rhs.lb() - alpha;
             auto upper = rhs.ub() - alpha;
             return Interval<decltype(lower)>{std::move(lower), std::move(upper)};
@@ -424,8 +424,8 @@ namespace recti {
          * @param[in] intvl
          * @return Stream&
          */
-        template <class Stream> friend auto operator<<(Stream &out, const Interval &intvl)
-            -> Stream & {
+        template <class Stream>
+        friend auto operator<<(Stream &out, const Interval &intvl) -> Stream & {
             out << "[" << intvl.lb() << ", " << intvl.ub() << "]";
             return out;
         }
