@@ -172,7 +172,7 @@ namespace recti {
          * @return false
          */
         template <typename U1, typename U2>  //
-        constexpr auto intersection_with(const MergeObj<U1, U2> &other) const {
+        constexpr auto intersect_with(const MergeObj<U1, U2> &other) const {
             auto xcoord = intersection(this->xcoord(), other.xcoord());
             auto ycoord = intersection(this->ycoord(), other.ycoord());
             return MergeObj<decltype(xcoord), decltype(ycoord)>{std::move(xcoord),
@@ -249,8 +249,8 @@ namespace recti {
         //     auto minDist = this->min_dist_with(other);
         //     auto mobj1 = this->enlarge_with(minDist);
         //     auto mobj2 = other.enlarge_with(minDist);
-        //     other = mobj1.intersection_with(other);
-        //     *this = mobj2.intersection_with(*this);
+        //     other = mobj1.intersect_with(other);
+        //     *this = mobj2.intersect_with(*this);
         //     return minDist;
         // }
     };

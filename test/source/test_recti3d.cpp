@@ -35,7 +35,7 @@ TEST_CASE("Interval test") {
     CHECK(!(b == a));
     CHECK(b != a);
     CHECK(a.contains(b));
-    CHECK(a.intersection_with(b) == b);
+    CHECK(a.intersect_with(b) == b);
     CHECK(!b.contains(a));
     CHECK(a.overlaps(b));
     CHECK(b.overlaps(a));

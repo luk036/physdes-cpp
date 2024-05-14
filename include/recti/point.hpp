@@ -304,7 +304,7 @@ namespace recti {
          * @return The intersection point if the points intersect.
          */
         template <typename U1, typename U2>  //
-        constexpr auto intersection_with(const Point<U1, U2> &other) const {
+        constexpr auto intersect_with(const Point<U1, U2> &other) const {
             auto xcoord = intersection(this->xcoord(), other.xcoord());
             auto ycoord = intersection(this->ycoord(), other.ycoord());
             return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord), std::move(ycoord)};

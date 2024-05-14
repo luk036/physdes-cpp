@@ -104,6 +104,8 @@ namespace recti {
          */
         constexpr auto len() const -> T { return this->ub() - this->lb(); }
 
+        constexpr auto is_invalid() const -> bool { return this->lb() > this->ub(); }
+
         /** @name Comparison operators
          *  definie ==, !=, <, >, <=, >=.
          */
@@ -346,7 +348,7 @@ namespace recti {
         /**
          * @brief intersection with
          *
-         * The above code is defining a template function called `intersection_with` that takes a
+         * The above code is defining a template function called `intersect_with` that takes a
          * parameter `other`. The function returns the intersection of the current object (an
          * `Interval`) with `other`.
          *
@@ -355,12 +357,13 @@ namespace recti {
          * @return constexpr auto
          */
         template <typename U>  //
-        constexpr auto intersection_with(const U &other) const {
+        constexpr auto intersect_with(const U &other) const {
             if constexpr (requires { other.lb(); }) {
                 return Interval<T>{this->lb() > other.lb() ? this->lb() : T(other.lb()),
                                    this->ub() < other.ub() ? this->ub() : T(other.ub())};
             } else /* constexpr */ {  // assume scalar
-                return Interval<U>{other, other};
+                return Interval<T>{this->lb() > other ? this->lb() : T(other),
+                                   this->ub() < other ? this->ub() : T(other)};
             }
         }
 
@@ -405,7 +408,7 @@ namespace recti {
             }
 
             if constexpr (requires { other.lb(); }) {
-                *this = other = this->intersection_with(other);
+                *this = other = this->intersect_with(other);
             } else /* constexpr */ {  // assume scalar
                 this->_ub = this->_lb = other;
             }

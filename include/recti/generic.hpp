@@ -91,10 +91,10 @@ namespace recti {
      */
     template <typename U1, typename U2>  //
     constexpr auto intersection(const U1 &lhs, const U2 &rhs) {
-        if constexpr (requires { lhs.intersection_with(rhs); }) {
-            return lhs.intersection_with(rhs);
-        } else if constexpr (requires { rhs.intersection_with(lhs); }) {
-            return rhs.intersection_with(lhs);
+        if constexpr (requires { lhs.intersect_with(rhs); }) {
+            return lhs.intersect_with(rhs);
+        } else if constexpr (requires { rhs.intersect_with(lhs); }) {
+            return rhs.intersect_with(lhs);
         } else /* constexpr */ {
             assert(lhs == rhs);
             return lhs;

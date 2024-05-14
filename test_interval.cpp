@@ -29,9 +29,9 @@ TEST_CASE("Interval test") {
 
     CHECK(a.contains(4));
     CHECK(a.contains(8));
-    CHECK(a.intersection_with(8) == Interval{8, 8});
+    CHECK(a.intersect_with(8) == Interval{8, 8});
     CHECK(a.contains(b));
-    CHECK(a.intersection_with(b) == b);
+    CHECK(a.intersect_with(b) == b);
     CHECK(!b.contains(a));
     CHECK(a.overlaps(b));
     CHECK(b.overlaps(a));
@@ -61,10 +61,10 @@ TEST_CASE("Interval of Interval test") {
     CHECK(a.contains(Interval{4, 5}));
     CHECK(a.contains(Interval{7, 8}));
 
-    CHECK(a.intersection_with(Interval{7, 8}) == Interval{Interval{7, 7}, Interval{8, 8}});  // ???
+    CHECK(a.intersect_with(Interval{7, 8}) == Interval{Interval{7, 7}, Interval{8, 8}});  // ???
 
     CHECK(a.contains(b));
-    CHECK(a.intersection_with(b) == b);
+    CHECK(a.intersect_with(b) == b);
     CHECK(!b.contains(a));
     CHECK(a.overlaps(b));
     CHECK(b.overlaps(a));
