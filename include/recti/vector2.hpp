@@ -275,8 +275,8 @@ namespace recti {
          * @param[in] alpha
          * @return vector2
          */
-        template <typename R> friend constexpr auto operator*(Vector2 rhs, const R &alpha)
-            -> Vector2 {
+        template <typename R>
+        friend constexpr auto operator*(Vector2 rhs, const R &alpha) -> Vector2 {
             return rhs *= alpha;
         }
 
@@ -288,8 +288,8 @@ namespace recti {
          * @param[in] x
          * @return vector2
          */
-        template <typename R> friend constexpr auto operator*(const R &alpha, Vector2 lhs)
-            -> Vector2 {
+        template <typename R>
+        friend constexpr auto operator*(const R &alpha, Vector2 lhs) -> Vector2 {
             return lhs *= alpha;
         }
 
@@ -301,8 +301,8 @@ namespace recti {
          * @param[in] alpha
          * @return vector2
          */
-        template <typename R> friend constexpr auto operator/(Vector2 rhs, const R &alpha)
-            -> Vector2 {
+        template <typename R>
+        friend constexpr auto operator/(Vector2 rhs, const R &alpha) -> Vector2 {
             return rhs /= alpha;
         }
 
@@ -316,8 +316,8 @@ namespace recti {
          * @param[in] v
          * @return Stream&
          */
-        template <class Stream> friend auto operator<<(Stream &out, const Vector2 &vec2)
-            -> Stream & {
+        template <class Stream>
+        friend auto operator<<(Stream &out, const Vector2 &vec2) -> Stream & {
             out << "{" << vec2.x() << ", " << vec2.y() << "}";
             return out;
         }
