@@ -50,8 +50,8 @@ namespace recti {
          * arguments are compile-time constants. The `noexcept` specifier indicates
          * that the constructor does not throw any exceptions.
          *
-         * @param[in] xcoord
-         * @param[in] ycoord
+         * @param[in] xcoord - x coordinate.
+         * @param[in] ycoord - y coordinate.
          */
         constexpr Point(T1 &&xcoord, T2 &&ycoord) noexcept : _xcoord{xcoord}, _ycoord{ycoord} {}
 
@@ -150,8 +150,8 @@ namespace recti {
          * @param[in] rhs - The vector to translate this Point by.
          * @return Reference to this Point after translation.
          */
-        template <typename U1, typename U2>
-        CONSTEXPR14 auto operator+=(const Vector2<U1, U2> &rhs) -> Self & {
+        template <typename U1, typename U2> CONSTEXPR14 auto operator+=(const Vector2<U1, U2> &rhs)
+            -> Self & {
             this->_xcoord += rhs.x();
             this->_ycoord += rhs.y();
             return *this;
@@ -184,8 +184,8 @@ namespace recti {
          * @param[in] rhs - The vector to translate this Point by.
          * @return Reference to this Point after translation.
          */
-        template <typename U1, typename U2>
-        CONSTEXPR14 auto operator-=(const Vector2<U1, U2> &rhs) -> Self & {
+        template <typename U1, typename U2> CONSTEXPR14 auto operator-=(const Vector2<U1, U2> &rhs)
+            -> Self & {
             this->_xcoord -= rhs.x();
             this->_ycoord -= rhs.y();
             return *this;
@@ -268,7 +268,7 @@ namespace recti {
         }
 
         /**
-         * @brief flip_xcoordy according to xcoord-ycoord diagonal line
+         * @brief flip_xy according to xcoord-ycoord diagonal line
          *
          * @return Point<T2, T1>
          */
@@ -277,7 +277,7 @@ namespace recti {
         /**
          * @brief flip according to ycoord-axis
          *
-         * @return Point<T2, T1>
+         * @return Point<T1, T2>
          */
         constexpr auto flip_y() const -> Point<T1, T2> { return {-this->xcoord(), this->ycoord()}; }
 
@@ -360,11 +360,11 @@ namespace recti {
         // }
 
         /**
-         * Outputs the point obj to the output stream out.
+         * Outputs the point object to the given output stream.
          *
-         * @param[out] out The output stream.
-         * @param[in] obj The point to output.
-         * @return The output stream.
+         * @param[out] out The output stream to write the point to.
+         * @param[in] obj The point object to output.
+         * @return The output stream after writing the point.
          */
         template <class Stream> friend auto operator<<(Stream &out, const Point &obj) -> Stream & {
             out << "(" << obj.xcoord() << ", " << obj.ycoord() << ")";
@@ -373,75 +373,19 @@ namespace recti {
 
       protected:
         /**
-         * @brief
+         * @brief Returns a reference to the x-coordinate of the point.
          *
-         * @return const T1&
+         * @return const T1& A reference to the x-coordinate of the point.
          */
         CONSTEXPR14 auto get_xcoord() -> T1 & { return this->_xcoord; }
 
         /**
-         * @brief
+         * @brief Returns a reference to the y-coordinate of the point.
          *
-         * @return const T2&
+         * @return const T2& A reference to the y-coordinate of the point.
          */
         CONSTEXPR14 auto get_ycoord() -> T2 & { return this->_ycoord; }
     };
 #pragma pack(pop)
 
-    // #pragma pack(push, 1)
-    //     /**
-    //      * @brief 2D Point
-    //      *
-    //      * @tparam T1
-    //      * @tparam T2
-    //      */
-    //     template <typename T1, typename T2 = T1> class dualpoint : public Point<T1, T2> {
-    //       public:
-    //         /**
-    //          * @brief
-    //          *
-    //          * @return const T1&
-    //          */
-    //         constexpr auto ycoord() const -> const T1 &  // override intentionally
-    //         {
-    //             return this->_xcoord;
-    //         }
-
-    //         /**
-    //          * @brief
-    //          *
-    //          * @return const T2&
-    //          */
-    //         constexpr auto xcoord() const -> const T2 &  // override intentionally
-    //         {
-    //             return this->_ycoord;
-    //         }
-    //     };
-    // #pragma pack(pop)
-
-    // /**
-    //  * @brief adapter for containers of Point (deprecated)
-    //  *
-    //  * @tparam iter
-    //  */
-    // template <typename iterator> class dual_iterator : public iterator {
-    //     using value_type = typename iterator::value_type;
-    //     using T1 = decltype(std::declval(iterator::value_type).xcoord());
-    //     using T2 = decltype(std::declval(iterator::value_type).ycoord());
-
-    //     constexpr explicit dual_iterator(iterator &&itr) : iterator{std::forward<iterator>(itr)}
-    //     {}
-
-    //     CONSTEXPR14 auto operator*() const noexcept -> const dualpoint<T2, T1> & {
-    //         return dualpoint<T2, T1>{};
-    //         // return std::reinterpret_cast<const dualpoint<T2,
-    //         // T1>&>(*iterator::operator*());
-    //     }
-
-    //     CONSTEXPR14 auto operator*() noexcept -> dualpoint<T2, T1> & {
-    //         return dualpoint<T2, T1>{};
-    //         // return std::reinterpret_cast<dualpoint<T2,
-    //         // T1>&>(*iterator::operator*());
-    //     }
-    // };
 }  // namespace recti

@@ -102,8 +102,16 @@ namespace recti {
          *
          * @return a value of type T.
          */
-        constexpr auto len() const -> T { return this->ub() - this->lb(); }
+        constexpr auto length() const -> T { return this->ub() - this->lb(); }
 
+        /**
+         * @brief Checks if the interval is invalid
+         *
+         * This function checks if the interval is invalid, which occurs when the lower bound is
+         * greater than the upper bound.
+         *
+         * @return `true` if the interval is invalid, `false` otherwise.
+         */
         constexpr auto is_invalid() const -> bool { return this->lb() > this->ub(); }
 
         /** @name Comparison operators
@@ -112,17 +120,15 @@ namespace recti {
         ///@{
 
         /**
-         * @brief Equal to
+         * @brief Equality comparison operator for `Interval` objects.
          *
-         * The above code is defining the equality operator (==) for a class template called
-         * Interval. The operator compares two Interval objects for equality by checking if their
-         * lower bounds (lb) and upper bounds (ub) are equal. If both the lower bounds and upper
-         * bounds are equal, the operator returns true, otherwise it returns false.
+         * Compares two `Interval` objects for equality by checking if their lower bounds (`lb`) and
+         * upper bounds (`ub`) are equal. If both the lower bounds and upper bounds are equal, the
+         * operator returns `true`, otherwise it returns `false`.
          *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
+         * @tparam U The type of the interval bounds.
+         * @param rhs The right-hand side `Interval` object to compare against.
+         * @return `true` if the intervals are equal, `false` otherwise.
          */
         template <typename U>  //
         constexpr auto operator==(const Interval<U> &rhs) const -> bool {
@@ -130,18 +136,15 @@ namespace recti {
         }
 
         /**
-         * @brief Not equal to
+         * @brief Not equal to comparison operator for `Interval` objects.
          *
-         * The above code is defining the "!=" (not equal to) operator for a class template called
-         * "Interval". This operator compares two Interval objects for inequality. It takes a
-         * reference to an Interval object "rhs" as a parameter and returns a boolean value. It uses
-         * the "==" (equal to) operator to determine if the two objects are equal, and then negates
-         * the result to return the opposite.
+         * Compares two `Interval` objects for inequality by negating the result of the `==` (equal
+         * to) operator. If the two intervals are not equal, the operator returns `true`, otherwise
+         * it returns `false`.
          *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
+         * @tparam U The type of the interval bounds.
+         * @param[in] rhs The right-hand side `Interval` object to compare against.
+         * @return `true` if the intervals are not equal, `false` otherwise.
          */
         template <typename U>  //
         constexpr auto operator!=(const Interval<U> &rhs) const -> bool {
@@ -149,16 +152,18 @@ namespace recti {
         }
 
         /**
-         * @brief Spaceship operator
+         * @brief Spaceship comparison operator for `Interval` objects.
          *
-         * The above code is defining a spaceship operator for a template class. The spaceship
-         * operator is a three-way comparison operator introduced in C++20. It compares the object
-         * on the left-hand side (LHS) with the object on the right-hand side (RHS) and returns a
-         * std::weak_ordering value indicating the relationship between the two objects.
+         * Compares the upper bound (`ub`) of the `Interval` object on the left-hand side (LHS) with
+         * the value on the right-hand side (RHS). If the LHS upper bound is less than the RHS
+         * value, it returns `std::weak_ordering::less`. If the LHS lower bound is greater than the
+         * RHS value, it returns `std::weak_ordering::greater`. Otherwise, it returns
+         * `std::weak_ordering::equivalent`.
          *
-         * @tparam U
-         * @param[in] rhs
-         * @return std::weak_ordering
+         * @tparam U The type of the value to compare against the interval bounds.
+         * @param[in] rhs The value to compare against the interval bounds.
+         * @return `std::weak_ordering` indicating the relationship between the interval and the
+         * value.
          */
         template <typename U>  //
         constexpr auto operator<=>(const U &rhs) const -> std::weak_ordering {
@@ -168,15 +173,19 @@ namespace recti {
         }
 
         /**
-         * @brief Spaceship operator
+         * @brief Spaceship comparison operator for comparing a value with an `Interval` object.
          *
-         * The above code is defining a spaceship operator for comparing a value of type `T` with an
-         * `Interval` object. The spaceship operator (`<=>`) is a three-way comparison operator
-         * introduced in C++20.
+         * Compares the given value with the bounds of the `Interval` object on the right-hand side.
+         * If the value is less than the lower bound of the interval, it returns
+         * `std::weak_ordering::less`. If the value is greater than the upper bound of the interval,
+         * it returns `std::weak_ordering::greater`. Otherwise, it returns
+         * `std::weak_ordering::equivalent`.
          *
-         * @param[in] lhs
-         * @param[in] rhs
-         * @return std::weak_ordering
+         * @tparam T The type of the value to compare against the interval bounds.
+         * @param[in] lhs The value to compare against the interval bounds.
+         * @param[in] rhs The `Interval` object to compare the value against.
+         * @return `std::weak_ordering` indicating the relationship between the value and the
+         * interval.
          */
         friend constexpr auto operator<=>(const T &lhs, const Interval &rhs) -> std::weak_ordering {
             if (lhs < rhs.lb()) return std::weak_ordering::less;
@@ -192,24 +201,27 @@ namespace recti {
         ///@{
 
         /**
-         * @brief Negation
+         * @brief Negation operator for an `Interval` object.
          *
-         * The above function returns the negation of an interval.
+         * This function returns a new `Interval` object that is the negation of the current
+         * `Interval` object. The lower bound of the new interval is the negation of the upper bound
+         * of the current interval, and the upper bound of the new interval is the negation of the
+         * lower bound of the current interval.
          *
-         * @return The `operator-` function is returning an `Interval` object.
+         * @return The negated `Interval` object.
          */
         constexpr auto operator-() const -> Interval { return {-this->_ub, -this->_lb}; }
 
         /**
-         * @brief Add
+         * @brief Add a value to the lower and upper bounds of the interval.
          *
-         * The above code is defining an `operator+=` function for the `Interval` class. This
-         * function takes a parameter `alpha` of type `U` and adds it to both the lower bound
-         * (`_lb`) and upper bound (`_ub`) of the `Interval` object. It then returns a reference to
-         * the modified `Interval` object.
+         * This function adds the given value `alpha` to both the lower bound (`_lb`) and upper
+         * bound (`_ub`) of the `Interval` object. It then returns a reference to the modified
+         * `Interval` object.
          *
-         * @param[in] alpha
-         * @return Interval&
+         * @tparam U The type of the value to add to the interval bounds.
+         * @param[in] alpha The value to add to the interval bounds.
+         * @return A reference to the modified `Interval` object.
          */
         template <typename U> constexpr auto operator+=(const U &alpha) -> Interval & {
             this->_lb += alpha;
@@ -218,50 +230,45 @@ namespace recti {
         }
 
         /**
-         * @brief Add by a scalar
+         * @brief Add a scalar value to an `Interval` object.
          *
-         * The above code is defining a friend function named `operator+` for the `Interval` class.
-         * This function takes an `Interval` object `rhs` and a scalar value `alpha` as parameters.
-         * It returns a new `Interval` object that is the result of adding `rhs` and `alpha`.
+         * This function creates a new `Interval` object by adding the scalar value `alpha` to the
+         * lower and upper bounds of the `rhs` `Interval` object.
          *
-         * @param[in] rhs The parameter `rhs` represents the right-hand side of the addition
-         * operation. It is an object of type `Interval`.
-         * @param[in] alpha The parameter `alpha` is a scalar value that will be added to the `rhs`
-         * interval.
-         *
-         * @return an `Interval` object.
+         * @tparam U The type of the scalar value to add.
+         * @param[in] rhs The `Interval` object to add the scalar value to.
+         * @param[in] alpha The scalar value to add to the `Interval` object.
+         * @return A new `Interval` object with the scalar value added to the bounds.
          */
-        template <typename U>
-        friend constexpr auto operator+(Interval rhs, const U &alpha) -> Interval {
+        template <typename U> friend constexpr auto operator+(Interval rhs, const U &alpha)
+            -> Interval {
             return rhs += alpha;
         }
 
         /**
          * @brief Add (by a scalar)
          *
-         * The function adds a scalar value to an interval.
+         * The function adds a scalar value `alpha` to an `Interval` object `rhs` and returns the
+         * resulting `Interval` object.
          *
-         * @param[in] alpha The parameter `alpha` is a scalar value that will be added to the `rhs`
-         * interval.
-         * @param[in] rhs The parameter `rhs` represents the right-hand side of the addition
-         * operation. It is an object of type `Interval`.
+         * @param[in] alpha The scalar value to add to the `Interval` object.
+         * @param[in] rhs The `Interval` object to add the scalar value to.
          *
-         * @return an `Interval` object.
+         * @return A new `Interval` object with the scalar value added to the bounds.
          */
         friend constexpr auto operator+(const T &alpha, Interval rhs) -> Interval {
             return rhs += alpha;
         }
 
         /**
-         * @brief Subtract
+         * @brief Subtract a scalar value from an `Interval` object.
          *
-         * The above code is defining an `operator-=` function for the `Interval` class. This
-         * function takes a parameter `alpha` of type `U` and subtracts it to both the lower bound
-         * (`_lb`) and upper bound (`_ub`) of the `Interval` object. It then returns a reference to
-         * the modified `Interval` object.
+         * This function subtracts the scalar value `alpha` from the lower and upper bounds of the
+         * `Interval` object and returns a reference to the modified `Interval` object.
          *
-         * @param[in] alpha
-         * @return Interval&
+         * @tparam U The type of the scalar value to subtract.
+         * @param[in] alpha The scalar value to subtract from the `Interval` object.
+         * @return A reference to the modified `Interval` object.
          */
         template <typename U> constexpr auto operator-=(const U &alpha) -> Interval & {
             this->_lb -= alpha;
@@ -270,36 +277,34 @@ namespace recti {
         }
 
         /**
-         * @brief Subtract by a scalar
+         * @brief Subtract a scalar value from an `Interval` object.
          *
-         * The above code is defining a friend function named `operator-` for the `Interval` class.
-         * This function takes an `Interval` object `rhs` and a scalar value `alpha` as parameters.
-         * It returns a new `Interval` object that is the result of subtracting `rhs` by `alpha`.
+         * This function subtracts the scalar value `alpha` from the lower and upper bounds of the
+         * `Interval` object `rhs` and returns a new `Interval` object with the modified bounds.
          *
-         * @param[in] rhs The parameter `rhs` represents the right-hand side of the subtraction
-         * operation. It is an object of type `Interval`.
-         * @param[in] alpha The parameter `alpha` is a scalar value that will be subtracted to the
-         * `rhs` interval.
+         * @tparam U The type of the scalar value to subtract.
+         * @param[in] rhs The `Interval` object to subtract the scalar value from.
+         * @param[in] alpha The scalar value to subtract from the `Interval` object.
          *
-         * @return an `Interval` object.
+         * @return A new `Interval` object with the scalar value subtracted from the bounds.
          */
-        template <typename U>
-        friend constexpr auto operator-(const Interval &rhs, const U &alpha) -> Interval {
+        template <typename U> friend constexpr auto operator-(const Interval &rhs, const U &alpha)
+            -> Interval {
             auto lower = rhs.lb() - alpha;
             auto upper = rhs.ub() - alpha;
             return Interval<decltype(lower)>{std::move(lower), std::move(upper)};
         }
 
         /**
-         * @brief Enlarge with
+         * @brief Enlarge the interval by subtracting `alpha` from the lower bound and adding
+         * `alpha` to the upper bound.
          *
-         * The `enlarge_with` function enlarges the interval by subtracting `alpha` from the lower
-         * bound and adding `alpha` to the upper bound.
+         * This function modifies the current `Interval` object by subtracting `alpha` from the
+         * lower bound (`_lb`) and adding `alpha` to the upper bound (`_ub`). It returns a reference
+         * to the modified `Interval` object.
          *
-         * @param[in] alpha The parameter "alpha" is of type T, which is not specified in the code
-         * snippet. It could be any data type, such as int, float, double, etc.
-         *
-         * @return a reference to the current object, which is an instance of the `Interval` class.
+         * @param[in] alpha The value to subtract from the lower bound and add to the upper bound.
+         * @return A reference to the modified `Interval` object.
          */
         constexpr auto enlarge_with(const T &alpha) -> Interval & {
             this->_lb -= alpha;
@@ -310,15 +315,15 @@ namespace recti {
         ///@}
 
         /**
-         * @brief Overlaps
+         * @brief Checks if the current interval overlaps with another interval.
          *
-         * The above code is defining a template function named "overlaps" that takes a parameter
-         * "other" of type U. The function returns a boolean value.
+         * This function checks if the current `Interval` object overlaps with the interval
+         * represented by the `other` parameter. It returns `true` if the intervals overlap, and
+         * `false` otherwise.
          *
-         * @tparam U
-         * @param[in] other
-         * @return true
-         * @return false
+         * @tparam U The type of the `other` interval.
+         * @param[in] other The interval to check for overlap.
+         * @return `true` if the intervals overlap, `false` otherwise.
          */
         template <typename U>  // cppcheck-suppress internalAstError
         constexpr auto overlaps(const U &other) const -> bool {
@@ -326,15 +331,22 @@ namespace recti {
         }
 
         /**
-         * @brief contains
+         * @brief Checks if the current interval contains another interval.
          *
-         * The above code is defining a template function named "contains" that takes a parameter
-         * "other" of type U. The function returns a boolean value.
+         * This function checks if the current `Interval` object contains the interval
+         * represented by the `other` parameter. If the `other` parameter has a `lb()`
+         * and `ub()` member function, it checks if the lower bound of the current
+         * interval is less than or equal to the lower bound of the `other` interval,
+         * and the upper bound of the current interval is greater than or equal to the
+         * upper bound of the `other` interval. Otherwise, it assumes the `other`
+         * parameter is a scalar value and checks if it is within the bounds of the
+         * current interval.
          *
-         * @tparam U
-         * @param[in] other
-         * @return true
-         * @return false
+         * @tparam U The type of the `other` interval or scalar value.
+         * @param[in] other The interval or scalar value to check if it is contained
+         * within the current interval.
+         * @return `true` if the current interval contains the `other` interval or
+         * scalar value, `false` otherwise.
          */
         template <typename U>  // cppcheck-suppress internalAstError
         constexpr auto contains(const U &other) const -> bool {
@@ -346,15 +358,20 @@ namespace recti {
         }
 
         /**
-         * @brief intersection with
+         * @brief Computes the intersection of the current interval with another interval or scalar
+         * value.
          *
-         * The above code is defining a template function called `intersect_with` that takes a
-         * parameter `other`. The function returns the intersection of the current object (an
-         * `Interval`) with `other`.
+         * This function returns a new `Interval` object that represents the intersection of the
+         * current `Interval` object with the interval or scalar value represented by the `other`
+         * parameter. If the `other` parameter has `lb()` and `ub()` member functions, it computes
+         * the intersection using the lower and upper bounds of both intervals. Otherwise, it
+         * assumes the `other` parameter is a scalar value and computes the intersection using the
+         * lower and upper bounds of the current interval and the scalar value.
          *
-         * @tparam U
-         * @param[in] other
-         * @return constexpr auto
+         * @tparam U The type of the `other` interval or scalar value.
+         * @param[in] other The interval or scalar value to intersect with the current interval.
+         * @return The intersection of the current interval with the `other` interval or scalar
+         * value.
          */
         template <typename U>  //
         constexpr auto intersect_with(const U &other) const {
@@ -368,14 +385,21 @@ namespace recti {
         }
 
         /**
-         * @brief minimum distance with
+         * @brief Computes the minimum distance between the current interval and the `other`
+         * interval or scalar value.
          *
-         * The above code is a C++ template function called `min_dist_with`. It takes a parameter
-         * `other` of type `U` and returns a value of type `T`.
+         * This function returns the minimum distance between the current interval and the interval
+         * or scalar value represented by the `other` parameter. If the `other` parameter is less
+         * than the current interval, the function returns the distance between the lower bound of
+         * the current interval and the `other` parameter. If the `other` parameter is greater than
+         * the current interval, the function returns the distance between the upper bound of the
+         * current interval and the `other` parameter. If the `other` parameter is within the
+         * current interval, the function returns 0.
          *
-         * @tparam U
-         * @param[in] other
-         * @return constexpr auto
+         * @tparam U The type of the `other` interval or scalar value.
+         * @param[in] other The interval or scalar value to compute the minimum distance with.
+         * @return The minimum distance between the current interval and the `other` interval or
+         * scalar value.
          */
         template <typename U> constexpr auto min_dist_with(const U &other) const -> T {
             if (*this < other) {
@@ -388,14 +412,23 @@ namespace recti {
         }
 
         /**
-         * @brief minimum distance with
+         * @brief Computes the minimum distance between the current interval and the `other`
+         * interval or scalar value, and updates the interval bounds accordingly.
          *
-         * The above code is a C++ template function called `min_dist_change_with`. It takes a
-         * parameter `other` of type `U` and returns a value of type `T`.
+         * This function returns the minimum distance between the current interval and the interval
+         * or scalar value represented by the `other` parameter. If the `other` parameter is less
+         * than the current interval, the function updates the lower bound of the current interval
+         * to the upper bound, and returns the distance between the new lower bound and the `other`
+         * parameter. If the `other` parameter is greater than the current interval, the function
+         * updates the upper bound of the current interval to the lower bound, and returns the
+         * distance between the new upper bound and the `other` parameter. If the `other` parameter
+         * is within the current interval, the function updates the interval to the intersection
+         * of the current interval and the `other` interval or scalar value, and returns 0.
          *
-         * @tparam U
-         * @param[in] other
-         * @return constexpr auto
+         * @tparam U The type of the `other` interval or scalar value.
+         * @param[in,out] other The interval or scalar value to compute the minimum distance with.
+         * @return The minimum distance between the current interval and the `other` interval or
+         * scalar value.
          */
         template <typename U> constexpr auto min_dist_change_with(U &other) const -> T {
             if (*this < other) {
@@ -416,27 +449,40 @@ namespace recti {
         }
 
         /**
-         * @brief output stream
+         * @brief Overloads the stream insertion operator (`<<`) to print an Interval object to the
+         * given output stream.
          *
-         * The above code is defining a friend function for the Interval class in C++. This friend
-         * function is an output stream operator overload (<<) that takes a reference to a Stream
-         * object (out) and a const reference to an Interval object (intvl).
+         * This function allows Interval objects to be printed directly to an output stream, such as
+         * `std::cout`, by overloading the stream insertion operator (`<<`). The Interval object is
+         * printed in the format `[lower_bound, upper_bound]`.
          *
-         * @tparam Stream
-         * @param[out] out
-         * @param[in] intvl
-         * @return Stream&
+         * @tparam Stream The type of the output stream.
+         * @param out The output stream to write the Interval object to.
+         * @param intvl The Interval object to be printed.
+         * @return A reference to the output stream (`out`) for chaining stream operations.
          */
-        template <class Stream>
-        friend auto operator<<(Stream &out, const Interval &intvl) -> Stream & {
+        template <class Stream> friend auto operator<<(Stream &out, const Interval &intvl)
+            -> Stream & {
             out << "[" << intvl.lb() << ", " << intvl.ub() << "]";
             return out;
         }
     };
 #pragma pack(pop)
 
-    /** The above code is defining a template function called `enlarge`. This function takes two
-    parameters, `lhs` and `rhs`, of any type `U1` and `U2` respectively. */
+    /**
+     * @brief Enlarges an interval or scalar value by adding and subtracting a given value.
+     *
+     * This function takes two parameters, `lhs` and `rhs`, and returns a new interval that
+     * is enlarged by the value of `rhs`. If `lhs` has an `enlarge_with` member function,
+     * it is used to enlarge the interval. Otherwise, a new interval is created with the
+     * lower bound as `lhs - rhs` and the upper bound as `lhs + rhs`.
+     *
+     * @tparam U1 The type of the first parameter `lhs`.
+     * @tparam U2 The type of the second parameter `rhs`.
+     * @param lhs The interval or scalar value to be enlarged.
+     * @param rhs The value to enlarge the interval or scalar value by.
+     * @return The enlarged interval or scalar value.
+     */
     template <typename U1, typename U2>  //
     constexpr auto enlarge(const U1 &lhs, const U2 &rhs) {
         if constexpr (requires { lhs.enlarge_with(rhs); }) {

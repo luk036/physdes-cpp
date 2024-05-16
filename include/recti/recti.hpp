@@ -93,7 +93,9 @@ namespace recti {
          *
          * @return constexpr T
          */
-        constexpr auto area() const -> T { return this->xcoord().len() * this->ycoord().len(); }
+        constexpr auto area() const -> T {
+            return this->xcoord().length() * this->ycoord().length();
+        }
     };
 #pragma pack(pop)
 

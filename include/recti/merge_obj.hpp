@@ -32,8 +32,8 @@ namespace recti {
      * Systems II: Analog and Digital Signal Processing, vol. 39, no. 11, pp.
      * 799-814, Nov. 1992, doi: 10.1109/82.204128.
      *
-     * @tparam T1
-     * @tparam T2
+     * @tparam T1 int or Interval
+     * @tparam T2 int or Interval
      */
     template <typename T1 = int, typename T2 = T1> class MergeObj : private Point<T1, T2> {
       public:
@@ -46,17 +46,23 @@ namespace recti {
          * `noexcept`, indicating that it can be evaluated at compile-time and it does
          * not throw any exceptions.
          *
-         * @param[in] xcoord x coordinate
-         * @param[in] ycoord y coordinate
+         * @param[in] xcoord The x coordinate value.
+         * @param[in] ycoord The y coordinate value.
          */
         constexpr MergeObj(T1 &&xcoord, T2 &&ycoord) noexcept
             : Point<T1, T2>{std::move(xcoord), std::move(ycoord)} {}
 
         /**
-         * @brief Construct a new MergeObj object
+         * @brief Construct a new MergeObj object from the given x and y coordinates.
          *
-         * @param[in] xcoord x coordinate
-         * @param[in] ycoord y coordinate
+         * This static member function constructs a new `MergeObj` object by combining the
+         * given `xcoord` and `ycoord` parameters in a specific way. The resulting `MergeObj`
+         * object represents a merging segment that can include a single point, segment, or
+         * region.
+         *
+         * @param[in] xcoord The x coordinate value.
+         * @param[in] ycoord The y coordinate value.
+         * @return A new `MergeObj` object constructed from the given coordinates.
          */
         static constexpr auto construct(T1 &&xcoord, T2 &&ycoord) -> MergeObj {
             return MergeObj{xcoord + ycoord, xcoord - ycoord};
@@ -68,13 +74,15 @@ namespace recti {
         ///@{
 
         /**
-         * @brief Equal to
+         * @brief Compares two `MergeObj` objects for equality.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] rhs
-         * @return true
-         * @return false
+         * This operator overload compares two `MergeObj` objects for equality. It returns `true` if
+         * the underlying `Point<T1, T2>` objects are equal, and `false` otherwise.
+         *
+         * @tparam U1 The type of the x-coordinate of the right-hand side `MergeObj`.
+         * @tparam U2 The type of the y-coordinate of the right-hand side `MergeObj`.
+         * @param[in] rhs The `MergeObj` object to compare against.
+         * @return `true` if the two `MergeObj` objects are equal, `false` otherwise.
          */
         template <typename U1, typename U2>
         constexpr auto operator==(const MergeObj<U1, U2> &rhs) const -> bool {
@@ -84,11 +92,15 @@ namespace recti {
         /**
          * @brief Not equal to
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] rhs
-         * @return true
-         * @return false
+         * Compares two `MergeObj` objects for inequality.
+         *
+         * This operator overload compares two `MergeObj` objects for inequality. It returns `true`
+         * if the underlying `Point<T1, T2>` objects are not equal, and `false` otherwise.
+         *
+         * @tparam U1 The type of the x-coordinate of the right-hand side `MergeObj`.
+         * @tparam U2 The type of the y-coordinate of the right-hand side `MergeObj`.
+         * @param[in] rhs The `MergeObj` object to compare against.
+         * @return `true` if the two `MergeObj` objects are not equal, `false` otherwise.
          */
         template <typename U1, typename U2>
         constexpr auto operator!=(const MergeObj<U1, U2> &rhs) const -> bool {
@@ -96,11 +108,16 @@ namespace recti {
         }
 
         /**
-         * @brief Add a vector (translation)
+         * @brief Add a vector (translation) to this `MergeObj`.
          *
-         * @tparam U
-         * @param[in] rhs
-         * @return MergeObj&
+         * This operator overload adds a `Vector2<U>` to this `MergeObj` object, modifying the x and
+         * y coordinates accordingly. The x coordinate is updated by adding the sum of the x and y
+         * components of the `Vector2<U>`, while the y coordinate is updated by adding the
+         * difference of the x and y components.
+         *
+         * @tparam U The type of the components of the `Vector2<U>` to add.
+         * @param[in] rhs The `Vector2<U>` to add to this `MergeObj`.
+         * @return A reference to this `MergeObj` after the addition.
          */
         template <typename U> constexpr auto operator+=(const Vector2<U> &rhs) -> MergeObj & {
             this->get_xcoord() += rhs.x() + rhs.y();
@@ -109,11 +126,16 @@ namespace recti {
         }
 
         /**
-         * @brief Substract a vector (translation)
+         * @brief Subtract a vector (translation)
          *
-         * @tparam U
-         * @param[in] rhs
-         * @return MergeObj&
+         * This operator overload subtracts a `Vector2<U>` from this `MergeObj` object, modifying
+         * the x and y coordinates accordingly. The x coordinate is updated by subtracting the sum
+         * of the x and y components of the `Vector2<U>`, while the y coordinate is updated by
+         * subtracting the difference of the x and y components.
+         *
+         * @tparam U The type of the components of the `Vector2<U>` to subtract.
+         * @param[in] rhs The `Vector2<U>` to subtract from this `MergeObj`.
+         * @return A reference to this `MergeObj` after the subtraction.
          */
         template <typename U> constexpr auto operator-=(const Vector2<U> &rhs) -> MergeObj & {
             this->get_xcoord() -= rhs.x() + rhs.y();
@@ -122,12 +144,17 @@ namespace recti {
         }
 
         /**
-         * @brief Add
+         * @brief Add a vector (translation) to a `MergeObj`.
          *
-         * @tparam U
-         * @param[in] xcoord
-         * @param[in] ycoord
-         * @return Vector2<T>
+         * This operator overload adds a `Vector2<U>` to a `MergeObj` object, modifying the x and y
+         * coordinates accordingly. The x coordinate is updated by adding the sum of the x and y
+         * components of the `Vector2<U>`, while the y coordinate is updated by adding the
+         * difference of the x and y components.
+         *
+         * @tparam U The type of the components of the `Vector2<U>` to add.
+         * @param lhs The `MergeObj` to add the vector to.
+         * @param rhs The `Vector2<U>` to add to the `MergeObj`.
+         * @return A new `MergeObj` with the vector added.
          */
         template <typename U>  //
         friend constexpr auto operator+(MergeObj lhs, const Vector2<U> &rhs) -> MergeObj {
@@ -135,12 +162,17 @@ namespace recti {
         }
 
         /**
-         * @brief Substract
+         * @brief Subtract a vector (translation) from a `MergeObj`.
          *
-         * @tparam U
-         * @param[in] xcoord
-         * @param[in] ycoord
-         * @return Vector2<T>
+         * This operator overload subtracts a `Vector2<U>` from a `MergeObj` object, modifying the x
+         * and y coordinates accordingly. The x coordinate is updated by subtracting the sum of the
+         * x and y components of the `Vector2<U>`, while the y coordinate is updated by subtracting
+         * the difference of the x and y components.
+         *
+         * @tparam U The type of the components of the `Vector2<U>` to subtract.
+         * @param lhs The `MergeObj` to subtract the vector from.
+         * @param rhs The `Vector2<U>` to subtract from the `MergeObj`.
+         * @return A new `MergeObj` with the vector subtracted.
          */
         template <typename U>  //
         friend constexpr auto operator-(MergeObj lhs, const Vector2<U> &rhs) -> MergeObj {
@@ -148,13 +180,16 @@ namespace recti {
         }
 
         /**
-         * @brief overlap
+         * @brief Check if two `MergeObj` objects overlap.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] other
-         * @return true
-         * @return false
+         * This function checks if the x and y coordinates of the current `MergeObj` object overlap
+         * with the x and y coordinates of the provided `MergeObj` object `other`. The overlap is
+         * determined by checking if the ranges of the x and y coordinates intersect.
+         *
+         * @tparam U1 The type of the x and y coordinates of the current `MergeObj` object.
+         * @tparam U2 The type of the x and y coordinates of the `MergeObj` object `other`.
+         * @param other The `MergeObj` object to check for overlap.
+         * @return `true` if the two `MergeObj` objects overlap, `false` otherwise.
          */
         template <typename U1, typename U2>  //
         constexpr auto overlaps(const MergeObj<U1, U2> &other) const -> bool {
@@ -163,13 +198,19 @@ namespace recti {
         }
 
         /**
-         * @brief intersection
+         * @brief Compute the intersection of two `MergeObj` objects.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] other
-         * @return true
-         * @return false
+         * This function computes the intersection of the current `MergeObj` object with the
+         * provided `MergeObj` object `other`. The intersection is calculated by finding the
+         * intersection of the x and y coordinate ranges of the two `MergeObj` objects. The
+         * resulting `MergeObj` object represents the overlapping region between the two input
+         * `MergeObj` objects.
+         *
+         * @tparam U1 The type of the x and y coordinates of the current `MergeObj` object.
+         * @tparam U2 The type of the x and y coordinates of the `MergeObj` object `other`.
+         * @param[in] other The `MergeObj` object to intersect with the current `MergeObj` object.
+         * @return A new `MergeObj` object representing the intersection of the two input `MergeObj`
+         * objects.
          */
         template <typename U1, typename U2>  //
         constexpr auto intersect_with(const MergeObj<U1, U2> &other) const {
@@ -180,23 +221,38 @@ namespace recti {
         }
 
         /**
-         * @brief overlap
+         * @brief Compute the minimum distance between the x and y coordinates of two `MergeObj`
+         * objects.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] other
-         * @return true
-         * @return false
+         * This function calculates the maximum distance between the x and y coordinates of the
+         * current `MergeObj` object and the provided `MergeObj` object `other`. The distance is
+         * computed by taking the maximum of the distances between the x coordinates and the
+         * distances between the y coordinates of the two `MergeObj` objects.
+         *
+         * @tparam U1 The type of the x and y coordinates of the current `MergeObj` object.
+         * @tparam U2 The type of the x and y coordinates of the `MergeObj` object `other`.
+         * @param[in] other The `MergeObj` object to compute the maximum distance with.
+         * @return The maximum distance between the two `MergeObj` objects.
          */
         template <typename U1, typename U2>  //
         constexpr auto min_dist_with(const MergeObj<U1, U2> &other) const {
             return std::max(min_dist(this->xcoord(), other.xcoord()),
                             min_dist(this->ycoord(), other.ycoord()));
-            // auto min_dist_x = min_dist(this->xcoord(), other.xcoord());
-            // auto min_dist_y = min_dist(this->ycoord(), other.ycoord());
-            // return min_dist_x > min_dist_y ? min_dist_x : min_dist_y;
         }
 
+        /**
+         * @brief Enlarge a `MergeObj` object by a given scale factor.
+         *
+         * This function creates a new `MergeObj` object by enlarging the x and y coordinates of the
+         * input `MergeObj` object `lhs` by the given scale factor `alpha`. The resulting `MergeObj`
+         * object will have larger x and y coordinate ranges compared to the input `MergeObj`
+         * object.
+         *
+         * @tparam R The type of the scale factor `alpha`.
+         * @param[in] lhs The `MergeObj` object to be enlarged.
+         * @param[in] alpha The scale factor to enlarge the `MergeObj` object by.
+         * @return A new `MergeObj` object with enlarged x and y coordinates.
+         */
         template <typename R>  //
         friend constexpr auto enlarge(const MergeObj &lhs, const R &alpha) {
             auto xcoord = enlarge(lhs.xcoord(), alpha);
@@ -206,13 +262,20 @@ namespace recti {
         }
 
         /**
-         * @brief overlap
+         * @brief Compute the intersection of two `MergeObj` objects by enlarging them and finding
+         * the overlap.
          *
-         * @tparam U1
-         * @tparam U2
-         * @param[in] other
-         * @return true
-         * @return false
+         * This function first calculates the minimum distance between the x and y coordinates of
+         * the current `MergeObj` object and the provided `MergeObj` object `other`. It then uses
+         * this distance to enlarge both `MergeObj` objects, with the current object being enlarged
+         * by half the distance and the `other` object being enlarged by the remaining half.
+         * Finally, it computes the intersection of the two enlarged `MergeObj` objects and returns
+         * the result.
+         *
+         * @tparam U1 The type of the x and y coordinates of the current `MergeObj` object.
+         * @tparam U2 The type of the x and y coordinates of the `MergeObj` object `other`.
+         * @param[in] other The `MergeObj` object to compute the intersection with.
+         * @return The intersection of the two `MergeObj` objects.
          */
         template <typename U1, typename U2>  //
         constexpr auto merge_with(const MergeObj<U1, U2> &other) const {
@@ -224,17 +287,19 @@ namespace recti {
         }
 
         /**
-         * @brief
+         * @brief Overload the stream insertion operator `<<` to output a `MergeObj` object.
          *
-         * @tparam T1
-         * @tparam T2
-         * @tparam Stream
-         * @param[out] out
-         * @param[in] p
-         * @return Stream&
+         * This function overloads the stream insertion operator `<<` to output a `MergeObj` object
+         * in the format `"/{xcoord}, {ycoord}/"`, where `{xcoord}` and `{ycoord}` are the x and y
+         * coordinates of the `MergeObj` object, respectively.
+         *
+         * @tparam Stream The type of the output stream.
+         * @param[out] out The output stream to write the `MergeObj` object to.
+         * @param[in] merge_obj The `MergeObj` object to be written to the output stream.
+         * @return The modified output stream.
          */
-        template <class Stream>
-        friend auto operator<<(Stream &out, const MergeObj &merge_obj) -> Stream & {
+        template <class Stream> friend auto operator<<(Stream &out, const MergeObj &merge_obj)
+            -> Stream & {
             out << "/" << merge_obj.xcoord() << ", " << merge_obj.ycoord() << "/";
             return out;
         }
