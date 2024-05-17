@@ -25,9 +25,15 @@ namespace recti {
 
       public:
         /**
-         * @brief Construct a new RPolygon object
+         * @brief Constructs a new `RPolygon` object from a set of points.
          *
-         * @param[in] pointset
+         * This constructor takes a `gsl::span` of `Point<T>` objects representing the
+         * vertices of the rectilinear polygon. The first point in the span is used as
+         * the origin of the polygon, and the remaining points are used to construct the
+         * vectors that define the edges of the polygon.
+         *
+         * @param[in] pointset A span of `Point<T>` objects representing the vertices of
+         * the rectilinear polygon.
          */
         explicit constexpr RPolygon(gsl::span<const Point<T>> pointset)
             : _origin{pointset.front()} {
@@ -37,10 +43,13 @@ namespace recti {
         }
 
         /**
-         * @brief
+         * @brief Adds a vector to the origin of the rectilinear polygon.
          *
-         * @param[in] rhs
-         * @return constexpr Point&
+         * This method adds the given vector to the origin point of the rectilinear polygon,
+         * effectively translating the entire polygon by the specified vector.
+         *
+         * @param[in] vector The vector to add to the origin.
+         * @return A reference to the modified RPolygon object.
          */
         constexpr auto operator+=(const Vector2<T> &vector) -> RPolygon & {
             this->_origin += vector;
@@ -48,9 +57,12 @@ namespace recti {
         }
 
         /**
-         * @brief
+         * @brief Calculates the signed area of the rectilinear polygon.
          *
-         * @return T
+         * This method calculates the signed area of the rectilinear polygon represented by this
+         * `RPolygon` object.
+         *
+         * @return The signed area of the rectilinear polygon.
          */
         constexpr auto signed_area() const -> T {
             assert(this->_vecs.size() >= 1);
@@ -61,22 +73,18 @@ namespace recti {
                 res = std::move(res) + itr1->x() * (itr1->y() - itr0->y());
             }
             return res;
-            // return std::accumulate(++first, this->_vecs.end(), std::move(res),
-            //                        [&y0](auto init, const auto &elem) {
-            //                          auto y1 = y0;
-            //                          y0 = elem.y();
-            //                          return std::move(init) +
-            //                                 elem.x() * (y0 - std::move(y1));
-            //                        });
         }
 
         /**
-         * @brief
+         * @brief Checks if the given point is contained within the rectilinear polygon.
          *
-         * @tparam U
-         * @param[in] rhs
-         * @return true
-         * @return false
+         * This method checks if the provided point is contained within the rectilinear polygon
+         * represented by this `RPolygon` object.
+         *
+         * @tparam U The type of the point coordinates.
+         * @param[in] rhs The point to check for containment.
+         * @return `true` if the point is contained within the rectilinear polygon, `false`
+         * otherwise.
          */
         template <typename U> auto contains(const Point<U> &rhs) const -> bool;
 
@@ -96,13 +104,19 @@ namespace recti {
     };
 
     /**
-     * @brief Create a xmono RPolygon object
+     * @brief Create a x-monotone rectilinear polygon (RPolygon) object.
      *
-     * @tparam FwIter
-     * @param[in] first
-     * @param[in] last
-     * @return true
-     * @return false
+     * This function takes a range of points represented by iterators `first` and `last`, and a key
+     * function `dir` that extracts the x and y coordinates of each point. It then creates an
+     * monotone RPolygon object from the given points.
+     *
+     * @tparam FwIter The iterator type for the range of points.
+     * @tparam KeyFn The type of the key function that extracts the x and y coordinates of each
+     * point.
+     * @param[in] first The beginning of the range of points.
+     * @param[in] last The end of the range of points.
+     * @param[in] dir The key function that extracts the x and y coordinates of each point.
+     * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
     template <typename FwIter, typename KeyFn>
     inline auto create_mono_rpolygon(FwIter &&first, FwIter &&last, KeyFn &&dir) -> bool {
@@ -131,13 +145,15 @@ namespace recti {
     }
 
     /**
-     * @brief Create a xmono RPolygon object
+     * @brief Create a x-monotone rectilinear polygon (RPolygon) object.
      *
-     * @tparam FwIter
-     * @param[in] first
-     * @param[in] last
-     * @return true
-     * @return false
+     * This function takes a range of points represented by iterators `first` and `last`, and
+     * creates an x-monotone RPolygon object from the given points.
+     *
+     * @tparam FwIter The iterator type for the range of points.
+     * @param[in] first The beginning of the range of points.
+     * @param[in] last The end of the range of points.
+     * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
     template <typename FwIter> inline auto create_xmono_rpolygon(FwIter &&first, FwIter &&last)
         -> bool {
@@ -146,13 +162,15 @@ namespace recti {
     }
 
     /**
-     * @brief Create a ymono RPolygon object
+     * @brief Create a y-monotone rectilinear polygon (RPolygon) object.
      *
-     * @tparam FwIter
-     * @param[in] first
-     * @param[in] last
-     * @return true
-     * @return false
+     * This function takes a range of points represented by iterators `first` and `last`, and
+     * creates an y-monotone RPolygon object from the given points.
+     *
+     * @tparam FwIter The iterator type for the range of points.
+     * @param[in] first The beginning of the range of points.
+     * @param[in] last The end of the range of points.
+     * @return `true` if the resulting RPolygon is clockwise, `false` otherwise.
      */
     template <typename FwIter> inline auto create_ymono_rpolygon(FwIter &&first, FwIter &&last)
         -> bool {
@@ -161,12 +179,15 @@ namespace recti {
     }
 
     /**
-     * @brief
+     * @brief Create a test rectilinear polygon (RPolygon) object.
      *
-     * @tparam T
-     * @tparam FwIter
-     * @param[in] first
-     * @param[in] last
+     * This function takes a range of points represented by iterators `first` and `last`, and
+     * creates a test RPolygon object from the given points. The resulting RPolygon is either
+     * clockwise or anti-clockwise depending on the relative positions of the points.
+     *
+     * @tparam FwIter The iterator type for the range of points.
+     * @param[in] first The beginning of the range of points.
+     * @param[in] last The end of the range of points.
      */
     template <typename FwIter> inline void create_test_rpolygon(FwIter &&first, FwIter &&last) {
         assert(first != last);
@@ -220,23 +241,20 @@ namespace recti {
     }
 
     /**
-     * @brief determine if a Point is within a Polygon
+     * @brief Determine if a point is within a rectilinear polygon.
      *
-     * The code below is from Wm. Randolph Franklin <wrf@ecse.rpi.edu>
-     * (see URL below) with some minor modifications for rectilinear. It returns
-     * true for strictly interior points, false for strictly exterior, and ub
-     * for points on the boundary.  The boundary behavior is complex but
-     * determined; in particular, for a partition of a region into polygons,
-     * each Point is "in" exactly one Polygon.
-     * (See p.243 of [O'Rourke (C)] for a discussion of boundary behavior.)
+     * This function implements the Wm. Randolph Franklin algorithm to determine if a
+     * given point is strictly inside, strictly outside, or on the boundary of a
+     * rectilinear polygon defined by the provided set of points.
      *
      * See http://www.faqs.org/faqs/graphics/algorithms-faq/ Subject 2.03
      *
-     * @tparam T
-     * @param[in] pointset
-     * @param[in] ptq
-     * @return true
-     * @return false
+     * @tparam T The numeric type of the point coordinates.
+     * @param pointset The set of points defining the rectilinear polygon.
+     * @param ptq The point to test for inclusion in the polygon.
+     * @return true if the point is strictly inside the polygon, false if the point
+     * is strictly outside the polygon, and an unspecified boolean value if the
+     * point is on the boundary of the polygon.
      */
     template <typename T>
     inline auto point_in_rpolygon(gsl::span<const Point<T>> pointset, const Point<T> &ptq) -> bool {
@@ -255,12 +273,14 @@ namespace recti {
     }
 
     /**
-     * @brief Polygon is clockwise
+     * @brief Determine if a rectilinear polygon is oriented clockwise.
      *
-     * @tparam T
-     * @param[in] pointset
-     * @return true
-     * @return false
+     * This function takes a span of points defining a rectilinear polygon and
+     * determines if the polygon is oriented in a clockwise direction.
+     *
+     * @tparam T The numeric type of the point coordinates.
+     * @param pointset The set of points defining the rectilinear polygon.
+     * @return true if the polygon is oriented clockwise, false otherwise.
      */
     template <typename T> inline auto rpolygon_is_clockwise(gsl::span<const Point<T>> pointset)
         -> bool {
@@ -276,5 +296,4 @@ namespace recti {
         auto it2 = std::next(it1) != pointset.end() ? std::next(it1) : pointset.begin();
         return it2->ycoord() > it1->ycoord();
     }
-
 }  // namespace recti

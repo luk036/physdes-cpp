@@ -25,9 +25,14 @@ namespace recti {
 
       public:
         /**
-         * @brief Construct a new Polygon object
+         * @brief Constructs a new Polygon object from a set of points.
          *
-         * @param[in] pointset
+         * This constructor takes a `gsl::span` of `Point<T>` objects representing the
+         * vertices of the polygon. The first point in the span is used as the origin
+         * of the polygon, and the remaining points are used to construct the edges of
+         * the polygon as vectors relative to the origin.
+         *
+         * @param[in] pointset A span of points representing the vertices of the polygon.
          */
         explicit constexpr Polygon(gsl::span<const Point<T>> pointset) : _origin{pointset.front()} {
             auto itr = pointset.begin();
@@ -37,10 +42,11 @@ namespace recti {
         }
 
         /**
-         * @brief
+         * @brief Adds a vector to the origin of the polygon, effectively translating the
+         * polygon.
          *
-         * @param[in] rhs
-         * @return constexpr Point&
+         * @param[in] rhs The vector to add to the origin.
+         * @return A reference to the modified polygon.
          */
         constexpr auto operator+=(const Vector2<T> &rhs) -> Polygon & {
             this->_origin += rhs;
@@ -48,9 +54,13 @@ namespace recti {
         }
 
         /**
-         * @brief
+         * @brief Calculates the signed area of the polygon multiplied by 2.
          *
-         * @return T
+         * This function calculates the signed area of the polygon by summing the
+         * cross products of adjacent edges. The result is multiplied by 2 to
+         * avoid the need for floating-point arithmetic.
+         *
+         * @return The signed area of the polygon multiplied by 2.
          */
         constexpr auto signed_area_x2() const -> T {
             auto itr2 = this->_vecs.begin();
@@ -81,13 +91,19 @@ namespace recti {
     };
 
     /**
-     * @brief
+     * @brief Writes the vertices of a polygon to an output stream in a format suitable for
+     * rendering.
      *
-     * @tparam Stream
-     * @tparam T
-     * @param[out] out
-     * @param[in] r
-     * @return Stream&
+     * This function writes the vertices of the given polygon to the provided output stream in a
+     * format that can be used to render the polygon, such as in a vector graphics format like SVG
+     * or LaTeX. Each vertex is written on a new line, prefixed with "\\draw " to indicate that it
+     * should be rendered as a drawing command.
+     *
+     * @tparam Stream The type of the output stream to write to.
+     * @tparam T The numeric type used to represent the coordinates of the polygon vertices.
+     * @param out The output stream to write the polygon vertices to.
+     * @param poly The polygon to write to the output stream.
+     * @return The output stream, for method chaining.
      */
     template <class Stream, typename T> auto operator<<(Stream &out, const Polygon<T> &poly)
         -> Stream & {
@@ -98,13 +114,20 @@ namespace recti {
     }
 
     /**
-     * @brief Create a mono Polygon object
+     * @brief Create a monotone polygon from a range of points.
      *
-     * @tparam FwIter
-     * @tparam Compare
-     * @param[in] first
-     * @param[in] last
-     * @param[in] dir
+     * This function takes a range of points represented by the iterators `first` and `last`, and a
+     * comparison function `dir` that defines the order of the points. It then creates a monotone
+     * polygon from the points by partitioning them into two halves based on their position relative
+     * to the line connecting the minimum and maximum points in the range. The two halves are then
+     * sorted in ascending order using the provided comparison function, and the second half is
+     * reversed.
+     *
+     * @tparam FwIter The type of the forward iterator over the points.
+     * @tparam Compare The type of the comparison function for the points.
+     * @param first The beginning of the range of points.
+     * @param last The end of the range of points.
+     * @param dir The comparison function for the points.
      */
     template <typename FwIter, typename Compare>
     inline void create_mono_polygon(FwIter &&first, FwIter &&last, Compare &&dir) {
@@ -125,9 +148,13 @@ namespace recti {
     /**
      * @brief Create a xmono Polygon object
      *
-     * @tparam FwIter
-     * @param[in] first
-     * @param[in] last
+     * This function creates a monotone polygon from a range of points represented by the iterators
+     * `first` and `last`. It uses a comparison function that compares the points based on their x
+     * and y coordinates.
+     *
+     * @tparam FwIter The type of the forward iterator over the points.
+     * @param[in] first The beginning of the range of points.
+     * @param[in] last The end of the range of points.
      */
     template <typename FwIter> inline auto create_xmono_polygon(FwIter &&first, FwIter &&last)
         -> void {
@@ -140,9 +167,13 @@ namespace recti {
     /**
      * @brief Create a ymono Polygon object
      *
-     * @tparam FwIter
-     * @param[in] first
-     * @param[in] last
+     * This function creates a monotone polygon from a range of points represented by the iterators
+     * `first` and `last`. It uses a comparison function that compares the points based on their y
+     * and x coordinates.
+     *
+     * @tparam FwIter The type of the forward iterator over the points.
+     * @param[in] first The beginning of the range of points.
+     * @param[in] last The end of the range of points.
      */
     template <typename FwIter> inline auto create_ymono_polygon(FwIter &&first, FwIter &&last)
         -> void {
@@ -153,7 +184,11 @@ namespace recti {
     }
 
     /**
-     * @brief determine if a Point is within a Polygon
+     * @brief Determine if a point is within a polygon
+     *
+     * This function determines whether a given point is strictly inside, strictly outside, or on
+     * the boundary of a polygon represented by a range of points. It uses the Winding Number
+     * algorithm to make this determination.
      *
      * The code below is from Wm. Randolph Franklin <wrf@ecse.rpi.edu>
      * (see URL below) with some minor modifications for integer. It returns
@@ -165,11 +200,11 @@ namespace recti {
      *
      * See http://www.faqs.org/faqs/graphics/algorithms-faq/ Subject 2.03
      *
-     * @tparam T
-     * @param[in] S
-     * @param[in] q
-     * @return true
-     * @return false
+     * @tparam T The type of the coordinates of the points in the polygon
+     * @param pointset The range of points representing the polygon
+     * @param ptq The point to test
+     * @return true if the point is strictly inside the polygon, false if the point is strictly
+     * outside the polygon
      */
     template <typename T>
     inline auto point_in_polygon(gsl::span<const Point<T>> pointset, const Point<T> &ptq) -> bool {
@@ -195,12 +230,11 @@ namespace recti {
     }
 
     /**
-     * @brief Polygon is clockwise
+     * @brief Determines if a polygon represented by a range of points is oriented clockwise.
      *
-     * @tparam T
-     * @param[in] S
-     * @return true
-     * @return false
+     * @tparam T The type of the coordinates of the points in the polygon.
+     * @param pointset The range of points representing the polygon.
+     * @return true if the polygon is oriented clockwise, false otherwise.
      */
     template <typename T> inline auto polygon_is_clockwise(gsl::span<const Point<T>> pointset)
         -> bool {
@@ -209,5 +243,4 @@ namespace recti {
         auto it2 = std::next(it1) != pointset.end() ? std::next(it1) : pointset.begin();
         return (*it1 - *it0).cross(*it2 - *it1) < 0;
     }
-
 }  // namespace recti
