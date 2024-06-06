@@ -105,8 +105,8 @@ namespace recti {
      * @param poly The polygon to write to the output stream.
      * @return The output stream, for method chaining.
      */
-    template <class Stream, typename T> auto operator<<(Stream &out, const Polygon<T> &poly)
-        -> Stream & {
+    template <class Stream, typename T>
+    auto operator<<(Stream &out, const Polygon<T> &poly) -> Stream & {
         for (auto &&vtx : poly) {
             out << "  \\draw " << vtx << ";\n";
         }
@@ -156,8 +156,8 @@ namespace recti {
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      */
-    template <typename FwIter> inline auto create_xmono_polygon(FwIter &&first, FwIter &&last)
-        -> void {
+    template <typename FwIter>
+    inline auto create_xmono_polygon(FwIter &&first, FwIter &&last) -> void {
         return create_mono_polygon(first, last, [](const auto &lhs, const auto &rhs) -> bool {
             return std::make_pair(lhs.xcoord(), lhs.ycoord())
                    < std::make_pair(rhs.xcoord(), rhs.ycoord());
@@ -175,8 +175,8 @@ namespace recti {
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      */
-    template <typename FwIter> inline auto create_ymono_polygon(FwIter &&first, FwIter &&last)
-        -> void {
+    template <typename FwIter>
+    inline auto create_ymono_polygon(FwIter &&first, FwIter &&last) -> void {
         return create_mono_polygon(first, last, [](const auto &lhs, const auto &rhs) -> bool {
             return std::make_pair(lhs.ycoord(), lhs.xcoord())
                    < std::make_pair(rhs.ycoord(), rhs.xcoord());
@@ -236,8 +236,8 @@ namespace recti {
      * @param pointset The range of points representing the polygon.
      * @return true if the polygon is oriented clockwise, false otherwise.
      */
-    template <typename T> inline auto polygon_is_clockwise(gsl::span<const Point<T>> pointset)
-        -> bool {
+    template <typename T>
+    inline auto polygon_is_clockwise(gsl::span<const Point<T>> pointset) -> bool {
         auto it1 = std::min_element(pointset.begin(), pointset.end());
         auto it0 = it1 != pointset.begin() ? std::prev(it1) : std::prev(pointset.end());
         auto it2 = std::next(it1) != pointset.end() ? std::next(it1) : pointset.begin();
