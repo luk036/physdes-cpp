@@ -298,8 +298,8 @@ namespace recti {
          * @param[in] merge_obj The `MergeObj` object to be written to the output stream.
          * @return The modified output stream.
          */
-        template <class Stream> friend auto operator<<(Stream &out, const MergeObj &merge_obj)
-            -> Stream & {
+        template <class Stream>
+        friend auto operator<<(Stream &out, const MergeObj &merge_obj) -> Stream & {
             out << "/" << merge_obj.xcoord() << ", " << merge_obj.ycoord() << "/";
             return out;
         }

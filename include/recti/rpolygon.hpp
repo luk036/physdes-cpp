@@ -155,8 +155,8 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
-    template <typename FwIter> inline auto create_xmono_rpolygon(FwIter &&first, FwIter &&last)
-        -> bool {
+    template <typename FwIter>
+    inline auto create_xmono_rpolygon(FwIter &&first, FwIter &&last) -> bool {
         return create_mono_rpolygon(
             first, last, [](const auto &pt) { return std::make_pair(pt.xcoord(), pt.ycoord()); });
     }
@@ -172,8 +172,8 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return `true` if the resulting RPolygon is clockwise, `false` otherwise.
      */
-    template <typename FwIter> inline auto create_ymono_rpolygon(FwIter &&first, FwIter &&last)
-        -> bool {
+    template <typename FwIter>
+    inline auto create_ymono_rpolygon(FwIter &&first, FwIter &&last) -> bool {
         return create_mono_rpolygon(
             first, last, [](const auto &pt) { return std::make_pair(pt.ycoord(), pt.xcoord()); });
     }
@@ -282,8 +282,8 @@ namespace recti {
      * @param pointset The set of points defining the rectilinear polygon.
      * @return true if the polygon is oriented clockwise, false otherwise.
      */
-    template <typename T> inline auto rpolygon_is_clockwise(gsl::span<const Point<T>> pointset)
-        -> bool {
+    template <typename T>
+    inline auto rpolygon_is_clockwise(gsl::span<const Point<T>> pointset) -> bool {
         auto it1 = std::min_element(pointset.begin(), pointset.end());
         auto it0 = it1 != pointset.begin() ? std::prev(it1) : pointset.end() - 1;
         if (it1->ycoord() < it0->ycoord()) {

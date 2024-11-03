@@ -240,8 +240,8 @@ namespace recti {
          * @param[in] alpha The scalar value to add to the `Interval` object.
          * @return A new `Interval` object with the scalar value added to the bounds.
          */
-        template <typename U> friend constexpr auto operator+(Interval rhs, const U &alpha)
-            -> Interval {
+        template <typename U>
+        friend constexpr auto operator+(Interval rhs, const U &alpha) -> Interval {
             return rhs += alpha;
         }
 
@@ -288,8 +288,8 @@ namespace recti {
          *
          * @return A new `Interval` object with the scalar value subtracted from the bounds.
          */
-        template <typename U> friend constexpr auto operator-(const Interval &rhs, const U &alpha)
-            -> Interval {
+        template <typename U>
+        friend constexpr auto operator-(const Interval &rhs, const U &alpha) -> Interval {
             auto lower = rhs.lb() - alpha;
             auto upper = rhs.ub() - alpha;
             return Interval<decltype(lower)>{std::move(lower), std::move(upper)};
@@ -461,8 +461,8 @@ namespace recti {
          * @param intvl The Interval object to be printed.
          * @return A reference to the output stream (`out`) for chaining stream operations.
          */
-        template <class Stream> friend auto operator<<(Stream &out, const Interval &intvl)
-            -> Stream & {
+        template <class Stream>
+        friend auto operator<<(Stream &out, const Interval &intvl) -> Stream & {
             out << "[" << intvl.lb() << ", " << intvl.ub() << "]";
             return out;
         }
