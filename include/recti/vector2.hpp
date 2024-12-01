@@ -301,8 +301,8 @@ namespace recti {
          * @param[in] alpha The scalar to multiply the vector components by.
          * @return A new vector that is the result of multiplying the input vector by the scalar.
          */
-        template <typename R>
-        friend constexpr auto operator*(Vector2 rhs, const R &alpha) -> Vector2 {
+        template <typename R> friend constexpr auto operator*(Vector2 rhs, const R &alpha)
+            -> Vector2 {
             return rhs *= alpha;
         }
 
@@ -314,8 +314,8 @@ namespace recti {
          * @param[in] lhs The vector to multiply.
          * @return A new vector that is the result of multiplying the input vector by the scalar.
          */
-        template <typename R>
-        friend constexpr auto operator*(const R &alpha, Vector2 lhs) -> Vector2 {
+        template <typename R> friend constexpr auto operator*(const R &alpha, Vector2 lhs)
+            -> Vector2 {
             return lhs *= alpha;
         }
 
@@ -327,8 +327,8 @@ namespace recti {
          * @param[in] alpha The scalar to divide the vector components by.
          * @return A new vector that is the result of dividing the input vector by the scalar.
          */
-        template <typename R>
-        friend constexpr auto operator/(Vector2 rhs, const R &alpha) -> Vector2 {
+        template <typename R> friend constexpr auto operator/(Vector2 rhs, const R &alpha)
+            -> Vector2 {
             return rhs /= alpha;
         }
 
@@ -342,8 +342,8 @@ namespace recti {
          * @param[in] vec2 The Vector2 object to insert into the stream.
          * @return Stream& The modified output stream.
          */
-        template <class Stream>
-        friend auto operator<<(Stream &out, const Vector2 &vec2) -> Stream & {
+        template <class Stream> friend auto operator<<(Stream &out, const Vector2 &vec2)
+            -> Stream & {
             out << "{" << vec2.x() << ", " << vec2.y() << "}";
             return out;
         }
