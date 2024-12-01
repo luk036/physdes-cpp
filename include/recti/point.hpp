@@ -35,8 +35,8 @@ namespace recti {
          */
         template <typename U1, typename U2> friend class Point;
 
-        T1 _xcoord;  //!< xcoord coordinate
-        T2 _ycoord;  //!< ycoord coordinate
+        T1 _xcoord;  //!< x coordinate
+        T2 _ycoord;  //!< y coordinate
 
       public:
         /**
