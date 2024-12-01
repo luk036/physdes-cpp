@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>recti::HSegment struct | Recti</title>
+  <title>recti::VSegment struct | Recti</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -51,9 +51,9 @@
         <h1>
           <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="recti_8hpp.html">&lt;recti/recti.hpp&gt;</a></div>
           <div class="m-doc-template">template&lt;typename T&gt;</div>
-          <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>HSegment <span class="m-thin">struct</span>
+          <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>VSegment <span class="m-thin">struct</span>
         </h1>
-        <p>Horizontal Line Segment.</p>
+        <p>Vertical Line Segment.</p>
         <table class="m-table m-fullwidth m-flat">
           <thead>
             <tr><th colspan="2">Template parameters</th></tr>
@@ -77,51 +77,51 @@
             </li>
           </ul>
         </nav>
-<p>The <code>struct <a href="structrecti_1_1_h_segment.html" class="m-doc">HSegment</a></code> is defining a horizontal line segment in a rectilinear coordinate system. It is inheriting from the <code><a href="classrecti_1_1_point.html" class="m-doc">Point</a>&lt;<a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&lt;T&gt;, T&gt;</code> class, which means that it will have all the member variables and member functions of <code><a href="classrecti_1_1_point.html" class="m-doc">Point</a>&lt;<a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&lt;T&gt;, T&gt;</code>. The <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&lt;T&gt;</code> template parameter is used to define the type of the x-coordinate of the line segment, and the <code>T</code> template parameter is used to define the type of the y-coordinate of the line segment.</p>
+<p>The <code>struct <a href="structrecti_1_1VSegment.html" class="m-doc">VSegment</a></code> is defining a vertical line segment in a rectilinear coordinate system. It is inheriting from the <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T, <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&gt;</code> class, which means that it will have all the member variables and member functions of <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T, <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&gt;</code>. The <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;</code> template parameter is used to define the type of the y-coordinate of the line segment, and the <code>T</code> template parameter is used to define the type of the x-coordinate of the line segment.</p>
         <section id="base-classes">
           <h2><a href="#base-classes">Base classes</a></h2>
           <dl class="m-doc">
             <dt>
               <div class="m-doc-template">template&lt;typename T1 = int, typename T2 = T1&gt;</div>
-              class <a href="classrecti_1_1_point.html" class="m-doc">Point&lt;Interval&lt;T&gt;, T&gt;</a>
+              class <a href="classrecti_1_1Point.html" class="m-doc">Point&lt;T, Interval&lt;T&gt;&gt;</a>
             </dt>
-            <dd><a href="classrecti_1_1_point.html" class="m-doc">Point</a>.</dd>
+            <dd><a href="classrecti_1_1Point.html" class="m-doc">Point</a>.</dd>
           </dl>
         </section>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a15a875d76771ecf1f1a7c6abafc7fca6" class="m-doc">HSegment</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp;&amp; xcoord,
-              T&amp;&amp; ycoord) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#aa7c5e23047537280ce9cff865d0634f2" class="m-doc">VSegment</a>(</span><span class="m-doc-wrap">T&amp;&amp; xcoord,
+              <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp;&amp; ycoord) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
-            <dd>Construct a new <a href="structrecti_1_1_h_segment.html" class="m-doc">HSegment</a> object.</dd>
+            <dd>Construct a new <a href="structrecti_1_1VSegment.html" class="m-doc">VSegment</a> object.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a3ed4876c13fd8889000b5811c0be27df" class="m-doc">HSegment</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp; xcoord,
-              const T&amp; ycoord) <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#ae8b0926006d7b2cdc633c17cc74e47bf" class="m-doc">VSegment</a>(</span><span class="m-doc-wrap">const T&amp; xcoord,
+              const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp; ycoord) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Construct a new <a href="structrecti_1_1_h_segment.html" class="m-doc">HSegment</a> object.</dd>
-            <dt id="aa1ef1180a40e3ac21d29c9afd1fe44ee">
-              <span class="m-doc-wrap-bumper"><a href="#aa1ef1180a40e3ac21d29c9afd1fe44ee" class="m-doc-self">HSegment</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1_point.html" class="m-doc">Point</a>&lt;<a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&lt;T&gt;, T&gt;&amp;&amp; base) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
+            <dd>Construct a new <a href="structrecti_1_1VSegment.html" class="m-doc">VSegment</a> object.</dd>
+            <dt id="aa17805d1deaca3131f9930e4afb235ba">
+              <span class="m-doc-wrap-bumper"><a href="#aa17805d1deaca3131f9930e4afb235ba" class="m-doc-self">VSegment</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T, <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&gt;&amp;&amp; base) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
-            <dd>Construct a new <a href="structrecti_1_1_h_segment.html" class="m-doc">HSegment</a> object from the base object (implicitly)</dd>
-            <dt id="ae14e87cf1b0f432786b05923019e206b">
-              <span class="m-doc-wrap-bumper"><a href="#ae14e87cf1b0f432786b05923019e206b" class="m-doc-self">HSegment</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1_point.html" class="m-doc">Point</a>&lt;<a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&lt;T&gt;, T&gt;&amp; base) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dd>Construct a new <a href="structrecti_1_1VSegment.html" class="m-doc">VSegment</a> object from the base object (implicitly)</dd>
+            <dt id="ad4a7fd7d431f34834ec83e6d86b45428">
+              <span class="m-doc-wrap-bumper"><a href="#ad4a7fd7d431f34834ec83e6d86b45428" class="m-doc-self">VSegment</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T, <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&gt;&amp; base) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Construct a new <a href="structrecti_1_1_h_segment.html" class="m-doc">HSegment</a> object from the base object (implicitly)</dd>
+            <dd>Construct a new <a href="structrecti_1_1VSegment.html" class="m-doc">VSegment</a> object from the base object (implicitly)</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a15a875d76771ecf1f1a7c6abafc7fca6"><div>
+          <section class="m-doc-details" id="aa7c5e23047537280ce9cff865d0634f2"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> recti::<wbr />HSegment&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a15a875d76771ecf1f1a7c6abafc7fca6" class="m-doc-self">HSegment</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp;&amp; xcoord,
-              T&amp;&amp; ycoord) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />VSegment&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa7c5e23047537280ce9cff865d0634f2" class="m-doc-self">VSegment</a>(</span><span class="m-doc-wrap">T&amp;&amp; xcoord,
+              <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp;&amp; ycoord) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
             </h3>
-            <p>Construct a new <a href="structrecti_1_1_h_segment.html" class="m-doc">HSegment</a> object.</p>
+            <p>Construct a new <a href="structrecti_1_1VSegment.html" class="m-doc">VSegment</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -137,17 +137,16 @@
                 </tr>
               </tbody>
             </table>
-<p>This is a constructor for the <code><a href="structrecti_1_1_h_segment.html" class="m-doc">HSegment</a></code> struct. It takes two parameters, <code>xcoord</code> and <code>ycoord</code>, which are both rvalue references. The <code>noexcept</code> specifier indicates that this constructor will not throw any exceptions.</p>
           </div></section>
-          <section class="m-doc-details" id="a3ed4876c13fd8889000b5811c0be27df"><div>
+          <section class="m-doc-details" id="ae8b0926006d7b2cdc633c17cc74e47bf"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> recti::<wbr />HSegment&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3ed4876c13fd8889000b5811c0be27df" class="m-doc-self">HSegment</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp; xcoord,
-              const T&amp; ycoord) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />VSegment&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae8b0926006d7b2cdc633c17cc74e47bf" class="m-doc-self">VSegment</a>(</span><span class="m-doc-wrap">const T&amp; xcoord,
+              const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp; ycoord) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Construct a new <a href="structrecti_1_1_h_segment.html" class="m-doc">HSegment</a> object.</p>
+            <p>Construct a new <a href="structrecti_1_1VSegment.html" class="m-doc">VSegment</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -209,7 +208,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.10.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

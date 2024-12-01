@@ -53,7 +53,7 @@
           <div class="m-doc-template">template&lt;typename T = int&gt;</div>
           <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>Interval <span class="m-thin">class</span>
         </h1>
-        <p><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>.</p>
+        <p><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>.</p>
         <table class="m-table m-fullwidth m-flat">
           <thead>
             <tr><th colspan="2">Template parameters</th></tr>
@@ -98,16 +98,16 @@
               <span class="m-doc-wrap-bumper"><a href="#a7e838f1ffe1a3c72c1469947a72ce0e4" class="m-doc">Interval</a>(</span><span class="m-doc-wrap">T&amp;&amp; lower,
               T&amp;&amp; upper) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
-            <dd>Construct a new <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object.</dd>
+            <dd>Construct a new <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object.</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="#a71e8c8c65e345f9abc2843eff6eaa37d" class="m-doc">Interval</a>(</span><span class="m-doc-wrap">const T&amp; lower,
               const T&amp; upper) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Construct a new <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object.</dd>
+            <dd>Construct a new <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object.</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="#a56136c5250fa75455f5871cc604a2648" class="m-doc">Interval</a>(</span><span class="m-doc-wrap">const T&amp; alpha) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Construct a new <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object.</dd>
+            <dd>Construct a new <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -126,34 +126,38 @@
             </dt>
             <dd>upper bound</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a84baddb103449ac82709dd2210ca4083" class="m-doc">len</a>(</span><span class="m-doc-wrap">) const -&gt; T -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#abd9454d1849e9ddd61639f56fdf23dd4" class="m-doc">length</a>(</span><span class="m-doc-wrap">) const -&gt; T -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>length</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af160ecd97b42437d322fc06cd232cfba" class="m-doc">is_invalid</a>(</span><span class="m-doc-wrap">) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Checks if the interval is invalid.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#af666ea201ea9e01836e3fd4ce772008c" class="m-doc">overlaps</a>(</span><span class="m-doc-wrap">const U&amp; other) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Overlaps.</dd>
+            <dd>Checks if the current interval overlaps with another interval.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#a1474ae81cd0f9a2e5b5d98b3d77df813" class="m-doc">contains</a>(</span><span class="m-doc-wrap">const U&amp; other) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>contains</dd>
+            <dd>Checks if the current interval contains another interval.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a43c5b610eb1268aaed605348e2cc18cc" class="m-doc">intersection_with</a>(</span><span class="m-doc-wrap">const U&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a87965b3869659e7a0688394e85632676" class="m-doc">intersect_with</a>(</span><span class="m-doc-wrap">const U&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>intersection with</dd>
+            <dd>Computes the intersection of the current interval with another interval or scalar value.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#a6a7677970746e92a4b5b545d7ddb3327" class="m-doc">min_dist_with</a>(</span><span class="m-doc-wrap">const U&amp; other) const -&gt; T -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>minimum distance with</dd>
+            <dd>Computes the minimum distance between the current interval and the <code>other</code> interval or scalar value.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#a9c337bd803c9ac88235e0c3487451ead" class="m-doc">min_dist_change_with</a>(</span><span class="m-doc-wrap">U&amp; other) const -&gt; T -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>minimum distance with</dd>
+            <dd>Computes the minimum distance between the current interval and the <code>other</code> interval or scalar value, and updates the interval bounds accordingly.</dd>
           </dl>
         </section>
         <section id="comparison-operators">
@@ -162,24 +166,24 @@
           <dl class="m-doc">
             <dt>
               <div class="m-doc-template">template&lt;typename U&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a576673ea2138566d13fd1f81de8c7101" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a576673ea2138566d13fd1f81de8c7101" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Equal to.</dd>
+            <dd>Equality comparison operator for <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> objects.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ac2c1de2bfa05f529a43e74867dc7e320" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac2c1de2bfa05f529a43e74867dc7e320" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Not equal to.</dd>
+            <dd>Not equal to comparison operator for <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> objects.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#ac7d3d99a4bc6664f38af0b6b400946e7" class="m-doc">operator&lt;=&gt;</a>(</span><span class="m-doc-wrap">const U&amp; rhs) const -&gt; std::weak_ordering -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Spaceship operator.</dd>
+            <dd>Spaceship comparison operator for <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> objects.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a6ecc7d8e7426a61e2e1980426f9ed983" class="m-doc">operator&lt;=&gt;</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
-              const <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&amp; rhs) -&gt; std::weak_ordering -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a06ced22e5749b82fbedc0775ef80e21b" class="m-doc">operator&lt;=&gt;</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&amp; rhs) -&gt; std::weak_ordering -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Spaceship operator.</dd>
+            <dd>Spaceship comparison operator for comparing a value with an <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</dd>
           </dl>
         </section>
         <section id="arithmetic-operators">
@@ -189,38 +193,38 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a4bb04c4a01e38a354ce752897bac7f56" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">) const -&gt; Interval -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Negation.</dd>
+            <dd>Negation operator for an <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#ab2f894682ff2b0f2a2b4599b71918f6e" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const U&amp; alpha) -&gt; Interval &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Add.</dd>
+            <dd>Add a value to the lower and upper bounds of the interval.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#a010072fe856db165ba5a86bbd6249ce8" class="m-doc">operator-=</a>(</span><span class="m-doc-wrap">const U&amp; alpha) -&gt; Interval &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Subtract.</dd>
+            <dd>Subtract a scalar value from an <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a0614490fa097463eeccc340c0cc9cc35" class="m-doc">enlarge_with</a>(</span><span class="m-doc-wrap">const T&amp; alpha) -&gt; Interval &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Enlarge with.</dd>
+            <dd>Enlarge the interval by subtracting <code>alpha</code> from the lower bound and adding <code>alpha</code> to the upper bound.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#aff8f484986767be6de48bdc212e8208b" class="m-doc">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> rhs,
-              const U&amp; alpha) -&gt; Interval -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a35b2c36288d20e6d89bd92b92eb4faa9" class="m-doc">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> rhs,
+              const U&amp; alpha) -&gt; Interval -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Add by a scalar.</dd>
+            <dd>Add a scalar value to an <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a3485d320e15be177f97dcfb896c496a4" class="m-doc">operator+</a>(</span><span class="m-doc-wrap">const T&amp; alpha,
-              <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> rhs) -&gt; Interval -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9ada281617f52be5a988741dd17eb67a" class="m-doc">operator+</a>(</span><span class="m-doc-wrap">const T&amp; alpha,
+              <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> rhs) -&gt; Interval -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Add (by a scalar)</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#af9699fa912fcb64305d8b6e909872339" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&amp; rhs,
-              const U&amp; alpha) -&gt; Interval -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a91e8fa082a2ef7ee5df89e600cbb0c2a" class="m-doc">operator-</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&amp; rhs,
+              const U&amp; alpha) -&gt; Interval -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Subtract by a scalar.</dd>
+            <dd>Subtract a scalar value from an <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</dd>
           </dl>
         </section>
         <section id="friends">
@@ -229,9 +233,9 @@
             <dt>
               <div class="m-doc-template">template&lt;class Stream&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#ada195e63aedfc4f48379f6e815aeb996" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
-              const <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&amp; intvl) -&gt; Stream &amp; -&gt; auto</span>
+              const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&amp; intvl) -&gt; Stream &amp; -&gt; auto</span>
             </dt>
-            <dd>output stream</dd>
+            <dd>Overloads the stream insertion operator (<code>&lt;&lt;</code>) to print an <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object to the given output stream.</dd>
           </dl>
         </section>
         <section>
@@ -244,7 +248,7 @@
               <span class="m-doc-wrap-bumper"> recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7e838f1ffe1a3c72c1469947a72ce0e4" class="m-doc-self">Interval</a>(</span><span class="m-doc-wrap">T&amp;&amp; lower,
               T&amp;&amp; upper) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
             </h3>
-            <p>Construct a new <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object.</p>
+            <p>Construct a new <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -260,7 +264,7 @@
                 </tr>
               </tbody>
             </table>
-<p>The function constructs a new <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object with given lower and upper values.</p>
+<p>The function constructs a new <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object with given lower and upper values.</p>
           </div></section>
           <section class="m-doc-details" id="a71e8c8c65e345f9abc2843eff6eaa37d"><div>
             <h3>
@@ -270,7 +274,7 @@
               <span class="m-doc-wrap-bumper"> recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a71e8c8c65e345f9abc2843eff6eaa37d" class="m-doc-self">Interval</a>(</span><span class="m-doc-wrap">const T&amp; lower,
               const T&amp; upper) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Construct a new <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object.</p>
+            <p>Construct a new <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -286,7 +290,7 @@
                 </tr>
               </tbody>
             </table>
-<p>The function constructs a new <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object with given lower and upper bounds.</p>
+<p>The function constructs a new <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object with given lower and upper bounds.</p>
           </div></section>
           <section class="m-doc-details" id="a56136c5250fa75455f5871cc604a2648"><div>
             <h3>
@@ -295,7 +299,7 @@
               </div>
               <span class="m-doc-wrap-bumper"> recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a56136c5250fa75455f5871cc604a2648" class="m-doc-self">Interval</a>(</span><span class="m-doc-wrap">const T&amp; alpha) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Construct a new <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object.</p>
+            <p>Construct a new <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -303,11 +307,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The parameter &quot;alpha&quot; is of type T, which is a template parameter for the <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> class. It represents the value that will be used as both the lower bound and upper bound of the interval.</td>
+                  <td>The parameter &quot;alpha&quot; is of type T, which is a template parameter for the <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> class. It represents the value that will be used as both the lower bound and upper bound of the interval.</td>
                 </tr>
               </tbody>
             </table>
-<p>The function constructs a new <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object with the same lower and upper bounds.</p>
+<p>The function constructs a new <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object with the same lower and upper bounds.</p>
           </div></section>
           <section class="m-doc-details" id="a25268d8c41c1e2b0433f67536f1630b0"><div>
             <h3>
@@ -324,17 +328,17 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The parameter &quot;alpha&quot; is of type T, which is the type of the object being assigned to the <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object.</td>
+                  <td>The parameter &quot;alpha&quot; is of type T, which is the type of the object being assigned to the <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>The assignment operator is returning a reference to the <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object.</td>
+                  <td>The assignment operator is returning a reference to the <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The assignment operator sets the lower and upper bounds of an <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object to the given value.</p>
+<p>The assignment operator sets the lower and upper bounds of an <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object to the given value.</p>
           </div></section>
           <section class="m-doc-details" id="a372c24895397763f3bff61df29f89cca"><div>
             <h3>
@@ -372,12 +376,12 @@
             </table>
 <p>The function returns a constant reference to the upper bound value.</p>
           </div></section>
-          <section class="m-doc-details" id="a84baddb103449ac82709dd2210ca4083"><div>
+          <section class="m-doc-details" id="abd9454d1849e9ddd61639f56fdf23dd4"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a84baddb103449ac82709dd2210ca4083" class="m-doc-self">len</a>(</span><span class="m-doc-wrap">) const -&gt; T <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abd9454d1849e9ddd61639f56fdf23dd4" class="m-doc-self">length</a>(</span><span class="m-doc-wrap">) const -&gt; T <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>length</p>
             <table class="m-table m-fullwidth m-flat">
@@ -390,6 +394,24 @@
             </table>
 <p>The function returns the length of a range by subtracting the upper bound from the lower bound.</p>
           </div></section>
+          <section class="m-doc-details" id="af160ecd97b42437d322fc06cd232cfba"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af160ecd97b42437d322fc06cd232cfba" class="m-doc-self">is_invalid</a>(</span><span class="m-doc-wrap">) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Checks if the interval is invalid.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><code>true</code> if the interval is invalid, <code>false</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This function checks if the interval is invalid, which occurs when the lower bound is greater than the upper bound.</p>
+          </div></section>
           <section class="m-doc-details" id="af666ea201ea9e01836e3fd4ce772008c"><div>
             <h3>
               <div class="m-doc-template">
@@ -398,7 +420,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af666ea201ea9e01836e3fd4ce772008c" class="m-doc-self">overlaps</a>(</span><span class="m-doc-wrap">const U&amp; other) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Overlaps.</p>
+            <p>Checks if the current interval overlaps with another interval.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Template parameters</th></tr>
@@ -406,7 +428,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">U</td>
-                  <td></td>
+                  <td>The type of the <code>other</code> interval.</td>
                 </tr>
               </tbody>
               <thead>
@@ -415,17 +437,17 @@
               <tbody>
                 <tr>
                   <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The interval to check for overlap.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>true</td>
+                  <td><code>true</code> if the intervals overlap, <code>false</code> otherwise.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is defining a template function named &quot;overlaps&quot; that takes a parameter &quot;other&quot; of type U. The function returns a boolean value.</p>
+<p>This function checks if the current <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object overlaps with the interval represented by the <code>other</code> parameter. It returns <code>true</code> if the intervals overlap, and <code>false</code> otherwise.</p>
           </div></section>
           <section class="m-doc-details" id="a1474ae81cd0f9a2e5b5d98b3d77df813"><div>
             <h3>
@@ -435,7 +457,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1474ae81cd0f9a2e5b5d98b3d77df813" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap">const U&amp; other) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>contains</p>
+            <p>Checks if the current interval contains another interval.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Template parameters</th></tr>
@@ -443,7 +465,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">U</td>
-                  <td></td>
+                  <td>The type of the <code>other</code> interval or scalar value.</td>
                 </tr>
               </tbody>
               <thead>
@@ -452,27 +474,27 @@
               <tbody>
                 <tr>
                   <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The interval or scalar value to check if it is contained within the current interval.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>true</td>
+                  <td><code>true</code> if the current interval contains the <code>other</code> interval or scalar value, <code>false</code> otherwise.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is defining a template function named &quot;contains&quot; that takes a parameter &quot;other&quot; of type U. The function returns a boolean value.</p>
+<p>This function checks if the current <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object contains the interval represented by the <code>other</code> parameter. If the <code>other</code> parameter has a <code><a href="classrecti_1_1Interval.html#a372c24895397763f3bff61df29f89cca" class="m-doc">lb()</a></code> and <code><a href="classrecti_1_1Interval.html#a49375d6f8273c752975637be0c0e571b" class="m-doc">ub()</a></code> member function, it checks if the lower bound of the current interval is less than or equal to the lower bound of the <code>other</code> interval, and the upper bound of the current interval is greater than or equal to the upper bound of the <code>other</code> interval. Otherwise, it assumes the <code>other</code> parameter is a scalar value and checks if it is within the bounds of the current interval.</p>
           </div></section>
-          <section class="m-doc-details" id="a43c5b610eb1268aaed605348e2cc18cc"><div>
+          <section class="m-doc-details" id="a87965b3869659e7a0688394e85632676"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
                 template&lt;typename U&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a43c5b610eb1268aaed605348e2cc18cc" class="m-doc-self">intersection_with</a>(</span><span class="m-doc-wrap">const U&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a87965b3869659e7a0688394e85632676" class="m-doc-self">intersect_with</a>(</span><span class="m-doc-wrap">const U&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>intersection with</p>
+            <p>Computes the intersection of the current interval with another interval or scalar value.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Template parameters</th></tr>
@@ -480,7 +502,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">U</td>
-                  <td></td>
+                  <td>The type of the <code>other</code> interval or scalar value.</td>
                 </tr>
               </tbody>
               <thead>
@@ -489,17 +511,17 @@
               <tbody>
                 <tr>
                   <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The interval or scalar value to intersect with the current interval.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>constexpr auto</td>
+                  <td>The intersection of the current interval with the <code>other</code> interval or scalar value.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is defining a template function called <code>intersection_with</code> that takes a parameter <code>other</code>. The function returns the intersection of the current object (an <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code>) with <code>other</code>.</p>
+<p>This function returns a new <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object that represents the intersection of the current <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object with the interval or scalar value represented by the <code>other</code> parameter. If the <code>other</code> parameter has <code><a href="classrecti_1_1Interval.html#a372c24895397763f3bff61df29f89cca" class="m-doc">lb()</a></code> and <code><a href="classrecti_1_1Interval.html#a49375d6f8273c752975637be0c0e571b" class="m-doc">ub()</a></code> member functions, it computes the intersection using the lower and upper bounds of both intervals. Otherwise, it assumes the <code>other</code> parameter is a scalar value and computes the intersection using the lower and upper bounds of the current interval and the scalar value.</p>
           </div></section>
           <section class="m-doc-details" id="a6a7677970746e92a4b5b545d7ddb3327"><div>
             <h3>
@@ -509,7 +531,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6a7677970746e92a4b5b545d7ddb3327" class="m-doc-self">min_dist_with</a>(</span><span class="m-doc-wrap">const U&amp; other) const -&gt; T <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>minimum distance with</p>
+            <p>Computes the minimum distance between the current interval and the <code>other</code> interval or scalar value.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Template parameters</th></tr>
@@ -517,7 +539,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">U</td>
-                  <td></td>
+                  <td>The type of the <code>other</code> interval or scalar value.</td>
                 </tr>
               </tbody>
               <thead>
@@ -526,17 +548,17 @@
               <tbody>
                 <tr>
                   <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The interval or scalar value to compute the minimum distance with.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>constexpr auto</td>
+                  <td>The minimum distance between the current interval and the <code>other</code> interval or scalar value.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is a C++ template function called <code>min_dist_with</code>. It takes a parameter <code>other</code> of type <code>U</code> and returns a value of type <code>T</code>.</p>
+<p>This function returns the minimum distance between the current interval and the interval or scalar value represented by the <code>other</code> parameter. If the <code>other</code> parameter is less than the current interval, the function returns the distance between the lower bound of the current interval and the <code>other</code> parameter. If the <code>other</code> parameter is greater than the current interval, the function returns the distance between the upper bound of the current interval and the <code>other</code> parameter. If the <code>other</code> parameter is within the current interval, the function returns 0.</p>
           </div></section>
           <section class="m-doc-details" id="a9c337bd803c9ac88235e0c3487451ead"><div>
             <h3>
@@ -546,7 +568,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9c337bd803c9ac88235e0c3487451ead" class="m-doc-self">min_dist_change_with</a>(</span><span class="m-doc-wrap">U&amp; other) const -&gt; T <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>minimum distance with</p>
+            <p>Computes the minimum distance between the current interval and the <code>other</code> interval or scalar value, and updates the interval bounds accordingly.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Template parameters</th></tr>
@@ -554,7 +576,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">U</td>
-                  <td></td>
+                  <td>The type of the <code>other</code> interval or scalar value.</td>
                 </tr>
               </tbody>
               <thead>
@@ -562,18 +584,18 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>other&nbsp;<span class="m-label m-flat m-danger">in/out</span></td>
+                  <td>The interval or scalar value to compute the minimum distance with.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>constexpr auto</td>
+                  <td>The minimum distance between the current interval and the <code>other</code> interval or scalar value.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is a C++ template function called <code>min_dist_change_with</code>. It takes a parameter <code>other</code> of type <code>U</code> and returns a value of type <code>T</code>.</p>
+<p>This function returns the minimum distance between the current interval and the interval or scalar value represented by the <code>other</code> parameter. If the <code>other</code> parameter is less than the current interval, the function updates the lower bound of the current interval to the upper bound, and returns the distance between the new lower bound and the <code>other</code> parameter. If the <code>other</code> parameter is greater than the current interval, the function updates the upper bound of the current interval to the lower bound, and returns the distance between the new upper bound and the <code>other</code> parameter. If the <code>other</code> parameter is within the current interval, the function updates the interval to the intersection of the current interval and the <code>other</code> interval or scalar value, and returns 0.</p>
           </div></section>
           <section class="m-doc-details" id="a576673ea2138566d13fd1f81de8c7101"><div>
             <h3>
@@ -581,9 +603,9 @@
                 template&lt;typename T&gt;
                 template&lt;typename U&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a576673ea2138566d13fd1f81de8c7101" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a576673ea2138566d13fd1f81de8c7101" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Equal to.</p>
+            <p>Equality comparison operator for <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> objects.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Template parameters</th></tr>
@@ -591,7 +613,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">U</td>
-                  <td></td>
+                  <td>The type of the interval bounds.</td>
                 </tr>
               </tbody>
               <thead>
@@ -599,18 +621,18 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>rhs</td>
+                  <td>The right-hand side <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object to compare against.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>true</td>
+                  <td><code>true</code> if the intervals are equal, <code>false</code> otherwise.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is defining the equality operator (==) for a class template called <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>. The operator compares two <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> objects for equality by checking if their lower bounds (lb) and upper bounds (ub) are equal. If both the lower bounds and upper bounds are equal, the operator returns true, otherwise it returns false.</p>
+<p>Compares two <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> objects for equality by checking if their lower bounds (<code>lb</code>) and upper bounds (<code>ub</code>) are equal. If both the lower bounds and upper bounds are equal, the operator returns <code>true</code>, otherwise it returns <code>false</code>.</p>
           </div></section>
           <section class="m-doc-details" id="ac2c1de2bfa05f529a43e74867dc7e320"><div>
             <h3>
@@ -618,9 +640,9 @@
                 template&lt;typename T&gt;
                 template&lt;typename U&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac2c1de2bfa05f529a43e74867dc7e320" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac2c1de2bfa05f529a43e74867dc7e320" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;U&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Not equal to.</p>
+            <p>Not equal to comparison operator for <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> objects.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Template parameters</th></tr>
@@ -628,7 +650,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">U</td>
-                  <td></td>
+                  <td>The type of the interval bounds.</td>
                 </tr>
               </tbody>
               <thead>
@@ -637,17 +659,17 @@
               <tbody>
                 <tr>
                   <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The right-hand side <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object to compare against.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>true</td>
+                  <td><code>true</code> if the intervals are not equal, <code>false</code> otherwise.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is defining the &quot;!=&quot; (not equal to) operator for a class template called &quot;Interval&quot;. This operator compares two <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> objects for inequality. It takes a reference to an <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object &quot;rhs&quot; as a parameter and returns a boolean value. It uses the &quot;==&quot; (equal to) operator to determine if the two objects are equal, and then negates the result to return the opposite.</p>
+<p>Compares two <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> objects for inequality by negating the result of the <code>==</code> (equal to) operator. If the two intervals are not equal, the operator returns <code>true</code>, otherwise it returns <code>false</code>.</p>
           </div></section>
           <section class="m-doc-details" id="ac7d3d99a4bc6664f38af0b6b400946e7"><div>
             <h3>
@@ -657,7 +679,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac7d3d99a4bc6664f38af0b6b400946e7" class="m-doc-self">operator&lt;=&gt;</a>(</span><span class="m-doc-wrap">const U&amp; rhs) const -&gt; std::weak_ordering <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Spaceship operator.</p>
+            <p>Spaceship comparison operator for <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> objects.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Template parameters</th></tr>
@@ -665,7 +687,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">U</td>
-                  <td></td>
+                  <td>The type of the value to compare against the interval bounds.</td>
                 </tr>
               </tbody>
               <thead>
@@ -674,27 +696,27 @@
               <tbody>
                 <tr>
                   <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The value to compare against the interval bounds.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>std::weak_ordering</td>
+                  <td><code>std::weak_ordering</code> indicating the relationship between the interval and the value.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is defining a spaceship operator for a template class. The spaceship operator is a three-way comparison operator introduced in C++20. It compares the object on the left-hand side (LHS) with the object on the right-hand side (RHS) and returns a std::weak_ordering value indicating the relationship between the two objects.</p>
+<p>Compares the upper bound (<code>ub</code>) of the <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object on the left-hand side (LHS) with the value on the right-hand side (RHS). If the LHS upper bound is less than the RHS value, it returns <code>std::weak_ordering::less</code>. If the LHS lower bound is greater than the RHS value, it returns <code>std::weak_ordering::greater</code>. Otherwise, it returns <code>std::weak_ordering::equivalent</code>.</p>
           </div></section>
-          <section class="m-doc-details" id="a6ecc7d8e7426a61e2e1980426f9ed983"><div>
+          <section class="m-doc-details" id="a06ced22e5749b82fbedc0775ef80e21b"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6ecc7d8e7426a61e2e1980426f9ed983" class="m-doc-self">operator&lt;=&gt;</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
-              const <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&amp; rhs) -&gt; std::weak_ordering <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a06ced22e5749b82fbedc0775ef80e21b" class="m-doc-self">operator&lt;=&gt;</a>(</span><span class="m-doc-wrap">const T&amp; lhs,
+              const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&amp; rhs) -&gt; std::weak_ordering <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Spaceship operator.</p>
+            <p>Spaceship comparison operator for comparing a value with an <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -702,21 +724,21 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The value to compare against the interval bounds.</td>
                 </tr>
                 <tr>
                   <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object to compare the value against.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>std::weak_ordering</td>
+                  <td><code>std::weak_ordering</code> indicating the relationship between the value and the interval.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is defining a spaceship operator for comparing a value of type <code>T</code> with an <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> object. The spaceship operator (<code>&lt;=&gt;</code>) is a three-way comparison operator introduced in C++20.</p>
+<p>Compares the given value with the bounds of the <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object on the right-hand side. If the value is less than the lower bound of the interval, it returns <code>std::weak_ordering::less</code>. If the value is greater than the upper bound of the interval, it returns <code>std::weak_ordering::greater</code>. Otherwise, it returns <code>std::weak_ordering::equivalent</code>.</p>
           </div></section>
           <section class="m-doc-details" id="a4bb04c4a01e38a354ce752897bac7f56"><div>
             <h3>
@@ -725,16 +747,16 @@
               </div>
               <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4bb04c4a01e38a354ce752897bac7f56" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">) const -&gt; Interval <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Negation.</p>
+            <p>Negation operator for an <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
                   <th style="width: 1%">Returns</th>
-                  <td>The <code>operator-</code> function is returning an <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> object.</td>
+                  <td>The negated <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above function returns the negation of an interval.</p>
+<p>This function returns a new <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object that is the negation of the current <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object. The lower bound of the new interval is the negation of the upper bound of the current interval, and the upper bound of the new interval is the negation of the lower bound of the current interval.</p>
           </div></section>
           <section class="m-doc-details" id="ab2f894682ff2b0f2a2b4599b71918f6e"><div>
             <h3>
@@ -744,25 +766,34 @@
               </div>
               <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab2f894682ff2b0f2a2b4599b71918f6e" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const U&amp; alpha) -&gt; Interval &amp; <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Add.</p>
+            <p>Add a value to the lower and upper bounds of the interval.</p>
             <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td>The type of the value to add to the interval bounds.</td>
+                </tr>
+              </tbody>
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The value to add to the interval bounds.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&amp;</td>
+                  <td>A reference to the modified <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is defining an <code>operator+=</code> function for the <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> class. This function takes a parameter <code>alpha</code> of type <code>U</code> and adds it to both the lower bound (<code>_lb</code>) and upper bound (<code>_ub</code>) of the <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> object. It then returns a reference to the modified <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> object.</p>
+<p>This function adds the given value <code>alpha</code> to both the lower bound (<code>_lb</code>) and upper bound (<code>_ub</code>) of the <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object. It then returns a reference to the modified <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</p>
           </div></section>
           <section class="m-doc-details" id="a010072fe856db165ba5a86bbd6249ce8"><div>
             <h3>
@@ -772,25 +803,34 @@
               </div>
               <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a010072fe856db165ba5a86bbd6249ce8" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">const U&amp; alpha) -&gt; Interval &amp; <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Subtract.</p>
+            <p>Subtract a scalar value from an <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</p>
             <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td>The type of the scalar value to subtract.</td>
+                </tr>
+              </tbody>
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The scalar value to subtract from the <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&amp;</td>
+                  <td>A reference to the modified <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is defining an <code>operator-=</code> function for the <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> class. This function takes a parameter <code>alpha</code> of type <code>U</code> and subtracts it to both the lower bound (<code>_lb</code>) and upper bound (<code>_ub</code>) of the <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> object. It then returns a reference to the modified <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> object.</p>
+<p>This function subtracts the scalar value <code>alpha</code> from the lower and upper bounds of the <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object and returns a reference to the modified <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</p>
           </div></section>
           <section class="m-doc-details" id="a0614490fa097463eeccc340c0cc9cc35"><div>
             <h3>
@@ -799,7 +839,7 @@
               </div>
               <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0614490fa097463eeccc340c0cc9cc35" class="m-doc-self">enlarge_with</a>(</span><span class="m-doc-wrap">const T&amp; alpha) -&gt; Interval &amp; <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Enlarge with.</p>
+            <p>Enlarge the interval by subtracting <code>alpha</code> from the lower bound and adding <code>alpha</code> to the upper bound.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -807,58 +847,67 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The parameter &quot;alpha&quot; is of type T, which is not specified in the code snippet. It could be any data type, such as int, float, double, etc.</td>
+                  <td>The value to subtract from the lower bound and add to the upper bound.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>a reference to the current object, which is an instance of the <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> class.</td>
+                  <td>A reference to the modified <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The <code>enlarge_with</code> function enlarges the interval by subtracting <code>alpha</code> from the lower bound and adding <code>alpha</code> to the upper bound.</p>
+<p>This function modifies the current <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object by subtracting <code>alpha</code> from the lower bound (<code>_lb</code>) and adding <code>alpha</code> to the upper bound (<code>_ub</code>). It returns a reference to the modified <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</p>
           </div></section>
-          <section class="m-doc-details" id="aff8f484986767be6de48bdc212e8208b"><div>
+          <section class="m-doc-details" id="a35b2c36288d20e6d89bd92b92eb4faa9"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
                 template&lt;typename U&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aff8f484986767be6de48bdc212e8208b" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> rhs,
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a35b2c36288d20e6d89bd92b92eb4faa9" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> rhs,
               const U&amp; alpha) -&gt; Interval <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Add by a scalar.</p>
+            <p>Add a scalar value to an <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</p>
             <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td>The type of the scalar value to add.</td>
+                </tr>
+              </tbody>
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The parameter <code>rhs</code> represents the right-hand side of the addition operation. It is an object of type <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code>.</td>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object to add the scalar value to.</td>
                 </tr>
                 <tr>
                   <td>alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The parameter <code>alpha</code> is a scalar value that will be added to the <code>rhs</code> interval.</td>
+                  <td>The scalar value to add to the <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>an <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> object.</td>
+                  <td>A new <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object with the scalar value added to the bounds.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is defining a friend function named <code>operator+</code> for the <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> class. This function takes an <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> object <code>rhs</code> and a scalar value <code>alpha</code> as parameters. It returns a new <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> object that is the result of adding <code>rhs</code> and <code>alpha</code>.</p>
+<p>This function creates a new <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object by adding the scalar value <code>alpha</code> to the lower and upper bounds of the <code>rhs</code> <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</p>
           </div></section>
-          <section class="m-doc-details" id="a3485d320e15be177f97dcfb896c496a4"><div>
+          <section class="m-doc-details" id="a9ada281617f52be5a988741dd17eb67a"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3485d320e15be177f97dcfb896c496a4" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">const T&amp; alpha,
-              <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> rhs) -&gt; Interval <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9ada281617f52be5a988741dd17eb67a" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">const T&amp; alpha,
+              <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> rhs) -&gt; Interval <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Add (by a scalar)</p>
             <table class="m-table m-fullwidth m-flat">
@@ -868,54 +917,63 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The parameter <code>alpha</code> is a scalar value that will be added to the <code>rhs</code> interval.</td>
+                  <td>The scalar value to add to the <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</td>
                 </tr>
                 <tr>
                   <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The parameter <code>rhs</code> represents the right-hand side of the addition operation. It is an object of type <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code>.</td>
+                  <td>The <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object to add the scalar value to.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>an <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> object.</td>
+                  <td>A new <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object with the scalar value added to the bounds.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The function adds a scalar value to an interval.</p>
+<p>The function adds a scalar value <code>alpha</code> to an <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object <code>rhs</code> and returns the resulting <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</p>
           </div></section>
-          <section class="m-doc-details" id="af9699fa912fcb64305d8b6e909872339"><div>
+          <section class="m-doc-details" id="a91e8fa082a2ef7ee5df89e600cbb0c2a"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
                 template&lt;typename U&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af9699fa912fcb64305d8b6e909872339" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&amp; rhs,
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Interval&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a91e8fa082a2ef7ee5df89e600cbb0c2a" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&amp; rhs,
               const U&amp; alpha) -&gt; Interval <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Subtract by a scalar.</p>
+            <p>Subtract a scalar value from an <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</p>
             <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td>The type of the scalar value to subtract.</td>
+                </tr>
+              </tbody>
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The parameter <code>rhs</code> represents the right-hand side of the subtraction operation. It is an object of type <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code>.</td>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object to subtract the scalar value from.</td>
                 </tr>
                 <tr>
                   <td>alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The parameter <code>alpha</code> is a scalar value that will be subtracted to the <code>rhs</code> interval.</td>
+                  <td>The scalar value to subtract from the <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>an <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> object.</td>
+                  <td>A new <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object with the scalar value subtracted from the bounds.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is defining a friend function named <code>operator-</code> for the <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> class. This function takes an <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> object <code>rhs</code> and a scalar value <code>alpha</code> as parameters. It returns a new <code><a href="classrecti_1_1_interval.html" class="m-doc">Interval</a></code> object that is the result of subtracting <code>rhs</code> by <code>alpha</code>.</p>
+<p>This function subtracts the scalar value <code>alpha</code> from the lower and upper bounds of the <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object <code>rhs</code> and returns a new <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></code> object with the modified bounds.</p>
           </div></section>
           <section class="m-doc-details" id="ada195e63aedfc4f48379f6e815aeb996"><div>
             <h3>
@@ -924,9 +982,9 @@
                 template&lt;class Stream&gt;
               </div>
               <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ada195e63aedfc4f48379f6e815aeb996" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
-              const <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a>&amp; intvl) -&gt; Stream &amp;</span></span>
+              const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&amp; intvl) -&gt; Stream &amp;</span></span>
             </h3>
-            <p>output stream</p>
+            <p>Overloads the stream insertion operator (<code>&lt;&lt;</code>) to print an <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object to the given output stream.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Template parameters</th></tr>
@@ -934,7 +992,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">Stream</td>
-                  <td></td>
+                  <td>The type of the output stream.</td>
                 </tr>
               </tbody>
               <thead>
@@ -942,22 +1000,22 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>out&nbsp;<span class="m-label m-flat m-warning">out</span></td>
-                  <td></td>
+                  <td>out</td>
+                  <td>The output stream to write the <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object to.</td>
                 </tr>
                 <tr>
-                  <td>intvl&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>intvl</td>
+                  <td>The <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object to be printed.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>Stream&amp;</td>
+                  <td>A reference to the output stream (<code>out</code>) for chaining stream operations.</td>
                 </tr>
               </tfoot>
             </table>
-<p>The above code is defining a friend function for the <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> class in C++. This friend function is an output stream operator overload (&lt;&lt;) that takes a reference to a Stream object (out) and a const reference to an <a href="classrecti_1_1_interval.html" class="m-doc">Interval</a> object (intvl).</p>
+<p>This function allows <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> objects to be printed directly to an output stream, such as <code>std::cout</code>, by overloading the stream insertion operator (<code>&lt;&lt;</code>). The <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a> object is printed in the format <code>[lower_bound, upper_bound]</code>.</p>
           </div></section>
         </section>
       </div>
@@ -1004,7 +1062,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.10.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

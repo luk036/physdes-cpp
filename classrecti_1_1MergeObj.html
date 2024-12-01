@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>recti::MergeObj class | Recti</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Recti</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li>
+              <a href="pages.html">Pages</a>
+              <ol>
+                <li><a href="about.html">About</a></li>
+              </ol>
+            </li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="merge__obj_8hpp.html">&lt;recti/merge_obj.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename T1 = int, typename T2 = T1&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>MergeObj <span class="m-thin">class</span>
+        </h1>
+        <p>Merging Object (for deferred-merge embedding (DME) algorithm)</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">T1</td>
+              <td>int or <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></td>
+            </tr>
+            <tr>
+              <td>T2</td>
+              <td>int or <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#comparison-operators">Comparison operators</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p>The code is defining a class template called <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> that represents a merging segment. The merging segment can include a single point, segment, or region. The template has two type parameters <code>T1</code> and <code>T2</code>, which default to <code>int</code> if not specified. The class inherits from the <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a></code> class, which represents a point in a 2D coordinate system. The <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> class provides various operations and functions for manipulating and comparing merging segments, such as adding and subtracting vectors, checking for overlap and intersection with other merging segments, calculating the minimum distance between merging segments, and merging two merging segments. The class also provides comparison operators and a stream insertion operator for convenient usage. The purpose of the <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> class is to support the deferred-merge embedding (DME) algorithm, as referenced in the code comments.</p><p>Reference:</p><ul><li>Ting-Hai Chao, Yu-Chin Hsu, Jan-Ming Ho and A. B. Kahng, &quot;Zero skew clock
+routing with minimum wirelength,&quot; in IEEE Transactions on Circuits and Systems II: Analog and Digital Signal Processing, vol. 39, no. 11, pp. 799-814, Nov. 1992, doi: 10.1109/82.204128.</li></ul>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a610c8c4d77815b1cf36dca716bdda7c7" class="m-doc">construct</a>(</span><span class="m-doc-wrap">T1&amp;&amp; xcoord,
+              T2&amp;&amp; ycoord) -&gt; MergeObj -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Construct a new <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a> object from the given x and y coordinates.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a1a90834a94e29565eaa159c7d54ad4a4" class="m-doc">MergeObj</a>(</span><span class="m-doc-wrap">T1&amp;&amp; xcoord,
+              T2&amp;&amp; ycoord) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Construct a new <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a> object.</dd>
+          </dl>
+        </section>
+        <section id="comparison-operators">
+          <h2><a href="#comparison-operators">Comparison operators</a></h2>
+<p>definie ==, !=, &lt;, &gt;, &lt;=, &gt;=.</p>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a46d8299d232a5c67e87f6ee43ac46c81" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&lt;U1, U2&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Compares two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects for equality.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a161fe0b0f32ae6efb2286ace3f8bd902" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&lt;U1, U2&gt;&amp; rhs) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Not equal to.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#acd68a00fabfd054c7b19a8c55462fae1" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;&amp; rhs) -&gt; MergeObj &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Add a vector (translation) to this <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3cf94b9166bc020045bf5e1873e47d21" class="m-doc">operator-=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;&amp; rhs) -&gt; MergeObj &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Subtract a vector (translation)</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7b0585337ada1db7f79064a797413540" class="m-doc">overlaps</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&lt;U1, U2&gt;&amp; other) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Check if two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects overlap.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab4d94e6324c73843a0dbf08d721991d3" class="m-doc">intersect_with</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&lt;U1, U2&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Compute the intersection of two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aaaf5603f882f2289363513e558825f08" class="m-doc">min_dist_with</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&lt;U1, U2&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Compute the minimum distance between the x and y coordinates of two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a43a706885d12365f12577e9155f14f12" class="m-doc">merge_with</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&lt;U1, U2&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Compute the intersection of two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects by enlarging them and finding the overlap.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad70131e2db5db97ba84dcc38f85b8c44" class="m-doc">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a> lhs,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;&amp; rhs) -&gt; MergeObj -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Add a vector (translation) to a <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename U&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2b0bc86a9c402ac4182a014557bd209a" class="m-doc">operator-</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a> lhs,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;&amp; rhs) -&gt; MergeObj -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Subtract a vector (translation) from a <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename R&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a308f4a1c76f4a61515f1ce0c994e3718" class="m-doc">enlarge</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&amp; lhs,
+              const R&amp; alpha) -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Enlarge a <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object by a given scale factor.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;class Stream&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aabd3968f95c749e6e439b18731c3f9bb" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
+              const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&amp; merge_obj) -&gt; Stream &amp; -&gt; auto</span>
+            </dt>
+            <dd>Overload the stream insertion operator <code>&lt;&lt;</code> to output a <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a610c8c4d77815b1cf36dca716bdda7c7"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static auto recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a610c8c4d77815b1cf36dca716bdda7c7" class="m-doc-self">construct</a>(</span><span class="m-doc-wrap">T1&amp;&amp; xcoord,
+              T2&amp;&amp; ycoord) -&gt; MergeObj <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Construct a new <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a> object from the given x and y coordinates.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">xcoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The x coordinate value.</td>
+                </tr>
+                <tr>
+                  <td>ycoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The y coordinate value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object constructed from the given coordinates.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This static member function constructs a new <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object by combining the given <code>xcoord</code> and <code>ycoord</code> parameters in a specific way. The resulting <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object represents a merging segment that can include a single point, segment, or region.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1a90834a94e29565eaa159c7d54ad4a4"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1a90834a94e29565eaa159c7d54ad4a4" class="m-doc-self">MergeObj</a>(</span><span class="m-doc-wrap">T1&amp;&amp; xcoord,
+              T2&amp;&amp; ycoord) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Construct a new <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a> object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">xcoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The x coordinate value.</td>
+                </tr>
+                <tr>
+                  <td>ycoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The y coordinate value.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>This code defines a constructor for the <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> class template. The constructor takes two parameters <code>xcoord</code> and <code>ycoord</code>, which are of type <code>T1</code> and <code>T2</code> respectively. The constructor is marked as <code>constexpr</code> and <code>noexcept</code>, indicating that it can be evaluated at compile-time and it does not throw any exceptions.</p>
+          </div></section>
+          <section class="m-doc-details" id="a46d8299d232a5c67e87f6ee43ac46c81"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a46d8299d232a5c67e87f6ee43ac46c81" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&lt;U1, U2&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Compares two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects for equality.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td>The type of the x-coordinate of the right-hand side <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td>The type of the y-coordinate of the right-hand side <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object to compare against.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects are equal, <code>false</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This operator overload compares two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects for equality. It returns <code>true</code> if the underlying <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T1, T2&gt;</code> objects are equal, and <code>false</code> otherwise.</p>
+          </div></section>
+          <section class="m-doc-details" id="a161fe0b0f32ae6efb2286ace3f8bd902"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a161fe0b0f32ae6efb2286ace3f8bd902" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&lt;U1, U2&gt;&amp; rhs) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Not equal to.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td>The type of the x-coordinate of the right-hand side <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td>The type of the y-coordinate of the right-hand side <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object to compare against.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects are not equal, <code>false</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Compares two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects for inequality.</p><p>This operator overload compares two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects for inequality. It returns <code>true</code> if the underlying <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T1, T2&gt;</code> objects are not equal, and <code>false</code> otherwise.</p>
+          </div></section>
+          <section class="m-doc-details" id="acd68a00fabfd054c7b19a8c55462fae1"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acd68a00fabfd054c7b19a8c55462fae1" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;&amp; rhs) -&gt; MergeObj &amp; <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Add a vector (translation) to this <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td>The type of the components of the <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code> to add.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code> to add to this <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A reference to this <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> after the addition.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This operator overload adds a <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code> to this <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object, modifying the x and y coordinates accordingly. The x coordinate is updated by adding the sum of the x and y components of the <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code>, while the y coordinate is updated by adding the difference of the x and y components.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3cf94b9166bc020045bf5e1873e47d21"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3cf94b9166bc020045bf5e1873e47d21" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;&amp; rhs) -&gt; MergeObj &amp; <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Subtract a vector (translation)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td>The type of the components of the <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code> to subtract.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code> to subtract from this <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A reference to this <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> after the subtraction.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This operator overload subtracts a <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code> from this <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object, modifying the x and y coordinates accordingly. The x coordinate is updated by subtracting the sum of the x and y components of the <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code>, while the y coordinate is updated by subtracting the difference of the x and y components.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7b0585337ada1db7f79064a797413540"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7b0585337ada1db7f79064a797413540" class="m-doc-self">overlaps</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&lt;U1, U2&gt;&amp; other) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Check if two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects overlap.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td>The type of the x and y coordinates of the current <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object.</td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td>The type of the x and y coordinates of the <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object <code>other</code>.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other</td>
+                  <td>The <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object to check for overlap.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects overlap, <code>false</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This function checks if the x and y coordinates of the current <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object overlap with the x and y coordinates of the provided <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object <code>other</code>. The overlap is determined by checking if the ranges of the x and y coordinates intersect.</p>
+          </div></section>
+          <section class="m-doc-details" id="ab4d94e6324c73843a0dbf08d721991d3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab4d94e6324c73843a0dbf08d721991d3" class="m-doc-self">intersect_with</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&lt;U1, U2&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Compute the intersection of two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td>The type of the x and y coordinates of the current <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object.</td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td>The type of the x and y coordinates of the <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object <code>other</code>.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object to intersect with the current <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object representing the intersection of the two input <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This function computes the intersection of the current <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object with the provided <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object <code>other</code>. The intersection is calculated by finding the intersection of the x and y coordinate ranges of the two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects. The resulting <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object represents the overlapping region between the two input <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects.</p>
+          </div></section>
+          <section class="m-doc-details" id="aaaf5603f882f2289363513e558825f08"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaaf5603f882f2289363513e558825f08" class="m-doc-self">min_dist_with</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&lt;U1, U2&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Compute the minimum distance between the x and y coordinates of two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td>The type of the x and y coordinates of the current <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object.</td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td>The type of the x and y coordinates of the <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object <code>other</code>.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object to compute the maximum distance with.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The maximum distance between the two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This function calculates the maximum distance between the x and y coordinates of the current <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object and the provided <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object <code>other</code>. The distance is computed by taking the maximum of the distances between the x coordinates and the distances between the y coordinates of the two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects.</p>
+          </div></section>
+          <section class="m-doc-details" id="a43a706885d12365f12577e9155f14f12"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U1, typename U2&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a43a706885d12365f12577e9155f14f12" class="m-doc-self">merge_with</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&lt;U1, U2&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Compute the intersection of two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects by enlarging them and finding the overlap.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U1</td>
+                  <td>The type of the x and y coordinates of the current <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object.</td>
+                </tr>
+                <tr>
+                  <td>U2</td>
+                  <td>The type of the x and y coordinates of the <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object <code>other</code>.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object to compute the intersection with.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The intersection of the two <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This function first calculates the minimum distance between the x and y coordinates of the current <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object and the provided <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object <code>other</code>. It then uses this distance to enlarge both <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects, with the current object being enlarged by half the distance and the <code>other</code> object being enlarged by the remaining half. Finally, it computes the intersection of the two enlarged <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> objects and returns the result.</p>
+          </div></section>
+          <section class="m-doc-details" id="ad70131e2db5db97ba84dcc38f85b8c44"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad70131e2db5db97ba84dcc38f85b8c44" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a> lhs,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;&amp; rhs) -&gt; MergeObj <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Add a vector (translation) to a <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td>The type of the components of the <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code> to add.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>lhs</td>
+                  <td>The <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> to add the vector to.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code> to add to the <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> with the vector added.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This operator overload adds a <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code> to a <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object, modifying the x and y coordinates accordingly. The x coordinate is updated by adding the sum of the x and y components of the <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code>, while the y coordinate is updated by adding the difference of the x and y components.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2b0bc86a9c402ac4182a014557bd209a"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename U&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2b0bc86a9c402ac4182a014557bd209a" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a> lhs,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;&amp; rhs) -&gt; MergeObj <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Subtract a vector (translation) from a <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">U</td>
+                  <td>The type of the components of the <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code> to subtract.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>lhs</td>
+                  <td>The <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> to subtract the vector from.</td>
+                </tr>
+                <tr>
+                  <td>rhs</td>
+                  <td>The <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code> to subtract from the <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> with the vector subtracted.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This operator overload subtracts a <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code> from a <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object, modifying the x and y coordinates accordingly. The x coordinate is updated by subtracting the sum of the x and y components of the <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U&gt;</code>, while the y coordinate is updated by subtracting the difference of the x and y components.</p>
+          </div></section>
+          <section class="m-doc-details" id="a308f4a1c76f4a61515f1ce0c994e3718"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;typename R&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a308f4a1c76f4a61515f1ce0c994e3718" class="m-doc-self">enlarge</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&amp; lhs,
+              const R&amp; alpha) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Enlarge a <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object by a given scale factor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">R</td>
+                  <td>The type of the scale factor <code>alpha</code>.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object to be enlarged.</td>
+                </tr>
+                <tr>
+                  <td>alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The scale factor to enlarge the <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object by.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A new <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object with enlarged x and y coordinates.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This function creates a new <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object by enlarging the x and y coordinates of the input <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object <code>lhs</code> by the given scale factor <code>alpha</code>. The resulting <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object will have larger x and y coordinate ranges compared to the input <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object.</p>
+          </div></section>
+          <section class="m-doc-details" id="aabd3968f95c749e6e439b18731c3f9bb"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T1, typename T2&gt;
+                template&lt;class Stream&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />MergeObj&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aabd3968f95c749e6e439b18731c3f9bb" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
+              const <a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a>&amp; merge_obj) -&gt; Stream &amp;</span></span>
+            </h3>
+            <p>Overload the stream insertion operator <code>&lt;&lt;</code> to output a <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">Stream</td>
+                  <td>The type of the output stream.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>out&nbsp;<span class="m-label m-flat m-warning">out</span></td>
+                  <td>The output stream to write the <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object to.</td>
+                </tr>
+                <tr>
+                  <td>merge_obj&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object to be written to the output stream.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The modified output stream.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This function overloads the stream insertion operator <code>&lt;&lt;</code> to output a <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object in the format <code>&quot;/{xcoord}, {ycoord}/&quot;</code>, where <code>{xcoord}</code> and <code>{ycoord}</code> are the x and y coordinates of the <code><a href="classrecti_1_1MergeObj.html" class="m-doc">MergeObj</a></code> object, respectively.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
