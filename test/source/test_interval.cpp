@@ -7,6 +7,7 @@
 #include <set>                 // for set, set<>::iterator
 
 using recti::Interval;
+using recti::hull;
 
 TEST_CASE("Interval test") {
     auto a = Interval{4, 8};
@@ -38,6 +39,26 @@ TEST_CASE("Interval test") {
     CHECK(b.overlaps(a));
 
     CHECK(min_dist(a, b) == 0);
+}
+
+TEST_CASE("Interval test hull") {
+    auto a = Interval{3, 5};
+    auto b = Interval{5, 7};
+    auto c = Interval{7, 8};
+
+    CHECK(a.hull_with(b) == Interval{3, 7});
+    CHECK(a.hull_with(c) == Interval{3, 8});
+    CHECK(b.hull_with(c) == Interval{5, 8});
+
+    auto d = 4;
+    CHECK(a.hull_with(d) == Interval{3, 5});
+    CHECK(a.hull_with(6) == Interval{3, 6});
+
+    CHECK(hull(a, d) == Interval{3, 5});
+    CHECK(hull(a, 6) == Interval{3, 6});
+    CHECK(hull(d, a) == Interval{3, 5});
+    CHECK(hull(6, a) == Interval{3, 6});
+    CHECK(hull(d, 6) == Interval{4, 6});
 }
 
 TEST_CASE("Interval of Interval test") {

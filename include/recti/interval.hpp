@@ -385,6 +385,33 @@ namespace recti {
         }
 
         /**
+         * @brief Computes the hull of the current interval with another interval or scalar
+         * value.
+         *
+         * This function returns a new `Interval` object that represents the hull of the
+         * current `Interval` object with the interval or scalar value represented by the `other`
+         * parameter. If the `other` parameter has `lb()` and `ub()` member functions, it computes
+         * the hull using the lower and upper bounds of both intervals. Otherwise, it
+         * assumes the `other` parameter is a scalar value and computes the hull using the
+         * lower and upper bounds of the current interval and the scalar value.
+         *
+         * @tparam U The type of the `other` interval or scalar value.
+         * @param[in] other The interval or scalar value to intersect with the current interval.
+         * @return The hull of the current interval with the `other` interval or scalar
+         * value.
+         */
+        template <typename U>  //
+        constexpr auto hull_with(const U &other) const {
+            if constexpr (requires { other.lb(); }) {
+                return Interval<T>{this->lb() < other.lb() ? this->lb() : T(other.lb()),
+                                   this->ub() > other.ub() ? this->ub() : T(other.ub())};
+            } else /* constexpr */ {  // assume scalar
+                return Interval<T>{this->lb() < other ? this->lb() : T(other),
+                                   this->ub() > other ? this->ub() : T(other)};
+            }
+        }
+
+        /**
          * @brief Computes the minimum distance between the current interval and the `other`
          * interval or scalar value.
          *
@@ -468,6 +495,37 @@ namespace recti {
         }
     };
 #pragma pack(pop)
+
+    /**
+     * @brief Computes the hull of two objects.
+     *
+     * This function computes the hull of the two input objects `lhs` and `rhs`. It first
+     * checks if `lhs` has an `hull_with` member function that can be called with `rhs` as an
+     * argument, and returns the result of that call. If `lhs` does not have an `hull_with`
+     * member function, it checks if `rhs` has an `hull_with` member function that can be
+     * called with `lhs` as an argument, and returns the result of that call. If neither object has
+     * an `hull_with` member function, the function asserts that `lhs` and `rhs` are equal and
+     * returns `lhs`.
+     *
+     * @tparam U1 The type of the first object.
+     * @tparam U2 The type of the second object.
+     * @param[in] lhs The first object.
+     * @param[in] rhs The second object.
+     * @return The hull of `lhs` and `rhs`.
+     */
+    template <typename U1, typename U2>  //
+    constexpr auto hull(const U1 &lhs, const U2 &rhs) {
+        if constexpr (requires { lhs.hull_with(rhs); }) {
+            return lhs.hull_with(rhs);
+        } else if constexpr (requires { rhs.hull_with(lhs); }) {
+            return rhs.hull_with(lhs);
+        } else /* constexpr */ {
+            if (lhs < rhs) {
+               return Interval<U1>(lhs, rhs);
+            }
+            return Interval<U2>(rhs, lhs);
+        }
+    }
 
     /**
      * @brief Enlarges an interval or scalar value by adding and subtracting a given value.

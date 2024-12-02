@@ -311,6 +311,21 @@ namespace recti {
         }
 
         /**
+         * Checks if this point hulls with another point.
+         *
+         * @tparam U1 - The x-coordinate type of the other point.
+         * @tparam U2 - The y-coordinate type of the other point.
+         * @param other - The other point to check for hull.
+         * @return The hull "point".
+         */
+        template <typename U1, typename U2>  //
+        constexpr auto hull_with(const Point<U1, U2> &other) const {
+            auto xcoord = hull(this->xcoord(), other.xcoord());
+            auto ycoord = hull(this->ycoord(), other.ycoord());
+            return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord), std::move(ycoord)};
+        }
+
+        /**
          * Checks if this point contains another point.
          *
          * @tparam U1 - The type of the x-coordinate for this point.

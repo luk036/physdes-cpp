@@ -27,6 +27,12 @@ TEST_CASE("Point test") {
     CHECK(a.flip_y().flip_y() == a);
 }
 
+TEST_CASE("Point test hull") {
+    auto a = Point<int>{3, 5};
+    auto b = Point<int>{5, 7};
+    CHECK(a.hull_with(b) == Point<Interval<int>>({3, 5}, {5,7}));
+}
+
 TEST_CASE("Rectangle test") {
     auto xrng1 = Interval<int>{4000, 8000};
     auto yrng1 = Interval<int>{5000, 7000};
