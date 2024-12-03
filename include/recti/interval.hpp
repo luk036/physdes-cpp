@@ -520,10 +520,8 @@ namespace recti {
         } else if constexpr (requires { rhs.hull_with(lhs); }) {
             return rhs.hull_with(lhs);
         } else /* constexpr */ {
-            if (lhs < rhs) {
-               return Interval<U1>(lhs, rhs);
-            }
-            return Interval<U2>(rhs, lhs);
+            return lhs < rhs ? 
+                Interval<U1>(lhs, rhs) : Interval<U2>(rhs, lhs);
         }
     }
 
