@@ -6,8 +6,8 @@
 #include <recti/interval.hpp>  // for Interval, operator<<, operator+, ope...
 #include <set>                 // for set, set<>::iterator
 
-using recti::Interval;
 using recti::hull;
+using recti::Interval;
 
 TEST_CASE("Interval test") {
     auto a = Interval{4, 8};

@@ -30,7 +30,7 @@ TEST_CASE("Point test") {
 TEST_CASE("Point test hull") {
     auto a = Point<int>{3, 5};
     auto b = Point<int>{5, 7};
-    CHECK(a.hull_with(b) == Point<Interval<int>>({3, 5}, {5,7}));
+    CHECK(a.hull_with(b) == Point<Interval<int>>({3, 5}, {5, 7}));
 }
 
 TEST_CASE("Rectangle test") {
