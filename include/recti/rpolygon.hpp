@@ -1,7 +1,7 @@
 #pragma once
 
 #include <algorithm>
-#include <gsl/span>
+#include <span>
 #include <utility>  // for std::pair
 #include <vector>
 
@@ -27,7 +27,7 @@ namespace recti {
         /**
          * @brief Constructs a new `RPolygon` object from a set of points.
          *
-         * This constructor takes a `gsl::span` of `Point<T>` objects representing the
+         * This constructor takes a `std::span` of `Point<T>` objects representing the
          * vertices of the rectilinear polygon. The first point in the span is used as
          * the origin of the polygon, and the remaining points are used to construct the
          * vectors that define the edges of the polygon.
@@ -35,7 +35,7 @@ namespace recti {
          * @param[in] pointset A span of `Point<T>` objects representing the vertices of
          * the rectilinear polygon.
          */
-        explicit constexpr RPolygon(gsl::span<const Point<T>> pointset)
+        explicit constexpr RPolygon(std::span<const Point<T>> pointset)
             : _origin{pointset.front()} {
             for (auto itr = std::next(pointset.begin()); itr != pointset.end(); ++itr) {
                 this->_vecs.push_back(*itr - this->_origin);
@@ -257,7 +257,7 @@ namespace recti {
      * point is on the boundary of the polygon.
      */
     template <typename T>
-    inline auto point_in_rpolygon(gsl::span<const Point<T>> pointset, const Point<T> &ptq) -> bool {
+    inline auto point_in_rpolygon(std::span<const Point<T>> pointset, const Point<T> &ptq) -> bool {
         auto res = false;
         auto pt0 = pointset.back();
         for (auto &&pt1 : pointset) {
@@ -282,7 +282,7 @@ namespace recti {
      * @param pointset The set of points defining the rectilinear polygon.
      * @return true if the polygon is oriented clockwise, false otherwise.
      */
-    template <typename T> inline auto rpolygon_is_clockwise(gsl::span<const Point<T>> pointset)
+    template <typename T> inline auto rpolygon_is_clockwise(std::span<const Point<T>> pointset)
         -> bool {
         auto it1 = std::min_element(pointset.begin(), pointset.end());
         auto it0 = it1 != pointset.begin() ? std::prev(it1) : pointset.end() - 1;

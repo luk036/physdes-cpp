@@ -1,7 +1,7 @@
 #pragma once
 
 #include <algorithm>
-#include <gsl/span>
+#include <span>
 #include <utility>  // for std::pair
 #include <vector>
 
@@ -27,14 +27,14 @@ namespace recti {
         /**
          * @brief Constructs a new Polygon object from a set of points.
          *
-         * This constructor takes a `gsl::span` of `Point<T>` objects representing the
+         * This constructor takes a `std::span` of `Point<T>` objects representing the
          * vertices of the polygon. The first point in the span is used as the origin
          * of the polygon, and the remaining points are used to construct the edges of
          * the polygon as vectors relative to the origin.
          *
          * @param[in] pointset A span of points representing the vertices of the polygon.
          */
-        explicit constexpr Polygon(gsl::span<const Point<T>> pointset) : _origin{pointset.front()} {
+        explicit constexpr Polygon(std::span<const Point<T>> pointset) : _origin{pointset.front()} {
             auto itr = pointset.begin();
             for (++itr; itr != pointset.end(); ++itr) {
                 this->_vecs.push_back(*itr - this->_origin);
@@ -207,7 +207,7 @@ namespace recti {
      * outside the polygon
      */
     template <typename T>
-    inline auto point_in_polygon(gsl::span<const Point<T>> pointset, const Point<T> &ptq) -> bool {
+    inline auto point_in_polygon(std::span<const Point<T>> pointset, const Point<T> &ptq) -> bool {
         auto res = false;
         auto pt0 = pointset.back();
         for (auto &&pt1 : pointset) {
@@ -236,7 +236,7 @@ namespace recti {
      * @param pointset The range of points representing the polygon.
      * @return true if the polygon is oriented clockwise, false otherwise.
      */
-    template <typename T> inline auto polygon_is_clockwise(gsl::span<const Point<T>> pointset)
+    template <typename T> inline auto polygon_is_clockwise(std::span<const Point<T>> pointset)
         -> bool {
         auto it1 = std::min_element(pointset.begin(), pointset.end());
         auto it0 = it1 != pointset.begin() ? std::prev(it1) : std::prev(pointset.end());

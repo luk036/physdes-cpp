@@ -1,6 +1,6 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, Expr...
 
-// #include <gsl/span>           // for span
+// #include <span>           // for span
 #include <ldsgen/ilds.hpp>    // for VdCorput
 #include <recti/polygon.hpp>  // for Polygon, polygon_is_clockwise, creat...
 #include <vector>             // for vector

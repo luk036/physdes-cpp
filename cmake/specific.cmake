@@ -5,7 +5,7 @@ CPMAddPackage(
   OPTIONS "FMT_INSTALL YES" # create an installable target
 )
 
-CPMAddPackage("gh:microsoft/GSL@4.0.0")
+# CPMAddPackage("gh:microsoft/GSL@4.0.0")
 
 CPMAddPackage(
   NAME LdsGen
@@ -14,7 +14,7 @@ CPMAddPackage(
   OPTIONS "INSTALL_ONLY YES" # create an installable target
 )
 
-set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt Microsoft.GSL::GSL)
+set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt)
 
 # cpmaddpackage( NAME GSL GITHUB_REPOSITORY "microsoft/GSL" GIT_TAG "v4.0.0" GIT_SHALLOW ON )
 
