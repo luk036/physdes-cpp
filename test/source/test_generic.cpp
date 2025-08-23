@@ -4,14 +4,17 @@
 
 struct MyPoint {
     int x, y;
-    constexpr auto operator==(const MyPoint& other) const -> bool { return x == other.x && y == other.y; }
+    constexpr auto operator==(const MyPoint& other) const -> bool {
+        return x == other.x && y == other.y;
+    }
 };
 
 struct MyRect {
     MyPoint min, max;
 
     constexpr auto overlaps(const MyRect& other) const -> bool {
-        return min.x < other.max.x && other.min.x < max.x && min.y < other.max.y && other.min.y < max.y;
+        return min.x < other.max.x && other.min.x < max.x && min.y < other.max.y
+               && other.min.y < max.y;
     }
 
     constexpr auto contains(const MyPoint& p) const -> bool {
