@@ -35,9 +35,10 @@ namespace recti {
          * @param[in] pointset A span of points representing the vertices of the polygon.
          */
         explicit constexpr Polygon(std::span<const Point<T>> pointset) : _origin{pointset.front()} {
-            auto itr = pointset.begin();
-            for (++itr; itr != pointset.end(); ++itr) {
-                this->_vecs.push_back(*itr - this->_origin);
+            if (pointset.size() <= 1) return;
+            _vecs.reserve(pointset.size() - 1);
+            for (auto it = pointset.begin() + 1; it != pointset.end(); ++it) {
+                _vecs.push_back(*it - _origin);
             }
         }
 
@@ -63,14 +64,10 @@ namespace recti {
          * @return The signed area of the polygon multiplied by 2.
          */
         constexpr auto signed_area_x2() const -> T {
-            auto itr2 = this->_vecs.begin();
-            auto itr0 = itr2++;
-            auto itr1 = itr2++;
-            auto end = this->_vecs.end();
-            auto last = std::prev(end);
-            auto res = itr0->x() * itr1->y() - last->x() * std::prev(last)->y();
-            for (; itr2 != end; ++itr2, ++itr1, ++itr0) {
-                res = std::move(res) + itr1->x() * (itr2->y() - itr0->y());
+            if (_vecs.size() < 2) return T{0};
+            T res = _vecs[0].x() * _vecs[1].y() - _vecs.back().x() * _vecs[_vecs.size() - 2].y();
+            for (size_t i = 1; i < _vecs.size() - 1; ++i) {
+                res += _vecs[i].x() * (_vecs[i + 1].y() - _vecs[i - 1].y());
             }
             return res;
         }
@@ -208,13 +205,19 @@ namespace recti {
      */
     template <typename T>
     inline auto point_in_polygon(std::span<const Point<T>> pointset, const Point<T> &ptq) -> bool {
-        auto res = false;
+        if (pointset.empty()) return false;
+
+        bool res = false;
         auto pt0 = pointset.back();
-        for (auto &&pt1 : pointset) {
-            if ((pt1.ycoord() <= ptq.ycoord() && ptq.ycoord() < pt0.ycoord())
-                || (pt0.ycoord() <= ptq.ycoord() && ptq.ycoord() < pt1.ycoord())) {
-                auto det = (ptq - pt0).cross(pt1 - pt0);
-                if (pt1.ycoord() > pt0.ycoord()) {
+        const auto qy = ptq.ycoord();
+
+        for (const auto &pt1 : pointset) {
+            const auto y0 = pt0.ycoord();
+            const auto y1 = pt1.ycoord();
+
+            if ((y1 <= qy && qy < y0) || (y0 <= qy && qy < y1)) {
+                const auto det = (ptq - pt0).cross(pt1 - pt0);
+                if (y1 > y0) {
                     if (det < 0) {
                         res = !res;
                     }

@@ -37,8 +37,9 @@ namespace recti {
          */
         explicit constexpr RPolygon(std::span<const Point<T>> pointset)
             : _origin{pointset.front()} {
+            _vecs.reserve(pointset.size() - 1);  // Pre-allocate memory
             for (auto itr = std::next(pointset.begin()); itr != pointset.end(); ++itr) {
-                this->_vecs.push_back(*itr - this->_origin);
+                _vecs.emplace_back(*itr - _origin);  // Use emplace_back for in-place construction
             }
         }
 
@@ -65,12 +66,15 @@ namespace recti {
          * @return The signed area of the rectilinear polygon.
          */
         constexpr auto signed_area() const -> T {
-            assert(this->_vecs.size() >= 1);
-            auto itr1 = this->_vecs.begin();
-            auto itr0 = itr1++;
-            auto res = itr0->x() * itr0->y();
-            for (; itr1 != this->_vecs.end(); ++itr1, ++itr0) {
-                res = std::move(res) + itr1->x() * (itr1->y() - itr0->y());
+            assert(_vecs.size() >= 1);
+            T res = _vecs[0].x() * _vecs[0].y();
+            if (_vecs.size() == 1) {
+                return res;
+            }
+            auto prev_y = _vecs[0].y();
+            for (auto it = _vecs.begin() + 1; it != _vecs.end(); ++it) {
+                res += it->x() * (it->y() - prev_y);
+                prev_y = it->y();
             }
             return res;
         }
@@ -258,11 +262,14 @@ namespace recti {
      */
     template <typename T>
     inline auto point_in_rpolygon(std::span<const Point<T>> pointset, const Point<T> &ptq) -> bool {
-        auto res = false;
         auto pt0 = pointset.back();
-        for (auto &&pt1 : pointset) {
-            if ((pt1.ycoord() <= ptq.ycoord() && ptq.ycoord() < pt0.ycoord())
-                || (pt0.ycoord() <= ptq.ycoord() && ptq.ycoord() < pt1.ycoord())) {
+        const auto &qy = ptq.ycoord();
+        const auto &p0y = pt0.ycoord();
+
+        auto res = false;
+        for (const auto &pt1 : pointset) {
+            const auto &p1y = pt1.ycoord();
+            if ((p1y <= qy && qy < p0y) || (p0y <= qy && qy < p1y)) {
                 if (pt1.xcoord() > ptq.xcoord()) {
                     res = !res;
                 }
