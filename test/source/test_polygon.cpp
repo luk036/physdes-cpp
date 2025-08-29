@@ -66,3 +66,15 @@ TEST_CASE("Polygon test (ycoord-mono 50)") {
     CHECK(!polygon_is_clockwise<int>(S));
     CHECK(point_in_polygon<int>(S, q));
 }
+
+TEST_CASE("Polygon rectilinear") {
+    auto S = std::vector<Point<int>>{{0, 0}, {0, 1}, {1, 1}, {1, 0}};
+    auto P = Polygon<int>(S);
+    CHECK(P.is_rectilinear());
+}
+
+TEST_CASE("Polygon non-rectilinear") {
+    auto S = std::vector<Point<int>>{{0, 0}, {1, 1}, {0, 1}};
+    auto P = Polygon<int>(S);
+    CHECK(!P.is_rectilinear());
+}

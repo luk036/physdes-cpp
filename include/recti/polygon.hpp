@@ -85,6 +85,43 @@ namespace recti {
          * @return Point<T>
          */
         auto ub() const -> Point<T>;
+
+        /**
+         * @brief Checks if the polygon is rectilinear.
+         *
+         * A polygon is rectilinear if all its edges are either horizontal or
+         * vertical. This function iterates through the vertices of the polygon
+         * and checks if each edge is either horizontal or vertical.
+         *
+         * @return true if the polygon is rectilinear, false otherwise.
+         */
+        constexpr auto is_rectilinear() const -> bool {
+            if (_vecs.empty()) {
+                return true;
+            }
+
+            // Edge from v0 to v1
+            auto edge_vec = _vecs[0];
+            if (edge_vec.x() != 0 && edge_vec.y() != 0) {
+                return false;
+            }
+
+            // Edges from vi to v(i+1)
+            for (size_t i = 1; i < _vecs.size(); ++i) {
+                edge_vec = _vecs[i] - _vecs[i-1];
+                if (edge_vec.x() != 0 && edge_vec.y() != 0) {
+                    return false;
+                }
+            }
+
+            // Edge from last vertex to v0
+            edge_vec = -_vecs.back();
+            if (edge_vec.x() != 0 && edge_vec.y() != 0) {
+                return false;
+            }
+
+            return true;
+        }
     };
 
     /**
