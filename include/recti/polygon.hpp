@@ -1,9 +1,12 @@
 #pragma once
 
 #include <algorithm>
+#include <functional>
 #include <span>
 #include <utility>  // for std::pair
 #include <vector>
+#include <iterator>
+#include <cassert>
 
 #include "recti.hpp"
 
@@ -25,6 +28,20 @@ namespace recti {
 
       public:
         /**
+         * @brief Default constructor
+         */
+        constexpr Polygon() = default;
+
+        /**
+         * @brief Constructs a new Polygon object from origin and vectors
+         *
+         * @param[in] origin The origin point of the polygon
+         * @param[in] vecs Vector of displacement vectors from origin
+         */
+        constexpr Polygon(Point<T> origin, std::vector<Vector2<T>> vecs) 
+            : _origin{std::move(origin)}, _vecs{std::move(vecs)} {}
+
+        /**
          * @brief Constructs a new Polygon object from a set of points.
          *
          * This constructor takes a `std::span` of `Point<T>` objects representing the
@@ -43,6 +60,20 @@ namespace recti {
         }
 
         /**
+         * @brief Equality comparison operator
+         */
+        constexpr bool operator==(const Polygon& rhs) const {
+            return _origin == rhs._origin && _vecs == rhs._vecs;
+        }
+
+        /**
+         * @brief Inequality comparison operator
+         */
+        constexpr bool operator!=(const Polygon& rhs) const {
+            return !(*this == rhs);
+        }
+
+        /**
          * @brief Adds a vector to the origin of the polygon, effectively translating the
          * polygon.
          *
@@ -51,6 +82,18 @@ namespace recti {
          */
         constexpr auto operator+=(const Vector2<T> &rhs) -> Polygon & {
             this->_origin += rhs;
+            return *this;
+        }
+
+        /**
+         * @brief Subtracts a vector from the origin of the polygon, effectively translating the
+         * polygon.
+         *
+         * @param[in] rhs The vector to subtract from the origin.
+         * @return A reference to the modified polygon.
+         */
+        constexpr auto operator-=(const Vector2<T> &rhs) -> Polygon & {
+            this->_origin -= rhs;
             return *this;
         }
 
@@ -65,6 +108,7 @@ namespace recti {
          */
         constexpr auto signed_area_x2() const -> T {
             if (_vecs.size() < 2) return T{0};
+            
             T res = _vecs[0].x() * _vecs[1].y() - _vecs.back().x() * _vecs[_vecs.size() - 2].y();
             for (size_t i = 1; i < _vecs.size() - 1; ++i) {
                 res += _vecs[i].x() * (_vecs[i + 1].y() - _vecs[i - 1].y());
@@ -73,53 +117,93 @@ namespace recti {
         }
 
         /**
-         * @brief
-         *
-         * @return Point<T>
+         * @brief Gets the origin point of the polygon
          */
-        auto lb() const -> Point<T>;
+        constexpr const Point<T>& origin() const { return _origin; }
 
         /**
-         * @brief
-         *
-         * @return Point<T>
+         * @brief Gets the displacement vectors of the polygon
          */
-        auto ub() const -> Point<T>;
+        constexpr const std::vector<Vector2<T>>& vectors() const { return _vecs; }
+
+        /**
+         * @brief Gets all vertices of the polygon as points
+         */
+        constexpr auto vertices() const -> std::vector<Point<T>> {
+            std::vector<Point<T>> result;
+            result.reserve(_vecs.size() + 1);
+            result.push_back(_origin);
+            for (const auto& vec : _vecs) {
+                result.push_back(_origin + vec);
+            }
+            return result;
+        }
 
         /**
          * @brief Checks if the polygon is rectilinear.
          *
          * A polygon is rectilinear if all its edges are either horizontal or
-         * vertical. This function iterates through the vertices of the polygon
-         * and checks if each edge is either horizontal or vertical.
+         * vertical.
          *
          * @return true if the polygon is rectilinear, false otherwise.
          */
-        constexpr auto is_rectilinear() const -> bool {
-            if (_vecs.empty()) {
-                return true;
-            }
-
-            // Edge from v0 to v1
-            auto edge_vec = _vecs[0];
-            if (edge_vec.x() != 0 && edge_vec.y() != 0) {
-                return false;
-            }
-
-            // Edges from vi to v(i+1)
-            for (size_t i = 1; i < _vecs.size(); ++i) {
-                edge_vec = _vecs[i] - _vecs[i-1];
-                if (edge_vec.x() != 0 && edge_vec.y() != 0) {
+        constexpr auto is_rectilinear() const -> bool {            
+            // Create a pointset with all vertices relative to origin
+            std::vector<Vector2<T>> pointset;
+            pointset.reserve(_vecs.size() + 1);
+            pointset.emplace_back(0, 0);
+            pointset.insert(pointset.end(), _vecs.begin(), _vecs.end());
+            
+            // Check all consecutive edges
+            for (size_t i = 0; i < pointset.size(); ++i) {
+                size_t next = (i + 1) % pointset.size();
+                const auto& v1 = pointset[i];
+                const auto& v2 = pointset[next];
+                
+                if (v1.x() != v2.x() && v1.y() != v2.y()) {
                     return false;
                 }
             }
+            
+            return true;
+        }
 
-            // Edge from last vertex to v0
-            edge_vec = -_vecs.back();
-            if (edge_vec.x() != 0 && edge_vec.y() != 0) {
-                return false;
+        /**
+         * @brief Checks if the polygon is convex.
+         *
+         * A polygon is convex if all its interior angles are less than or equal to 180 degrees.
+         *
+         * @return true if the polygon is convex, false otherwise.
+         */
+        constexpr auto is_convex() const -> bool {
+            if (_vecs.size() < 2) return false;
+            if (_vecs.size() == 2) return true; // Triangle is convex
+            
+            // Create a pointset with all vertices relative to origin
+            std::vector<Vector2<T>> pointset;
+            pointset.reserve(_vecs.size() + 1);
+            pointset.emplace_back(0, 0);
+            pointset.insert(pointset.end(), _vecs.begin(), _vecs.end());
+            
+            // Determine initial cross product sign
+            const auto& pv0 = pointset[pointset.size() - 2];
+            const auto& pv2 = pointset[1];
+            T cross_product_sign = -pv0.x() * pv2.y() + pv0.y() * pv2.x();
+            
+            // Check all consecutive edges
+            for (size_t i = 1; i < pointset.size() - 1; ++i) {
+                const auto& v0 = pointset[i - 1];
+                const auto& v1 = pointset[i];
+                const auto& v2 = pointset[i + 1];
+                
+                T current_cross_product = (v1.x() - v0.x()) * (v2.y() - v1.y()) - 
+                                         (v1.y() - v0.y()) * (v2.x() - v1.x());
+                
+                if ((cross_product_sign > 0) != (current_cross_product > 0)) {
+                    return false;
+                }
             }
-
+            
             return true;
         }
     };
@@ -139,13 +223,13 @@ namespace recti {
      * @param poly The polygon to write to the output stream.
      * @return The output stream, for method chaining.
      */
-    template <class Stream, typename T> auto operator<<(Stream &out, const Polygon<T> &poly)
-        -> Stream & {
-        for (auto &&vtx : poly) {
-            out << "  \\draw " << vtx << ";\n";
-        }
-        return out;
-    }
+    // template <class Stream, typename T> auto operator<<(Stream &out, const Polygon<T> &poly)
+    //     -> Stream & {
+    //     for (auto &&vtx : poly) {
+    //         out << "  \\draw " << vtx << ";\n";
+    //     }
+    //     return out;
+    // }
 
     /**
      * @brief Create a monotone polygon from a range of points.
