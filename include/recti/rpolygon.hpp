@@ -6,6 +6,14 @@
 #include <vector>
 
 #include "recti.hpp"
+#include <algorithm>
+#include <cassert>
+#include <functional>
+#include <iterator>
+#include <span>
+#include <utility>
+#include <vector>
+#include "polygon.hpp"
 
 namespace recti {
 
@@ -21,11 +29,25 @@ namespace recti {
     template <typename T> class RPolygon {
       private:
         Point<T> _origin{};
-        std::vector<Vector2<T>> _vecs{};  // @todo: add custom allocator support
+        std::vector<Vector2<T>> _vecs{};
 
       public:
         /**
-         * @brief Constructs a new `RPolygon` object from a set of points.
+         * @brief Default constructor
+         */
+        constexpr RPolygon() = default;
+
+        /**
+         * @brief Constructs a new RPolygon object from origin and vectors
+         *
+         * @param[in] origin The origin point of the polygon
+         * @param[in] vecs Vector of displacement vectors from origin
+         */
+        constexpr RPolygon(Point<T> origin, std::vector<Vector2<T>> vecs) 
+            : _origin{std::move(origin)}, _vecs{std::move(vecs)} {}
+
+        /**
+         * @brief Constructs a new RPolygon object from a set of points.
          *
          * This constructor takes a `std::span` of `Point<T>` objects representing the
          * vertices of the rectilinear polygon. The first point in the span is used as
@@ -37,10 +59,25 @@ namespace recti {
          */
         explicit constexpr RPolygon(std::span<const Point<T>> pointset)
             : _origin{pointset.front()} {
-            _vecs.reserve(pointset.size() - 1);  // Pre-allocate memory
-            for (auto itr = std::next(pointset.begin()); itr != pointset.end(); ++itr) {
-                _vecs.emplace_back(*itr - _origin);  // Use emplace_back for in-place construction
+            if (pointset.size() <= 1) return;
+            _vecs.reserve(pointset.size() - 1);
+            for (auto it = pointset.begin() + 1; it != pointset.end(); ++it) {
+                _vecs.emplace_back(*it - _origin);
             }
+        }
+
+        /**
+         * @brief Equality comparison operator
+         */
+        constexpr bool operator==(const RPolygon& rhs) const {
+            return _origin == rhs._origin && _vecs == rhs._vecs;
+        }
+
+        /**
+         * @brief Inequality comparison operator
+         */
+        constexpr bool operator!=(const RPolygon& rhs) const {
+            return !(*this == rhs);
         }
 
         /**
@@ -49,62 +86,114 @@ namespace recti {
          * This method adds the given vector to the origin point of the rectilinear polygon,
          * effectively translating the entire polygon by the specified vector.
          *
-         * @param[in] vector The vector to add to the origin.
+         * @param[in] rhs The vector to add to the origin.
          * @return A reference to the modified RPolygon object.
          */
-        constexpr auto operator+=(const Vector2<T> &vector) -> RPolygon & {
-            this->_origin += vector;
+        constexpr auto operator+=(const Vector2<T> &rhs) -> RPolygon & {
+            this->_origin += rhs;
             return *this;
+        }
+
+        /**
+         * @brief Subtracts a vector from the origin of the rectilinear polygon.
+         *
+         * This method subtracts the given vector from the origin point of the rectilinear polygon,
+         * effectively translating the entire polygon by the negative of the specified vector.
+         *
+         * @param[in] rhs The vector to subtract from the origin.
+         * @return A reference to the modified RPolygon object.
+         */
+        constexpr auto operator-=(const Vector2<T> &rhs) -> RPolygon & {
+            this->_origin -= rhs;
+            return *this;
+        }
+
+        /**
+         * @brief Gets the origin point of the polygon
+         */
+        constexpr const Point<T>& origin() const { return _origin; }
+
+        /**
+         * @brief Gets the displacement vectors of the polygon
+         */
+        constexpr const std::vector<Vector2<T>>& vectors() const { return _vecs; }
+
+        /**
+         * @brief Gets all vertices of the polygon as points
+         */
+        constexpr auto vertices() const -> std::vector<Point<T>> {
+            std::vector<Point<T>> result;
+            result.reserve(_vecs.size() + 1);
+            result.push_back(_origin);
+            for (const auto& vec : _vecs) {
+                result.push_back(_origin + vec);
+            }
+            return result;
         }
 
         /**
          * @brief Calculates the signed area of the rectilinear polygon.
          *
          * This method calculates the signed area of the rectilinear polygon represented by this
-         * `RPolygon` object.
+         * `RPolygon` object using the shoelace formula.
          *
          * @return The signed area of the rectilinear polygon.
          */
         constexpr auto signed_area() const -> T {
-            assert(_vecs.size() >= 1);
-            T res = _vecs[0].x() * _vecs[0].y();
-            if (_vecs.size() == 1) {
-                return res;
-            }
-            auto prev_y = _vecs[0].y();
-            for (auto it = _vecs.begin() + 1; it != _vecs.end(); ++it) {
-                res += it->x() * (it->y() - prev_y);
-                prev_y = it->y();
+            if (_vecs.empty()) return T{0};
+            
+            auto it = _vecs.begin();
+            Vector2<T> vec0 = *it++;
+            T res = vec0.x() * vec0.y();
+            
+            for (; it != _vecs.end(); ++it) {
+                Vector2<T> vec1 = *it;
+                res += vec1.x() * (vec1.y() - vec0.y());
+                vec0 = vec1;
             }
             return res;
         }
 
         /**
-         * @brief Checks if the given point is contained within the rectilinear polygon.
+         * @brief Converts the rectilinear polygon to a general polygon
          *
-         * This method checks if the provided point is contained within the rectilinear polygon
-         * represented by this `RPolygon` object.
+         * This method adds intermediate points to ensure the polygon remains rectilinear
+         * when converted to a general polygon representation.
          *
-         * @tparam U The type of the point coordinates.
-         * @param[in] rhs The point to check for containment.
-         * @return `true` if the point is contained within the rectilinear polygon, `false`
-         * otherwise.
+         * @return A Polygon object representing the converted polygon
          */
-        template <typename U> auto contains(const Point<U> &rhs) const -> bool;
+        constexpr auto to_polygon() const -> Polygon<T> {
+            if (_vecs.empty()) {
+                return Polygon<T>(_origin, {});
+            }
+
+            std::vector<Vector2<T>> new_vecs;
+            Vector2<T> current_pt(0, 0);
+
+            for (const auto& next_pt : _vecs) {
+                if (current_pt.x() != next_pt.x() && current_pt.y() != next_pt.y()) {
+                    // Add intermediate point for non-rectilinear segment
+                    new_vecs.emplace_back(next_pt.x(), current_pt.y());
+                }
+                new_vecs.push_back(next_pt);
+                current_pt = next_pt;
+            }
+
+            // Handle closing segment
+            Vector2<T> first_pt(0, 0);
+            if (current_pt.x() != first_pt.x() && current_pt.y() != first_pt.y()) {
+                new_vecs.emplace_back(first_pt.x(), current_pt.y());
+            }
+
+            return Polygon<T>(_origin, std::move(new_vecs));
+        }
 
         /**
-         * @brief
-         *
-         * @return Point<T>
+         * @brief Checks if the polygon is rectilinear (all edges are horizontal or vertical)
          */
-        auto lb() const -> Point<T>;
-
-        /**
-         * @brief
-         *
-         * @return Point<T>
-         */
-        auto ub() const -> Point<T>;
+        constexpr auto is_rectilinear() const -> bool {
+            return true;
+        }
     };
 
     /**

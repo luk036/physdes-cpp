@@ -1,5 +1,6 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 #include <fmt/core.h>
+#include <ostream>
 
 // #include <span>            // for span
 #include <ldsgen/ilds.hpp>     // for VdCorput
@@ -68,4 +69,68 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono 50)") {
     CHECK_EQ(P.signed_area(), -2032128);
     CHECK(rpolygon_is_clockwise<int>(S));
     CHECK(!point_in_rpolygon<int>(S, q));
+}
+
+TEST_CASE("Rectilinear Polygon point_in_rpolygon test") {
+    // Define a square in counter-clockwise order
+    auto S = std::vector<Point<int>>{
+        {0, 0}, {10, 0}, {10, 10}, {0, 10}
+    };
+
+    // Test points strictly inside the polygon
+    CHECK(point_in_rpolygon<int>(S, Point<int>{5, 5}));
+    CHECK(point_in_rpolygon<int>(S, Point<int>{1, 1}));
+    CHECK(point_in_rpolygon<int>(S, Point<int>{9, 9}));
+
+    // Test points strictly outside the polygon
+    CHECK(!point_in_rpolygon<int>(S, Point<int>{-1, -1}));
+    CHECK(!point_in_rpolygon<int>(S, Point<int>{11, 5}));
+    CHECK(!point_in_rpolygon<int>(S, Point<int>{5, -1}));
+    CHECK(!point_in_rpolygon<int>(S, Point<int>{5, 11}));
+}
+
+TEST_CASE("RPolygon to_polygon conversion") {
+    auto coords = std::vector<Point<int>>{{0, 0}, {10, 10}, {5, 5}};
+    auto r_poly = RPolygon<int>(coords);
+    auto poly = r_poly.to_polygon();
+    
+    // Expected coordinates after conversion to maintain rectilinearity
+    auto expected_coords = std::vector<Point<int>>{{0, 0}, {10, 0}, {10, 10}, {5, 10}, {5, 5}, {0, 5}};
+    auto expected_poly = Polygon<int>(expected_coords);
+    
+    CHECK(poly == expected_poly);
+}
+
+TEST_CASE("RPolygon rectilinearity test") {
+    // Rectilinear polygon
+    auto rectilinear_coords = std::vector<Point<int>>{{0, 0}, {10, 10}, {5, 5}};
+    auto rectilinear_poly = RPolygon<int>(rectilinear_coords);
+    CHECK(rectilinear_poly.is_rectilinear());
+}
+
+TEST_CASE("RPolygon equality test") {
+    auto coords1 = std::vector<Point<int>>{{0, 0}, {5, 0}, {5, 5}, {0, 5}};
+    auto coords2 = std::vector<Point<int>>{{0, 0}, {5, 0}, {5, 5}, {0, 5}};
+    
+    auto poly1 = RPolygon<int>(coords1);
+    auto poly2 = RPolygon<int>(coords2);
+    
+    CHECK(poly1 == poly2);
+    
+    // Test inequality
+    auto poly3 = RPolygon<int>(coords1);
+    poly3 += Vector2<int>{1, 0};
+    CHECK(poly1 != poly3);
+}
+
+TEST_CASE("RPolygon vertices access") {
+    auto coords = std::vector<Point<int>>{{0, 0}, {5, 0}, {5, 5}, {0, 5}};
+    auto poly = RPolygon<int>(coords);
+    
+    auto vertices = poly.vertices();
+    CHECK(vertices.size() == 4);
+    CHECK(vertices[0] == Point<int>{0, 0});
+    CHECK(vertices[1] == Point<int>{5, 0});
+    CHECK(vertices[2] == Point<int>{5, 5});
+    CHECK(vertices[3] == Point<int>{0, 5});
 }
