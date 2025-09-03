@@ -334,6 +334,112 @@ namespace recti {
     }
 
     /**
+     * @brief Check if a polygon is monotone with respect to a given direction function
+     * 
+     * @tparam T The type of the coordinates
+     * @tparam Compare The type of the comparison function
+     * @param pointset The polygon vertices as points
+     * @param dir The direction function that extracts a key for comparison
+     * @return true if the polygon is monotone, false otherwise
+     */
+    template <typename T, typename Compare>
+    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, Compare&& dir) -> bool {
+        if (pointset.size() <= 3) {
+            return true;
+        }
+        
+        // Find the minimum point according to the direction function
+        auto min_it = std::min_element(pointset.begin(), pointset.end(), 
+            [&dir](const Point<T>& a, const Point<T>& b) {
+                return dir(a) < dir(b);
+            });
+        
+        // Create a rotated span starting from the minimum point
+        std::vector<Point<T>> rotated_pointset;
+        rotated_pointset.reserve(pointset.size());
+        rotated_pointset.insert(rotated_pointset.end(), min_it, pointset.end());
+        rotated_pointset.insert(rotated_pointset.end(), pointset.begin(), min_it);
+        
+        size_t n = rotated_pointset.size();
+        size_t i = 0;
+        
+        // Check for increasing sequence
+        for (i = 0; i < n - 1; ++i) {
+            auto current_loc = dir(rotated_pointset[i]);
+            auto next_loc = dir(rotated_pointset[i + 1]);
+            if (current_loc > next_loc) {
+                break;
+            }
+        }
+        
+        // If we never broke, it's monotone increasing
+        if (i == n - 1) {
+            return true;
+        }
+        
+        // Check the remaining part is monotone decreasing
+        for (size_t j = i; j < n - 1; ++j) {
+            auto current_loc = dir(rotated_pointset[j]);
+            auto next_loc = dir(rotated_pointset[j + 1]);
+            if (current_loc < next_loc) {
+                return false;
+            }
+        }
+        
+        return true;
+    }    
+
+    /**
+     * @brief Check if a polygon is x-monotone
+     * 
+     * A polygon is x-monotone if it can be divided into two chains that are both
+     * monotone with respect to the x-axis.
+     * 
+     * @tparam T The type of the coordinates
+     * @param pointset The polygon vertices as points
+     * @return true if the polygon is x-monotone, false otherwise
+     */
+    template <typename T>
+    inline auto rpolygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool {
+        auto x_key = [](const Point<T>& pt) -> std::pair<T, T> {
+            return {pt.xcoord(), pt.ycoord()};
+        };
+        return rpolygon_is_monotone(pointset, x_key);
+    }    
+
+    /**
+     * @brief Check if a polygon is y-monotone
+     * 
+     * A polygon is y-monotone if it can be divided into two chains that are both
+     * monotone with respect to the y-axis.
+     * 
+     * @tparam T The type of the coordinates
+     * @param pointset The polygon vertices as points
+     * @return true if the polygon is y-monotone, false otherwise
+     */
+    template <typename T>
+    inline auto rpolygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool {
+        auto y_key = [](const Point<T>& pt) -> std::pair<T, T> {
+            return {pt.ycoord(), pt.xcoord()};
+        };
+        return rpolygon_is_monotone(pointset, y_key);
+    }
+
+    /**
+     * @brief Check if a polygon is convex
+     * 
+     * A rectilinear polygon is convex precisely when it is both x-monotone and y-monotone.
+     * 
+     * @tparam T The type of the coordinates
+     * @param pointset The polygon vertices as points
+     * @return true if the polygon is y-monotone, false otherwise
+     */
+    template <typename T>
+    inline auto rpolygon_is_convex(std::span<const Point<T>> pointset) -> bool {
+        return rpolygon_is_xmonotone(pointset) && rpolygon_is_ymonotone(pointset);
+    }
+
+    /**
      * @brief Determine if a point is within a rectilinear polygon.
      *
      * This function implements the Wm. Randolph Franklin algorithm to determine if a
@@ -376,20 +482,12 @@ namespace recti {
      *
      * @tparam T The numeric type of the point coordinates.
      * @param pointset The set of points defining the rectilinear polygon.
-     * @return true if the polygon is oriented clockwise, false otherwise.
+     * @return true if the polygon is oriented anti-clockwise, false otherwise.
      */
-    template <typename T> inline auto rpolygon_is_clockwise(std::span<const Point<T>> pointset)
+    template <typename T> inline auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset)
         -> bool {
         auto it1 = std::min_element(pointset.begin(), pointset.end());
-        auto it0 = it1 != pointset.begin() ? std::prev(it1) : pointset.end() - 1;
-        if (it1->ycoord() < it0->ycoord()) {
-            return false;
-        }
-        if (it1->ycoord() > it0->ycoord()) {
-            return true;
-        }
-        // it1->ycoord() == it0->ycoord()
-        auto it2 = std::next(it1) != pointset.end() ? std::next(it1) : pointset.begin();
-        return it2->ycoord() > it1->ycoord();
+        auto it0 = it1 != pointset.begin() ? std::prev(it1) : std::prev(pointset.end());
+        return it0->ycoord() > it1->ycoord();
     }
 }  // namespace recti

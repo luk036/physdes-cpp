@@ -17,9 +17,12 @@ TEST_CASE("Polygon test (test polygon)") {
                                      {-3, -4}, {1, 4}};
 
     create_ymono_polygon(S.begin(), S.end());
+    CHECK(polygon_is_ymonotone<int>(S));
+    CHECK(!polygon_is_xmonotone<int>(S));    
+    CHECK(polygon_is_anticlockwise<int>(S));
     auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 102);
-    
+
     // Test += and -= operators
     auto Q = Polygon<int>(S);
     Q += Vector2<int>{4, 5};
@@ -33,6 +36,9 @@ TEST_CASE("Polygon test (ycoord-mono)") {
                                      {-3, -4}, {1, 4}};
 
     create_ymono_polygon(S.begin(), S.end());
+    CHECK(polygon_is_ymonotone<int>(S));
+    CHECK(!polygon_is_xmonotone<int>(S));    
+    CHECK(polygon_is_anticlockwise<int>(S));
     auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 102);
     CHECK(!point_in_polygon<int>(S, Point<int>{4, 5}));
@@ -44,9 +50,11 @@ TEST_CASE("Polygon test (xcoord-mono)") {
                                      {-3, -4}, {1, 4}};
     
     create_xmono_polygon(S.begin(), S.end());
+    CHECK(polygon_is_xmonotone<int>(S));
+    CHECK(!polygon_is_ymonotone<int>(S));    
+    CHECK(polygon_is_anticlockwise<int>(S));
     auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 111);
-    CHECK(!polygon_is_clockwise<int>(S));
 }
 
 TEST_CASE("Polygon test (ycoord-mono 20)") {
@@ -59,6 +67,9 @@ TEST_CASE("Polygon test (ycoord-mono 20)") {
     }
     
     create_ymono_polygon(S.begin(), S.end());
+    CHECK(polygon_is_ymonotone<int>(S));
+    CHECK(!polygon_is_xmonotone<int>(S));    
+    CHECK(polygon_is_anticlockwise<int>(S));
     auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 4074624);
 }
@@ -73,6 +84,9 @@ TEST_CASE("Polygon test (xcoord-mono 20)") {
     }
     
     create_xmono_polygon(S.begin(), S.end());
+    CHECK(polygon_is_xmonotone<int>(S));
+    CHECK(!polygon_is_ymonotone<int>(S));    
+    CHECK(polygon_is_anticlockwise<int>(S));
     auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 3862080);
 }
@@ -87,6 +101,9 @@ TEST_CASE("Polygon test (ycoord-mono 50)") {
     }
     
     create_ymono_polygon(S.begin(), S.end());
+    CHECK(polygon_is_ymonotone<int>(S));
+    CHECK(!polygon_is_xmonotone<int>(S));    
+    CHECK(polygon_is_anticlockwise<int>(S));
     auto q = Point<int>(int(hgenX.pop()), int(hgenY.pop()));
     
     // fmt::print(
@@ -111,7 +128,6 @@ TEST_CASE("Polygon test (ycoord-mono 50)") {
     
     auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 4409856);
-    CHECK(!polygon_is_clockwise<int>(S));
     CHECK(point_in_polygon<int>(S, q));
 
 }
@@ -148,8 +164,7 @@ TEST_CASE("Polygon convexity") {
 TEST_CASE("Polygon equality") {
     auto coords = std::vector<Point<int>>{{0, 0}, {1, 0}, {1, 1}, {0, 1}};
     auto P = Polygon<int>(coords);
-    auto Q = Polygon<int>(coords);
-    
+    auto Q = Polygon<int>(coords);    
     CHECK(P == Q);
     
     // Test inequality
@@ -200,7 +215,7 @@ TEST_CASE("Polygon test (ycoord-mono) 2") {
     create_ymono_polygon(S.begin(), S.end());
     auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 200);
-    CHECK(!polygon_is_clockwise<int>(S));
+    CHECK(polygon_is_anticlockwise<int>(S));
     CHECK(point_in_polygon<int>(S, Point<int>{5, 5}));
     CHECK(!point_in_polygon<int>(S, Point<int>{15, 5}));
 }
