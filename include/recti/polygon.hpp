@@ -302,58 +302,64 @@ namespace recti {
     /**
      * @brief Check if a polygon is monotone with respect to a given direction function
      * 
+     * A polygon is monotone with respect to a direction if it can be divided into two chains
+     * that are both monotone (either entirely non-decreasing or non-increasing) in that direction.
+     * 
      * @tparam T The type of the coordinates
-     * @tparam Compare The type of the comparison function
+     * @tparam DirFunc The type of the direction function
      * @param pointset The polygon vertices as points
-     * @param dir The direction function that extracts a key for comparison
+     * @param dir The direction function that returns a key for comparison
      * @return true if the polygon is monotone, false otherwise
      */
-    template <typename T, typename Compare>
-    inline auto polygon_is_monotone(std::span<const Point<T>> pointset, Compare&& dir) -> bool {
+    template <typename T, typename DirFunc>
+    inline auto polygon_is_monotone(std::span<const Point<T>> pointset, DirFunc&& dir) -> bool {
         if (pointset.size() <= 3) {
             return true;
         }
         
-        // Find the minimum point according to the direction function
-        auto min_it = std::min_element(pointset.begin(), pointset.end(), 
+        const size_t n = pointset.size();
+        
+        // Find min and max points according to the direction function using std::minmax_element
+        auto [min_it, max_it] = std::minmax_element(
+            pointset.begin(), pointset.end(),
             [&dir](const Point<T>& a, const Point<T>& b) {
                 return dir(a) < dir(b);
-            });
-        
-        // Create a rotated span starting from the minimum point
-        std::vector<Point<T>> rotated_pointset;
-        rotated_pointset.reserve(pointset.size());
-        rotated_pointset.insert(rotated_pointset.end(), min_it, pointset.end());
-        rotated_pointset.insert(rotated_pointset.end(), pointset.begin(), min_it);
-        
-        size_t n = rotated_pointset.size();
-        size_t i = 0;
-        
-        // Check for increasing sequence
-        for (i = 0; i < n - 1; ++i) {
-            auto current_loc = dir(rotated_pointset[i]);
-            auto next_loc = dir(rotated_pointset[i + 1]);
-            if (current_loc > next_loc) {
-                break;
             }
-        }
+        );
         
-        // If we never broke, it's monotone increasing
-        if (i == n - 1) {
-            return true;
-        }
+        size_t min_index = std::distance(pointset.begin(), min_it);
+        size_t max_index = std::distance(pointset.begin(), max_it);
         
-        // Check the remaining part is monotone decreasing
-        for (size_t j = i; j < n - 1; ++j) {
-            auto current_loc = dir(rotated_pointset[j]);
-            auto next_loc = dir(rotated_pointset[j + 1]);
-            if (current_loc < next_loc) {
+        // Check chain from min to max (should be non-decreasing)
+        size_t i = min_index;
+        while (i != max_index) {
+            size_t next_i = (i + 1) % n;
+            auto current_key = dir(pointset[i]);
+            auto next_key = dir(pointset[next_i]);
+            
+            // Compare the first element of the key tuple (the main direction component)
+            if (current_key.first > next_key.first) {
                 return false;
             }
+            i = next_i;
+        }
+        
+        // Check chain from max to min (should be non-increasing)
+        i = max_index;
+        while (i != min_index) {
+            size_t next_i = (i + 1) % n;
+            auto current_key = dir(pointset[i]);
+            auto next_key = dir(pointset[next_i]);
+            
+            // Compare the first element of the key tuple (the main direction component)
+            if (current_key.first < next_key.first) {
+                return false;
+            }
+            i = next_i;
         }
         
         return true;
-    }    
+    }
 
     /**
      * @brief Check if a polygon is x-monotone
@@ -371,7 +377,7 @@ namespace recti {
             return {pt.xcoord(), pt.ycoord()};
         };
         return polygon_is_monotone(pointset, x_key);
-    }    
+    }
 
     /**
      * @brief Check if a polygon is y-monotone
