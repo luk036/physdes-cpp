@@ -1,10 +1,10 @@
 #pragma once
 
 #include <algorithm>
+#include <cassert>
 #include <span>
 #include <utility>  // for std::pair
 #include <vector>
-#include <cassert>
 
 #include "recti.hpp"
 
@@ -36,7 +36,7 @@ namespace recti {
          * @param[in] origin The origin point of the polygon
          * @param[in] vecs Vector of displacement vectors from origin
          */
-        constexpr Polygon(Point<T> origin, std::vector<Vector2<T>> vecs) 
+        constexpr Polygon(Point<T> origin, std::vector<Vector2<T>> vecs)
             : _origin{std::move(origin)}, _vecs{std::move(vecs)} {}
 
         /**
@@ -67,9 +67,7 @@ namespace recti {
         /**
          * @brief Inequality comparison operator
          */
-        constexpr bool operator!=(const Polygon& rhs) const {
-            return !(*this == rhs);
-        }
+        constexpr bool operator!=(const Polygon& rhs) const { return !(*this == rhs); }
 
         /**
          * @brief Adds a vector to the origin of the polygon, effectively translating the
@@ -78,7 +76,7 @@ namespace recti {
          * @param[in] rhs The vector to add to the origin.
          * @return A reference to the modified polygon.
          */
-        constexpr auto operator+=(const Vector2<T> &rhs) -> Polygon & {
+        constexpr auto operator+=(const Vector2<T>& rhs) -> Polygon& {
             this->_origin += rhs;
             return *this;
         }
@@ -90,7 +88,7 @@ namespace recti {
          * @param[in] rhs The vector to subtract from the origin.
          * @return A reference to the modified polygon.
          */
-        constexpr auto operator-=(const Vector2<T> &rhs) -> Polygon & {
+        constexpr auto operator-=(const Vector2<T>& rhs) -> Polygon& {
             this->_origin -= rhs;
             return *this;
         }
@@ -106,7 +104,7 @@ namespace recti {
          */
         constexpr auto signed_area_x2() const -> T {
             if (_vecs.size() < 2) return T{0};
-            
+
             T res = _vecs[0].x() * _vecs[1].y() - _vecs.back().x() * _vecs[_vecs.size() - 2].y();
             for (size_t i = 1; i < _vecs.size() - 1; ++i) {
                 res += _vecs[i].x() * (_vecs[i + 1].y() - _vecs[i - 1].y());
@@ -145,24 +143,24 @@ namespace recti {
          *
          * @return true if the polygon is rectilinear, false otherwise.
          */
-        constexpr auto is_rectilinear() const -> bool {            
+        constexpr auto is_rectilinear() const -> bool {
             // Create a pointset with all vertices relative to origin
             std::vector<Vector2<T>> pointset;
             pointset.reserve(_vecs.size() + 1);
             pointset.emplace_back(0, 0);
             pointset.insert(pointset.end(), _vecs.begin(), _vecs.end());
-            
+
             // Check all consecutive edges
             for (size_t i = 0; i < pointset.size(); ++i) {
                 size_t next = (i + 1) % pointset.size();
                 const auto& v1 = pointset[i];
                 const auto& v2 = pointset[next];
-                
+
                 if (v1.x() != v2.x() && v1.y() != v2.y()) {
                     return false;
                 }
             }
-            
+
             return true;
         }
 
@@ -175,33 +173,33 @@ namespace recti {
          */
         constexpr auto is_convex() const -> bool {
             if (_vecs.size() < 2) return false;
-            if (_vecs.size() == 2) return true; // Triangle is convex
-            
+            if (_vecs.size() == 2) return true;  // Triangle is convex
+
             // Create a pointset with all vertices relative to origin
             std::vector<Vector2<T>> pointset;
             pointset.reserve(_vecs.size() + 1);
             pointset.emplace_back(0, 0);
             pointset.insert(pointset.end(), _vecs.begin(), _vecs.end());
-            
+
             // Determine initial cross product sign
             const auto& pv0 = pointset[pointset.size() - 2];
             const auto& pv2 = pointset[1];
             T cross_product_sign = -pv0.x() * pv2.y() + pv0.y() * pv2.x();
-            
+
             // Check all consecutive edges
             for (size_t i = 1; i < pointset.size() - 1; ++i) {
                 const auto& v0 = pointset[i - 1];
                 const auto& v1 = pointset[i];
                 const auto& v2 = pointset[i + 1];
-                
-                T current_cross_product = (v1.x() - v0.x()) * (v2.y() - v1.y()) - 
-                                         (v1.y() - v0.y()) * (v2.x() - v1.x());
-                
+
+                T current_cross_product
+                    = (v1.x() - v0.x()) * (v2.y() - v1.y()) - (v1.y() - v0.y()) * (v2.x() - v1.x());
+
                 if ((cross_product_sign > 0) != (current_cross_product > 0)) {
                     return false;
                 }
             }
-            
+
             return true;
         }
     };
@@ -246,14 +244,14 @@ namespace recti {
      * @param dir The comparison function for the points.
      */
     template <typename FwIter, typename Compare>
-    inline void create_mono_polygon(FwIter &&first, FwIter &&last, Compare &&dir) {
+    inline void create_mono_polygon(FwIter&& first, FwIter&& last, Compare&& dir) {
         assert(first != last);
 
         auto result = std::minmax_element(first, last, dir);
         auto min_pt = *result.first;
         auto max_pt = *result.second;
         auto displace = max_pt - min_pt;
-        auto middle = std::partition(first, last, [&displace, &min_pt](const auto &elem) -> bool {
+        auto middle = std::partition(first, last, [&displace, &min_pt](const auto& elem) -> bool {
             return displace.cross(elem - min_pt) <= 0;
         });
         std::sort(first, middle, dir);
@@ -272,9 +270,9 @@ namespace recti {
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      */
-    template <typename FwIter> inline auto create_xmono_polygon(FwIter &&first, FwIter &&last)
+    template <typename FwIter> inline auto create_xmono_polygon(FwIter&& first, FwIter&& last)
         -> void {
-        return create_mono_polygon(first, last, [](const auto &lhs, const auto &rhs) -> bool {
+        return create_mono_polygon(first, last, [](const auto& lhs, const auto& rhs) -> bool {
             return std::make_pair(lhs.xcoord(), lhs.ycoord())
                    < std::make_pair(rhs.xcoord(), rhs.ycoord());
         });
@@ -291,9 +289,9 @@ namespace recti {
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      */
-    template <typename FwIter> inline auto create_ymono_polygon(FwIter &&first, FwIter &&last)
+    template <typename FwIter> inline auto create_ymono_polygon(FwIter&& first, FwIter&& last)
         -> void {
-        return create_mono_polygon(first, last, [](const auto &lhs, const auto &rhs) -> bool {
+        return create_mono_polygon(first, last, [](const auto& lhs, const auto& rhs) -> bool {
             return std::make_pair(lhs.ycoord(), lhs.xcoord())
                    < std::make_pair(rhs.ycoord(), rhs.xcoord());
         });
@@ -301,10 +299,10 @@ namespace recti {
 
     /**
      * @brief Check if a polygon is monotone with respect to a given direction function
-     * 
+     *
      * A polygon is monotone with respect to a direction if it can be divided into two chains
      * that are both monotone (either entirely non-decreasing or non-increasing) in that direction.
-     * 
+     *
      * @tparam T The type of the coordinates
      * @tparam DirFunc The type of the direction function
      * @param pointset The polygon vertices as points
@@ -316,84 +314,79 @@ namespace recti {
         if (pointset.size() <= 3) {
             return true;
         }
-        
+
         const size_t n = pointset.size();
-        
+
         // Find min and max points according to the direction function using std::minmax_element
         auto [min_it, max_it] = std::minmax_element(
             pointset.begin(), pointset.end(),
-            [&dir](const Point<T>& a, const Point<T>& b) {
-                return dir(a) < dir(b);
-            }
-        );
-        
-        size_t min_index = std::distance(pointset.begin(), min_it);
-        size_t max_index = std::distance(pointset.begin(), max_it);
-        
+            [&dir](const Point<T>& a, const Point<T>& b) { return dir(a) < dir(b); });
+
+        size_t min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
+        size_t max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
+
         // Check chain from min to max (should be non-decreasing)
         size_t i = min_index;
         while (i != max_index) {
             size_t next_i = (i + 1) % n;
             auto current_key = dir(pointset[i]);
             auto next_key = dir(pointset[next_i]);
-            
+
             // Compare the first element of the key tuple (the main direction component)
             if (current_key.first > next_key.first) {
                 return false;
             }
             i = next_i;
         }
-        
+
         // Check chain from max to min (should be non-increasing)
         i = max_index;
         while (i != min_index) {
             size_t next_i = (i + 1) % n;
             auto current_key = dir(pointset[i]);
             auto next_key = dir(pointset[next_i]);
-            
+
             // Compare the first element of the key tuple (the main direction component)
             if (current_key.first < next_key.first) {
                 return false;
             }
             i = next_i;
         }
-        
+
         return true;
     }
 
     /**
      * @brief Check if a polygon is x-monotone
-     * 
+     *
      * A polygon is x-monotone if it can be divided into two chains that are both
      * monotone with respect to the x-axis.
-     * 
+     *
      * @tparam T The type of the coordinates
      * @param pointset The polygon vertices as points
      * @return true if the polygon is x-monotone, false otherwise
      */
-    template <typename T>
-    inline auto polygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool {
-        auto x_key = [](const Point<T>& pt) -> std::pair<T, T> {
-            return {pt.xcoord(), pt.ycoord()};
-        };
+    template <typename T> inline auto polygon_is_xmonotone(std::span<const Point<T>> pointset)
+        -> bool {
+        auto x_key
+            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
         return polygon_is_monotone(pointset, x_key);
     }
 
     /**
      * @brief Check if a polygon is y-monotone
-     * 
+     *
      * A polygon is y-monotone if it can be divided into two chains that are both
      * monotone with respect to the y-axis.
-     * 
+     *
      * @tparam T The type of the coordinates
      * @param pointset The polygon vertices as points
      * @return true if the polygon is y-monotone, false otherwise
      */
-    template <typename T>
-    inline auto polygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool {
-        auto y_key = [](const Point<T>& pt) -> std::pair<T, T> {
-            return {pt.ycoord(), pt.xcoord()};
-        };
+    template <typename T> inline auto polygon_is_ymonotone(std::span<const Point<T>> pointset)
+        -> bool {
+        auto y_key
+            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
         return polygon_is_monotone(pointset, y_key);
     }
 
@@ -421,14 +414,14 @@ namespace recti {
      * outside the polygon
      */
     template <typename T>
-    inline auto point_in_polygon(std::span<const Point<T>> pointset, const Point<T> &ptq) -> bool {
+    inline auto point_in_polygon(std::span<const Point<T>> pointset, const Point<T>& ptq) -> bool {
         if (pointset.empty()) return false;
 
         bool res = false;
         auto pt0 = pointset.back();
         const auto qy = ptq.ycoord();
 
-        for (const auto &pt1 : pointset) {
+        for (const auto& pt1 : pointset) {
             const auto y0 = pt0.ycoord();
             const auto y1 = pt1.ycoord();
 

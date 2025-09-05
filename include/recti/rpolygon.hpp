@@ -1,19 +1,16 @@
 #pragma once
 
 #include <algorithm>
-#include <span>
-#include <utility>  // for std::pair
-#include <vector>
-
-#include "recti.hpp"
-#include <algorithm>
 #include <cassert>
 #include <functional>
 #include <iterator>
 #include <span>
+#include <utility>  // for std::pair
 #include <utility>
 #include <vector>
+
 #include "polygon.hpp"
+#include "recti.hpp"
 
 namespace recti {
 
@@ -43,7 +40,7 @@ namespace recti {
          * @param[in] origin The origin point of the polygon
          * @param[in] vecs Vector of displacement vectors from origin
          */
-        constexpr RPolygon(Point<T> origin, std::vector<Vector2<T>> vecs) 
+        constexpr RPolygon(Point<T> origin, std::vector<Vector2<T>> vecs)
             : _origin{std::move(origin)}, _vecs{std::move(vecs)} {}
 
         /**
@@ -69,16 +66,14 @@ namespace recti {
         /**
          * @brief Equality comparison operator
          */
-        constexpr bool operator==(const RPolygon& rhs) const {
+        constexpr bool operator==(const RPolygon &rhs) const {
             return _origin == rhs._origin && _vecs == rhs._vecs;
         }
 
         /**
          * @brief Inequality comparison operator
          */
-        constexpr bool operator!=(const RPolygon& rhs) const {
-            return !(*this == rhs);
-        }
+        constexpr bool operator!=(const RPolygon &rhs) const { return !(*this == rhs); }
 
         /**
          * @brief Adds a vector to the origin of the rectilinear polygon.
@@ -111,12 +106,12 @@ namespace recti {
         /**
          * @brief Gets the origin point of the polygon
          */
-        constexpr const Point<T>& origin() const { return _origin; }
+        constexpr const Point<T> &origin() const { return _origin; }
 
         /**
          * @brief Gets the displacement vectors of the polygon
          */
-        constexpr const std::vector<Vector2<T>>& vectors() const { return _vecs; }
+        constexpr const std::vector<Vector2<T>> &vectors() const { return _vecs; }
 
         /**
          * @brief Gets all vertices of the polygon as points
@@ -125,7 +120,7 @@ namespace recti {
             std::vector<Point<T>> result;
             result.reserve(_vecs.size() + 1);
             result.push_back(_origin);
-            for (const auto& vec : _vecs) {
+            for (const auto &vec : _vecs) {
                 result.push_back(_origin + vec);
             }
             return result;
@@ -141,11 +136,11 @@ namespace recti {
          */
         constexpr auto signed_area() const -> T {
             if (_vecs.empty()) return T{0};
-            
+
             auto it = _vecs.begin();
             Vector2<T> vec0 = *it++;
             T res = vec0.x() * vec0.y();
-            
+
             for (; it != _vecs.end(); ++it) {
                 Vector2<T> vec1 = *it;
                 res += vec1.x() * (vec1.y() - vec0.y());
@@ -170,7 +165,7 @@ namespace recti {
             std::vector<Vector2<T>> new_vecs;
             Vector2<T> current_pt(0, 0);
 
-            for (const auto& next_pt : _vecs) {
+            for (const auto &next_pt : _vecs) {
                 if (current_pt.x() != next_pt.x() && current_pt.y() != next_pt.y()) {
                     // Add intermediate point for non-rectilinear segment
                     new_vecs.emplace_back(next_pt.x(), current_pt.y());
@@ -191,9 +186,7 @@ namespace recti {
         /**
          * @brief Checks if the polygon is rectilinear (all edges are horizontal or vertical)
          */
-        constexpr auto is_rectilinear() const -> bool {
-            return true;
-        }
+        constexpr auto is_rectilinear() const -> bool { return true; }
     };
 
     /**
@@ -335,10 +328,10 @@ namespace recti {
 
     /**
      * @brief Check if a polygon is monotone with respect to a given direction function
-     * 
+     *
      * A polygon is monotone with respect to a direction if it can be divided into two chains
      * that are both monotone (either entirely non-decreasing or non-increasing) in that direction.
-     * 
+     *
      * @tparam T The type of the coordinates
      * @tparam DirFunc The type of the direction function
      * @param pointset The polygon vertices as points
@@ -346,102 +339,97 @@ namespace recti {
      * @return true if the polygon is monotone, false otherwise
      */
     template <typename T, typename DirFunc>
-    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, DirFunc&& dir) -> bool {
+    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, DirFunc &&dir) -> bool {
         if (pointset.size() <= 3) {
             return true;
         }
-        
+
         const size_t n = pointset.size();
-        
+
         // Find min and max points according to the direction function using std::minmax_element
         auto [min_it, max_it] = std::minmax_element(
             pointset.begin(), pointset.end(),
-            [&dir](const Point<T>& a, const Point<T>& b) {
-                return dir(a) < dir(b);
-            }
-        );
-        
-        size_t min_index = std::distance(pointset.begin(), min_it);
-        size_t max_index = std::distance(pointset.begin(), max_it);
-        
+            [&dir](const Point<T> &a, const Point<T> &b) { return dir(a) < dir(b); });
+
+        size_t min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
+        size_t max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
+
         // Check chain from min to max (should be non-decreasing)
         size_t i = min_index;
         while (i != max_index) {
             size_t next_i = (i + 1) % n;
             auto current_key = dir(pointset[i]);
             auto next_key = dir(pointset[next_i]);
-            
+
             // Compare the first element of the key tuple (the main direction component)
             if (current_key.first > next_key.first) {
                 return false;
             }
             i = next_i;
         }
-        
+
         // Check chain from max to min (should be non-increasing)
         i = max_index;
         while (i != min_index) {
             size_t next_i = (i + 1) % n;
             auto current_key = dir(pointset[i]);
             auto next_key = dir(pointset[next_i]);
-            
+
             // Compare the first element of the key tuple (the main direction component)
             if (current_key.first < next_key.first) {
                 return false;
             }
             i = next_i;
         }
-        
+
         return true;
     }
 
     /**
      * @brief Check if a polygon is x-monotone
-     * 
+     *
      * A polygon is x-monotone if it can be divided into two chains that are both
      * monotone with respect to the x-axis.
-     * 
+     *
      * @tparam T The type of the coordinates
      * @param pointset The polygon vertices as points
      * @return true if the polygon is x-monotone, false otherwise
      */
-    template <typename T>
-    inline auto rpolygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool {
-        auto x_key = [](const Point<T>& pt) -> std::pair<T, T> {
-            return {pt.xcoord(), pt.ycoord()};
-        };
+    template <typename T> inline auto rpolygon_is_xmonotone(std::span<const Point<T>> pointset)
+        -> bool {
+        auto x_key
+            = [](const Point<T> &pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
         return rpolygon_is_monotone(pointset, x_key);
-    }    
+    }
 
     /**
      * @brief Check if a polygon is y-monotone
-     * 
+     *
      * A polygon is y-monotone if it can be divided into two chains that are both
      * monotone with respect to the y-axis.
-     * 
+     *
      * @tparam T The type of the coordinates
      * @param pointset The polygon vertices as points
      * @return true if the polygon is y-monotone, false otherwise
      */
-    template <typename T>
-    inline auto rpolygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool {
-        auto y_key = [](const Point<T>& pt) -> std::pair<T, T> {
-            return {pt.ycoord(), pt.xcoord()};
-        };
+    template <typename T> inline auto rpolygon_is_ymonotone(std::span<const Point<T>> pointset)
+        -> bool {
+        auto y_key
+            = [](const Point<T> &pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
         return rpolygon_is_monotone(pointset, y_key);
     }
 
     /**
      * @brief Check if a polygon is convex
-     * 
+     *
      * A rectilinear polygon is convex precisely when it is both x-monotone and y-monotone.
-     * 
+     *
      * @tparam T The type of the coordinates
      * @param pointset The polygon vertices as points
      * @return true if the polygon is y-monotone, false otherwise
      */
-    template <typename T>
-    inline auto rpolygon_is_convex(std::span<const Point<T>> pointset) -> bool {
+    template <typename T> inline auto rpolygon_is_convex(std::span<const Point<T>> pointset)
+        -> bool {
         return rpolygon_is_xmonotone(pointset) && rpolygon_is_ymonotone(pointset);
     }
 

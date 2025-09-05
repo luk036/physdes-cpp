@@ -1,5 +1,6 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 #include <fmt/core.h>
+
 #include <ostream>
 
 // #include <span>            // for span
@@ -79,9 +80,7 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono 50)") {
 
 TEST_CASE("Rectilinear Polygon point_in_rpolygon test") {
     // Define a square in counter-clockwise order
-    auto S = std::vector<Point<int>>{
-        {0, 0}, {10, 0}, {10, 10}, {0, 10}
-    };
+    auto S = std::vector<Point<int>>{{0, 0}, {10, 0}, {10, 10}, {0, 10}};
 
     // Test points strictly inside the polygon
     CHECK(point_in_rpolygon<int>(S, Point<int>{5, 5}));
@@ -99,11 +98,12 @@ TEST_CASE("RPolygon to_polygon conversion") {
     auto coords = std::vector<Point<int>>{{0, 0}, {10, 10}, {5, 5}};
     auto r_poly = RPolygon<int>(coords);
     auto poly = r_poly.to_polygon();
-    
+
     // Expected coordinates after conversion to maintain rectilinearity
-    auto expected_coords = std::vector<Point<int>>{{0, 0}, {10, 0}, {10, 10}, {5, 10}, {5, 5}, {0, 5}};
+    auto expected_coords
+        = std::vector<Point<int>>{{0, 0}, {10, 0}, {10, 10}, {5, 10}, {5, 5}, {0, 5}};
     auto expected_poly = Polygon<int>(expected_coords);
-    
+
     CHECK(poly == expected_poly);
 }
 
@@ -117,12 +117,12 @@ TEST_CASE("RPolygon rectilinearity test") {
 TEST_CASE("RPolygon equality test") {
     auto coords1 = std::vector<Point<int>>{{0, 0}, {5, 0}, {5, 5}, {0, 5}};
     auto coords2 = std::vector<Point<int>>{{0, 0}, {5, 0}, {5, 5}, {0, 5}};
-    
+
     auto poly1 = RPolygon<int>(coords1);
     auto poly2 = RPolygon<int>(coords2);
-    
+
     CHECK(poly1 == poly2);
-    
+
     // Test inequality
     auto poly3 = RPolygon<int>(coords1);
     poly3 += Vector2<int>{1, 0};
@@ -132,7 +132,7 @@ TEST_CASE("RPolygon equality test") {
 TEST_CASE("RPolygon vertices access") {
     auto coords = std::vector<Point<int>>{{0, 0}, {5, 0}, {5, 5}, {0, 5}};
     auto poly = RPolygon<int>(coords);
-    
+
     auto vertices = poly.vertices();
     CHECK(vertices.size() == 4);
     CHECK(vertices[0] == Point<int>{0, 0});

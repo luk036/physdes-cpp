@@ -1,4 +1,5 @@
 #include <doctest/doctest.h>
+
 #include <recti/halton_int.hpp>
 
 TEST_CASE("VDC 2") {
