@@ -23,7 +23,7 @@ template <typename T> class Dllink {
   public:
     Dllink *next{this}; /**< pointer to the next node */
     Dllink *prev{this}; /**< pointer to the previous node */
-    T data{}; /**< data */
+    T data{};           /**< data */
 
     /**
      * @brief Construct a new Dllink object
