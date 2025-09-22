@@ -34,7 +34,7 @@ class RDllIterator {
 };
 
 class RDllist {
-  private:
+  public:
     std::vector<Dllink<size_t>> cycle;
 
   public:

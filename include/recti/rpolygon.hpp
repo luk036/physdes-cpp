@@ -5,8 +5,8 @@
 #include <functional>
 #include <iterator>
 #include <span>
+#include "rdllist.hpp"
 #include <utility>  // for std::pair
-#include <utility>
 #include <vector>
 
 #include "polygon.hpp"
@@ -339,50 +339,55 @@ namespace recti {
      * @return true if the polygon is monotone, false otherwise
      */
     template <typename T, typename DirFunc>
-    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, DirFunc &&dir) -> bool {
+    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, DirFunc&& dir) -> bool {
         if (pointset.size() <= 3) {
             return true;
         }
 
-        const size_t n = pointset.size();
+        // Find min and max indices
+        size_t min_index = 0;
+        size_t max_index = 0;
+        auto min_val = dir(pointset[0]);
+        auto max_val = dir(pointset[0]);
 
-        // Find min and max points according to the direction function using std::minmax_element
-        auto [min_it, max_it] = std::minmax_element(
-            pointset.begin(), pointset.end(),
-            [&dir](const Point<T> &a, const Point<T> &b) { return dir(a) < dir(b); });
-
-        size_t min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
-        size_t max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
-
-        // Check chain from min to max (should be non-decreasing)
-        size_t i = min_index;
-        while (i != max_index) {
-            size_t next_i = (i + 1) % n;
-            auto current_key = dir(pointset[i]);
-            auto next_key = dir(pointset[next_i]);
-
-            // Compare the first element of the key tuple (the main direction component)
-            if (current_key.first > next_key.first) {
-                return false;
+        for (size_t i = 1; i < pointset.size(); ++i) {
+            auto current_val = dir(pointset[i]);
+            if (current_val < min_val) {
+                min_val = current_val;
+                min_index = i;
             }
-            i = next_i;
+            if (current_val > max_val) {
+                max_val = current_val;
+                max_index = i;
+            }
         }
 
-        // Check chain from max to min (should be non-increasing)
-        i = max_index;
-        while (i != min_index) {
-            size_t next_i = (i + 1) % n;
-            auto current_key = dir(pointset[i]);
-            auto next_key = dir(pointset[next_i]);
+        RDllist rdll(pointset.size());
+        auto& v_min = rdll[min_index];
+        auto& v_max = rdll[max_index];
 
-            // Compare the first element of the key tuple (the main direction component)
-            if (current_key.first < next_key.first) {
-                return false;
+        auto violate = [&pointset, &dir](Dllink<size_t>* vi, Dllink<size_t>* v_stop, 
+                                        std::function<bool(T, T)> cmp) -> bool {
+            auto current = vi;
+            while (current != v_stop) {
+                auto vnext = current->next;
+                auto current_key = dir(pointset[current->data]);
+                auto next_key = dir(pointset[vnext->data]);
+                if (cmp(std::get<0>(current_key), std::get<0>(next_key))) {
+                    return true;
+                }
+                current = vnext;
             }
-            i = next_i;
+            return false;
+        };
+
+        // Chain from min to max
+        if (violate(&v_min, &v_max, [](T a, T b) { return a > b; })) {
+            return false;
         }
 
-        return true;
+        // Chain from max to min
+        return !violate(&v_max, &v_min, [](T a, T b) { return a < b; });
     }
 
     /**

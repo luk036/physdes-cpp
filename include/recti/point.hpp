@@ -39,6 +39,8 @@ namespace recti {
         T2 _ycoord;  //!< y coordinate
 
       public:
+        constexpr Point() noexcept : _xcoord{T1(0)}, _ycoord{T2(0)} {}
+
         /**
          * @brief Construct a new Point object
          *
