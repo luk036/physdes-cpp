@@ -42,7 +42,7 @@ TEST_CASE("Rectangle test") {
     auto r2 = Rectangle<int>{xrng2, yrng2};
     auto p = Point<int>{7000, 6000};
     auto v = Vector2<int>{5000, 6000};
-    Rectangle<int> r3 = r1 - v;
+    auto r3 = Rectangle<int>(r1 - v);
 
     CHECK(r1 != r2);
     CHECK(r3 + v == r1);

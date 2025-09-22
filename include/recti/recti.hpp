@@ -5,7 +5,6 @@
 
 namespace recti {
 
-#pragma pack(push, 1)
     /**
      * @brief Rectangle (Rectilinear)
      *
@@ -49,7 +48,7 @@ namespace recti {
          *
          * @param[in] p
          */
-        constexpr Rectangle(
+        constexpr explicit Rectangle(
             Point<Interval<T>> &&base) noexcept  // Note: intentionally allow implicit conversion
             : Point<Interval<T>>{std::move(base)} {}
 
@@ -97,9 +96,7 @@ namespace recti {
             return this->xcoord().length() * this->ycoord().length();
         }
     };
-#pragma pack(pop)
 
-#pragma pack(push, 1)
     /**
      * @brief Horizontal Line Segment
      *
@@ -136,11 +133,11 @@ namespace recti {
             : Point<Interval<T>, T>{xcoord, ycoord} {}
 
         /**
-         * @brief Construct a new HSegment object from the base object (implicitly)
+         * @brief Construct a new HSegment object from the.
          *
          * @param[in] p
          */
-        constexpr HSegment(
+        constexpr explicit HSegment(
             Point<Interval<T>, T> &&base) noexcept  // Note: intentionally allow implicit conversion
             : Point<Interval<T>, T>{std::move(base)} {}
 
@@ -152,9 +149,7 @@ namespace recti {
         constexpr explicit HSegment(const Point<Interval<T>, T> &base)
             : Point<Interval<T>, T>{base} {}
     };
-#pragma pack(pop)
 
-#pragma pack(push, 1)
     /**
      * @brief Vertical Line Segment
      *
@@ -191,7 +186,7 @@ namespace recti {
          *
          * @param[in] p
          */
-        constexpr VSegment(
+        constexpr explicit VSegment(
             Point<T, Interval<T>> &&base) noexcept  // Note: intentionally allow implicit conversion
             : Point<T, Interval<T>>{std::move(base)} {}
 
@@ -203,6 +198,5 @@ namespace recti {
         constexpr explicit VSegment(const Point<T, Interval<T>> &base)
             : Point<T, Interval<T>>{base} {}
     };
-#pragma pack(pop)
 
 }  // namespace recti
