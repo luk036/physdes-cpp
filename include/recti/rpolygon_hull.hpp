@@ -152,8 +152,8 @@ namespace recti {
                 return std::make_pair(a.xcoord(), a.ycoord()) <
                        std::make_pair(b.xcoord(), b.ycoord());
             });
-        size_t min_index = std::distance(pointset.begin(), min_it);
-        size_t max_index = std::distance(pointset.begin(), max_it);
+        size_t min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
+        size_t max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
         Point<T> min_point = *min_it;
 
         RDllist rdll(pointset.size());
@@ -222,8 +222,8 @@ namespace recti {
                 return std::make_pair(a.ycoord(), a.xcoord()) <
                        std::make_pair(b.ycoord(), b.xcoord());
             });
-        size_t min_index = std::distance(pointset.begin(), min_it);
-        size_t max_index = std::distance(pointset.begin(), max_it);
+        size_t min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
+        size_t max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
         Point<T> min_point = *min_it;
 
         RDllist rdll(pointset.size());
