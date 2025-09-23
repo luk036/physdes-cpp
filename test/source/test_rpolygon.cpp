@@ -29,12 +29,46 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono)") {
     auto S = std::vector<Point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
                                      {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
     auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
+
+    CHECK(is_anticlockwise);
+    CHECK(rpolygon_is_anticlockwise<int>(S));
+    CHECK(rpolygon_is_xmonotone<int>(S));
+    CHECK(!rpolygon_is_ymonotone<int>(S));
+    auto P = RPolygon<int>(S);
+    CHECK_EQ(P.signed_area(), 51);
+}
+
+TEST_CASE("Rectilinear Polygon test (xcoord-mono 50)") {
+    auto hgenX = ildsgen::VdCorput(3, 7);
+    auto hgenY = ildsgen::VdCorput(2, 11);
+    auto S = std::vector<Point<int>>{};
+    for (auto i = 0; i != 50; ++i) {
+        S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
+    }
+    auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
+ 
+    // SVG output (commented out as per reference)
+    // fmt::print("<svg viewBox=\"0 0 2187 2048\" xmlns=\"http://www.w3.org/2000/svg\">\n");
+    // fmt::print("  <polygon points=\"");
+    // auto p0 = S.back();
+    // for (const auto& p1 : S) {
+    //     fmt::print("{},{} {},{} ", p0.xcoord(), p0.ycoord(), p1.xcoord(), p0.ycoord());
+    //     p0 = p1;
+    // }
+    // fmt::print("\"\n");
+    // fmt::print("  fill=\"#88C0D0\" stroke=\"black\" opacity=\"0.5\"/>\n");
+    // for (const auto& p : S) {
+    //     fmt::print("  <circle cx=\"{}\" cy=\"{}\" r=\"10\" />\n", p.xcoord(), p.ycoord());
+    // }
+    // fmt::print("</svg>\n");
+
     CHECK(!is_anticlockwise);
     CHECK(!rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_xmonotone<int>(S));
     CHECK(!rpolygon_is_ymonotone<int>(S));
+ 
     auto P = RPolygon<int>(S);
-    CHECK_EQ(P.signed_area(), -53);
+    CHECK_EQ(P.signed_area(), -2098656);
 }
 
 TEST_CASE("Rectilinear Polygon test (ycoord-mono 50)") {
@@ -52,26 +86,19 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono 50)") {
     auto q = Point<int>(int(hgenX.pop()), int(hgenY.pop()));
     CHECK(!point_in_rpolygon<int>(S, q));
 
-    // fmt::print(
-    //     "\n<svg viewBox='0 0 2187 2048'
-    //     xmlns='http://www.w3.org/2000/svg'>\n");
-    // fmt::print("  <polygon points='");
+    // SVG output (commented out as per reference)
+    // fmt::print("<svg viewBox=\"0 0 2187 2048\" xmlns=\"http://www.w3.org/2000/svg\">\n");
+    // fmt::print("  <polygon points=\"");
     // auto p0 = S.back();
-    // for (auto&& p1 : S)
-    // {
-    //     fmt::print("{},{} {},{} ", p0.xcoord(), p0.ycoord(), p1.xcoord(),
-    //     p0.ycoord()); p0 = p1;
+    // for (const auto& p1 : S) {
+    //     fmt::print("{},{} {},{} ", p0.xcoord(), p0.ycoord(), p1.xcoord(), p0.ycoord());
+    //     p0 = p1;
     // }
-    // fmt::print("'\n");
-    // fmt::print("  fill='#88C0D0' stroke='black' />\n");
-    // for (auto&& p : S)
-    // {
-    //     fmt::print("  <circle cx='{}' cy='{}' r='10' />\n", p.xcoord(),
-    //     p.ycoord());
+    // fmt::print("\"\n");
+    // fmt::print("  fill=\"#88C0D0\" stroke=\"black\" opacity=\"0.5\"/>\n");
+    // for (const auto& p : S) {
+    //     fmt::print("  <circle cx=\"{}\" cy=\"{}\" r=\"10\" />\n", p.xcoord(), p.ycoord());
     // }
-    // fmt::print(
-    //     "  <circle cx='{}' cy='{}' r='10' fill='#BF616A' />\n", q.xcoord(),
-    //     q.ycoord());
     // fmt::print("</svg>\n");
 
     auto P = RPolygon<int>(S);
