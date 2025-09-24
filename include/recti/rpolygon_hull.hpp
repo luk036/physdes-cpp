@@ -10,6 +10,7 @@
 #include "rdllist.hpp"
 #include "rpolygon.hpp"
 #include "vector2.hpp"
+#include <fmt/core.h>
 
 namespace recti {
 
@@ -293,16 +294,16 @@ namespace recti {
      * @return A vector of vectors of indices representing convex polygons
      */
     template <typename T>
-    inline auto rpolygon_cut_convex_recur(Dllink<size_t>& v1, std::vector<Point<T>>& pointset,
+    inline auto rpolygon_cut_convex_recur(Dllink<size_t>* v1, std::vector<Point<T>>& pointset,
                                          bool is_anticlockwise, RDllist& rdll)
         -> std::vector<std::vector<size_t>> {
-        auto v2 = v1.next;
+        auto v2 = v1->next;
         auto v3 = v2->next;
-        if (v3 == &v1) {  // Rectangle
-            return {{v1.data, v2->data}};
+        if (v3 == v1) {  // Rectangle
+            return {{v1->data, v2->data}};
         }
-        if (v3->next == &v1) {  // Monotone
-            return {{v1.data, v2->data, v3->data}};
+        if (v3->next == v1) {  // Monotone
+            return {{v1->data, v2->data, v3->data}};
         }
 
         auto find_concave_point = [&pointset](Dllink<size_t>* vcurr, std::function<bool(T)> cmp2)
@@ -327,12 +328,12 @@ namespace recti {
             return nullptr;  // Convex
         };
 
-        auto vcurr = is_anticlockwise ? find_concave_point(&v1, [](T a) { return a > 0; })
-                                      : find_concave_point(&v1, [](T a) { return a < 0; });
+        auto vcurr = is_anticlockwise ? find_concave_point(v1, [](T a) { return a > 0; })
+                                      : find_concave_point(v1, [](T a) { return a < 0; });
 
-        if (!vcurr) {  // Convex
-            std::vector<size_t> L = {v1.data};
-            for (const auto& vi : rdll.from_node(v1.data)) {
+        if (vcurr == nullptr) {  // Convex
+            std::vector<size_t> L = {v1->data};
+            for (const auto& vi : rdll.from_node(v1->data)) {
                 L.push_back(vi.data);
             }
             return {L};
@@ -375,6 +376,7 @@ namespace recti {
 
         auto [v_min, vertical] = find_min_dist_point(vcurr);
         size_t n = pointset.size();
+
         pointset.emplace_back(Point<T, T>{});
         rdll.cycle.emplace_back(Dllink<size_t>(n));
         auto& new_node = rdll[n];
@@ -399,8 +401,8 @@ namespace recti {
             pointset[n] = Point<T>(p1.xcoord(), p_min.ycoord());
         }
 
-        auto L1 = rpolygon_cut_convex_recur(*vcurr, pointset, is_anticlockwise, rdll);
-        auto L2 = rpolygon_cut_convex_recur(new_node, pointset, is_anticlockwise, rdll);
+        auto L1 = rpolygon_cut_convex_recur(vcurr, pointset, is_anticlockwise, rdll);
+        auto L2 = rpolygon_cut_convex_recur(&new_node, pointset, is_anticlockwise, rdll);
         L1.insert(L1.end(), L2.begin(), L2.end());
         return L1;
     }
@@ -414,20 +416,40 @@ namespace recti {
      * @return A vector of vectors of points representing convex polygons
      */
     template <typename T>
-    inline auto rpolygon_cut_convex(std::span<const Point<T>> pointset, bool is_anticlockwise)
-        -> std::vector<std::vector<Point<T>>> {
+    inline auto rpolygon_cut_convex(std::vector<std::vector<Point<T>>>& result, std::span<const Point<T>> pointset, bool is_anticlockwise) {
         std::vector<Point<T>> mutable_pointset(pointset.begin(), pointset.end());
         RDllist rdll(pointset.size());
-        auto L = rpolygon_cut_convex_recur(rdll[0], mutable_pointset, is_anticlockwise, rdll);
-        std::vector<std::vector<Point<T>>> result;
+        auto L = rpolygon_cut_convex_recur(&rdll[0], mutable_pointset, is_anticlockwise, rdll);
+        fmt::print("after recursion\n");
+
+        // std::vector<std::vector<Point<T>>> result;
         for (const auto& item : L) {
-            std::vector<Point<T>> P;
+            fmt::print("    item begin\n");
+            std::vector<Point<T>> P{};
             for (const auto& i : item) {
-                P.push_back(mutable_pointset[i]);
+                Point<T> pi = mutable_pointset[i];
+                fmt::print("    ({}, {}) ", pi.xcoord(), pi.ycoord());
+                P.push_back(pi);
             }
+            fmt::print("\n");
+            for (const auto& pi : P) {
+                fmt::print("    ({}, {}) ", pi.xcoord(), pi.ycoord());
+            }
+            fmt::print("    item end\n");
             result.push_back(P);
+            fmt::print("    after push_back\n");
         }
-        return result;
+
+        for (const auto& C: result) {
+            fmt::print("check begin\n");
+            for (const auto& pi : C) {
+                fmt::print("    ({}, {}) ", pi.xcoord(), pi.ycoord());
+            }
+            fmt::print("check end\n");
+        }
+        fmt::print("after loop\n");
+
+        // return result;
     }
 
 }  // namespace recti
