@@ -284,75 +284,84 @@ namespace recti {
     }
 
     /**
-     * @brief Recursively cut a rectilinear polygon into convex polygons
-     *
-     * @tparam T The type of the coordinates
-     * @param v1 The starting node in the doubly-linked list
-     * @param pointset The polygon vertices as points
-     * @param is_anticlockwise Whether the polygon is oriented anti-clockwise
-     * @param rdll The doubly-linked list representing the polygon
-     * @return A vector of vectors of indices representing convex polygons
+     * @brief Recursive function for convex decomposition
      */
     template <typename T>
-    inline auto rpolygon_cut_convex_recur(Dllink<size_t>* v1, std::vector<Point<T>>& pointset,
-                                         bool is_anticlockwise, RDllist& rdll)
+    inline auto rpolygon_cut_convex_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst, 
+                                         bool is_anticlockwise, RDllist& rdll) 
         -> std::vector<std::vector<size_t>> {
         auto v2 = v1->next;
         auto v3 = v2->next;
-        if (v3 == v1) {  // Rectangle
+        
+        // Base case: triangle or smaller
+        if (v3 == v1) { // rectangle (actually triangle since v3 == v1 means only 3     distinct nodes)
             return {{v1->data, v2->data}};
         }
-        if (v3->next == v1) {  // Monotone
+        if (v3->next == v1) { // quadrilateral
             return {{v1->data, v2->data, v3->data}};
         }
-
-        auto find_concave_point = [&pointset](Dllink<size_t>* vcurr, std::function<bool(T)> cmp2)
+    
+        // Find concave point
+        auto find_concave_point = [&lst](Dllink<size_t>* vstart, std::function<bool(T)>     cmp2) 
             -> Dllink<size_t>* {
-            auto vstop = vcurr;
+            auto vcurr = vstart;
             do {
                 auto vnext = vcurr->next;
                 auto vprev = vcurr->prev;
-                const auto& p0 = pointset[vprev->data];
-                const auto& p1 = pointset[vcurr->data];
-                const auto& p2 = pointset[vnext->data];
-                T area_diff = (p1.ycoord() - p0.ycoord()) * (p2.xcoord() - p1.xcoord());
-                Vector2<T> v1 = p1 - p0;
-                Vector2<T> v2 = p2 - p1;
-                if (v1.x() * v2.x() < 0 || v1.y() * v2.y() < 0) {
+                
+                auto p0 = lst[vprev->data];
+                auto p1 = lst[vcurr->data];
+                auto p2 = lst[vnext->data];
+                
+                auto area_diff = (p1.ycoord() - p0.ycoord()) * (p2.xcoord() - p1.xcoord());
+                auto v1_vec = p1 - p0;
+                auto v2_vec = p2 - p1;
+                
+                // Check if there's an angle change (not rectilinear)
+                if (v1_vec.x() * v2_vec.x() < 0 || v1_vec.y() * v2_vec.y() < 0) {
                     if (cmp2(area_diff)) {
                         return vcurr;
                     }
                 }
                 vcurr = vnext;
-            } while (vcurr != vstop);
-            return nullptr;  // Convex
+            } while (vcurr != vstart);
+            
+            return nullptr; // convex
         };
-
-        auto vcurr = is_anticlockwise ? find_concave_point(v1, [](T a) { return a > 0; })
-                                      : find_concave_point(v1, [](T a) { return a < 0; });
-
-        if (vcurr == nullptr) {  // Convex
-            std::vector<size_t> L = {v1->data};
-            for (const auto& vi : rdll.from_node(v1->data)) {
-                L.push_back(vi.data);
-            }
-            return {L};
+    
+        auto vcurr = find_concave_point(v1, 
+            is_anticlockwise ? [](T a) { return a > 0; } : [](T a) { return a < 0; });
+    
+        if (vcurr == nullptr) {
+            // Convex polygon - return all vertices
+            std::vector<size_t> indices;
+            auto current = v1;
+            do {
+                indices.push_back(current->data);
+                current = current->next;
+            } while (current != v1);
+            return {std::move(indices)};
         }
-
-        auto find_min_dist_point = [&pointset](Dllink<size_t>* vcurr)
-            -> std::pair<Dllink<size_t>*, bool> {
+    
+        // Find minimum distance point for cutting
+        auto find_min_dist_point = [&lst](Dllink<size_t>* vcurr) ->     std::pair<Dllink<size_t>*, bool> {
             auto vnext = vcurr->next;
             auto vprev = vcurr->prev;
             auto vi = vnext->next;
+            
             T min_value = std::numeric_limits<T>::max();
             bool vertical = true;
             Dllink<size_t>* v_min = vcurr;
-            const auto& pcurr = pointset[vcurr->data];
+            auto pcurr = lst[vcurr->data];
+            
             while (vi != vprev) {
-                const auto& p0 = pointset[vi->prev->data];
-                const auto& p1 = pointset[vi->data];
-                const auto& p2 = pointset[vi->next->data];
-                Vector2<T> vec_i = p1 - pcurr;
+                auto p0 = lst[vi->prev->data];
+                auto p1 = lst[vi->data];
+                auto p2 = lst[vi->next->data];
+                
+                auto vec_i = p1 - pcurr;
+                
+                // Check vertical alignment
                 if ((p0.ycoord() <= pcurr.ycoord() && pcurr.ycoord() <= p1.ycoord()) ||
                     (p1.ycoord() <= pcurr.ycoord() && pcurr.ycoord() <= p0.ycoord())) {
                     if (std::abs(vec_i.x()) < min_value) {
@@ -361,6 +370,8 @@ namespace recti {
                         vertical = true;
                     }
                 }
+                
+                // Check horizontal alignment  
                 if ((p2.xcoord() <= pcurr.xcoord() && pcurr.xcoord() <= p1.xcoord()) ||
                     (p1.xcoord() <= pcurr.xcoord() && pcurr.xcoord() <= p2.xcoord())) {
                     if (std::abs(vec_i.y()) < min_value) {
@@ -369,87 +380,69 @@ namespace recti {
                         vertical = false;
                     }
                 }
+                
                 vi = vi->next;
             }
+            
             return {v_min, vertical};
         };
-
-        auto [v_min, vertical] = find_min_dist_point(vcurr);
-        size_t n = pointset.size();
-
-        pointset.emplace_back(Point<T, T>{});
+    
+        auto [v_min, vertical] = find_min_dist_point    (vcurr);
+        size_t n = lst.size();
         rdll.cycle.emplace_back(Dllink<size_t>(n));
-        auto& new_node = rdll[n];
-        const auto& p_min = pointset[v_min->data];
-        const auto& p1 = pointset[vcurr->data];
-
+        auto new_node = &rdll.cycle[n];
+        auto p_min = lst[v_min->data];
+        auto p1 = lst[vcurr->data];
+        
+        // Create new point and node
+        Point<T> p_new;
         if (vertical) {
-            new_node.next = vcurr->next;
-            new_node.prev = v_min->prev;
-            v_min->prev->next = &new_node;
-            vcurr->next->prev = &new_node;
+            new_node->next = vcurr->next;
+            new_node->prev = v_min->prev;
+            v_min->prev->next = new_node;
+            vcurr->next->prev = new_node;
             vcurr->next = v_min;
             v_min->prev = vcurr;
-            pointset[n] = Point<T>(p_min.xcoord(), p1.ycoord());
+            p_new = Point<T>(p_min.xcoord(), p1.ycoord());
         } else {
-            new_node.prev = vcurr->prev;
-            new_node.next = v_min->next;
-            v_min->next->prev = &new_node;
-            vcurr->prev->next = &new_node;
+            new_node->prev = vcurr->prev;
+            new_node->next = v_min->next;
+            v_min->next->prev = new_node;
+            vcurr->prev->next = new_node;
             vcurr->prev = v_min;
             v_min->next = vcurr;
-            pointset[n] = Point<T>(p1.xcoord(), p_min.ycoord());
+            p_new = Point<T>(p1.xcoord(), p_min.ycoord());
         }
-
-        auto L1 = rpolygon_cut_convex_recur(vcurr, pointset, is_anticlockwise, rdll);
-        auto L2 = rpolygon_cut_convex_recur(&new_node, pointset, is_anticlockwise, rdll);
-        L1.insert(L1.end(), L2.begin(), L2.end());
+        lst.push_back(p_new);
+        
+        auto L1 = rpolygon_cut_convex_recur(vcurr, lst, is_anticlockwise, rdll);
+        auto L2 = rpolygon_cut_convex_recur(new_node, lst, is_anticlockwise, rdll);
+        L1.insert(L1.end(), L2.begin(), L2.end());    
         return L1;
     }
 
     /**
-     * @brief Cut a rectilinear polygon into convex polygons
-     *
-     * @tparam T The type of the coordinates
-     * @param pointset The polygon vertices as points
-     * @param is_anticlockwise Whether the polygon is oriented anti-clockwise
-     * @return A vector of vectors of points representing convex polygons
+     * @brief Cut a polygon into convex pieces
      */
     template <typename T>
-    inline auto rpolygon_cut_convex(std::vector<std::vector<Point<T>>>& result, std::span<const Point<T>> pointset, bool is_anticlockwise) {
-        std::vector<Point<T>> mutable_pointset(pointset.begin(), pointset.end());
-        RDllist rdll(pointset.size());
-        auto L = rpolygon_cut_convex_recur(&rdll[0], mutable_pointset, is_anticlockwise, rdll);
-        fmt::print("after recursion\n");
-
-        // std::vector<std::vector<Point<T>>> result;
-        for (const auto& item : L) {
-            fmt::print("    item begin\n");
-            std::vector<Point<T>> P{};
-            for (const auto& i : item) {
-                Point<T> pi = mutable_pointset[i];
-                fmt::print("    ({}, {}) ", pi.xcoord(), pi.ycoord());
-                P.push_back(pi);
+    inline auto rpolygon_cut_convex(std::span<const Point<T>> pointset, bool     is_anticlockwise) 
+        -> std::vector<std::vector<Point<T>>> {
+        std::vector<Point<T>> lst(pointset.begin(), pointset.end());
+        RDllist rdll(lst.size());
+        
+        auto index_lists = rpolygon_cut_convex_recur(&rdll[0], lst,     is_anticlockwise, rdll);
+        
+        std::vector<std::vector<Point<T>>> result;
+        for (const auto& indices : index_lists) {
+            std::vector<Point<T>> polygon;
+            for (auto index : indices) {
+                polygon.push_back(lst[index]);
             }
-            fmt::print("\n");
-            for (const auto& pi : P) {
-                fmt::print("    ({}, {}) ", pi.xcoord(), pi.ycoord());
-            }
-            fmt::print("    item end\n");
-            result.push_back(P);
-            fmt::print("    after push_back\n");
+            result.push_back(polygon);
         }
-
-        for (const auto& C: result) {
-            fmt::print("check begin\n");
-            for (const auto& pi : C) {
-                fmt::print("    ({}, {}) ", pi.xcoord(), pi.ycoord());
-            }
-            fmt::print("check end\n");
-        }
-        fmt::print("after loop\n");
-
-        // return result;
+        
+        return result;
     }
+
 
 }  // namespace recti

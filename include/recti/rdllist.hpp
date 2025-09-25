@@ -39,7 +39,7 @@ class RDllist {
 
   public:
     explicit RDllist(size_t num_nodes, bool reverse = false) {
-        cycle.reserve(num_nodes);
+        cycle.reserve(3 * num_nodes); // must reserve enough space for expansion!
         for (size_t k = 0; k < num_nodes; ++k) {
             cycle.emplace_back(Dllink<size_t>(k));
         }
