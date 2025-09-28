@@ -1,5 +1,7 @@
 #pragma once
 
+#include <fmt/core.h>
+
 #include <algorithm>
 #include <functional>
 #include <span>
@@ -10,7 +12,6 @@
 #include "rdllist.hpp"
 #include "rpolygon.hpp"
 #include "vector2.hpp"
-#include <fmt/core.h>
 
 namespace recti {
 
@@ -18,7 +19,8 @@ namespace recti {
     //  * @brief Check if a polygon is monotone with respect to a given direction function
     //  *
     //  * A polygon is monotone with respect to a direction if it can be divided into two chains
-    //  * that are both monotone (either entirely non-decreasing or non-increasing) in that direction.
+    //  * that are both monotone (either entirely non-decreasing or non-increasing) in that
+    //  direction.
     //  *
     //  * @tparam T The type of the coordinates
     //  * @tparam DirFunc The type of the direction function
@@ -54,7 +56,7 @@ namespace recti {
     //     auto& v_min = rdll[min_index];
     //     auto& v_max = rdll[max_index];
 
-    //     auto violate = [&pointset, &dir](Dllink<size_t>* vi, Dllink<size_t>* v_stop, 
+    //     auto violate = [&pointset, &dir](Dllink<size_t>* vi, Dllink<size_t>* v_stop,
     //                                     std::function<bool(T, T)> cmp) -> bool {
     //         auto current = vi;
     //         while (current != v_stop) {
@@ -137,22 +139,22 @@ namespace recti {
      * @return A vector of points representing the x-monotone hull
      */
     template <typename T>
-    inline auto rpolygon_make_xmonotone_hull(std::span<const Point<T>> pointset, bool is_anticlockwise)
-        -> std::vector<Point<T>> {
+    inline auto rpolygon_make_xmonotone_hull(std::span<const Point<T>> pointset,
+                                             bool is_anticlockwise) -> std::vector<Point<T>> {
         if (pointset.size() <= 3) {
             return std::vector<Point<T>>(pointset.begin(), pointset.end());
         }
 
-        auto min_it = std::min_element(pointset.begin(), pointset.end(),
-            [](const auto& a, const auto& b) {
-                return std::make_pair(a.xcoord(), a.ycoord()) <
-                       std::make_pair(b.xcoord(), b.ycoord());
-            });
-        auto max_it = std::max_element(pointset.begin(), pointset.end(),
-            [](const auto& a, const auto& b) {
-                return std::make_pair(a.xcoord(), a.ycoord()) <
-                       std::make_pair(b.xcoord(), b.ycoord());
-            });
+        auto min_it
+            = std::min_element(pointset.begin(), pointset.end(), [](const auto& a, const auto& b) {
+                  return std::make_pair(a.xcoord(), a.ycoord())
+                         < std::make_pair(b.xcoord(), b.ycoord());
+              });
+        auto max_it
+            = std::max_element(pointset.begin(), pointset.end(), [](const auto& a, const auto& b) {
+                  return std::make_pair(a.xcoord(), a.ycoord())
+                         < std::make_pair(b.xcoord(), b.ycoord());
+              });
         size_t min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
         size_t max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
         Point<T> min_point = *min_it;
@@ -184,11 +186,15 @@ namespace recti {
         };
 
         if (is_anticlockwise) {
-            process(&v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a >= 0; });
-            process(&v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a >= 0; });
+            process(
+                &v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a >= 0; });
+            process(
+                &v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a >= 0; });
         } else {
-            process(&v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a <= 0; });
-            process(&v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a <= 0; });
+            process(
+                &v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a <= 0; });
+            process(
+                &v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a <= 0; });
         }
 
         std::vector<Point<T>> result = {min_point};
@@ -207,22 +213,22 @@ namespace recti {
      * @return A vector of points representing the y-monotone hull
      */
     template <typename T>
-    inline auto rpolygon_make_ymonotone_hull(std::span<const Point<T>> pointset, bool is_anticlockwise)
-        -> std::vector<Point<T>> {
+    inline auto rpolygon_make_ymonotone_hull(std::span<const Point<T>> pointset,
+                                             bool is_anticlockwise) -> std::vector<Point<T>> {
         if (pointset.size() <= 3) {
             return std::vector<Point<T>>(pointset.begin(), pointset.end());
         }
 
-        auto min_it = std::min_element(pointset.begin(), pointset.end(),
-            [](const auto& a, const auto& b) {
-                return std::make_pair(a.ycoord(), a.xcoord()) <
-                       std::make_pair(b.ycoord(), b.xcoord());
-            });
-        auto max_it = std::max_element(pointset.begin(), pointset.end(),
-            [](const auto& a, const auto& b) {
-                return std::make_pair(a.ycoord(), a.xcoord()) <
-                       std::make_pair(b.ycoord(), b.xcoord());
-            });
+        auto min_it
+            = std::min_element(pointset.begin(), pointset.end(), [](const auto& a, const auto& b) {
+                  return std::make_pair(a.ycoord(), a.xcoord())
+                         < std::make_pair(b.ycoord(), b.xcoord());
+              });
+        auto max_it
+            = std::max_element(pointset.begin(), pointset.end(), [](const auto& a, const auto& b) {
+                  return std::make_pair(a.ycoord(), a.xcoord())
+                         < std::make_pair(b.ycoord(), b.xcoord());
+              });
         size_t min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
         size_t max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
         Point<T> min_point = *min_it;
@@ -254,11 +260,15 @@ namespace recti {
         };
 
         if (is_anticlockwise) {
-            process(&v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a >= 0; });
-            process(&v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a >= 0; });
+            process(
+                &v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a >= 0; });
+            process(
+                &v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a >= 0; });
         } else {
-            process(&v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a <= 0; });
-            process(&v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a <= 0; });
+            process(
+                &v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a <= 0; });
+            process(
+                &v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a <= 0; });
         }
 
         std::vector<Point<T>> result = {min_point};

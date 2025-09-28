@@ -5,11 +5,11 @@
 #include <functional>
 #include <iterator>
 #include <span>
-#include "rdllist.hpp"
 #include <utility>  // for std::pair
 #include <vector>
 
 #include "polygon.hpp"
+#include "rdllist.hpp"
 #include "recti.hpp"
 
 namespace recti {
@@ -205,7 +205,8 @@ namespace recti {
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
     template <typename FwIter, typename KeyFn, typename CmpFn>
-    inline auto create_mono_rpolygon(FwIter &&first, FwIter &&last, KeyFn &&dir, CmpFn&& cmp) -> bool {
+    inline auto create_mono_rpolygon(FwIter &&first, FwIter &&last, KeyFn &&dir, CmpFn &&cmp)
+        -> bool {
         assert(first != last);
 
         // Use x-monotone as model
@@ -245,7 +246,7 @@ namespace recti {
         -> bool {
         return create_mono_rpolygon(
             first, last, [](const auto &pt) { return std::make_pair(pt.xcoord(), pt.ycoord()); },
-            [](const auto& a, const auto& b) -> bool { return a < b; });
+            [](const auto &a, const auto &b) -> bool { return a < b; });
     }
 
     /**
@@ -263,7 +264,7 @@ namespace recti {
         -> bool {
         return create_mono_rpolygon(
             first, last, [](const auto &pt) { return std::make_pair(pt.ycoord(), pt.xcoord()); },
-        [](const auto& a, const auto& b) -> bool {return a > b; });
+            [](const auto &a, const auto &b) -> bool { return a > b; });
     }
 
     /**
@@ -340,77 +341,66 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return A vector of points representing the test rectilinear polygon.
      */
-    template <typename FwIter>
-    inline auto create_test_rpolygon(FwIter first, FwIter last) -> std::vector<typename std::iterator_traits<FwIter>::value_type> {
+    template <typename FwIter> inline auto create_test_rpolygon(FwIter first, FwIter last)
+        -> std::vector<typename std::iterator_traits<FwIter>::value_type> {
         using T = typename std::iterator_traits<FwIter>::value_type::value_type;
         assert(first != last);
 
-        auto dir_x = [](const auto& pt) { return std::make_pair(pt.xcoord(), pt.ycoord()); };
-        auto dir_y = [](const auto& pt) { return std::make_pair(pt.ycoord(), pt.xcoord()); };
+        auto dir_x = [](const auto &pt) { return std::make_pair(pt.xcoord(), pt.ycoord()); };
+        auto dir_y = [](const auto &pt) { return std::make_pair(pt.ycoord(), pt.xcoord()); };
 
-        auto max_pt = *std::max_element(first, last, [&dir_y](const auto& a, const auto& b) {
-            return dir_y(a) < dir_y(b);
-        });
-        auto min_pt = *std::min_element(first, last, [&dir_y](const auto& a, const auto& b) {
-            return dir_y(a) < dir_y(b);
-        });
+        auto max_pt = *std::max_element(
+            first, last, [&dir_y](const auto &a, const auto &b) { return dir_y(a) < dir_y(b); });
+        auto min_pt = *std::min_element(
+            first, last, [&dir_y](const auto &a, const auto &b) { return dir_y(a) < dir_y(b); });
         Vector2<T> vec = max_pt - min_pt;
 
         std::vector<typename std::iterator_traits<FwIter>::value_type> lst1, lst2;
-        auto middle = std::partition(first, last, [&min_pt, &vec](const auto& pt) {
-            return vec.cross(pt - min_pt) < 0;
-        });
+        auto middle = std::partition(
+            first, last, [&min_pt, &vec](const auto &pt) { return vec.cross(pt - min_pt) < 0; });
         lst1.assign(first, middle);
         lst2.assign(middle, last);
 
-        auto max_pt1 = *std::max_element(lst1.begin(), lst1.end(), [&dir_x](const auto& a, const auto& b) {
-            return dir_x(a) < dir_x(b);
-        });
-        auto middle2 = std::partition(lst1.begin(), lst1.end(), [&max_pt1](const auto& pt) {
+        auto max_pt1 = *std::max_element(
+            lst1.begin(), lst1.end(),
+            [&dir_x](const auto &a, const auto &b) { return dir_x(a) < dir_x(b); });
+        auto middle2 = std::partition(lst1.begin(), lst1.end(), [&max_pt1](const auto &pt) {
             return pt.ycoord() < max_pt1.ycoord();
         });
-        auto min_pt2 = *std::min_element(lst2.begin(), lst2.end(), [&dir_x](const auto& a, const auto& b) {
-            return dir_x(a) < dir_x(b);
-        });
-        auto middle3 = std::partition(lst2.begin(), lst2.end(), [&min_pt2](const auto& pt) {
+        auto min_pt2 = *std::min_element(
+            lst2.begin(), lst2.end(),
+            [&dir_x](const auto &a, const auto &b) { return dir_x(a) < dir_x(b); });
+        auto middle3 = std::partition(lst2.begin(), lst2.end(), [&min_pt2](const auto &pt) {
             return pt.ycoord() > min_pt2.ycoord();
         });
 
         std::vector<typename std::iterator_traits<FwIter>::value_type> lsta, lstb, lstc, lstd;
         if (vec.x() < 0) {
             lsta.assign(middle3, lst2.end());
-            std::sort(lsta.begin(), lsta.end(), [&dir_x](const auto& a, const auto& b) {
-                return dir_x(a) > dir_x(b);
-            });
+            std::sort(lsta.begin(), lsta.end(),
+                      [&dir_x](const auto &a, const auto &b) { return dir_x(a) > dir_x(b); });
             lstb.assign(lst2.begin(), middle3);
-            std::sort(lstb.begin(), lstb.end(), [&dir_y](const auto& a, const auto& b) {
-                return dir_y(a) < dir_y(b);
-            });
+            std::sort(lstb.begin(), lstb.end(),
+                      [&dir_y](const auto &a, const auto &b) { return dir_y(a) < dir_y(b); });
             lstc.assign(middle2, lst1.end());
-            std::sort(lstc.begin(), lstc.end(), [&dir_x](const auto& a, const auto& b) {
-                return dir_x(a) < dir_x(b);
-            });
+            std::sort(lstc.begin(), lstc.end(),
+                      [&dir_x](const auto &a, const auto &b) { return dir_x(a) < dir_x(b); });
             lstd.assign(lst1.begin(), middle2);
-            std::sort(lstd.begin(), lstd.end(), [&dir_y](const auto& a, const auto& b) {
-                return dir_y(a) > dir_y(b);
-            });
+            std::sort(lstd.begin(), lstd.end(),
+                      [&dir_y](const auto &a, const auto &b) { return dir_y(a) > dir_y(b); });
         } else {
             lsta.assign(lst1.begin(), middle2);
-            std::sort(lsta.begin(), lsta.end(), [&dir_x](const auto& a, const auto& b) {
-                return dir_x(a) < dir_x(b);
-            });
+            std::sort(lsta.begin(), lsta.end(),
+                      [&dir_x](const auto &a, const auto &b) { return dir_x(a) < dir_x(b); });
             lstb.assign(middle2, lst1.end());
-            std::sort(lstb.begin(), lstb.end(), [&dir_y](const auto& a, const auto& b) {
-                return dir_y(a) < dir_y(b);
-            });
+            std::sort(lstb.begin(), lstb.end(),
+                      [&dir_y](const auto &a, const auto &b) { return dir_y(a) < dir_y(b); });
             lstc.assign(lst2.begin(), middle3);
-            std::sort(lstc.begin(), lstc.end(), [&dir_x](const auto& a, const auto& b) {
-                return dir_x(a) > dir_x(b);
-            });
+            std::sort(lstc.begin(), lstc.end(),
+                      [&dir_x](const auto &a, const auto &b) { return dir_x(a) > dir_x(b); });
             lstd.assign(middle3, lst2.end());
-            std::sort(lstd.begin(), lstd.end(), [&dir_y](const auto& a, const auto& b) {
-                return dir_y(a) > dir_y(b);
-            });
+            std::sort(lstd.begin(), lstd.end(),
+                      [&dir_y](const auto &a, const auto &b) { return dir_y(a) > dir_y(b); });
         }
 
         std::vector<typename std::iterator_traits<FwIter>::value_type> result;
@@ -435,7 +425,7 @@ namespace recti {
      * @return true if the polygon is monotone, false otherwise
      */
     template <typename T, typename DirFunc>
-    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, DirFunc&& dir) -> bool {
+    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, DirFunc &&dir) -> bool {
         if (pointset.size() <= 3) {
             return true;
         }
@@ -459,11 +449,11 @@ namespace recti {
         }
 
         RDllist rdll(pointset.size());
-        auto& v_min = rdll[min_index];
-        auto& v_max = rdll[max_index];
+        auto &v_min = rdll[min_index];
+        auto &v_max = rdll[max_index];
 
-        auto violate = [&pointset, &dir](Dllink<size_t>* vi, Dllink<size_t>* v_stop, 
-                                        std::function<bool(T, T)> cmp) -> bool {
+        auto violate = [&pointset, &dir](Dllink<size_t> *vi, Dllink<size_t> *v_stop,
+                                         std::function<bool(T, T)> cmp) -> bool {
             auto current = vi;
             while (current != v_stop) {
                 auto vnext = current->next;

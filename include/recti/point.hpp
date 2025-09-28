@@ -40,7 +40,7 @@ namespace recti {
 
       public:
         using value_type = T1;
-        
+
         constexpr Point() noexcept : _xcoord{T1(0)}, _ycoord{T2(0)} {}
 
         /**

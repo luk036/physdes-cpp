@@ -46,7 +46,7 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono 50)") {
         S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
     }
     auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
- 
+
     // SVG output (commented out as per reference)
     // fmt::print("<svg viewBox=\"0 0 2187 2048\" xmlns=\"http://www.w3.org/2000/svg\">\n");
     // fmt::print("  <polygon points=\"");
@@ -66,7 +66,7 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono 50)") {
     CHECK(!rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_xmonotone<int>(S));
     CHECK(!rpolygon_is_ymonotone<int>(S));
- 
+
     auto P = RPolygon<int>(S);
     CHECK_EQ(P.signed_area(), -2098656);
 }

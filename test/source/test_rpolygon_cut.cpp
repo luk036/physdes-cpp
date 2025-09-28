@@ -1,14 +1,13 @@
 #include <doctest/doctest.h>
 #include <fmt/core.h>
 
-#include <vector>
-#include <span>
-
 #include <ldsgen/ilds.hpp>     // for VdCorput
-#include <recti/rpolygon.hpp>  // for create_xmono_rpolygon, create_test_rpolygon
-#include <recti/rpolygon_hull.hpp> // for rpolygon_is_monotone, rpolygon_make_xmonotone_hull, etc.
-#include <recti/rpolygon_cut.hpp>
 #include <recti/point.hpp>     // for Point
+#include <recti/rpolygon.hpp>  // for create_xmono_rpolygon, create_test_rpolygon
+#include <recti/rpolygon_cut.hpp>
+#include <recti/rpolygon_hull.hpp>  // for rpolygon_is_monotone, rpolygon_make_xmonotone_hull, etc.
+#include <span>
+#include <vector>
 
 using namespace recti;
 
@@ -118,7 +117,6 @@ TEST_CASE("RPolygon explicit cut test") {
     // }
 }
 
-
 TEST_CASE("RPolygon implicit cut test") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
@@ -171,7 +169,6 @@ TEST_CASE("RPolygon implicit cut test") {
     //     CHECK(rpolygon_is_convex<int>(C));
     // }
 }
-
 
 TEST_CASE("RPolygon cut rectangle test") {
     ildsgen::VdCorput hgenX(3, 7);
