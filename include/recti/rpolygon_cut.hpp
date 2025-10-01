@@ -15,6 +15,50 @@
 
 namespace recti {
 
+    // Find minimum distance point for cutting
+    template <typename T>
+    inline auto _find_min_dist_point(const std::vector<Point<T>>& lst, Dllink<size_t>* vcurr) -> std::pair<Dllink<size_t>*, bool> {
+        auto vnext = vcurr->next;
+        auto vstop = vcurr;
+        auto vi = vnext;
+
+        T min_value = std::numeric_limits<T>::max();
+        bool vertical = true;
+        Dllink<size_t>* v_min = vcurr;
+        const auto& pcurr = lst[vcurr->data];
+        const auto* p0 = &lst[vi->prev->data];
+        const auto* p1 = &lst[vi->data];
+        const auto* p2 = &lst[vi->next->data];
+
+        while (vi != vstop) {
+            auto vec_i = *p1 - pcurr;
+            // Check vertical alignment
+            if ((p0->ycoord() < pcurr.ycoord() && pcurr.ycoord() <= p1->ycoord())
+                || (p1->ycoord() <= pcurr.ycoord() && pcurr.ycoord() < p0->ycoord())) {
+                if (min_value > std::abs(vec_i.x())) {
+                    min_value = std::abs(vec_i.x());
+                    v_min = vi;
+                    vertical = true;
+                }
+            }
+            // Check horizontal alignment
+            if ((p2->xcoord() < pcurr.xcoord() && pcurr.xcoord() <= p1->xcoord())
+                || (p1->xcoord() <= pcurr.xcoord() && pcurr.xcoord() < p2->xcoord())) {
+                if (min_value > std::abs(vec_i.y())) {
+                    min_value = std::abs(vec_i.y());
+                    v_min = vi;
+                    vertical = false;
+                }
+            }
+            vi = vi->next;
+            p0 = p1;
+            p1 = p2;
+            p2 = &lst[vi->next->data];
+
+        }
+        return {v_min, vertical};
+    }
+
     /**
      * @brief Recursive function for convex decomposition
      */
@@ -25,12 +69,10 @@ namespace recti {
         auto v2 = v1->next;
         auto v3 = v2->next;
 
-        // Base case: triangle or smaller
-        if (v3 == v1) {  // rectangle (actually triangle since v3 == v1 means only 3     distinct
-                         // nodes)
+        if (v3 == v1) {  // rectangle 
             return {{v1->data, v2->data}};
         }
-        if (v3->next == v1) {  // quadrilateral
+        if (v3->next == v1) {  // L-shape
             return {{v1->data, v2->data, v3->data}};
         }
 
@@ -76,52 +118,52 @@ namespace recti {
             return {std::move(indices)};
         }
 
-        // Find minimum distance point for cutting
-        auto find_min_dist_point
-            = [&lst](Dllink<size_t>* vcurr) -> std::pair<Dllink<size_t>*, bool> {
-            auto vnext = vcurr->next;
-            auto vprev = vcurr->prev;
-            auto vi = vnext->next;
+        // // Find minimum distance point for cutting
+        // auto find_min_dist_point
+        //     = [&lst](Dllink<size_t>* vcurr) -> std::pair<Dllink<size_t>*, bool> {
+        //     auto vnext = vcurr->next;
+        //     auto vprev = vcurr->prev;
+        //     auto vi = vnext->next;
 
-            T min_value = std::numeric_limits<T>::max();
-            bool vertical = true;
-            Dllink<size_t>* v_min = vcurr;
-            auto pcurr = lst[vcurr->data];
+        //     T min_value = std::numeric_limits<T>::max();
+        //     bool vertical = true;
+        //     Dllink<size_t>* v_min = vcurr;
+        //     auto pcurr = lst[vcurr->data];
 
-            while (vi != vprev) {
-                auto p0 = lst[vi->prev->data];
-                auto p1 = lst[vi->data];
-                auto p2 = lst[vi->next->data];
+        //     while (vi != vprev) {
+        //         auto p0 = lst[vi->prev->data];
+        //         auto p1 = lst[vi->data];
+        //         auto p2 = lst[vi->next->data];
 
-                auto vec_i = p1 - pcurr;
+        //         auto vec_i = p1 - pcurr;
 
-                // Check vertical alignment
-                if ((p0.ycoord() <= pcurr.ycoord() && pcurr.ycoord() <= p1.ycoord())
-                    || (p1.ycoord() <= pcurr.ycoord() && pcurr.ycoord() <= p0.ycoord())) {
-                    if (std::abs(vec_i.x()) < min_value) {
-                        min_value = std::abs(vec_i.x());
-                        v_min = vi;
-                        vertical = true;
-                    }
-                }
+        //         // Check vertical alignment
+        //         if ((p0.ycoord() <= pcurr.ycoord() && pcurr.ycoord() <= p1.ycoord())
+        //             || (p1.ycoord() <= pcurr.ycoord() && pcurr.ycoord() <= p0.ycoord())) {
+        //             if (std::abs(vec_i.x()) < min_value) {
+        //                 min_value = std::abs(vec_i.x());
+        //                 v_min = vi;
+        //                 vertical = true;
+        //             }
+        //         }
 
-                // Check horizontal alignment
-                if ((p2.xcoord() <= pcurr.xcoord() && pcurr.xcoord() <= p1.xcoord())
-                    || (p1.xcoord() <= pcurr.xcoord() && pcurr.xcoord() <= p2.xcoord())) {
-                    if (std::abs(vec_i.y()) < min_value) {
-                        min_value = std::abs(vec_i.y());
-                        v_min = vi;
-                        vertical = false;
-                    }
-                }
+        //         // Check horizontal alignment
+        //         if ((p2.xcoord() <= pcurr.xcoord() && pcurr.xcoord() <= p1.xcoord())
+        //             || (p1.xcoord() <= pcurr.xcoord() && pcurr.xcoord() <= p2.xcoord())) {
+        //             if (std::abs(vec_i.y()) < min_value) {
+        //                 min_value = std::abs(vec_i.y());
+        //                 v_min = vi;
+        //                 vertical = false;
+        //             }
+        //         }
 
-                vi = vi->next;
-            }
+        //         vi = vi->next;
+        //     }
 
-            return {v_min, vertical};
-        };
+        //     return {v_min, vertical};
+        // };
 
-        auto [v_min, vertical] = find_min_dist_point(vcurr);
+        auto [v_min, vertical] = _find_min_dist_point<T>(lst, vcurr);
         size_t n = lst.size();
         rdll.cycle.emplace_back(Dllink<size_t>(n));
         auto new_node = &rdll.cycle[n];
@@ -187,9 +229,7 @@ namespace recti {
         -> std::vector<std::vector<size_t>> {
         auto v2 = v1->next;
 
-        // Base case: triangle or smaller
-        if (v2->next == v1) {  // rectangle (actually triangle since v3 == v1 means only 3 distinct
-                               // nodes)
+        if (v2->next == v1) {  // rectangle 
             return {{v1->data, v2->data}};
         }
 
@@ -230,52 +270,52 @@ namespace recti {
             return {std::move(indices)};
         }
 
-        // Find minimum distance point for cutting
-        auto find_min_dist_point
-            = [&lst](Dllink<size_t>* vcurr) -> std::pair<Dllink<size_t>*, bool> {
-            auto vnext = vcurr->next;
-            auto vstop = vcurr;
-            auto vi = vnext;
+        // // Find minimum distance point for cutting
+        // auto find_min_dist_point
+        //     = [&lst](Dllink<size_t>* vcurr) -> std::pair<Dllink<size_t>*, bool> {
+        //     auto vnext = vcurr->next;
+        //     auto vstop = vcurr;
+        //     auto vi = vnext;
 
-            T min_value = std::numeric_limits<T>::max();
-            bool vertical = true;
-            Dllink<size_t>* v_min = vcurr;
-            auto pcurr = lst[vcurr->data];
+        //     T min_value = std::numeric_limits<T>::max();
+        //     bool vertical = true;
+        //     Dllink<size_t>* v_min = vcurr;
+        //     auto pcurr = lst[vcurr->data];
 
-            while (vi != vstop) {
-                auto p0 = lst[vi->prev->data];
-                auto p1 = lst[vi->data];
-                auto p2 = lst[vi->next->data];
+        //     while (vi != vstop) {
+        //         auto p0 = lst[vi->prev->data];
+        //         auto p1 = lst[vi->data];
+        //         auto p2 = lst[vi->next->data];
 
-                auto vec_i = p1 - pcurr;
+        //         auto vec_i = p1 - pcurr;
 
-                // Check vertical alignment
-                if ((p0.ycoord() < pcurr.ycoord() && pcurr.ycoord() <= p1.ycoord())
-                    || (p1.ycoord() <= pcurr.ycoord() && pcurr.ycoord() < p0.ycoord())) {
-                    if (min_value > std::abs(vec_i.x())) {
-                        min_value = std::abs(vec_i.x());
-                        v_min = vi;
-                        vertical = true;
-                    }
-                }
+        //         // Check vertical alignment
+        //         if ((p0.ycoord() < pcurr.ycoord() && pcurr.ycoord() <= p1.ycoord())
+        //             || (p1.ycoord() <= pcurr.ycoord() && pcurr.ycoord() < p0.ycoord())) {
+        //             if (min_value > std::abs(vec_i.x())) {
+        //                 min_value = std::abs(vec_i.x());
+        //                 v_min = vi;
+        //                 vertical = true;
+        //             }
+        //         }
 
-                // Check horizontal alignment
-                if ((p2.xcoord() < pcurr.xcoord() && pcurr.xcoord() <= p1.xcoord())
-                    || (p1.xcoord() <= pcurr.xcoord() && pcurr.xcoord() < p2.xcoord())) {
-                    if (min_value > std::abs(vec_i.y())) {
-                        min_value = std::abs(vec_i.y());
-                        v_min = vi;
-                        vertical = false;
-                    }
-                }
+        //         // Check horizontal alignment
+        //         if ((p2.xcoord() < pcurr.xcoord() && pcurr.xcoord() <= p1.xcoord())
+        //             || (p1.xcoord() <= pcurr.xcoord() && pcurr.xcoord() < p2.xcoord())) {
+        //             if (min_value > std::abs(vec_i.y())) {
+        //                 min_value = std::abs(vec_i.y());
+        //                 v_min = vi;
+        //                 vertical = false;
+        //             }
+        //         }
 
-                vi = vi->next;
-            }
+        //         vi = vi->next;
+        //     }
 
-            return {v_min, vertical};
-        };
+        //     return {v_min, vertical};
+        // };
 
-        auto [v_min, vertical] = find_min_dist_point(vcurr);
+        auto [v_min, vertical] = _find_min_dist_point<T>(lst, vcurr);
         size_t n = lst.size();
         rdll.cycle.emplace_back(Dllink<size_t>(n));
         auto new_node = &rdll.cycle[n];
@@ -398,8 +438,8 @@ namespace recti {
             auto pc1 = lst[vcurr->data];
             auto pc2 = lst[vnext->data];
             auto pcurr = Point<T>(pc2.xcoord(), pc1.ycoord());
-            fmt::print("  <circle fill=\"red\" cx=\"{}\" cy=\"{}\" r=\"10\" />\n", pcurr.xcoord(),
-                       pcurr.ycoord());
+            // fmt::print("  <circle fill=\"red\" cx=\"{}\" cy=\"{}\" r=\"10\" />\n", pcurr.xcoord(),
+            //            pcurr.ycoord());
 
             while (vi != vstop) {
                 auto p0 = lst[vi->prev->data];
@@ -409,8 +449,8 @@ namespace recti {
                 auto vec_i = p1 - pcurr;
 
                 // Check vertical alignment
-                if ((p0.ycoord() <= pcurr.ycoord() && pcurr.ycoord() <= p1.ycoord())
-                    || (p1.ycoord() <= pcurr.ycoord() && pcurr.ycoord() <= p0.ycoord())) {
+                if ((p0.ycoord() < pcurr.ycoord() && pcurr.ycoord() <= p1.ycoord())
+                    || (p1.ycoord() <= pcurr.ycoord() && pcurr.ycoord() < p0.ycoord())) {
                     if (min_value > std::abs(vec_i.x())) {
                         min_value = std::abs(vec_i.x());
                         v_min = vi;
@@ -419,8 +459,8 @@ namespace recti {
                 }
 
                 // Check horizontal alignment
-                if ((p2.xcoord() <= pcurr.xcoord() && pcurr.xcoord() <= p1.xcoord())
-                    || (p1.xcoord() <= pcurr.xcoord() && pcurr.xcoord() <= p2.xcoord())) {
+                if ((p2.xcoord() < pcurr.xcoord() && pcurr.xcoord() <= p1.xcoord())
+                    || (p1.xcoord() <= pcurr.xcoord() && pcurr.xcoord() < p2.xcoord())) {
                     if (min_value > std::abs(vec_i.y())) {
                         min_value = std::abs(vec_i.y());
                         v_min = vi;
@@ -439,8 +479,8 @@ namespace recti {
         rdll.cycle.emplace_back(Dllink<size_t>(n));
         auto new_node = &rdll.cycle[n];
         auto p_min = lst[v_min->data];
-        fmt::print("  <circle fill=\"green\" cx=\"{}\" cy=\"{}\" r=\"10\" />\n", p_min.xcoord(),
-                   p_min.ycoord());
+        // fmt::print("  <circle fill=\"green\" cx=\"{}\" cy=\"{}\" r=\"10\" />\n", p_min.xcoord(),
+        //            p_min.ycoord());
         // auto p1 = lst[vcurr->data];
         auto pc1 = lst[vcurr->data];
         auto pc2 = lst[vcurr->next->data];
@@ -466,8 +506,8 @@ namespace recti {
             v_min->next = vnext;
             p_new = Point<T>(p1.xcoord(), p_min.ycoord());
         }
-        fmt::print("  <circle fill=\"blue\" cx=\"{}\" cy=\"{}\" r=\"10\" />\n", p_new.xcoord(),
-                   p_new.ycoord());
+        // fmt::print("  <circle fill=\"blue\" cx=\"{}\" cy=\"{}\" r=\"10\" />\n", p_new.xcoord(),
+        //            p_new.ycoord());
         // fmt::print("  <circle fill=\"red\" cx=\"{}\" cy=\"{}\" r=\"10\" />\n", p_new.xcoord(),
         // p_new.ycoord());
 

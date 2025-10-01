@@ -13,18 +13,6 @@
   <circle cx="1701" cy="1280" r="10" />
   <circle cx="2025" cy="1088" r="10" />
   <circle cx="1944" cy="128" r="10" />
-  <circle fill="red" cx="243" cy="1152" r="10" />
-  <circle fill="green" cx="324" cy="384" r="10" />
-  <circle fill="blue" cx="243" cy="384" r="10" />
-  <circle fill="red" cx="567" cy="1536" r="10" />
-  <circle fill="green" cx="1701" cy="1280" r="10" />
-  <circle fill="blue" cx="1701" cy="1536" r="10" />
-  <circle fill="red" cx="1944" cy="1088" r="10" />
-  <circle fill="green" cx="1701" cy="1280" r="10" />
-  <circle fill="blue" cx="1944" cy="1280" r="10" />
-  <circle fill="red" cx="1296" cy="128" r="10" />
-  <circle fill="green" cx="972" cy="256" r="10" />
-  <circle fill="blue" cx="972" cy="128" r="10" />
   <polygon points="1944,128 972,128 972,256 324,256 324,384 243,384 243,1536 1701,1536 1701,1280 1944,1280 "
   fill="#D088C0" stroke="black" opacity="0.3"/>
   <polygon points="1296,64 972,64 972,128 1296,128 "
