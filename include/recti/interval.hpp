@@ -457,7 +457,7 @@ namespace recti {
          * @return The minimum distance between the current interval and the `other` interval or
          * scalar value.
          */
-        template <typename U> constexpr auto min_dist_change_with(U &other) const -> T {
+        template <typename U> constexpr auto min_dist_change_with(U &other) -> T {
             if (*this < other) {
                 this->_lb = this->_ub;
                 return min_dist_change(this->_ub, other);

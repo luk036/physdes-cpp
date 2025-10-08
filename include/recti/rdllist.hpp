@@ -28,9 +28,9 @@ class RDllIterator {
     }
 
     // For range-based for loop support
-    constexpr auto begin() noexcept -> RDllIterator { return RDllIterator{cur->next}; }
+    constexpr auto begin() const noexcept -> RDllIterator { return RDllIterator{cur->next}; }
 
-    constexpr auto end() noexcept -> RDllIterator { return RDllIterator{stop}; }
+    constexpr auto end() const noexcept -> RDllIterator { return RDllIterator{stop}; }
 };
 
 class RDllist {
@@ -63,11 +63,21 @@ class RDllist {
 
     auto operator[](size_t k) -> Dllink<size_t>& { return cycle.at(k); }
 
+    auto operator[](size_t k) const -> const Dllink<size_t>& { return cycle.at(k); }
+
     auto from_node(size_t k) -> RDllIterator { return RDllIterator{&cycle.at(k)}; }
 
+    auto from_node(size_t k) const -> RDllIterator {
+        return RDllIterator{const_cast<Dllink<size_t>*>(&cycle.at(k))};
+    }
+
     auto begin() -> RDllIterator { return from_node(0); }
+
+    auto begin() const -> RDllIterator { return from_node(0); }
 
     auto end() -> RDllIterator {
         return RDllIterator{nullptr};  // Dummy end iterator
     }
+
+    auto end() const -> RDllIterator { return RDllIterator{nullptr}; }
 };
