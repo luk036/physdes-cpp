@@ -10,7 +10,6 @@
 
 #include "polygon.hpp"
 #include "rdllist.hpp"
-#include "recti.hpp"
 
 namespace recti {
 
