@@ -209,23 +209,26 @@ namespace recti {
         assert(first != last);
 
         // Use x-monotone as model
-        auto leftward
+        // Lambda for comparing elements based on the provided direction function.
+        auto compare_by_direction
             = [&dir](const auto &rhs, const auto &lhs) -> bool { return dir(rhs) < dir(lhs); };
-        auto result = std::minmax_element(first, last, leftward);
+        auto result = std::minmax_element(first, last, compare_by_direction);
         const auto leftmost = *result.first;
         const auto rightmost = *result.second;
 
         const auto is_anticw = cmp(dir(leftmost).second, dir(rightmost).second);
-        auto r2l = [&leftmost, &dir](const auto &elem) -> bool {
+        // Lambda to check if an element belongs to the right-to-left chain.
+        auto is_right_to_left_chain = [&leftmost, &dir](const auto &elem) -> bool {
             return dir(elem).second <= dir(leftmost).second;
         };
-        auto l2r = [&leftmost, &dir](const auto &elem) -> bool {
+        // Lambda to check if an element belongs to the left-to-right chain.
+        auto is_left_to_right_chain = [&leftmost, &dir](const auto &elem) -> bool {
             return dir(elem).second >= dir(leftmost).second;
         };
-        const auto middle = is_anticw ? std::partition(first, last, std::move(r2l))
-                                      : std::partition(first, last, std::move(l2r));
-        std::sort(first, middle, leftward);
-        std::sort(middle, last, std::move(leftward));
+        const auto middle = is_anticw ? std::partition(first, last, std::move(is_right_to_left_chain))
+                                      : std::partition(first, last, std::move(is_left_to_right_chain));
+        std::sort(first, middle, compare_by_direction);
+        std::sort(middle, last, std::move(compare_by_direction));
         std::reverse(middle, last);
         return is_anticw;  // is_clockwise if y-monotone
     }
@@ -354,60 +357,60 @@ namespace recti {
             first, last, [&dir_y](const auto &a, const auto &b) { return dir_y(a) < dir_y(b); });
         Vector2<T> vec = max_pt - min_pt;
 
-        std::vector<typename std::iterator_traits<FwIter>::value_type> lst1, lst2;
+        std::vector<typename std::iterator_traits<FwIter>::value_type> upper_chain_points, lower_chain_points;
         auto middle = std::partition(
             first, last, [&min_pt, &vec](const auto &pt) { return vec.cross(pt - min_pt) < 0; });
-        lst1.assign(first, middle);
-        lst2.assign(middle, last);
+        upper_chain_points.assign(first, middle);
+        lower_chain_points.assign(middle, last);
 
         auto max_pt1 = *std::max_element(
-            lst1.begin(), lst1.end(),
+            upper_chain_points.begin(), upper_chain_points.end(),
             [&dir_x](const auto &a, const auto &b) { return dir_x(a) < dir_x(b); });
-        auto middle2 = std::partition(lst1.begin(), lst1.end(), [&max_pt1](const auto &pt) {
+        auto middle2 = std::partition(upper_chain_points.begin(), upper_chain_points.end(), [&max_pt1](const auto &pt) {
             return pt.ycoord() < max_pt1.ycoord();
         });
         auto min_pt2 = *std::min_element(
-            lst2.begin(), lst2.end(),
+            lower_chain_points.begin(), lower_chain_points.end(),
             [&dir_x](const auto &a, const auto &b) { return dir_x(a) < dir_x(b); });
-        auto middle3 = std::partition(lst2.begin(), lst2.end(), [&min_pt2](const auto &pt) {
+        auto middle3 = std::partition(lower_chain_points.begin(), lower_chain_points.end(), [&min_pt2](const auto &pt) {
             return pt.ycoord() > min_pt2.ycoord();
         });
 
-        std::vector<typename std::iterator_traits<FwIter>::value_type> lsta, lstb, lstc, lstd;
+        std::vector<typename std::iterator_traits<FwIter>::value_type> segment_a_points, segment_b_points, segment_c_points, segment_d_points;
         if (vec.x() < 0) {
-            lsta.assign(middle3, lst2.end());
-            std::sort(lsta.begin(), lsta.end(),
+            segment_a_points.assign(middle3, lower_chain_points.end());
+            std::sort(segment_a_points.begin(), segment_a_points.end(),
                       [&dir_x](const auto &a, const auto &b) { return dir_x(a) > dir_x(b); });
-            lstb.assign(lst2.begin(), middle3);
-            std::sort(lstb.begin(), lstb.end(),
+            segment_b_points.assign(lower_chain_points.begin(), middle3);
+            std::sort(segment_b_points.begin(), segment_b_points.end(),
                       [&dir_y](const auto &a, const auto &b) { return dir_y(a) < dir_y(b); });
-            lstc.assign(middle2, lst1.end());
-            std::sort(lstc.begin(), lstc.end(),
+            segment_c_points.assign(middle2, upper_chain_points.end());
+            std::sort(segment_c_points.begin(), segment_c_points.end(),
                       [&dir_x](const auto &a, const auto &b) { return dir_x(a) < dir_x(b); });
-            lstd.assign(lst1.begin(), middle2);
-            std::sort(lstd.begin(), lstd.end(),
+            segment_d_points.assign(upper_chain_points.begin(), middle2);
+            std::sort(segment_d_points.begin(), segment_d_points.end(),
                       [&dir_y](const auto &a, const auto &b) { return dir_y(a) > dir_y(b); });
         } else {
-            lsta.assign(lst1.begin(), middle2);
-            std::sort(lsta.begin(), lsta.end(),
+            segment_a_points.assign(upper_chain_points.begin(), middle2);
+            std::sort(segment_a_points.begin(), segment_a_points.end(),
                       [&dir_x](const auto &a, const auto &b) { return dir_x(a) < dir_x(b); });
-            lstb.assign(middle2, lst1.end());
-            std::sort(lstb.begin(), lstb.end(),
+            segment_b_points.assign(middle2, upper_chain_points.end());
+            std::sort(segment_b_points.begin(), segment_b_points.end(),
                       [&dir_y](const auto &a, const auto &b) { return dir_y(a) < dir_y(b); });
-            lstc.assign(lst2.begin(), middle3);
-            std::sort(lstc.begin(), lstc.end(),
+            segment_c_points.assign(lower_chain_points.begin(), middle3);
+            std::sort(segment_c_points.begin(), segment_c_points.end(),
                       [&dir_x](const auto &a, const auto &b) { return dir_x(a) > dir_x(b); });
-            lstd.assign(middle3, lst2.end());
-            std::sort(lstd.begin(), lstd.end(),
+            segment_d_points.assign(middle3, lower_chain_points.end());
+            std::sort(segment_d_points.begin(), segment_d_points.end(),
                       [&dir_y](const auto &a, const auto &b) { return dir_y(a) > dir_y(b); });
         }
 
         std::vector<typename std::iterator_traits<FwIter>::value_type> result;
-        result.reserve(lsta.size() + lstb.size() + lstc.size() + lstd.size());
-        result.insert(result.end(), lsta.begin(), lsta.end());
-        result.insert(result.end(), lstb.begin(), lstb.end());
-        result.insert(result.end(), lstc.begin(), lstc.end());
-        result.insert(result.end(), lstd.begin(), lstd.end());
+        result.reserve(segment_a_points.size() + segment_b_points.size() + segment_c_points.size() + segment_d_points.size());
+        result.insert(result.end(), segment_a_points.begin(), segment_a_points.end());
+        result.insert(result.end(), segment_b_points.begin(), segment_b_points.end());
+        result.insert(result.end(), segment_c_points.begin(), segment_c_points.end());
+        result.insert(result.end(), segment_d_points.begin(), segment_d_points.end());
         return result;
     }
 
