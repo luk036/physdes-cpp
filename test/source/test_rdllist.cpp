@@ -42,12 +42,12 @@ TEST_CASE("test_rdllist_iter") {
     Test iteration of RDllist.
     */
     RDllist dll(5);
-    auto it = dll.begin();
+    const auto it = dll.begin();
     std::vector<size_t> data;
     for (auto& node : it) {
         data.push_back(node.data);
     }
-    std::vector<size_t> expected = {1, 2, 3, 4};
+    const std::vector<size_t> expected = {1, 2, 3, 4};
     CHECK(data == expected);
 }
 
@@ -56,11 +56,11 @@ TEST_CASE("test_rdllist_from_node") {
     Test from_node of RDllist.
     */
     RDllist dll(5);
-    auto it = dll.from_node(2);
+    const auto it = dll.from_node(2);
     std::vector<size_t> data;
     for (auto& node : it) {
         data.push_back(node.data);
     }
-    std::vector<size_t> expected = {3, 4, 0, 1};
+    const std::vector<size_t> expected = {3, 4, 0, 1};
     CHECK(data == expected);
 }

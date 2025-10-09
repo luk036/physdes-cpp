@@ -182,7 +182,7 @@ namespace recti {
     inline auto rpolygon_cut_explicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
                                             bool is_anticlockwise, RDllist& rdll)
         -> std::vector<std::vector<size_t>> {
-        auto v2 = v1->next;
+        const auto v2 = v1->next;
 
         if (v2->next == v1) {  // rectangle 
             return {{v1->data, v2->data}};

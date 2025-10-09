@@ -15,26 +15,26 @@ using namespace recti;
 TEST_CASE("Rectilinear Polygon test (ycoord-mono)") {
     auto S = std::vector<Point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
                                      {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
-    auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
+    const auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
     CHECK(!is_clockwise);
     CHECK(rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_ymonotone<int>(S));
     CHECK(!rpolygon_is_xmonotone<int>(S));
     CHECK(!point_in_rpolygon<int>(S, Point<int>{4, 5}));
-    auto P = RPolygon<int>(S);
+    const auto P = RPolygon<int>(S);
     CHECK_EQ(P.signed_area(), 45);
 }
 
 TEST_CASE("Rectilinear Polygon test (xcoord-mono)") {
     auto S = std::vector<Point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
                                      {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
-    auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
+    const auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
 
     CHECK(is_anticlockwise);
     CHECK(rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_xmonotone<int>(S));
     CHECK(!rpolygon_is_ymonotone<int>(S));
-    auto P = RPolygon<int>(S);
+    const auto P = RPolygon<int>(S);
     CHECK_EQ(P.signed_area(), 51);
 }
 
@@ -45,7 +45,7 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono 50)") {
     for (auto i = 0; i != 50; ++i) {
         S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
     }
-    auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
+    const auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
 
     // SVG output (commented out as per reference)
     // fmt::print("<svg viewBox=\"0 0 2187 2048\" xmlns=\"http://www.w3.org/2000/svg\">\n");
@@ -67,7 +67,7 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono 50)") {
     CHECK(rpolygon_is_xmonotone<int>(S));
     CHECK(!rpolygon_is_ymonotone<int>(S));
 
-    auto P = RPolygon<int>(S);
+    const auto P = RPolygon<int>(S);
     CHECK_EQ(P.signed_area(), -2098656);
 }
 
@@ -78,12 +78,12 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono 50)") {
     for (auto i = 0; i != 50; ++i) {
         S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
     }
-    auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
+    const auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
     CHECK(is_clockwise);
     CHECK(!rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_ymonotone<int>(S));
     CHECK(!rpolygon_is_xmonotone<int>(S));
-    auto q = Point<int>(int(hgenX.pop()), int(hgenY.pop()));
+    const auto q = Point<int>(int(hgenX.pop()), int(hgenY.pop()));
     CHECK(!point_in_rpolygon<int>(S, q));
 
     // SVG output (commented out as per reference)
@@ -101,13 +101,13 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono 50)") {
     // }
     // fmt::print("</svg>\n");
 
-    auto P = RPolygon<int>(S);
+    const auto P = RPolygon<int>(S);
     CHECK_EQ(P.signed_area(), -2032128);
 }
 
 TEST_CASE("Rectilinear Polygon point_in_rpolygon test") {
     // Define a square in counter-clockwise order
-    auto S = std::vector<Point<int>>{{0, 0}, {10, 0}, {10, 10}, {0, 10}};
+    const auto S = std::vector<Point<int>>{{0, 0}, {10, 0}, {10, 10}, {0, 10}};
 
     // Test points strictly inside the polygon
     CHECK(point_in_rpolygon<int>(S, Point<int>{5, 5}));
@@ -122,31 +122,31 @@ TEST_CASE("Rectilinear Polygon point_in_rpolygon test") {
 }
 
 TEST_CASE("RPolygon to_polygon conversion") {
-    auto coords = std::vector<Point<int>>{{0, 0}, {10, 10}, {5, 5}};
-    auto r_poly = RPolygon<int>(coords);
-    auto poly = r_poly.to_polygon();
+    const auto coords = std::vector<Point<int>>{{0, 0}, {10, 10}, {5, 5}};
+    const auto r_poly = RPolygon<int>(coords);
+    const auto poly = r_poly.to_polygon();
 
     // Expected coordinates after conversion to maintain rectilinearity
-    auto expected_coords
+    const auto expected_coords
         = std::vector<Point<int>>{{0, 0}, {10, 0}, {10, 10}, {5, 10}, {5, 5}, {0, 5}};
-    auto expected_poly = Polygon<int>(expected_coords);
+    const auto expected_poly = Polygon<int>(expected_coords);
 
     CHECK(poly == expected_poly);
 }
 
 TEST_CASE("RPolygon rectilinearity test") {
     // Rectilinear polygon
-    auto rectilinear_coords = std::vector<Point<int>>{{0, 0}, {10, 10}, {5, 5}};
-    auto rectilinear_poly = RPolygon<int>(rectilinear_coords);
+    const auto rectilinear_coords = std::vector<Point<int>>{{0, 0}, {10, 10}, {5, 5}};
+    const auto rectilinear_poly = RPolygon<int>(rectilinear_coords);
     CHECK(rectilinear_poly.is_rectilinear());
 }
 
 TEST_CASE("RPolygon equality test") {
-    auto coords1 = std::vector<Point<int>>{{0, 0}, {5, 0}, {5, 5}, {0, 5}};
-    auto coords2 = std::vector<Point<int>>{{0, 0}, {5, 0}, {5, 5}, {0, 5}};
+    const auto coords1 = std::vector<Point<int>>{{0, 0}, {5, 0}, {5, 5}, {0, 5}};
+    const auto coords2 = std::vector<Point<int>>{{0, 0}, {5, 0}, {5, 5}, {0, 5}};
 
-    auto poly1 = RPolygon<int>(coords1);
-    auto poly2 = RPolygon<int>(coords2);
+    const auto poly1 = RPolygon<int>(coords1);
+    const auto poly2 = RPolygon<int>(coords2);
 
     CHECK(poly1 == poly2);
 
@@ -157,10 +157,10 @@ TEST_CASE("RPolygon equality test") {
 }
 
 TEST_CASE("RPolygon vertices access") {
-    auto coords = std::vector<Point<int>>{{0, 0}, {5, 0}, {5, 5}, {0, 5}};
-    auto poly = RPolygon<int>(coords);
+    const auto coords = std::vector<Point<int>>{{0, 0}, {5, 0}, {5, 5}, {0, 5}};
+    const auto poly = RPolygon<int>(coords);
 
-    auto vertices = poly.vertices();
+    const auto vertices = poly.vertices();
     CHECK(vertices.size() == 4);
     CHECK(vertices[0] == Point<int>{0, 0});
     CHECK(vertices[1] == Point<int>{5, 0});

@@ -30,18 +30,18 @@ namespace recti {
         }
 
         // Find min and max indices based on the direction function
-        auto min_it = std::min_element(pointset.begin(), pointset.end(),
+        const auto min_it = std::min_element(pointset.begin(), pointset.end(),
                                       [&dir](const auto& a, const auto& b) {
                                           return dir(a) < dir(b);
                                       });
-        auto max_it = std::max_element(pointset.begin(), pointset.end(),
+        const auto max_it = std::max_element(pointset.begin(), pointset.end(),
                                       [&dir](const auto& a, const auto& b) {
                                           return dir(a) < dir(b);
                                       });
         
-        size_t min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
-        size_t max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
-        Point<T> min_point = *min_it;
+        const size_t min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
+        const size_t max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
+        const Point<T> min_point = *min_it;
 
         RDllist rdll(pointset.size());
         auto& v_min = rdll[min_index];

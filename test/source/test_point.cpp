@@ -7,9 +7,9 @@
 using namespace recti;
 
 TEST_CASE("Point") {
-    Point p1(1, 2);
-    Point p2(1, 2);
-    Point p3(2, 3);
+    const Point p1(1, 2);
+    const Point p2(1, 2);
+    const Point p3(2, 3);
 
     SUBCASE("Construction and Accessors") {
         CHECK(p1.xcoord() == 1);
@@ -23,7 +23,7 @@ TEST_CASE("Point") {
     }
 
     SUBCASE("Arithmetic Operators") {
-        Vector2 v(1, 1);
+        const Vector2 v(1, 1);
         Point p4 = p1 + v;
         CHECK(p4.xcoord() == 2);
         CHECK(p4.ycoord() == 3);
@@ -32,24 +32,24 @@ TEST_CASE("Point") {
         p4 -= v;
         CHECK(p4 == p1);
 
-        Point p5 = p3 - v;
+        const Point p5 = p3 - v;
         CHECK(p5 == p1);
     }
 
     SUBCASE("Flip") {
-        Point p_flipped = p1.flip_xy();
+        const Point p_flipped = p1.flip_xy();
         CHECK(p_flipped.xcoord() == 2);
         CHECK(p_flipped.ycoord() == 1);
 
-        Point p_flipped_y = p1.flip_y();
+        const Point p_flipped_y = p1.flip_y();
         CHECK(p_flipped_y.xcoord() == -1);
         CHECK(p_flipped_y.ycoord() == 2);
     }
 
     SUBCASE("Overlaps, Contains, Intersects, Hull") {
-        Point p_interval1(Interval(0, 2), Interval(0, 2));
-        Point p_interval2(Interval(1, 3), Interval(1, 3));
-        Point p_interval3(Interval(3, 4), Interval(3, 4));
+        const Point p_interval1(Interval(0, 2), Interval(0, 2));
+        const Point p_interval2(Interval(1, 3), Interval(1, 3));
+        const Point p_interval3(Interval(3, 4), Interval(3, 4));
 
         CHECK(p_interval1.overlaps(p_interval2));
         CHECK(!p_interval1.overlaps(p_interval3));
@@ -57,20 +57,20 @@ TEST_CASE("Point") {
         CHECK(p_interval1.contains(Point(1, 1)));
         CHECK(!p_interval1.contains(Point(3, 3)));
 
-        Point intersection = p_interval1.intersect_with(p_interval2);
+        const Point intersection = p_interval1.intersect_with(p_interval2);
         CHECK(intersection.xcoord() == Interval(1, 2));
         CHECK(intersection.ycoord() == Interval(1, 2));
 
-        Point hull = p_interval1.hull_with(p_interval2);
+        const Point hull = p_interval1.hull_with(p_interval2);
         CHECK(hull.xcoord() == Interval(0, 3));
         CHECK(hull.ycoord() == Interval(0, 3));
     }
 
     SUBCASE("Min Distance") {
-        Point p_interval1(Interval(0, 2), Interval(0, 2));
-        Point p_interval2(Interval(4, 5), Interval(4, 5));
+        const Point p_interval1(Interval(0, 2), Interval(0, 2));
+        const Point p_interval2(Interval(4, 5), Interval(4, 5));
 
-        auto dist = p_interval1.min_dist_with(p_interval2);
+        const auto dist = p_interval1.min_dist_with(p_interval2);
         CHECK(dist == 4);
     }
 }

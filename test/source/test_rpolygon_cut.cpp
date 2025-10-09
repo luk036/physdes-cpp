@@ -18,9 +18,9 @@ TEST_CASE("RPolygon convex cut test") {
     for (int i = 0; i < 40; ++i) {
         S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
     }
-    auto P = create_test_rpolygon(S.begin(), S.end());
+    const auto P = create_test_rpolygon(S.begin(), S.end());
     // CHECK((!rpolygon_is_xmonotone<int>(P) || !rpolygon_is_ymonotone<int>(P)));
-    bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
     // CHECK_FALSE(is_anticlockwise);
 
     // // SVG output (commented out as per reference)
@@ -39,7 +39,7 @@ TEST_CASE("RPolygon convex cut test") {
     //         fmt::print("  <circle cx=\"{}\" cy=\"{}\" r=\"10\" />\n", p.xcoord(), p.ycoord());
     //     }
     // }
-    auto L = rpolygon_cut_convex<int>(P, is_anticlockwise);
+    const auto L = rpolygon_cut_convex<int>(P, is_anticlockwise);
 
     for (const auto& C : L) {
         CHECK(rpolygon_is_convex<int>(C));
@@ -67,10 +67,10 @@ TEST_CASE("RPolygon explicit cut test") {
     for (int i = 0; i < 7; ++i) {
         S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
     }
-    auto P = create_test_rpolygon(S.begin(), S.end());
+    const auto P = create_test_rpolygon(S.begin(), S.end());
     // CHECK((!rpolygon_is_xmonotone<int>(P) || !rpolygon_is_ymonotone<int>(P)));
-    bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
-    auto Q = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
+    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+    const auto Q = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
 
     // SVG output (commented out as per reference)
     // fmt::print("<svg viewBox=\"0 0 2187 2048\" xmlns=\"http://www.w3.org/2000/svg\">\n");
@@ -88,7 +88,7 @@ TEST_CASE("RPolygon explicit cut test") {
     //         fmt::print("  <circle cx=\"{}\" cy=\"{}\" r=\"10\" />\n", p.xcoord(), p.ycoord());
     //     }
     // }
-    auto L = rpolygon_cut_explicit<int>(Q, is_anticlockwise);
+    const auto L = rpolygon_cut_explicit<int>(Q, is_anticlockwise);
 
     for (const auto& C : L) {
         CHECK(rpolygon_is_convex<int>(C));
@@ -120,10 +120,10 @@ TEST_CASE("RPolygon implicit cut test") {
     for (int i = 0; i < 20; ++i) {
         S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
     }
-    auto P = create_test_rpolygon(S.begin(), S.end());
+    const auto P = create_test_rpolygon(S.begin(), S.end());
     // CHECK((!rpolygon_is_xmonotone<int>(P) || !rpolygon_is_ymonotone<int>(P)));
-    bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
-    auto Q = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
+    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+    const auto Q = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
 
     // SVG output (commented out as per reference)
     fmt::print("<svg viewBox=\"0 0 2187 2048\" xmlns=\"http://www.w3.org/2000/svg\">\n");
@@ -141,7 +141,7 @@ TEST_CASE("RPolygon implicit cut test") {
             fmt::print("  <circle cx=\"{}\" cy=\"{}\" r=\"10\" />\n", p.xcoord(), p.ycoord());
         }
     }
-    auto L = rpolygon_cut_implicit<int>(Q, is_anticlockwise);
+    const auto L = rpolygon_cut_implicit<int>(Q, is_anticlockwise);
 
     for (const auto& C : L) {
         CHECK(rpolygon_is_convex<int>(C));
@@ -172,10 +172,10 @@ TEST_CASE("RPolygon cut rectangle test") {
     for (int i = 0; i < 7; ++i) {
         S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
     }
-    auto P = create_test_rpolygon(S.begin(), S.end());
+    const auto P = create_test_rpolygon(S.begin(), S.end());
     // CHECK((!rpolygon_is_xmonotone<int>(P) || !rpolygon_is_ymonotone<int>(P)));
-    bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
-    auto Q = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
+    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+    const auto Q = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
 
     // // SVG output (commented out as per reference)
     // fmt::print("<svg viewBox=\"0 0 2187 2048\" xmlns=\"http://www.w3.org/2000/svg\">\n");
@@ -193,7 +193,7 @@ TEST_CASE("RPolygon cut rectangle test") {
     //         fmt::print("  <circle cx=\"{}\" cy=\"{}\" r=\"10\" />\n", p.xcoord(), p.ycoord());
     //     }
     // }
-    auto L = rpolygon_cut_rectangle<int>(Q, is_anticlockwise);
+    const auto L = rpolygon_cut_rectangle<int>(Q, is_anticlockwise);
 
     for (const auto& C : L) {
         CHECK(rpolygon_is_convex<int>(C));

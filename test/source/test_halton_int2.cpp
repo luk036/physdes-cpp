@@ -16,8 +16,8 @@ TEST_CASE("Vdcorput 2") {
 }
 
 TEST_CASE("Halton 2") {
-    unsigned base[] = {3, 5};
-    unsigned scale[] = {7, 7};
+    const unsigned base[] = {3, 5};
+    const unsigned scale[] = {7, 7};
     auto hgen = recti::halton(base, scale);
     CHECK_EQ(hgen(), std::vector<unsigned>{729, 15625});
     CHECK_EQ(hgen(), std::vector<unsigned>{1458, 31250});

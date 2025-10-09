@@ -10,9 +10,9 @@ using recti::hull;
 using recti::Interval;
 
 TEST_CASE("Interval test") {
-    auto a = Interval{4, 8};
-    auto b = Interval{5, 6};
-    auto v = 3;
+    const auto a = Interval{4, 8};
+    const auto b = Interval{5, 6};
+    const auto v = 3;
 
     CHECK(!(a < b));
     CHECK(!(b < a));
@@ -42,15 +42,15 @@ TEST_CASE("Interval test") {
 }
 
 TEST_CASE("Interval test hull") {
-    auto a = Interval{3, 5};
-    auto b = Interval{5, 7};
-    auto c = Interval{7, 8};
+    const auto a = Interval{3, 5};
+    const auto b = Interval{5, 7};
+    const auto c = Interval{7, 8};
 
     CHECK(a.hull_with(b) == Interval{3, 7});
     CHECK(a.hull_with(c) == Interval{3, 8});
     CHECK(b.hull_with(c) == Interval{5, 8});
 
-    auto d = 4;
+    const auto d = 4;
     CHECK(a.hull_with(d) == Interval{3, 5});
     CHECK(a.hull_with(6) == Interval{3, 6});
 
@@ -62,9 +62,9 @@ TEST_CASE("Interval test hull") {
 }
 
 TEST_CASE("Interval of Interval test") {
-    auto a = Interval{Interval{3, 4}, Interval{8, 9}};
-    auto b = Interval{Interval{5, 6}, Interval{6, 7}};
-    auto v = 3;
+    const auto a = Interval{Interval{3, 4}, Interval{8, 9}};
+    const auto b = Interval{Interval{5, 6}, Interval{6, 7}};
+    const auto v = 3;
 
     CHECK(!(a < b));
     CHECK(!(b < a));

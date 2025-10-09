@@ -11,19 +11,19 @@
 using namespace recti;
 
 TEST_CASE("RPolygon is_monotone small list test") {
-    std::vector<Point<int>> points = {{0, 0}, {1, 1}};
+    const std::vector<Point<int>> points = {{0, 0}, {1, 1}};
     CHECK(rpolygon_is_monotone<int>(
         points, [](const Point<int>& p) { return std::make_pair(p.xcoord(), p.ycoord()); }));
 }
 
 TEST_CASE("RPolygon is_monotone break test") {
-    std::vector<Point<int>> points = {{0, 0}, {3, 1}, {1, 2}, {2, 3}};
+    const std::vector<Point<int>> points = {{0, 0}, {3, 1}, {1, 2}, {2, 3}};
     CHECK_FALSE(rpolygon_is_monotone<int>(
         points, [](const Point<int>& p) { return std::make_pair(p.xcoord(), p.ycoord()); }));
 }
 
 TEST_CASE("RPolygon make x-monotone hull test") {
-    std::vector<Point<int>> S = {{-10, 50}, {-40, 40}, {-60, -40}, {-20, -50}, {90, -2},
+    const std::vector<Point<int>> S = {{-10, 50}, {-40, 40}, {-60, -40}, {-20, -50}, {90, -2},
                                  {60, 10},  {50, 20},  {10, 40},   {80, 60}};
     CHECK_FALSE(rpolygon_is_xmonotone<int>(S));
 
@@ -41,7 +41,7 @@ TEST_CASE("RPolygon make x-monotone hull test") {
     //     fmt::print("  <circle cx=\"{}\" cy=\"{}\" r=\"1\" />\n", p.xcoord(), p.ycoord());
     // }
 
-    auto C = rpolygon_make_xmonotone_hull<int>(S, true);
+    const auto C = rpolygon_make_xmonotone_hull<int>(S, true);
 
     // // SVG output for hull
     // fmt::print("  <polygon points=\"");
@@ -58,7 +58,7 @@ TEST_CASE("RPolygon make x-monotone hull test") {
 }
 
 TEST_CASE("RPolygon make y-monotone hull test") {
-    std::vector<Point<int>> S = {{90, -10}, {40, -40}, {-40, -60}, {-50, -20}, {-20, 90},
+    const std::vector<Point<int>> S = {{90, -10}, {40, -40}, {-40, -60}, {-50, -20}, {-20, 90},
                                  {10, 60},  {20, 50},  {30, 10},   {60, 80}};
     CHECK_FALSE(rpolygon_is_ymonotone<int>(S));
 
@@ -76,7 +76,7 @@ TEST_CASE("RPolygon make y-monotone hull test") {
     //     fmt::print("  <circle cx=\"{}\" cy=\"{}\" r=\"1\" />\n", p.xcoord(), p.ycoord());
     // }
 
-    auto C = rpolygon_make_ymonotone_hull<int>(S, false);
+    const auto C = rpolygon_make_ymonotone_hull<int>(S, false);
 
     // // SVG output for hull
     // fmt::print("  <polygon points=\"");
@@ -99,10 +99,10 @@ TEST_CASE("RPolygon make convex hull test with Halton points") {
     for (int i = 0; i < 100; ++i) {
         S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
     }
-    auto P = create_test_rpolygon(S.begin(), S.end());
+    const auto P = create_test_rpolygon(S.begin(), S.end());
     CHECK_FALSE(rpolygon_is_xmonotone<int>(P));
     CHECK_FALSE(rpolygon_is_ymonotone<int>(P));
-    auto C = rpolygon_make_convex_hull<int>(P, false);
+    const auto C = rpolygon_make_convex_hull<int>(P, false);
 
     // // SVG output (commented out as per reference)
     // fmt::print("<svg viewBox=\"0 0 2187 2048\" xmlns=\"http://www.w3.org/2000/svg\">\n");
@@ -139,7 +139,7 @@ TEST_CASE("RPolygon make xmono hull test") {
     for (auto i = 0; i != 50; ++i) {
         S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
     }
-    auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
+    const auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
     CHECK(rpolygon_is_ymonotone<int>(S));
     CHECK_FALSE(rpolygon_is_xmonotone<int>(S));
 
@@ -157,7 +157,7 @@ TEST_CASE("RPolygon make xmono hull test") {
     //     fmt::print("  <circle cx=\"{}\" cy=\"{}\" r=\"10\" />\n", p.xcoord(), p.ycoord());
     // }
 
-    auto C = rpolygon_make_xmonotone_hull<int>(S, !is_clockwise);
+    const auto C = rpolygon_make_xmonotone_hull<int>(S, !is_clockwise);
 
     // // SVG output for hull
     // fmt::print("  <polygon points=\"");
@@ -182,7 +182,7 @@ TEST_CASE("RPolygon make ymono hull test") {
     for (auto i = 0; i != 50; ++i) {
         S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
     }
-    auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
+    const auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
     CHECK(rpolygon_is_xmonotone<int>(S));
     CHECK_FALSE(rpolygon_is_ymonotone<int>(S));
 
@@ -200,7 +200,7 @@ TEST_CASE("RPolygon make ymono hull test") {
     //     fmt::print("  <circle cx=\"{}\" cy=\"{}\" r=\"10\" />\n", p.xcoord(), p.ycoord());
     // }
 
-    auto C = rpolygon_make_ymonotone_hull<int>(S, is_anticlockwise);
+    const auto C = rpolygon_make_ymonotone_hull<int>(S, is_anticlockwise);
 
     // // SVG output for hull
     // fmt::print("  <polygon points=\"");

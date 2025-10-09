@@ -20,7 +20,7 @@ TEST_CASE("Polygon test (test polygon)") {
     CHECK(polygon_is_ymonotone<int>(S));
     CHECK(!polygon_is_xmonotone<int>(S));
     CHECK(polygon_is_anticlockwise<int>(S));
-    auto P = Polygon<int>(S);
+    const auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 102);
 
     // Test += and -= operators
@@ -39,7 +39,7 @@ TEST_CASE("Polygon test (ycoord-mono)") {
     CHECK(polygon_is_ymonotone<int>(S));
     CHECK(!polygon_is_xmonotone<int>(S));
     CHECK(polygon_is_anticlockwise<int>(S));
-    auto P = Polygon<int>(S);
+    const auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 102);
     CHECK(!point_in_polygon<int>(S, Point<int>{4, 5}));
 }
@@ -53,7 +53,7 @@ TEST_CASE("Polygon test (xcoord-mono)") {
     CHECK(polygon_is_xmonotone<int>(S));
     CHECK(!polygon_is_ymonotone<int>(S));
     CHECK(polygon_is_anticlockwise<int>(S));
-    auto P = Polygon<int>(S);
+    const auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 111);
 }
 
@@ -70,7 +70,7 @@ TEST_CASE("Polygon test (ycoord-mono 20)") {
     CHECK(polygon_is_ymonotone<int>(S));
     CHECK(!polygon_is_xmonotone<int>(S));
     CHECK(polygon_is_anticlockwise<int>(S));
-    auto P = Polygon<int>(S);
+    const auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 4074624);
 }
 
@@ -87,7 +87,7 @@ TEST_CASE("Polygon test (xcoord-mono 20)") {
     CHECK(polygon_is_xmonotone<int>(S));
     CHECK(!polygon_is_ymonotone<int>(S));
     CHECK(polygon_is_anticlockwise<int>(S));
-    auto P = Polygon<int>(S);
+    const auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 3862080);
 }
 
@@ -104,7 +104,7 @@ TEST_CASE("Polygon test (ycoord-mono 50)") {
     CHECK(polygon_is_ymonotone<int>(S));
     CHECK(!polygon_is_xmonotone<int>(S));
     CHECK(polygon_is_anticlockwise<int>(S));
-    auto q = Point<int>(int(hgenX.pop()), int(hgenY.pop()));
+    const auto q = Point<int>(int(hgenX.pop()), int(hgenY.pop()));
 
     // fmt::print(
     //     "\n<svg viewBox='0 0 2187 2048'
@@ -126,44 +126,44 @@ TEST_CASE("Polygon test (ycoord-mono 50)") {
     //     q.ycoord());
     // fmt::print("</svg>\n");
 
-    auto P = Polygon<int>(S);
+    const auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 4409856);
     CHECK(point_in_polygon<int>(S, q));
 }
 
 TEST_CASE("Polygon rectilinear") {
     // Create a rectilinear polygon
-    auto rectilinear_coords = std::vector<Point<int>>{{0, 0}, {0, 1}, {1, 1}, {1, 0}};
-    auto rectilinear_polygon = Polygon<int>(rectilinear_coords);
+    const auto rectilinear_coords = std::vector<Point<int>>{{0, 0}, {0, 1}, {1, 1}, {1, 0}};
+    const auto rectilinear_polygon = Polygon<int>(rectilinear_coords);
     CHECK(rectilinear_polygon.is_rectilinear() == true);
 
     // Create a non-rectilinear polygon
-    auto non_rectilinear_coords = std::vector<Point<int>>{{0, 0}, {1, 1}, {2, 0}};
-    auto non_rectilinear_polygon = Polygon<int>(non_rectilinear_coords);
+    const auto non_rectilinear_coords = std::vector<Point<int>>{{0, 0}, {1, 1}, {2, 0}};
+    const auto non_rectilinear_polygon = Polygon<int>(non_rectilinear_coords);
     CHECK(non_rectilinear_polygon.is_rectilinear() == false);
 }
 
 TEST_CASE("Polygon convexity") {
     // Test case 1: Convex polygon
-    auto convex_coords = std::vector<Point<int>>{{0, 0}, {2, 0}, {2, 2}, {0, 2}};
-    auto convex_polygon = Polygon<int>(convex_coords);
+    const auto convex_coords = std::vector<Point<int>>{{0, 0}, {2, 0}, {2, 2}, {0, 2}};
+    const auto convex_polygon = Polygon<int>(convex_coords);
     CHECK(convex_polygon.is_convex() == true);
 
     // Test case 2: Non-convex polygon
-    auto non_convex_coords = std::vector<Point<int>>{{0, 0}, {2, 0}, {1, 1}, {2, 2}, {0, 2}};
-    auto non_convex_polygon = Polygon<int>(non_convex_coords);
+    const auto non_convex_coords = std::vector<Point<int>>{{0, 0}, {2, 0}, {1, 1}, {2, 2}, {0, 2}};
+    const auto non_convex_polygon = Polygon<int>(non_convex_coords);
     CHECK(non_convex_polygon.is_convex() == false);
 
     // Test case 3: Triangle (always convex)
-    auto triangle_coords = std::vector<Point<int>>{{0, 0}, {2, 0}, {1, 2}};
-    auto triangle = Polygon<int>(triangle_coords);
+    const auto triangle_coords = std::vector<Point<int>>{{0, 0}, {2, 0}, {1, 2}};
+    const auto triangle = Polygon<int>(triangle_coords);
     CHECK(triangle.is_convex() == true);
 }
 
 TEST_CASE("Polygon equality") {
-    auto coords = std::vector<Point<int>>{{0, 0}, {1, 0}, {1, 1}, {0, 1}};
-    auto P = Polygon<int>(coords);
-    auto Q = Polygon<int>(coords);
+    const auto coords = std::vector<Point<int>>{{0, 0}, {1, 0}, {1, 1}, {0, 1}};
+    const auto P = Polygon<int>(coords);
+    const auto Q = Polygon<int>(coords);
     CHECK(P == Q);
 
     // Test inequality
@@ -173,10 +173,10 @@ TEST_CASE("Polygon equality") {
 }
 
 TEST_CASE("Polygon vertices access") {
-    auto coords = std::vector<Point<int>>{{0, 0}, {1, 0}, {1, 1}, {0, 1}};
-    auto P = Polygon<int>(coords);
+    const auto coords = std::vector<Point<int>>{{0, 0}, {1, 0}, {1, 1}, {0, 1}};
+    const auto P = Polygon<int>(coords);
 
-    auto vertices = P.vertices();
+    const auto vertices = P.vertices();
     CHECK(vertices.size() == 4);
     CHECK(vertices[0] == Point<int>{0, 0});
     CHECK(vertices[1] == Point<int>{1, 0});
@@ -193,15 +193,15 @@ TEST_CASE("Polygon empty and small cases") {
     //     CHECK(empty_polygon.is_convex() == false);
 
     // Single point
-    auto single_coords = std::vector<Point<int>>{{1, 1}};
-    auto single_polygon = Polygon<int>(single_coords);
+    const auto single_coords = std::vector<Point<int>>{{1, 1}};
+    const auto single_polygon = Polygon<int>(single_coords);
     CHECK(single_polygon.signed_area_x2() == 0);
     CHECK(single_polygon.is_rectilinear() == true);
     CHECK(single_polygon.is_convex() == false);
 
     // Two points (line segment)
-    auto line_coords = std::vector<Point<int>>{{0, 0}, {1, 1}};
-    auto line_polygon = Polygon<int>(line_coords);
+    const auto line_coords = std::vector<Point<int>>{{0, 0}, {1, 1}};
+    const auto line_polygon = Polygon<int>(line_coords);
     CHECK(line_polygon.signed_area_x2() == 0);
     CHECK(line_polygon.is_rectilinear() == false);  // Diagonal line is not rectilinear
     CHECK(line_polygon.is_convex() == false);
@@ -210,7 +210,7 @@ TEST_CASE("Polygon empty and small cases") {
 TEST_CASE("Polygon test (ycoord-mono) 2") {
     auto S = std::vector<Point<int>>{{0, 0}, {0, 10}, {10, 10}, {10, 0}};
     create_ymono_polygon(S.begin(), S.end());
-    auto P = Polygon<int>(S);
+    const auto P = Polygon<int>(S);
     CHECK(P.signed_area_x2() == 200);
     CHECK(polygon_is_anticlockwise<int>(S));
     CHECK(point_in_polygon<int>(S, Point<int>{5, 5}));

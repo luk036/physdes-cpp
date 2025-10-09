@@ -15,9 +15,9 @@ using namespace recti;
 // template <typename T> struct my_point : Point<T, T> { double data; };
 
 TEST_CASE("Point test") {
-    auto a = Point<int>{4000, 8000};
-    auto b = Point<int>{5000, 6000};
-    auto v = (b - a) / 2;  // integer division
+    const auto a = Point<int>{4000, 8000};
+    const auto b = Point<int>{5000, 6000};
+    const auto v = (b - a) / 2;  // integer division
 
     CHECK(!(a == b));
     CHECK(a != b);
@@ -28,21 +28,21 @@ TEST_CASE("Point test") {
 }
 
 TEST_CASE("Point test hull") {
-    auto a = Point<int>{3, 5};
-    auto b = Point<int>{5, 7};
+    const auto a = Point<int>{3, 5};
+    const auto b = Point<int>{5, 7};
     CHECK(a.hull_with(b) == Point<Interval<int>>({3, 5}, {5, 7}));
 }
 
 TEST_CASE("Rectangle test") {
-    auto xrng1 = Interval<int>{4000, 8000};
-    auto yrng1 = Interval<int>{5000, 7000};
-    auto r1 = Rectangle<int>{xrng1, yrng1};
-    auto xrng2 = Interval<int>{5000, 7000};
-    auto yrng2 = Interval<int>{6000, 6000};
-    auto r2 = Rectangle<int>{xrng2, yrng2};
-    auto p = Point<int>{7000, 6000};
-    auto v = Vector2<int>{5000, 6000};
-    auto r3 = Rectangle<int>(r1 - v);
+    const auto xrng1 = Interval<int>{4000, 8000};
+    const auto yrng1 = Interval<int>{5000, 7000};
+    const auto r1 = Rectangle<int>{xrng1, yrng1};
+    const auto xrng2 = Interval<int>{5000, 7000};
+    const auto yrng2 = Interval<int>{6000, 6000};
+    const auto r2 = Rectangle<int>{xrng2, yrng2};
+    const auto p = Point<int>{7000, 6000};
+    const auto v = Vector2<int>{5000, 6000};
+    const auto r3 = Rectangle<int>(r1 - v);
 
     CHECK(r1 != r2);
     CHECK(r3 + v == r1);
@@ -57,10 +57,10 @@ TEST_CASE("Rectangle test") {
 }
 
 TEST_CASE("Segment test") {
-    auto xrng1 = Interval<int>{4000, 8000};
-    auto yrng1 = Interval<int>{5000, 7000};
-    auto s1 = HSegment<int>{xrng1, 6000};
-    auto s2 = VSegment<int>{5000, yrng1};
+    const auto xrng1 = Interval<int>{4000, 8000};
+    const auto yrng1 = Interval<int>{5000, 7000};
+    const auto s1 = HSegment<int>{xrng1, 6000};
+    const auto s2 = VSegment<int>{5000, yrng1};
 
     CHECK(s1.overlaps(s2));
 }

@@ -453,9 +453,9 @@ namespace recti {
      */
     template <typename T> inline auto polygon_is_anticlockwise(std::span<const Point<T>> pointset)
         -> bool {
-        auto it1 = std::min_element(pointset.begin(), pointset.end());
-        auto it0 = it1 != pointset.begin() ? std::prev(it1) : std::prev(pointset.end());
-        auto it2 = std::next(it1) != pointset.end() ? std::next(it1) : pointset.begin();
+        const auto it1 = std::min_element(pointset.begin(), pointset.end());
+        const auto it0 = it1 != pointset.begin() ? std::prev(it1) : std::prev(pointset.end());
+        const auto it2 = std::next(it1) != pointset.end() ? std::next(it1) : pointset.begin();
         return (*it1 - *it0).cross(*it2 - *it1) > 0;
     }
 }  // namespace recti

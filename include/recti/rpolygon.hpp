@@ -575,8 +575,8 @@ namespace recti {
      */
     template <typename T> inline auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset)
         -> bool {
-        auto it1 = std::min_element(pointset.begin(), pointset.end());
-        auto it0 = it1 != pointset.begin() ? std::prev(it1) : std::prev(pointset.end());
+        const auto it1 = std::min_element(pointset.begin(), pointset.end());
+        const auto it0 = it1 != pointset.begin() ? std::prev(it1) : std::prev(pointset.end());
         return it0->ycoord() > it1->ycoord();
     }
 }  // namespace recti

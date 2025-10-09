@@ -14,7 +14,7 @@ auto main(int argc, char **argv) -> int {
         {"fr", recti::LanguageCode::FR},
     };
 
-    cxxopts::Options options(*argv, "A program to welcome the world!");
+    const cxxopts::Options options(*argv, "A program to welcome the world!");
 
     std::string language;
     std::string name;
@@ -28,7 +28,7 @@ auto main(int argc, char **argv) -> int {
   ;
     // clang-format on
 
-    auto result = options.parse(argc, argv);
+    const auto result = options.parse(argc, argv);
 
     if (result["help"].as<bool>()) {
         std::cout << options.help() << std::endl;
@@ -40,7 +40,7 @@ auto main(int argc, char **argv) -> int {
         return 0;
     }
 
-    auto langIt = languages.find(language);
+    const auto langIt = languages.find(language);
     if (langIt == languages.end()) {
         std::cerr << "unknown language code: " << language << std::endl;
         return 1;

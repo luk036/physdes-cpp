@@ -23,16 +23,16 @@ struct MyRect {
 };
 
 TEST_CASE("Generic functions") {
-    MyPoint p1{1, 2};
-    MyPoint p2{1, 2};
-    MyPoint p3{2, 3};
+    const MyPoint p1{1, 2};
+    const MyPoint p2{1, 2};
+    const MyPoint p3{2, 3};
 
     CHECK(recti::overlap(p1, p2));
     CHECK(!recti::overlap(p1, p3));
 
-    MyRect r1{{0, 0}, {4, 4}};
-    MyRect r2{{2, 2}, {6, 6}};
-    MyRect r3{{8, 8}, {10, 10}};
+    const MyRect r1{{0, 0}, {4, 4}};
+    const MyRect r2{{2, 2}, {6, 6}};
+    const MyRect r3{{8, 8}, {10, 10}};
 
     CHECK(recti::overlap(r1, r2));
     CHECK(!recti::overlap(r1, r3));
