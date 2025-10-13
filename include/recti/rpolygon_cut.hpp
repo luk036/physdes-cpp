@@ -17,7 +17,8 @@ namespace recti {
 
     // Find minimum distance point for cutting
     template <typename T>
-    inline auto _find_min_dist_point(const std::vector<Point<T>>& lst, Dllink<size_t>* vcurr) -> std::pair<Dllink<size_t>*, bool> {
+    inline auto _find_min_dist_point(const std::vector<Point<T>>& lst, Dllink<size_t>* vcurr)
+        -> std::pair<Dllink<size_t>*, bool> {
         auto vnext = vcurr->next;
         auto vstop = vcurr;
         auto vi = vnext;
@@ -54,7 +55,6 @@ namespace recti {
             p0 = p1;
             p1 = p2;
             p2 = &lst[vi->next->data];
-
         }
         return {v_min, vertical};
     }
@@ -69,7 +69,7 @@ namespace recti {
         auto v2 = v1->next;
         auto v3 = v2->next;
 
-        if (v3 == v1) {  // rectangle 
+        if (v3 == v1) {  // rectangle
             return {{v1->data, v2->data}};
         }
         if (v3->next == v1) {  // L-shape
@@ -184,7 +184,7 @@ namespace recti {
         -> std::vector<std::vector<size_t>> {
         const auto v2 = v1->next;
 
-        if (v2->next == v1) {  // rectangle 
+        if (v2->next == v1) {  // rectangle
             return {{v1->data, v2->data}};
         }
 
@@ -348,7 +348,8 @@ namespace recti {
             const auto& pc1 = lst[vcurr->data];
             const auto& pc2 = lst[vnext->data];
             const auto pcurr = Point<T>(pc2.xcoord(), pc1.ycoord());
-            // fmt::print("  <circle fill=\"red\" cx=\"{}\" cy=\"{}\" r=\"10\" />\n", pcurr.xcoord(),
+            // fmt::print("  <circle fill=\"red\" cx=\"{}\" cy=\"{}\" r=\"10\" />\n",
+            // pcurr.xcoord(),
             //            pcurr.ycoord());
 
             while (vi != vstop) {

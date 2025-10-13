@@ -13,7 +13,8 @@ namespace recti {
      * @param[in] scale
      * @return unsigned
      */
-    inline auto vdc(const unsigned num, unsigned base = 2, unsigned scale = 10) noexcept -> unsigned {
+    inline auto vdc(const unsigned num, unsigned base = 2, unsigned scale = 10) noexcept
+        -> unsigned {
         auto vdc = 0U;
         auto factor = unsigned(std::pow(base, scale));
         auto temp_num = num;

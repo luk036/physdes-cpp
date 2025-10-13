@@ -390,7 +390,6 @@ namespace recti {
             return Point<int, int>{std::move(xcoord), std::move(ycoord)};
         }
 
-
         /**
          * Outputs the point object to the given output stream.
          *

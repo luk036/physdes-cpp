@@ -1,20 +1,20 @@
 #pragma once
 
 #include <algorithm>
-#include <stdexcept>
-#include <vector>
+#include <functional>
 #include <memory>
 #include <optional>
-#include <functional>
-#include <string>
 #include <recti/generic.hpp>
 #include <recti/interval.hpp>
 #include <recti/point.hpp>
+#include <stdexcept>
+#include <string>
+#include <vector>
 
 namespace recti {
 
-using IntPoint = Point<int>;
-using IntRect = Point<Interval<int>, Interval<int>>;
+    using IntPoint = Point<int>;
+    using IntRect = Point<Interval<int>, Interval<int>>;
 
 }  // namespace recti
 
@@ -25,15 +25,18 @@ enum class NodeType { STEINER, TERMINAL, SOURCE };
 
 inline std::string to_string(NodeType t) {
     switch (t) {
-        case NodeType::STEINER: return "Steiner";
-        case NodeType::TERMINAL: return "Terminal";
-        case NodeType::SOURCE: return "Source";
+        case NodeType::STEINER:
+            return "Steiner";
+        case NodeType::TERMINAL:
+            return "Terminal";
+        case NodeType::SOURCE:
+            return "Source";
     }
     return "Unknown";
 }
 
 class RoutingNode {
-public:
+  public:
     std::string id;
     NodeType type;
     IntPoint pt;
@@ -71,11 +74,11 @@ class GlobalRoutingTree {
     int next_steiner_id = 1;
     int next_terminal_id = 1;
 
-public:
+  public:
     std::unordered_map<std::string, RoutingNode*> nodes;
     std::vector<std::unique_ptr<RoutingNode>> owned_nodes;
 
-public:
+  public:
     GlobalRoutingTree(IntPoint source_position = {0, 0})
         : source_node("source", NodeType::SOURCE, source_position) {
         nodes["source"] = &source_node;
@@ -85,7 +88,8 @@ public:
 
     auto get_source() -> RoutingNode* { return &source_node; }
 
-    auto insert_steiner_node(IntPoint pt, std::optional<std::string> parent_id = std::nullopt) -> std::string {
+    auto insert_steiner_node(IntPoint pt, std::optional<std::string> parent_id = std::nullopt)
+        -> std::string {
         std::string steiner_id = "steiner_" + std::to_string(next_steiner_id++);
         auto node_ptr = std::make_unique<RoutingNode>(steiner_id, NodeType::STEINER, pt);
         RoutingNode* node = node_ptr.get();
@@ -121,7 +125,8 @@ public:
         return nearest;
     }
 
-    auto insert_terminal_node(IntPoint pt, std::optional<std::string> parent_id = std::nullopt) -> std::string {
+    auto insert_terminal_node(IntPoint pt, std::optional<std::string> parent_id = std::nullopt)
+        -> std::string {
         std::string terminal_id = "terminal_" + std::to_string(next_terminal_id++);
         auto node_ptr = std::make_unique<RoutingNode>(terminal_id, NodeType::TERMINAL, pt);
         RoutingNode* node = node_ptr.get();
@@ -142,7 +147,8 @@ public:
         return terminal_id;
     }
 
-    auto insert_node_on_branch(NodeType new_node_type, int x, int y, std::string branch_start_id, std::string branch_end_id) -> std::string {
+    auto insert_node_on_branch(NodeType new_node_type, int x, int y, std::string branch_start_id,
+                               std::string branch_end_id) -> std::string {
         auto start_it = nodes.find(branch_start_id);
         auto end_it = nodes.find(branch_end_id);
         if (start_it == nodes.end() || end_it == nodes.end()) {
@@ -150,9 +156,11 @@ public:
         }
         RoutingNode* start_node = start_it->second;
         RoutingNode* end_node = end_it->second;
-        auto child_it = std::find(start_node->children.begin(), start_node->children.end(), end_node);
+        auto child_it
+            = std::find(start_node->children.begin(), start_node->children.end(), end_node);
         if (child_it == start_node->children.end()) {
-            throw std::runtime_error(branch_end_id + " is not a direct child of " + branch_start_id);
+            throw std::runtime_error(branch_end_id + " is not a direct child of "
+                                     + branch_start_id);
         }
 
         std::string node_id;
@@ -220,7 +228,8 @@ public:
             std::string steiner_id = "steiner_" + std::to_string(next_steiner_id++);
             IntRect possible_path = parent_node->pt.hull_with(nearest_node->pt);
             IntPoint nearest_pt = possible_path.nearest_to(pt);
-            auto steiner_ptr = std::make_unique<RoutingNode>(steiner_id, NodeType::STEINER, nearest_pt);
+            auto steiner_ptr
+                = std::make_unique<RoutingNode>(steiner_id, NodeType::STEINER, nearest_pt);
             RoutingNode* new_node = steiner_ptr.get();
             nodes[steiner_id] = new_node;
             owned_nodes.push_back(std::move(steiner_ptr));
@@ -232,7 +241,8 @@ public:
         }
     }
 
-    auto _find_nearest_insertion_with_constraints(IntPoint pt, int allowed_wirelength) -> InsertionPair {
+    auto _find_nearest_insertion_with_constraints(IntPoint pt, int allowed_wirelength)
+        -> InsertionPair {
         if (nodes.size() <= 1) return {nullptr, &source_node};
         RoutingNode* nearest_node = &source_node;
         RoutingNode* parent_node = nullptr;
@@ -271,22 +281,26 @@ public:
         owned_nodes.push_back(std::move(node_ptr));
         nodes[terminal_id] = terminal_node;
 
-        auto [parent_node, nearest_node] = _find_nearest_insertion_with_constraints(pt, allowed_wirelength);
+        auto [parent_node, nearest_node]
+            = _find_nearest_insertion_with_constraints(pt, allowed_wirelength);
         if (parent_node == nullptr) {
             nearest_node->add_child(terminal_node);
-            terminal_node->path_length = nearest_node->path_length + nearest_node->pt.min_dist_with(pt);
+            terminal_node->path_length
+                = nearest_node->path_length + nearest_node->pt.min_dist_with(pt);
         } else {
             std::string steiner_id = "steiner_" + std::to_string(next_steiner_id++);
             IntRect possible_path = parent_node->pt.hull_with(nearest_node->pt);
             IntPoint nearest_pt = possible_path.nearest_to(pt);
-            auto steiner_ptr = std::make_unique<RoutingNode>(steiner_id, NodeType::STEINER, nearest_pt);
+            auto steiner_ptr
+                = std::make_unique<RoutingNode>(steiner_id, NodeType::STEINER, nearest_pt);
             RoutingNode* new_node = steiner_ptr.get();
             nodes[steiner_id] = new_node;
             owned_nodes.push_back(std::move(steiner_ptr));
 
             parent_node->remove_child(nearest_node);
             parent_node->add_child(new_node);
-            new_node->path_length = parent_node->path_length + parent_node->pt.min_dist_with(nearest_pt);
+            new_node->path_length
+                = parent_node->path_length + parent_node->pt.min_dist_with(nearest_pt);
             new_node->add_child(nearest_node);
             new_node->add_child(terminal_node);
             terminal_node->path_length = new_node->path_length + nearest_pt.min_dist_with(pt);
@@ -351,8 +365,9 @@ public:
                 parent->remove_child(steiner);
                 parent->add_child(child);
                 nodes.erase(steiner->id);
-                auto owned_it = std::find_if(owned_nodes.begin(), owned_nodes.end(),
-                                             [steiner](const auto& up) { return up.get() == steiner; });
+                auto owned_it
+                    = std::find_if(owned_nodes.begin(), owned_nodes.end(),
+                                   [steiner](const auto& up) { return up.get() == steiner; });
                 if (owned_it != owned_nodes.end()) {
                     owned_nodes.erase(owned_it);
                 }
@@ -369,7 +384,7 @@ class GlobalRouter {
     GlobalRoutingTree tree;
     int worst_wirelength = 0;
 
-public:
+  public:
     GlobalRouter(IntPoint source_, std::vector<IntPoint> terminals)
         : source_position(source_), tree(source_) {
         terminal_positions = terminals;
@@ -407,6 +422,9 @@ public:
     auto get_tree() const -> const GlobalRoutingTree& { return tree; }
 };
 
-extern std::string visualize_routing_tree_svg(const GlobalRoutingTree& tree, int width = 800, int height = 600, int margin = 50);
+extern std::string visualize_routing_tree_svg(const GlobalRoutingTree& tree, int width = 800,
+                                              int height = 600, int margin = 50);
 
-extern void save_routing_tree_svg(const GlobalRoutingTree& tree, std::string filename = "routing_tree.svg", int width = 800, int height = 600);
+extern void save_routing_tree_svg(const GlobalRoutingTree& tree,
+                                  std::string filename = "routing_tree.svg", int width = 800,
+                                  int height = 600);

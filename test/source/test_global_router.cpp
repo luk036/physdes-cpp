@@ -1,15 +1,14 @@
 #include <doctest/doctest.h>
 #include <fmt/core.h>
 
-#include <ldsgen/ilds.hpp>          // for VdCorput
-#include <iostream>  // for operator<<
+#include <iostream>         // for operator<<
+#include <ldsgen/ilds.hpp>  // for VdCorput
+#include <recti/global_router.hpp>
 #include <recti/interval.hpp>
 #include <recti/point.hpp>
 #include <vector>
-#include <recti/global_router.hpp>
 
 using namespace recti;
-
 
 TEST_CASE("Test route_with_steiner") {
     ildsgen::VdCorput hgenX(3, 7);

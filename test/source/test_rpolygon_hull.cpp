@@ -24,7 +24,7 @@ TEST_CASE("RPolygon is_monotone break test") {
 
 TEST_CASE("RPolygon make x-monotone hull test") {
     const std::vector<Point<int>> S = {{-10, 50}, {-40, 40}, {-60, -40}, {-20, -50}, {90, -2},
-                                 {60, 10},  {50, 20},  {10, 40},   {80, 60}};
+                                       {60, 10},  {50, 20},  {10, 40},   {80, 60}};
     CHECK_FALSE(rpolygon_is_xmonotone<int>(S));
 
     // // SVG output (commented out as per reference test_rpolygon.cpp)
@@ -59,7 +59,7 @@ TEST_CASE("RPolygon make x-monotone hull test") {
 
 TEST_CASE("RPolygon make y-monotone hull test") {
     const std::vector<Point<int>> S = {{90, -10}, {40, -40}, {-40, -60}, {-50, -20}, {-20, 90},
-                                 {10, 60},  {20, 50},  {30, 10},   {60, 80}};
+                                       {10, 60},  {20, 50},  {30, 10},   {60, 80}};
     CHECK_FALSE(rpolygon_is_ymonotone<int>(S));
 
     // // SVG output (commented out as per reference)

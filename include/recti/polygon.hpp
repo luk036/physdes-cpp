@@ -368,9 +368,8 @@ namespace recti {
      */
     template <typename T> inline auto polygon_is_xmonotone(std::span<const Point<T>> pointset)
         -> bool {
-        auto x_key = [](const Point<T>& pt) -> std::pair<T, T> {
-            return {pt.xcoord(), pt.ycoord()};
-        };
+        auto x_key
+            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
         return polygon_is_monotone(pointset, x_key);
     }
 
@@ -386,9 +385,8 @@ namespace recti {
      */
     template <typename T> inline auto polygon_is_ymonotone(std::span<const Point<T>> pointset)
         -> bool {
-        auto y_key = [](const Point<T>& pt) -> std::pair<T, T> {
-            return {pt.ycoord(), pt.xcoord()};
-        };
+        auto y_key
+            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
         return polygon_is_monotone(pointset, y_key);
     }
 
