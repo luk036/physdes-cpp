@@ -176,4 +176,28 @@ namespace recti {
         }
     }
 
+    /**
+     * @brief Find a point in lhs that is nearest to rhs
+     *
+     *     .---------------------.
+     *     |                     *~~~~~~~~~~~o rhs
+     *     |                     |
+     *     |                     |
+     *     `---------------------'
+     *         lhs
+     *
+     * @tparam U1 The type of the first object.
+     * @tparam U2 The type of the second object.
+     * @param lhs The first object.
+     * @param rhs The second object.
+     */
+    template <typename U1, typename U2>  //
+    constexpr auto nearest(const U1 &lhs, const U2 &rhs) {
+        if constexpr (requires { lhs.nearest_to(rhs); }) {
+            return lhs.nearest_to(rhs);
+        } else /* constexpr */ {
+            return lhs;
+        }
+    }
+
 }  // namespace recti

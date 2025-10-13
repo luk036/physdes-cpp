@@ -14,28 +14,25 @@ if is_plat("linux") then
     -- add_cxflags("-Wconversion", { force = true })
     -- add_cxflags("-nostdinc++", {force = true})
     -- add_sysincludedirs(os.getenv("PREFIX") .. "/include/c++/v1", {public = true})
-
 elseif is_plat("windows") then
     add_cxflags("/EHsc /W4 /WX /wd4819 /wd4996", { force = true })
 end
 
--- header only package
--- target("Recti")
---     set_kind("static")
---     add_includedirs("include", {public = true})
---     add_files("src/*.cpp")
---     add_packages("ms-gsl")
---     set_warnings("all", "error")
+target("Recti")
+    set_kind("static")
+    add_includedirs("include", {public = true})
+    add_files("source/*.cpp")
+    add_packages("ms-gsl")
 
 target("test_recti")
-set_kind("binary")
--- add_deps("Recti")
-add_includedirs("include", { public = true })
-add_includedirs("../lds-gen-cpp/include", { public = true })
-add_files("test/source/*.cpp")
-add_packages("ms-gsl")
-add_packages("fmt", "doctest")
-add_tests("default")
+    set_kind("binary")
+    add_deps("Recti")
+    add_includedirs("include", { public = true })
+    add_includedirs("../lds-gen-cpp/include", { public = true })
+    add_files("test/source/*.cpp")
+    add_packages("ms-gsl")
+    add_packages("fmt", "doctest")
+    add_tests("default")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io

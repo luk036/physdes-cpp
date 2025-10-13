@@ -74,3 +74,13 @@ TEST_CASE("Point") {
         CHECK(dist == 4);
     }
 }
+
+TEST_CASE("Point nearest_to") {
+    const Point a(3, 4);
+    const Point b(5, 6);
+    CHECK(a.nearest_to(b) == Point(3, 4));
+
+    const Point r(Interval(3, 4), Interval(5, 6));  // Rectangle
+    CHECK(r.nearest_to(a) == Point(3, 5));
+    CHECK(r.nearest_to(b) == Point(4, 6));
+}

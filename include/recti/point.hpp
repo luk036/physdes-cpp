@@ -315,7 +315,7 @@ namespace recti {
         }
 
         /**
-         * Checks if this point hulls with another point.
+         * Return the hull (bounding box) of this point and another point.
          *
          * @tparam U1 - The x-coordinate type of the other point.
          * @tparam U2 - The y-coordinate type of the other point.
@@ -377,6 +377,19 @@ namespace recti {
         //     auto ycoord = enlarge(lhs.ycoord(), alpha);
         //     return Point{std::move(xcoord), std::move(ycoord)};
         // }
+
+        /**
+         * Return the point in this object that is nearest to the given point.
+         *
+         * @param other - The other point.
+         * @return The nearest "point".
+         */
+        constexpr auto nearest_to(const Point<int, int> &other) const {
+            auto xcoord = nearest(this->xcoord(), other.xcoord());
+            auto ycoord = nearest(this->ycoord(), other.ycoord());
+            return Point<int, int>{std::move(xcoord), std::move(ycoord)};
+        }
+
 
         /**
          * Outputs the point object to the given output stream.

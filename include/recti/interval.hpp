@@ -438,6 +438,16 @@ namespace recti {
             return T(0);
         }
 
+        constexpr auto nearest_to(const T &other) const -> T {
+            if (*this < other) {
+                return nearest(this->_ub, other);
+            }
+            if (other < *this) {
+                return nearest(this->_lb, other);
+            }
+            return other;
+        }
+
         /**
          * @brief Computes the minimum distance between the current interval and the `other`
          * interval or scalar value, and updates the interval bounds accordingly.

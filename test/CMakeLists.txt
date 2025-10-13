@@ -36,11 +36,11 @@ set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 20)
 if(NOT TEST_INSTALLED_VERSION)
   if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     target_compile_options(
-      Recti INTERFACE -Wall -Wpedantic -Wextra -Werror -Wno-deprecated-declarations
+      Recti PUBLIC -Wall -Wpedantic -Wextra -Werror -Wno-deprecated-declarations
     )
   elseif(MSVC)
-    target_compile_options(Recti INTERFACE /W4 /WX /wd4819 /wd4996)
-    target_compile_definitions(${PROJECT_NAME} INTERFACE DOCTEST_CONFIG_USE_STD_HEADERS)
+    target_compile_options(Recti PUBLIC /W4 /WX /wd4819 /wd4996)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
   endif()
 endif()
 
@@ -58,6 +58,6 @@ doctest_discover_tests(${PROJECT_NAME})
 # ---- code coverage ----
 
 if(ENABLE_TEST_COVERAGE)
-  target_compile_options(Recti INTERFACE -O0 -g -fprofile-arcs -ftest-coverage)
-  target_link_options(Recti INTERFACE -fprofile-arcs -ftest-coverage)
+  target_compile_options(Recti PUBLIC -O0 -g -fprofile-arcs -ftest-coverage)
+  target_link_options(Recti PUBLIC -fprofile-arcs -ftest-coverage)
 endif()
