@@ -130,7 +130,7 @@ namespace recti {
          * @tparam U1 - The type of x coordinate for this Point.
          * @tparam U2 - The type of y coordinate for this Point.
          * @param[in] rhs - The other Point object to compare against.
-         * @return False if the two Point objects have equal x and y coordinates, true otherwise.
+         * @return false if the two Point objects have equal x and y coordinates, true otherwise.
          */
         template <typename U1, typename U2>
         constexpr auto operator!=(const Point<U1, U2> &rhs) const -> bool {
@@ -211,52 +211,6 @@ namespace recti {
             auto ycoord = lhs.ycoord() - vec2.y();
             return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord), std::move(ycoord)};
         }
-
-        // /**
-        //  * @brief Add a vector (translation)
-        //  *
-        //  * @param[in] alpha
-        //  * @return Self&
-        //  */
-        // CONSTEXPR14 auto operator+=(const T2 &alpha) -> Self & {
-        //     this->_xcoord += alpha;
-        //     this->_ycoord += alpha;
-        //     return *this;
-        // }
-
-        // /**
-        //  * @brief Substract
-        //  *
-        //  * @param[in] alpha
-        //  * @return Self&
-        //  */
-        // CONSTEXPR14 auto operator-=(const T1 &alpha) -> Self & {
-        //     this->_xcoord -= alpha;
-        //     this->_ycoord -= alpha;
-        //     return *this;
-        // }
-
-        // /**
-        //  * @brief Add
-        //  *
-        //  * @param[in] xcoord
-        //  * @param[in] alpha
-        //  * @return Point
-        //  */
-        // friend constexpr auto operator+(Point lhs, const T1 &alpha) -> Point {
-        //     return lhs += alpha;
-        // }
-
-        // /**
-        //  * @brief Substract
-        //  *
-        //  * @param[in] xcoord
-        //  * @param[in] alpha
-        //  * @return Point
-        //  */
-        // friend constexpr auto operator-(Point lhs, const T1 &alpha) -> Point {
-        //     return lhs -= alpha;
-        // }
 
         /**
          * @brief Calculates the displacement vector between this point and another point
@@ -370,13 +324,6 @@ namespace recti {
             return min_dist_change(this->_xcoord, other._xcoord)
                    + min_dist_change(this->_ycoord, other._ycoord);
         }
-
-        // template <typename R>  //
-        // friend constexpr auto enlarge(const Point &lhs, const R &alpha) {
-        //     auto xcoord = enlarge(lhs.xcoord(), alpha);
-        //     auto ycoord = enlarge(lhs.ycoord(), alpha);
-        //     return Point{std::move(xcoord), std::move(ycoord)};
-        // }
 
         /**
          * Return the point in this object that is nearest to the given point.
