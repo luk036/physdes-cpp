@@ -75,11 +75,15 @@ namespace recti {
               };
 
         if (is_anticlockwise) {
-            process(&v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a >= 0; });
-            process(&v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a >= 0; });
+            process(
+                &v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a >= 0; });
+            process(
+                &v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a >= 0; });
         } else {
-            process(&v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a <= 0; });
-            process(&v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a <= 0; });
+            process(
+                &v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a <= 0; });
+            process(
+                &v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a <= 0; });
         }
 
         std::vector<Point<T>> result = {min_point};

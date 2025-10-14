@@ -41,8 +41,8 @@ auto GlobalRoutingTree::get_tree_structure(const RoutingNode* node, int level) c
     return oss.str();
 }
 
-std::string visualize_routing_tree_svg(const GlobalRoutingTree& tree, int width, int height,
-                                       int margin) {
+std::string visualize_routing_tree_svg(const GlobalRoutingTree& tree, const int width,
+                                       const int height, const int margin) {
     std::vector<RoutingNode*> all_nodes;
     for (auto& [id, node] : tree.nodes) {
         all_nodes.push_back(node);
@@ -169,8 +169,8 @@ std::string visualize_routing_tree_svg(const GlobalRoutingTree& tree, int width,
     return svg.str();
 }
 
-void save_routing_tree_svg(const GlobalRoutingTree& tree, std::string filename, int width,
-                           int height) {
+void save_routing_tree_svg(const GlobalRoutingTree& tree, const std::string filename,
+                           const int width, const int height) {
     std::string svg_content = visualize_routing_tree_svg(tree, width, height);
     std::ofstream f(filename);
     f << svg_content;

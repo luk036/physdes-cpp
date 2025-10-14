@@ -23,7 +23,7 @@ using recti::IntRect;
 
 enum class NodeType { STEINER, TERMINAL, SOURCE };
 
-inline std::string to_string(NodeType t) {
+inline std::string to_string(const NodeType t) {
     switch (t) {
         case NodeType::STEINER:
             return "Steiner";
@@ -321,7 +321,7 @@ class GlobalRoutingTree {
 
     auto get_tree_structure(const RoutingNode* node = nullptr, int level = 0) const -> std::string;
 
-    auto find_path_to_source(std::string node_id) const -> std::vector<const RoutingNode*> {
+    auto find_path_to_source(const std::string& node_id) const -> std::vector<const RoutingNode*> {
         auto it = nodes.find(node_id);
         if (it == nodes.end()) {
             throw std::runtime_error("Node " + node_id + " not found");
@@ -385,7 +385,7 @@ class GlobalRouter {
     int worst_wirelength = 0;
 
   public:
-    GlobalRouter(IntPoint source_, std::vector<IntPoint> terminals)
+    GlobalRouter(const IntPoint& source_, const std::vector<IntPoint>& terminals)
         : source_position(source_), tree(source_) {
         terminal_positions = terminals;
         if (!terminal_positions.empty()) {
@@ -422,9 +422,9 @@ class GlobalRouter {
     auto get_tree() const -> const GlobalRoutingTree& { return tree; }
 };
 
-extern std::string visualize_routing_tree_svg(const GlobalRoutingTree& tree, int width = 800,
-                                              int height = 600, int margin = 50);
+extern std::string visualize_routing_tree_svg(const GlobalRoutingTree& tree, const int width = 800,
+                                              const int height = 600, const int margin = 50);
 
 extern void save_routing_tree_svg(const GlobalRoutingTree& tree,
-                                  std::string filename = "routing_tree.svg", int width = 800,
-                                  int height = 600);
+                                  const std::string filename = "routing_tree.svg",
+                                  const int width = 800, const int height = 600);
