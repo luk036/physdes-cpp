@@ -110,12 +110,14 @@ class GlobalRoutingTree {
         return steiner_id;
     }
 
-    auto _find_nearest_node(IntPoint pt) -> RoutingNode* {
+    auto _find_nearest_node(IntPoint pt, std::optional<std::string> exclude_id = std::nullopt)
+        -> RoutingNode* {
         if (nodes.size() <= 1) return &source_node;
         RoutingNode temp("temp", NodeType::STEINER, pt);
         RoutingNode* nearest = &source_node;
         int min_dist = source_node.manhattan_distance(&temp);
         for (auto& [id, node] : nodes) {
+            if (exclude_id && id == *exclude_id) continue;
             int dist = node->manhattan_distance(&temp);
             if (dist < min_dist) {
                 min_dist = dist;
@@ -135,7 +137,7 @@ class GlobalRoutingTree {
 
         RoutingNode* parent_node;
         if (!parent_id) {
-            parent_node = _find_nearest_node(pt);
+            parent_node = _find_nearest_node(pt, terminal_id);
         } else {
             auto it = nodes.find(*parent_id);
             if (it == nodes.end()) {
@@ -357,20 +359,28 @@ class GlobalRoutingTree {
     }
 
     void optimize_steiner_points() {
-        auto steiners = get_all_steiner_nodes();
-        for (auto steiner : steiners) {
-            if (steiner->children.size() == 1 && steiner->parent != nullptr) {
-                auto parent = steiner->parent;
-                auto child = steiner->children[0];
-                parent->remove_child(steiner);
-                parent->add_child(child);
-                nodes.erase(steiner->id);
-                auto owned_it
-                    = std::find_if(owned_nodes.begin(), owned_nodes.end(),
-                                   [steiner](const auto& up) { return up.get() == steiner; });
-                if (owned_it != owned_nodes.end()) {
-                    owned_nodes.erase(owned_it);
-                }
+        std::vector<std::string> steiner_ids_to_remove;
+        for (auto& [id, node] : nodes) {
+            if (node->type == NodeType::STEINER && node->children.size() == 1
+                && node->parent != nullptr && node->parent->type != NodeType::SOURCE) {
+                steiner_ids_to_remove.push_back(id);
+            }
+        }
+
+        for (const auto& steiner_id : steiner_ids_to_remove) {
+            RoutingNode* steiner = nodes.at(steiner_id);
+            RoutingNode* parent = steiner->parent;
+            RoutingNode* child = steiner->children[0];
+
+            parent->remove_child(steiner);
+            parent->add_child(child);
+            child->parent = parent;  // Update child's parent
+
+            nodes.erase(steiner_id);
+            auto owned_it = std::find_if(owned_nodes.begin(), owned_nodes.end(),
+                                         [steiner](const auto& up) { return up.get() == steiner; });
+            if (owned_it != owned_nodes.end()) {
+                owned_nodes.erase(owned_it);
             }
         }
     }
