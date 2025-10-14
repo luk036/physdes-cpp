@@ -215,8 +215,8 @@ namespace recti {
      *
      * @tparam Stream The type of the output stream to write to.
      * @tparam T The numeric type used to represent the coordinates of the polygon vertices.
-     * @param out The output stream to write the polygon vertices to.
-     * @param poly The polygon to write to the output stream.
+      The output stream to write the polygon vertices to.
+      The polygon to write to the output stream.
      * @return The output stream, for method chaining.
      */
     // template <class Stream, typename T> auto operator<<(Stream &out, const Polygon<T> &poly)

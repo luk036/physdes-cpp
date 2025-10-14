@@ -168,7 +168,7 @@ namespace recti {
          *
          * @tparam U1 - The x coordinate type of this Point.
          * @tparam U2 - The y coordinate type of this Point.
-         * @param[in] rhs - The vector to translate this Point by.
+         * @param[in] vec2 - The vector to translate this Point by.
          * @return A new Point after translation.
          */
         template <typename U1, typename U2>  //
@@ -202,7 +202,7 @@ namespace recti {
          *
          * @tparam U1 - The x coordinate type of this Point.
          * @tparam U2 - The y coordinate type of this Point.
-         * @param[in] rhs - The vector to translate this Point by.
+         * @param[in] vec2 - The vector to translate this Point by.
          * @return A new Point after translation.
          */
         template <typename U1, typename U2>  //

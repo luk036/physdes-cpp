@@ -46,7 +46,7 @@ namespace recti {
          *
          * Note: intentionally allow implicit conversion
          *
-         * @param[in] p
+         * @param[in] base
          */
         constexpr explicit Rectangle(
             Point<Interval<T>> &&base) noexcept  // Note: intentionally allow implicit conversion
@@ -55,7 +55,7 @@ namespace recti {
         /**
          * @brief Construct a new Rectangle object from the base object (implicitly)
          *
-         * @param[in] p
+         * @param[in] base
          */
         constexpr explicit Rectangle(const Point<Interval<T>> &base) : Point<Interval<T>>{base} {}
 
@@ -135,7 +135,7 @@ namespace recti {
         /**
          * @brief Construct a new HSegment object from the.
          *
-         * @param[in] p
+         * @param[in] base
          */
         constexpr explicit HSegment(
             Point<Interval<T>, T> &&base) noexcept  // Note: intentionally allow implicit conversion
@@ -144,7 +144,7 @@ namespace recti {
         /**
          * @brief Construct a new HSegment object from the base object (implicitly)
          *
-         * @param[in] p
+         * @param[in] base
          */
         constexpr explicit HSegment(const Point<Interval<T>, T> &base)
             : Point<Interval<T>, T>{base} {}
@@ -184,7 +184,7 @@ namespace recti {
         /**
          * @brief Construct a new VSegment object from the base object (implicitly)
          *
-         * @param[in] p
+         * @param[in] base
          */
         constexpr explicit VSegment(
             Point<T, Interval<T>> &&base) noexcept  // Note: intentionally allow implicit conversion
@@ -193,7 +193,7 @@ namespace recti {
         /**
          * @brief Construct a new VSegment object from the base object (implicitly)
          *
-         * @param[in] p
+         * @param[in] base
          */
         constexpr explicit VSegment(const Point<T, Interval<T>> &base)
             : Point<T, Interval<T>>{base} {}
