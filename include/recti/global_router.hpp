@@ -22,18 +22,6 @@
 #include <string>
 #include <vector>
 
-namespace recti {
-
-    /// @brief Type alias for a 2D point with integer coordinates.
-    using IntPoint = Point<int>;
-    /// @brief Type alias for a 2D rectangle defined by two integer intervals.
-    // using IntRect = Point<Interval<int>, Interval<int>>;
-
-}  // namespace recti
-
-using recti::IntPoint;
-// using recti::auto;
-
 /**
  * @brief Defines the type of a routing node.
  */
@@ -63,43 +51,44 @@ inline std::string to_string(const NodeType t) {
 /**
  * @brief Represents a node in the global routing tree.
  *
- * A RoutingNode can be a source, terminal, or Steiner point. It holds
+ * A RoutingNode<IntPoint> can be a source, terminal, or Steiner point. It holds
  * its position, type, and connections to parent and child nodes in the tree.
  */
+template <typename IntPoint>
 class RoutingNode {
   public:
     std::string id;                ///< Unique identifier for the node.
     NodeType type;                 ///< The type of the node (STEINER, TERMINAL, SOURCE).
     IntPoint pt;                   ///< The 2D integer coordinates of the node.
-    std::vector<RoutingNode*> children; ///< Pointers to child nodes in the routing tree.
-    RoutingNode* parent = nullptr; ///< Pointer to the parent node. Null for the source node.
+    std::vector<RoutingNode<IntPoint>*> children; ///< Pointers to child nodes in the routing tree.
+    RoutingNode<IntPoint>* parent = nullptr; ///< Pointer to the parent node. Null for the source node.
     double capacitance = 0.0;      ///< Capacitance associated with the node (for future use).
     double delay = 0.0;            ///< Delay associated with the node (for future use).
     int path_length = 0;           ///< Path length from the source to this node.
 
     /**
-     * @brief Constructs a new RoutingNode.
+     * @brief Constructs a new RoutingNode<IntPoint>.
      * @param id_ The unique identifier for the node.
      * @param type_ The type of the node.
      * @param pt_ The 2D integer coordinates of the node.
      */
-    RoutingNode(std::string id_, NodeType type_, IntPoint pt_)
+    RoutingNode<IntPoint>(std::string id_, NodeType type_, IntPoint pt_)
         : id(std::move(id_)), type(type_), pt(pt_) {}
 
     /**
      * @brief Adds a child node to this node.
-     * @param child A pointer to the child RoutingNode to add.
+     * @param child A pointer to the child RoutingNode<IntPoint> to add.
      */
-    void add_child(RoutingNode* child) {
+    void add_child(RoutingNode<IntPoint>* child) {
         child->parent = this;
         children.push_back(child);
     }
 
     /**
      * @brief Removes a child node from this node.
-     * @param child A pointer to the child RoutingNode to remove.
+     * @param child A pointer to the child RoutingNode<IntPoint> to remove.
      */
-    void remove_child(RoutingNode* child) {
+    void remove_child(RoutingNode<IntPoint>* child) {
         auto it = std::find(children.begin(), children.end(), child);
         if (it != children.end()) {
             children.erase(it);
@@ -115,10 +104,10 @@ class RoutingNode {
 
     /**
      * @brief Calculates the Manhattan distance between this node and another node.
-     * @param other A pointer to the other RoutingNode.
+     * @param other A pointer to the other RoutingNode<IntPoint>.
      * @return The Manhattan distance between the two nodes.
      */
-    auto manhattan_distance(const RoutingNode* other) const -> int {
+    auto manhattan_distance(const RoutingNode<IntPoint>* other) const -> int {
         return pt.min_dist_with(other->pt);
     }
 };
@@ -130,14 +119,15 @@ class RoutingNode {
  * Steiner points, and terminal points, and provides methods for building
  * and manipulating the tree structure.
  */
+template <typename IntPoint>
 class GlobalRoutingTree {
-    RoutingNode source_node; ///< The root node of the routing tree.
+    RoutingNode<IntPoint> source_node; ///< The root node of the routing tree.
     int next_steiner_id = 1; ///< Counter for generating unique Steiner node IDs.
     int next_terminal_id = 1; ///< Counter for generating unique terminal node IDs.
 
   public:
-    std::unordered_map<std::string, RoutingNode*> nodes; ///< Map from node ID to RoutingNode pointer.
-    std::vector<std::unique_ptr<RoutingNode>> owned_nodes; ///< Stores unique_ptrs for memory management of nodes.
+    std::unordered_map<std::string, RoutingNode<IntPoint>*> nodes; ///< Map from node ID to RoutingNode<IntPoint> pointer.
+    std::vector<std::unique_ptr<RoutingNode<IntPoint>>> owned_nodes; ///< Stores unique_ptrs for memory management of nodes.
 
   public:
     /**
@@ -151,15 +141,15 @@ class GlobalRoutingTree {
 
     /**
      * @brief Gets a const pointer to the source node of the tree.
-     * @return A const pointer to the source RoutingNode.
+     * @return A const pointer to the source RoutingNode<IntPoint>.
      */
-    auto get_source() const -> const RoutingNode* { return &source_node; }
+    auto get_source() const -> const RoutingNode<IntPoint>* { return &source_node; }
 
     /**
      * @brief Gets a non-const pointer to the source node of the tree.
-     * @return A non-const pointer to the source RoutingNode.
+     * @return A non-const pointer to the source RoutingNode<IntPoint>.
      */
-    auto get_source() -> RoutingNode* { return &source_node; }
+    auto get_source() -> RoutingNode<IntPoint>* { return &source_node; }
 
     /**
      * @brief Inserts a new Steiner node into the routing tree.
@@ -171,12 +161,12 @@ class GlobalRoutingTree {
     auto insert_steiner_node(IntPoint pt, std::optional<std::string> parent_id = std::nullopt)
         -> std::string {
         std::string steiner_id = "steiner_" + std::to_string(next_steiner_id++);
-        auto node_ptr = std::make_unique<RoutingNode>(steiner_id, NodeType::STEINER, pt);
-        RoutingNode* node = node_ptr.get();
+        auto node_ptr = std::make_unique<RoutingNode<IntPoint>>(steiner_id, NodeType::STEINER, pt);
+        RoutingNode<IntPoint>* node = node_ptr.get();
         nodes[steiner_id] = node;
         owned_nodes.push_back(std::move(node_ptr));
 
-        RoutingNode* parent_node;
+        RoutingNode<IntPoint>* parent_node;
         if (!parent_id) {
             parent_node = &source_node;
         } else {
@@ -194,13 +184,13 @@ class GlobalRoutingTree {
      * @brief Finds the nearest existing node in the tree to a given point.
      * @param pt The target point.
      * @param exclude_id Optional ID of a node to exclude from the search.
-     * @return A pointer to the nearest RoutingNode.
+     * @return A pointer to the nearest RoutingNode<IntPoint>.
      */
     auto _find_nearest_node(IntPoint pt, std::optional<std::string> exclude_id = std::nullopt)
-        -> RoutingNode* {
+        -> RoutingNode<IntPoint>* {
         if (nodes.size() <= 1) return &source_node;
-        RoutingNode temp("temp", NodeType::STEINER, pt);
-        RoutingNode* nearest = &source_node;
+        RoutingNode<IntPoint> temp("temp", NodeType::STEINER, pt);
+        RoutingNode<IntPoint>* nearest = &source_node;
         int min_dist = source_node.manhattan_distance(&temp);
         for (auto& [id, node] : nodes) {
             if (exclude_id && id == *exclude_id) continue;
@@ -223,12 +213,12 @@ class GlobalRoutingTree {
     auto insert_terminal_node(IntPoint pt, std::optional<std::string> parent_id = std::nullopt)
         -> std::string {
         std::string terminal_id = "terminal_" + std::to_string(next_terminal_id++);
-        auto node_ptr = std::make_unique<RoutingNode>(terminal_id, NodeType::TERMINAL, pt);
-        RoutingNode* node = node_ptr.get();
+        auto node_ptr = std::make_unique<RoutingNode<IntPoint>>(terminal_id, NodeType::TERMINAL, pt);
+        RoutingNode<IntPoint>* node = node_ptr.get();
         nodes[terminal_id] = node;
         owned_nodes.push_back(std::move(node_ptr));
 
-        RoutingNode* parent_node;
+        RoutingNode<IntPoint>* parent_node;
         if (!parent_id) {
             parent_node = _find_nearest_node(pt, terminal_id);
         } else {
@@ -259,8 +249,8 @@ class GlobalRoutingTree {
         if (start_it == nodes.end() || end_it == nodes.end()) {
             throw std::runtime_error("One or both branch nodes not found");
         }
-        RoutingNode* start_node = start_it->second;
-        RoutingNode* end_node = end_it->second;
+        RoutingNode<IntPoint>* start_node = start_it->second;
+        RoutingNode<IntPoint>* end_node = end_it->second;
         auto child_it
             = std::find(start_node->children.begin(), start_node->children.end(), end_node);
         if (child_it == start_node->children.end()) {
@@ -277,8 +267,8 @@ class GlobalRoutingTree {
             throw std::runtime_error("Node type must be STEINER or TERMINAL");
         }
 
-        auto node_ptr = std::make_unique<RoutingNode>(node_id, new_node_type, IntPoint(x, y));
-        RoutingNode* new_node = node_ptr.get();
+        auto node_ptr = std::make_unique<RoutingNode<IntPoint>>(node_id, new_node_type, IntPoint(x, y));
+        RoutingNode<IntPoint>* new_node = node_ptr.get();
         nodes[node_id] = new_node;
         owned_nodes.push_back(std::move(node_ptr));
 
@@ -288,7 +278,7 @@ class GlobalRoutingTree {
         return node_id;
     }
 
-    using InsertionPair = std::pair<RoutingNode*, RoutingNode*>;
+    using InsertionPair = std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*>;
     /**
      * @brief Finds the nearest insertion point (node or branch) for a given point.
      * @param pt The target point for insertion.
@@ -297,10 +287,10 @@ class GlobalRoutingTree {
      */
     auto _find_nearest_insertion(IntPoint pt) -> InsertionPair {
         if (nodes.size() <= 1) return {nullptr, &source_node};
-        RoutingNode* nearest_node = &source_node;
-        RoutingNode* parent_node = nullptr;
+        RoutingNode<IntPoint>* nearest_node = &source_node;
+        RoutingNode<IntPoint>* parent_node = nullptr;
         int min_distance = source_node.pt.min_dist_with(pt);
-        std::function<void(RoutingNode*)> traverse = [&](RoutingNode* node) {
+        std::function<void(RoutingNode<IntPoint>*)> traverse = [&](RoutingNode<IntPoint>* node) {
             for (auto child : node->children) {
                 auto possible_path = node->pt.hull_with(child->pt);
                 int distance = possible_path.min_dist_with(pt);
@@ -331,8 +321,8 @@ class GlobalRoutingTree {
      */
     void insert_terminal_with_steiner(IntPoint pt) {
         std::string terminal_id = "terminal_" + std::to_string(next_terminal_id++);
-        auto node_ptr = std::make_unique<RoutingNode>(terminal_id, NodeType::TERMINAL, pt);
-        RoutingNode* terminal_node = node_ptr.get();
+        auto node_ptr = std::make_unique<RoutingNode<IntPoint>>(terminal_id, NodeType::TERMINAL, pt);
+        RoutingNode<IntPoint>* terminal_node = node_ptr.get();
         owned_nodes.push_back(std::move(node_ptr));
         nodes[terminal_id] = terminal_node;
 
@@ -344,8 +334,8 @@ class GlobalRoutingTree {
             auto possible_path = parent_node->pt.hull_with(nearest_node->pt);
             IntPoint nearest_pt = possible_path.nearest_to(pt);
             auto steiner_ptr
-                = std::make_unique<RoutingNode>(steiner_id, NodeType::STEINER, nearest_pt);
-            RoutingNode* new_node = steiner_ptr.get();
+                = std::make_unique<RoutingNode<IntPoint>>(steiner_id, NodeType::STEINER, nearest_pt);
+            RoutingNode<IntPoint>* new_node = steiner_ptr.get();
             nodes[steiner_id] = new_node;
             owned_nodes.push_back(std::move(steiner_ptr));
 
@@ -365,10 +355,10 @@ class GlobalRoutingTree {
     auto _find_nearest_insertion_with_constraints(IntPoint pt, int allowed_wirelength)
         -> InsertionPair {
         if (nodes.size() <= 1) return {nullptr, &source_node};
-        RoutingNode* nearest_node = &source_node;
-        RoutingNode* parent_node = nullptr;
+        RoutingNode<IntPoint>* nearest_node = &source_node;
+        RoutingNode<IntPoint>* parent_node = nullptr;
         int min_distance = source_node.pt.min_dist_with(pt);
-        std::function<void(RoutingNode*)> traverse = [&](RoutingNode* node) {
+        std::function<void(RoutingNode<IntPoint>*)> traverse = [&](RoutingNode<IntPoint>* node) {
             for (auto child : node->children) {
                 auto possible_path = node->pt.hull_with(child->pt);
                 int distance = possible_path.min_dist_with(pt);
@@ -402,8 +392,8 @@ class GlobalRoutingTree {
      */
     void insert_terminal_with_constraints(IntPoint pt, int allowed_wirelength) {
         std::string terminal_id = "terminal_" + std::to_string(next_terminal_id++);
-        auto node_ptr = std::make_unique<RoutingNode>(terminal_id, NodeType::TERMINAL, pt);
-        RoutingNode* terminal_node = node_ptr.get();
+        auto node_ptr = std::make_unique<RoutingNode<IntPoint>>(terminal_id, NodeType::TERMINAL, pt);
+        RoutingNode<IntPoint>* terminal_node = node_ptr.get();
         owned_nodes.push_back(std::move(node_ptr));
         nodes[terminal_id] = terminal_node;
 
@@ -418,8 +408,8 @@ class GlobalRoutingTree {
             auto possible_path = parent_node->pt.hull_with(nearest_node->pt);
             IntPoint nearest_pt = possible_path.nearest_to(pt);
             auto steiner_ptr
-                = std::make_unique<RoutingNode>(steiner_id, NodeType::STEINER, nearest_pt);
-            RoutingNode* new_node = steiner_ptr.get();
+                = std::make_unique<RoutingNode<IntPoint>>(steiner_id, NodeType::STEINER, nearest_pt);
+            RoutingNode<IntPoint>* new_node = steiner_ptr.get();
             nodes[steiner_id] = new_node;
             owned_nodes.push_back(std::move(steiner_ptr));
 
@@ -439,7 +429,7 @@ class GlobalRoutingTree {
      */
     auto calculate_wirelength() const -> int {
         int total = 0;
-        std::function<void(const RoutingNode*)> traverse = [&](const RoutingNode* node) {
+        std::function<void(const RoutingNode<IntPoint>*)> traverse = [&](const RoutingNode<IntPoint>* node) {
             for (auto child : node->children) {
                 total += node->manhattan_distance(child);
                 traverse(child);
@@ -455,7 +445,7 @@ class GlobalRoutingTree {
      * @param level The current depth level in the tree (for indentation).
      * @return A string representing the tree structure.
      */
-    auto get_tree_structure(const RoutingNode* node = nullptr, int level = 0) const -> std::string;
+    auto get_tree_structure(const RoutingNode<IntPoint>* node = nullptr, int level = 0) const -> std::string;
 
     /**
      * @brief Finds the path from a given node to the source node.
@@ -463,13 +453,13 @@ class GlobalRoutingTree {
      * @return A vector of const pointers to RoutingNodes, representing the path from source to the given node.
      * @throws std::runtime_error if the specified node is not found.
      */
-    auto find_path_to_source(const std::string& node_id) const -> std::vector<const RoutingNode*> {
+    auto find_path_to_source(const std::string& node_id) const -> std::vector<const RoutingNode<IntPoint>*> {
         auto it = nodes.find(node_id);
         if (it == nodes.end()) {
             throw std::runtime_error("Node " + node_id + " not found");
         }
-        const RoutingNode* current = it->second;
-        std::vector<const RoutingNode*> path;
+        const RoutingNode<IntPoint>* current = it->second;
+        std::vector<const RoutingNode<IntPoint>*> path;
         while (current) {
             path.push_back(current);
             current = current->parent;
@@ -482,8 +472,8 @@ class GlobalRoutingTree {
      * @brief Retrieves all terminal nodes in the tree.
      * @return A vector of pointers to all RoutingNodes of type TERMINAL.
      */
-    auto get_all_terminals() const -> std::vector<RoutingNode*> {
-        std::vector<RoutingNode*> terms;
+    auto get_all_terminals() const -> std::vector<RoutingNode<IntPoint>*> {
+        std::vector<RoutingNode<IntPoint>*> terms;
         for (auto& [id, node] : nodes) {
             if (node->type == NodeType::TERMINAL) {
                 terms.push_back(node);
@@ -496,8 +486,8 @@ class GlobalRoutingTree {
      * @brief Retrieves all Steiner nodes in the tree.
      * @return A vector of pointers to all RoutingNodes of type STEINER.
      */
-    auto get_all_steiner_nodes() const -> std::vector<RoutingNode*> {
-        std::vector<RoutingNode*> steins;
+    auto get_all_steiner_nodes() const -> std::vector<RoutingNode<IntPoint>*> {
+        std::vector<RoutingNode<IntPoint>*> steins;
         for (auto& [id, node] : nodes) {
             if (node->type == NodeType::STEINER) {
                 steins.push_back(node);
@@ -520,9 +510,9 @@ class GlobalRoutingTree {
         }
 
         for (const auto& steiner_id : steiner_ids_to_remove) {
-            RoutingNode* steiner = nodes.at(steiner_id);
-            RoutingNode* parent = steiner->parent;
-            RoutingNode* child = steiner->children[0];
+            RoutingNode<IntPoint>* steiner = nodes.at(steiner_id);
+            RoutingNode<IntPoint>* parent = steiner->parent;
+            RoutingNode<IntPoint>* child = steiner->children[0];
 
             parent->remove_child(steiner);
             parent->add_child(child);
@@ -549,10 +539,11 @@ class GlobalRoutingTree {
  * This class takes a source position and a list of terminal positions
  * and can build a routing tree using different strategies.
  */
+template <typename IntPoint>
 class GlobalRouter {
     IntPoint source_position; ///< The starting position for the routing.
     std::vector<IntPoint> terminal_positions; ///< The target terminal positions.
-    GlobalRoutingTree tree; ///< The routing tree constructed by this router.
+    GlobalRoutingTree<IntPoint> tree; ///< The routing tree constructed by this router.
     int worst_wirelength = 0; ///< The maximum wirelength from source to any terminal, used for constraints.
 
   public:
@@ -606,30 +597,32 @@ class GlobalRouter {
     }
 
     /**
-     * @brief Gets a const reference to the constructed GlobalRoutingTree.
-     * @return A const reference to the GlobalRoutingTree.
+     * @brief Gets a const reference to the constructed GlobalRoutingTree<IntPoint>.
+     * @return A const reference to the GlobalRoutingTree<IntPoint>.
      */
-    auto get_tree() const -> const GlobalRoutingTree& { return tree; }
+    auto get_tree() const -> const GlobalRoutingTree<IntPoint>& { return tree; }
 };
 
 /**
  * @brief Generates an SVG string representation of the routing tree.
- * @param tree The GlobalRoutingTree to visualize.
+ * @param tree The GlobalRoutingTree<IntPoint> to visualize.
  * @param width The width of the SVG image.
  * @param height The height of the SVG image.
  * @param margin The margin around the routing tree within the SVG.
  * @return A string containing the SVG representation.
  */
-extern std::string visualize_routing_tree_svg(const GlobalRoutingTree& tree, const int width = 800,
+template <typename IntPoint>
+extern std::string visualize_routing_tree_svg(const GlobalRoutingTree<IntPoint>& tree, const int width = 800,
                                               const int height = 600, const int margin = 50);
 
 /**
  * @brief Saves an SVG representation of the routing tree to a file.
- * @param tree The GlobalRoutingTree to save.
+ * @param tree The GlobalRoutingTree<IntPoint> to save.
  * @param filename The name of the output SVG file.
  * @param width The width of the SVG image.
  * @param height The height of the SVG image.
  */
-extern void save_routing_tree_svg(const GlobalRoutingTree& tree,
+template <typename IntPoint>
+extern void save_routing_tree_svg(const GlobalRoutingTree<IntPoint>& tree,
                                   const std::string filename = "routing_tree.svg",
                                   const int width = 800, const int height = 600);

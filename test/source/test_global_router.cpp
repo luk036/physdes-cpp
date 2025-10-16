@@ -219,9 +219,9 @@ TEST_SUITE("GlobalRoutingTree") {
         CHECK(tree.get_all_terminals().size() == 2);      // t1 and the new terminal
 
         // Verify the new steiner is on the source-s1 branch
-        RoutingNode* source = tree.get_source();
+        RoutingNode<Point<int, int>>* source = tree.get_source();
         CHECK(source->children.size() == 1);
-        RoutingNode* new_steiner = source->children[0];
+        RoutingNode<Point<int, int>>* new_steiner = source->children[0];
         CHECK(new_steiner->type == NodeType::STEINER);
         CHECK(new_steiner->pt.xcoord() == 5);  // Nearest point on source-s1 path to (5,5) is (5,0)
         CHECK(new_steiner->pt.ycoord() == 0);
@@ -248,6 +248,8 @@ TEST_CASE("Test route_with_steiner") {
     hgenX.reseed(19);
     hgenY.reseed(19);
 
+    using IntPoint = Point<int, int>;
+
     std::vector<IntPoint> terminals;
     for (int i = 0; i < 5; ++i) {
         terminals.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
@@ -269,6 +271,8 @@ TEST_CASE("Test route_with_constraints") {
 
     hgenX.reseed(19);
     hgenY.reseed(19);
+
+        using IntPoint = Point<int, int>;
 
     std::vector<IntPoint> terminals;
     for (int i = 0; i < 5; ++i) {

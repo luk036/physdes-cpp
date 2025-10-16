@@ -8,29 +8,20 @@
 #include <recti/point.hpp>
 #include <sstream>
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 // using recti::nearest_to;
+using namespace recti;
 
-std::ostream& operator<<(std::ostream& os, const RoutingNode& node) {
+std::ostream& operator<<(std::ostream& os, const RoutingNode<Point<int, int>>& node) {
     std::string type_name = to_string(node.type);
     os << type_name << "Node(" << node.id << ", (" << node.pt.xcoord() << ", " << node.pt.ycoord()
        << "))";
     return os;
 }
 
-void GlobalRoutingTree::visualize_tree() const {
-    std::cout << "Global Routing Tree Structure:\n";
-    std::cout << "========================================\n";
-    std::cout << get_tree_structure();
-    std::cout << "Total wirelength: " << calculate_wirelength() << "\n";
-    std::cout << "Total nodes: " << nodes.size() << "\n";
-    std::cout << "Terminals: " << get_all_terminals().size() << "\n";
-    std::cout << "Steiner points: " << get_all_steiner_nodes().size() << "\n";
-}
-
-auto GlobalRoutingTree::get_tree_structure(const RoutingNode* node, int level) const
+template <typename IntPoint>
+auto GlobalRoutingTree<IntPoint>::get_tree_structure(const RoutingNode<IntPoint>* node, int level) const
     -> std::string {
     if (node == nullptr) node = &source_node;
     std::ostringstream oss;
@@ -41,9 +32,22 @@ auto GlobalRoutingTree::get_tree_structure(const RoutingNode* node, int level) c
     return oss.str();
 }
 
-std::string visualize_routing_tree_svg(const GlobalRoutingTree& tree, const int width,
+template <typename IntPoint>
+void GlobalRoutingTree<IntPoint>::visualize_tree() const {
+    std::cout << "Global Routing Tree Structure:\n";
+    std::cout << "========================================\n";
+    std::cout << get_tree_structure();
+    std::cout << "Total wirelength: " << calculate_wirelength() << "\n";
+    std::cout << "Total nodes: " << nodes.size() << "\n";
+    std::cout << "Terminals: " << get_all_terminals().size() << "\n";
+    std::cout << "Steiner points: " << get_all_steiner_nodes().size() << "\n";
+}
+
+
+template <>
+std::string visualize_routing_tree_svg(const GlobalRoutingTree<Point<int, int>>& tree, const int width,
                                        const int height, const int margin) {
-    std::vector<RoutingNode*> all_nodes;
+    std::vector<RoutingNode<Point<int, int>>*> all_nodes;
     for (auto& [id, node] : tree.nodes) {
         all_nodes.push_back(node);
     }
@@ -84,7 +88,7 @@ std::string visualize_routing_tree_svg(const GlobalRoutingTree& tree, const int 
     svg << "</marker>\n";
     svg << "</defs>\n";
 
-    std::function<void(const RoutingNode*)> draw_connections = [&](const RoutingNode* node) {
+    std::function<void(const RoutingNode<Point<int, int>>*)> draw_connections = [&](const RoutingNode<Point<int, int>>* node) {
         for (auto child : node->children) {
             auto [x1, y1] = scale_coords(node->pt.xcoord(), node->pt.ycoord());
             auto [x2, y2] = scale_coords(child->pt.xcoord(), child->pt.ycoord());
@@ -169,7 +173,8 @@ std::string visualize_routing_tree_svg(const GlobalRoutingTree& tree, const int 
     return svg.str();
 }
 
-void save_routing_tree_svg(const GlobalRoutingTree& tree, const std::string filename,
+template <>
+void save_routing_tree_svg(const GlobalRoutingTree<Point<int, int>>& tree, const std::string filename,
                            const int width, const int height) {
     std::string svg_content = visualize_routing_tree_svg(tree, width, height);
     std::ofstream f(filename);
@@ -186,12 +191,12 @@ void save_routing_tree_svg(const GlobalRoutingTree& tree, const std::string file
 //     for (int i = 0; i < 7; ++i) {
 //         coords.push_back(hgen());
 //     }
-//     std::vector<IntPoint> terminals;
+//     std::vector<Point<int, int>> terminals;
 //     for (const auto& coord : coords) {
 //         terminals.emplace_back(static_cast<int>(coord[0]), static_cast<int>(coord[1]));
 //     }
 //     auto src_coord = hgen();
-//     IntPoint source(static_cast<int>(src_coord[0]), static_cast<int>(src_coord[1]));
+//     Point<int, int> source(static_cast<int>(src_coord[0]), static_cast<int>(src_coord[1]));
 
 //     GlobalRouter router(source, terminals);
 //     router.route_with_steiners();
@@ -211,12 +216,12 @@ void save_routing_tree_svg(const GlobalRoutingTree& tree, const std::string file
 //     for (int i = 0; i < 7; ++i) {
 //         coords.push_back(hgen());
 //     }
-//     std::vector<IntPoint> terminals;
+//     std::vector<Point<int, int>> terminals;
 //     for (const auto& coord : coords) {
 //         terminals.emplace_back(static_cast<int>(coord[0]), static_cast<int>(coord[1]));
 //     }
 //     auto src_coord = hgen();
-//     IntPoint source(static_cast<int>(src_coord[0]), static_cast<int>(src_coord[1]));
+//     Point<int, int> source(static_cast<int>(src_coord[0]), static_cast<int>(src_coord[1]));
 
 //     GlobalRouter router(source, terminals);
 //     router.route_with_constraints(0.9);
