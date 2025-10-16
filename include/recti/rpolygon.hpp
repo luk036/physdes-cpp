@@ -198,9 +198,11 @@ namespace recti {
      * @tparam FwIter The iterator type for the range of points.
      * @tparam KeyFn The type of the key function that extracts the x and y coordinates of each
      * point.
+     * @tparam CmpFn The type of the comparison function for the y-coordinates.
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      * @param[in] dir The key function that extracts the x and y coordinates of each point.
+     * @param[in] cmp The comparison function for the y-coordinates.
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
     template <typename FwIter, typename KeyFn, typename CmpFn>

@@ -54,8 +54,7 @@ template <typename T> class Dllink {
     /**
      * @brief whether the node is locked
      *
-     * @return true
-     * @return false
+     * @return True if the node is locked, false otherwise.
      */
     constexpr auto is_locked() const noexcept -> bool { return this->next == this; }
 

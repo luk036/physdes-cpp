@@ -8,9 +8,9 @@ namespace recti {
     /**
      * @brief van der Corput sequence
      *
-     * @param[in] k
-     * @param[in] base
-     * @param[in] scale
+     * @param[in] num - The number to calculate the van der Corput sequence for.
+     * @param[in] base - The base of the van der Corput sequence.
+     * @param[in] scale - The scale of the van der Corput sequence.
      * @return unsigned
      */
     inline auto vdc(const unsigned num, unsigned base = 2, unsigned scale = 10) noexcept

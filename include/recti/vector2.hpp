@@ -114,26 +114,11 @@ namespace recti {
          * @tparam U2 The type of the y-coordinate of the other `Vector2` object.
          * @param[in] other The other `Vector2` object to compare against.
          * @return true If the two `Vector2` objects have the same x and y coordinates.
-         * @return false If the two `Vector2` objects have different x or y coordinates.
          */
         template <typename U1, typename U2>  //
         constexpr auto operator==(const Vector2<U1, U2> &other) const -> bool {
             return std::tie(this->x(), this->y()) == std::tie(other.x(), other.y());
         }
-
-        // /**
-        //  * @brief Less than
-        //  *
-        //  * @tparam U1
-        //  * @tparam U2
-        //  * @param[in] other
-        //  * @return true
-        //  * @return false
-        //  */
-        // template <typename U1, typename U2> //
-        // constexpr auto operator<(const Vector2<U1, U2> &other) const -> bool {
-        //   return std::tie(this->x(), this->y()) < std::tie(other.x(), other.y());
-        // }
 
         /**
          * @brief Compares two `Vector2` objects for inequality.
@@ -146,54 +131,11 @@ namespace recti {
          * @tparam U2 The type of the y-coordinate of the other `Vector2` object.
          * @param[in] other The other `Vector2` object to compare against.
          * @return true If the two `Vector2` objects have different x or y coordinates.
-         * @return false If the two `Vector2` objects have the same x and y coordinates.
          */
         template <typename U1, typename U2>  //
         constexpr auto operator!=(const Vector2<U1, U2> &other) const -> bool {
             return !(*this == other);
         }
-
-        // /**
-        //  * @brief Greater than
-        //  *
-        //  * @tparam U1
-        //  * @tparam U2
-        //  * @param[in] other
-        //  * @return true
-        //  * @return false
-        //  */
-        // template <typename U1, typename U2> //
-        // constexpr auto operator>(const Vector2<U1, U2> &other) const -> bool {
-        //   return other < *this;
-        // }
-
-        // /**
-        //  * @brief Less than or euqual to
-        //  *
-        //  * @tparam U1
-        //  * @tparam U2
-        //  * @param[in] other
-        //  * @return true
-        //  * @return false
-        //  */
-        // template <typename U1, typename U2> //
-        // constexpr auto operator<=(const Vector2<U1, U2> &other) const -> bool {
-        //   return !(other < *this);
-        // }
-
-        // /**
-        //  * @brief Greater than or equal to
-        //  *
-        //  * @tparam U1
-        //  * @tparam U2
-        //  * @param[in] other
-        //  * @return true
-        //  * @return false
-        //  */
-        // template <typename U1, typename U2> //
-        // constexpr auto operator>=(const Vector2<U1, U2> &other) const -> bool {
-        //   return !(*this < other);
-        // }
 
         ///@}
 
