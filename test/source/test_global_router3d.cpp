@@ -1,12 +1,12 @@
 #include <doctest/doctest.h>
 #include <fmt/core.h>
 
+#include <cstdlib>          // for rand()
 #include <iostream>         // for operator<<
 #include <ldsgen/ilds.hpp>  // for VdCorput
 #include <recti/global_router.hpp>
 #include <recti/interval.hpp>
 #include <recti/point.hpp>
-#include <cstdlib> // for rand()
 #include <string>
 #include <vector>
 
@@ -84,7 +84,8 @@ TEST_SUITE("GlobalRoutingTree3d") {
         CHECK(tree.nodes.at(s1_id)->children.size() == 1);
         CHECK(tree.nodes.at(s1_id)->children[0]->id == s2_id);
 
-        std::string new_s_id = tree.insert_node_on_branch(NodeType::STEINER, Point{Point{15, 0}, 0}, s1_id, s2_id);
+        std::string new_s_id
+            = tree.insert_node_on_branch(NodeType::STEINER, Point{Point{15, 0}, 0}, s1_id, s2_id);
 
         CHECK(tree.nodes.at(s1_id)->children.size() == 1);
         CHECK(tree.nodes.at(s1_id)->children[0]->id == new_s_id);
@@ -97,7 +98,8 @@ TEST_SUITE("GlobalRoutingTree3d") {
         GlobalRoutingTree tree(Point{Point{0, 0}, 0});
         std::string s1_id = tree.insert_steiner_node(Point{Point{10, 0}, 0});
         std::string s2_id = tree.insert_steiner_node(Point{Point{20, 0}, 0}, s1_id);
-        CHECK_THROWS_AS(tree.insert_node_on_branch(NodeType::STEINER, Point{Point{15, 0}, 0}, "non_existent", s2_id),
+        CHECK_THROWS_AS(tree.insert_node_on_branch(NodeType::STEINER, Point{Point{15, 0}, 0},
+                                                   "non_existent", s2_id),
                         std::runtime_error);
     }
 
@@ -105,17 +107,20 @@ TEST_SUITE("GlobalRoutingTree3d") {
         GlobalRoutingTree tree(Point{Point{0, 0}, 0});
         std::string s1_id = tree.insert_steiner_node(Point{Point{10, 0}, 0});
         std::string s2_id = tree.insert_steiner_node(Point{Point{20, 0}, 0}, s1_id);
-        CHECK_THROWS_AS(tree.insert_node_on_branch(NodeType::STEINER, Point{Point{15, 0}, 0}, s1_id, "non_existent"),
+        CHECK_THROWS_AS(tree.insert_node_on_branch(NodeType::STEINER, Point{Point{15, 0}, 0}, s1_id,
+                                                   "non_existent"),
                         std::runtime_error);
     }
 
     TEST_CASE("GlobalRoutingTree::insert_node_on_branch - end_node not child of start_node") {
         GlobalRoutingTree tree(Point{Point{0, 0}, 0});
         std::string s1_id = tree.insert_steiner_node(Point{Point{10, 0}, 0});
-        std::string s2_id = tree.insert_steiner_node(Point{Point{20, 0}, 0});  // s2 is not child of s1
+        std::string s2_id
+            = tree.insert_steiner_node(Point{Point{20, 0}, 0});  // s2 is not child of s1
 
-        CHECK_THROWS_AS(tree.insert_node_on_branch(NodeType::STEINER, Point{Point{15, 0}, 0}, s1_id, s2_id),
-                        std::runtime_error);
+        CHECK_THROWS_AS(
+            tree.insert_node_on_branch(NodeType::STEINER, Point{Point{15, 0}, 0}, s1_id, s2_id),
+            std::runtime_error);
     }
 
     TEST_CASE("GlobalRoutingTree::find_path_to_source - basic path") {
@@ -147,9 +152,10 @@ TEST_SUITE("GlobalRoutingTree3d") {
     TEST_CASE("GlobalRoutingTree::optimize_steiner_points - remove redundant steiner") {
         GlobalRoutingTree tree(Point{Point{0, 0}, 0});
         std::string s1_id = tree.insert_steiner_node(Point{Point{10, 0}, 0});
-        std::string s2_id
-            = tree.insert_steiner_node(Point{Point{20, 0}, 0}, s1_id);  // s2 has only one child (none yet)
-        std::string t1_id = tree.insert_terminal_node(Point{Point{30, 0}, 0}, s2_id);  // s2 now has t1 as child
+        std::string s2_id = tree.insert_steiner_node(Point{Point{20, 0}, 0},
+                                                     s1_id);  // s2 has only one child (none yet)
+        std::string t1_id
+            = tree.insert_terminal_node(Point{Point{30, 0}, 0}, s2_id);  // s2 now has t1 as child
 
         CHECK(tree.get_all_steiner_nodes().size() == 2);  // s1, s2
         CHECK(tree.nodes.count(s1_id));
@@ -173,7 +179,8 @@ TEST_SUITE("GlobalRoutingTree3d") {
         std::string s1_id = tree.insert_steiner_node(Point{Point{10, 0}, 0});
         std::string s2_id = tree.insert_steiner_node(Point{Point{20, 0}, 0}, s1_id);
         std::string t1_id = tree.insert_terminal_node(Point{Point{30, 0}, 0}, s2_id);
-        std::string t2_id = tree.insert_terminal_node(Point{Point{20, 10}, 10}, s2_id);  // s2 now has two children
+        std::string t2_id = tree.insert_terminal_node(Point{Point{20, 10}, 10},
+                                                      s2_id);  // s2 now has two children
 
         CHECK(tree.get_all_steiner_nodes().size() == 2);  // s1, s2
 
@@ -187,7 +194,8 @@ TEST_SUITE("GlobalRoutingTree3d") {
 
     TEST_CASE("GlobalRoutingTree::optimize_steiner_points - source node is not removed") {
         GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-        std::string t1_id = tree.insert_terminal_node(Point{Point{10, 0}, 0});  // source has one child (t1)
+        std::string t1_id
+            = tree.insert_terminal_node(Point{Point{10, 0}, 0});  // source has one child (t1)
 
         CHECK(tree.get_all_steiner_nodes().empty());
         CHECK(tree.get_source()->children.size() == 1);
@@ -201,7 +209,8 @@ TEST_SUITE("GlobalRoutingTree3d") {
 
     TEST_CASE("GlobalRoutingTree::insert_terminal_with_steiner - no steiner inserted") {
         GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-        tree.insert_terminal_with_steiner(Point{Point{0, 10}, 10});  // Should attach directly to source
+        tree.insert_terminal_with_steiner(
+            Point{Point{0, 10}, 10});  // Should attach directly to source
 
         CHECK(tree.get_source()->children.size() == 1);
         CHECK(tree.get_all_steiner_nodes().empty());
@@ -224,7 +233,8 @@ TEST_SUITE("GlobalRoutingTree3d") {
         CHECK(source->children.size() == 1);
         RoutingNode<Point<Point<int, int>, int>>* new_steiner = source->children[0];
         CHECK(new_steiner->type == NodeType::STEINER);
-        CHECK(new_steiner->pt.xcoord().xcoord() == 5);  // Nearest point on source-s1 path to (5,5) is (5,0)
+        CHECK(new_steiner->pt.xcoord().xcoord()
+              == 5);  // Nearest point on source-s1 path to (5,5) is (5,0)
         CHECK(new_steiner->pt.ycoord() == 0);
 
         CHECK(new_steiner->children.size()
@@ -254,9 +264,11 @@ TEST_CASE("Test route3d_with_steiner") {
 
     std::vector<IntPoint> terminals;
     for (int i = 0; i < 5; ++i) {
-        terminals.emplace_back(Point{Point{static_cast<int>(hgenX.pop()), (rand() % 4) * scale_z}, static_cast<int>(hgenY.pop())});
+        terminals.emplace_back(Point{Point{static_cast<int>(hgenX.pop()), (rand() % 4) * scale_z},
+                                     static_cast<int>(hgenY.pop())});
     }
-    IntPoint source(Point{Point{static_cast<int>(hgenX.pop()), (rand() % 4) * scale_z}, static_cast<int>(hgenY.pop())});
+    IntPoint source(Point{Point{static_cast<int>(hgenX.pop()), (rand() % 4) * scale_z},
+                          static_cast<int>(hgenY.pop())});
 
     GlobalRouter router(source, terminals);
     router.route_with_steiners();
@@ -279,9 +291,11 @@ TEST_CASE("Test route3d_with_constraints") {
 
     std::vector<IntPoint> terminals;
     for (int i = 0; i < 5; ++i) {
-        terminals.emplace_back(Point{Point{static_cast<int>(hgenX.pop()), (rand() % 4) * scale_z}, static_cast<int>(hgenY.pop())});
+        terminals.emplace_back(Point{Point{static_cast<int>(hgenX.pop()), (rand() % 4) * scale_z},
+                                     static_cast<int>(hgenY.pop())});
     }
-    IntPoint source(Point{Point{static_cast<int>(hgenX.pop()), (rand() % 4) * scale_z}, static_cast<int>(hgenY.pop())});
+    IntPoint source(Point{Point{static_cast<int>(hgenX.pop()), (rand() % 4) * scale_z},
+                          static_cast<int>(hgenY.pop())});
 
     GlobalRouter router(source, terminals);
     router.route_with_constraints(1.0);

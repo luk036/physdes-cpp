@@ -77,8 +77,8 @@ namespace recti {
         }
 
         // Find concave point
-        auto find_concave_point
-            = [&lst](Dllink<size_t>* vstart, std::function<bool(T)> cmp2) -> Dllink<size_t>* {
+        auto find_concave_point = [&lst](Dllink<size_t>* vstart,
+                                         const std::function<bool(T)>& cmp2) -> Dllink<size_t>* {
             auto vcurr = vstart;
             do {
                 auto vnext = vcurr->next;
@@ -189,8 +189,8 @@ namespace recti {
         }
 
         // Find concave point
-        auto find_explicit_concave_point
-            = [&lst](Dllink<size_t>* vstart, std::function<bool(T)> cmp2) -> Dllink<size_t>* {
+        auto find_explicit_concave_point =
+            [&lst](Dllink<size_t>* vstart, const std::function<bool(T)>& cmp2) -> Dllink<size_t>* {
             auto vcurr = vstart;
             do {
                 auto vnext = vcurr->next;
@@ -301,8 +301,8 @@ namespace recti {
         }
 
         // Find concave point
-        auto find_implicit_concave_point
-            = [&lst](Dllink<size_t>* vstart, std::function<bool(T)> cmp2) -> Dllink<size_t>* {
+        auto find_implicit_concave_point =
+            [&lst](Dllink<size_t>* vstart, const std::function<bool(T)>& cmp2) -> Dllink<size_t>* {
             auto vcurr = vstart;
             do {
                 auto vnext = vcurr->next;

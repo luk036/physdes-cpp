@@ -97,8 +97,8 @@ namespace recti {
         /**
          * @brief measure (length)
          *
-         * The function returns the measure (length) of a range by subtracting the upper bound from the lower
-         * bound.
+         * The function returns the measure (length) of a range by subtracting the upper bound from
+         * the lower bound.
          *
          * @return a value of type T.
          */

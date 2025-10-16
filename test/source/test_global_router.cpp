@@ -83,7 +83,8 @@ TEST_SUITE("GlobalRoutingTree") {
         CHECK(tree.nodes.at(s1_id)->children.size() == 1);
         CHECK(tree.nodes.at(s1_id)->children[0]->id == s2_id);
 
-        std::string new_s_id = tree.insert_node_on_branch(NodeType::STEINER, Point{15, 0}, s1_id, s2_id);
+        std::string new_s_id
+            = tree.insert_node_on_branch(NodeType::STEINER, Point{15, 0}, s1_id, s2_id);
 
         CHECK(tree.nodes.at(s1_id)->children.size() == 1);
         CHECK(tree.nodes.at(s1_id)->children[0]->id == new_s_id);
@@ -96,16 +97,18 @@ TEST_SUITE("GlobalRoutingTree") {
         GlobalRoutingTree tree(Point{0, 0});
         std::string s1_id = tree.insert_steiner_node({10, 0});
         std::string s2_id = tree.insert_steiner_node({20, 0}, s1_id);
-        CHECK_THROWS_AS(tree.insert_node_on_branch(NodeType::STEINER, Point{15, 0}, "non_existent", s2_id),
-                        std::runtime_error);
+        CHECK_THROWS_AS(
+            tree.insert_node_on_branch(NodeType::STEINER, Point{15, 0}, "non_existent", s2_id),
+            std::runtime_error);
     }
 
     TEST_CASE("GlobalRoutingTree::insert_node_on_branch - invalid branch_end_id") {
         GlobalRoutingTree tree(Point{0, 0});
         std::string s1_id = tree.insert_steiner_node({10, 0});
         std::string s2_id = tree.insert_steiner_node({20, 0}, s1_id);
-        CHECK_THROWS_AS(tree.insert_node_on_branch(NodeType::STEINER, Point{15, 0}, s1_id, "non_existent"),
-                        std::runtime_error);
+        CHECK_THROWS_AS(
+            tree.insert_node_on_branch(NodeType::STEINER, Point{15, 0}, s1_id, "non_existent"),
+            std::runtime_error);
     }
 
     TEST_CASE("GlobalRoutingTree::insert_node_on_branch - end_node not child of start_node") {
@@ -272,7 +275,7 @@ TEST_CASE("Test route_with_constraints") {
     hgenX.reseed(19);
     hgenY.reseed(19);
 
-        using IntPoint = Point<int, int>;
+    using IntPoint = Point<int, int>;
 
     std::vector<IntPoint> terminals;
     for (int i = 0; i < 5; ++i) {

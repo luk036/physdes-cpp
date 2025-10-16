@@ -368,11 +368,25 @@ namespace recti {
         CONSTEXPR14 auto get_xcoord() -> T1 & { return this->_xcoord; }
 
         /**
+         * @brief Returns a reference to the x-coordinate of the point.
+         *
+         * @return const T1& A reference to the x-coordinate of the point.
+         */
+        constexpr auto get_xcoord() const -> const T1 & { return this->_xcoord; }
+
+        /**
          * @brief Returns a reference to the y-coordinate of the point.
          *
          * @return const T2& A reference to the y-coordinate of the point.
          */
         CONSTEXPR14 auto get_ycoord() -> T2 & { return this->_ycoord; }
+
+        /**
+         * @brief Returns a reference to the y-coordinate of the point.
+         *
+         * @return const T2& A reference to the y-coordinate of the point.
+         */
+        constexpr auto get_ycoord() const -> const T2 & { return this->_ycoord; }
     };
 #pragma pack(pop)
 

@@ -17,7 +17,7 @@ class RDllIterator {
         return *this;
     }
 
-    constexpr auto operator*() noexcept -> Dllink<size_t>& { return *cur; }
+    constexpr auto operator*() const noexcept -> const Dllink<size_t>& { return *cur; }
 
     constexpr auto operator!=(const RDllIterator& other) const noexcept -> bool {
         return cur != other.cur;

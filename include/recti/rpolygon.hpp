@@ -206,8 +206,8 @@ namespace recti {
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
     template <typename FwIter, typename KeyFn, typename CmpFn>
-    inline auto create_mono_rpolygon(FwIter &&first, FwIter &&last, KeyFn &&dir, CmpFn &&cmp)
-        -> bool {
+    inline auto create_mono_rpolygon(FwIter &&first, FwIter &&last, const KeyFn &dir,
+                                     const CmpFn &cmp) -> bool {
         assert(first != last);
 
         // Use x-monotone as model
@@ -433,7 +433,8 @@ namespace recti {
      * @return true if the polygon is monotone, false otherwise
      */
     template <typename T, typename DirFunc>
-    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, DirFunc &&dir) -> bool {
+    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, const DirFunc &dir)
+        -> bool {
         if (pointset.size() <= 3) {
             return true;
         }
@@ -496,9 +497,8 @@ namespace recti {
      */
     template <typename T> inline auto rpolygon_is_xmonotone(std::span<const Point<T>> pointset)
         -> bool {
-        auto x_key = [](const Point<T> &pt) -> std::pair<T, T> {
-            return {pt.xcoord(), pt.ycoord()};
-        };
+        auto x_key
+            = [](const Point<T> &pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
         return rpolygon_is_monotone(pointset, x_key);
     }
 
@@ -514,9 +514,8 @@ namespace recti {
      */
     template <typename T> inline auto rpolygon_is_ymonotone(std::span<const Point<T>> pointset)
         -> bool {
-        auto y_key = [](const Point<T> &pt) -> std::pair<T, T> {
-            return {pt.ycoord(), pt.xcoord()};
-        };
+        auto y_key
+            = [](const Point<T> &pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
         return rpolygon_is_monotone(pointset, y_key);
     }
 

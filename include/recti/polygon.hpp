@@ -205,29 +205,6 @@ namespace recti {
     };
 
     /**
-     * @brief Writes the vertices of a polygon to an output stream in a format suitable for
-     * rendering.
-     *
-     * This function writes the vertices of the given polygon to the provided output stream in a
-     * format that can be used to render the polygon, such as in a vector graphics format like SVG
-     * or LaTeX. Each vertex is written on a new line, prefixed with "\\draw " to indicate that it
-     * should be rendered as a drawing command.
-     *
-     * @tparam Stream The type of the output stream to write to.
-     * @tparam T The numeric type used to represent the coordinates of the polygon vertices.
-      The output stream to write the polygon vertices to.
-      The polygon to write to the output stream.
-     * @return The output stream, for method chaining.
-     */
-    // template <class Stream, typename T> auto operator<<(Stream &out, const Polygon<T> &poly)
-    //     -> Stream & {
-    //     for (auto &&vtx : poly) {
-    //         out << "  \\draw " << vtx << ";\n";
-    //     }
-    //     return out;
-    // }
-
-    /**
      * @brief Create a monotone polygon from a range of points.
      *
      * This function takes a range of points represented by the iterators `first` and `last`, and a
@@ -244,7 +221,7 @@ namespace recti {
      * @param dir The comparison function for the points.
      */
     template <typename FwIter, typename Compare>
-    inline void create_mono_polygon(FwIter&& first, FwIter&& last, Compare&& dir) {
+    inline void create_mono_polygon(FwIter&& first, FwIter&& last, const Compare& dir) {
         assert(first != last);
 
         auto result = std::minmax_element(first, last, dir);
@@ -310,7 +287,8 @@ namespace recti {
      * @return true if the polygon is monotone, false otherwise
      */
     template <typename T, typename DirFunc>
-    inline auto polygon_is_monotone(std::span<const Point<T>> pointset, DirFunc&& dir) -> bool {
+    inline auto polygon_is_monotone(std::span<const Point<T>> pointset, const DirFunc& dir)
+        -> bool {
         if (pointset.size() <= 3) {
             return true;
         }
@@ -368,9 +346,8 @@ namespace recti {
      */
     template <typename T> inline auto polygon_is_xmonotone(std::span<const Point<T>> pointset)
         -> bool {
-        auto x_key = [](const Point<T>& pt) -> std::pair<T, T> {
-            return {pt.xcoord(), pt.ycoord()};
-        };
+        auto x_key
+            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
         return polygon_is_monotone(pointset, x_key);
     }
 
@@ -386,9 +363,8 @@ namespace recti {
      */
     template <typename T> inline auto polygon_is_ymonotone(std::span<const Point<T>> pointset)
         -> bool {
-        auto y_key = [](const Point<T>& pt) -> std::pair<T, T> {
-            return {pt.ycoord(), pt.xcoord()};
-        };
+        auto y_key
+            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
         return polygon_is_monotone(pointset, y_key);
     }
 

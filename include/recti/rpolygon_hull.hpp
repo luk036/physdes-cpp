@@ -20,11 +20,9 @@ namespace recti {
      * @param dir Function to extract comparison coordinates
      * @return A vector of points representing the monotone hull
      */
-    template <typename T>
-    inline auto rpolygon_make_monotone_hull(std::span<const Point<T>> pointset,
-                                            bool is_anticlockwise,
-                                            std::function<std::pair<T, T>(const Point<T>&)> dir)
-        -> std::vector<Point<T>> {
+    template <typename T> inline auto rpolygon_make_monotone_hull(
+        std::span<const Point<T>> pointset, bool is_anticlockwise,
+        const std::function<std::pair<T, T>(const Point<T>&)>& dir) -> std::vector<Point<T>> {
         if (pointset.size() <= 3) {
             return std::vector<Point<T>>(pointset.begin(), pointset.end());
         }
@@ -45,45 +43,41 @@ namespace recti {
         auto& v_min = rdll[min_index];
         auto& v_max = rdll[max_index];
 
-        auto process
-            = [&pointset, &dir](Dllink<size_t>* vcurr, Dllink<size_t>* vstop,
-                                std::function<bool(T, T)> cmp, std::function<bool(T)> cmp2) {
-                  while (vcurr != vstop) {
-                      auto vnext = vcurr->next;
-                      auto vprev = vcurr->prev;
-                      const auto& p0 = pointset[vprev->data];
-                      const auto& p1 = pointset[vcurr->data];
-                      const auto& p2 = pointset[vnext->data];
+        auto process = [&pointset, &dir](Dllink<size_t>* vcurr, Dllink<size_t>* vstop,
+                                         const std::function<bool(T, T)>& cmp,
+                                         const std::function<bool(T)>& cmp2) {
+            while (vcurr != vstop) {
+                auto vnext = vcurr->next;
+                auto vprev = vcurr->prev;
+                const auto& p0 = pointset[vprev->data];
+                const auto& p1 = pointset[vcurr->data];
+                const auto& p2 = pointset[vnext->data];
 
-                      auto dir_p0 = dir(p0);
-                      auto dir_p1 = dir(p1);
-                      auto dir_p2 = dir(p2);
+                auto dir_p0 = dir(p0);
+                auto dir_p1 = dir(p1);
+                auto dir_p2 = dir(p2);
 
-                      if (cmp(std::get<0>(dir_p1), std::get<0>(dir_p2))
-                          || cmp(std::get<0>(dir_p0), std::get<0>(dir_p1))) {
-                          T area_diff = (p1.ycoord() - p0.ycoord()) * (p2.xcoord() - p1.xcoord());
-                          if (cmp2(area_diff)) {
-                              vcurr->detach();
-                              vcurr = vprev;
-                          } else {
-                              vcurr = vnext;
-                          }
-                      } else {
-                          vcurr = vnext;
-                      }
-                  }
-              };
+                if (cmp(std::get<0>(dir_p1), std::get<0>(dir_p2))
+                    || cmp(std::get<0>(dir_p0), std::get<0>(dir_p1))) {
+                    T area_diff = (p1.ycoord() - p0.ycoord()) * (p2.xcoord() - p1.xcoord());
+                    if (cmp2(area_diff)) {
+                        vcurr->detach();
+                        vcurr = vprev;
+                    } else {
+                        vcurr = vnext;
+                    }
+                } else {
+                    vcurr = vnext;
+                }
+            }
+        };
 
         if (is_anticlockwise) {
-            process(
-                &v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a >= 0; });
-            process(
-                &v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a >= 0; });
+            process(&v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a >= 0; });
+            process(&v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a >= 0; });
         } else {
-            process(
-                &v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a <= 0; });
-            process(
-                &v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a <= 0; });
+            process(&v_min, &v_max, [](T x, T y) { return x >= y; }, [](T a) { return a <= 0; });
+            process(&v_max, &v_min, [](T x, T y) { return x <= y; }, [](T a) { return a <= 0; });
         }
 
         std::vector<Point<T>> result = {min_point};
