@@ -242,7 +242,7 @@ class GlobalRoutingTree {
      * @return The ID of the newly inserted node.
      * @throws std::runtime_error if branch nodes are not found or if branch_end_id is not a direct child of branch_start_id.
      */
-    auto insert_node_on_branch(NodeType new_node_type, int x, int y, std::string branch_start_id,
+    auto insert_node_on_branch(NodeType new_node_type, IntPoint pt, std::string branch_start_id,
                                std::string branch_end_id) -> std::string {
         auto start_it = nodes.find(branch_start_id);
         auto end_it = nodes.find(branch_end_id);
@@ -267,7 +267,7 @@ class GlobalRoutingTree {
             throw std::runtime_error("Node type must be STEINER or TERMINAL");
         }
 
-        auto node_ptr = std::make_unique<RoutingNode<IntPoint>>(node_id, new_node_type, IntPoint(x, y));
+        auto node_ptr = std::make_unique<RoutingNode<IntPoint>>(node_id, new_node_type, pt);
         RoutingNode<IntPoint>* new_node = node_ptr.get();
         nodes[node_id] = new_node;
         owned_nodes.push_back(std::move(node_ptr));
@@ -552,19 +552,24 @@ class GlobalRouter {
      * @param source_ The source position.
      * @param terminals A vector of terminal positions.
      */
-    GlobalRouter(const IntPoint& source_, const std::vector<IntPoint>& terminals)
+    GlobalRouter(const IntPoint& source_, std::vector<IntPoint> terminal_positions)
         : source_position(source_), tree(source_) {
-        terminal_positions = terminals;
-        if (!terminal_positions.empty()) {
-            worst_wirelength = source_position.min_dist_with(terminal_positions[0]);
-            for (const auto& t : terminal_positions) {
-                worst_wirelength = std::max(worst_wirelength, source_position.min_dist_with(t));
-            }
-        }
+        // Sort terminal positions by distance from source (descending order)
         std::sort(terminal_positions.begin(), terminal_positions.end(),
-                  [this](const IntPoint& a, const IntPoint& b) {
-                      return source_position.min_dist_with(a) > source_position.min_dist_with(b);
-                  });
+            [this](const IntPoint& a, const IntPoint& b) {
+                auto da = source_position.min_dist_with(a);
+                auto db = source_position.min_dist_with(b);
+                return da > db || (da == db && source_position.hull_with(a).measure() > source_position.hull_with(b).measure());
+            });
+        
+        this->terminal_positions = std::move(terminal_positions);
+                
+        // Calculate worst wirelength (distance to farthest terminal)
+        if (!this->terminal_positions.empty()) {
+            this->worst_wirelength = source_position.min_dist_with(this->terminal_positions[0]);
+        } else {
+            this->worst_wirelength = 0;
+        }
     }
 
     /**
@@ -626,3 +631,30 @@ template <typename IntPoint>
 extern void save_routing_tree_svg(const GlobalRoutingTree<IntPoint>& tree,
                                   const std::string filename = "routing_tree.svg",
                                   const int width = 800, const int height = 600);
+                                  
+/**
+ * @brief Generates an SVG string representation of the routing tree (3d).
+ * @param tree The GlobalRoutingTree<IntPoint> to visualize.
+ * @param scale_z the scale factor in z
+ * @param width The width of the SVG image.
+ * @param height The height of the SVG image.
+ * @param margin The margin around the routing tree within the SVG.
+ * @return A string containing the SVG representation.
+ */
+template <typename IntPoint>
+extern std::string visualize_routing_tree3d_svg(const GlobalRoutingTree<IntPoint>& tree, const int scale_z, const int width = 800,
+                                              const int height = 600, const int margin = 50);
+
+/**
+ * @brief Saves an SVG representation of the routing tree to a file (3d).
+ * @param tree The GlobalRoutingTree<IntPoint> to save.
+ * @param scale_z the scale factor in z
+ * @param filename The name of the output SVG file.
+ * @param width The width of the SVG image.
+ * @param height The height of the SVG image.
+ */
+template <typename IntPoint>
+extern void save_routing_tree3d_svg(const GlobalRoutingTree<IntPoint>& tree, const int scale_z,
+                                  const std::string filename = "routing_tree3d.svg",
+                                  const int width = 800, const int height = 600);
+

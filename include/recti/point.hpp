@@ -226,6 +226,15 @@ namespace recti {
         }
 
         /**
+         * @brief measure (area, volume etc.)
+         *
+         * The function returns the measure (area, volume etc.).
+         */
+        constexpr auto measure() const {
+            return measure_of(this->xcoord()) * measure_of(this->ycoord());
+        }
+
+        /**
          * @brief flip_xy according to xcoord-ycoord diagonal line
          *
          * @return Point<T2, T1>
@@ -335,7 +344,7 @@ namespace recti {
         constexpr auto nearest_to(const Point<U1, U2> &other) const {
             auto xcoord = nearest(this->xcoord(), other.xcoord());
             auto ycoord = nearest(this->ycoord(), other.ycoord());
-            return Point<int, int>{std::move(xcoord), std::move(ycoord)};
+            return Point<U1, U2>{std::move(xcoord), std::move(ycoord)};
         }
 
         /**

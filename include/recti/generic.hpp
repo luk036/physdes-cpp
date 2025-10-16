@@ -200,4 +200,12 @@ namespace recti {
         }
     }
 
+    template <typename U>  //
+    constexpr auto measure_of(const U & a) {
+        if constexpr (requires { a.measure(); }) {
+            return a.measure();
+        } else{
+            return 1;
+        }
+    }
 }  // namespace recti

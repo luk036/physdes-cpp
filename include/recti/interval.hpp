@@ -95,14 +95,14 @@ namespace recti {
         constexpr auto ub() const -> const T & { return this->_ub; }
 
         /**
-         * @brief length
+         * @brief measure (length)
          *
-         * The function returns the length of a range by subtracting the upper bound from the lower
+         * The function returns the measure (length) of a range by subtracting the upper bound from the lower
          * bound.
          *
          * @return a value of type T.
          */
-        constexpr auto length() const -> T { return this->ub() - this->lb(); }
+        constexpr auto measure() const -> T { return this->ub() - this->lb(); }
 
         /**
          * @brief Checks if the interval is invalid

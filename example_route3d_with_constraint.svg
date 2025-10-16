@@ -1,0 +1,55 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+<rect width="100%" height="100%" fill="white"/>
+<defs>
+<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="black"/>
+</marker>
+</defs>
+<line x1="342.067" y1="357.692" x2="342.067" y2="396.154" stroke="yellow" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="342.067" y1="396.154" x2="488.101" y2="550" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="342.067" y1="396.154" x2="50" y2="396.154" stroke="blue" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="342.067" y1="357.692" x2="342.067" y2="242.308" stroke="yellow" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="342.067" y1="242.308" x2="342.067" y2="88.4615" stroke="yellow" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="342.067" y1="88.4615" x2="123.017" y2="50" stroke="yellow" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="342.067" y1="88.4615" x2="415.084" y2="88.4615" stroke="blue" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="342.067" y1="242.308" x2="269.05" y2="242.308" stroke="blue" stroke-width="2" marker-end="url(#arrowhead)"/>
+<circle cx="342.067" cy="396.154" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="350.067" y="400.154" font-family="Arial" font-size="10" fill="black">S2</text>
+<text x="342.067" y="385.154" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1377, 100),1344)</text>
+<circle cx="415.084" cy="88.4615" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="423.084" y="92.4615" font-family="Arial" font-size="10" fill="black">T2</text>
+<text x="415.084" y="77.4615" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1620, 200),320)</text>
+<circle cx="342.067" cy="357.692" r="8" fill="red" stroke="black" stroke-width="1"/>
+<text x="352.067" y="361.692" font-family="Arial" font-size="10" fill="black">S</text>
+<text x="342.067" y="344.692" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1377, 100),1216)</text>
+<circle cx="342.067" cy="88.4615" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="350.067" y="92.4615" font-family="Arial" font-size="10" fill="black">S1</text>
+<text x="342.067" y="77.4615" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1377, 100),320)</text>
+<circle cx="123.017" cy="50" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="131.017" y="54" font-family="Arial" font-size="10" fill="black">T1</text>
+<text x="123.017" y="39" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((648, 100),192)</text>
+<circle cx="488.101" cy="550" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="496.101" y="554" font-family="Arial" font-size="10" fill="black">T3</text>
+<text x="488.101" y="539" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1863, 0),1856)</text>
+<circle cx="50" cy="396.154" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="58" y="400.154" font-family="Arial" font-size="10" fill="black">T4</text>
+<text x="50" y="385.154" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((405, 200),1344)</text>
+<circle cx="269.05" cy="242.308" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="277.05" y="246.308" font-family="Arial" font-size="10" fill="black">T5</text>
+<text x="269.05" y="231.308" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1134, 200),832)</text>
+<circle cx="342.067" cy="242.308" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="350.067" y="246.308" font-family="Arial" font-size="10" fill="black">S3</text>
+<text x="342.067" y="231.308" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1377, 100),832)</text>
+<text x="20" y="20" font-family="Arial" font-size="12" font-weight="bold">Legend:</text>
+<circle cx="20" cy="36" r="4" fill="red" stroke="black"/>
+<text x="30" y="40" font-family="Arial" font-size="10">Source</text>
+<circle cx="20" cy="56" r="4" fill="blue" stroke="black"/>
+<text x="30" y="60" font-family="Arial" font-size="10">Steiner</text>
+<circle cx="20" cy="76" r="4" fill="green" stroke="black"/>
+<text x="30" y="80" font-family="Arial" font-size="10">Terminal</text>
+<text x="20" y="110" font-family="Arial" font-size="10" font-weight="bold">Statistics:</text>
+<text x="20" y="125" font-family="Arial" font-size="9">Total Nodes: 9</text>
+<text x="20" y="140" font-family="Arial" font-size="9">Terminals: 5</text>
+<text x="20" y="155" font-family="Arial" font-size="9">Steiner: 3</text>
+<text x="20" y="170" font-family="Arial" font-size="9">Wirelength: 4737</text>
+</svg>
