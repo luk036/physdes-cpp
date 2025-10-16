@@ -331,7 +331,8 @@ namespace recti {
          * @param other - The other point.
          * @return The nearest "point".
          */
-        constexpr auto nearest_to(const Point<int, int> &other) const {
+        template <typename U1, typename U2>  //
+        constexpr auto nearest_to(const Point<U1, U2> &other) const {
             auto xcoord = nearest(this->xcoord(), other.xcoord());
             auto ycoord = nearest(this->ycoord(), other.ycoord());
             return Point<int, int>{std::move(xcoord), std::move(ycoord)};

@@ -72,7 +72,7 @@ class RoutingNode {
      * @param type_ The type of the node.
      * @param pt_ The 2D integer coordinates of the node.
      */
-    RoutingNode<IntPoint>(std::string id_, NodeType type_, IntPoint pt_)
+    RoutingNode(std::string id_, NodeType type_, IntPoint pt_)
         : id(std::move(id_)), type(type_), pt(pt_) {}
 
     /**
