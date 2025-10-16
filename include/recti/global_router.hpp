@@ -79,7 +79,7 @@ class GlobalRoutingTree {
     std::vector<std::unique_ptr<RoutingNode>> owned_nodes;
 
   public:
-    GlobalRoutingTree(IntPoint source_position = {0, 0})
+    GlobalRoutingTree(IntPoint source_position)
         : source_node("source", NodeType::SOURCE, source_position) {
         nodes["source"] = &source_node;
     }

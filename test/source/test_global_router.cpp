@@ -64,19 +64,19 @@ TEST_SUITE("RoutingNode") {
 
 TEST_SUITE("GlobalRoutingTree") {
     TEST_CASE("GlobalRoutingTree::insert_steiner_node - invalid parent_id") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         CHECK_THROWS_AS(tree.insert_steiner_node({10, 10}, "non_existent_parent"),
                         std::runtime_error);
     }
 
     TEST_CASE("GlobalRoutingTree::insert_terminal_node - invalid parent_id") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         CHECK_THROWS_AS(tree.insert_terminal_node({10, 10}, "non_existent_parent"),
                         std::runtime_error);
     }
 
     TEST_CASE("GlobalRoutingTree::insert_node_on_branch - basic insertion") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         std::string s1_id = tree.insert_steiner_node({10, 0});
         std::string s2_id = tree.insert_steiner_node({20, 0}, s1_id);
 
@@ -93,7 +93,7 @@ TEST_SUITE("GlobalRoutingTree") {
     }
 
     TEST_CASE("GlobalRoutingTree::insert_node_on_branch - invalid branch_start_id") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         std::string s1_id = tree.insert_steiner_node({10, 0});
         std::string s2_id = tree.insert_steiner_node({20, 0}, s1_id);
         CHECK_THROWS_AS(tree.insert_node_on_branch(NodeType::STEINER, 15, 0, "non_existent", s2_id),
@@ -101,7 +101,7 @@ TEST_SUITE("GlobalRoutingTree") {
     }
 
     TEST_CASE("GlobalRoutingTree::insert_node_on_branch - invalid branch_end_id") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         std::string s1_id = tree.insert_steiner_node({10, 0});
         std::string s2_id = tree.insert_steiner_node({20, 0}, s1_id);
         CHECK_THROWS_AS(tree.insert_node_on_branch(NodeType::STEINER, 15, 0, s1_id, "non_existent"),
@@ -109,7 +109,7 @@ TEST_SUITE("GlobalRoutingTree") {
     }
 
     TEST_CASE("GlobalRoutingTree::insert_node_on_branch - end_node not child of start_node") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         std::string s1_id = tree.insert_steiner_node({10, 0});
         std::string s2_id = tree.insert_steiner_node({20, 0});  // s2 is not child of s1
 
@@ -118,7 +118,7 @@ TEST_SUITE("GlobalRoutingTree") {
     }
 
     TEST_CASE("GlobalRoutingTree::find_path_to_source - basic path") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         std::string s1_id = tree.insert_steiner_node({10, 0});
         std::string s2_id = tree.insert_steiner_node({20, 0}, s1_id);
         std::string t1_id = tree.insert_terminal_node({30, 0}, s2_id);
@@ -132,19 +132,19 @@ TEST_SUITE("GlobalRoutingTree") {
     }
 
     TEST_CASE("GlobalRoutingTree::find_path_to_source - source node") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         auto path = tree.find_path_to_source("source");
         CHECK(path.size() == 1);
         CHECK(path[0]->id == "source");
     }
 
     TEST_CASE("GlobalRoutingTree::find_path_to_source - non-existent node") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         CHECK_THROWS_AS(tree.find_path_to_source("non_existent"), std::runtime_error);
     }
 
     TEST_CASE("GlobalRoutingTree::optimize_steiner_points - remove redundant steiner") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         std::string s1_id = tree.insert_steiner_node({10, 0});
         std::string s2_id
             = tree.insert_steiner_node({20, 0}, s1_id);  // s2 has only one child (none yet)
@@ -168,7 +168,7 @@ TEST_SUITE("GlobalRoutingTree") {
     }
 
     TEST_CASE("GlobalRoutingTree::optimize_steiner_points - do not remove non-redundant steiner") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         std::string s1_id = tree.insert_steiner_node({10, 0});
         std::string s2_id = tree.insert_steiner_node({20, 0}, s1_id);
         std::string t1_id = tree.insert_terminal_node({30, 0}, s2_id);
@@ -185,7 +185,7 @@ TEST_SUITE("GlobalRoutingTree") {
     }
 
     TEST_CASE("GlobalRoutingTree::optimize_steiner_points - source node is not removed") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         std::string t1_id = tree.insert_terminal_node({10, 0});  // source has one child (t1)
 
         CHECK(tree.get_all_steiner_nodes().empty());
@@ -199,7 +199,7 @@ TEST_SUITE("GlobalRoutingTree") {
     }
 
     TEST_CASE("GlobalRoutingTree::insert_terminal_with_steiner - no steiner inserted") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         tree.insert_terminal_with_steiner({0, 10});  // Should attach directly to source
 
         CHECK(tree.get_source()->children.size() == 1);
@@ -208,7 +208,7 @@ TEST_SUITE("GlobalRoutingTree") {
     }
 
     TEST_CASE("GlobalRoutingTree::insert_terminal_with_steiner - steiner inserted on branch") {
-        GlobalRoutingTree tree;
+        GlobalRoutingTree tree(Point{0, 0});
         std::string s1_id = tree.insert_steiner_node({10, 0});
         std::string t1_id = tree.insert_terminal_node({20, 0}, s1_id);
 
