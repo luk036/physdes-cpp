@@ -13,9 +13,9 @@ using namespace recti;
 
 TEST_SUITE("RoutingNode") {
     TEST_CASE("RoutingNode::remove_child - existing child") {
-        RoutingNode parent("parent", NodeType::SOURCE);
-        RoutingNode child1("child1", NodeType::TERMINAL);
-        RoutingNode child2("child2", NodeType::TERMINAL);
+        RoutingNode parent("parent", NodeType::SOURCE, Point{0, 0});
+        RoutingNode child1("child1", NodeType::TERMINAL, Point{0, 0});
+        RoutingNode child2("child2", NodeType::TERMINAL, Point{0, 0});
 
         parent.add_child(&child1);
         parent.add_child(&child2);
@@ -32,9 +32,9 @@ TEST_SUITE("RoutingNode") {
     }
 
     TEST_CASE("RoutingNode::remove_child - non-existent child") {
-        RoutingNode parent("parent", NodeType::SOURCE);
-        RoutingNode child1("child1", NodeType::TERMINAL);
-        RoutingNode child2("child2", NodeType::TERMINAL);
+        RoutingNode parent("parent", NodeType::SOURCE, Point{0, 0});
+        RoutingNode child1("child1", NodeType::TERMINAL, Point{0, 0});
+        RoutingNode child2("child2", NodeType::TERMINAL, Point{0, 0});
 
         parent.add_child(&child1);
 
@@ -50,8 +50,8 @@ TEST_SUITE("RoutingNode") {
     }
 
     TEST_CASE("RoutingNode::remove_child - from empty children list") {
-        RoutingNode parent("parent", NodeType::SOURCE);
-        RoutingNode child("child", NodeType::TERMINAL);
+        RoutingNode parent("parent", NodeType::SOURCE, Point{0, 0});
+        RoutingNode child("child", NodeType::TERMINAL, Point{0, 0});
 
         CHECK(parent.children.empty());
 

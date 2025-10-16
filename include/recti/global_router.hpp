@@ -27,12 +27,12 @@ namespace recti {
     /// @brief Type alias for a 2D point with integer coordinates.
     using IntPoint = Point<int>;
     /// @brief Type alias for a 2D rectangle defined by two integer intervals.
-    using IntRect = Point<Interval<int>, Interval<int>>;
+    // using IntRect = Point<Interval<int>, Interval<int>>;
 
 }  // namespace recti
 
 using recti::IntPoint;
-using recti::IntRect;
+// using recti::auto;
 
 /**
  * @brief Defines the type of a routing node.
@@ -83,7 +83,7 @@ class RoutingNode {
      * @param type_ The type of the node.
      * @param pt_ The 2D integer coordinates of the node.
      */
-    RoutingNode(std::string id_, NodeType type_, IntPoint pt_ = {0, 0})
+    RoutingNode(std::string id_, NodeType type_, IntPoint pt_)
         : id(std::move(id_)), type(type_), pt(pt_) {}
 
     /**
@@ -144,7 +144,7 @@ class GlobalRoutingTree {
      * @brief Constructs a new GlobalRoutingTree with a specified source position.
      * @param source_position The 2D integer coordinates of the source node.
      */
-    GlobalRoutingTree(IntPoint source_position = {0, 0})
+    GlobalRoutingTree(IntPoint source_position)
         : source_node("source", NodeType::SOURCE, source_position) {
         nodes["source"] = &source_node;
     }
@@ -302,7 +302,7 @@ class GlobalRoutingTree {
         int min_distance = source_node.pt.min_dist_with(pt);
         std::function<void(RoutingNode*)> traverse = [&](RoutingNode* node) {
             for (auto child : node->children) {
-                IntRect possible_path = node->pt.hull_with(child->pt);
+                auto possible_path = node->pt.hull_with(child->pt);
                 int distance = possible_path.min_dist_with(pt);
                 if (distance < min_distance) {
                     min_distance = distance;
@@ -341,7 +341,7 @@ class GlobalRoutingTree {
             nearest_node->add_child(terminal_node);
         } else {
             std::string steiner_id = "steiner_" + std::to_string(next_steiner_id++);
-            IntRect possible_path = parent_node->pt.hull_with(nearest_node->pt);
+            auto possible_path = parent_node->pt.hull_with(nearest_node->pt);
             IntPoint nearest_pt = possible_path.nearest_to(pt);
             auto steiner_ptr
                 = std::make_unique<RoutingNode>(steiner_id, NodeType::STEINER, nearest_pt);
@@ -370,7 +370,7 @@ class GlobalRoutingTree {
         int min_distance = source_node.pt.min_dist_with(pt);
         std::function<void(RoutingNode*)> traverse = [&](RoutingNode* node) {
             for (auto child : node->children) {
-                IntRect possible_path = node->pt.hull_with(child->pt);
+                auto possible_path = node->pt.hull_with(child->pt);
                 int distance = possible_path.min_dist_with(pt);
                 IntPoint nearest_pt = possible_path.nearest_to(pt);
                 int path_length = node->path_length + node->pt.min_dist_with(nearest_pt) + distance;
@@ -415,7 +415,7 @@ class GlobalRoutingTree {
                 = nearest_node->path_length + nearest_node->pt.min_dist_with(pt);
         } else {
             std::string steiner_id = "steiner_" + std::to_string(next_steiner_id++);
-            IntRect possible_path = parent_node->pt.hull_with(nearest_node->pt);
+            auto possible_path = parent_node->pt.hull_with(nearest_node->pt);
             IntPoint nearest_pt = possible_path.nearest_to(pt);
             auto steiner_ptr
                 = std::make_unique<RoutingNode>(steiner_id, NodeType::STEINER, nearest_pt);
