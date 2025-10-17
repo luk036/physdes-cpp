@@ -170,15 +170,13 @@ namespace recti {
         }
 
         /**
-         * @brief Enlarge a `MergeObj` object by a given scale factor.
+         * @brief Enlarge the `MergeObj` object by a given scale factor.
          *
          * This function creates a new `MergeObj` object by enlarging the x and y coordinates of the
-         * input `MergeObj` object `lhs` by the given scale factor `alpha`. The resulting `MergeObj`
-         * object will have larger x and y coordinate ranges compared to the input `MergeObj`
-         * object.
+         * current `MergeObj` object by the given scale factor `alpha`. The resulting `MergeObj`
+         * object will have larger x and y coordinate ranges.
          *
          * @tparam R The type of the scale factor `alpha`.
-         * @param[in] lhs The `MergeObj` object to be enlarged.
          * @param[in] alpha The scale factor to enlarge the `MergeObj` object by.
          * @return A new `MergeObj` object with enlarged x and y coordinates.
          */

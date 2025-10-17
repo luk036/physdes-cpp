@@ -28,12 +28,11 @@ namespace recti {
         using Self = Point<T1, T2>;
 
         /**
-         * @brief
-         *
-         * @tparam U1
-         * @tparam U2
+         * @brief Allow all other specializations to access private members
          */
-        template <typename U1, typename U2> friend class Point;
+        /// \cond INTERNAL
+        template <typename, typename> friend class Point;
+        /// \endcond
 
         T1 _xcoord;  //!< x coordinate
         T2 _ycoord;  //!< y coordinate

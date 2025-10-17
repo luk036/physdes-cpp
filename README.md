@@ -22,7 +22,7 @@
 - Reproducible dependency management via [CPM.cmake](https://github.com/TheLartians/CPM.cmake)
 - Installable target with automatic versioning information and header generation via [PackageProject.cmake](https://github.com/TheLartians/PackageProject.cmake)
 - Automatic [documentation](https://thelartians.github.io/ModernCppStarter) and deployment with [Doxygen](https://www.doxygen.nl) and [GitHub Pages](https://pages.github.com)
-- Support for [sanitizer tools, and more](#additional-tools)
+- Support for sanitizer tools, and more
 
 
 ## Usage
@@ -42,7 +42,7 @@ Eventually, you can remove any unused files, such as the standalone directory or
 Feel free to replace the License with one suited for your project.
 
 To cleanly separate the library and subproject code, the outer `CMakeList.txt` only defines the library itself while the tests and other subprojects are self-contained in their own directories.
-During development it is usually convenient to [build all subprojects at once](#build-everything-at-once).
+During development it is usually convenient to build all subprojects at once.
 
 ### Build and run the standalone target
 
