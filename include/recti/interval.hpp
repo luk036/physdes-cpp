@@ -304,12 +304,9 @@ namespace recti {
          * to the modified `Interval` object.
          *
          * @param[in] alpha The value to subtract from the lower bound and add to the upper bound.
-         * @return A reference to the modified `Interval` object.
          */
-        constexpr auto enlarge_with(const T &alpha) -> Interval & {
-            this->_lb -= alpha;
-            this->_ub += alpha;
-            return *this;
+        constexpr auto enlarge_with(const T &alpha) const {
+            return Interval{this->_lb - alpha, this->_ub + alpha};
         }
 
         ///@}
@@ -551,9 +548,7 @@ namespace recti {
     template <typename U1, typename U2>  //
     constexpr auto enlarge(const U1 &lhs, const U2 &rhs) {
         if constexpr (requires { lhs.enlarge_with(rhs); }) {
-            auto res{lhs};
-            res.enlarge_with(rhs);
-            return res;
+            return lhs.enlarge_with(rhs);
         } else /* constexpr */ {
             return Interval<U1>{lhs - rhs, lhs + rhs};
         }

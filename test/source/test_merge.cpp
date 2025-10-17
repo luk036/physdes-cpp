@@ -2,37 +2,22 @@
 
 #include <recti/halton_int.hpp>  // for recti
 #include <recti/merge_obj.hpp>   // for MergeObj, operator+, operator-
-// #include <random>
 #include <iostream>  // for operator<<, ostream, basic_ostream
-
 #include "recti/interval.hpp"  // for min_dist, overlap, interval
-#include "recti/point.hpp"     // for operator<<, Point
-#include "recti/vector2.hpp"   // for vector2
 
-// using std::randint;
 using namespace recti;
 
 TEST_CASE("MergeObj test") {
-    const auto r1 = MergeObj<int>{4 + 5, 4 - 5};
-    const auto r2 = MergeObj<int>{7 + 9, 7 - 9};
-    const auto v = Vector2<int>{5, 6};
+    const auto r1 = MergeObj<int>{4 - 5, 4 + 5};
+    const auto r2 = MergeObj<int>{7 - 9, 7 + 9};
 
     CHECK_EQ(r1, r1);
     CHECK(r1 != r2);
-    CHECK((r1 - v) + v == r1);
     CHECK(!overlap(r1, r2));
     CHECK(r1.min_dist_with(r2) == 7);
     CHECK(min_dist(r1, r2) == 7);
 }
 
-/*
-xcoord [ - a ,  + a ]
-ycoord [ - a ,  + a ]
-
-xcoord [ + a ,  - a ]
-ycoord [ + a ,  - a ]
-
-*/
 TEST_CASE("merge test") {
     const auto s1 = MergeObj<int>{800, -400};
     const auto s2 = MergeObj<int>{1400, -400};

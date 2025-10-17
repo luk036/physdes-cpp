@@ -41,7 +41,7 @@ namespace recti {
       public:
         using value_type = T1;
 
-        constexpr Point() noexcept : _xcoord{T1(0)}, _ycoord{T2(0)} {}
+        constexpr Point(): _xcoord{T1(0)}, _ycoord{T2(0)} {}
 
         /**
          * @brief Construct a new Point object
@@ -51,13 +51,12 @@ namespace recti {
          * values. The parameters are passed as rvalue references (`T1&&` and `T2&&`)
          * to allow for efficient move semantics. The constructor is marked as
          * `constexpr` to indicate that it can be evaluated at compile-time if the
-         * arguments are compile-time constants. The `noexcept` specifier indicates
-         * that the constructor does not throw any exceptions.
+         * arguments are compile-time constants.
          *
          * @param[in] xcoord - x coordinate.
          * @param[in] ycoord - y coordinate.
          */
-        constexpr Point(T1 &&xcoord, T2 &&ycoord) noexcept : _xcoord{xcoord}, _ycoord{ycoord} {}
+        constexpr Point(T1 &&xcoord, T2 &&ycoord) noexcept: _xcoord{xcoord}, _ycoord{ycoord} {}
 
         /**
          * Copy constructor for Point class.
@@ -332,6 +331,19 @@ namespace recti {
         constexpr auto min_dist_change_with(Point<U1, U2> &other) {
             return min_dist_change(this->_xcoord, other._xcoord)
                    + min_dist_change(this->_ycoord, other._ycoord);
+        }
+
+        /**
+         * @brief Enlarge the point by `alpha`
+         *
+         * @param[in] alpha The value to enlarge
+         * @return A reference to the modified `Interval` object.
+         */
+        template <typename T>
+        constexpr auto enlarge_with(const T &alpha) const {
+            auto xb = enlarge(this->xcoord(), alpha);
+            auto yb = enlarge(this->ycoord(), alpha);
+            return Point<decltype(xb), decltype(yb)>{std::move(xb), std::move(yb)};
         }
 
         /**
