@@ -1,8 +1,9 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, TEST...
 
+#include <iostream>              // for operator<<, ostream, basic_ostream
 #include <recti/halton_int.hpp>  // for recti
 #include <recti/merge_obj.hpp>   // for MergeObj, operator+, operator-
-#include <iostream>  // for operator<<, ostream, basic_ostream
+
 #include "recti/interval.hpp"  // for min_dist, overlap, interval
 
 using namespace recti;

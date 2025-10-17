@@ -41,7 +41,7 @@ namespace recti {
       public:
         using value_type = T1;
 
-        constexpr Point(): _xcoord{T1(0)}, _ycoord{T2(0)} {}
+        constexpr Point() : _xcoord{T1(0)}, _ycoord{T2(0)} {}
 
         /**
          * @brief Construct a new Point object
@@ -56,7 +56,7 @@ namespace recti {
          * @param[in] xcoord - x coordinate.
          * @param[in] ycoord - y coordinate.
          */
-        constexpr Point(T1 &&xcoord, T2 &&ycoord) noexcept: _xcoord{xcoord}, _ycoord{ycoord} {}
+        constexpr Point(T1 &&xcoord, T2 &&ycoord) noexcept : _xcoord{xcoord}, _ycoord{ycoord} {}
 
         /**
          * Copy constructor for Point class.
@@ -339,8 +339,7 @@ namespace recti {
          * @param[in] alpha The value to enlarge
          * @return A reference to the modified `Interval` object.
          */
-        template <typename T>
-        constexpr auto enlarge_with(const T &alpha) const {
+        template <typename T> constexpr auto enlarge_with(const T &alpha) const {
             auto xb = enlarge(this->xcoord(), alpha);
             auto yb = enlarge(this->ycoord(), alpha);
             return Point<decltype(xb), decltype(yb)>{std::move(xb), std::move(yb)};

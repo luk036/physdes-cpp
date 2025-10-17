@@ -213,7 +213,7 @@ namespace recti {
             auto x = t.xcoord();
             auto y = t.ycoord();
             return MergeObj<decltype(x), decltype(y)>{std::move(x), std::move(y)};
-    }
+        }
 
         /**
          * @brief Overload the stream insertion operator `<<` to output a `MergeObj` object.
