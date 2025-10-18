@@ -191,12 +191,11 @@ template <typename IntPoint> class GlobalRoutingTree {
     auto _find_nearest_node(const IntPoint& pt, std::optional<std::string> exclude_id
                                                 = std::nullopt) -> RoutingNode<IntPoint>* {
         if (nodes.size() <= 1) return &source_node;
-        RoutingNode<IntPoint> temp("temp", NodeType::STEINER, pt);
         RoutingNode<IntPoint>* nearest = &source_node;
-        int min_dist = source_node.manhattan_distance(&temp);
+        int min_dist = source_node.pt.min_dist_with(pt);
         for (auto& [id, node] : nodes) {
             if (exclude_id && id == *exclude_id) continue;
-            int dist = node->manhattan_distance(&temp);
+            int dist = node->pt.min_dist_with(pt);
             if (dist < min_dist) {
                 min_dist = dist;
                 nearest = node;

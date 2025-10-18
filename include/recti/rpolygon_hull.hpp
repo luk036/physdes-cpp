@@ -20,42 +20,44 @@ namespace recti {
      * @param dir Function to extract comparison coordinates
      * @return A vector of points representing the monotone hull
      */
-    template <typename T> inline auto rpolygon_make_monotone_hull(
-        std::span<const Point<T>> pointset, bool is_anticlockwise,
-        const std::function<std::pair<T, T>(const Point<T>&)>& dir) -> std::vector<Point<T>> {
+    template <typename T>
+    inline auto rpolygon_make_monotone_hull(std::span<const Point<T>> pointset,
+                                            bool is_anticlockwise,
+                                            const std::function<std::pair<T, T>(const Point<T> &)> &dir)
+        -> std::vector<Point<T>> {
         if (pointset.size() <= 3) {
             return std::vector<Point<T>>(pointset.begin(), pointset.end());
         }
 
         // Find min and max indices based on the direction function
-        const auto min_it
-            = std::min_element(pointset.begin(), pointset.end(),
-                               [&dir](const auto& a, const auto& b) { return dir(a) < dir(b); });
-        const auto max_it
-            = std::max_element(pointset.begin(), pointset.end(),
-                               [&dir](const auto& a, const auto& b) { return dir(a) < dir(b); });
+        const auto min_it = std::min_element(
+            pointset.begin(), pointset.end(),
+            [&dir](const auto &a, const auto &b) { return std::invoke(dir, a) < std::invoke(dir, b); });
+        const auto max_it = std::max_element(
+            pointset.begin(), pointset.end(),
+            [&dir](const auto &a, const auto &b) { return std::invoke(dir, a) < std::invoke(dir, b); });
 
         const size_t min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
         const size_t max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
         const Point<T> min_point = *min_it;
 
         RDllist rdll(pointset.size());
-        auto& v_min = rdll[min_index];
-        auto& v_max = rdll[max_index];
+        auto &v_min = rdll[min_index];
+        auto &v_max = rdll[max_index];
 
-        auto process = [&pointset, &dir](Dllink<size_t>* vcurr, Dllink<size_t>* vstop,
-                                         const std::function<bool(T, T)>& cmp,
-                                         const std::function<bool(T)>& cmp2) {
+        auto process = [&pointset, &dir](Dllink<size_t> *vcurr, Dllink<size_t> *vstop,
+                                         const std::function<bool(T, T)> &cmp,
+                                         const std::function<bool(T)> &cmp2) {
             while (vcurr != vstop) {
                 auto vnext = vcurr->next;
                 auto vprev = vcurr->prev;
-                const auto& p0 = pointset[vprev->data];
-                const auto& p1 = pointset[vcurr->data];
-                const auto& p2 = pointset[vnext->data];
+                const auto &p0 = pointset[vprev->data];
+                const auto &p1 = pointset[vcurr->data];
+                const auto &p2 = pointset[vnext->data];
 
-                auto dir_p0 = dir(p0);
-                auto dir_p1 = dir(p1);
-                auto dir_p2 = dir(p2);
+                auto dir_p0 = std::invoke(dir, p0);
+                auto dir_p1 = std::invoke(dir, p1);
+                auto dir_p2 = std::invoke(dir, p2);
 
                 if (cmp(std::get<0>(dir_p1), std::get<0>(dir_p2))
                     || cmp(std::get<0>(dir_p0), std::get<0>(dir_p1))) {
@@ -81,7 +83,7 @@ namespace recti {
         }
 
         std::vector<Point<T>> result = {min_point};
-        for (const auto& v : rdll.from_node(min_index)) {
+        for (const auto &v : rdll.from_node(min_index)) {
             result.push_back(pointset[v.data]);
         }
         return result;
