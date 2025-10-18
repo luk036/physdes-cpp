@@ -19,27 +19,11 @@ namespace recti {
         /**
          * @brief Construct a new Rectangle object
          *
-         * This is a constructor for the `Rectangle` struct. It takes two
-         * `Interval<T>` objects, `xcoord` and `ycoord`, as parameters. The `&&`
-         * indicates that the parameters are rvalue references, allowing the
-         * constructor to efficiently move the `Interval<T>` objects into the
-         * `Rectangle` object. The `noexcept` specifier indicates that this
-         * constructor will not throw any exceptions.
-         *
          * @param[in] xcoord
          * @param[in] ycoord
          */
-        constexpr Rectangle(Interval<T> &&xcoord, Interval<T> &&ycoord) noexcept
+        constexpr Rectangle(Interval<T> xcoord, Interval<T> ycoord) noexcept
             : Point<Interval<T>>{std::move(xcoord), std::move(ycoord)} {}
-
-        /**
-         * @brief Construct a new Rectangle object
-         *
-         * @param[in] xcoord
-         * @param[in] ycoord
-         */
-        constexpr Rectangle(const Interval<T> &xcoord, const Interval<T> &ycoord)
-            : Point<Interval<T>>{xcoord, ycoord} {}
 
         /**
          * @brief Construct a new Rectangle object from the base object (implicitly)
@@ -48,16 +32,9 @@ namespace recti {
          *
          * @param[in] base
          */
-        constexpr explicit Rectangle(
-            Point<Interval<T>> &&base) noexcept  // Note: intentionally allow implicit conversion
+        constexpr Rectangle(
+            Point<Interval<T>> base) noexcept  // Note: intentionally allow implicit conversion
             : Point<Interval<T>>{std::move(base)} {}
-
-        /**
-         * @brief Construct a new Rectangle object from the base object (implicitly)
-         *
-         * @param[in] base
-         */
-        constexpr explicit Rectangle(const Point<Interval<T>> &base) : Point<Interval<T>>{base} {}
 
         /**
          * @brief lower left corner
@@ -113,41 +90,20 @@ namespace recti {
         /**
          * @brief Construct a new HSegment object
          *
-         * This is a constructor for the `HSegment` struct. It takes two parameters,
-         * `xcoord` and `ycoord`, which are both rvalue references. The `noexcept`
-         * specifier indicates that this constructor will not throw any exceptions.
-         *
          * @param[in] xcoord
          * @param[in] ycoord
          */
-        constexpr HSegment(Interval<T> &&xcoord, T &&ycoord) noexcept
-            : Point<Interval<T>, T>{xcoord, ycoord} {}
-
-        /**
-         * @brief Construct a new HSegment object
-         *
-         * @param[in] xcoord
-         * @param[in] ycoord
-         */
-        constexpr HSegment(const Interval<T> &xcoord, const T &ycoord)
-            : Point<Interval<T>, T>{xcoord, ycoord} {}
+        constexpr HSegment(Interval<T> xcoord, T ycoord) noexcept
+            : Point<Interval<T>, T>{std::move(xcoord), std::move(ycoord)} {}
 
         /**
          * @brief Construct a new HSegment object from the.
          *
          * @param[in] base
          */
-        constexpr explicit HSegment(
-            Point<Interval<T>, T> &&base) noexcept  // Note: intentionally allow implicit conversion
+        constexpr HSegment(
+            Point<Interval<T>, T> base) noexcept  // Note: intentionally allow implicit conversion
             : Point<Interval<T>, T>{std::move(base)} {}
-
-        /**
-         * @brief Construct a new HSegment object from the base object (implicitly)
-         *
-         * @param[in] base
-         */
-        constexpr explicit HSegment(const Point<Interval<T>, T> &base)
-            : Point<Interval<T>, T>{base} {}
     };
 
     /**
@@ -169,34 +125,17 @@ namespace recti {
          * @param[in] xcoord
          * @param[in] ycoord
          */
-        constexpr VSegment(T &&xcoord, Interval<T> &&ycoord) noexcept
-            : Point<T, Interval<T>>{xcoord, ycoord} {}
-
-        /**
-         * @brief Construct a new VSegment object
-         *
-         * @param[in] xcoord
-         * @param[in] ycoord
-         */
-        constexpr VSegment(const T &xcoord, const Interval<T> &ycoord)
-            : Point<T, Interval<T>>{xcoord, ycoord} {}
+        constexpr VSegment(T xcoord, Interval<T> ycoord) noexcept
+            : Point<T, Interval<T>>{std::move(xcoord), std::move(ycoord)} {}
 
         /**
          * @brief Construct a new VSegment object from the base object (implicitly)
          *
          * @param[in] base
          */
-        constexpr explicit VSegment(
-            Point<T, Interval<T>> &&base) noexcept  // Note: intentionally allow implicit conversion
+        constexpr VSegment(
+            Point<T, Interval<T>> base) noexcept  // Note: intentionally allow implicit conversion
             : Point<T, Interval<T>>{std::move(base)} {}
-
-        /**
-         * @brief Construct a new VSegment object from the base object (implicitly)
-         *
-         * @param[in] base
-         */
-        constexpr explicit VSegment(const Point<T, Interval<T>> &base)
-            : Point<T, Interval<T>>{base} {}
     };
 
 }  // namespace recti
