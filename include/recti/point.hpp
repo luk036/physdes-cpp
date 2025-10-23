@@ -305,6 +305,23 @@ namespace recti {
         }
 
         /**
+         * Checks if this point blocks another point.
+         *
+         * @tparam U1 - The type of the x-coordinate for this point.
+         * @tparam U2 - The type of the y-coordinate for this point.
+         * @param other - The other point to check for containment.
+         * @return true if the x and y coordinates contain, false otherwise.
+         */
+        template <typename U1, typename U2>  //
+        constexpr auto blocks(const Point<U1, U2> &other) const -> bool {
+            return (contain(this->xcoord(), other.xcoord())
+                   && contain(other.ycoord(), this->ycoord()))
+                   || (contain(this->ycoord(), other.ycoord())
+                   && contain(other.xcoord(), this->xcoord()));
+            }
+
+
+        /**
          * @brief minimum distance between this point and another point
          *
          * @tparam U1 - The x-coordinate type of the other point.

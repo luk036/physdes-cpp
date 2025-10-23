@@ -1,3 +1,4 @@
+// global_router.cpp
 #include <algorithm>
 #include <fstream>
 #include <iostream>
@@ -10,19 +11,17 @@
 #include <string>
 #include <vector>
 
-// using recti::nearest_to;
 using namespace recti;
 
-std::ostream& operator<<(std::ostream& os, const RoutingNode<Point<int, int>>& node) {
+template <typename IntPoint>
+std::ostream& operator<<(std::ostream& os, const RoutingNode<IntPoint>& node) {
     std::string type_name = to_string(node.type);
-    os << type_name << "Node(" << node.id << ", (" << node.pt.xcoord() << ", " << node.pt.ycoord()
-       << "))";
+    os << type_name << "Node(" << node.id << ", (" << node.pt << "))";
     return os;
 }
 
 template <typename IntPoint>
-auto GlobalRoutingTree<IntPoint>::get_tree_structure(const RoutingNode<IntPoint>* node,
-                                                     int level) const -> std::string {
+auto GlobalRoutingTree<IntPoint>::get_tree_structure(const RoutingNode<IntPoint>* node, int level) const -> std::string {
     if (node == nullptr) node = &source_node;
     std::ostringstream oss;
     oss << std::string(level * 2, ' ') << *node << "\n";
@@ -42,9 +41,10 @@ template <typename IntPoint> void GlobalRoutingTree<IntPoint>::visualize_tree() 
     std::cout << "Steiner points: " << get_all_steiner_nodes().size() << "\n";
 }
 
-template <> std::string visualize_routing_tree_svg(const GlobalRoutingTree<Point<int, int>>& tree,
-                                                   const int width, const int height,
-                                                   const int margin) {
+template <> std::string visualize_routing_tree_svg(
+    const GlobalRoutingTree<Point<int, int>>& tree,
+    std::optional<std::vector<GlobalRoutingTree<Point<int, int>>::Keepout>> keepouts,
+    const int width, const int height, const int margin) {
     std::vector<RoutingNode<Point<int, int>>*> all_nodes;
     for (auto& [id, node] : tree.nodes) {
         all_nodes.push_back(node);
@@ -76,28 +76,34 @@ template <> std::string visualize_routing_tree_svg(const GlobalRoutingTree<Point
     };
 
     std::ostringstream svg;
-    svg << "<svg width=\"" << width << "\" height=\"" << height
-        << "\" xmlns=\"http://www.w3.org/2000/svg\">\n";
+    svg << "<svg width=\"" << width << "\" height=\"" << height << "\" xmlns=\"http://www.w3.org/2000/svg\">\n";
     svg << "<rect width=\"100%\" height=\"100%\" fill=\"white\"/>\n";
     svg << "<defs>\n";
-    svg << "<marker id=\"arrowhead\" markerWidth=\"10\" markerHeight=\"7\" refX=\"9\" refY=\"3.5\" "
-           "orient=\"auto\">\n";
+    svg << "<marker id=\"arrowhead\" markerWidth=\"10\" markerHeight=\"7\" refX=\"9\" refY=\"3.5\" orient=\"auto\">\n";
     svg << "<polygon points=\"0 0, 10 3.5, 0 7\" fill=\"black\"/>\n";
     svg << "</marker>\n";
     svg << "</defs>\n";
 
-    std::function<void(const RoutingNode<Point<int, int>>*)> draw_connections =
-        [&](const RoutingNode<Point<int, int>>* node) {
-            for (auto child : node->children) {
-                auto [x1, y1] = scale_coords(node->pt.xcoord(), node->pt.ycoord());
-                auto [x2, y2] = scale_coords(child->pt.xcoord(), child->pt.ycoord());
-                svg << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\"" << x2 << "\" y2=\""
-                    << y2
-                    << "\" stroke=\"black\" stroke-width=\"2\" marker-end=\"url(#arrowhead)\"/>\n";
-                draw_connections(child);
-            }
-        };
+    std::function<void(const RoutingNode<Point<int, int>>*)> draw_connections = [&](const RoutingNode<Point<int, int>>* node) {
+        for (auto child : node->children) {
+            auto [x1, y1] = scale_coords(node->pt.xcoord(), node->pt.ycoord());
+            auto [x2, y2] = scale_coords(child->pt.xcoord(), child->pt.ycoord());
+            svg << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\"" << x2 << "\" y2=\"" << y2 << "\" stroke=\"black\" stroke-width=\"2\" marker-end=\"url(#arrowhead)\"/>\n";
+            draw_connections(child);
+        }
+    };
     draw_connections(tree.get_source());
+
+    if (keepouts.has_value()) {
+        std::string color = "orange";
+        for (const auto& keepout : *keepouts) {
+            auto [x1, y1] = scale_coords(keepout.xcoord().lb(), keepout.ycoord().lb());
+            auto [x2, y2] = scale_coords(keepout.xcoord().ub(), keepout.ycoord().ub());
+            double rwidth = x2 - x1;
+            double rheight = y2 - y1;
+            svg << "<rect x=\"" << x1 << "\" y=\"" << y1 << "\" width=\"" << rwidth << "\" height=\"" << rheight << "\" fill=\"" << color << "\" stroke=\"black\" stroke-width=\"1\"/>\n";
+        }
+    }
 
     for (auto node : all_nodes) {
         auto [x, y] = scale_coords(node->pt.xcoord(), node->pt.ycoord());
@@ -123,18 +129,13 @@ template <> std::string visualize_routing_tree_svg(const GlobalRoutingTree<Point
             radius = 5;
             label = node->id;
         }
-        svg << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"" << radius << "\" fill=\""
-            << color << "\" stroke=\"black\" stroke-width=\"1\"/>\n";
-        svg << "<text x=\"" << x + radius + 2 << "\" y=\"" << y + 4
-            << "\" font-family=\"Arial\" font-size=\"10\" fill=\"black\">" << label << "</text>\n";
-        svg << "<text x=\"" << x << "\" y=\"" << y - radius - 5
-            << "\" font-family=\"Arial\" font-size=\"8\" fill=\"gray\" text-anchor=\"middle\">("
-            << node->pt.xcoord() << "," << node->pt.ycoord() << ")</text>\n";
+        svg << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"" << radius << "\" fill=\"" << color << "\" stroke=\"black\" stroke-width=\"1\"/>\n";
+        svg << "<text x=\"" << x + radius + 2 << "\" y=\"" << y + 4 << "\" font-family=\"Arial\" font-size=\"10\" fill=\"black\">" << label << "</text>\n";
+        svg << "<text x=\"" << x << "\" y=\"" << y - radius - 5 << "\" font-family=\"Arial\" font-size=\"8\" fill=\"gray\" text-anchor=\"middle\">(" << node->pt.xcoord() << "," << node->pt.ycoord() << ")</text>\n";
     }
 
     int legend_y = 20;
-    svg << "<text x=\"20\" y=\"" << legend_y
-        << "\" font-family=\"Arial\" font-size=\"12\" font-weight=\"bold\">Legend:</text>\n";
+    svg << "<text x=\"20\" y=\"" << legend_y << "\" font-family=\"Arial\" font-size=\"12\" font-weight=\"bold\">Legend:</text>\n";
 
     struct LegendItem {
         std::string text;
@@ -147,45 +148,36 @@ template <> std::string visualize_routing_tree_svg(const GlobalRoutingTree<Point
         {"Terminal", "green", 20, legend_y + 60},
     };
     for (const auto& item : legend_items) {
-        svg << "<circle cx=\"" << item.x << "\" cy=\"" << item.y - 4 << "\" r=\"4\" fill=\""
-            << item.color << "\" stroke=\"black\"/>\n";
-        svg << "<text x=\"" << item.x + 10 << "\" y=\"" << item.y
-            << "\" font-family=\"Arial\" font-size=\"10\">" << item.text << "</text>\n";
+        svg << "<circle cx=\"" << item.x << "\" cy=\"" << item.y - 4 << "\" r=\"4\" fill=\"" << item.color << "\" stroke=\"black\"/>\n";
+        svg << "<text x=\"" << item.x + 10 << "\" y=\"" << item.y << "\" font-family=\"Arial\" font-size=\"10\">" << item.text << "</text>\n";
     }
 
     int stats_y = legend_y + 90;
-    svg << "<text x=\"20\" y=\"" << stats_y
-        << "\" font-family=\"Arial\" font-size=\"10\" font-weight=\"bold\">Statistics:</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 15
-        << "\" font-family=\"Arial\" font-size=\"9\">Total Nodes: " << tree.nodes.size()
-        << "</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 30
-        << "\" font-family=\"Arial\" font-size=\"9\">Terminals: " << tree.get_all_terminals().size()
-        << "</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 45
-        << "\" font-family=\"Arial\" font-size=\"9\">Steiner: "
-        << tree.get_all_steiner_nodes().size() << "</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 60
-        << "\" font-family=\"Arial\" font-size=\"9\">Wirelength: " << tree.calculate_wirelength()
-        << "</text>\n";
+    svg << "<text x=\"20\" y=\"" << stats_y << "\" font-family=\"Arial\" font-size=\"10\" font-weight=\"bold\">Statistics:</text>\n";
+    svg << "<text x=\"20\" y=\"" << stats_y + 15 << "\" font-family=\"Arial\" font-size=\"9\">Total Nodes: " << tree.nodes.size() << "</text>\n";
+    svg << "<text x=\"20\" y=\"" << stats_y + 30 << "\" font-family=\"Arial\" font-size=\"9\">Terminals: " << tree.get_all_terminals().size() << "</text>\n";
+    svg << "<text x=\"20\" y=\"" << stats_y + 45 << "\" font-family=\"Arial\" font-size=\"9\">Steiner: " << tree.get_all_steiner_nodes().size() << "</text>\n";
+    svg << "<text x=\"20\" y=\"" << stats_y + 60 << "\" font-family=\"Arial\" font-size=\"9\">Wirelength: " << tree.calculate_wirelength() << "</text>\n";
 
     svg << "</svg>\n";
     return svg.str();
 }
 
-template <> void save_routing_tree_svg(const GlobalRoutingTree<Point<int, int>>& tree,
-                                       const std::string filename, const int width,
-                                       const int height) {
-    std::string svg_content = visualize_routing_tree_svg(tree, width, height);
+template <> void save_routing_tree_svg(
+    const GlobalRoutingTree<Point<int, int>>& tree,
+    std::optional<std::vector<GlobalRoutingTree<Point<int, int>>::Keepout>> keepouts,
+    const std::string filename, const int width, const int height) {
+    std::string svg_content = visualize_routing_tree_svg(tree, keepouts, width, height, 50);
     std::ofstream f(filename);
     f << svg_content;
     std::cout << "Routing tree saved to " << filename << "\n";
 }
 
 template <>
-std::string visualize_routing_tree3d_svg(const GlobalRoutingTree<Point<Point<int, int>, int>>& tree,
-                                         const int scale_z, const int width, const int height,
-                                         const int margin) {
+std::string visualize_routing_tree3d_svg(
+    const GlobalRoutingTree<Point<Point<int, int>, int>>& tree,
+    std::optional<std::vector<GlobalRoutingTree<Point<Point<int, int>, int>>::Keepout>> keepouts,
+    const int scale_z, const int width, const int height, const int margin) {
     std::vector<RoutingNode<Point<Point<int, int>, int>>*> all_nodes;
     for (auto& [id, node] : tree.nodes) {
         all_nodes.push_back(node);
@@ -216,35 +208,40 @@ std::string visualize_routing_tree3d_svg(const GlobalRoutingTree<Point<Point<int
         return {sx, sy};
     };
 
-    std::vector<std::string> layer_colors = {"red", "yellow", "blue", "green"};
+    std::vector<std::string> layer_colors = {"red", "orange", "blue", "green"};
 
     std::ostringstream svg;
-    svg << "<svg width=\"" << width << "\" height=\"" << height
-        << "\" xmlns=\"http://www.w3.org/2000/svg\">\n";
+    svg << "<svg width=\"" << width << "\" height=\"" << height << "\" xmlns=\"http://www.w3.org/2000/svg\">\n";
     svg << "<rect width=\"100%\" height=\"100%\" fill=\"white\"/>\n";
     svg << "<defs>\n";
-    svg << "<marker id=\"arrowhead\" markerWidth=\"10\" markerHeight=\"7\" refX=\"9\" refY=\"3.5\" "
-           "orient=\"auto\">\n";
+    svg << "<marker id=\"arrowhead\" markerWidth=\"10\" markerHeight=\"7\" refX=\"9\" refY=\"3.5\" orient=\"auto\">\n";
     svg << "<polygon points=\"0 0, 10 3.5, 0 7\" fill=\"black\"/>\n";
     svg << "</marker>\n";
     svg << "</defs>\n";
 
-    std::function<void(const RoutingNode<Point<Point<int, int>, int>>*)> draw_connections
-        = [&](const RoutingNode<Point<Point<int, int>, int>>* node) {
-              for (auto child : node->children) {
-                  auto [x1, y1] = scale_coords(node->pt.xcoord().xcoord(), node->pt.ycoord());
-                  auto [x2, y2] = scale_coords(child->pt.xcoord().xcoord(), child->pt.ycoord());
-                  size_t color_index = static_cast<size_t>(child->pt.xcoord().ycoord() / scale_z)
-                                       % layer_colors.size();
-                  std::string color = layer_colors[color_index];
+    std::function<void(const RoutingNode<Point<Point<int, int>, int>>*)> draw_connections = [&](const RoutingNode<Point<Point<int, int>, int>>* node) {
+        for (auto child : node->children) {
+            auto [x1, y1] = scale_coords(node->pt.xcoord().xcoord(), node->pt.ycoord());
+            auto [x2, y2] = scale_coords(child->pt.xcoord().xcoord(), child->pt.ycoord());
+            size_t color_index = static_cast<size_t>(child->pt.xcoord().ycoord() / scale_z) % layer_colors.size();
+            std::string color = layer_colors[color_index];
 
-                  svg << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\"" << x2 << "\" y2=\""
-                      << y2 << "\" stroke=\"" << color
-                      << "\" stroke-width=\"2\" marker-end=\"url(#arrowhead)\"/>\n";
-                  draw_connections(child);
-              }
-          };
+            svg << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\"" << x2 << "\" y2=\"" << y2 << "\" stroke=\"" << color << "\" stroke-width=\"2\" marker-end=\"url(#arrowhead)\"/>\n";
+            draw_connections(child);
+        }
+    };
     draw_connections(tree.get_source());
+
+    if (keepouts.has_value()) {
+        std::string color = "pink";
+        for (const auto& keepout : *keepouts) {
+            auto [x1, y1] = scale_coords(keepout.xcoord().xcoord().lb(), keepout.ycoord().lb());
+            auto [x2, y2] = scale_coords(keepout.xcoord().xcoord().ub(), keepout.ycoord().ub());
+            double rwidth = x2 - x1;
+            double rheight = y2 - y1;
+            svg << "<rect x=\"" << x1 << "\" y=\"" << y1 << "\" width=\"" << rwidth << "\" height=\"" << rheight << "\" fill=\"" << color << "\" stroke=\"black\" stroke-width=\"1\"/>\n";
+        }
+    }
 
     for (auto node : all_nodes) {
         auto [x, y] = scale_coords(node->pt.xcoord().xcoord(), node->pt.ycoord());
@@ -270,18 +267,13 @@ std::string visualize_routing_tree3d_svg(const GlobalRoutingTree<Point<Point<int
             radius = 5;
             label = node->id;
         }
-        svg << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"" << radius << "\" fill=\""
-            << color << "\" stroke=\"black\" stroke-width=\"1\"/>\n";
-        svg << "<text x=\"" << x + radius + 2 << "\" y=\"" << y + 4
-            << "\" font-family=\"Arial\" font-size=\"10\" fill=\"black\">" << label << "</text>\n";
-        svg << "<text x=\"" << x << "\" y=\"" << y - radius - 5
-            << "\" font-family=\"Arial\" font-size=\"8\" fill=\"gray\" text-anchor=\"middle\">("
-            << node->pt.xcoord() << "," << node->pt.ycoord() << ")</text>\n";
+        svg << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"" << radius << "\" fill=\"" << color << "\" stroke=\"black\" stroke-width=\"1\"/>\n";
+        svg << "<text x=\"" << x + radius + 2 << "\" y=\"" << y + 4 << "\" font-family=\"Arial\" font-size=\"10\" fill=\"black\">" << label << "</text>\n";
+        svg << "<text x=\"" << x << "\" y=\"" << y - radius - 5 << "\" font-family=\"Arial\" font-size=\"8\" fill=\"gray\" text-anchor=\"middle\">(" << node->pt << ")</text>\n";
     }
 
     int legend_y = 20;
-    svg << "<text x=\"20\" y=\"" << legend_y
-        << "\" font-family=\"Arial\" font-size=\"12\" font-weight=\"bold\">Legend:</text>\n";
+    svg << "<text x=\"20\" y=\"" << legend_y << "\" font-family=\"Arial\" font-size=\"12\" font-weight=\"bold\">Legend:</text>\n";
 
     struct LegendItem {
         std::string text;
@@ -294,87 +286,28 @@ std::string visualize_routing_tree3d_svg(const GlobalRoutingTree<Point<Point<int
         {"Terminal", "green", 20, legend_y + 60},
     };
     for (const auto& item : legend_items) {
-        svg << "<circle cx=\"" << item.x << "\" cy=\"" << item.y - 4 << "\" r=\"4\" fill=\""
-            << item.color << "\" stroke=\"black\"/>\n";
-        svg << "<text x=\"" << item.x + 10 << "\" y=\"" << item.y
-            << "\" font-family=\"Arial\" font-size=\"10\">" << item.text << "</text>\n";
+        svg << "<circle cx=\"" << item.x << "\" cy=\"" << item.y - 4 << "\" r=\"4\" fill=\"" << item.color << "\" stroke=\"black\"/>\n";
+        svg << "<text x=\"" << item.x + 10 << "\" y=\"" << item.y << "\" font-family=\"Arial\" font-size=\"10\">" << item.text << "</text>\n";
     }
 
     int stats_y = legend_y + 90;
-    svg << "<text x=\"20\" y=\"" << stats_y
-        << "\" font-family=\"Arial\" font-size=\"10\" font-weight=\"bold\">Statistics:</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 15
-        << "\" font-family=\"Arial\" font-size=\"9\">Total Nodes: " << tree.nodes.size()
-        << "</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 30
-        << "\" font-family=\"Arial\" font-size=\"9\">Terminals: " << tree.get_all_terminals().size()
-        << "</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 45
-        << "\" font-family=\"Arial\" font-size=\"9\">Steiner: "
-        << tree.get_all_steiner_nodes().size() << "</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 60
-        << "\" font-family=\"Arial\" font-size=\"9\">Wirelength: " << tree.calculate_wirelength()
-        << "</text>\n";
+    svg << "<text x=\"20\" y=\"" << stats_y << "\" font-family=\"Arial\" font-size=\"10\" font-weight=\"bold\">Statistics:</text>\n";
+    svg << "<text x=\"20\" y=\"" << stats_y + 15 << "\" font-family=\"Arial\" font-size=\"9\">Total Nodes: " << tree.nodes.size() << "</text>\n";
+    svg << "<text x=\"20\" y=\"" << stats_y + 30 << "\" font-family=\"Arial\" font-size=\"9\">Terminals: " << tree.get_all_terminals().size() << "</text>\n";
+    svg << "<text x=\"20\" y=\"" << stats_y + 45 << "\" font-family=\"Arial\" font-size=\"9\">Steiner: " << tree.get_all_steiner_nodes().size() << "</text>\n";
+    svg << "<text x=\"20\" y=\"" << stats_y + 60 << "\" font-family=\"Arial\" font-size=\"9\">Wirelength: " << tree.calculate_wirelength() << "</text>\n";
 
     svg << "</svg>\n";
     return svg.str();
 }
 
-template <> void save_routing_tree3d_svg(const GlobalRoutingTree<Point<Point<int, int>, int>>& tree,
-                                         const int scale_z, const std::string filename,
-                                         const int width, const int height) {
-    std::string svg_content = visualize_routing_tree3d_svg(tree, scale_z, width, height);
+template <> void save_routing_tree3d_svg(
+    const GlobalRoutingTree<Point<Point<int, int>, int>>& tree,
+    std::optional<std::vector<GlobalRoutingTree<Point<Point<int, int>, int>>::Keepout>> keepouts,
+    const int scale_z,
+    const std::string filename, const int width, const int height) {
+    std::string svg_content = visualize_routing_tree3d_svg(tree, keepouts, scale_z, width, height, 50);
     std::ofstream f(filename);
     f << svg_content;
     std::cout << "Routing tree (3d) saved to " << filename << "\n";
 }
-
-// void test_route_with_steiner() {
-//     unsigned base[] = {3, 2};
-//     unsigned scale[] = {7, 11};
-//     auto hgen = recti::halton(base, scale);
-//     // Assuming no reseed, adjust if halton has reseed
-//     std::vector<std::vector<unsigned>> coords;
-//     for (int i = 0; i < 7; ++i) {
-//         coords.push_back(hgen());
-//     }
-//     std::vector<Point<int, int>> terminals;
-//     for (const auto& coord : coords) {
-//         terminals.emplace_back(static_cast<int>(coord[0]), static_cast<int>(coord[1]));
-//     }
-//     auto src_coord = hgen();
-//     Point<int, int> source(static_cast<int>(src_coord[0]), static_cast<int>(src_coord[1]));
-
-//     GlobalRouter router(source, terminals);
-//     router.route_with_steiners();
-
-//     std::string svg_output = visualize_routing_tree_svg(router.get_tree(), 1000, 1000);
-//     std::cout << svg_output;
-
-//     save_routing_tree_svg(router.get_tree(), "example_route_with_steiner.svg");
-// }
-
-// void test_route_with_constraints() {
-//     unsigned base[] = {3, 2};
-//     unsigned scale[] = {7, 11};
-//     auto hgen = recti::halton(base, scale);
-//     // Assuming no reseed
-//     std::vector<std::vector<unsigned>> coords;
-//     for (int i = 0; i < 7; ++i) {
-//         coords.push_back(hgen());
-//     }
-//     std::vector<Point<int, int>> terminals;
-//     for (const auto& coord : coords) {
-//         terminals.emplace_back(static_cast<int>(coord[0]), static_cast<int>(coord[1]));
-//     }
-//     auto src_coord = hgen();
-//     Point<int, int> source(static_cast<int>(src_coord[0]), static_cast<int>(src_coord[1]));
-
-//     GlobalRouter router(source, terminals);
-//     router.route_with_constraints(0.9);
-
-//     std::string svg_output = visualize_routing_tree_svg(router.get_tree(), 1000, 1000);
-//     std::cout << svg_output;
-
-//     save_routing_tree_svg(router.get_tree(), "example_route_with_constraint.svg");
-// }
