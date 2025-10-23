@@ -34,7 +34,7 @@ namespace recti {
          * @param[in] upper The "upper" parameter is the upper bound of the interval. It represents
          * the maximum value that can be included in the interval.
          */
-        constexpr Interval(T &&lower, T &&upper) noexcept
+        constexpr Interval(T&& lower, T&& upper) noexcept
             : _lb{std::move(lower)}, _ub{std::move(upper)} {}
 
         /**
@@ -47,7 +47,7 @@ namespace recti {
          * @param[in] upper The "upper" parameter represents the upper bound of the interval. It is
          * the maximum value that can be included in the interval.
          */
-        constexpr Interval(const T &lower, const T &upper) : _lb{lower}, _ub{upper} {}
+        constexpr Interval(const T& lower, const T& upper) : _lb{lower}, _ub{upper} {}
 
         /**
          * @brief Construct a new Interval object
@@ -58,7 +58,7 @@ namespace recti {
          * the Interval class. It represents the value that will be used as both the lower bound and
          * upper bound of the interval.
          */
-        explicit constexpr Interval(const T &alpha) : _lb{alpha}, _ub{alpha} {}
+        explicit constexpr Interval(const T& alpha) : _lb{alpha}, _ub{alpha} {}
 
         /**
          * @brief Assignment operator
@@ -71,7 +71,7 @@ namespace recti {
          *
          * @return The assignment operator is returning a reference to the Interval object.
          */
-        constexpr auto operator=(const T &alpha) -> Interval & {
+        constexpr auto operator=(const T& alpha) -> Interval& {
             this->_lb = this->_ub = alpha;
             return *this;
         }
@@ -83,7 +83,7 @@ namespace recti {
          *
          * @return a reference to a constant object of type T.
          */
-        constexpr auto lb() const -> const T & { return this->_lb; }
+        constexpr auto lb() const -> const T& { return this->_lb; }
 
         /**
          * @brief upper bound
@@ -92,7 +92,7 @@ namespace recti {
          *
          * @return a reference to a constant object of type T.
          */
-        constexpr auto ub() const -> const T & { return this->_ub; }
+        constexpr auto ub() const -> const T& { return this->_ub; }
 
         /**
          * @brief measure (length)
@@ -131,7 +131,7 @@ namespace recti {
          * @return `true` if the intervals are equal, `false` otherwise.
          */
         template <typename U>  //
-        constexpr auto operator==(const Interval<U> &rhs) const -> bool {
+        constexpr auto operator==(const Interval<U>& rhs) const -> bool {
             return this->lb() == rhs.lb() && this->ub() == rhs.ub();
         }
 
@@ -147,7 +147,7 @@ namespace recti {
          * @return `true` if the intervals are not equal, `false` otherwise.
          */
         template <typename U>  //
-        constexpr auto operator!=(const Interval<U> &rhs) const -> bool {
+        constexpr auto operator!=(const Interval<U>& rhs) const -> bool {
             return !(*this == rhs);
         }
 
@@ -166,7 +166,7 @@ namespace recti {
          * value.
          */
         template <typename U>  //
-        constexpr auto operator<=>(const U &rhs) const -> std::weak_ordering {
+        constexpr auto operator<=>(const U& rhs) const -> std::weak_ordering {
             if (this->ub() < rhs) return std::weak_ordering::less;
             if (this->lb() > rhs) return std::weak_ordering::greater;
             return std::weak_ordering::equivalent;
@@ -187,7 +187,7 @@ namespace recti {
          * @return `std::weak_ordering` indicating the relationship between the value and the
          * interval.
          */
-        friend constexpr auto operator<=>(const T &lhs, const Interval &rhs) -> std::weak_ordering {
+        friend constexpr auto operator<=>(const T& lhs, const Interval& rhs) -> std::weak_ordering {
             if (lhs < rhs.lb()) return std::weak_ordering::less;
             if (lhs > rhs.ub()) return std::weak_ordering::greater;
             return std::weak_ordering::equivalent;
@@ -223,7 +223,7 @@ namespace recti {
          * @param[in] alpha The value to add to the interval bounds.
          * @return A reference to the modified `Interval` object.
          */
-        template <typename U> constexpr auto operator+=(const U &alpha) -> Interval & {
+        template <typename U> constexpr auto operator+=(const U& alpha) -> Interval& {
             this->_lb += alpha;
             this->_ub += alpha;
             return *this;
@@ -240,7 +240,7 @@ namespace recti {
          * @param[in] alpha The scalar value to add to the `Interval` object.
          * @return A new `Interval` object with the scalar value added to the bounds.
          */
-        template <typename U> friend constexpr auto operator+(Interval rhs, const U &alpha)
+        template <typename U> friend constexpr auto operator+(Interval rhs, const U& alpha)
             -> Interval {
             return rhs += alpha;
         }
@@ -256,7 +256,7 @@ namespace recti {
          *
          * @return A new `Interval` object with the scalar value added to the bounds.
          */
-        friend constexpr auto operator+(const T &alpha, Interval rhs) -> Interval {
+        friend constexpr auto operator+(const T& alpha, Interval rhs) -> Interval {
             return rhs += alpha;
         }
 
@@ -270,7 +270,7 @@ namespace recti {
          * @param[in] alpha The scalar value to subtract from the `Interval` object.
          * @return A reference to the modified `Interval` object.
          */
-        template <typename U> constexpr auto operator-=(const U &alpha) -> Interval & {
+        template <typename U> constexpr auto operator-=(const U& alpha) -> Interval& {
             this->_lb -= alpha;
             this->_ub -= alpha;
             return *this;
@@ -288,7 +288,7 @@ namespace recti {
          *
          * @return A new `Interval` object with the scalar value subtracted from the bounds.
          */
-        template <typename U> friend constexpr auto operator-(const Interval &rhs, const U &alpha)
+        template <typename U> friend constexpr auto operator-(const Interval& rhs, const U& alpha)
             -> Interval {
             auto lower = rhs.lb() - alpha;
             auto upper = rhs.ub() - alpha;
@@ -305,7 +305,7 @@ namespace recti {
          *
          * @param[in] alpha The value to subtract from the lower bound and add to the upper bound.
          */
-        constexpr auto enlarge_with(const T &alpha) const {
+        constexpr auto enlarge_with(const T& alpha) const {
             return Interval{this->_lb - alpha, this->_ub + alpha};
         }
 
@@ -323,7 +323,7 @@ namespace recti {
          * @return `true` if the intervals overlap, `false` otherwise.
          */
         template <typename U>  // cppcheck-suppress internalAstError
-        constexpr auto overlaps(const U &other) const -> bool {
+        constexpr auto overlaps(const U& other) const -> bool {
             return !(*this < other || other < *this);
         }
 
@@ -346,7 +346,7 @@ namespace recti {
          * scalar value, `false` otherwise.
          */
         template <typename U>  // cppcheck-suppress internalAstError
-        constexpr auto contains(const U &other) const -> bool {
+        constexpr auto contains(const U& other) const -> bool {
             if constexpr (requires { other.lb(); }) {
                 return this->lb() <= other.lb() && other.ub() <= this->ub();
             } else /* constexpr */ {  // assume scalar
@@ -371,7 +371,7 @@ namespace recti {
          * value.
          */
         template <typename U>  //
-        constexpr auto intersect_with(const U &other) const {
+        constexpr auto intersect_with(const U& other) const {
             if constexpr (requires { other.lb(); }) {
                 return Interval<T>{this->lb() > other.lb() ? this->lb() : T(other.lb()),
                                    this->ub() < other.ub() ? this->ub() : T(other.ub())};
@@ -398,7 +398,7 @@ namespace recti {
          * value.
          */
         template <typename U>  //
-        constexpr auto hull_with(const U &other) const {
+        constexpr auto hull_with(const U& other) const {
             if constexpr (requires { other.lb(); }) {
                 return Interval<T>{this->lb() < other.lb() ? this->lb() : T(other.lb()),
                                    this->ub() > other.ub() ? this->ub() : T(other.ub())};
@@ -425,7 +425,7 @@ namespace recti {
          * @return The minimum distance between the current interval and the `other` interval or
          * scalar value.
          */
-        template <typename U> constexpr auto min_dist_with(const U &other) const -> T {
+        template <typename U> constexpr auto min_dist_with(const U& other) const -> T {
             if (*this < other) {
                 return min_dist(this->_ub, other);
             }
@@ -435,7 +435,7 @@ namespace recti {
             return T(0);
         }
 
-        constexpr auto nearest_to(const T &other) const -> T {
+        constexpr auto nearest_to(const T& other) const -> T {
             if (*this < other) {
                 return nearest(this->_ub, other);
             }
@@ -464,7 +464,7 @@ namespace recti {
          * @return The minimum distance between the current interval and the `other` interval or
          * scalar value.
          */
-        template <typename U> constexpr auto min_dist_change_with(U &other) -> T {
+        template <typename U> constexpr auto min_dist_change_with(U& other) -> T {
             if (*this < other) {
                 this->_lb = this->_ub;
                 return min_dist_change(this->_ub, other);
@@ -495,8 +495,8 @@ namespace recti {
          * @param intvl The Interval object to be printed.
          * @return A reference to the output stream (`out`) for chaining stream operations.
          */
-        template <class Stream> friend auto operator<<(Stream &out, const Interval &intvl)
-            -> Stream & {
+        template <class Stream> friend auto operator<<(Stream& out, const Interval& intvl)
+            -> Stream& {
             out << "[" << intvl.lb() << ", " << intvl.ub() << "]";
             return out;
         }
@@ -521,7 +521,7 @@ namespace recti {
      * @return The hull of `lhs` and `rhs`.
      */
     template <typename U1, typename U2>  //
-    constexpr auto hull(const U1 &lhs, const U2 &rhs) {
+    constexpr auto hull(const U1& lhs, const U2& rhs) {
         if constexpr (requires { lhs.hull_with(rhs); }) {
             return lhs.hull_with(rhs);
         } else if constexpr (requires { rhs.hull_with(lhs); }) {
@@ -546,7 +546,7 @@ namespace recti {
      * @return The enlarged interval or scalar value.
      */
     template <typename U1, typename U2>  //
-    constexpr auto enlarge(const U1 &lhs, const U2 &rhs) {
+    constexpr auto enlarge(const U1& lhs, const U2& rhs) {
         if constexpr (requires { lhs.enlarge_with(rhs); }) {
             return lhs.enlarge_with(rhs);
         } else /* constexpr */ {

@@ -51,7 +51,7 @@ namespace recti {
          * @param[in] xcoord The x coordinate value.
          * @param[in] ycoord The y coordinate value.
          */
-        constexpr MergeObj(T1 &&xcoord, T2 &&ycoord) noexcept
+        constexpr MergeObj(T1&& xcoord, T2&& ycoord) noexcept
             : impl{std::move(xcoord), std::move(ycoord)} {}
 
         /**
@@ -66,7 +66,7 @@ namespace recti {
          * @param[in] ycoord The y coordinate value.
          * @return A new `MergeObj` object constructed from the given coordinates.
          */
-        static constexpr auto construct(T1 &&xcoord, T2 &&ycoord) -> MergeObj {
+        static constexpr auto construct(T1&& xcoord, T2&& ycoord) -> MergeObj {
             return MergeObj{xcoord - ycoord, xcoord + ycoord};
         }
 
@@ -87,7 +87,7 @@ namespace recti {
          * @return `true` if the two `MergeObj` objects are equal, `false` otherwise.
          */
         template <typename U1, typename U2>
-        constexpr auto operator==(const MergeObj<U1, U2> &rhs) const -> bool {
+        constexpr auto operator==(const MergeObj<U1, U2>& rhs) const -> bool {
             return this->impl == rhs.impl;
         }
 
@@ -105,7 +105,7 @@ namespace recti {
          * @return `true` if the two `MergeObj` objects are not equal, `false` otherwise.
          */
         template <typename U1, typename U2>
-        constexpr auto operator!=(const MergeObj<U1, U2> &rhs) const -> bool {
+        constexpr auto operator!=(const MergeObj<U1, U2>& rhs) const -> bool {
             return this->impl != rhs.impl;
         }
 
@@ -122,7 +122,7 @@ namespace recti {
          * @return `true` if the two `MergeObj` objects overlap, `false` otherwise.
          */
         template <typename U1, typename U2>  //
-        constexpr auto overlaps(const MergeObj<U1, U2> &other) const -> bool {
+        constexpr auto overlaps(const MergeObj<U1, U2>& other) const -> bool {
             return this->impl.overlaps(other.impl);
         }
 
@@ -142,7 +142,7 @@ namespace recti {
          * objects.
          */
         template <typename U1, typename U2>  //
-        constexpr auto intersect_with(const MergeObj<U1, U2> &other) const {
+        constexpr auto intersect_with(const MergeObj<U1, U2>& other) const {
             auto xcoord = intersection(this->impl.xcoord(), other.impl.xcoord());
             auto ycoord = intersection(this->impl.ycoord(), other.impl.ycoord());
             return MergeObj<decltype(xcoord), decltype(ycoord)>{std::move(xcoord),
@@ -164,7 +164,7 @@ namespace recti {
          * @return The maximum distance between the two `MergeObj` objects.
          */
         template <typename U1, typename U2>  //
-        constexpr auto min_dist_with(const MergeObj<U1, U2> &other) const {
+        constexpr auto min_dist_with(const MergeObj<U1, U2>& other) const {
             return std::max(min_dist(this->impl.xcoord(), other.impl.xcoord()),
                             min_dist(this->impl.ycoord(), other.impl.ycoord()));
         }
@@ -181,7 +181,7 @@ namespace recti {
          * @return A new `MergeObj` object with enlarged x and y coordinates.
          */
         template <typename R>  //
-        constexpr auto enlarge_with(const R &alpha) {
+        constexpr auto enlarge_with(const R& alpha) {
             auto xcoord = enlarge(this->impl.xcoord(), alpha);
             auto ycoord = enlarge(this->impl.ycoord(), alpha);
             return MergeObj<decltype(xcoord), decltype(ycoord)>{std::move(xcoord),
@@ -202,7 +202,7 @@ namespace recti {
          * @param[in] other The `MergeObj` object to compute the intersection with.
          * @return The intersection of the two `MergeObj` objects.
          */
-        constexpr auto merge_with(const MergeObj<T1, T2> &other) const {
+        constexpr auto merge_with(const MergeObj<T1, T2>& other) const {
             auto alpha = this->min_dist_with(other);
             auto half = alpha / 2;
             auto trr1 = this->impl.enlarge_with(half);
@@ -225,8 +225,8 @@ namespace recti {
          * @param[in] merge_obj The `MergeObj` object to be written to the output stream.
          * @return The modified output stream.
          */
-        template <class Stream> friend auto operator<<(Stream &out, const MergeObj &merge_obj)
-            -> Stream & {
+        template <class Stream> friend auto operator<<(Stream& out, const MergeObj& merge_obj)
+            -> Stream& {
             out << "/" << merge_obj.impl.xcoord() << ", " << merge_obj.impl.ycoord() << "/";
             return out;
         }

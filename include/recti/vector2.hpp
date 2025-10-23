@@ -33,7 +33,7 @@ namespace recti {
          * @param[in] vec_x The x-coordinate of the vector.
          * @param[in] vec_y The y-coordinate of the vector.
          */
-        constexpr Vector2(T1 &&vec_x, T2 &&vec_y) noexcept
+        constexpr Vector2(T1&& vec_x, T2&& vec_y) noexcept
             : _x{std::move(vec_x)}, _y{std::move(vec_y)} {}
         /**
          * @brief Construct a new Vector2 object
@@ -46,7 +46,7 @@ namespace recti {
          * @param[in] vec_x The x-coordinate of the vector.
          * @param[in] vec_y The y-coordinate of the vector.
          */
-        constexpr Vector2(const T1 &vec_x, const T2 &vec_y) : _x{vec_x}, _y{vec_y} {}
+        constexpr Vector2(const T1& vec_x, const T2& vec_y) : _x{vec_x}, _y{vec_y} {}
 
         /**
          * @brief Construct a new Vector2 object
@@ -60,7 +60,7 @@ namespace recti {
          * @tparam U2 The type of the y-coordinate of the other `Vector2` object.
          * @param[in] other The other `Vector2` object to copy from.
          */
-        template <typename U1, typename U2> constexpr explicit Vector2(const Vector2<U1, U2> &other)
+        template <typename U1, typename U2> constexpr explicit Vector2(const Vector2<U1, U2>& other)
             : _x(other.x()), _y(other.y()) {}
 
         /**
@@ -70,7 +70,7 @@ namespace recti {
          *
          * @return constexpr const T1& A const reference to the x-coordinate of the vector.
          */
-        constexpr auto x() const noexcept -> const T1 & { return this->_x; }
+        constexpr auto x() const noexcept -> const T1& { return this->_x; }
 
         /**
          * @brief Returns a const reference to the y-coordinate of the vector.
@@ -79,7 +79,7 @@ namespace recti {
          *
          * @return constexpr const T1& A const reference to the y-coordinate of the vector.
          */
-        constexpr auto y() const noexcept -> const T2 & { return this->_y; }
+        constexpr auto y() const noexcept -> const T2& { return this->_y; }
 
         /**
          * @brief Calculates the cross product of two `Vector2` objects.
@@ -94,7 +94,7 @@ namespace recti {
          * @return constexpr auto The cross product of the two `Vector2` objects.
          */
         template <typename U1, typename U2>  //
-        constexpr auto cross(const Vector2<U1, U2> &other) const {
+        constexpr auto cross(const Vector2<U1, U2>& other) const {
             return this->_x * other._y - other._x * this->_y;
         }
 
@@ -116,7 +116,7 @@ namespace recti {
          * @return true If the two `Vector2` objects have the same x and y coordinates.
          */
         template <typename U1, typename U2>  //
-        constexpr auto operator==(const Vector2<U1, U2> &other) const -> bool {
+        constexpr auto operator==(const Vector2<U1, U2>& other) const -> bool {
             return std::tie(this->x(), this->y()) == std::tie(other.x(), other.y());
         }
 
@@ -133,7 +133,7 @@ namespace recti {
          * @return true If the two `Vector2` objects have different x or y coordinates.
          */
         template <typename U1, typename U2>  //
-        constexpr auto operator!=(const Vector2<U1, U2> &other) const -> bool {
+        constexpr auto operator!=(const Vector2<U1, U2>& other) const -> bool {
             return !(*this == other);
         }
 
@@ -160,7 +160,7 @@ namespace recti {
          * @return A reference to this vector, after the addition.
          */
         template <typename U1, typename U2>
-        CONSTEXPR14 auto operator+=(const Vector2<U1, U2> &other) -> Vector2 & {
+        CONSTEXPR14 auto operator+=(const Vector2<U1, U2>& other) -> Vector2& {
             this->_x += other.x();
             this->_y += other.y();
             return *this;
@@ -175,7 +175,7 @@ namespace recti {
          * @return A reference to this vector, after the subtraction.
          */
         template <typename U1, typename U2>  //
-        CONSTEXPR14 auto operator-=(const Vector2<U1, U2> &other) -> Vector2 & {
+        CONSTEXPR14 auto operator-=(const Vector2<U1, U2>& other) -> Vector2& {
             this->_x -= other.x();
             this->_y -= other.y();
             return *this;
@@ -188,7 +188,7 @@ namespace recti {
          * @param[in] alpha The scalar to multiply the vector components by.
          * @return A reference to this vector, after the multiplication.
          */
-        template <typename R> CONSTEXPR14 auto operator*=(const R &alpha) -> Vector2 & {
+        template <typename R> CONSTEXPR14 auto operator*=(const R& alpha) -> Vector2& {
             this->_x *= alpha;
             this->_y *= alpha;
             return *this;
@@ -201,7 +201,7 @@ namespace recti {
          * @param[in] alpha The scalar to divide the vector components by.
          * @return A reference to this vector, after the division.
          */
-        template <typename R> CONSTEXPR14 auto operator/=(const R &alpha) -> Vector2 & {
+        template <typename R> CONSTEXPR14 auto operator/=(const R& alpha) -> Vector2& {
             this->_x /= alpha;
             this->_y /= alpha;
             return *this;
@@ -217,7 +217,7 @@ namespace recti {
          * @return A new vector that is the sum of the two input vectors.
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator+(Vector2 rhs, const Vector2<U1, U2> &lhs) -> Vector2 {
+        friend constexpr auto operator+(Vector2 rhs, const Vector2<U1, U2>& lhs) -> Vector2 {
             return rhs += lhs;
         }
 
@@ -231,7 +231,7 @@ namespace recti {
          * @return A new vector that is the difference of the two input vectors.
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator-(Vector2 rhs, const Vector2<U1, U2> &lhs) -> Vector2 {
+        friend constexpr auto operator-(Vector2 rhs, const Vector2<U1, U2>& lhs) -> Vector2 {
             return rhs -= lhs;
         }
 
@@ -243,7 +243,7 @@ namespace recti {
          * @param[in] alpha The scalar to multiply the vector components by.
          * @return A new vector that is the result of multiplying the input vector by the scalar.
          */
-        template <typename R> friend constexpr auto operator*(Vector2 rhs, const R &alpha)
+        template <typename R> friend constexpr auto operator*(Vector2 rhs, const R& alpha)
             -> Vector2 {
             return rhs *= alpha;
         }
@@ -256,7 +256,7 @@ namespace recti {
          * @param[in] lhs The vector to multiply.
          * @return A new vector that is the result of multiplying the input vector by the scalar.
          */
-        template <typename R> friend constexpr auto operator*(const R &alpha, Vector2 lhs)
+        template <typename R> friend constexpr auto operator*(const R& alpha, Vector2 lhs)
             -> Vector2 {
             return lhs *= alpha;
         }
@@ -269,7 +269,7 @@ namespace recti {
          * @param[in] alpha The scalar to divide the vector components by.
          * @return A new vector that is the result of dividing the input vector by the scalar.
          */
-        template <typename R> friend constexpr auto operator/(Vector2 rhs, const R &alpha)
+        template <typename R> friend constexpr auto operator/(Vector2 rhs, const R& alpha)
             -> Vector2 {
             return rhs /= alpha;
         }
@@ -284,8 +284,8 @@ namespace recti {
          * @param[in] vec2 The Vector2 object to insert into the stream.
          * @return Stream& The modified output stream.
          */
-        template <class Stream> friend auto operator<<(Stream &out, const Vector2 &vec2)
-            -> Stream & {
+        template <class Stream> friend auto operator<<(Stream& out, const Vector2& vec2)
+            -> Stream& {
             out << "{" << vec2.x() << ", " << vec2.y() << "}";
             return out;
         }

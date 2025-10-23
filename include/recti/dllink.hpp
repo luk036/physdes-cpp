@@ -21,8 +21,8 @@ class RDllIterator;
 #pragma pack(push, 1)
 template <typename T> class Dllink {
   public:
-    Dllink *next{this}; /**< pointer to the next node */
-    Dllink *prev{this}; /**< pointer to the previous node */
+    Dllink* next{this}; /**< pointer to the next node */
+    Dllink* prev{this}; /**< pointer to the previous node */
     T data{};           /**< data */
 
     /**
@@ -40,10 +40,10 @@ template <typename T> class Dllink {
      */
     constexpr Dllink() = default;
     ~Dllink() = default;
-    Dllink(const Dllink &) = delete;                      // don't copy
-    auto operator=(const Dllink &) -> Dllink & = delete;  // don't assign
-    constexpr Dllink(Dllink &&) noexcept = default;
-    constexpr auto operator=(Dllink &&) noexcept -> Dllink & = delete;  // don't assign
+    Dllink(const Dllink&) = delete;                     // don't copy
+    auto operator=(const Dllink&) -> Dllink& = delete;  // don't assign
+    constexpr Dllink(Dllink&&) noexcept = default;
+    constexpr auto operator=(Dllink&&) noexcept -> Dllink& = delete;  // don't assign
 
     /**
      * @brief lock the node (and don't append it to any list)
@@ -76,7 +76,7 @@ template <typename T> class Dllink {
      *
      * @param[in,out] node
      */
-    constexpr auto attach(Dllink &node) noexcept -> void {
+    constexpr auto attach(Dllink& node) noexcept -> void {
         node.next = this->next;
         this->next->prev = &node;
         this->next = &node;

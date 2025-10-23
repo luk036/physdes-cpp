@@ -6,7 +6,7 @@
 #include <string>
 #include <unordered_map>
 
-auto main(int argc, char **argv) -> int {
+auto main(int argc, char** argv) -> int {
     const std::unordered_map<std::string, recti::LanguageCode> languages{
         {"en", recti::LanguageCode::EN},
         {"de", recti::LanguageCode::DE},

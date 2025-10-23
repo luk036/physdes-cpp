@@ -65,14 +65,14 @@ namespace recti {
         /**
          * @brief Equality comparison operator
          */
-        constexpr bool operator==(const RPolygon &rhs) const {
+        constexpr bool operator==(const RPolygon& rhs) const {
             return _origin == rhs._origin && _vecs == rhs._vecs;
         }
 
         /**
          * @brief Inequality comparison operator
          */
-        constexpr bool operator!=(const RPolygon &rhs) const { return !(*this == rhs); }
+        constexpr bool operator!=(const RPolygon& rhs) const { return !(*this == rhs); }
 
         /**
          * @brief Adds a vector to the origin of the rectilinear polygon.
@@ -83,7 +83,7 @@ namespace recti {
          * @param[in] rhs The vector to add to the origin.
          * @return A reference to the modified RPolygon object.
          */
-        constexpr auto operator+=(const Vector2<T> &rhs) -> RPolygon & {
+        constexpr auto operator+=(const Vector2<T>& rhs) -> RPolygon& {
             this->_origin += rhs;
             return *this;
         }
@@ -97,7 +97,7 @@ namespace recti {
          * @param[in] rhs The vector to subtract from the origin.
          * @return A reference to the modified RPolygon object.
          */
-        constexpr auto operator-=(const Vector2<T> &rhs) -> RPolygon & {
+        constexpr auto operator-=(const Vector2<T>& rhs) -> RPolygon& {
             this->_origin -= rhs;
             return *this;
         }
@@ -105,12 +105,12 @@ namespace recti {
         /**
          * @brief Gets the origin point of the polygon
          */
-        constexpr const Point<T> &origin() const { return _origin; }
+        constexpr const Point<T>& origin() const { return _origin; }
 
         /**
          * @brief Gets the displacement vectors of the polygon
          */
-        constexpr const std::vector<Vector2<T>> &vectors() const { return _vecs; }
+        constexpr const std::vector<Vector2<T>>& vectors() const { return _vecs; }
 
         /**
          * @brief Gets all vertices of the polygon as points
@@ -119,7 +119,7 @@ namespace recti {
             std::vector<Point<T>> result;
             result.reserve(_vecs.size() + 1);
             result.push_back(_origin);
-            for (const auto &vec : _vecs) {
+            for (const auto& vec : _vecs) {
                 result.push_back(_origin + vec);
             }
             return result;
@@ -164,7 +164,7 @@ namespace recti {
             std::vector<Vector2<T>> new_vecs;
             Vector2<T> current_pt(0, 0);
 
-            for (const auto &next_pt : _vecs) {
+            for (const auto& next_pt : _vecs) {
                 if (current_pt.x() != next_pt.x() && current_pt.y() != next_pt.y()) {
                     // Add intermediate point for non-rectilinear segment
                     new_vecs.emplace_back(next_pt.x(), current_pt.y());
@@ -206,25 +206,25 @@ namespace recti {
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
     template <typename FwIter, typename KeyFn, typename CmpFn>
-    inline auto create_mono_rpolygon(FwIter &&first, FwIter &&last, const KeyFn &dir,
-                                     const CmpFn &cmp) -> bool {
+    inline auto create_mono_rpolygon(FwIter&& first, FwIter&& last, const KeyFn& dir,
+                                     const CmpFn& cmp) -> bool {
         assert(first != last);
 
         // Use x-monotone as model
         // Lambda for comparing elements based on the provided direction function.
         auto compare_by_direction
-            = [&dir](const auto &rhs, const auto &lhs) -> bool { return dir(rhs) < dir(lhs); };
+            = [&dir](const auto& rhs, const auto& lhs) -> bool { return dir(rhs) < dir(lhs); };
         auto result = std::minmax_element(first, last, compare_by_direction);
         const auto leftmost = *result.first;
         const auto rightmost = *result.second;
 
         const auto is_anticw = cmp(dir(leftmost).second, dir(rightmost).second);
         // Lambda to check if an element belongs to the right-to-left chain.
-        auto is_right_to_left_chain = [&leftmost, &dir](const auto &elem) -> bool {
+        auto is_right_to_left_chain = [&leftmost, &dir](const auto& elem) -> bool {
             return dir(elem).second <= dir(leftmost).second;
         };
         // Lambda to check if an element belongs to the left-to-right chain.
-        auto is_left_to_right_chain = [&leftmost, &dir](const auto &elem) -> bool {
+        auto is_left_to_right_chain = [&leftmost, &dir](const auto& elem) -> bool {
             return dir(elem).second >= dir(leftmost).second;
         };
         const auto middle = is_anticw
@@ -247,11 +247,11 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
-    template <typename FwIter> inline auto create_xmono_rpolygon(FwIter &&first, FwIter &&last)
+    template <typename FwIter> inline auto create_xmono_rpolygon(FwIter&& first, FwIter&& last)
         -> bool {
         return create_mono_rpolygon(
-            first, last, [](const auto &pt) { return std::make_pair(pt.xcoord(), pt.ycoord()); },
-            [](const auto &a, const auto &b) -> bool { return a < b; });
+            first, last, [](const auto& pt) { return std::make_pair(pt.xcoord(), pt.ycoord()); },
+            [](const auto& a, const auto& b) -> bool { return a < b; });
     }
 
     /**
@@ -265,11 +265,11 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return `true` if the resulting RPolygon is clockwise, `false` otherwise.
      */
-    template <typename FwIter> inline auto create_ymono_rpolygon(FwIter &&first, FwIter &&last)
+    template <typename FwIter> inline auto create_ymono_rpolygon(FwIter&& first, FwIter&& last)
         -> bool {
         return create_mono_rpolygon(
-            first, last, [](const auto &pt) { return std::make_pair(pt.ycoord(), pt.xcoord()); },
-            [](const auto &a, const auto &b) -> bool { return a > b; });
+            first, last, [](const auto& pt) { return std::make_pair(pt.ycoord(), pt.xcoord()); },
+            [](const auto& a, const auto& b) -> bool { return a > b; });
     }
 
     /**
@@ -283,22 +283,22 @@ namespace recti {
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      */
-    template <typename FwIter> inline void create_test_rpolygon_old(FwIter &&first, FwIter &&last) {
+    template <typename FwIter> inline void create_test_rpolygon_old(FwIter&& first, FwIter&& last) {
         assert(first != last);
 
-        auto upwd = [](const auto &rhs, const auto &lhs) -> bool {
+        auto upwd = [](const auto& rhs, const auto& lhs) -> bool {
             return std::make_pair(rhs.ycoord(), rhs.xcoord())
                    < std::make_pair(lhs.ycoord(), lhs.xcoord());
         };
-        auto down = [](const auto &rhs, const auto &lhs) -> bool {
+        auto down = [](const auto& rhs, const auto& lhs) -> bool {
             return std::make_pair(rhs.ycoord(), rhs.xcoord())
                    > std::make_pair(lhs.ycoord(), lhs.xcoord());
         };
-        auto left = [](const auto &rhs, const auto &lhs) {
+        auto left = [](const auto& rhs, const auto& lhs) {
             return std::make_pair(rhs.xcoord(), rhs.ycoord())
                    < std::make_pair(lhs.xcoord(), lhs.ycoord());
         };
-        auto right = [](const auto &rhs, const auto &lhs) {
+        auto right = [](const auto& rhs, const auto& lhs) {
             return std::make_pair(rhs.xcoord(), rhs.ycoord())
                    > std::make_pair(lhs.xcoord(), lhs.ycoord());
         };
@@ -308,16 +308,16 @@ namespace recti {
         auto max_pt = *result.second;
         auto d_x = max_pt.xcoord() - min_pt.xcoord();
         auto d_y = max_pt.ycoord() - min_pt.ycoord();
-        auto middle = std::partition(first, last, [&min_pt, &d_x, &d_y](const auto &elem) -> bool {
+        auto middle = std::partition(first, last, [&min_pt, &d_x, &d_y](const auto& elem) -> bool {
             return d_x * (elem.ycoord() - min_pt.ycoord())
                    < (elem.xcoord() - min_pt.xcoord()) * d_y;
         });
         auto max_pt1 = *std::max_element(first, middle, left);
-        auto middle2 = std::partition(first, middle, [&max_pt1](const auto &elem) -> bool {
+        auto middle2 = std::partition(first, middle, [&max_pt1](const auto& elem) -> bool {
             return elem.ycoord() < max_pt1.ycoord();
         });
         auto min_pt2 = *std::min_element(middle, last, left);
-        auto middle3 = std::partition(middle, last, [&min_pt2](const auto &elem) -> bool {
+        auto middle3 = std::partition(middle, last, [&min_pt2](const auto& elem) -> bool {
             return elem.ycoord() > min_pt2.ycoord();
         });
 
@@ -351,63 +351,63 @@ namespace recti {
         using T = typename std::iterator_traits<FwIter>::value_type::value_type;
         assert(first != last);
 
-        auto dir_x = [](const auto &pt) { return std::make_pair(pt.xcoord(), pt.ycoord()); };
-        auto dir_y = [](const auto &pt) { return std::make_pair(pt.ycoord(), pt.xcoord()); };
+        auto dir_x = [](const auto& pt) { return std::make_pair(pt.xcoord(), pt.ycoord()); };
+        auto dir_y = [](const auto& pt) { return std::make_pair(pt.ycoord(), pt.xcoord()); };
 
         auto max_pt = *std::max_element(
-            first, last, [&dir_y](const auto &a, const auto &b) { return dir_y(a) < dir_y(b); });
+            first, last, [&dir_y](const auto& a, const auto& b) { return dir_y(a) < dir_y(b); });
         auto min_pt = *std::min_element(
-            first, last, [&dir_y](const auto &a, const auto &b) { return dir_y(a) < dir_y(b); });
+            first, last, [&dir_y](const auto& a, const auto& b) { return dir_y(a) < dir_y(b); });
         Vector2<T> vec = max_pt - min_pt;
 
         std::vector<typename std::iterator_traits<FwIter>::value_type> upper_chain_points,
             lower_chain_points;
         auto middle = std::partition(
-            first, last, [&min_pt, &vec](const auto &pt) { return vec.cross(pt - min_pt) < 0; });
+            first, last, [&min_pt, &vec](const auto& pt) { return vec.cross(pt - min_pt) < 0; });
         upper_chain_points.assign(first, middle);
         lower_chain_points.assign(middle, last);
 
         auto max_pt1 = *std::max_element(
             upper_chain_points.begin(), upper_chain_points.end(),
-            [&dir_x](const auto &a, const auto &b) { return dir_x(a) < dir_x(b); });
+            [&dir_x](const auto& a, const auto& b) { return dir_x(a) < dir_x(b); });
         auto middle2
             = std::partition(upper_chain_points.begin(), upper_chain_points.end(),
-                             [&max_pt1](const auto &pt) { return pt.ycoord() < max_pt1.ycoord(); });
+                             [&max_pt1](const auto& pt) { return pt.ycoord() < max_pt1.ycoord(); });
         auto min_pt2 = *std::min_element(
             lower_chain_points.begin(), lower_chain_points.end(),
-            [&dir_x](const auto &a, const auto &b) { return dir_x(a) < dir_x(b); });
+            [&dir_x](const auto& a, const auto& b) { return dir_x(a) < dir_x(b); });
         auto middle3
             = std::partition(lower_chain_points.begin(), lower_chain_points.end(),
-                             [&min_pt2](const auto &pt) { return pt.ycoord() > min_pt2.ycoord(); });
+                             [&min_pt2](const auto& pt) { return pt.ycoord() > min_pt2.ycoord(); });
 
         std::vector<typename std::iterator_traits<FwIter>::value_type> segment_a_points,
             segment_b_points, segment_c_points, segment_d_points;
         if (vec.x() < 0) {
             segment_a_points.assign(middle3, lower_chain_points.end());
             std::sort(segment_a_points.begin(), segment_a_points.end(),
-                      [&dir_x](const auto &a, const auto &b) { return dir_x(a) > dir_x(b); });
+                      [&dir_x](const auto& a, const auto& b) { return dir_x(a) > dir_x(b); });
             segment_b_points.assign(lower_chain_points.begin(), middle3);
             std::sort(segment_b_points.begin(), segment_b_points.end(),
-                      [&dir_y](const auto &a, const auto &b) { return dir_y(a) < dir_y(b); });
+                      [&dir_y](const auto& a, const auto& b) { return dir_y(a) < dir_y(b); });
             segment_c_points.assign(middle2, upper_chain_points.end());
             std::sort(segment_c_points.begin(), segment_c_points.end(),
-                      [&dir_x](const auto &a, const auto &b) { return dir_x(a) < dir_x(b); });
+                      [&dir_x](const auto& a, const auto& b) { return dir_x(a) < dir_x(b); });
             segment_d_points.assign(upper_chain_points.begin(), middle2);
             std::sort(segment_d_points.begin(), segment_d_points.end(),
-                      [&dir_y](const auto &a, const auto &b) { return dir_y(a) > dir_y(b); });
+                      [&dir_y](const auto& a, const auto& b) { return dir_y(a) > dir_y(b); });
         } else {
             segment_a_points.assign(upper_chain_points.begin(), middle2);
             std::sort(segment_a_points.begin(), segment_a_points.end(),
-                      [&dir_x](const auto &a, const auto &b) { return dir_x(a) < dir_x(b); });
+                      [&dir_x](const auto& a, const auto& b) { return dir_x(a) < dir_x(b); });
             segment_b_points.assign(middle2, upper_chain_points.end());
             std::sort(segment_b_points.begin(), segment_b_points.end(),
-                      [&dir_y](const auto &a, const auto &b) { return dir_y(a) < dir_y(b); });
+                      [&dir_y](const auto& a, const auto& b) { return dir_y(a) < dir_y(b); });
             segment_c_points.assign(lower_chain_points.begin(), middle3);
             std::sort(segment_c_points.begin(), segment_c_points.end(),
-                      [&dir_x](const auto &a, const auto &b) { return dir_x(a) > dir_x(b); });
+                      [&dir_x](const auto& a, const auto& b) { return dir_x(a) > dir_x(b); });
             segment_d_points.assign(middle3, lower_chain_points.end());
             std::sort(segment_d_points.begin(), segment_d_points.end(),
-                      [&dir_y](const auto &a, const auto &b) { return dir_y(a) > dir_y(b); });
+                      [&dir_y](const auto& a, const auto& b) { return dir_y(a) > dir_y(b); });
         }
 
         std::vector<typename std::iterator_traits<FwIter>::value_type> result;
@@ -433,7 +433,7 @@ namespace recti {
      * @return true if the polygon is monotone, false otherwise
      */
     template <typename T, typename DirFunc>
-    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, const DirFunc &dir)
+    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, const DirFunc& dir)
         -> bool {
         if (pointset.size() <= 3) {
             return true;
@@ -458,10 +458,10 @@ namespace recti {
         }
 
         RDllist rdll(pointset.size());
-        auto &v_min = rdll[min_index];
-        auto &v_max = rdll[max_index];
+        auto& v_min = rdll[min_index];
+        auto& v_max = rdll[max_index];
 
-        auto violate = [&pointset, &dir](Dllink<size_t> *vi, Dllink<size_t> *v_stop,
+        auto violate = [&pointset, &dir](Dllink<size_t>* vi, Dllink<size_t>* v_stop,
                                          std::function<bool(T, T)> cmp) -> bool {
             auto current = vi;
             while (current != v_stop) {
@@ -498,7 +498,7 @@ namespace recti {
     template <typename T> inline auto rpolygon_is_xmonotone(std::span<const Point<T>> pointset)
         -> bool {
         auto x_key
-            = [](const Point<T> &pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
+            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
         return rpolygon_is_monotone(pointset, x_key);
     }
 
@@ -515,7 +515,7 @@ namespace recti {
     template <typename T> inline auto rpolygon_is_ymonotone(std::span<const Point<T>> pointset)
         -> bool {
         auto y_key
-            = [](const Point<T> &pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
+            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
         return rpolygon_is_monotone(pointset, y_key);
     }
 
@@ -550,14 +550,14 @@ namespace recti {
      * point is on the boundary of the polygon.
      */
     template <typename T>
-    inline auto point_in_rpolygon(std::span<const Point<T>> pointset, const Point<T> &ptq) -> bool {
+    inline auto point_in_rpolygon(std::span<const Point<T>> pointset, const Point<T>& ptq) -> bool {
         auto pt0 = pointset.back();
-        const auto &qy = ptq.ycoord();
-        const auto &p0y = pt0.ycoord();
+        const auto& qy = ptq.ycoord();
+        const auto& p0y = pt0.ycoord();
 
         auto res = false;
-        for (const auto &pt1 : pointset) {
-            const auto &p1y = pt1.ycoord();
+        for (const auto& pt1 : pointset) {
+            const auto& p1y = pt1.ycoord();
             if ((p1y <= qy && qy < p0y) || (p0y <= qy && qy < p1y)) {
                 if (pt1.xcoord() > ptq.xcoord()) {
                     res = !res;

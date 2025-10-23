@@ -11,7 +11,6 @@
 
 using namespace recti;
 
-
 TEST_CASE("Test route_with_steiner") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
@@ -39,7 +38,8 @@ TEST_CASE("Test route_with_steiner") {
     std::string svg_output = visualize_routing_tree_svg(router.get_tree(), keepouts, 1000, 1000);
     std::cout << svg_output;
 
-    save_routing_tree_svg(router.get_tree(), keepouts, "example_route_with_steiner_and_keepouts.svg");
+    save_routing_tree_svg(router.get_tree(), keepouts,
+                          "example_route_with_steiner_and_keepouts.svg");
 }
 
 TEST_CASE("Test route_with_constraints") {
@@ -69,5 +69,6 @@ TEST_CASE("Test route_with_constraints") {
     std::string svg_output = visualize_routing_tree_svg(router.get_tree(), keepouts, 1000, 1000);
     std::cout << svg_output;
 
-    save_routing_tree_svg(router.get_tree(), keepouts, "example_route_with_constraint_and_keepouts.svg");
+    save_routing_tree_svg(router.get_tree(), keepouts,
+                          "example_route_with_constraint_and_keepouts.svg");
 }

@@ -30,7 +30,7 @@ namespace recti {
      * @return `true` if the two objects overlap, `false` otherwise.
      */
     template <typename U1, typename U2>  //
-    constexpr auto overlap(const U1 &lhs, const U2 &rhs) -> bool {
+    constexpr auto overlap(const U1& lhs, const U2& rhs) -> bool {
         if constexpr (requires { lhs.overlaps(rhs); }) {
             return lhs.overlaps(rhs);
         } else if constexpr (requires { rhs.overlaps(lhs); }) {
@@ -64,7 +64,7 @@ namespace recti {
      * @return `true` if the first object contains the second object, `false` otherwise.
      */
     template <typename U1, typename U2>  //
-    constexpr auto contain(const U1 &lhs, const U2 &rhs) -> bool {
+    constexpr auto contain(const U1& lhs, const U2& rhs) -> bool {
         if constexpr (requires { lhs.contains(rhs); }) {
             return lhs.contains(rhs);
         } else if constexpr (requires { rhs.contains(lhs); }) {
@@ -101,7 +101,7 @@ namespace recti {
      * @return The intersection of `lhs` and `rhs`.
      */
     template <typename U1, typename U2>  //
-    constexpr auto intersection(const U1 &lhs, const U2 &rhs) {
+    constexpr auto intersection(const U1& lhs, const U2& rhs) {
         if constexpr (requires { lhs.intersect_with(rhs); }) {
             return lhs.intersect_with(rhs);
         } else if constexpr (requires { rhs.intersect_with(lhs); }) {
@@ -137,7 +137,7 @@ namespace recti {
      * @return The minimum distance between `lhs` and `rhs`.
      */
     template <typename U1, typename U2>  //
-    constexpr auto min_dist(const U1 &lhs, const U2 &rhs) {
+    constexpr auto min_dist(const U1& lhs, const U2& rhs) {
         if constexpr (requires { lhs.min_dist_with(rhs); }) {
             return lhs.min_dist_with(rhs);
         } else if constexpr (requires { rhs.min_dist_with(lhs); }) {
@@ -166,7 +166,7 @@ namespace recti {
      * the objects.
      */
     template <typename U1, typename U2>  //
-    constexpr auto min_dist_change(U1 &lhs, U2 &rhs) {
+    constexpr auto min_dist_change(U1& lhs, U2& rhs) {
         if constexpr (requires { lhs.min_dist_change_with(rhs); }) {
             return lhs.min_dist_change_with(rhs);
         } else if constexpr (requires { rhs.min_dist_change_with(lhs); }) {
@@ -192,7 +192,7 @@ namespace recti {
      * @param rhs The second object.
      */
     template <typename U1, typename U2>  //
-    constexpr auto nearest(const U1 &lhs, const U2 &rhs) {
+    constexpr auto nearest(const U1& lhs, const U2& rhs) {
         if constexpr (requires { lhs.nearest_to(rhs); }) {
             return lhs.nearest_to(rhs);
         } else /* constexpr */ {
@@ -201,7 +201,7 @@ namespace recti {
     }
 
     template <typename U>  //
-    constexpr auto measure_of(const U &a) {
+    constexpr auto measure_of(const U& a) {
         if constexpr (requires { a.measure(); }) {
             return a.measure();
         } else {

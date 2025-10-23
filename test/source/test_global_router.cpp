@@ -170,12 +170,14 @@ TEST_SUITE("GlobalRoutingTree") {
     //     CHECK(tree.nodes.at(t1_id)->parent->id == s1_id);
     // }
 
-    // TEST_CASE("GlobalRoutingTree::optimize_steiner_points - do not remove non-redundant steiner") {
+    // TEST_CASE("GlobalRoutingTree::optimize_steiner_points - do not remove non-redundant steiner")
+    // {
     //     GlobalRoutingTree tree(Point{0, 0});
     //     std::string s1_id = tree.insert_steiner_node({10, 0});
     //     std::string s2_id = tree.insert_steiner_node({20, 0}, s1_id);
     //     std::string t1_id = tree.insert_terminal_node({30, 0}, s2_id);
-    //     std::string t2_id = tree.insert_terminal_node({20, 10}, s2_id);  // s2 now has two children
+    //     std::string t2_id = tree.insert_terminal_node({20, 10}, s2_id);  // s2 now has two
+    //     children
 
     //     CHECK(tree.get_all_steiner_nodes().size() == 2);  // s1, s2
 
@@ -262,7 +264,8 @@ TEST_CASE("Test route_with_steiner") {
     GlobalRouter router(source, terminals);
     router.route_with_steiners();
 
-    std::string svg_output = visualize_routing_tree_svg(router.get_tree(), std::nullopt, 1000, 1000);
+    std::string svg_output
+        = visualize_routing_tree_svg(router.get_tree(), std::nullopt, 1000, 1000);
     std::cout << svg_output;
 
     save_routing_tree_svg(router.get_tree(), std::nullopt, "example_route_with_steiner.svg");
@@ -286,7 +289,8 @@ TEST_CASE("Test route_with_constraints") {
     GlobalRouter router(source, terminals);
     router.route_with_constraints(1.0);
 
-    std::string svg_output = visualize_routing_tree_svg(router.get_tree(), std::nullopt, 1000, 1000);
+    std::string svg_output
+        = visualize_routing_tree_svg(router.get_tree(), std::nullopt, 1000, 1000);
     std::cout << svg_output;
 
     save_routing_tree_svg(router.get_tree(), std::nullopt, "example_route_with_constraint.svg");

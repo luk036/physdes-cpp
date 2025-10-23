@@ -108,7 +108,7 @@ TEST_CASE("Interval overlapping test") {
     std::set<Interval<int>> S;   // set of maximal non-overlapped rectangles
     std::list<Interval<int>> L;  // list of the removed rectangles
 
-    for (const auto &intvl : lst) {
+    for (const auto& intvl : lst) {
         if (S.contains(intvl)) {
             L.push_back(intvl);
         } else {
