@@ -131,7 +131,7 @@ template <> std::string visualize_routing_tree_svg(
         }
         svg << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"" << radius << "\" fill=\"" << color << "\" stroke=\"black\" stroke-width=\"1\"/>\n";
         svg << "<text x=\"" << x + radius + 2 << "\" y=\"" << y + 4 << "\" font-family=\"Arial\" font-size=\"10\" fill=\"black\">" << label << "</text>\n";
-        svg << "<text x=\"" << x << "\" y=\"" << y - radius - 5 << "\" font-family=\"Arial\" font-size=\"8\" fill=\"gray\" text-anchor=\"middle\">(" << node->pt.xcoord() << "," << node->pt.ycoord() << ")</text>\n";
+        svg << "<text x=\"" << x << "\" y=\"" << y - radius - 5 << "\" font-family=\"Arial\" font-size=\"8\" fill=\"gray\" text-anchor=\"middle\">(" << node->pt << ")</text>\n";
     }
 
     int legend_y = 20;

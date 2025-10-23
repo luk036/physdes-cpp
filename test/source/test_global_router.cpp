@@ -254,7 +254,7 @@ TEST_CASE("Test route_with_steiner") {
     using IntPoint = Point<int, int>;
 
     std::vector<IntPoint> terminals;
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 7; ++i) {
         terminals.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     IntPoint source(static_cast<int>(hgenX.pop()), static_cast<int>(hgenX.pop()));
@@ -278,13 +278,13 @@ TEST_CASE("Test route_with_constraints") {
     using IntPoint = Point<int, int>;
 
     std::vector<IntPoint> terminals;
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 7; ++i) {
         terminals.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     IntPoint source(static_cast<int>(hgenX.pop()), static_cast<int>(hgenX.pop()));
 
     GlobalRouter router(source, terminals);
-    router.route_with_constraints(1.1);
+    router.route_with_constraints(1.0);
 
     std::string svg_output = visualize_routing_tree_svg(router.get_tree(), std::nullopt, 1000, 1000);
     std::cout << svg_output;

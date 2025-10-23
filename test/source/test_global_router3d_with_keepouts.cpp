@@ -34,7 +34,7 @@ TEST_CASE("Test route3d_with_steiner_and_keepouts") {
         {Point{Interval<int>(500, 800), Interval<int>(-1000, 1000)}, Interval<int>(600, 900)},
     };
 
-    GlobalRouter router(source, terminals, keepouts);
+    GlobalRouter<IntPoint> router(source, terminals, keepouts);
     router.route_with_steiners();
 
     std::string svg_output
@@ -67,7 +67,7 @@ TEST_CASE("Test route3d_with_constraints_and_keepouts") {
         {{Interval<int>(500, 800), Interval<int>(-1000, 1000)}, Interval<int>(600, 900)},
     };
 
-    GlobalRouter router(source, terminals, keepouts);
+    GlobalRouter<IntPoint> router(source, terminals, keepouts);
     router.route_with_constraints(1.0);
 
     std::string svg_output

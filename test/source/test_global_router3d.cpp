@@ -264,10 +264,10 @@ TEST_CASE("Test route3d_with_steiner") {
 
     std::vector<IntPoint> terminals;
     for (int i = 0; i < 5; ++i) {
-        terminals.emplace_back(Point{Point{static_cast<int>(hgenX.pop()), (rand() % 4) * scale_z},
+        terminals.emplace_back(Point{Point{static_cast<int>(hgenX.pop()), (i % 4) * scale_z},
                                      static_cast<int>(hgenY.pop())});
     }
-    IntPoint source(Point{Point{static_cast<int>(hgenX.pop()), (rand() % 4) * scale_z},
+    IntPoint source(Point{Point{static_cast<int>(hgenX.pop()), 0},
                           static_cast<int>(hgenY.pop())});
 
     GlobalRouter router(source, terminals);
@@ -291,10 +291,10 @@ TEST_CASE("Test route3d_with_constraints") {
 
     std::vector<IntPoint> terminals;
     for (int i = 0; i < 5; ++i) {
-        terminals.emplace_back(Point{Point{static_cast<int>(hgenX.pop()), (rand() % 4) * scale_z},
+        terminals.emplace_back(Point{Point{static_cast<int>(hgenX.pop()), (i % 4) * scale_z},
                                      static_cast<int>(hgenY.pop())});
     }
-    IntPoint source(Point{Point{static_cast<int>(hgenX.pop()), (rand() % 4) * scale_z},
+    IntPoint source(Point{Point{static_cast<int>(hgenX.pop()), 0},
                           static_cast<int>(hgenY.pop())});
 
     GlobalRouter router(source, terminals);
