@@ -149,66 +149,6 @@ TEST_SUITE("GlobalRoutingTree3d") {
         CHECK_THROWS_AS(tree.find_path_to_source("non_existent"), std::runtime_error);
     }
 
-    // TEST_CASE("GlobalRoutingTree::optimize_steiner_points - remove redundant steiner") {
-    //     GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-    //     std::string s1_id = tree.insert_steiner_node(Point{Point{10, 0}, 0});
-    //     std::string s2_id = tree.insert_steiner_node(Point{Point{20, 0}, 0},
-    //                                                  s1_id);  // s2 has only one child (none yet)
-    //     std::string t1_id
-    //         = tree.insert_terminal_node(Point{Point{30, 0}, 0}, s2_id);  // s2 now has t1 as
-    //         child
-
-    //     CHECK(tree.get_all_steiner_nodes().size() == 2);  // s1, s2
-    //     CHECK(tree.nodes.count(s1_id));
-    //     CHECK(tree.nodes.count(s2_id));
-
-    //     tree.optimize_steiner_points();
-
-    //     // s2 should be removed because it has only one child (t1) and a parent (s1)
-    //     CHECK(tree.get_all_steiner_nodes().size() == 1);  // Only s1 remains
-    //     CHECK(tree.nodes.count(s1_id));
-    //     CHECK_FALSE(tree.nodes.count(s2_id));
-
-    //     // s1 should now directly point to t1
-    //     CHECK(tree.nodes.at(s1_id)->children.size() == 1);
-    //     CHECK(tree.nodes.at(s1_id)->children[0]->id == t1_id);
-    //     CHECK(tree.nodes.at(t1_id)->parent->id == s1_id);
-    // }
-
-    // TEST_CASE("GlobalRoutingTree::optimize_steiner_points - do not remove non-redundant steiner")
-    // {
-    //     GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-    //     std::string s1_id = tree.insert_steiner_node(Point{Point{10, 0}, 0});
-    //     std::string s2_id = tree.insert_steiner_node(Point{Point{20, 0}, 0}, s1_id);
-    //     std::string t1_id = tree.insert_terminal_node(Point{Point{30, 0}, 0}, s2_id);
-    //     std::string t2_id = tree.insert_terminal_node(Point{Point{20, 10}, 10},
-    //                                                   s2_id);  // s2 now has two children
-
-    //     CHECK(tree.get_all_steiner_nodes().size() == 2);  // s1, s2
-
-    //     tree.optimize_steiner_points();
-
-    //     // No steiner nodes should be removed
-    //     CHECK(tree.get_all_steiner_nodes().size() == 2);
-    //     CHECK(tree.nodes.count(s1_id));
-    //     CHECK(tree.nodes.count(s2_id));
-    // }
-
-    // TEST_CASE("GlobalRoutingTree::optimize_steiner_points - source node is not removed") {
-    //     GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-    //     std::string t1_id
-    //         = tree.insert_terminal_node(Point{Point{10, 0}, 0});  // source has one child (t1)
-
-    //     CHECK(tree.get_all_steiner_nodes().empty());
-    //     CHECK(tree.get_source()->children.size() == 1);
-
-    //     tree.optimize_steiner_points();
-
-    //     CHECK(tree.get_all_steiner_nodes().empty());
-    //     CHECK(tree.get_source()->children.size() == 1);
-    //     CHECK(tree.get_source()->children[0]->id == t1_id);
-    // }
-
     TEST_CASE("GlobalRoutingTree::insert_terminal_with_steiner - no steiner inserted") {
         GlobalRoutingTree tree(Point{Point{0, 0}, 0});
         tree.insert_terminal_with_steiner(
@@ -254,58 +194,54 @@ TEST_SUITE("GlobalRoutingTree3d") {
     }
 }
 
-TEST_CASE("Test route3d_with_steiner") {
+// Helper function to generate a set of 3D points for testing
+auto generate_3d_points(size_t num_terminals, unsigned int seed)
+    -> std::pair<Point<Point<int, int>, int>, std::vector<Point<Point<int, int>, int>>> {
     constexpr int scale_z = 100;
 
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
-    hgenX.reseed(19);
-    hgenY.reseed(19);
+    hgenX.reseed(seed);
+    hgenY.reseed(seed);
 
-    using IntPoint = Point<Point<int, int>, int>;
+    using IntPoint3d = Point<Point<int, int>, int>;
 
-    std::vector<IntPoint> terminals;
-    for (int i = 0; i < 5; ++i) {
-        terminals.emplace_back(Point{Point{static_cast<int>(hgenX.pop()), (i % 4) * scale_z},
-                                     static_cast<int>(hgenY.pop())});
+    std::vector<IntPoint3d> terminals;
+    terminals.reserve(num_terminals);
+    for (size_t i = 0; i < num_terminals; ++i) {
+        terminals.emplace_back(
+            Point{Point{static_cast<int>(hgenX.pop()), (static_cast<int>(i) % 4) * scale_z},
+                  static_cast<int>(hgenY.pop())});
     }
-    IntPoint source(Point{Point{static_cast<int>(hgenX.pop()), 0}, static_cast<int>(hgenY.pop())});
+    IntPoint3d source(
+        Point{Point{static_cast<int>(hgenX.pop()), 0}, static_cast<int>(hgenY.pop())});
 
-    GlobalRouter router(source, terminals);
-    router.route_with_steiners();
-
-    std::string svg_output
-        = visualize_routing_tree3d_svg(router.get_tree(), std::nullopt, scale_z, 1000, 1000);
-    std::cout << svg_output;
-
-    save_routing_tree3d_svg(router.get_tree(), std::nullopt, scale_z,
-                            "example_route3d_with_steiner.svg");
+    return {source, terminals};
 }
 
-TEST_CASE("Test route3d_with_constraints") {
-    constexpr int scale_z = 100;
+TEST_SUITE("RoutingAlgorithms3d") {
+    TEST_CASE("Test routing algorithms in 3D") {
+        const size_t num_terminals = 5;
+        const unsigned int seed = 19;
+        const double high_stress = 1.0;
+        const int scale_z = 100;
+        const unsigned int width = 1000;
+        const unsigned int height = 1000;
 
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
-    hgenX.reseed(19);
-    hgenY.reseed(19);
+        auto [source, terminals] = generate_3d_points(num_terminals, seed);
 
-    using IntPoint = Point<Point<int, int>, int>;
+        SUBCASE("route_with_steiners") {
+            GlobalRouter router(source, terminals);
+            router.route_with_steiners();
+            save_routing_tree3d_svg(router.get_tree(), std::nullopt, scale_z,
+                                    "example_route3d_with_steiner.svg", width, height);
+        }
 
-    std::vector<IntPoint> terminals;
-    for (int i = 0; i < 5; ++i) {
-        terminals.emplace_back(Point{Point{static_cast<int>(hgenX.pop()), (i % 4) * scale_z},
-                                     static_cast<int>(hgenY.pop())});
+        SUBCASE("route_with_constraints") {
+            GlobalRouter router(source, terminals);
+            router.route_with_constraints(high_stress);
+            save_routing_tree3d_svg(router.get_tree(), std::nullopt, scale_z,
+                                    "example_route3d_with_constraint.svg", width, height);
+        }
     }
-    IntPoint source(Point{Point{static_cast<int>(hgenX.pop()), 0}, static_cast<int>(hgenY.pop())});
-
-    GlobalRouter router(source, terminals);
-    router.route_with_constraints(1.0);
-
-    std::string svg_output
-        = visualize_routing_tree3d_svg(router.get_tree(), std::nullopt, scale_z, 1000, 1000);
-    std::cout << svg_output;
-
-    save_routing_tree3d_svg(router.get_tree(), std::nullopt, scale_z,
-                            "example_route3d_with_constraint.svg");
 }
