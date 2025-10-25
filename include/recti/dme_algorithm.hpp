@@ -435,8 +435,10 @@ namespace recti {
 
             // Split into left and right groups
             size_t mid = nodes.size() / 2;
-            std::vector<std::unique_ptr<TreeNode>> left_group(nodes.begin(), nodes.begin() + mid);
-            std::vector<std::unique_ptr<TreeNode>> right_group(nodes.begin() + mid, nodes.end());
+            std::vector<std::unique_ptr<TreeNode>> left_group(std::make_move_iterator(nodes.begin()),
+                std::make_move_iterator(nodes.begin() + mid));
+            std::vector<std::unique_ptr<TreeNode>> right_group(
+                std::make_move_iterator(nodes.begin() + mid), std::make_move_iterator(nodes.end()));
 
             // Recursively build subtrees
             auto left_child = build_merging_tree(std::move(left_group), !vertical);
@@ -465,7 +467,7 @@ namespace recti {
                     auto ms1 = ManhattanArc<int, int>::from_point(node->position());
                     ManhattanArc<Interval<int>, Interval<int>> ms{Interval{ms1.impl.xcoord(), ms1.impl.xcoord()},
                                                                   Interval{ms1.impl.ycoord(), ms1.impl.ycoord()}}; 
-                    merging_segments[node->name()] = ms;
+                    merging_segments.emplace(node->name(), ms);
                     return ms;
                 }
 
@@ -482,7 +484,7 @@ namespace recti {
                 node->set_delay(delay_left);
 
                 auto merged_segment = left_ms.merge_with(right_ms, extend_left);
-                merging_segments[node->name()] = merged_segment;
+                merging_segments.emplace(node->name(), merged_segment);
 
                 float wire_cap = delay_calculator_->calculate_wire_capacitance(distance);
                 node->set_capacitance(node->left().value()->capacitance() +

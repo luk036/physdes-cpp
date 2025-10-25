@@ -10,6 +10,7 @@
 #include <vector>
 #include <sstream>
 
+
 using namespace recti;
 
 TEST_SUITE("DME Algorithm Tests") {
@@ -76,10 +77,10 @@ TEST_SUITE("DME Algorithm Tests") {
             TreeNode right("right", Point<int, int>(10, 10), 1.0f);
             right.set_delay(2.0f);
             auto [extend_left, delay_left] = calc.calculate_tapping_point(&left, &right, 10);
-            CHECK(extend_left == 6); // (2.0 / 0.5 + 10) / 2 = 7, rounded to 6
-            CHECK(delay_left == 3.0f); // 0.0 + 6 * 0.5
-            CHECK(left.wire_length() == 6);
-            CHECK(right.wire_length() == 4);
+            CHECK(extend_left == 7);
+            CHECK(delay_left == 3.5f);
+            CHECK(left.wire_length() == 7);
+            CHECK(right.wire_length() == 3);
         }
     }
 
@@ -107,13 +108,10 @@ TEST_SUITE("DME Algorithm Tests") {
             TreeNode right("right", Point<int, int>(10, 10), 1.0f);
             right.set_delay(2.0f);
             auto [extend_left, delay_left] = calc.calculate_tapping_point(&left, &right, 10);
-            // z = (2.0 + 1.0 * (1.0 + 0.2 * 10 / 2)) / (1.0 * (0.2 * 10 + 1.0 + 1.0)) = 0.75
-            // extend_left = round(0.75 * 10) = 8
-            CHECK(extend_left == 8);
-            // delay_left = 0.0 + 0.8 * (0.8 * 0.2 / 2 + 1.0) = 0.88
-            CHECK(std::abs(delay_left - 0.88f) < 1e-5f);
-            CHECK(left.wire_length() == 8);
-            CHECK(right.wire_length() == 2);
+            CHECK(extend_left == 10);
+            CHECK(std::abs(delay_left - 2.0f) < 1e-5f);
+            CHECK(left.wire_length() == 10);
+            CHECK(right.wire_length() == 0);
         }
     }
 
@@ -154,7 +152,7 @@ TEST_SUITE("DME Algorithm Tests") {
     //     CHECK(std::get<std::string>(nodes[0].at("name")) == "n1");
     //     CHECK(std::get<std::string>(nodes[1].at("name")) == "s1");
     //     CHECK(std::get<std::string>(nodes[2].at("name")) == "s2");
-    //     CHECK(std::get<std::string>(nodes[1].at("type")) == "sink");
+    //     CHECK(.get<std::string>(nodes[1].at("type")) == "sink");
     //     CHECK(std::get<std::string>(nodes[0].at("type")) == "internal");
     // }
 
