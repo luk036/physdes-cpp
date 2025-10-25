@@ -226,7 +226,7 @@ namespace recti {
             : delay_per_unit_(delay_per_unit), capacitance_per_unit_(capacitance_per_unit) {}
 
         auto calculate_wire_delay(int length, float /*load_capacitance*/) const -> float override {
-            return delay_per_unit_ * length;
+            return delay_per_unit_ * static_cast<float>(length);
         }
 
         auto calculate_wire_delay_per_unit(float /*load_capacitance*/) const -> float override {
@@ -234,15 +234,16 @@ namespace recti {
         }
 
         auto calculate_wire_capacitance(int length) const -> float override {
-            return capacitance_per_unit_ * length;
+            return capacitance_per_unit_ * static_cast<float>(length);
         }
 
         auto calculate_tapping_point(TreeNode* node_left, TreeNode* node_right, int distance) const
             -> std::pair<int, float> override {
             float skew = node_right->delay() - node_left->delay();
-            int extend_left
-                = static_cast<int>(std::round((skew / delay_per_unit_ + distance) / 2.0f));
-            float delay_left = node_left->delay() + extend_left * delay_per_unit_;
+            int extend_left = static_cast<int>(
+                std::round((skew / delay_per_unit_ + static_cast<float>(distance)) / 2.0f));
+            float delay_left
+                = node_left->delay() + static_cast<float>(extend_left) * delay_per_unit_;
             node_left->set_wire_length(extend_left);
             node_right->set_wire_length(distance - extend_left);
 
@@ -289,8 +290,8 @@ namespace recti {
             : unit_resistance_(unit_resistance), unit_capacitance_(unit_capacitance) {}
 
         auto calculate_wire_delay(int length, float load_capacitance) const -> float override {
-            float wire_resistance = unit_resistance_ * length;
-            float wire_capacitance = unit_capacitance_ * length;
+            float wire_resistance = unit_resistance_ * static_cast<float>(length);
+            float wire_capacitance = unit_capacitance_ * static_cast<float>(length);
             return wire_resistance * (wire_capacitance / 2.0f + load_capacitance);
         }
 
@@ -299,19 +300,19 @@ namespace recti {
         }
 
         auto calculate_wire_capacitance(int length) const -> float override {
-            return unit_capacitance_ * length;
+            return unit_capacitance_ * static_cast<float>(length);
         }
 
         auto calculate_tapping_point(TreeNode* node_left, TreeNode* node_right, int distance) const
             -> std::pair<int, float> override {
             float skew = node_right->delay() - node_left->delay();
-            float r = distance * unit_resistance_;
-            float c = distance * unit_capacitance_;
+            float r = static_cast<float>(distance) * unit_resistance_;
+            float c = static_cast<float>(distance) * unit_capacitance_;
             float z = (skew + r * (node_right->capacitance() + c / 2.0f))
                       / (r * (c + node_right->capacitance() + node_left->capacitance()));
-            int extend_left = static_cast<int>(std::round(z * distance));
-            float r_left = extend_left * unit_resistance_;
-            float c_left = extend_left * unit_capacitance_;
+            int extend_left = static_cast<int>(std::round(z * static_cast<float>(distance)));
+            float r_left = static_cast<float>(extend_left) * unit_resistance_;
+            float c_left = static_cast<float>(extend_left) * unit_capacitance_;
             float delay_left
                 = node_left->delay() + r_left * (c_left / 2.0f + node_left->capacitance());
             node_left->set_wire_length(extend_left);
@@ -586,10 +587,9 @@ namespace recti {
      */
     inline auto get_tree_statistics(const TreeNode* root) -> std::unordered_map<
         std::string,
-        std::variant<
-            std::vector<std::unordered_map<
-                std::string, std::variant<std::string, std::tuple<int, int>, float, int>>>,
-            std::vector<std::string>, int>> {
+        std::variant<std::vector<std::unordered_map<
+                         std::string, std::variant<std::string, std::tuple<int, int>, float, int>>>,
+                     std::vector<std::string>, int>> {
         using Values = std::variant<std::string, std::tuple<int, int>, float, int>;
         std::vector<std::unordered_map<std::string, Values>> nodes;
         std::vector<std::unordered_map<std::string, Values>> wires;
@@ -629,9 +629,8 @@ namespace recti {
 
         traverse(root, nullptr);
 
-        using StatsVariant =
-            std::variant<std::vector<std::unordered_map<std::string, Values>>,
-                         std::vector<std::string>, int>;
+        using StatsVariant = std::variant<std::vector<std::unordered_map<std::string, Values>>,
+                                          std::vector<std::string>, int>;
 
         return {{"nodes", StatsVariant(nodes)},
                 {"wires", StatsVariant(wires)},
