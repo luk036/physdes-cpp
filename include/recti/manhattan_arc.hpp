@@ -270,31 +270,6 @@ namespace recti {
         }
         
         /**
-         * @brief Compute the intersection of two `ManhattanArc` objects by enlarging them and finding
-         * the overlap.
-         *
-         * This function first calculates the minimum distance between the x and y coordinates of
-         * the current `ManhattanArc` object and the provided `ManhattanArc` object `other`. It then uses
-         * this distance to enlarge both `ManhattanArc` objects, with the current object being enlarged
-         * by half the distance and the `other` object being enlarged by the remaining half.
-         * Finally, it computes the intersection of the two enlarged `ManhattanArc` objects and returns
-         * the result.
-         *
-         * @param[in] other The `ManhattanArc` object to compute the intersection with.
-         * @return The intersection of the two `ManhattanArc` objects.
-         */
-        constexpr auto merge_with(const ManhattanArc<T1, T2>& other) const {
-            auto alpha = this->min_dist_with(other);
-            auto half = alpha / 2;
-            auto trr1 = this->impl.enlarge_with(half);
-            auto trr2 = other.impl.enlarge_with(alpha - half);
-            auto t = trr1.intersect_with(trr2);
-            auto x = t.xcoord();
-            auto y = t.ycoord();
-            return ManhattanArc<decltype(x), decltype(y)>{std::move(x), std::move(y)};
-        }
-
-        /**
          * @brief Overload the stream insertion operator `<<` to output a `ManhattanArc` object.
          *
          * This function overloads the stream insertion operator `<<` to output a `ManhattanArc` object

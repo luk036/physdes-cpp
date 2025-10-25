@@ -19,15 +19,6 @@ TEST_CASE("ManhattanArc test") {
     CHECK(min_dist(r1, r2) == 7);
 }
 
-TEST_CASE("merge test") {
-    const auto s1 = ManhattanArc<int>{800, -400};
-    const auto s2 = ManhattanArc<int>{1400, -400};
-    const auto m1 = s1.merge_with(s2);
-    std::cout << m1 << '\n';
-    // CHECK(false);
-    CHECK(m1 == ManhattanArc<Interval<int>>(Interval<int>{1100, 1100}, Interval<int>{-700, -100}));
-}
-
 TEST_CASE("ManhattanArc class") {
     ManhattanArc<int, int> a(4 - 5, 4 + 5); // [-1, 9]
     SUBCASE("Equality") {
