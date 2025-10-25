@@ -27,6 +27,11 @@ namespace recti {
 
         /**
          * @brief Construct a new Interval object
+         */
+        constexpr Interval() : _lb{T()}, _ub{T()} {}
+
+        /**
+         * @brief Construct a new Interval object
          *
          * The function constructs a new Interval object with given lower and upper values.
          *

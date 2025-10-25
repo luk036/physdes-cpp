@@ -40,6 +40,11 @@ namespace recti {
 
       public:
         /**
+         * @brief Default constructor
+         */
+        constexpr ManhattanArc() : impl{T1{}, T2{}} {}
+
+        /**
          * @brief Construct a new ManhattanArc object
          *
          * This code defines a constructor for the `ManhattanArc` class template. The
