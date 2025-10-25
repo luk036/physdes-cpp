@@ -5,16 +5,14 @@
 #include <recti/dme_algorithm.hpp>
 #include <recti/interval.hpp>
 #include <recti/point.hpp>
+#include <sstream>
 #include <string>
 #include <variant>
 #include <vector>
-#include <sstream>
-
 
 using namespace recti;
 
 TEST_SUITE("DME Algorithm Tests") {
-
     TEST_CASE("Sink class") {
         SUBCASE("Basic constructor and accessors") {
             Sink sink("s1", Point<int, int>(10, 20), 1.5f);
@@ -56,13 +54,9 @@ TEST_SUITE("DME Algorithm Tests") {
     TEST_CASE("LinearDelayCalculator class") {
         LinearDelayCalculator calc(0.5f, 0.2f);
 
-        SUBCASE("Constructor and accessors") {
-            CHECK(calc.delay_per_unit() == 0.5f);
-        }
+        SUBCASE("Constructor and accessors") { CHECK(calc.delay_per_unit() == 0.5f); }
 
-        SUBCASE("calculate_wire_delay") {
-            CHECK(calc.calculate_wire_delay(10, 5.0f) == 5.0f);
-        }
+        SUBCASE("calculate_wire_delay") { CHECK(calc.calculate_wire_delay(10, 5.0f) == 5.0f); }
 
         SUBCASE("calculate_wire_delay_per_unit") {
             CHECK(calc.calculate_wire_delay_per_unit(5.0f) == 0.5f);
@@ -87,20 +81,18 @@ TEST_SUITE("DME Algorithm Tests") {
     TEST_CASE("ElmoreDelayCalculator class") {
         ElmoreDelayCalculator calc(0.1f, 0.2f);
 
-        SUBCASE("Constructor and accessors") {
-            CHECK(calc.unit_resistance() == 0.1f);
-        }
+        SUBCASE("Constructor and accessors") { CHECK(calc.unit_resistance() == 0.1f); }
 
         SUBCASE("calculate_wire_delay") {
-            CHECK(calc.calculate_wire_delay(10, 5.0f) == 6.0f); // 0.1 * 10 * (0.2 * 10 / 2 + 5.0)
+            CHECK(calc.calculate_wire_delay(10, 5.0f) == 6.0f);  // 0.1 * 10 * (0.2 * 10 / 2 + 5.0)
         }
 
         SUBCASE("calculate_wire_delay_per_unit") {
-            CHECK(calc.calculate_wire_delay_per_unit(5.0f) == 0.51f); // 0.1 * (0.2 / 2 + 5.0)
+            CHECK(calc.calculate_wire_delay_per_unit(5.0f) == 0.51f);  // 0.1 * (0.2 / 2 + 5.0)
         }
 
         SUBCASE("calculate_wire_capacitance") {
-            CHECK(calc.calculate_wire_capacitance(10) == 2.0f); // 0.2 * 10
+            CHECK(calc.calculate_wire_capacitance(10) == 2.0f);  // 0.2 * 10
         }
 
         SUBCASE("calculate_tapping_point") {
@@ -115,45 +107,48 @@ TEST_SUITE("DME Algorithm Tests") {
         }
     }
 
-    // TEST_CASE("DMEAlgorithm class") {
-    //     SUBCASE("Constructor") {
-    //         std::vector<Sink> sinks = {Sink("s1", Point<int, int>(10, 20), 1.0f)};
-    //         auto calc = std::make_unique<LinearDelayCalculator>(0.5f);
-    //         DMEAlgorithm dme(sinks, std::move(calc));
-    //         // CHECK(typeid(*dme.delay_calculator_) == typeid(LinearDelayCalculator));
+    TEST_CASE("DMEAlgorithm class") {
+        SUBCASE("Constructor") {
+            std::vector<Sink> sinks = {Sink("s1", Point<int, int>(10, 20), 1.0f)};
+            auto calc = std::make_unique<LinearDelayCalculator>(0.5f);
+            DMEAlgorithm dme(sinks, std::move(calc));
+            // CHECK(typeid(*dme.delay_calculator_) == typeid(LinearDelayCalculator));
 
-    //         auto calc2 = std::make_unique<ElmoreDelayCalculator>(0.1f, 0.2f);
-    //         DMEAlgorithm dme2(sinks, std::move(calc2));
-    //         // CHECK(typeid(*dme2.delay_calculator_) == typeid(ElmoreDelayCalculator));
-    //     }
+            auto calc2 = std::make_unique<ElmoreDelayCalculator>(0.1f, 0.2f);
+            DMEAlgorithm dme2(sinks, std::move(calc2));
+            // CHECK(typeid(*dme2.delay_calculator_) == typeid(ElmoreDelayCalculator));
+        }
 
-    //     SUBCASE("Empty sinks") {
-    //         std::vector<Sink> sinks;
-    //         auto calc = std::make_unique<LinearDelayCalculator>();
-    //         CHECK_THROWS_AS(DMEAlgorithm(sinks, std::move(calc)), std::invalid_argument);
-    //     }
-    // }
+        SUBCASE("Empty sinks") {
+            std::vector<Sink> sinks;
+            auto calc = std::make_unique<LinearDelayCalculator>();
+            CHECK_THROWS_AS(DMEAlgorithm(sinks, std::move(calc)), std::invalid_argument);
+        }
+    }
 
-    // TEST_CASE("get_tree_statistics function") {
-    //     TreeNode s1("s1", Point<int, int>(10, 20));
-    //     TreeNode s2("s2", Point<int, int>(30, 40));
-    //     TreeNode root("n1", Point<int, int>(20, 30));
-    //     root.set_left(&s1);
-    //     root.set_right(&s2);
-    //     s1.set_parent(&root);
-    //     s2.set_parent(&root);
+    TEST_CASE("get_tree_statistics function") {
+        TreeNode s1("s1", Point<int, int>(10, 20));
+        TreeNode s2("s2", Point<int, int>(30, 40));
+        TreeNode root("n1", Point<int, int>(20, 30));
+        root.set_left(&s1);
+        root.set_right(&s2);
+        s1.set_parent(&root);
+        s2.set_parent(&root);
 
-    //     auto stats = get_tree_statistics(&root);
-    //     CHECK(std::get<int>(stats.at("total_nodes")) == 3);
-    //     CHECK(std::get<int>(stats.at("total_sinks")) == 2);
-    //     CHECK(std::get<int>(stats.at("total_wires")) == 2);
-    //     auto nodes = std::get<std::vector<std::unordered_map<std::string, std::variant<std::string, std::tuple<int, int>, float>>>>(stats.at("nodes"));
-    //     CHECK(nodes.size() == 3);
-    //     CHECK(std::get<std::string>(nodes[0].at("name")) == "n1");
-    //     CHECK(std::get<std::string>(nodes[1].at("name")) == "s1");
-    //     CHECK(std::get<std::string>(nodes[2].at("name")) == "s2");
-    //     CHECK(.get<std::string>(nodes[1].at("type")) == "sink");
-    //     CHECK(std::get<std::string>(nodes[0].at("type")) == "internal");
-    // }
+        auto stats = get_tree_statistics(&root);
+        CHECK(std::get<int>(stats.at("total_nodes")) == 3);
+        CHECK(std::get<int>(stats.at("total_sinks")) == 2);
+        CHECK(std::get<int>(stats.at("total_wires")) == 2);
 
+        using Values = std::variant<std::string, std::tuple<int, int>, float, int>;
+        using NodeInfo = std::unordered_map<std::string, Values>;
+        auto nodes = std::get<std::vector<NodeInfo>>(stats.at("nodes"));
+
+        CHECK(nodes.size() == 3);
+        CHECK(std::get<std::string>(nodes[0].at("name")) == "n1");
+        CHECK(std::get<std::string>(nodes[1].at("name")) == "s1");
+        CHECK(std::get<std::string>(nodes[2].at("name")) == "s2");
+        CHECK(std::get<std::string>(nodes[1].at("type")) == "sink");
+        CHECK(std::get<std::string>(nodes[0].at("type")) == "internal");
+    }
 }

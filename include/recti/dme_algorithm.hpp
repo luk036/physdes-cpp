@@ -1,17 +1,17 @@
 #pragma once
 
+#include <algorithm>
 #include <functional>
+#include <memory>
 #include <optional>
+#include <stdexcept>
 #include <string>
+#include <unordered_map>
 #include <variant>
 #include <vector>
-#include <unordered_map>
-#include <memory>
-#include <stdexcept>
-#include <algorithm>
 
-#include "point.hpp"
 #include "manhattan_arc.hpp"
+#include "point.hpp"
 
 namespace recti {
 
@@ -19,7 +19,7 @@ namespace recti {
      * @brief Represents a clock sink with position and capacitance.
      */
     class Sink {
-    public:
+      public:
         /**
          * @brief Construct a Sink with name, position, and capacitance.
          *
@@ -48,14 +48,13 @@ namespace recti {
         /**
          * @brief Stream insertion operator for Sink.
          */
-        template <class Stream>
-        friend auto operator<<(Stream& out, const Sink& sink) -> Stream& {
+        template <class Stream> friend auto operator<<(Stream& out, const Sink& sink) -> Stream& {
             out << "Sink(name=" << sink.name_ << ", position=" << sink.position_
                 << ", capacitance=" << sink.capacitance_ << ")";
             return out;
         }
 
-    private:
+      private:
         std::string name_;
         Point<int, int> position_;
         float capacitance_;
@@ -65,7 +64,7 @@ namespace recti {
      * @brief Represents a node in the clock tree.
      */
     class TreeNode {
-    public:
+      public:
         /**
          * @brief Construct a TreeNode with name and position.
          *
@@ -164,13 +163,13 @@ namespace recti {
         /**
          * @brief Stream insertion operator for TreeNode.
          */
-        template <class Stream>
-        friend auto operator<<(Stream& out, const TreeNode& node) -> Stream& {
+        template <class Stream> friend auto operator<<(Stream& out, const TreeNode& node)
+            -> Stream& {
             out << "TreeNode(name=" << node.name_ << ", position=" << node.position_ << ")";
             return out;
         }
 
-    private:
+      private:
         std::string name_;
         Point<int, int> position_;
         std::optional<TreeNode*> left_ = std::nullopt;
@@ -186,7 +185,7 @@ namespace recti {
      * @brief Abstract base class for delay calculation strategies.
      */
     class DelayCalculator {
-    public:
+      public:
         virtual ~DelayCalculator() = default;
 
         /**
@@ -207,15 +206,16 @@ namespace recti {
         /**
          * @brief Calculate extra length based on skew.
          */
-        virtual auto calculate_tapping_point(TreeNode* node_left, TreeNode* node_right, int distance) const
-            -> std::pair<int, float> = 0;
+        virtual auto calculate_tapping_point(TreeNode* node_left, TreeNode* node_right,
+                                             int distance) const -> std::pair<int, float>
+            = 0;
     };
 
     /**
      * @brief Linear delay model: delay = k * length.
      */
     class LinearDelayCalculator : public DelayCalculator {
-    public:
+      public:
         /**
          * @brief Construct a LinearDelayCalculator.
          *
@@ -240,7 +240,8 @@ namespace recti {
         auto calculate_tapping_point(TreeNode* node_left, TreeNode* node_right, int distance) const
             -> std::pair<int, float> override {
             float skew = node_right->delay() - node_left->delay();
-            int extend_left = static_cast<int>(std::round((skew / delay_per_unit_ + distance) / 2.0f));
+            int extend_left
+                = static_cast<int>(std::round((skew / delay_per_unit_ + distance) / 2.0f));
             float delay_left = node_left->delay() + extend_left * delay_per_unit_;
             node_left->set_wire_length(extend_left);
             node_right->set_wire_length(distance - extend_left);
@@ -268,7 +269,7 @@ namespace recti {
          */
         auto delay_per_unit() const -> float { return delay_per_unit_; }
 
-    private:
+      private:
         float delay_per_unit_;
         float capacitance_per_unit_;
     };
@@ -277,7 +278,7 @@ namespace recti {
      * @brief Elmore delay model for RC trees.
      */
     class ElmoreDelayCalculator : public DelayCalculator {
-    public:
+      public:
         /**
          * @brief Construct an ElmoreDelayCalculator.
          *
@@ -306,12 +307,13 @@ namespace recti {
             float skew = node_right->delay() - node_left->delay();
             float r = distance * unit_resistance_;
             float c = distance * unit_capacitance_;
-            float z = (skew + r * (node_right->capacitance() + c / 2.0f)) /
-                      (r * (c + node_right->capacitance() + node_left->capacitance()));
+            float z = (skew + r * (node_right->capacitance() + c / 2.0f))
+                      / (r * (c + node_right->capacitance() + node_left->capacitance()));
             int extend_left = static_cast<int>(std::round(z * distance));
             float r_left = extend_left * unit_resistance_;
             float c_left = extend_left * unit_capacitance_;
-            float delay_left = node_left->delay() + r_left * (c_left / 2.0f + node_left->capacitance());
+            float delay_left
+                = node_left->delay() + r_left * (c_left / 2.0f + node_left->capacitance());
             node_left->set_wire_length(extend_left);
             node_right->set_wire_length(distance - extend_left);
 
@@ -338,7 +340,7 @@ namespace recti {
          */
         auto unit_resistance() const -> float { return unit_resistance_; }
 
-    private:
+      private:
         float unit_resistance_;
         float unit_capacitance_;
     };
@@ -347,14 +349,15 @@ namespace recti {
      * @brief Deferred Merge Embedding (DME) Algorithm for Clock Tree Synthesis.
      */
     class DMEAlgorithm {
-    public:
+      public:
         /**
          * @brief Construct a DMEAlgorithm.
          *
          * @param sinks List of clock sinks.
          * @param delay_calculator Strategy for delay calculation.
          */
-        DMEAlgorithm(const std::vector<Sink>& sinks, std::unique_ptr<DelayCalculator> delay_calculator)
+        DMEAlgorithm(const std::vector<Sink>& sinks,
+                     std::unique_ptr<DelayCalculator> delay_calculator)
             : sinks_(sinks), delay_calculator_(std::move(delay_calculator)), node_id_(0) {
             if (sinks.empty()) {
                 throw std::invalid_argument("No sinks provided");
@@ -368,7 +371,8 @@ namespace recti {
             // Step 1: Create initial leaf nodes
             std::vector<std::unique_ptr<TreeNode>> nodes;
             for (const auto& sink : sinks_) {
-                nodes.emplace_back(std::make_unique<TreeNode>(sink.name(), sink.position(), sink.capacitance()));
+                nodes.emplace_back(
+                    std::make_unique<TreeNode>(sink.name(), sink.position(), sink.capacitance()));
             }
 
             // Step 2: Build merging tree
@@ -389,7 +393,9 @@ namespace recti {
         /**
          * @brief Analyze clock skew in the constructed tree.
          */
-        auto analyze_skew(const TreeNode* root) const -> std::unordered_map<std::string, std::variant<float, std::string, std::vector<float>>> {
+        auto analyze_skew(const TreeNode* root) const
+            -> std::unordered_map<std::string,
+                                  std::variant<float, std::string, std::vector<float>>> {
             std::vector<float> sink_delays;
 
             std::function<void(const TreeNode*)> collect_sink_delays = [&](const TreeNode* node) {
@@ -407,17 +413,15 @@ namespace recti {
             float min_delay = *std::min_element(sink_delays.begin(), sink_delays.end());
             float skew = max_delay - min_delay;
 
-            return {
-                {"max_delay", max_delay},
-                {"min_delay", min_delay},
-                {"skew", skew},
-                {"sink_delays", sink_delays},
-                {"total_wirelength", static_cast<float>(total_wirelength(root))},
-                {"delay_model", std::string("TBD")}
-            };
+            return {{"max_delay", max_delay},
+                    {"min_delay", min_delay},
+                    {"skew", skew},
+                    {"sink_delays", sink_delays},
+                    {"total_wirelength", static_cast<float>(total_wirelength(root))},
+                    {"delay_model", std::string("TBD")}};
         }
 
-    private:
+      private:
         /**
          * @brief Build a balanced merging tree using recursive bipartition.
          */
@@ -430,12 +434,13 @@ namespace recti {
             // Sort nodes by x or y coordinate
             std::sort(nodes.begin(), nodes.end(), [vertical](const auto& a, const auto& b) {
                 return vertical ? a->position().xcoord() < b->position().xcoord()
-                               : a->position().ycoord() < b->position().ycoord();
+                                : a->position().ycoord() < b->position().ycoord();
             });
 
             // Split into left and right groups
             size_t mid = nodes.size() / 2;
-            std::vector<std::unique_ptr<TreeNode>> left_group(std::make_move_iterator(nodes.begin()),
+            std::vector<std::unique_ptr<TreeNode>> left_group(
+                std::make_move_iterator(nodes.begin()),
                 std::make_move_iterator(nodes.begin() + mid));
             std::vector<std::unique_ptr<TreeNode>> right_group(
                 std::make_move_iterator(nodes.begin() + mid), std::make_move_iterator(nodes.end()));
@@ -445,8 +450,8 @@ namespace recti {
             auto right_child = build_merging_tree(std::move(right_group), !vertical);
 
             // Create parent node
-            auto parent = std::make_unique<TreeNode>(
-                "n" + std::to_string(node_id_++), left_child->position());
+            auto parent = std::make_unique<TreeNode>("n" + std::to_string(node_id_++),
+                                                     left_child->position());
             parent->set_left(left_child.get());
             parent->set_right(right_child.get());
             left_child->set_parent(parent.get());
@@ -460,38 +465,41 @@ namespace recti {
          */
         auto compute_merging_segments(TreeNode* root)
             -> std::unordered_map<std::string, ManhattanArc<Interval<int>, Interval<int>>> {
-            std::unordered_map<std::string, ManhattanArc<Interval<int>, Interval<int>>> merging_segments;
+            std::unordered_map<std::string, ManhattanArc<Interval<int>, Interval<int>>>
+                merging_segments;
 
-            std::function<ManhattanArc<Interval<int>, Interval<int>>(TreeNode*)> compute_segment = [&](TreeNode* node) {
-                if (!node->left() && !node->right()) {
-                    auto ms1 = ManhattanArc<int, int>::from_point(node->position());
-                    ManhattanArc<Interval<int>, Interval<int>> ms{Interval{ms1.impl.xcoord(), ms1.impl.xcoord()},
-                                                                  Interval{ms1.impl.ycoord(), ms1.impl.ycoord()}}; 
-                    merging_segments.emplace(node->name(), ms);
-                    return ms;
-                }
+            std::function<ManhattanArc<Interval<int>, Interval<int>>(TreeNode*)> compute_segment
+                = [&](TreeNode* node) {
+                      if (!node->left() && !node->right()) {
+                          auto ms1 = ManhattanArc<int, int>::from_point(node->position());
+                          ManhattanArc<Interval<int>, Interval<int>> ms{
+                              Interval{ms1.impl.xcoord(), ms1.impl.xcoord()},
+                              Interval{ms1.impl.ycoord(), ms1.impl.ycoord()}};
+                          merging_segments.emplace(node->name(), ms);
+                          return ms;
+                      }
 
-                if (!node->left() || !node->right()) {
-                    throw std::runtime_error("Internal node must have both children");
-                }
+                      if (!node->left() || !node->right()) {
+                          throw std::runtime_error("Internal node must have both children");
+                      }
 
-                auto left_ms = compute_segment(node->left().value());
-                auto right_ms = compute_segment(node->right().value());
-                int distance = left_ms.min_dist_with(right_ms);
+                      auto left_ms = compute_segment(node->left().value());
+                      auto right_ms = compute_segment(node->right().value());
+                      int distance = left_ms.min_dist_with(right_ms);
 
-                auto [extend_left, delay_left] = delay_calculator_->calculate_tapping_point(
-                    node->left().value(), node->right().value(), distance);
-                node->set_delay(delay_left);
+                      auto [extend_left, delay_left] = delay_calculator_->calculate_tapping_point(
+                          node->left().value(), node->right().value(), distance);
+                      node->set_delay(delay_left);
 
-                auto merged_segment = left_ms.merge_with(right_ms, extend_left);
-                merging_segments.emplace(node->name(), merged_segment);
+                      auto merged_segment = left_ms.merge_with(right_ms, extend_left);
+                      merging_segments.emplace(node->name(), merged_segment);
 
-                float wire_cap = delay_calculator_->calculate_wire_capacitance(distance);
-                node->set_capacitance(node->left().value()->capacitance() +
-                                      node->right().value()->capacitance() + wire_cap);
+                      float wire_cap = delay_calculator_->calculate_wire_capacitance(distance);
+                      node->set_capacitance(node->left().value()->capacitance()
+                                            + node->right().value()->capacitance() + wire_cap);
 
-                return merged_segment;
-            };
+                      return merged_segment;
+                  };
 
             compute_segment(root);
             return merging_segments;
@@ -500,19 +508,25 @@ namespace recti {
         /**
          * @brief Embed the clock tree by selecting actual positions for internal nodes.
          */
-        auto embed_tree(TreeNode* merging_tree, const std::unordered_map<std::string, ManhattanArc<Interval<int>, Interval<int>>>& merging_segments)
-            -> std::unique_ptr<TreeNode> {
-            std::function<void(TreeNode*, const std::optional<ManhattanArc<Interval<int>, Interval<int>>>)> embed_node =
-                [&](TreeNode* node, const std::optional<ManhattanArc<Interval<int>, Interval<int>>> parent_segment) {
+        auto embed_tree(
+            TreeNode* merging_tree,
+            const std::unordered_map<std::string, ManhattanArc<Interval<int>, Interval<int>>>&
+                merging_segments) -> std::unique_ptr<TreeNode> {
+            std::function<void(TreeNode*,
+                               const std::optional<ManhattanArc<Interval<int>, Interval<int>>>)>
+                embed_node = [&](TreeNode* node,
+                                 const std::optional<ManhattanArc<Interval<int>, Interval<int>>>
+                                     parent_segment) {
                     if (!node) return;
 
                     if (!parent_segment) {
                         node->set_position(merging_segments.at(node->name()).get_upper_corner());
                     } else {
-                        node->set_position(merging_segments.at(node->name()).nearest_point_to(
-                            node->parent().value()->position()));
-                        node->set_wire_length(node->position().min_dist_with(
-                            node->parent().value()->position()));
+                        node->set_position(
+                            merging_segments.at(node->name())
+                                .nearest_point_to(node->parent().value()->position()));
+                        node->set_wire_length(
+                            node->position().min_dist_with(node->parent().value()->position()));
                     }
 
                     embed_node(node->left().value_or(nullptr), merging_segments.at(node->name()));
@@ -528,20 +542,21 @@ namespace recti {
          * @brief Compute delays and other parameters for the entire tree.
          */
         auto compute_tree_parameters(TreeNode* root) -> void {
-            std::function<void(TreeNode*, float)> compute_delays = [&](TreeNode* node, float parent_delay) {
-                if (!node) return;
+            std::function<void(TreeNode*, float)> compute_delays
+                = [&](TreeNode* node, float parent_delay) {
+                      if (!node) return;
 
-                if (node->parent()) {
-                    float wire_delay = delay_calculator_->calculate_wire_delay(
-                        node->wire_length(), node->capacitance());
-                    node->set_delay(parent_delay + wire_delay);
-                } else {
-                    node->set_delay(0.0f);
-                }
+                      if (node->parent()) {
+                          float wire_delay = delay_calculator_->calculate_wire_delay(
+                              node->wire_length(), node->capacitance());
+                          node->set_delay(parent_delay + wire_delay);
+                      } else {
+                          node->set_delay(0.0f);
+                      }
 
-                compute_delays(node->left().value_or(nullptr), node->delay());
-                compute_delays(node->right().value_or(nullptr), node->delay());
-            };
+                      compute_delays(node->left().value_or(nullptr), node->delay());
+                      compute_delays(node->right().value_or(nullptr), node->delay());
+                  };
 
             compute_delays(root, 0.0f);
         }
@@ -566,54 +581,64 @@ namespace recti {
         int node_id_;
     };
 
-    // /**
-    //  * @brief Extract comprehensive statistics from the clock tree.
-    //  */
-    // auto get_tree_statistics(const TreeNode* root)
-    //     -> std::unordered_map<std::string, std::variant<std::vector<std::unordered_map<std::string, std::variant<std::string, std::tuple<int, int>, float>>>, std::vector<std::string>, int>> {
-    //     std::vector<std::unordered_map<std::string, std::variant<std::string, std::tuple<int, int>, float>>> nodes;
-    //     std::vector<std::unordered_map<std::string, std::variant<std::string, std::tuple<int, int>, int>>> wires;
-    //     std::vector<std::string> sinks;
+    /**
+     * @brief Extract comprehensive statistics from the clock tree.
+     */
+    auto get_tree_statistics(const TreeNode* root) -> std::unordered_map<
+        std::string,
+        std::variant<
+            std::vector<std::unordered_map<
+                std::string, std::variant<std::string, std::tuple<int, int>, float, int>>>,
+            std::vector<std::string>, int>> {
+        using Values = std::variant<std::string, std::tuple<int, int>, float, int>;
+        std::vector<std::unordered_map<std::string, Values>> nodes;
+        std::vector<std::unordered_map<std::string, Values>> wires;
+        std::vector<std::string> sinks;
 
-    //     std::function<void(const TreeNode*, const TreeNode*)> traverse = [&](const TreeNode* node, const TreeNode* parent) {
-    //         if (!node) return;
+        std::function<void(const TreeNode*, const TreeNode*)> traverse =
+            [&](const TreeNode* node, const TreeNode* parent) {
+                if (!node) {
+                    return;
+                }
 
-    //         nodes.push_back({
-    //             {"name", node->name()},
-    //             {"position", std::tuple(node->position().xcoord(), node->position().ycoord())},
-    //             {"type", node->left() || node->right() ? std::string("internal") : std::string("sink")},
-    //             {"delay", node->delay()},
-    //             {"capacitance", node->capacitance()}
-    //         });
+                nodes.push_back(
+                    {{"name", node->name()},
+                     {"position", std::tuple(node->position().xcoord(), node->position().ycoord())},
+                     {"type", node->left() || node->right() ? std::string("internal")
+                                                            : std::string("sink")},
+                     {"delay", node->delay()},
+                     {"capacitance", node->capacitance()}});
 
-    //         if (!node->left() && !node->right()) {
-    //             sinks.push_back(node->name());
-    //         }
+                if (!node->left() && !node->right()) {
+                    sinks.push_back(node->name());
+                }
 
-    //         if (parent) {
-    //             wires.push_back({
-    //                 {"from", parent->name()},
-    //                 {"to", node->name()},
-    //                 {"length", node->wire_length()},
-    //                 {"from_pos", std::tuple(parent->position().xcoord(), parent->position().ycoord())},
-    //                 {"to_pos", std::tuple(node->position().xcoord(), node->position().ycoord())}
-    //             });
-    //         }
+                if (parent) {
+                    wires.push_back({{"from", parent->name()},
+                                     {"to", node->name()},
+                                     {"length", node->wire_length()},
+                                     {"from_pos", std::tuple(parent->position().xcoord(),
+                                                             parent->position().ycoord())},
+                                     {"to_pos", std::tuple(node->position().xcoord(),
+                                                           node->position().ycoord())}});
+                }
 
-    //         traverse(node->left().value_or(nullptr), node);
-    //         traverse(node->right().value_or(nullptr), node);
-    //     };
+                traverse(node->left().value_or(nullptr), node);
+                traverse(node->right().value_or(nullptr), node);
+            };
 
-    //     traverse(root, nullptr);
+        traverse(root, nullptr);
 
-    //     return {
-    //         {"nodes", nodes},
-    //         {"wires", wires},
-    //         {"sinks", sinks},
-    //         {"total_nodes", static_cast<int>(nodes.size())},
-    //         {"total_sinks", static_cast<int>(sinks.size())},
-    //         {"total_wires", static_cast<int>(wires.size())}
-    //     };
-    // }
+        using StatsVariant =
+            std::variant<std::vector<std::unordered_map<std::string, Values>>,
+                         std::vector<std::string>, int>;
 
-} // namespace recti
+        return {{"nodes", StatsVariant(nodes)},
+                {"wires", StatsVariant(wires)},
+                {"sinks", StatsVariant(sinks)},
+                {"total_nodes", static_cast<int>(nodes.size())},
+                {"total_sinks", static_cast<int>(sinks.size())},
+                {"total_wires", static_cast<int>(wires.size())}};
+    }
+
+}  // namespace recti
