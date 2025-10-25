@@ -63,6 +63,29 @@ TEST_SUITE("Clock Tree Visualization Tests") {
         }
     }
 
+
+    // TEST_CASE("visualize_example_tree usage") {
+    //     // Call the visualize_example_tree function
+    //     auto [linear_svg, elmore_svg, comparison_svg] = visualize_example_tree();
+
+    //     SUBCASE("Verify SVG content for Linear Delay Model") {
+    //         // Check that the SVG string is not empty
+    //         CHECK(!linear_svg.empty());
+    //         // Verify SVG dimensions
+    //         CHECK(linear_svg.find("<svg width=\"800\" height=\"600\"") != std::string::npos);
+    //         // Verify presence of analysis box
+    //         CHECK(linear_svg.find("Clock Tree Analysis") != std::string::npos);
+    //         // Verify presence of delay model
+    //         CHECK(linear_svg.find("Delay Model:") != std::string::npos);
+    //         // Verify presence of a sink name (e.g., s1)
+    //         CHECK(linear_svg.find("s1") != std::string::npos);
+    //         // Verify presence of node labels
+    //         CHECK(linear_svg.find("class=\"node-label\"") != std::string::npos);
+    //         // Verify presence of delay labels
+    //         CHECK(linear_svg.find("class=\"delay-label\"") != std::string::npos);
+    //     }
+    // }
+
     // TEST_CASE("create_comparison_visualization") {
     //     TreeNode tree1("root1", Point<int, int>(50, 50));
     //     TreeNode tree2("root2", Point<int, int>(150, 50));

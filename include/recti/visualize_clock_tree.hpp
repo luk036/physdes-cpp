@@ -537,4 +537,86 @@ namespace recti {
         return create_comparison_visualization({linear_data, elmore_data}, filename, 1200, 600);
     }
 
+    /**
+     * @brief Example function demonstrating clock tree visualization with different delay models.
+     *
+     * @return A tuple of three SVG strings: linear model, Elmore model, and comparison visualization.
+     */
+    inline auto visualize_example_tree() -> std::tuple<std::string, std::string, std::string> {
+        // Hardcoded coordinates based on the commented-out example sinks in the Python code
+        std::vector<std::pair<int, int>> coords = {
+            {-100, 40}, {-60, 60}, {0, 40}, {20, 20},
+            {-20, -20}, {-30, -50}, {-100, -40}, {-100, 0}
+        };
+
+        // Create example sinks
+        std::vector<Sink> example_sinks;
+        for (size_t i = 0; i < coords.size(); ++i) {
+            example_sinks.emplace_back(
+                "s" + std::to_string(i + 1),
+                Point<int, int>(static_cast<int>(coords[i].first), static_cast<int>(coords[i].second)),
+                1.0f
+            );
+        }
+
+        std::cout << "=== Generating Clock Trees with Different Delay Models ===\n";
+
+        // Linear delay model
+        auto linear_calc = std::make_unique<LinearDelayCalculator>(0.5f, 0.2f);
+        DMEAlgorithm dme_linear(example_sinks, std::move(linear_calc));
+        auto clock_tree_linear = dme_linear.build_clock_tree();
+        auto analysis_linear = dme_linear.analyze_skew(clock_tree_linear.get());
+
+        // Elmore delay model
+        auto elmore_calc = std::make_unique<ElmoreDelayCalculator>(0.1f, 0.2f);
+        DMEAlgorithm dme_elmore(example_sinks, std::move(elmore_calc));
+        auto clock_tree_elmore = dme_elmore.build_clock_tree();
+        auto analysis_elmore = dme_elmore.analyze_skew(clock_tree_elmore.get());
+
+        // Create individual visualizations
+        ClockTreeVisualizer visualizer;
+
+        // Linear model visualization
+        auto linear_svg = visualizer.visualize_tree(
+            clock_tree_linear.get(),
+            example_sinks,
+            "linear_model_clock_tree.svg",
+            800,
+            600,
+            analysis_linear
+        );
+
+        // Elmore model visualization
+        auto elmore_svg = visualizer.visualize_tree(
+            clock_tree_elmore.get(),
+            example_sinks,
+            "elmore_model_clock_tree.svg",
+            800,
+            600,
+            analysis_elmore
+        );
+
+        // Comparison visualization
+        std::unordered_map<std::string, std::variant<const TreeNode*, std::vector<Sink>, std::unordered_map<std::string, std::variant<float, std::string, std::vector<float>>>, std::string>> linear_data = {
+            {"tree", clock_tree_linear.get()},
+            {"sinks", example_sinks},
+            {"analysis", analysis_linear},
+            {"title", std::string("Linear Delay Model")}
+        };
+        std::unordered_map<std::string, std::variant<const TreeNode*, std::vector<Sink>, std::unordered_map<std::string, std::variant<float, std::string, std::vector<float>>>, std::string>> elmore_data = {
+            {"tree", clock_tree_elmore.get()},
+            {"sinks", example_sinks},
+            {"analysis", analysis_elmore},
+            {"title", std::string("Elmore Delay Model")}
+        };
+
+        auto comparison_svg = create_delay_model_comparison(linear_data, elmore_data);
+
+        std::cout << "Visualizations created:\n";
+        std::cout << "- linear_model_clock_tree.svg: Linear delay model\n";
+        std::cout << "- elmore_model_clock_tree.svg: Elmore delay model\n";
+        std::cout << "- delay_model_comparison.svg: Side-by-side comparison\n";
+
+        return {linear_svg, elmore_svg, comparison_svg};
+    }
 }  // namespace recti
