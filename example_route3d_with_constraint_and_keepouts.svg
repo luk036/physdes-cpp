@@ -1,63 +1,63 @@
-<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+<svg width="1000" height="1000" xmlns="http://www.w3.org/2000/svg">
 <rect width="100%" height="100%" fill="white"/>
 <defs>
 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
 <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
 </marker>
 </defs>
-<line x1="50" y1="511.538" x2="601.683" y2="550" stroke="green" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="50" y1="511.538" x2="163.582" y2="396.154" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="163.582" y1="396.154" x2="382.632" y2="357.692" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="382.632" y1="357.692" x2="382.632" y2="242.308" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="382.632" y1="242.308" x2="382.632" y2="242.308" stroke="blue" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="382.632" y1="242.308" x2="382.632" y2="203.846" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="382.632" y1="203.846" x2="528.666" y2="203.846" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="528.666" y1="203.846" x2="674.7" y2="203.846" stroke="blue" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="528.666" y1="203.846" x2="528.666" y2="88.4615" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="382.632" y1="203.846" x2="236.599" y2="50" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="382.632" y1="357.692" x2="455.649" y2="357.692" stroke="orange" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="163.582" y1="396.154" x2="163.582" y2="396.154" stroke="orange" stroke-width="2" marker-end="url(#arrowhead)"/>
-<rect x="522.656" y="292.788" width="90.1442" height="150.24" fill="pink" stroke="black" stroke-width="1"/>
-<rect x="192.127" y="172.596" width="90.1442" height="90.1442" fill="pink" stroke="black" stroke-width="1"/>
-<circle cx="382.632" cy="242.308" r="6" fill="blue" stroke="black" stroke-width="1"/>
-<text x="390.632" y="246.308" font-family="Arial" font-size="10" fill="black">S2</text>
-<text x="382.632" y="231.308" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1134, 0), 832))</text>
-<circle cx="528.666" cy="88.4615" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="536.666" y="92.4615" font-family="Arial" font-size="10" fill="black">T2</text>
-<text x="528.666" y="77.4615" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1620, 0), 320))</text>
-<circle cx="50" cy="511.538" r="8" fill="red" stroke="black" stroke-width="1"/>
-<text x="60" y="515.538" font-family="Arial" font-size="10" fill="black">S</text>
-<text x="50" y="498.538" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((27, 0), 1728))</text>
-<circle cx="528.666" cy="203.846" r="6" fill="blue" stroke="black" stroke-width="1"/>
-<text x="536.666" y="207.846" font-family="Arial" font-size="10" fill="black">S1</text>
-<text x="528.666" y="192.846" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1620, 0), 704))</text>
-<circle cx="674.7" cy="203.846" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="682.7" y="207.846" font-family="Arial" font-size="10" fill="black">T1</text>
-<text x="674.7" y="192.846" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((2106, 200), 704))</text>
-<circle cx="601.683" cy="550" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="609.683" y="554" font-family="Arial" font-size="10" fill="black">T3</text>
-<text x="601.683" y="539" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1863, 300), 1856))</text>
-<circle cx="382.632" cy="242.308" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="390.632" y="246.308" font-family="Arial" font-size="10" fill="black">T4</text>
-<text x="382.632" y="231.308" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1134, 200), 832))</text>
-<circle cx="236.599" cy="50" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="244.599" y="54" font-family="Arial" font-size="10" fill="black">T5</text>
-<text x="236.599" y="39" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((648, 0), 192))</text>
-<circle cx="382.632" cy="203.846" r="6" fill="blue" stroke="black" stroke-width="1"/>
-<text x="390.632" y="207.846" font-family="Arial" font-size="10" fill="black">S3</text>
-<text x="382.632" y="192.846" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1134, 0), 704))</text>
-<circle cx="455.649" cy="357.692" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="463.649" y="361.692" font-family="Arial" font-size="10" fill="black">T6</text>
-<text x="455.649" y="346.692" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1377, 100), 1216))</text>
-<circle cx="382.632" cy="357.692" r="6" fill="blue" stroke="black" stroke-width="1"/>
-<text x="390.632" y="361.692" font-family="Arial" font-size="10" fill="black">S4</text>
-<text x="382.632" y="346.692" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1134, 0), 1216))</text>
-<circle cx="163.582" cy="396.154" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="171.582" y="400.154" font-family="Arial" font-size="10" fill="black">T7</text>
-<text x="163.582" y="385.154" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((405, 100), 1344))</text>
-<circle cx="163.582" cy="396.154" r="6" fill="blue" stroke="black" stroke-width="1"/>
-<text x="171.582" y="400.154" font-family="Arial" font-size="10" fill="black">S5</text>
-<text x="163.582" y="385.154" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((405, 0), 1344))</text>
+<line x1="50" y1="714.935" x2="844.805" y2="770.346" stroke="green" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="50" y1="714.935" x2="213.636" y2="548.701" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="213.636" y1="548.701" x2="529.221" y2="493.29" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="529.221" y1="493.29" x2="529.221" y2="327.056" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="529.221" y1="327.056" x2="529.221" y2="327.056" stroke="blue" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="529.221" y1="327.056" x2="529.221" y2="271.645" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="529.221" y1="271.645" x2="739.61" y2="271.645" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="739.61" y1="271.645" x2="950" y2="271.645" stroke="blue" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="739.61" y1="271.645" x2="739.61" y2="105.411" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="529.221" y1="271.645" x2="318.831" y2="50" stroke="red" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="529.221" y1="493.29" x2="634.416" y2="493.29" stroke="orange" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="213.636" y1="548.701" x2="213.636" y2="548.701" stroke="orange" stroke-width="2" marker-end="url(#arrowhead)"/>
+<rect x="730.952" y="399.784" width="129.87" height="216.45" fill="pink" stroke="black" stroke-width="1"/>
+<rect x="254.762" y="226.623" width="129.87" height="129.87" fill="pink" stroke="black" stroke-width="1"/>
+<circle cx="529.221" cy="327.056" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="537.221" y="331.056" font-family="Arial" font-size="10" fill="black">S2</text>
+<text x="529.221" y="316.056" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1134, 0), 832))</text>
+<circle cx="739.61" cy="105.411" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="747.61" y="109.411" font-family="Arial" font-size="10" fill="black">T2</text>
+<text x="739.61" y="94.4113" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1620, 0), 320))</text>
+<circle cx="50" cy="714.935" r="8" fill="red" stroke="black" stroke-width="1"/>
+<text x="60" y="718.935" font-family="Arial" font-size="10" fill="black">S</text>
+<text x="50" y="701.935" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((27, 0), 1728))</text>
+<circle cx="739.61" cy="271.645" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="747.61" y="275.645" font-family="Arial" font-size="10" fill="black">S1</text>
+<text x="739.61" y="260.645" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1620, 0), 704))</text>
+<circle cx="950" cy="271.645" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="958" y="275.645" font-family="Arial" font-size="10" fill="black">T1</text>
+<text x="950" y="260.645" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((2106, 200), 704))</text>
+<circle cx="844.805" cy="770.346" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="852.805" y="774.346" font-family="Arial" font-size="10" fill="black">T3</text>
+<text x="844.805" y="759.346" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1863, 300), 1856))</text>
+<circle cx="529.221" cy="327.056" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="537.221" y="331.056" font-family="Arial" font-size="10" fill="black">T4</text>
+<text x="529.221" y="316.056" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1134, 200), 832))</text>
+<circle cx="318.831" cy="50" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="326.831" y="54" font-family="Arial" font-size="10" fill="black">T5</text>
+<text x="318.831" y="39" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((648, 0), 192))</text>
+<circle cx="529.221" cy="271.645" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="537.221" y="275.645" font-family="Arial" font-size="10" fill="black">S3</text>
+<text x="529.221" y="260.645" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1134, 0), 704))</text>
+<circle cx="634.416" cy="493.29" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="642.416" y="497.29" font-family="Arial" font-size="10" fill="black">T6</text>
+<text x="634.416" y="482.29" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1377, 100), 1216))</text>
+<circle cx="529.221" cy="493.29" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="537.221" y="497.29" font-family="Arial" font-size="10" fill="black">S4</text>
+<text x="529.221" y="482.29" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((1134, 0), 1216))</text>
+<circle cx="213.636" cy="548.701" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="221.636" y="552.701" font-family="Arial" font-size="10" fill="black">T7</text>
+<text x="213.636" y="537.701" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((405, 100), 1344))</text>
+<circle cx="213.636" cy="548.701" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="221.636" y="552.701" font-family="Arial" font-size="10" fill="black">S5</text>
+<text x="213.636" y="537.701" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">(((405, 0), 1344))</text>
 <text x="20" y="20" font-family="Arial" font-size="12" font-weight="bold">Legend:</text>
 <circle cx="20" cy="36" r="4" fill="red" stroke="black"/>
 <text x="30" y="40" font-family="Arial" font-size="10">Source</text>

@@ -84,3 +84,67 @@ TEST_CASE("Point nearest_to") {
     CHECK(r.nearest_to(a) == Point(3, 5));
     CHECK(r.nearest_to(b) == Point(4, 6));
 }
+
+TEST_CASE("Point class") {
+    Point<int, int> a(3, 4);
+
+    SUBCASE("Constructor and accessors") {
+        CHECK(a.xcoord() == 3);
+        CHECK(a.ycoord() == 4);
+    }
+    SUBCASE("measure") {
+        CHECK(a.measure() == 1);
+        Point<int, int> b(3, 8);
+        CHECK(b.measure() == 1);
+    }
+    SUBCASE("rotates") {
+        auto rotated = a.rotates();
+        CHECK(rotated.xcoord() == -1);
+        CHECK(rotated.ycoord() == 7);
+    }
+    SUBCASE("inv_rotates") {
+        Point<int, int> b(-1, 9);
+        auto inv_rotated = b.inv_rotates();
+        CHECK(inv_rotated.xcoord() == 4);
+        CHECK(inv_rotated.ycoord() == 5);
+    }
+    SUBCASE("blocks") {
+        Point<int, int> b(5, 6);
+        CHECK(a.blocks(b) == false);
+        // Add more complex cases with Intervals if needed
+    }
+    SUBCASE("nearest_to") {
+        Point<int, int> b(5, 6);
+        auto nearest = a.nearest_to(b);
+        CHECK(nearest.xcoord() == 3);
+        CHECK(nearest.ycoord() == 4);
+        Point<Interval<int>, Interval<int>> r(Interval<int>(3, 4), Interval<int>(5, 6));
+        auto nearest1 = r.nearest_to(a);
+        CHECK(nearest1.xcoord() == 3);
+        CHECK(nearest1.ycoord() == 5);
+        auto nearest2 = r.nearest_to(b);
+        CHECK(nearest2.xcoord() == 4);
+        CHECK(nearest2.ycoord() == 6);
+    }
+    SUBCASE("get_center") {
+        CHECK(a.get_center().xcoord() == 3);
+        CHECK(a.get_center().ycoord() == 4);
+        Point<Interval<int>, int> b(Interval<int>(3, 7), 4);
+        CHECK(b.get_center().xcoord() == 5);
+        CHECK(b.get_center().ycoord() == 4);
+    }
+    SUBCASE("lower_corner") {
+        CHECK(a.lower_corner().xcoord() == 3);
+        CHECK(a.lower_corner().ycoord() == 4);
+        Point<Interval<int>, int> b(Interval<int>(3, 7), 4);
+        CHECK(b.lower_corner().xcoord() == 3);
+        CHECK(b.lower_corner().ycoord() == 4);
+    }
+    SUBCASE("upper_corner") {
+        CHECK(a.upper_corner().xcoord() == 3);
+        CHECK(a.upper_corner().ycoord() == 4);
+        Point<Interval<int>, int> b(Interval<int>(3, 7), 4);
+        CHECK(b.upper_corner().xcoord() == 7);
+        CHECK(b.upper_corner().ycoord() == 4);
+    }
+}

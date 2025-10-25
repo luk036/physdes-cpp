@@ -374,6 +374,75 @@ namespace recti {
         }
 
         /**
+         * @brief Rotate the point by 45 degrees (used for ManhattanArc).
+         *
+         * @return A new rotated Point.
+         */
+        constexpr auto rotates() const -> Point<T1, T2> {
+            if constexpr (std::is_same_v<T1, Point>) {
+                auto pt = _xcoord.rotates();
+                auto pt2 = Point(pt.ycoord(), _ycoord).rotates();
+                auto pt3 = Point(pt.xcoord(), pt2.ycoord()).rotates();
+                return Point(Point(pt3.xcoord(), pt2.xcoord()), pt3.ycoord());
+            } else {
+                auto xcoord = _xcoord - _ycoord;
+                auto ycoord = _xcoord + _ycoord;
+                return Point<T1, T2>(xcoord, ycoord);
+            }
+        }
+
+        /**
+         * @brief Inverse rotate the point (used for ManhattanArc).
+         *
+         * @return A new inversely rotated Point.
+         */
+        constexpr auto inv_rotates() const -> Point<T1, T2> {
+            if constexpr (std::is_same_v<T1, Point>) {
+                auto pt = Point(_xcoord.xcoord(), _ycoord).inv_rotates();
+                auto pt2 = Point(_xcoord.ycoord(), pt.ycoord()).inv_rotates();
+                auto pt3 = Point(pt.xcoord(), pt2.xcoord()).inv_rotates();
+                return Point(Point(pt3.xcoord(), pt3.ycoord()), pt2.ycoord());
+            } else {
+                auto xcoord = (_xcoord + _ycoord) / 2;
+                auto ycoord = (-_xcoord + _ycoord) / 2;
+                return Point<T1, T2>(xcoord, ycoord);
+            }
+        }
+
+        /**
+         * @brief Calculate the center of the point.
+         *
+         * @return The center of the point.
+         */
+        constexpr auto get_center() const {
+            auto xcoord = center(_xcoord);
+            auto ycoord = center(_ycoord);
+            return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord), std::move(ycoord)};
+        }
+
+        /**
+         * @brief Calculate the lower corner of the point.
+         *
+         * @return The lower corner of the point.
+         */
+        constexpr auto lower_corner() const {
+            auto xcoord = lower(_xcoord);
+            auto ycoord = lower(_ycoord);
+            return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord), std::move(ycoord)};
+        }
+
+        /**
+         * @brief Calculate the upper corner of the point.
+         *
+         * @return The upper corner of the point.
+         */
+        constexpr auto upper_corner() const {
+            auto xcoord = upper(_xcoord);
+            auto ycoord = upper(_ycoord);
+            return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord), std::move(ycoord)};
+        }
+        
+        /**
          * Outputs the point object to the given output stream.
          *
          * @param[out] out The output stream to write the point to.

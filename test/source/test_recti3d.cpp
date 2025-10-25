@@ -2,7 +2,7 @@
 
 #include <ostream>               // for operator<<
 #include <recti/halton_int.hpp>  // for recti
-#include <recti/merge_obj.hpp>   // for merge_obj
+#include <recti/manhattan_arc.hpp>   // for manhattan_arc
 #include <recti/recti.hpp>       // for Rectangle
 
 #include "recti/interval.hpp"  // for min_dist, Interval, overlap
@@ -118,12 +118,12 @@ TEST_CASE("Rectangle 3D test") {
 //     // }
 // }
 
-// TEST_CASE("MergeObj test") {
+// TEST_CASE("ManhattanArc test") {
 //     auto a = Point<int>{40000, 80000};
 //     auto b = Point<int>{50000, 60000};
 
-//     auto m1 = MergeObj<Point<int>>{a + 50000, a - 50000};
-//     auto m2 = MergeObj<Point<int>>{b + 90000, b - 90000};
+//     auto m1 = ManhattanArc<Point<int>>{a + 50000, a - 50000};
+//     auto m2 = ManhattanArc<Point<int>>{b + 90000, b - 90000};
 //     // auto v = Vector2{Vector2{50000, 60000}, 0};
 
 //     CHECK(m1 != m2);

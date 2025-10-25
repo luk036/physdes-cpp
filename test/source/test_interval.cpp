@@ -116,3 +116,45 @@ TEST_CASE("Interval overlapping test") {
         }
     }
 }
+
+TEST_CASE("Interval class") {
+    Interval<int> a(3, 4);
+    SUBCASE("Constructor and accessors") {
+        CHECK(a.lb() == 3);
+        CHECK(a.ub() == 4);
+    }
+    SUBCASE("is_invalid") {
+        CHECK(a.is_invalid() == false);
+        Interval<int> b(4, 3);
+        CHECK(b.is_invalid() == true);
+    }
+    SUBCASE("measure") {
+        CHECK(a.measure() == 1);
+        Interval<int> b(3, 8);
+        CHECK(b.measure() == 5);
+    }
+    SUBCASE("nearest_to") {
+        Interval<int> c(3, 5);
+        CHECK(c.nearest_to(8) == 5);
+        CHECK(c.nearest_to(0) == 3);
+        CHECK(c.nearest_to(4) == 4);
+    }
+    SUBCASE("get_center") {
+        Interval<int> d(3, 7);
+        CHECK(d.get_center() == 5);
+    }
+    SUBCASE("lower_corner") {
+        Interval<int> e(3, 7);
+        CHECK(e.lower_corner() == 3);
+    }
+    SUBCASE("upper_corner") {
+        Interval<int> f(3, 7);
+        CHECK(f.upper_corner() == 7);
+    }
+    SUBCASE("enlarge_with") {
+        Interval<int> g(3, 5);
+        auto enlarged = g.enlarge_with(2);
+        CHECK(enlarged.lb() == 1);
+        CHECK(enlarged.ub() == 7);
+    }
+}

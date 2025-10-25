@@ -177,7 +177,7 @@ namespace recti {
     }
 
     /**
-     * @brief Find a point in lhs that is nearest to rhs
+     * @brief Returns the nearest point on `lhs` to `rhs`.
      *
      *     .---------------------.
      *     |                     *~~~~~~~~~~~o rhs
@@ -186,26 +186,98 @@ namespace recti {
      *     `---------------------'
      *         lhs
      *
-     * @tparam U1 The type of the first object.
-     * @tparam U2 The type of the second object.
-     * @param lhs The first object.
-     * @param rhs The second object.
+     * This function returns the point on `lhs` that is nearest to `rhs`. If `lhs` has a
+     * `nearest_to` member function, it is used. Otherwise, it assumes `lhs` is a scalar and
+     * returns it directly.
+     *
+     * @tparam U1 Type of the first object.
+     * @tparam U2 Type of the second object.
+     * @param[in] lhs The object to find the nearest point on.
+     * @param[in] rhs The reference point.
+     * @return The nearest point on `lhs` to `rhs`.
      */
-    template <typename U1, typename U2>  //
+    template <typename U1, typename U2>
     constexpr auto nearest(const U1& lhs, const U2& rhs) {
         if constexpr (requires { lhs.nearest_to(rhs); }) {
             return lhs.nearest_to(rhs);
-        } else /* constexpr */ {
+        } else {
             return lhs;
         }
     }
 
-    template <typename U>  //
-    constexpr auto measure_of(const U& a) {
-        if constexpr (requires { a.measure(); }) {
-            return a.measure();
+    /**
+     * @brief Calculates the measure (length, area, etc.) of an object.
+     *
+     * This function returns the measure of `obj`. If `obj` has a `measure` member function,
+     * it is used. Otherwise, it returns 1.
+     *
+     * @tparam U Type of the object.
+     * @param[in] obj The object to measure.
+     * @return The measure of the object.
+     */
+    template <typename U>
+    constexpr auto measure_of(const U& obj) {
+        if constexpr (requires { obj.measure(); }) {
+            return obj.measure();
         } else {
             return 1;
+        }
+    }
+
+    /**
+     * @brief Calculates the center of an object.
+     *
+     * This function returns the center of `obj`. If `obj` has a `get_center` member function,
+     * it is used. Otherwise, it assumes `obj` is a scalar and returns it directly.
+     *
+     * @tparam U Type of the object.
+     * @param[in] obj The object to find the center of.
+     * @return The center of the object.
+     */
+    template <typename U>
+    constexpr auto center(const U& obj) {
+        if constexpr (requires { obj.get_center(); }) {
+            return obj.get_center();
+        } else {
+            return obj;
+        }
+    }
+
+    /**
+     * @brief Calculates the lower corner of an object.
+     *
+     * This function returns the lower corner of `obj`. If `obj` has a `lower_corner` member
+     * function, it is used. Otherwise, it assumes `obj` is a scalar and returns it directly.
+     *
+     * @tparam U Type of the object.
+     * @param[in] obj The object to find the lower corner of.
+     * @return The lower corner of the object.
+     */
+    template <typename U>
+    constexpr auto lower(const U& obj) {
+        if constexpr (requires { obj.lower_corner(); }) {
+            return obj.lower_corner();
+        } else {
+            return obj;
+        }
+    }
+
+    /**
+     * @brief Calculates the upper corner of an object.
+     *
+     * This function returns the upper corner of `obj`. If `obj` has a `upper_corner` member
+     * function, it is used. Otherwise, it assumes `obj` is a scalar and returns it directly.
+     *
+     * @tparam U Type of the object.
+     * @param[in] obj The object to find the upper corner of.
+     * @return The upper corner of the object.
+     */
+    template <typename U>
+    constexpr auto upper(const U& obj) {
+        if constexpr (requires { obj.upper_corner(); }) {
+            return obj.upper_corner();
+        } else {
+            return obj;
         }
     }
 }  // namespace recti

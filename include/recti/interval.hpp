@@ -435,6 +435,12 @@ namespace recti {
             return T(0);
         }
 
+        /**
+         * @brief Find the nearest point to a given value.
+         *
+         * @param[in] other The reference value.
+         * @return The nearest point in the interval to `obj`.
+         */
         constexpr auto nearest_to(const T& other) const -> T {
             if (*this < other) {
                 return nearest(this->_ub, other);
@@ -481,6 +487,29 @@ namespace recti {
             }
             return T(0);
         }
+
+        /**
+         * @brief Calculate the center of the interval.
+         *
+         * @return The center of the interval.
+         */
+        constexpr auto get_center() const -> T {
+            return this->_lb + (this->_ub - this->_lb) / 2;
+        }
+
+        /**
+         * @brief Get the lower corner of the interval.
+         *
+         * @return The lower bound.
+         */
+        constexpr auto lower_corner() const -> T { return this->_lb; }
+
+        /**
+         * @brief Get the upper corner of the interval.
+         *
+         * @return The upper bound.
+         */
+        constexpr auto upper_corner() const -> T { return this->_ub; }
 
         /**
          * @brief Overloads the stream insertion operator (`<<`) to print an Interval object to the

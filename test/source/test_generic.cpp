@@ -1,4 +1,5 @@
 #include <recti/generic.hpp>
+#include <recti/interval.hpp>
 
 #include "doctest/doctest.h"
 
@@ -39,4 +40,62 @@ TEST_CASE("Generic functions") {
 
     CHECK(recti::contain(r1, p1));
     CHECK(recti::contain(r1, p3));
+}
+
+using namespace recti;
+
+TEST_CASE("min_dist function") {
+    // Scalar tests
+    CHECK(min_dist(1, 3) == 2);
+    CHECK(min_dist(3, 1) == 2);
+    CHECK(min_dist(1, 1) == 0);
+    // Interval tests
+    Interval<int> a(3, 5);
+    Interval<int> b(7, 9);
+    CHECK(min_dist(a, 4) == 0); // 4 is within [3,5]
+    CHECK(min_dist(a, 6) == 1); // Distance to upper bound
+    CHECK(min_dist(a, b) == 2); // Distance between [3,5] and [7,9]
+}
+
+TEST_CASE("nearest function") {
+    // Scalar tests
+    CHECK(nearest(1, 1) == 1);
+    CHECK(nearest(1, 3) == 1);
+    // Interval tests
+    Interval<int> a(1, 2);
+    CHECK(nearest(a, 4) == 2); // Nearest to upper bound
+    Interval<int> b(1, 5);
+    CHECK(nearest(b, 4) == 4); // 4 is within [1,5]
+}
+
+TEST_CASE("measure_of function") {
+    // Scalar test
+    CHECK(measure_of(1) == 1);
+    // Interval test
+    Interval<int> a(1, 2);
+    CHECK(measure_of(a) == 1);
+}
+
+TEST_CASE("center function") {
+    // Scalar test
+    CHECK(center(1) == 1);
+    // Interval test
+    Interval<int> a(1, 3);
+    CHECK(center(a) == 2);
+}
+
+TEST_CASE("lower function") {
+    // Scalar test
+    CHECK(lower(1) == 1);
+    // Interval test
+    Interval<int> a(1, 3);
+    CHECK(lower(a) == 1);
+}
+
+TEST_CASE("upper function") {
+    // Scalar test
+    CHECK(upper(1) == 1);
+    // Interval test
+    Interval<int> a(1, 3);
+    CHECK(upper(a) == 3);
 }
