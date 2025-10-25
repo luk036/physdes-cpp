@@ -584,7 +584,7 @@ namespace recti {
     /**
      * @brief Extract comprehensive statistics from the clock tree.
      */
-    auto get_tree_statistics(const TreeNode* root) -> std::unordered_map<
+    inline auto get_tree_statistics(const TreeNode* root) -> std::unordered_map<
         std::string,
         std::variant<
             std::vector<std::unordered_map<
