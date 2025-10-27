@@ -9,6 +9,24 @@
 
 using namespace recti;
 
+namespace {
+int count_leaves(const std::shared_ptr<recti::TreeNode>& node) {
+    if (!node) {
+        return 0;
+    }
+    if (node->is_leaf()) {
+        return 1;
+    }
+    return count_leaves(node->left) + count_leaves(node->right);
+}
+template <typename DelayCalculator, typename... Args>
+auto create_dme_algorithm(const std::vector<recti::Sink>& sinks, Args&&... args) {
+    auto calculator = std::make_unique<DelayCalculator>(std::forward<Args>(args)...);
+    return recti::DMEAlgorithm(sinks, std::move(calculator));
+}
+
+} // namespace
+
 TEST_SUITE("Sink Tests") {
     TEST_CASE("Sink Construction") {
         SUBCASE("Basic construction") {
@@ -164,25 +182,19 @@ TEST_SUITE("DMEAlgorithm Tests") {
     TEST_CASE("DMEAlgorithm Construction") {
         SUBCASE("Valid construction") {
             std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(10, 20), 1.0)};
-            auto calculator = std::make_unique<recti::LinearDelayCalculator>();
-
-            REQUIRE_NOTHROW(recti::DMEAlgorithm dme(sinks, std::move(calculator)));
+            REQUIRE_NOTHROW(create_dme_algorithm<recti::LinearDelayCalculator>(sinks));
         }
 
         SUBCASE("Empty sinks throws exception") {
             std::vector<recti::Sink> sinks;
-            auto calculator = std::make_unique<recti::LinearDelayCalculator>();
-
-            REQUIRE_THROWS_AS(recti::DMEAlgorithm dme(sinks, std::move(calculator)),
+            REQUIRE_THROWS_AS(create_dme_algorithm<recti::LinearDelayCalculator>(sinks),
                               std::invalid_argument);
         }
     }
 
     TEST_CASE("DMEAlgorithm Single Sink") {
         std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(10, 20), 1.5)};
-        auto calculator = std::make_unique<recti::LinearDelayCalculator>();
-        recti::DMEAlgorithm dme(sinks, std::move(calculator));
-
+        auto dme = create_dme_algorithm<recti::LinearDelayCalculator>(sinks);
         auto tree = dme.build_clock_tree();
 
         CHECK(tree->name == "s1");  // Single sink becomes root
@@ -195,9 +207,7 @@ TEST_SUITE("DMEAlgorithm Tests") {
     TEST_CASE("DMEAlgorithm Two Sinks") {
         std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(0, 0), 1.0),
                                           recti::Sink("s2", recti::Point<int>(10, 0), 1.0)};
-        auto calculator = std::make_unique<recti::LinearDelayCalculator>(1.0, 1.0);
-        recti::DMEAlgorithm dme(sinks, std::move(calculator));
-
+        auto dme = create_dme_algorithm<recti::LinearDelayCalculator>(sinks, 1.0, 1.0);
         auto tree = dme.build_clock_tree();
 
         CHECK(tree->is_leaf() == false);  // Root should be internal node
@@ -216,35 +226,19 @@ TEST_SUITE("DMEAlgorithm Tests") {
         std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(10, 20), 1.0),
                                           recti::Sink("s2", recti::Point<int>(30, 40), 1.0),
                                           recti::Sink("s3", recti::Point<int>(50, 10), 1.0)};
-        auto calculator = std::make_unique<recti::LinearDelayCalculator>();
-        recti::DMEAlgorithm dme(sinks, std::move(calculator));
-
+        auto dme = create_dme_algorithm<recti::LinearDelayCalculator>(sinks);
         auto tree = dme.build_clock_tree();
 
         CHECK(tree != nullptr);
         CHECK(tree->is_leaf() == false);
-
-        // Should have all sinks as leaves
-        int leaf_count = 0;
-        std::function<void(const std::shared_ptr<recti::TreeNode>&)> count_leaves;
-        count_leaves = [&](const std::shared_ptr<recti::TreeNode>& node) {
-            if (!node) return;
-            if (node->is_leaf()) leaf_count++;
-            count_leaves(node->left);
-            count_leaves(node->right);
-        };
-        count_leaves(tree);
-
-        CHECK(leaf_count == 3);
+        CHECK(count_leaves(tree) == 3);
     }
 
     TEST_CASE("DMEAlgorithm Skew Analysis") {
         std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(0, 0), 1.0),
                                           recti::Sink("s2", recti::Point<int>(10, 10), 1.0),
                                           recti::Sink("s3", recti::Point<int>(20, 0), 1.0)};
-        auto calculator = std::make_unique<recti::LinearDelayCalculator>(1.0, 1.0);
-        recti::DMEAlgorithm dme(sinks, std::move(calculator));
-
+        auto dme = create_dme_algorithm<recti::LinearDelayCalculator>(sinks, 1.0, 1.0);
         auto tree = dme.build_clock_tree();
         auto analysis = dme.analyze_skew(tree);
 
@@ -338,14 +332,12 @@ TEST_SUITE("Integration Tests") {
                                           recti::Sink("s3", recti::Point<int>(50, 10), 1.0)};
 
         // Test with Linear delay calculator
-        auto linear_calc = std::make_unique<recti::LinearDelayCalculator>(0.5, 0.2);
-        recti::DMEAlgorithm dme_linear(sinks, std::move(linear_calc));
+        auto dme_linear = create_dme_algorithm<recti::LinearDelayCalculator>(sinks, 0.5, 0.2);
         auto tree_linear = dme_linear.build_clock_tree();
         auto analysis_linear = dme_linear.analyze_skew(tree_linear);
 
         // Test with Elmore delay calculator
-        auto elmore_calc = std::make_unique<recti::ElmoreDelayCalculator>(0.1, 0.2);
-        recti::DMEAlgorithm dme_elmore(sinks, std::move(elmore_calc));
+        auto dme_elmore = create_dme_algorithm<recti::ElmoreDelayCalculator>(sinks, 0.1, 0.2);
         auto tree_elmore = dme_elmore.build_clock_tree();
         auto analysis_elmore = dme_elmore.analyze_skew(tree_elmore);
 
@@ -369,9 +361,7 @@ TEST_SUITE("Integration Tests") {
                                recti::Point<int>(i * 10, i * 5), 1.0 + i * 0.1);
         }
 
-        auto calculator = std::make_unique<recti::LinearDelayCalculator>();
-        recti::DMEAlgorithm dme(sinks, std::move(calculator));
-
+        auto dme = create_dme_algorithm<recti::LinearDelayCalculator>(sinks);
         auto tree = dme.build_clock_tree();
         auto analysis = dme.analyze_skew(tree);
         auto stats = recti::get_tree_statistics(tree);
