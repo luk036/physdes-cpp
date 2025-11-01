@@ -10,190 +10,12 @@
 #include <string>
 #include <vector>
 
+#include "TestGlobalRouter.h"
+
 using namespace recti;
 
-TEST_SUITE("RoutingNode3d") {
-    TEST_CASE("RoutingNode::remove_child - existing child") {
-        RoutingNode parent("parent", NodeType::SOURCE, Point{Point{0, 0}, 0});
-        RoutingNode child1("child1", NodeType::TERMINAL, Point{Point{0, 0}, 0});
-        RoutingNode child2("child2", NodeType::TERMINAL, Point{Point{0, 0}, 0});
-
-        parent.add_child(&child1);
-        parent.add_child(&child2);
-
-        CHECK(parent.children.size() == 2);
-        CHECK(child1.parent == &parent);
-        CHECK(child2.parent == &parent);
-
-        parent.remove_child(&child1);
-
-        CHECK(parent.children.size() == 1);
-        CHECK(parent.children[0] == &child2);
-        CHECK(child1.parent == nullptr);
-    }
-
-    TEST_CASE("RoutingNode::remove_child - non-existent child") {
-        RoutingNode parent("parent", NodeType::SOURCE, Point{Point{0, 0}, 0});
-        RoutingNode child1("child1", NodeType::TERMINAL, Point{Point{0, 0}, 0});
-        RoutingNode child2("child2", NodeType::TERMINAL, Point{Point{0, 0}, 0});
-
-        parent.add_child(&child1);
-
-        CHECK(parent.children.size() == 1);
-        CHECK(child1.parent == &parent);
-
-        parent.remove_child(&child2);  // Try to remove a child that was never added
-
-        CHECK(parent.children.size() == 1);  // Size should remain 1
-        CHECK(parent.children[0] == &child1);
-        CHECK(child1.parent == &parent);
-        CHECK(child2.parent == nullptr);  // Should still be nullptr
-    }
-
-    TEST_CASE("RoutingNode::remove_child - from empty children list") {
-        RoutingNode parent("parent", NodeType::SOURCE, Point{Point{0, 0}, 0});
-        RoutingNode child("child", NodeType::TERMINAL, Point{Point{0, 0}, 0});
-
-        CHECK(parent.children.empty());
-
-        parent.remove_child(&child);  // Remove from empty list
-
-        CHECK(parent.children.empty());
-        CHECK(child.parent == nullptr);
-    }
-}
-
-TEST_SUITE("GlobalRoutingTree3d") {
-    TEST_CASE("GlobalRoutingTree::insert_steiner_node - invalid parent_id") {
-        GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-        CHECK_THROWS_AS(tree.insert_steiner_node(Point{Point{10, 10}, 10}, "non_existent_parent"),
-                        std::runtime_error);
-    }
-
-    TEST_CASE("GlobalRoutingTree::insert_terminal_node - invalid parent_id") {
-        GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-        CHECK_THROWS_AS(tree.insert_terminal_node(Point{Point{10, 10}, 10}, "non_existent_parent"),
-                        std::runtime_error);
-    }
-
-    TEST_CASE("GlobalRoutingTree::insert_node_on_branch - basic insertion") {
-        GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-        std::string s1_id = tree.insert_steiner_node(Point{Point{10, 0}, 0});
-        std::string s2_id = tree.insert_steiner_node(Point{Point{20, 0}, 0}, s1_id);
-
-        CHECK(tree.nodes.at(s1_id)->children.size() == 1);
-        CHECK(tree.nodes.at(s1_id)->children[0]->id == s2_id);
-
-        std::string new_s_id
-            = tree.insert_node_on_branch(NodeType::STEINER, Point{Point{15, 0}, 0}, s1_id, s2_id);
-
-        CHECK(tree.nodes.at(s1_id)->children.size() == 1);
-        CHECK(tree.nodes.at(s1_id)->children[0]->id == new_s_id);
-        CHECK(tree.nodes.at(new_s_id)->children.size() == 1);
-        CHECK(tree.nodes.at(new_s_id)->children[0]->id == s2_id);
-        CHECK(tree.nodes.at(s2_id)->parent->id == new_s_id);
-    }
-
-    TEST_CASE("GlobalRoutingTree::insert_node_on_branch - invalid branch_start_id") {
-        GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-        std::string s1_id = tree.insert_steiner_node(Point{Point{10, 0}, 0});
-        std::string s2_id = tree.insert_steiner_node(Point{Point{20, 0}, 0}, s1_id);
-        CHECK_THROWS_AS(tree.insert_node_on_branch(NodeType::STEINER, Point{Point{15, 0}, 0},
-                                                   "non_existent", s2_id),
-                        std::runtime_error);
-    }
-
-    TEST_CASE("GlobalRoutingTree::insert_node_on_branch - invalid branch_end_id") {
-        GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-        std::string s1_id = tree.insert_steiner_node(Point{Point{10, 0}, 0});
-        std::string s2_id = tree.insert_steiner_node(Point{Point{20, 0}, 0}, s1_id);
-        CHECK_THROWS_AS(tree.insert_node_on_branch(NodeType::STEINER, Point{Point{15, 0}, 0}, s1_id,
-                                                   "non_existent"),
-                        std::runtime_error);
-    }
-
-    TEST_CASE("GlobalRoutingTree::insert_node_on_branch - end_node not child of start_node") {
-        GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-        std::string s1_id = tree.insert_steiner_node(Point{Point{10, 0}, 0});
-        std::string s2_id
-            = tree.insert_steiner_node(Point{Point{20, 0}, 0});  // s2 is not child of s1
-
-        CHECK_THROWS_AS(
-            tree.insert_node_on_branch(NodeType::STEINER, Point{Point{15, 0}, 0}, s1_id, s2_id),
-            std::runtime_error);
-    }
-
-    TEST_CASE("GlobalRoutingTree::find_path_to_source - basic path") {
-        GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-        std::string s1_id = tree.insert_steiner_node(Point{Point{10, 0}, 0});
-        std::string s2_id = tree.insert_steiner_node(Point{Point{20, 0}, 0}, s1_id);
-        std::string t1_id = tree.insert_terminal_node(Point{Point{30, 0}, 0}, s2_id);
-
-        auto path = tree.find_path_to_source(t1_id);
-        CHECK(path.size() == 4);  // source -> s1 -> s2 -> t1
-        CHECK(path[0]->id == "source");
-        CHECK(path[1]->id == s1_id);
-        CHECK(path[2]->id == s2_id);
-        CHECK(path[3]->id == t1_id);
-    }
-
-    TEST_CASE("GlobalRoutingTree::find_path_to_source - source node") {
-        GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-        auto path = tree.find_path_to_source("source");
-        CHECK(path.size() == 1);
-        CHECK(path[0]->id == "source");
-    }
-
-    TEST_CASE("GlobalRoutingTree::find_path_to_source - non-existent node") {
-        GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-        CHECK_THROWS_AS(tree.find_path_to_source("non_existent"), std::runtime_error);
-    }
-
-    TEST_CASE("GlobalRoutingTree::insert_terminal_with_steiner - no steiner inserted") {
-        GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-        tree.insert_terminal_with_steiner(
-            Point{Point{0, 10}, 10});  // Should attach directly to source
-
-        CHECK(tree.get_source()->children.size() == 1);
-        CHECK(tree.get_all_steiner_nodes().empty());
-        CHECK(tree.get_all_terminals().size() == 1);
-    }
-
-    TEST_CASE("GlobalRoutingTree::insert_terminal_with_steiner - steiner inserted on branch") {
-        GlobalRoutingTree tree(Point{Point{0, 0}, 0});
-        std::string s1_id = tree.insert_steiner_node(Point{Point{10, 0}, 0});
-        std::string t1_id = tree.insert_terminal_node(Point{Point{20, 0}, 0}, s1_id);
-
-        // Insert a terminal that should cause a steiner to be inserted on the source-s1 branch
-        tree.insert_terminal_with_steiner(Point{Point{5, 5}, 5});
-
-        CHECK(tree.get_all_steiner_nodes().size() == 2);  // s1 and the new steiner
-        CHECK(tree.get_all_terminals().size() == 2);      // t1 and the new terminal
-
-        // Verify the new steiner is on the source-s1 branch
-        RoutingNode<Point<Point<int, int>, int>>* source = tree.get_source();
-        CHECK(source->children.size() == 1);
-        RoutingNode<Point<Point<int, int>, int>>* new_steiner = source->children[0];
-        CHECK(new_steiner->type == NodeType::STEINER);
-        CHECK(new_steiner->pt.xcoord().xcoord()
-              == 5);  // Nearest point on source-s1 path to (5,5) is (5,0)
-        CHECK(new_steiner->pt.ycoord() == 0);
-
-        CHECK(new_steiner->children.size()
-              == 2);  // Should have s1 and the new terminal as children
-        bool found_s1 = false;
-        bool found_new_terminal = false;
-        for (auto child : new_steiner->children) {
-            if (child->id == s1_id) found_s1 = true;
-            if (child->type == NodeType::TERMINAL && child->pt.xcoord().xcoord() == 5
-                && child->pt.ycoord() == 5)
-                found_new_terminal = true;
-        }
-        CHECK(found_s1);
-        CHECK(found_new_terminal);
-    }
-}
-
+namespace {
+using namespace recti;
 // Helper function to generate a set of 3D points for testing
 auto generate_3d_points(size_t num_terminals, unsigned int seed)
     -> std::pair<Point<Point<int, int>, int>, std::vector<Point<Point<int, int>, int>>> {
@@ -218,6 +40,7 @@ auto generate_3d_points(size_t num_terminals, unsigned int seed)
 
     return {source, terminals};
 }
+} // namespace
 
 TEST_SUITE("RoutingAlgorithms3d") {
     TEST_CASE("Test routing algorithms in 3D") {
@@ -245,3 +68,4 @@ TEST_SUITE("RoutingAlgorithms3d") {
         }
     }
 }
+

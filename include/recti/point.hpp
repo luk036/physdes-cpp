@@ -40,7 +40,11 @@ namespace recti {
       public:
         using value_type = T1;
 
-        constexpr Point() : _xcoord{T1(0)}, _ycoord{T2(0)} {}
+        /**
+         * @brief Default constructor
+         *
+         */
+        constexpr Point() : _xcoord{}, _ycoord{} {}
 
         /**
          * @brief Construct a new Point object
