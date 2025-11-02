@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <recti/detail/svg_utils.hpp>
 #include <recti/generic.hpp>
 #include <recti/global_router.hpp>
 #include <recti/halton_int.hpp>
@@ -52,29 +53,7 @@ template <> std::string visualize_routing_tree_svg(
     }
     if (all_nodes.empty()) return "<svg></svg>";
 
-    int min_x = all_nodes[0]->pt.xcoord(), max_x = min_x;
-    int min_y = all_nodes[0]->pt.ycoord(), max_y = min_y;
-    for (auto node : all_nodes) {
-        min_x = std::min(min_x, node->pt.xcoord());
-        max_x = std::max(max_x, node->pt.xcoord());
-        min_y = std::min(min_y, node->pt.ycoord());
-        max_y = std::max(max_y, node->pt.ycoord());
-    }
-
-    int range_x = max_x - min_x;
-    int range_y = max_y - min_y;
-    if (range_x == 0) range_x = 1;
-    if (range_y == 0) range_y = 1;
-
-    double scale_x = (width - 2.0 * margin) / range_x;
-    double scale_y = (height - 2.0 * margin) / range_y;
-    double scale = std::min(scale_x, scale_y);
-
-    auto scale_coords = [&](int x, int y) -> std::pair<double, double> {
-        double sx = margin + (x - min_x) * scale;
-        double sy = margin + (y - min_y) * scale;
-        return {sx, sy};
-    };
+    auto params = detail::calculate_svg_params(all_nodes, width, height, margin);
 
     std::ostringstream svg;
     svg << "<svg width=\"" << width << "\" height=\"" << height
@@ -90,8 +69,8 @@ template <> std::string visualize_routing_tree_svg(
     std::function<void(const RoutingNode<Point<int, int>>*)> draw_connections =
         [&](const RoutingNode<Point<int, int>>* node) {
             for (auto child : node->children) {
-                auto [x1, y1] = scale_coords(node->pt.xcoord(), node->pt.ycoord());
-                auto [x2, y2] = scale_coords(child->pt.xcoord(), child->pt.ycoord());
+                auto [x1, y1] = detail::scale_coords(node->pt.xcoord(), node->pt.ycoord(), params);
+                auto [x2, y2] = detail::scale_coords(child->pt.xcoord(), child->pt.ycoord(), params);
                 svg << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\"" << x2 << "\" y2=\""
                     << y2
                     << "\" stroke=\"black\" stroke-width=\"2\" marker-end=\"url(#arrowhead)\"/>\n";
@@ -103,8 +82,8 @@ template <> std::string visualize_routing_tree_svg(
     if (keepouts.has_value()) {
         std::string color = "orange";
         for (const auto& keepout : *keepouts) {
-            auto [x1, y1] = scale_coords(keepout.xcoord().lb(), keepout.ycoord().lb());
-            auto [x2, y2] = scale_coords(keepout.xcoord().ub(), keepout.ycoord().ub());
+            auto [x1, y1] = detail::scale_coords(keepout.xcoord().lb(), keepout.ycoord().lb(), params);
+            auto [x2, y2] = detail::scale_coords(keepout.xcoord().ub(), keepout.ycoord().ub(), params);
             double rwidth = x2 - x1;
             double rheight = y2 - y1;
             svg << "<rect x=\"" << x1 << "\" y=\"" << y1 << "\" width=\"" << rwidth
@@ -114,74 +93,11 @@ template <> std::string visualize_routing_tree_svg(
     }
 
     for (auto node : all_nodes) {
-        auto [x, y] = scale_coords(node->pt.xcoord(), node->pt.ycoord());
-        std::string color;
-        int radius;
-        std::string label;
-        if (node->type == NodeType::SOURCE) {
-            color = "red";
-            radius = 8;
-            label = "S";
-        } else if (node->type == NodeType::STEINER) {
-            color = "blue";
-            radius = 6;
-            size_t pos = node->id.find('_');
-            label = "S" + (pos != std::string::npos ? node->id.substr(pos + 1) : "");
-        } else if (node->type == NodeType::TERMINAL) {
-            color = "green";
-            radius = 6;
-            size_t pos = node->id.find('_');
-            label = "T" + (pos != std::string::npos ? node->id.substr(pos + 1) : "");
-        } else {
-            color = "gray";
-            radius = 5;
-            label = node->id;
-        }
-        svg << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"" << radius << "\" fill=\""
-            << color << "\" stroke=\"black\" stroke-width=\"1\"/>\n";
-        svg << "<text x=\"" << x + radius + 2 << "\" y=\"" << y + 4
-            << "\" font-family=\"Arial\" font-size=\"10\" fill=\"black\">" << label << "</text>\n";
-        svg << "<text x=\"" << x << "\" y=\"" << y - radius - 5
-            << "\" font-family=\"Arial\" font-size=\"8\" fill=\"gray\" text-anchor=\"middle\">("
-            << node->pt << ")</text>\n";
+        detail::draw_node(svg, node, params);
     }
 
-    int legend_y = 20;
-    svg << "<text x=\"20\" y=\"" << legend_y
-        << "\" font-family=\"Arial\" font-size=\"12\" font-weight=\"bold\">Legend:</text>\n";
-
-    struct LegendItem {
-        std::string text;
-        std::string color;
-        int x, y;
-    };
-    std::vector<LegendItem> legend_items = {
-        {"Source", "red", 20, legend_y + 20},
-        {"Steiner", "blue", 20, legend_y + 40},
-        {"Terminal", "green", 20, legend_y + 60},
-    };
-    for (const auto& item : legend_items) {
-        svg << "<circle cx=\"" << item.x << "\" cy=\"" << item.y - 4 << "\" r=\"4\" fill=\""
-            << item.color << "\" stroke=\"black\"/>\n";
-        svg << "<text x=\"" << item.x + 10 << "\" y=\"" << item.y
-            << "\" font-family=\"Arial\" font-size=\"10\">" << item.text << "</text>\n";
-    }
-
-    int stats_y = legend_y + 90;
-    svg << "<text x=\"20\" y=\"" << stats_y
-        << "\" font-family=\"Arial\" font-size=\"10\" font-weight=\"bold\">Statistics:</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 15
-        << "\" font-family=\"Arial\" font-size=\"9\">Total Nodes: " << tree.nodes.size()
-        << "</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 30
-        << "\" font-family=\"Arial\" font-size=\"9\">Terminals: " << tree.get_all_terminals().size()
-        << "</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 45
-        << "\" font-family=\"Arial\" font-size=\"9\">Steiner: "
-        << tree.get_all_steiner_nodes().size() << "</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 60
-        << "\" font-family=\"Arial\" font-size=\"9\">Wirelength: " << tree.calculate_wirelength()
-        << "</text>\n";
+    detail::draw_legend(svg);
+    detail::draw_stats(svg, tree);
 
     svg << "</svg>\n";
     return svg.str();
@@ -207,29 +123,7 @@ template <> std::string visualize_routing_tree3d_svg(
     }
     if (all_nodes.empty()) return "<svg></svg>";
 
-    int min_x = all_nodes[0]->pt.xcoord().xcoord(), max_x = min_x;
-    int min_y = all_nodes[0]->pt.ycoord(), max_y = min_y;
-    for (auto node : all_nodes) {
-        min_x = std::min(min_x, node->pt.xcoord().xcoord());
-        max_x = std::max(max_x, node->pt.xcoord().xcoord());
-        min_y = std::min(min_y, node->pt.ycoord());
-        max_y = std::max(max_y, node->pt.ycoord());
-    }
-
-    int range_x = max_x - min_x;
-    int range_y = max_y - min_y;
-    if (range_x == 0) range_x = 1;
-    if (range_y == 0) range_y = 1;
-
-    double scale_x = (width - 2.0 * margin) / range_x;
-    double scale_y = (height - 2.0 * margin) / range_y;
-    double scale = std::min(scale_x, scale_y);
-
-    auto scale_coords = [&](int x, int y) -> std::pair<double, double> {
-        double sx = margin + (x - min_x) * scale;
-        double sy = margin + (y - min_y) * scale;
-        return {sx, sy};
-    };
+    auto params = detail::calculate_svg_params(all_nodes, width, height, margin);
 
     std::vector<std::string> layer_colors = {"red", "orange", "blue", "green"};
 
@@ -247,8 +141,8 @@ template <> std::string visualize_routing_tree3d_svg(
     std::function<void(const RoutingNode<Point<Point<int, int>, int>>*)> draw_connections
         = [&](const RoutingNode<Point<Point<int, int>, int>>* node) {
               for (auto child : node->children) {
-                  auto [x1, y1] = scale_coords(node->pt.xcoord().xcoord(), node->pt.ycoord());
-                  auto [x2, y2] = scale_coords(child->pt.xcoord().xcoord(), child->pt.ycoord());
+                  auto [x1, y1] = detail::scale_coords(node->pt.xcoord().xcoord(), node->pt.ycoord(), params);
+                  auto [x2, y2] = detail::scale_coords(child->pt.xcoord().xcoord(), child->pt.ycoord(), params);
                   size_t color_index = static_cast<size_t>(child->pt.xcoord().ycoord() / scale_z)
                                        % layer_colors.size();
                   std::string color = layer_colors[color_index];
@@ -264,8 +158,8 @@ template <> std::string visualize_routing_tree3d_svg(
     if (keepouts.has_value()) {
         std::string color = "pink";
         for (const auto& keepout : *keepouts) {
-            auto [x1, y1] = scale_coords(keepout.xcoord().xcoord().lb(), keepout.ycoord().lb());
-            auto [x2, y2] = scale_coords(keepout.xcoord().xcoord().ub(), keepout.ycoord().ub());
+            auto [x1, y1] = detail::scale_coords(keepout.xcoord().xcoord().lb(), keepout.ycoord().lb(), params);
+            auto [x2, y2] = detail::scale_coords(keepout.xcoord().xcoord().ub(), keepout.ycoord().ub(), params);
             double rwidth = x2 - x1;
             double rheight = y2 - y1;
             svg << "<rect x=\"" << x1 << "\" y=\"" << y1 << "\" width=\"" << rwidth
@@ -275,74 +169,11 @@ template <> std::string visualize_routing_tree3d_svg(
     }
 
     for (auto node : all_nodes) {
-        auto [x, y] = scale_coords(node->pt.xcoord().xcoord(), node->pt.ycoord());
-        std::string color;
-        int radius;
-        std::string label;
-        if (node->type == NodeType::SOURCE) {
-            color = "red";
-            radius = 8;
-            label = "S";
-        } else if (node->type == NodeType::STEINER) {
-            color = "blue";
-            radius = 6;
-            size_t pos = node->id.find('_');
-            label = "S" + (pos != std::string::npos ? node->id.substr(pos + 1) : "");
-        } else if (node->type == NodeType::TERMINAL) {
-            color = "green";
-            radius = 6;
-            size_t pos = node->id.find('_');
-            label = "T" + (pos != std::string::npos ? node->id.substr(pos + 1) : "");
-        } else {
-            color = "gray";
-            radius = 5;
-            label = node->id;
-        }
-        svg << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"" << radius << "\" fill=\""
-            << color << "\" stroke=\"black\" stroke-width=\"1\"/>\n";
-        svg << "<text x=\"" << x + radius + 2 << "\" y=\"" << y + 4
-            << "\" font-family=\"Arial\" font-size=\"10\" fill=\"black\">" << label << "</text>\n";
-        svg << "<text x=\"" << x << "\" y=\"" << y - radius - 5
-            << "\" font-family=\"Arial\" font-size=\"8\" fill=\"gray\" text-anchor=\"middle\">("
-            << node->pt << ")</text>\n";
+        detail::draw_node(svg, node, params);
     }
 
-    int legend_y = 20;
-    svg << "<text x=\"20\" y=\"" << legend_y
-        << "\" font-family=\"Arial\" font-size=\"12\" font-weight=\"bold\">Legend:</text>\n";
-
-    struct LegendItem {
-        std::string text;
-        std::string color;
-        int x, y;
-    };
-    std::vector<LegendItem> legend_items = {
-        {"Source", "red", 20, legend_y + 20},
-        {"Steiner", "blue", 20, legend_y + 40},
-        {"Terminal", "green", 20, legend_y + 60},
-    };
-    for (const auto& item : legend_items) {
-        svg << "<circle cx=\"" << item.x << "\" cy=\"" << item.y - 4 << "\" r=\"4\" fill=\""
-            << item.color << "\" stroke=\"black\"/>\n";
-        svg << "<text x=\"" << item.x + 10 << "\" y=\"" << item.y
-            << "\" font-family=\"Arial\" font-size=\"10\">" << item.text << "</text>\n";
-    }
-
-    int stats_y = legend_y + 90;
-    svg << "<text x=\"20\" y=\"" << stats_y
-        << "\" font-family=\"Arial\" font-size=\"10\" font-weight=\"bold\">Statistics:</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 15
-        << "\" font-family=\"Arial\" font-size=\"9\">Total Nodes: " << tree.nodes.size()
-        << "</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 30
-        << "\" font-family=\"Arial\" font-size=\"9\">Terminals: " << tree.get_all_terminals().size()
-        << "</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 45
-        << "\" font-family=\"Arial\" font-size=\"9\">Steiner: "
-        << tree.get_all_steiner_nodes().size() << "</text>\n";
-    svg << "<text x=\"20\" y=\"" << stats_y + 60
-        << "\" font-family=\"Arial\" font-size=\"9\">Wirelength: " << tree.calculate_wirelength()
-        << "</text>\n";
+    detail::draw_legend(svg);
+    detail::draw_stats(svg, tree);
 
     svg << "</svg>\n";
     return svg.str();

@@ -149,6 +149,13 @@ template <typename IntPoint> class GlobalRoutingTree {
     auto _find_nearest_insertion(const IntPoint& pt,
                                  std::optional<std::vector<Keepout>> keepouts = std::nullopt)
         -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*> {
+        return _find_nearest_insertion_with_constraints(pt, std::nullopt, keepouts);
+    }
+
+    auto _find_nearest_insertion_with_constraints(
+        const IntPoint& pt, std::optional<int> allowed_wirelength,
+        std::optional<std::vector<Keepout>> keepouts = std::nullopt)
+        -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*> {
         RoutingNode<IntPoint>* parent_node = nullptr;
         RoutingNode<IntPoint>* nearest_node = &source_node;
         int min_distance = source_node.pt.min_dist_with(pt);
@@ -157,8 +164,13 @@ template <typename IntPoint> class GlobalRoutingTree {
             for (auto* child : node->children) {
                 auto possible_path = node->pt.hull_with(child->pt);
                 int distance = possible_path.min_dist_with(pt);
+                auto nearest_pt = possible_path.nearest_to(pt);
+                if (allowed_wirelength) {
+                    int path_length
+                        = node->path_length + node->pt.min_dist_with(nearest_pt) + distance;
+                    if (path_length > *allowed_wirelength) continue;
+                }
                 if (distance < min_distance) {
-                    auto nearest_pt = possible_path.nearest_to(pt);
                     bool block = false;
                     if (keepouts.has_value()) {
                         auto path1 = nearest_pt.hull_with(pt);
@@ -195,56 +207,40 @@ template <typename IntPoint> class GlobalRoutingTree {
         return {parent_node, nearest_node};
     }
 
-    auto _find_nearest_insertion_with_constraints(const IntPoint& pt, int allowed_wirelength,
-                                                  std::optional<std::vector<Keepout>> keepouts
-                                                  = std::nullopt)
-        -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*> {
-        RoutingNode<IntPoint>* parent_node = nullptr;
-        RoutingNode<IntPoint>* nearest_node = &source_node;
-        int min_distance = source_node.pt.min_dist_with(pt);
+    auto _insert_terminal_impl(const IntPoint& pt, std::optional<int> allowed_wirelength,
+                               std::optional<std::vector<Keepout>> keepouts) -> void {
+        std::string terminal_id = "terminal_" + std::to_string(next_terminal_id++);
+        auto terminal_ptr
+            = std::make_unique<RoutingNode<IntPoint>>(terminal_id, NodeType::TERMINAL, pt);
+        RoutingNode<IntPoint>* terminal_node = terminal_ptr.get();
+        nodes[terminal_id] = terminal_node;
+        owned_nodes.push_back(std::move(terminal_ptr));
 
-        std::function<void(RoutingNode<IntPoint>*)> traverse = [&](RoutingNode<IntPoint>* node) {
-            for (auto* child : node->children) {
-                auto possible_path = node->pt.hull_with(child->pt);
-                int distance = possible_path.min_dist_with(pt);
-                auto nearest_pt = possible_path.nearest_to(pt);
-                int path_length = node->path_length + node->pt.min_dist_with(nearest_pt) + distance;
-                if (path_length > allowed_wirelength) continue;
-                if (distance < min_distance) {
-                    bool block = false;
-                    if (keepouts.has_value()) {
-                        auto path1 = nearest_pt.hull_with(pt);
-                        auto path2 = nearest_pt.hull_with(node->pt);
-                        auto path3 = nearest_pt.hull_with(child->pt);
-                        for (const auto& keepout : *keepouts) {
-                            if (keepout.contains(nearest_pt)) {
-                                block = true;
-                            }
-                            if (keepout.blocks(path1) || keepout.blocks(path2)
-                                || keepout.blocks(path3)) {
-                                block = true;
-                            }
-                        }
-                    }
-                    if (!block) {
-                        min_distance = distance;
-                        if (nearest_pt == node->pt) {
-                            nearest_node = node;
-                            parent_node = nullptr;
-                        } else if (nearest_pt == child->pt) {
-                            nearest_node = child;
-                            parent_node = nullptr;
-                        } else {
-                            parent_node = node;
-                            nearest_node = child;
-                        }
-                    }
-                }
-                traverse(child);
-            }
-        };
-        traverse(&source_node);
-        return {parent_node, nearest_node};
+        auto [parent_node, nearest_node]
+            = _find_nearest_insertion_with_constraints(pt, allowed_wirelength, keepouts);
+
+        if (parent_node == nullptr) {
+            nearest_node->add_child(terminal_node);
+            terminal_node->path_length
+                = nearest_node->path_length + nearest_node->pt.min_dist_with(pt);
+        } else {
+            std::string steiner_id = "steiner_" + std::to_string(next_steiner_id++);
+            auto possible_path = parent_node->pt.hull_with(nearest_node->pt);
+            IntPoint nearest_pt = possible_path.nearest_to(pt);
+            auto steiner_ptr = std::make_unique<RoutingNode<IntPoint>>(
+                steiner_id, NodeType::STEINER, nearest_pt);
+            RoutingNode<IntPoint>* new_node = steiner_ptr.get();
+            nodes[steiner_id] = new_node;
+            owned_nodes.push_back(std::move(steiner_ptr));
+
+            parent_node->remove_child(nearest_node);
+            parent_node->add_child(new_node);
+            new_node->path_length
+                = parent_node->path_length + parent_node->pt.min_dist_with(nearest_pt);
+            new_node->add_child(nearest_node);
+            new_node->add_child(terminal_node);
+            terminal_node->path_length = new_node->path_length + nearest_pt.min_dist_with(pt);
+        }
     }
 
   public:
@@ -387,37 +383,7 @@ template <typename IntPoint> class GlobalRoutingTree {
     auto insert_terminal_with_steiner(const IntPoint& pt,
                                       std::optional<std::vector<Keepout>> keepouts = std::nullopt)
         -> void {
-        std::string terminal_id = "terminal_" + std::to_string(next_terminal_id++);
-        auto terminal_ptr
-            = std::make_unique<RoutingNode<IntPoint>>(terminal_id, NodeType::TERMINAL, pt);
-        RoutingNode<IntPoint>* terminal_node = terminal_ptr.get();
-        nodes[terminal_id] = terminal_node;
-        owned_nodes.push_back(std::move(terminal_ptr));
-
-        auto [parent_node, nearest_node] = _find_nearest_insertion(pt, keepouts);
-
-        if (parent_node == nullptr) {
-            nearest_node->add_child(terminal_node);
-            terminal_node->path_length
-                = nearest_node->path_length + nearest_node->pt.min_dist_with(pt);
-        } else {
-            std::string steiner_id = "steiner_" + std::to_string(next_steiner_id++);
-            auto possible_path = parent_node->pt.hull_with(nearest_node->pt);
-            IntPoint nearest_pt = possible_path.nearest_to(pt);
-            auto steiner_ptr = std::make_unique<RoutingNode<IntPoint>>(
-                steiner_id, NodeType::STEINER, nearest_pt);
-            RoutingNode<IntPoint>* new_node = steiner_ptr.get();
-            nodes[steiner_id] = new_node;
-            owned_nodes.push_back(std::move(steiner_ptr));
-
-            parent_node->remove_child(nearest_node);
-            parent_node->add_child(new_node);
-            new_node->path_length
-                = parent_node->path_length + parent_node->pt.min_dist_with(nearest_pt);
-            new_node->add_child(nearest_node);
-            new_node->add_child(terminal_node);
-            terminal_node->path_length = new_node->path_length + nearest_pt.min_dist_with(pt);
-        }
+        _insert_terminal_impl(pt, std::nullopt, keepouts);
     }
 
     /**
@@ -429,38 +395,7 @@ template <typename IntPoint> class GlobalRoutingTree {
     auto insert_terminal_with_constraints(const IntPoint& pt, int allowed_wirelength,
                                           std::optional<std::vector<Keepout>> keepouts
                                           = std::nullopt) -> void {
-        std::string terminal_id = "terminal_" + std::to_string(next_terminal_id++);
-        auto terminal_ptr
-            = std::make_unique<RoutingNode<IntPoint>>(terminal_id, NodeType::TERMINAL, pt);
-        RoutingNode<IntPoint>* terminal_node = terminal_ptr.get();
-        nodes[terminal_id] = terminal_node;
-        owned_nodes.push_back(std::move(terminal_ptr));
-
-        auto [parent_node, nearest_node]
-            = _find_nearest_insertion_with_constraints(pt, allowed_wirelength, keepouts);
-
-        if (parent_node == nullptr) {
-            nearest_node->add_child(terminal_node);
-            terminal_node->path_length
-                = nearest_node->path_length + nearest_node->pt.min_dist_with(pt);
-        } else {
-            std::string steiner_id = "steiner_" + std::to_string(next_steiner_id++);
-            auto possible_path = parent_node->pt.hull_with(nearest_node->pt);
-            IntPoint nearest_pt = possible_path.nearest_to(pt);
-            auto steiner_ptr = std::make_unique<RoutingNode<IntPoint>>(
-                steiner_id, NodeType::STEINER, nearest_pt);
-            RoutingNode<IntPoint>* new_node = steiner_ptr.get();
-            nodes[steiner_id] = new_node;
-            owned_nodes.push_back(std::move(steiner_ptr));
-
-            parent_node->remove_child(nearest_node);
-            parent_node->add_child(new_node);
-            new_node->path_length
-                = parent_node->path_length + parent_node->pt.min_dist_with(nearest_pt);
-            new_node->add_child(nearest_node);
-            new_node->add_child(terminal_node);
-            terminal_node->path_length = new_node->path_length + nearest_pt.min_dist_with(pt);
-        }
+        _insert_terminal_impl(pt, allowed_wirelength, keepouts);
     }
 
     /**

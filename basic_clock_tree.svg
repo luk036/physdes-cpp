@@ -1,0 +1,48 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+<style>
+  .node-label { font: 10px sans-serif; fill: #333; }
+  .delay-label { font: 8px sans-serif; fill: #666; }
+  .wire-label { font: 9px sans-serif; fill: #444; }
+  .analysis-label { font: 12px sans-serif; fill: #333; }
+</style>
+<rect width="100%" height="100%" fill="white"/>
+<g class="clock-tree">
+<line x1="492.308" y1="300" x2="492.308" y2="107.692" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="492.308" y="198.846" class="wire-label" text-anchor="middle">50</text>
+<line x1="492.308" y1="107.692" x2="300" y2="107.692" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="396.154" y="102.692" class="wire-label" text-anchor="middle">50</text>
+<line x1="492.308" y1="107.692" x2="684.615" y2="107.692" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="588.462" y="102.692" class="wire-label" text-anchor="middle">50</text>
+<line x1="492.308" y1="300" x2="396.154" y2="300" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="444.231" y="295" class="wire-label" text-anchor="middle">25</text>
+<line x1="396.154" y1="300" x2="107.692" y2="300" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="251.923" y="295" class="wire-label" text-anchor="middle">75</text>
+<line x1="396.154" y1="300" x2="492.308" y2="492.308" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="444.231" y="391.154" class="wire-label" text-anchor="middle">75</text>
+<circle cx="492.308" cy="300" r="10" fill="#F44336" stroke="#333" stroke-width="1"/>
+<text x="492.308" y="285" class="node-label" text-anchor="middle">n2</text>
+<text x="492.308" y="322" class="delay-label" text-anchor="middle">d:0.0</text>
+<circle cx="492.308" cy="107.692" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="492.308" y="96.6923" class="node-label" text-anchor="middle">n0</text>
+<text x="492.308" y="125.692" class="delay-label" text-anchor="middle">d:40.0</text>
+<circle cx="300" cy="107.692" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="300" y="94.6923" class="node-label" text-anchor="middle">CPU</text>
+<text x="300" y="127.692" class="delay-label" text-anchor="middle">d:80.0</text>
+<text x="300" y="137.692" class="delay-label" text-anchor="middle">c:2.0</text>
+<circle cx="684.615" cy="107.692" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="684.615" y="94.6923" class="node-label" text-anchor="middle">GPU</text>
+<text x="684.615" y="127.692" class="delay-label" text-anchor="middle">d:80.0</text>
+<text x="684.615" y="137.692" class="delay-label" text-anchor="middle">c:1.5</text>
+<circle cx="396.154" cy="300" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="396.154" y="289" class="node-label" text-anchor="middle">n1</text>
+<text x="396.154" y="318" class="delay-label" text-anchor="middle">d:20.0</text>
+<circle cx="107.692" cy="300" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="107.692" y="287" class="node-label" text-anchor="middle">IO</text>
+<text x="107.692" y="320" class="delay-label" text-anchor="middle">d:80.0</text>
+<text x="107.692" y="330" class="delay-label" text-anchor="middle">c:0.5</text>
+<circle cx="492.308" cy="492.308" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="492.308" y="479.308" class="node-label" text-anchor="middle">Memory</text>
+<text x="492.308" y="512.308" class="delay-label" text-anchor="middle">d:80.0</text>
+<text x="492.308" y="522.308" class="delay-label" text-anchor="middle">c:1.0</text>
+</g>
+</svg>

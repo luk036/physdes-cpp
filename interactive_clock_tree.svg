@@ -1,0 +1,61 @@
+<svg width="1000" height="700" xmlns="http://www.w3.org/2000/svg">
+<style>
+  .node-label { font: 10px sans-serif; fill: #333; }
+  .delay-label { font: 8px sans-serif; fill: #666; }
+  .wire-label { font: 9px sans-serif; fill: #444; }
+  .analysis-label { font: 12px sans-serif; fill: #333; }
+</style>
+<rect width="100%" height="100%" fill="white"/>
+<g class="clock-tree">
+<line x1="573.077" y1="350" x2="573.077" y2="126.923" stroke="#455A64" stroke-width="3" stroke-linecap="round"/>
+<text x="573.077" y="233.462" class="wire-label" text-anchor="middle">50</text>
+<line x1="573.077" y1="126.923" x2="350" y2="126.923" stroke="#455A64" stroke-width="3" stroke-linecap="round"/>
+<text x="461.538" y="121.923" class="wire-label" text-anchor="middle">50</text>
+<line x1="573.077" y1="126.923" x2="796.154" y2="126.923" stroke="#455A64" stroke-width="3" stroke-linecap="round"/>
+<text x="684.615" y="121.923" class="wire-label" text-anchor="middle">50</text>
+<line x1="573.077" y1="350" x2="461.538" y2="350" stroke="#455A64" stroke-width="3" stroke-linecap="round"/>
+<text x="517.308" y="345" class="wire-label" text-anchor="middle">25</text>
+<line x1="461.538" y1="350" x2="126.923" y2="350" stroke="#455A64" stroke-width="3" stroke-linecap="round"/>
+<text x="294.231" y="345" class="wire-label" text-anchor="middle">75</text>
+<line x1="461.538" y1="350" x2="573.077" y2="573.077" stroke="#455A64" stroke-width="3" stroke-linecap="round"/>
+<text x="517.308" y="456.538" class="wire-label" text-anchor="middle">75</text>
+<circle cx="573.077" cy="350" r="12" fill="#C62828" stroke="#333" stroke-width="1"/>
+<text x="573.077" y="333" class="node-label" text-anchor="middle">n2</text>
+<text x="573.077" y="374" class="delay-label" text-anchor="middle">d:0.0</text>
+<circle cx="573.077" cy="126.923" r="8" fill="#1565C0" stroke="#333" stroke-width="1"/>
+<text x="573.077" y="113.923" class="node-label" text-anchor="middle">n0</text>
+<text x="573.077" y="146.923" class="delay-label" text-anchor="middle">d:40.0</text>
+<circle cx="350" cy="126.923" r="10" fill="#2E7D32" stroke="#333" stroke-width="1"/>
+<text x="350" y="111.923" class="node-label" text-anchor="middle">CPU</text>
+<text x="350" y="148.923" class="delay-label" text-anchor="middle">d:80.0</text>
+<text x="350" y="158.923" class="delay-label" text-anchor="middle">c:2.0</text>
+<circle cx="796.154" cy="126.923" r="10" fill="#2E7D32" stroke="#333" stroke-width="1"/>
+<text x="796.154" y="111.923" class="node-label" text-anchor="middle">GPU</text>
+<text x="796.154" y="148.923" class="delay-label" text-anchor="middle">d:80.0</text>
+<text x="796.154" y="158.923" class="delay-label" text-anchor="middle">c:1.5</text>
+<circle cx="461.538" cy="350" r="8" fill="#1565C0" stroke="#333" stroke-width="1"/>
+<text x="461.538" y="337" class="node-label" text-anchor="middle">n1</text>
+<text x="461.538" y="370" class="delay-label" text-anchor="middle">d:20.0</text>
+<circle cx="126.923" cy="350" r="10" fill="#2E7D32" stroke="#333" stroke-width="1"/>
+<text x="126.923" y="335" class="node-label" text-anchor="middle">IO</text>
+<text x="126.923" y="372" class="delay-label" text-anchor="middle">d:80.0</text>
+<text x="126.923" y="382" class="delay-label" text-anchor="middle">c:0.5</text>
+<circle cx="573.077" cy="573.077" r="10" fill="#2E7D32" stroke="#333" stroke-width="1"/>
+<text x="573.077" y="558.077" class="node-label" text-anchor="middle">Memory</text>
+<text x="573.077" y="595.077" class="delay-label" text-anchor="middle">d:80.0</text>
+<text x="573.077" y="605.077" class="delay-label" text-anchor="middle">c:1.0</text>
+<g class="analysis-info">
+<rect x="10" y="10" width="220" height="140" fill="white" stroke="#ccc" stroke-width="1" rx="5"/>
+<rect x="10" y="10" width="220" height="20" fill="#f0f0f0" stroke="#ccc" stroke-width="1" rx="5"/>
+<text x="20" y="25" font-family="sans-serif" font-size="12" font-weight="bold" fill="#333">Clock Tree Analysis</text>
+<text x="20" y="45" font-family="monospace" font-size="11" fill="#333">
+<tspan x="20" y="61">Delay Model: N5recti21LinearDelayCalculatorE</tspan>
+<tspan x="20" y="77">Max Delay: 80.000000</tspan>
+<tspan x="20" y="93">Min Delay: 80.000000</tspan>
+<tspan x="20" y="109">Skew: 0.000000</tspan>
+<tspan x="20" y="125">Total Wirelength: 325</tspan>
+<tspan x="20" y="141">Sinks: 4</tspan>
+</text>
+</g>
+</g>
+</svg>
