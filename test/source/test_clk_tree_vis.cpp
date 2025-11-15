@@ -512,10 +512,14 @@ TEST_CASE("Example Visualization Usage") {
     SUBCASE("Complete Workflow Example") {
         // Step 1: Create clock sinks
         std::vector<recti::Sink> sinks = {
-            recti::Sink("CPU", recti::Point<int>(0, 0), 2.0),
-            recti::Sink("GPU", recti::Point<int>(100, 0), 1.5),
-            recti::Sink("Memory", recti::Point<int>(50, 100), 1.0),
-            recti::Sink("IO", recti::Point<int>(-50, 50), 0.5)
+            recti::Sink("s1", recti::Point<int>(-100, 40), 1.0),
+            recti::Sink("s2", recti::Point<int>(-60, 60), 1.0),
+            recti::Sink("s3", recti::Point<int>(0, 40), 1.0),
+            recti::Sink("s4", recti::Point<int>(20, 20), 1.0),
+            recti::Sink("s5", recti::Point<int>(-20, -20), 1.0),
+            recti::Sink("s6", recti::Point<int>(-30, -50), 1.0),
+            recti::Sink("s7", recti::Point<int>(-100, -40), 1.0),
+            recti::Sink("s8", recti::Point<int>(-100, 0), 1.0),
         };
         
         // Step 2: Build clock tree using DME algorithm
