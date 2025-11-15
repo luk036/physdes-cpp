@@ -126,23 +126,89 @@ TEST_SUITE("LinearDelayCalculator Tests") {
             auto [extend_left, delay_left] = calc.calculate_tapping_point(left, right, 10);
 
             CHECK(extend_left == 5);
-            CHECK(delay_left == doctest::Approx(3.5));
+            CHECK(delay_left == doctest::Approx(1.0 + 5 * 0.5)); // 1.0 + 2.5 = 3.5
             CHECK(left.wire_length == 5);
             CHECK(right.wire_length == 5);
+            CHECK(left.need_elongation == false);
+            CHECK(right.need_elongation == false);
         }
 
-        SUBCASE("Skewed case") {
+        SUBCASE("Skewed case - right slower") {
             recti::TreeNode left("left", recti::Point<int>(0, 0));
             recti::TreeNode right("right", recti::Point<int>(10, 0));
 
             left.delay = 1.0;
-            right.delay = 3.0;  // Right is slower
+            right.delay = 3.0;  // Right is slower, so extend_left should be > 5
 
             auto [extend_left, delay_left] = calc.calculate_tapping_point(left, right, 10);
 
-            // Should extend left more to balance delays
-            CHECK(extend_left > 5);
-            CHECK(delay_left == doctest::Approx(left.delay + extend_left * 0.5));
+            // skew = 3.0 - 1.0 = 2.0
+            // extend_left = round((2.0 / 0.5 + 10) / 2) = round((4 + 10) / 2) = round(7) = 7
+            CHECK(extend_left == 7);
+            CHECK(delay_left == doctest::Approx(1.0 + 7 * 0.5)); // 1.0 + 3.5 = 4.5
+            CHECK(left.wire_length == 7);
+            CHECK(right.wire_length == 3);
+            CHECK(left.need_elongation == false);
+            CHECK(right.need_elongation == false);
+        }
+
+        SUBCASE("Skewed case - left slower") {
+            recti::TreeNode left("left", recti::Point<int>(0, 0));
+            recti::TreeNode right("right", recti::Point<int>(10, 0));
+
+            left.delay = 3.0;
+            right.delay = 1.0;  // Left is slower, so extend_left should be < 5
+
+            auto [extend_left, delay_left] = calc.calculate_tapping_point(left, right, 10);
+
+            // skew = 1.0 - 3.0 = -2.0
+            // extend_left = round((-2.0 / 0.5 + 10) / 2) = round((-4 + 10) / 2) = round(3) = 3
+            CHECK(extend_left == 3);
+            CHECK(delay_left == doctest::Approx(3.0 + 3 * 0.5)); // 3.0 + 1.5 = 4.5
+            CHECK(left.wire_length == 3);
+            CHECK(right.wire_length == 7);
+            CHECK(left.need_elongation == false);
+            CHECK(right.need_elongation == false);
+        }
+
+        SUBCASE("Elongation needed for right branch (extend_left < 0)") {
+            recti::TreeNode left("left", recti::Point<int>(0, 0));
+            recti::TreeNode right("right", recti::Point<int>(10, 0));
+
+            left.delay = 10.0;
+            right.delay = 1.0; // Right is much faster, tapping point would be negative
+
+            auto [extend_left, delay_left] = calc.calculate_tapping_point(left, right, 10);
+
+            // skew = 1.0 - 10.0 = -9.0
+            // extend_left = round((-9.0 / 0.5 + 10) / 2) = round((-18 + 10) / 2) = round(-4) = -4
+            // Should be clamped to 0
+            CHECK(extend_left == 0);
+            CHECK(delay_left == doctest::Approx(10.0)); // delay_left should be node_left.delay
+            CHECK(left.wire_length == 0);
+            CHECK(right.wire_length == 14); // distance - extend_left = 10 - (-4) = 14
+            CHECK(left.need_elongation == false);
+            CHECK(right.need_elongation == true);
+        }
+
+        SUBCASE("Elongation needed for left branch (extend_left > distance)") {
+            recti::TreeNode left("left", recti::Point<int>(0, 0));
+            recti::TreeNode right("right", recti::Point<int>(10, 0));
+
+            left.delay = 1.0;
+            right.delay = 10.0; // Left is much faster, tapping point would be > distance
+
+            auto [extend_left, delay_left] = calc.calculate_tapping_point(left, right, 10);
+
+            // skew = 10.0 - 1.0 = 9.0
+            // extend_left = round((9.0 / 0.5 + 10) / 2) = round((18 + 10) / 2) = round(14) = 14
+            // Should be clamped to distance (10)
+            CHECK(extend_left == 10);
+            CHECK(delay_left == doctest::Approx(10.0)); // delay_left should be node_right.delay
+            CHECK(left.wire_length == 14); // extend_left = 14
+            CHECK(right.wire_length == 0);
+            CHECK(left.need_elongation == true);
+            CHECK(right.need_elongation == false);
         }
     }
 }
@@ -174,6 +240,106 @@ TEST_SUITE("ElmoreDelayCalculator Tests") {
         SUBCASE("Calculate wire capacitance") {
             CHECK(calc.calculate_wire_capacitance(10) == doctest::Approx(2.0));
             CHECK(calc.calculate_wire_capacitance(0) == doctest::Approx(0.0));
+        }
+    }
+
+    TEST_CASE("ElmoreDelayCalculator Tapping Point") {
+        recti::ElmoreDelayCalculator calc(0.1, 0.2);
+
+        SUBCASE("Balanced case") {
+            recti::TreeNode left("left", recti::Point<int>(0, 0));
+            recti::TreeNode right("right", recti::Point<int>(10, 0));
+
+            left.delay = 1.0;
+            right.delay = 1.0;
+            left.capacitance = 1.0;
+            right.capacitance = 1.0;
+
+            auto [extend_left, delay_left] = calc.calculate_tapping_point(left, right, 10);
+
+            // skew = 0
+            // r = 10 * 0.1 = 1.0
+            // c = 10 * 0.2 = 2.0
+            // z = (0 + 1.0 * (1.0 + 2.0/2)) / (1.0 * (2.0 + 1.0 + 1.0)) = (1.0 * 2.0) / (1.0 * 4.0) = 2.0 / 4.0 = 0.5
+            // extend_left = round(0.5 * 10) = 5
+            // r_left = 5 * 0.1 = 0.5
+            // c_left = 5 * 0.2 = 1.0
+            // delay_left = 1.0 + 0.5 * (1.0/2 + 1.0) = 1.0 + 0.5 * 1.5 = 1.0 + 0.75 = 1.75
+            CHECK(extend_left == 5);
+            CHECK(delay_left == doctest::Approx(1.75));
+            CHECK(left.wire_length == 5);
+            CHECK(right.wire_length == 5);
+            CHECK(left.need_elongation == false);
+            CHECK(right.need_elongation == false);
+        }
+
+        SUBCASE("Skewed case - right slower") {
+            recti::TreeNode left("left", recti::Point<int>(0, 0));
+            recti::TreeNode right("right", recti::Point<int>(10, 0));
+
+            left.delay = 1.0;
+            right.delay = 3.0;  // Right is slower
+            left.capacitance = 1.0;
+            right.capacitance = 1.0;
+
+            auto [extend_left, delay_left] = calc.calculate_tapping_point(left, right, 10);
+
+            // skew = 3.0 - 1.0 = 2.0
+            // r = 1.0, c = 2.0
+            // z = (2.0 + 1.0 * (1.0 + 2.0/2)) / (1.0 * (2.0 + 1.0 + 1.0)) = (2.0 + 2.0) / 4.0 = 4.0 / 4.0 = 1.0
+            // extend_left = round(1.0 * 10) = 10
+            CHECK(extend_left == 10);
+            CHECK(delay_left == doctest::Approx(left.delay + 10 * 0.1 * (10 * 0.2 / 2 + left.capacitance))); // 1.0 + 1.0 * (1.0 + 1.0) = 3.0
+            CHECK(left.wire_length == 10);
+            CHECK(right.wire_length == 0);
+            CHECK(left.need_elongation == false);
+            CHECK(right.need_elongation == false);
+        }
+
+        SUBCASE("Elongation needed for right branch (extend_left < 0)") {
+            recti::TreeNode left("left", recti::Point<int>(0, 0));
+            recti::TreeNode right("right", recti::Point<int>(10, 0));
+
+            left.delay = 10.0;
+            right.delay = 1.0; // Right is much faster, tapping point would be negative
+            left.capacitance = 1.0;
+            right.capacitance = 1.0;
+
+            auto [extend_left, delay_left] = calc.calculate_tapping_point(left, right, 10);
+
+            // skew = 1.0 - 10.0 = -9.0
+            // r = 1.0, c = 2.0
+            // z = (-9.0 + 1.0 * (1.0 + 2.0/2)) / (1.0 * (2.0 + 1.0 + 1.0)) = (-9.0 + 2.0) / 4.0 = -7.0 / 4.0 = -1.75
+            // extend_left = round(-1.75 * 10) = -18 (clamped to 0)
+            CHECK(extend_left == 0);
+            CHECK(delay_left == doctest::Approx(10.0)); // delay_left should be node_left.delay
+            CHECK(left.wire_length == 0);
+            CHECK(right.wire_length == 28); // distance - extend_left = 10 - (-18) = 28
+            CHECK(left.need_elongation == false);
+            CHECK(right.need_elongation == true);
+        }
+
+        SUBCASE("Elongation needed for left branch (extend_left > distance)") {
+            recti::TreeNode left("left", recti::Point<int>(0, 0));
+            recti::TreeNode right("right", recti::Point<int>(10, 0));
+
+            left.delay = 1.0;
+            right.delay = 10.0; // Left is much faster, tapping point would be > distance
+            left.capacitance = 1.0;
+            right.capacitance = 1.0;
+
+            auto [extend_left, delay_left] = calc.calculate_tapping_point(left, right, 10);
+
+            // skew = 10.0 - 1.0 = 9.0
+            // r = 1.0, c = 2.0
+            // z = (9.0 + 1.0 * (1.0 + 2.0/2)) / (1.0 * (2.0 + 1.0 + 1.0)) = (9.0 + 2.0) / 4.0 = 11.0 / 4.0 = 2.75
+            // extend_left = round(2.75 * 10) = 28 (clamped to 10)
+            CHECK(extend_left == 10);
+            CHECK(delay_left == doctest::Approx(10.0)); // delay_left should be node_right.delay
+            CHECK(left.wire_length == 28); // extend_left = 28
+            CHECK(right.wire_length == 0);
+            CHECK(left.need_elongation == true);
+            CHECK(right.need_elongation == false);
         }
     }
 }
@@ -222,16 +388,30 @@ TEST_SUITE("DMEAlgorithm Tests") {
         CHECK(analysis.total_wirelength > 0);
     }
 
-    TEST_CASE("DMEAlgorithm Multiple Sinks") {
-        std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(10, 20), 1.0),
-                                          recti::Sink("s2", recti::Point<int>(30, 40), 1.0),
-                                          recti::Sink("s3", recti::Point<int>(50, 10), 1.0)};
-        auto dme = create_dme_algorithm<recti::LinearDelayCalculator>(sinks);
+    TEST_CASE("DMEAlgorithm Multiple Sinks - Tree Structure and Merging Segments") {
+        std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(10, 10), 1.0),
+                                          recti::Sink("s2", recti::Point<int>(20, 10), 1.0),
+                                          recti::Sink("s3", recti::Point<int>(15, 30), 1.0),
+                                          recti::Sink("s4", recti::Point<int>(25, 30), 1.0)};
+        auto dme = create_dme_algorithm<recti::LinearDelayCalculator>(sinks, 1.0, 1.0);
         auto tree = dme.build_clock_tree();
 
         CHECK(tree != nullptr);
-        CHECK(tree->is_leaf() == false);
-        CHECK(count_leaves(tree) == 3);
+        CHECK(tree->is_leaf() == false); // Root should be internal
+        CHECK(count_leaves(tree) == 4);
+
+        // Verify basic tree structure (e.g., root has two children, children are internal or leaves)
+        CHECK(tree->left != nullptr);
+        CHECK(tree->right != nullptr);
+        CHECK_FALSE(tree->left->is_leaf());
+        CHECK_FALSE(tree->right->is_leaf());
+
+        // Further checks could involve inspecting specific node names, positions, and parent/child relationships
+        // This would require more detailed knowledge of the expected tree topology from build_merging_tree
+        // For now, we rely on the leaf count and non-leaf root to indicate a valid tree structure.
+
+        // Note: Directly testing merging segments is hard without exposing private members or having a specific API.
+        // The correctness is implicitly tested by the zero-skew property in analyze_skew.
     }
 
     TEST_CASE("DMEAlgorithm Skew Analysis") {
@@ -313,15 +493,25 @@ TEST_SUITE("Tree Statistics Tests") {
     }
 
     TEST_CASE("Empty Tree Statistics") {
-        auto empty_tree = std::make_shared<recti::TreeNode>("root", recti::Point<int>(0, 0));
+        // An empty tree is not possible with current DMEAlgorithm, but a single node tree is.
+        // For get_tree_statistics, if passed a leaf node as root, it should correctly report.
+        auto leaf_node = std::make_shared<recti::TreeNode>("leaf1", recti::Point<int>(0, 0));
+        leaf_node->delay = 0.0;
+        leaf_node->capacitance = 1.0;
 
-        auto stats = recti::get_tree_statistics(empty_tree);
+        auto stats = recti::get_tree_statistics(leaf_node);
 
         CHECK(stats.total_nodes == 1);
-        CHECK(stats.total_sinks == 1);  // Single node is a leaf
-        CHECK(stats.total_wires == 0);  // No parent, so no wires
+        CHECK(stats.total_sinks == 1);
+        CHECK(stats.total_wires == 0);
         CHECK(stats.sinks.size() == 1);
-        CHECK(stats.sinks[0] == "root");
+        CHECK(stats.sinks[0] == "leaf1");
+
+        CHECK(stats.nodes[0].name == "leaf1");
+        CHECK(stats.nodes[0].type == "sink");
+        CHECK(stats.nodes[0].position == std::pair<int, int>(0, 0));
+        CHECK(stats.nodes[0].delay == doctest::Approx(0.0));
+        CHECK(stats.nodes[0].capacitance == doctest::Approx(1.0));
     }
 }
 
