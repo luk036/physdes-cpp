@@ -15,6 +15,7 @@ namespace recti {
      * argument, and returns the result of that call. If neither object has an `overlaps` member
      * function, the function simply checks if the two objects are equal and returns the result.
      *
+     * @verbatim
      *     .---------------------.
      *     |                     |
      *     |            .--------+-------.
@@ -22,6 +23,7 @@ namespace recti {
      *     `------------+--------'       |
      *                  |                |
      *                  `----------------'
+     * @endverbatim
      *
      * @tparam U1 The type of the first object.
      * @tparam U2 The type of the second object.
@@ -51,11 +53,13 @@ namespace recti {
      * that `lhs` does not contain `rhs`). If neither object has a `contains` member function, the
      * function simply checks if the two objects are equal and returns the result.
      *
+     * @verbatim
      *     .---------------------.
      *     |            .--.     |
      *     | .  | ----  |  |     |
      *     |            `--'     |
      *     `---------------------'
+     * @endverbatim
      *
      * @tparam U1 The type of the first object.
      * @tparam U2 The type of the second object.
@@ -85,7 +89,7 @@ namespace recti {
      * an `intersect_with` member function, the function asserts that `lhs` and `rhs` are equal and
      * returns `lhs`.
      *
-     *
+     * @verbatim
      *     .---------------------.
      *     |                     |
      *     |            .--------+-------.
@@ -93,6 +97,7 @@ namespace recti {
      *     `------------+--------'       |
      *                  |                |
      *                  `----------------'
+     * @endverbatim
      *
      * @tparam U1 The type of the first object.
      * @tparam U2 The type of the second object.
@@ -115,6 +120,7 @@ namespace recti {
     /**
      * @brief Calculates the minimum distance between two objects `lhs` and `rhs`.
      *
+     * @verbatim
      *     .-----------.
      *     |           |
      *     |           |~~~~~.-------------.
@@ -122,6 +128,7 @@ namespace recti {
      *     `-----------'     |             |
      *                       |             |
      *                       `-------------'
+     * @endverbatim
      *
      * The function first checks if `lhs` has a `min_dist_with` member function that can be
      * called with `rhs` as an argument, and returns the result of that call. If `lhs` does not
@@ -179,12 +186,14 @@ namespace recti {
     /**
      * @brief Returns the nearest point on `lhs` to `rhs`.
      *
+     * @verbatim
      *     .---------------------.
      *     |                     *~~~~~~~~~~~o rhs
      *     |                     |
      *     |                     |
      *     `---------------------'
      *         lhs
+     * @endverbatim
      *
      * This function returns the point on `lhs` that is nearest to `rhs`. If `lhs` has a
      * `nearest_to` member function, it is used. Otherwise, it assumes `lhs` is a scalar and

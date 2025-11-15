@@ -9,18 +9,37 @@
 #include <unordered_set>
 #include <vector>
 
+/**
+ * @class UnionFind
+ * @brief Implements the Union-Find data structure for disjoint set union operations.
+ *
+ * This class is used to keep track of a set of elements partitioned into a
+ * number of disjoint (non-overlapping) subsets. It provides two main operations:
+ * `find`, which determines which subset an element is in, and `unionSets`,
+ * which joins two subsets into a single subset. This implementation uses both path
+ * compression and union by rank for optimization.
+ */
 class UnionFind {
   private:
     std::vector<int> parent;
     std::vector<int> rank;
 
   public:
+    /**
+     * @brief Constructs a new UnionFind object.
+     * @param size The initial number of elements in the set.
+     */
     UnionFind(int size) : parent(size), rank(size, 0) {
         for (int i = 0; i < size; ++i) {
             parent[i] = i;
         }
     }
 
+    /**
+     * @brief Finds the representative of the set containing an element.
+     * @param p The element to find.
+     * @return The representative of the set.
+     */
     int find(int p) {
         if (parent[p] != p) {
             parent[p] = find(parent[p]);
@@ -28,6 +47,12 @@ class UnionFind {
         return parent[p];
     }
 
+    /**
+     * @brief Merges the sets containing two elements.
+     * @param p The first element.
+     * @param q The second element.
+     * @return True if the sets were merged, false if they were already in the same set.
+     */
     bool unionSets(int p, int q) {
         int pp = find(p);
         int pq = find(q);
@@ -46,6 +71,10 @@ class UnionFind {
     }
 };
 
+/**
+ * @struct Edge
+ * @brief Represents an edge in the graph with a source, destination, and cost.
+ */
 struct Edge {
     int u;
     int v;
@@ -54,6 +83,10 @@ struct Edge {
     Edge(int u, int v, double cost) : u(u), v(v), cost(cost) {}
 };
 
+/**
+ * @struct Point
+ * @brief Represents a point in a 2D grid with x and y coordinates.
+ */
 struct Point {
     int x;
     int y;
@@ -63,6 +96,10 @@ struct Point {
     bool operator==(const Point& other) const { return x == other.x && y == other.y; }
 };
 
+/**
+ * @struct Pair
+ * @brief Represents a pair of terminals (source and target) to be connected.
+ */
 struct Pair {
     Point source;
     Point target;
@@ -71,12 +108,18 @@ struct Pair {
 };
 
 namespace std {
+    /**
+     * @brief Hash function for the Point struct.
+     */
     template <> struct hash<Point> {
         size_t operator()(const Point& p) const {
             return hash<int>()(p.x) ^ (hash<int>()(p.y) << 1);
         }
     };
 
+    /**
+     * @brief Hash function for std::pair<int, int>.
+     */
     template <> struct hash<std::pair<int, int>> {
         size_t operator()(const std::pair<int, int>& p) const {
             return hash<int>()(p.first) ^ (hash<int>()(p.second) << 1);
@@ -84,15 +127,33 @@ namespace std {
     };
 }  // namespace std
 
+/**
+ * @class SteinerForestGrid
+ * @brief Computes an approximate Steiner Forest on a grid graph.
+ *
+ * This class implements an algorithm to find a low-cost subgraph that connects
+ * specified pairs of terminal nodes on a grid. The algorithm is based on a
+ * primal-dual approach and iteratively builds a solution.
+ */
 class SteinerForestGrid {
   private:
     int h, w, n;
     std::vector<Pair> pairs;
 
   public:
+    /**
+     * @brief Constructs a SteinerForestGrid solver.
+     * @param height The height of the grid.
+     * @param width The width of the grid.
+     * @param terminalPairs A vector of pairs of points to be connected.
+     */
     SteinerForestGrid(int height, int width, const std::vector<Pair>& terminalPairs)
         : h(height), w(width), n(height * width), pairs(terminalPairs) {}
 
+    /**
+     * @struct Result
+     * @brief Stores the result of the Steiner Forest computation.
+     */
     struct Result {
         std::vector<Edge> edges;
         double totalCost;
@@ -101,6 +162,10 @@ class SteinerForestGrid {
         std::unordered_set<int> steinerNodes;
     };
 
+    /**
+     * @brief Computes the Steiner Forest.
+     * @return A Result struct containing the edges of the forest, total cost, and node sets.
+     */
     Result compute() {
         UnionFind uf(n);
         std::unordered_set<int> sources;
@@ -247,7 +312,7 @@ class SteinerForestGrid {
             }
         }
 
-        // Reverse delete
+        // Reverse delete to prune the forest
         std::vector<Edge> FPruned = F;
         for (int i = FPruned.size() - 1; i >= 0; --i) {
             UnionFind tempUF(n);
@@ -273,7 +338,7 @@ class SteinerForestGrid {
             }
         }
 
-        // Compute cost
+        // Compute final cost
         double totalCost = 0.0;
         for (const auto& edge : FPruned) {
             totalCost += edge.cost;
@@ -297,6 +362,13 @@ class SteinerForestGrid {
     }
 };
 
+/**
+ * @brief Generates an SVG visualization of the Steiner Forest.
+ * @param result The result from the SteinerForestGrid computation.
+ * @param h The height of the grid.
+ * @param w The width of the grid.
+ * @param filename The name of the SVG file to generate.
+ */
 void generateSVG(const SteinerForestGrid::Result& result, int h, int w,
                  const std::string& filename) {
     int cellSize = 50;
@@ -373,6 +445,13 @@ void generateSVG(const SteinerForestGrid::Result& result, int h, int w,
     file.close();
 }
 
+/**
+ * @brief Main entry point of the program.
+ *
+ * Initializes a Steiner Forest problem on a grid, computes the solution,
+ * generates an SVG visualization, and prints the results to the console.
+ * @return 0 on success.
+ */
 int main() {
     int h = 8;
     int w = 8;
