@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fmt/core.h>
 #include <algorithm>
 #include <cmath>
 #include <functional>
@@ -516,7 +517,7 @@ namespace recti {
             // Create a new parent node for the two subtrees.
             // Its initial position is set to the left child's position (will be updated during
             // embedding).
-            auto parent = std::make_shared<TreeNode>(std::string("n") + std::to_string(node_id++),
+            auto parent = std::make_shared<TreeNode>(fmt::format("n{}", node_id++),
                                                      left_child->position);
             parent->left = left_child;
             parent->right = right_child;
