@@ -41,7 +41,7 @@ auto generate_points_and_keepouts(size_t num_terminals, unsigned int seed)
 
 TEST_SUITE("RoutingAlgorithmsWithKeepouts") {
     TEST_CASE("Test routing algorithms with keepouts") {
-        const size_t num_terminals = 7;
+        const size_t num_terminals = 100;
         const unsigned int seed = 19;
         const double high_stress = 1.1;
         const unsigned int width = 1000;

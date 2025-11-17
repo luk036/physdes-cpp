@@ -46,38 +46,48 @@ TEST_SUITE("RPolygon Stress Tests") {
             auto hull = rpolygon_make_ymonotone_hull<int>(P, is_anticlockwise);
             CHECK(rpolygon_is_ymonotone<int>(hull));
         }
-
-        // SUBCASE("Convex cut") {
-        //     auto L = rpolygon_cut_convex<int>(P, is_anticlockwise);
-        //     for (const auto& C : L) {
-        //         CHECK(rpolygon_is_convex<int>(C));
-        //     }
-        // }
     }
 
-    // TEST_CASE("Degenerate polygons") {
-    //     SUBCASE("Collinear points") {
-    //         std::vector<Point<int>> S;
-    //         for (int i = 0; i < 100; ++i) {
-    //             S.emplace_back(i, i);
-    //             S.emplace_back(i+1, i);
-    //         }
-    //         auto P = create_test_rpolygon(S.begin(), S.end());
-    //         bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
-    //         auto hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
-    //         CHECK(rpolygon_is_convex<int>(hull));
-    //     }
-    //
-    //     SUBCASE("Duplicate points") {
-    //         std::vector<Point<int>> S;
-    //         for (int i = 0; i < 100; ++i) {
-    //             S.emplace_back(i, i);
-    //             S.emplace_back(i, i);
-    //         }
-    //         auto P = create_test_rpolygon(S.begin(), S.end());
-    //         bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
-    //         auto hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
-    //         CHECK(rpolygon_is_convex<int>(hull));
-    //     }
-    // }
+    TEST_CASE("Degenerate polygons") {
+        SUBCASE("Collinear points") {
+            std::vector<Point<int>> S;
+            for (int i = 0; i < 100; ++i) {
+                S.emplace_back(i, i);
+                S.emplace_back(i+1, i);
+            }
+            auto P = create_test_rpolygon(S.begin(), S.end());
+            bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+            auto hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
+            CHECK(rpolygon_is_convex<int>(hull));
+        }
+    
+        // SUBCASE("Duplicate points") {
+        //     std::vector<Point<int>> S;
+        //     for (int i = 0; i < 100; ++i) {
+        //         S.emplace_back(i, i);
+        //         S.emplace_back(i, i);
+        //     }
+        //     auto P = create_test_rpolygon(S.begin(), S.end());
+        //     bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+        //     auto hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
+        //     CHECK(rpolygon_is_convex<int>(hull));
+        // }
+    }
+}
+
+TEST_SUITE("RPolygon Stress Tests") {
+    TEST_CASE("Large polygon hull and cut") {
+        const size_t num_points = 100;
+        const int max_coord = 10000;
+
+        auto P = generate_random_rpolygon(num_points, max_coord);
+        bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+
+        SUBCASE("Convex cut") {
+            auto L = rpolygon_cut_convex<int>(P, is_anticlockwise);
+            for (const auto& C : L) {
+                CHECK(rpolygon_is_convex<int>(C));
+            }
+        }
+    }
 }

@@ -5,59 +5,631 @@
 <polygon points="0 0, 10 3.5, 0 7" fill="black"/>
 </marker>
 </defs>
-<line x1="222.717" y1="50" x2="647.868" y2="194.177" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="647.868" y1="194.177" x2="887.015" y2="383.133" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="647.868" y1="194.177" x2="647.868" y2="194.177" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="222.717" y1="50" x2="222.717" y2="131.192" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="222.717" y1="131.192" x2="408.721" y2="446.118" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="408.721" y1="446.118" x2="528.294" y2="635.074" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="528.294" y1="635.074" x2="528.294" y2="635.074" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="528.294" y1="635.074" x2="528.294" y2="698.059" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="528.294" y1="698.059" x2="767.441" y2="950" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="528.294" y1="698.059" x2="50" y2="698.059" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="408.721" y1="446.118" x2="408.721" y2="446.118" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
-<line x1="222.717" y1="131.192" x2="169.574" y2="131.192" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
-<rect x="638.026" y="528.786" width="147.622" height="246.036" fill="orange" stroke="black" stroke-width="1"/>
-<rect x="96.7469" y="331.957" width="147.622" height="147.622" fill="orange" stroke="black" stroke-width="1"/>
-<circle cx="222.717" cy="131.192" r="6" fill="blue" stroke="black" stroke-width="1"/>
-<text x="230.717" y="135.192" font-family="Arial" font-size="10" fill="black">S5</text>
-<text x="222.717" y="120.192" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((756, 192))</text>
-<circle cx="647.868" cy="194.177" r="6" fill="blue" stroke="black" stroke-width="1"/>
-<text x="655.868" y="198.177" font-family="Arial" font-size="10" fill="black">S4</text>
-<text x="647.868" y="183.177" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1620, 320))</text>
-<circle cx="169.574" cy="131.192" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="177.574" y="135.192" font-family="Arial" font-size="10" fill="black">T7</text>
-<text x="169.574" y="120.192" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((648, 192))</text>
-<circle cx="647.868" cy="194.177" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="655.868" y="198.177" font-family="Arial" font-size="10" fill="black">T6</text>
-<text x="647.868" y="183.177" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1620, 320))</text>
-<circle cx="408.721" cy="446.118" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="416.721" y="450.118" font-family="Arial" font-size="10" fill="black">T5</text>
-<text x="408.721" y="435.118" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1134, 832))</text>
-<circle cx="528.294" cy="698.059" r="6" fill="blue" stroke="black" stroke-width="1"/>
-<text x="536.294" y="702.059" font-family="Arial" font-size="10" fill="black">S2</text>
-<text x="528.294" y="687.059" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1377, 1344))</text>
-<circle cx="408.721" cy="446.118" r="6" fill="blue" stroke="black" stroke-width="1"/>
-<text x="416.721" y="450.118" font-family="Arial" font-size="10" fill="black">S3</text>
-<text x="408.721" y="435.118" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1134, 832))</text>
-<circle cx="50" cy="698.059" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="58" y="702.059" font-family="Arial" font-size="10" fill="black">T4</text>
-<text x="50" y="687.059" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((405, 1344))</text>
-<circle cx="528.294" cy="635.074" r="6" fill="blue" stroke="black" stroke-width="1"/>
-<text x="536.294" y="639.074" font-family="Arial" font-size="10" fill="black">S1</text>
-<text x="528.294" y="624.074" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1377, 1216))</text>
-<circle cx="528.294" cy="635.074" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="536.294" y="639.074" font-family="Arial" font-size="10" fill="black">T3</text>
-<text x="528.294" y="624.074" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1377, 1216))</text>
-<circle cx="887.015" cy="383.133" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="895.015" y="387.133" font-family="Arial" font-size="10" fill="black">T2</text>
-<text x="887.015" y="372.133" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((2106, 704))</text>
-<circle cx="767.441" cy="950" r="6" fill="green" stroke="black" stroke-width="1"/>
-<text x="775.441" y="954" font-family="Arial" font-size="10" fill="black">T1</text>
-<text x="767.441" y="939" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1863, 1856))</text>
-<circle cx="222.717" cy="50" r="8" fill="red" stroke="black" stroke-width="1"/>
-<text x="232.717" y="54" font-family="Arial" font-size="10" fill="black">S</text>
-<text x="222.717" y="37" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((756, 27))</text>
+<line x1="501.883" y1="193.933" x2="498.117" y2="170.502" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="498.117" y1="170.502" x2="422.803" y2="170.502" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="422.803" y1="170.502" x2="362.552" y2="170.502" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="362.552" y1="170.502" x2="362.552" y2="230.753" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="362.552" y1="230.753" x2="355.021" y2="244.142" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="355.021" y1="244.142" x2="355.021" y2="291.004" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="355.021" y1="244.142" x2="294.77" y2="244.142" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="294.77" y1="244.142" x2="272.176" y2="244.142" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="272.176" y1="244.142" x2="264.644" y2="244.142" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="264.644" y1="244.142" x2="264.644" y2="304.393" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="264.644" y1="244.142" x2="204.393" y2="244.142" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="204.393" y1="244.142" x2="204.393" y2="264.226" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="204.393" y1="264.226" x2="204.393" y2="344.561" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="204.393" y1="344.561" x2="219.456" y2="384.728" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="204.393" y1="344.561" x2="159.205" y2="344.561" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="159.205" y1="344.561" x2="83.8912" y2="344.561" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="83.8912" y1="344.561" x2="68.8285" y2="404.812" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="68.8285" y1="404.812" x2="50" y2="505.23" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="159.205" y1="344.561" x2="159.205" y2="444.979" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="159.205" y1="444.979" x2="102.72" y2="886.82" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="204.393" y1="244.142" x2="151.674" y2="224.059" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="151.674" y1="224.059" x2="151.674" y2="183.891" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="151.674" y1="183.891" x2="136.611" y2="163.808" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="136.611" y1="163.808" x2="91.4226" y2="163.808" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="136.611" y1="163.808" x2="136.611" y2="103.556" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="151.674" y1="224.059" x2="61.2971" y2="224.059" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="294.77" y1="244.142" x2="294.77" y2="324.477" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="362.552" y1="170.502" x2="317.364" y2="123.64" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="317.364" y1="123.64" x2="287.238" y2="83.4728" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="287.238" y1="83.4728" x2="287.238" y2="63.3891" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="287.238" y1="83.4728" x2="226.987" y2="83.4728" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="498.117" y1="170.502" x2="498.117" y2="130.335" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="498.117" y1="130.335" x2="498.117" y2="110.251" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="498.117" y1="110.251" x2="467.992" y2="90.1674" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="467.992" y1="90.1674" x2="407.741" y2="50" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="498.117" y1="130.335" x2="558.368" y2="130.335" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="501.883" y1="193.933" x2="543.305" y2="193.933" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="543.305" y1="193.933" x2="543.305" y2="210.669" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="543.305" y1="193.933" x2="565.9" y2="193.933" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="565.9" y1="193.933" x2="633.682" y2="190.586" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="633.682" y1="190.586" x2="678.87" y2="190.586" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="678.87" y1="190.586" x2="678.87" y2="137.029" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="678.87" y1="190.586" x2="693.933" y2="190.586" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="693.933" y1="190.586" x2="693.933" y2="237.448" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="693.933" y1="237.448" x2="701.464" y2="317.782" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="701.464" y1="317.782" x2="746.653" y2="317.782" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="701.464" y1="317.782" x2="701.464" y2="378.033" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="701.464" y1="378.033" x2="701.464" y2="398.117" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="701.464" y1="398.117" x2="761.715" y2="398.117" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="701.464" y1="398.117" x2="701.464" y2="438.285" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="701.464" y1="438.285" x2="671.339" y2="438.285" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="701.464" y1="438.285" x2="712.762" y2="478.452" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="712.762" y1="478.452" x2="773.013" y2="518.619" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="712.762" y1="478.452" x2="727.824" y2="598.954" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="712.762" y1="478.452" x2="803.138" y2="538.703" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="712.762" y1="478.452" x2="795.607" y2="880.126" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="693.933" y1="190.586" x2="724.059" y2="177.197" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="724.059" y1="177.197" x2="769.247" y2="177.197" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="769.247" y1="177.197" x2="814.435" y2="177.197" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="814.435" y1="177.197" x2="814.435" y2="157.113" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="814.435" y1="157.113" x2="829.498" y2="116.946" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="829.498" y1="116.946" x2="950" y2="76.7782" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="814.435" y1="177.197" x2="837.029" y2="197.28" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="837.029" y1="197.28" x2="874.686" y2="197.28" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="874.686" y1="197.28" x2="897.28" y2="217.364" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="897.28" y1="217.364" x2="904.812" y2="217.364" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="897.28" y1="217.364" x2="897.28" y2="277.615" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="897.28" y1="277.615" x2="897.28" y2="337.866" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="897.28" y1="337.866" x2="927.406" y2="337.866" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="897.28" y1="337.866" x2="882.218" y2="458.368" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="882.218" y1="458.368" x2="863.389" y2="558.787" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="863.389" y1="558.787" x2="863.389" y2="619.038" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="863.389" y1="619.038" x2="938.703" y2="619.038" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="863.389" y1="619.038" x2="863.389" y2="639.121" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="863.389" y1="639.121" x2="848.326" y2="639.121" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="863.389" y1="639.121" x2="870.921" y2="699.372" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="870.921" y1="699.372" x2="916.109" y2="759.623" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="916.109" y1="759.623" x2="931.172" y2="759.623" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="916.109" y1="759.623" x2="916.109" y2="799.791" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="837.029" y1="197.28" x2="837.029" y2="297.699" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="769.247" y1="177.197" x2="769.247" y2="56.6946" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="565.9" y1="193.933" x2="565.9" y2="270.921" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="565.9" y1="270.921" x2="565.9" y2="331.172" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="565.9" y1="331.172" x2="520.711" y2="351.255" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="520.711" y1="351.255" x2="475.523" y2="351.255" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="520.711" y1="351.255" x2="520.711" y2="391.423" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="520.711" y1="391.423" x2="520.711" y2="431.59" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="520.711" y1="431.59" x2="490.586" y2="431.59" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="490.586" y1="431.59" x2="490.586" y2="451.674" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="490.586" y1="431.59" x2="441.632" y2="431.59" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="441.632" y1="431.59" x2="430.335" y2="431.59" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="430.335" y1="431.59" x2="400.209" y2="424.895" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="400.209" y1="424.895" x2="400.209" y2="411.506" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="400.209" y1="424.895" x2="339.958" y2="424.895" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="339.958" y1="424.895" x2="321.13" y2="485.146" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="321.13" y1="485.146" x2="260.879" y2="485.146" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="321.13" y1="485.146" x2="321.13" y2="545.397" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="321.13" y1="545.397" x2="306.067" y2="585.565" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="306.067" y1="585.565" x2="215.69" y2="585.565" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="215.69" y1="585.565" x2="215.69" y2="605.649" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="215.69" y1="585.565" x2="185.565" y2="585.565" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="185.565" y1="585.565" x2="170.502" y2="565.481" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="185.565" y1="585.565" x2="185.565" y2="645.816" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="185.565" y1="645.816" x2="185.565" y2="665.9" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="185.565" y1="645.816" x2="125.314" y2="645.816" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="125.314" y1="645.816" x2="117.782" y2="645.816" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="117.782" y1="645.816" x2="95.1883" y2="625.732" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="117.782" y1="645.816" x2="117.782" y2="706.067" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="117.782" y1="706.067" x2="57.5314" y2="766.318" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="441.632" y1="431.59" x2="441.632" y2="532.008" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="441.632" y1="532.008" x2="441.632" y2="592.259" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="441.632" y1="592.259" x2="456.695" y2="612.343" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="456.695" y1="612.343" x2="456.695" y2="652.51" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="456.695" y1="652.51" x2="509.414" y2="672.594" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="509.414" y1="672.594" x2="509.414" y2="692.678" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="509.414" y1="672.594" x2="569.665" y2="672.594" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="569.665" y1="672.594" x2="577.197" y2="672.594" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="577.197" y1="672.594" x2="660.042" y2="672.594" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="660.042" y1="672.594" x2="667.573" y2="659.205" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="660.042" y1="672.594" x2="660.042" y2="719.456" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="569.665" y1="672.594" x2="569.665" y2="732.845" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="569.665" y1="732.845" x2="569.665" y2="752.929" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="569.665" y1="752.929" x2="599.791" y2="752.929" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="569.665" y1="752.929" x2="569.665" y2="813.18" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="569.665" y1="813.18" x2="524.477" y2="813.18" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="524.477" y1="813.18" x2="464.226" y2="873.431" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="569.665" y1="813.18" x2="644.979" y2="813.18" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="644.979" y1="813.18" x2="644.979" y2="839.958" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="644.979" y1="839.958" x2="644.979" y2="853.347" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="644.979" y1="839.958" x2="705.23" y2="839.958" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="644.979" y1="813.18" x2="735.356" y2="813.18" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="735.356" y1="813.18" x2="735.356" y2="860.042" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="735.356" y1="813.18" x2="780.544" y2="813.18" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="780.544" y1="813.18" x2="780.544" y2="779.707" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="780.544" y1="813.18" x2="825.732" y2="819.874" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="456.695" y1="652.51" x2="388.912" y2="652.51" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="388.912" y1="652.51" x2="366.318" y2="652.51" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="388.912" y1="652.51" x2="388.912" y2="726.151" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="388.912" y1="726.151" x2="388.912" y2="773.013" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="388.912" y1="773.013" x2="373.849" y2="833.264" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="388.912" y1="726.151" x2="328.661" y2="726.151" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="328.661" y1="726.151" x2="253.347" y2="746.234" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="253.347" y1="746.234" x2="238.285" y2="746.234" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="253.347" y1="746.234" x2="253.347" y2="806.485" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="253.347" y1="806.485" x2="253.347" y2="826.569" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="253.347" y1="806.485" x2="193.096" y2="806.485" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="193.096" y1="806.485" x2="162.971" y2="866.736" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="441.632" y1="592.259" x2="396.444" y2="592.259" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="520.711" y1="431.59" x2="532.008" y2="491.841" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="532.008" y1="491.841" x2="532.008" y2="511.925" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="532.008" y1="491.841" x2="592.259" y2="491.841" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="592.259" y1="491.841" x2="622.385" y2="552.092" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="565.9" y1="331.172" x2="611.088" y2="331.172" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="611.088" y1="331.172" x2="626.151" y2="331.172" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="611.088" y1="331.172" x2="611.088" y2="371.339" stroke="black" stroke-width="2" marker-end="url(#arrowhead)"/>
+<rect x="715.69" y="461.715" width="125.523" height="209.205" fill="orange" stroke="black" stroke-width="1"/>
+<rect x="255.439" y="294.351" width="125.523" height="125.523" fill="orange" stroke="black" stroke-width="1"/>
+<circle cx="388.912" cy="726.151" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="396.912" y="730.151" font-family="Arial" font-size="10" fill="black">S42</text>
+<text x="388.912" y="715.151" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((819, 1632))</text>
+<circle cx="151.674" cy="183.891" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="159.674" y="187.891" font-family="Arial" font-size="10" fill="black">T28</text>
+<text x="151.674" y="172.891" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((252, 336))</text>
+<circle cx="498.117" cy="130.335" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="506.117" y="134.335" font-family="Arial" font-size="10" fill="black">S2</text>
+<text x="498.117" y="119.335" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1080, 208))</text>
+<circle cx="611.088" cy="331.172" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="619.088" y="335.172" font-family="Arial" font-size="10" fill="black">S11</text>
+<text x="611.088" y="320.172" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1350, 688))</text>
+<circle cx="272.176" cy="244.142" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="280.176" y="248.142" font-family="Arial" font-size="10" fill="black">T19</text>
+<text x="272.176" y="233.142" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((540, 480))</text>
+<circle cx="498.117" cy="110.251" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="506.117" y="114.251" font-family="Arial" font-size="10" fill="black">T2</text>
+<text x="498.117" y="99.251" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1080, 160))</text>
+<circle cx="226.987" cy="83.4728" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="234.987" y="87.4728" font-family="Arial" font-size="10" fill="black">T33</text>
+<text x="226.987" y="72.4728" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((432, 96))</text>
+<circle cx="501.883" cy="193.933" r="8" fill="red" stroke="black" stroke-width="1"/>
+<text x="511.883" y="197.933" font-family="Arial" font-size="10" fill="black">S</text>
+<text x="501.883" y="180.933" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1089, 360))</text>
+<circle cx="498.117" cy="170.502" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="506.117" y="174.502" font-family="Arial" font-size="10" fill="black">S1</text>
+<text x="498.117" y="159.502" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1080, 304))</text>
+<circle cx="490.586" cy="431.59" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="498.586" y="435.59" font-family="Arial" font-size="10" fill="black">S12</text>
+<text x="490.586" y="420.59" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1062, 928))</text>
+<circle cx="543.305" cy="210.669" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="551.305" y="214.669" font-family="Arial" font-size="10" fill="black">T1</text>
+<text x="543.305" y="199.669" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1188, 400))</text>
+<circle cx="355.021" cy="244.142" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="363.021" y="248.142" font-family="Arial" font-size="10" fill="black">S10</text>
+<text x="355.021" y="233.142" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((738, 480))</text>
+<circle cx="490.586" cy="451.674" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="498.586" y="455.674" font-family="Arial" font-size="10" fill="black">T18</text>
+<text x="490.586" y="440.674" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1062, 976))</text>
+<circle cx="422.803" cy="170.502" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="430.803" y="174.502" font-family="Arial" font-size="10" fill="black">T3</text>
+<text x="422.803" y="159.502" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((900, 304))</text>
+<circle cx="814.435" cy="177.197" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="822.435" y="181.197" font-family="Arial" font-size="10" fill="black">S17</text>
+<text x="814.435" y="166.197" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1836, 320))</text>
+<circle cx="558.368" cy="130.335" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="566.368" y="134.335" font-family="Arial" font-size="10" fill="black">T4</text>
+<text x="558.368" y="119.335" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1224, 208))</text>
+<circle cx="204.393" cy="244.142" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="212.393" y="248.142" font-family="Arial" font-size="10" fill="black">S16</text>
+<text x="204.393" y="233.142" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((378, 480))</text>
+<circle cx="633.682" cy="190.586" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="641.682" y="194.586" font-family="Arial" font-size="10" fill="black">T5</text>
+<text x="633.682" y="179.586" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1404, 352))</text>
+<circle cx="185.565" cy="585.565" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="193.565" y="589.565" font-family="Arial" font-size="10" fill="black">S43</text>
+<text x="185.565" y="574.565" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((333, 1296))</text>
+<circle cx="204.393" cy="264.226" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="212.393" y="268.226" font-family="Arial" font-size="10" fill="black">T29</text>
+<text x="204.393" y="253.226" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((378, 528))</text>
+<circle cx="543.305" cy="193.933" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="551.305" y="197.933" font-family="Arial" font-size="10" fill="black">S3</text>
+<text x="543.305" y="182.933" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1188, 360))</text>
+<circle cx="264.644" cy="244.142" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="272.644" y="248.142" font-family="Arial" font-size="10" fill="black">S15</text>
+<text x="264.644" y="233.142" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((522, 480))</text>
+<circle cx="467.992" cy="90.1674" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="475.992" y="94.1674" font-family="Arial" font-size="10" fill="black">T6</text>
+<text x="467.992" y="79.1674" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1008, 112))</text>
+<circle cx="520.711" cy="431.59" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="528.711" y="435.59" font-family="Arial" font-size="10" fill="black">S14</text>
+<text x="520.711" y="420.59" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1134, 928))</text>
+<circle cx="565.9" cy="270.921" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="573.9" y="274.921" font-family="Arial" font-size="10" fill="black">T7</text>
+<text x="565.9" y="259.921" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1242, 544))</text>
+<circle cx="565.9" cy="193.933" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="573.9" y="197.933" font-family="Arial" font-size="10" fill="black">S4</text>
+<text x="565.9" y="182.933" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1242, 360))</text>
+<circle cx="407.741" cy="50" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="415.741" y="54" font-family="Arial" font-size="10" fill="black">T13</text>
+<text x="407.741" y="39" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((864, 16))</text>
+<circle cx="362.552" cy="230.753" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="370.552" y="234.753" font-family="Arial" font-size="10" fill="black">T8</text>
+<text x="362.552" y="219.753" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((756, 448))</text>
+<circle cx="693.933" cy="237.448" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="701.933" y="241.448" font-family="Arial" font-size="10" fill="black">T12</text>
+<text x="693.933" y="226.448" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1548, 464))</text>
+<circle cx="102.72" cy="886.82" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="110.72" y="890.82" font-family="Arial" font-size="10" fill="black">T100</text>
+<text x="102.72" y="875.82" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((135, 2016))</text>
+<circle cx="475.523" cy="351.255" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="483.523" y="355.255" font-family="Arial" font-size="10" fill="black">T9</text>
+<text x="475.523" y="340.255" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1026, 736))</text>
+<circle cx="701.464" cy="317.782" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="709.464" y="321.782" font-family="Arial" font-size="10" fill="black">S18</text>
+<text x="701.464" y="306.782" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1566, 656))</text>
+<circle cx="520.711" cy="391.423" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="528.711" y="395.423" font-family="Arial" font-size="10" fill="black">T10</text>
+<text x="520.711" y="380.423" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1134, 832))</text>
+<circle cx="520.711" cy="351.255" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="528.711" y="355.255" font-family="Arial" font-size="10" fill="black">S5</text>
+<text x="520.711" y="340.255" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1134, 736))</text>
+<circle cx="287.238" cy="83.4728" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="295.238" y="87.4728" font-family="Arial" font-size="10" fill="black">S19</text>
+<text x="287.238" y="72.4728" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((576, 96))</text>
+<circle cx="678.87" cy="137.029" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="686.87" y="141.029" font-family="Arial" font-size="10" fill="black">T11</text>
+<text x="678.87" y="126.029" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1512, 224))</text>
+<circle cx="678.87" cy="190.586" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="686.87" y="194.586" font-family="Arial" font-size="10" fill="black">S6</text>
+<text x="678.87" y="179.586" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1512, 352))</text>
+<circle cx="724.059" cy="177.197" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="732.059" y="181.197" font-family="Arial" font-size="10" fill="black">T14</text>
+<text x="724.059" y="166.197" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1620, 320))</text>
+<circle cx="693.933" cy="190.586" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="701.933" y="194.586" font-family="Arial" font-size="10" fill="black">S7</text>
+<text x="693.933" y="179.586" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1548, 352))</text>
+<circle cx="355.021" cy="291.004" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="363.021" y="295.004" font-family="Arial" font-size="10" fill="black">T15</text>
+<text x="355.021" y="280.004" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((738, 592))</text>
+<circle cx="317.364" cy="123.64" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="325.364" y="127.64" font-family="Arial" font-size="10" fill="black">T16</text>
+<text x="317.364" y="112.64" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((648, 192))</text>
+<circle cx="644.979" cy="813.18" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="652.979" y="817.18" font-family="Arial" font-size="10" fill="black">S48</text>
+<text x="644.979" y="802.18" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1431, 1840))</text>
+<circle cx="400.209" cy="411.506" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="408.209" y="415.506" font-family="Arial" font-size="10" fill="black">T22</text>
+<text x="400.209" y="400.506" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((846, 880))</text>
+<circle cx="362.552" cy="170.502" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="370.552" y="174.502" font-family="Arial" font-size="10" fill="black">S8</text>
+<text x="362.552" y="159.502" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((756, 304))</text>
+<circle cx="626.151" cy="331.172" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="634.151" y="335.172" font-family="Arial" font-size="10" fill="black">T17</text>
+<text x="626.151" y="320.172" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1386, 688))</text>
+<circle cx="863.389" cy="639.121" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="871.389" y="643.121" font-family="Arial" font-size="10" fill="black">S49</text>
+<text x="863.389" y="628.121" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1953, 1424))</text>
+<circle cx="294.77" cy="324.477" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="302.77" y="328.477" font-family="Arial" font-size="10" fill="black">T23</text>
+<text x="294.77" y="313.477" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((594, 672))</text>
+<circle cx="565.9" cy="331.172" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="573.9" y="335.172" font-family="Arial" font-size="10" fill="black">S9</text>
+<text x="565.9" y="320.172" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1242, 688))</text>
+<circle cx="611.088" cy="371.339" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="619.088" y="375.339" font-family="Arial" font-size="10" fill="black">T20</text>
+<text x="611.088" y="360.339" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1350, 784))</text>
+<circle cx="430.335" cy="431.59" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="438.335" y="435.59" font-family="Arial" font-size="10" fill="black">T21</text>
+<text x="430.335" y="420.59" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((918, 928))</text>
+<circle cx="294.77" cy="244.142" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="302.77" y="248.142" font-family="Arial" font-size="10" fill="black">S13</text>
+<text x="294.77" y="233.142" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((594, 480))</text>
+<circle cx="287.238" cy="63.3891" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="295.238" y="67.3891" font-family="Arial" font-size="10" fill="black">T24</text>
+<text x="287.238" y="52.3891" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((576, 48))</text>
+<circle cx="264.644" cy="304.393" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="272.644" y="308.393" font-family="Arial" font-size="10" fill="black">T25</text>
+<text x="264.644" y="293.393" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((522, 624))</text>
+<circle cx="532.008" cy="511.925" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="540.008" y="515.925" font-family="Arial" font-size="10" fill="black">T26</text>
+<text x="532.008" y="500.925" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1161, 1120))</text>
+<circle cx="814.435" cy="157.113" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="822.435" y="161.113" font-family="Arial" font-size="10" fill="black">T27</text>
+<text x="814.435" y="146.113" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1836, 272))</text>
+<circle cx="746.653" cy="317.782" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="754.653" y="321.782" font-family="Arial" font-size="10" fill="black">T30</text>
+<text x="746.653" y="306.782" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1674, 656))</text>
+<circle cx="904.812" cy="217.364" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="912.812" y="221.364" font-family="Arial" font-size="10" fill="black">T40</text>
+<text x="904.812" y="206.364" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((2052, 416))</text>
+<circle cx="874.686" cy="197.28" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="882.686" y="201.28" font-family="Arial" font-size="10" fill="black">T31</text>
+<text x="874.686" y="186.28" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1980, 368))</text>
+<circle cx="701.464" cy="378.033" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="709.464" y="382.033" font-family="Arial" font-size="10" fill="black">T32</text>
+<text x="701.464" y="367.033" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1566, 800))</text>
+<circle cx="592.259" cy="491.841" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="600.259" y="495.841" font-family="Arial" font-size="10" fill="black">T34</text>
+<text x="592.259" y="480.841" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1305, 1072))</text>
+<circle cx="705.23" cy="839.958" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="713.23" y="843.958" font-family="Arial" font-size="10" fill="black">T86</text>
+<text x="705.23" y="828.958" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1575, 1904))</text>
+<circle cx="532.008" cy="491.841" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="540.008" y="495.841" font-family="Arial" font-size="10" fill="black">S20</text>
+<text x="532.008" y="480.841" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1161, 1072))</text>
+<circle cx="339.958" cy="424.895" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="347.958" y="428.895" font-family="Arial" font-size="10" fill="black">T35</text>
+<text x="339.958" y="413.895" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((702, 912))</text>
+<circle cx="938.703" cy="619.038" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="946.703" y="623.038" font-family="Arial" font-size="10" fill="black">T87</text>
+<text x="938.703" y="608.038" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((2133, 1376))</text>
+<circle cx="400.209" cy="424.895" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="408.209" y="428.895" font-family="Arial" font-size="10" fill="black">S21</text>
+<text x="400.209" y="413.895" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((846, 912))</text>
+<circle cx="441.632" cy="532.008" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="449.632" y="536.008" font-family="Arial" font-size="10" fill="black">T36</text>
+<text x="441.632" y="521.008" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((945, 1168))</text>
+<circle cx="125.314" cy="645.816" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="133.314" y="649.816" font-family="Arial" font-size="10" fill="black">T84</text>
+<text x="125.314" y="634.816" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((189, 1440))</text>
+<circle cx="441.632" cy="431.59" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="449.632" y="435.59" font-family="Arial" font-size="10" fill="black">S22</text>
+<text x="441.632" y="420.59" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((945, 928))</text>
+<circle cx="769.247" cy="56.6946" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="777.247" y="60.6946" font-family="Arial" font-size="10" fill="black">T37</text>
+<text x="769.247" y="45.6946" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1728, 32))</text>
+<circle cx="95.1883" cy="625.732" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="103.188" y="629.732" font-family="Arial" font-size="10" fill="black">T85</text>
+<text x="95.1883" y="614.732" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((117, 1392))</text>
+<circle cx="769.247" cy="177.197" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="777.247" y="181.197" font-family="Arial" font-size="10" fill="black">S23</text>
+<text x="769.247" y="166.197" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1728, 320))</text>
+<circle cx="829.498" cy="116.946" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="837.498" y="120.946" font-family="Arial" font-size="10" fill="black">T38</text>
+<text x="829.498" y="105.946" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1872, 176))</text>
+<circle cx="671.339" cy="438.285" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="679.339" y="442.285" font-family="Arial" font-size="10" fill="black">T39</text>
+<text x="671.339" y="427.285" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1494, 944))</text>
+<circle cx="837.029" cy="297.699" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="845.029" y="301.699" font-family="Arial" font-size="10" fill="black">T41</text>
+<text x="837.029" y="286.699" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1890, 608))</text>
+<circle cx="644.979" cy="853.347" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="652.979" y="857.347" font-family="Arial" font-size="10" fill="black">T82</text>
+<text x="644.979" y="842.347" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1431, 1936))</text>
+<circle cx="837.029" cy="197.28" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="845.029" y="201.28" font-family="Arial" font-size="10" fill="black">S24</text>
+<text x="837.029" y="186.28" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1890, 368))</text>
+<circle cx="91.4226" cy="163.808" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="99.4226" y="167.808" font-family="Arial" font-size="10" fill="black">T42</text>
+<text x="91.4226" y="152.808" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((108, 288))</text>
+<circle cx="136.611" cy="103.556" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="144.611" y="107.556" font-family="Arial" font-size="10" fill="black">T43</text>
+<text x="136.611" y="92.5565" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((216, 144))</text>
+<circle cx="238.285" cy="746.234" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="246.285" y="750.234" font-family="Arial" font-size="10" fill="black">T83</text>
+<text x="238.285" y="735.234" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((459, 1680))</text>
+<circle cx="136.611" cy="163.808" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="144.611" y="167.808" font-family="Arial" font-size="10" fill="black">S25</text>
+<text x="136.611" y="152.808" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((216, 288))</text>
+<circle cx="456.695" cy="612.343" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="464.695" y="616.343" font-family="Arial" font-size="10" fill="black">T44</text>
+<text x="456.695" y="601.343" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((981, 1360))</text>
+<circle cx="761.715" cy="398.117" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="769.715" y="402.117" font-family="Arial" font-size="10" fill="black">T45</text>
+<text x="761.715" y="387.117" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1710, 848))</text>
+<circle cx="185.565" cy="665.9" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="193.565" y="669.9" font-family="Arial" font-size="10" fill="black">T80</text>
+<text x="185.565" y="654.9" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((333, 1488))</text>
+<circle cx="701.464" cy="398.117" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="709.464" y="402.117" font-family="Arial" font-size="10" fill="black">S26</text>
+<text x="701.464" y="387.117" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1566, 848))</text>
+<circle cx="61.2971" cy="224.059" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="69.2971" y="228.059" font-family="Arial" font-size="10" fill="black">T46</text>
+<text x="61.2971" y="213.059" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((36, 432))</text>
+<circle cx="848.326" cy="639.121" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="856.326" y="643.121" font-family="Arial" font-size="10" fill="black">T81</text>
+<text x="848.326" y="628.121" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1917, 1424))</text>
+<circle cx="151.674" cy="224.059" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="159.674" y="228.059" font-family="Arial" font-size="10" fill="black">S27</text>
+<text x="151.674" y="213.059" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((252, 432))</text>
+<circle cx="219.456" cy="384.728" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="227.456" y="388.728" font-family="Arial" font-size="10" fill="black">T47</text>
+<text x="219.456" y="373.728" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((414, 816))</text>
+<circle cx="622.385" cy="552.092" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="630.385" y="556.092" font-family="Arial" font-size="10" fill="black">T48</text>
+<text x="622.385" y="541.092" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1377, 1216))</text>
+<circle cx="897.28" cy="277.615" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="905.28" y="281.615" font-family="Arial" font-size="10" fill="black">T49</text>
+<text x="897.28" y="266.615" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((2034, 560))</text>
+<circle cx="897.28" cy="217.364" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="905.28" y="221.364" font-family="Arial" font-size="10" fill="black">S28</text>
+<text x="897.28" y="206.364" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((2034, 416))</text>
+<circle cx="712.762" cy="478.452" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="720.762" y="482.452" font-family="Arial" font-size="10" fill="black">T50</text>
+<text x="712.762" y="467.452" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1593, 1040))</text>
+<circle cx="701.464" cy="438.285" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="709.464" y="442.285" font-family="Arial" font-size="10" fill="black">S29</text>
+<text x="701.464" y="427.285" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1566, 944))</text>
+<circle cx="396.444" cy="592.259" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="404.444" y="596.259" font-family="Arial" font-size="10" fill="black">T51</text>
+<text x="396.444" y="581.259" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((837, 1312))</text>
+<circle cx="441.632" cy="592.259" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="449.632" y="596.259" font-family="Arial" font-size="10" fill="black">S30</text>
+<text x="441.632" y="581.259" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((945, 1312))</text>
+<circle cx="509.414" cy="692.678" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="517.414" y="696.678" font-family="Arial" font-size="10" fill="black">T52</text>
+<text x="509.414" y="681.678" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1107, 1552))</text>
+<circle cx="260.879" cy="485.146" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="268.879" y="489.146" font-family="Arial" font-size="10" fill="black">T53</text>
+<text x="260.879" y="474.146" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((513, 1056))</text>
+<circle cx="321.13" cy="545.397" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="329.13" y="549.397" font-family="Arial" font-size="10" fill="black">T54</text>
+<text x="321.13" y="534.397" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((657, 1200))</text>
+<circle cx="321.13" cy="485.146" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="329.13" y="489.146" font-family="Arial" font-size="10" fill="black">S31</text>
+<text x="321.13" y="474.146" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((657, 1056))</text>
+<circle cx="577.197" cy="672.594" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="585.197" y="676.594" font-family="Arial" font-size="10" fill="black">T55</text>
+<text x="577.197" y="661.594" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1269, 1504))</text>
+<circle cx="57.5314" cy="766.318" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="65.5314" y="770.318" font-family="Arial" font-size="10" fill="black">T98</text>
+<text x="57.5314" y="755.318" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((27, 1728))</text>
+<circle cx="509.414" cy="672.594" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="517.414" y="676.594" font-family="Arial" font-size="10" fill="black">S32</text>
+<text x="509.414" y="661.594" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1107, 1504))</text>
+<circle cx="950" cy="76.7782" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="958" y="80.7782" font-family="Arial" font-size="10" fill="black">T56</text>
+<text x="950" y="65.7782" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((2160, 80))</text>
+<circle cx="83.8912" cy="344.561" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="91.8912" y="348.561" font-family="Arial" font-size="10" fill="black">T57</text>
+<text x="83.8912" y="333.561" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((90, 720))</text>
+<circle cx="916.109" cy="799.791" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="924.109" y="803.791" font-family="Arial" font-size="10" fill="black">T99</text>
+<text x="916.109" y="788.791" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((2079, 1808))</text>
+<circle cx="204.393" cy="344.561" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="212.393" y="348.561" font-family="Arial" font-size="10" fill="black">S33</text>
+<text x="204.393" y="333.561" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((378, 720))</text>
+<circle cx="927.406" cy="337.866" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="935.406" y="341.866" font-family="Arial" font-size="10" fill="black">T58</text>
+<text x="927.406" y="326.866" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((2106, 704))</text>
+<circle cx="306.067" cy="585.565" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="314.067" y="589.565" font-family="Arial" font-size="10" fill="black">T59</text>
+<text x="306.067" y="574.565" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((621, 1296))</text>
+<circle cx="159.205" cy="444.979" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="167.205" y="448.979" font-family="Arial" font-size="10" fill="black">T60</text>
+<text x="159.205" y="433.979" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((270, 960))</text>
+<circle cx="159.205" cy="344.561" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="167.205" y="348.561" font-family="Arial" font-size="10" fill="black">S34</text>
+<text x="159.205" y="333.561" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((270, 720))</text>
+<circle cx="366.318" cy="652.51" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="374.318" y="656.51" font-family="Arial" font-size="10" fill="black">T61</text>
+<text x="366.318" y="641.51" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((765, 1456))</text>
+<circle cx="456.695" cy="652.51" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="464.695" y="656.51" font-family="Arial" font-size="10" fill="black">S35</text>
+<text x="456.695" y="641.51" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((981, 1456))</text>
+<circle cx="773.013" cy="518.619" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="781.013" y="522.619" font-family="Arial" font-size="10" fill="black">T62</text>
+<text x="773.013" y="507.619" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1737, 1136))</text>
+<circle cx="569.665" cy="732.845" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="577.665" y="736.845" font-family="Arial" font-size="10" fill="black">T63</text>
+<text x="569.665" y="721.845" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1251, 1648))</text>
+<circle cx="569.665" cy="672.594" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="577.665" y="676.594" font-family="Arial" font-size="10" fill="black">S36</text>
+<text x="569.665" y="661.594" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1251, 1504))</text>
+<circle cx="727.824" cy="598.954" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="735.824" y="602.954" font-family="Arial" font-size="10" fill="black">T64</text>
+<text x="727.824" y="587.954" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1629, 1328))</text>
+<circle cx="667.573" cy="659.205" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="675.573" y="663.205" font-family="Arial" font-size="10" fill="black">T65</text>
+<text x="667.573" y="648.205" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1485, 1472))</text>
+<circle cx="524.477" cy="813.18" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="532.477" y="817.18" font-family="Arial" font-size="10" fill="black">T66</text>
+<text x="524.477" y="802.18" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1143, 1840))</text>
+<circle cx="68.8285" cy="404.812" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="76.8285" y="408.812" font-family="Arial" font-size="10" fill="black">T67</text>
+<text x="68.8285" y="393.812" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((54, 864))</text>
+<circle cx="882.218" cy="458.368" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="890.218" y="462.368" font-family="Arial" font-size="10" fill="black">T68</text>
+<text x="882.218" y="447.368" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1998, 992))</text>
+<circle cx="897.28" cy="337.866" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="905.28" y="341.866" font-family="Arial" font-size="10" fill="black">S37</text>
+<text x="897.28" y="326.866" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((2034, 704))</text>
+<circle cx="803.138" cy="538.703" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="811.138" y="542.703" font-family="Arial" font-size="10" fill="black">T69</text>
+<text x="803.138" y="527.703" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1809, 1184))</text>
+<circle cx="599.791" cy="752.929" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="607.791" y="756.929" font-family="Arial" font-size="10" fill="black">T70</text>
+<text x="599.791" y="741.929" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1323, 1696))</text>
+<circle cx="735.356" cy="860.042" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="743.356" y="864.042" font-family="Arial" font-size="10" fill="black">T92</text>
+<text x="735.356" y="849.042" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1647, 1952))</text>
+<circle cx="569.665" cy="752.929" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="577.665" y="756.929" font-family="Arial" font-size="10" fill="black">S38</text>
+<text x="569.665" y="741.929" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1251, 1696))</text>
+<circle cx="660.042" cy="719.456" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="668.042" y="723.456" font-family="Arial" font-size="10" fill="black">T71</text>
+<text x="660.042" y="708.456" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1467, 1616))</text>
+<circle cx="193.096" cy="806.485" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="201.096" y="810.485" font-family="Arial" font-size="10" fill="black">T93</text>
+<text x="193.096" y="795.485" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((351, 1824))</text>
+<circle cx="660.042" cy="672.594" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="668.042" y="676.594" font-family="Arial" font-size="10" fill="black">S39</text>
+<text x="660.042" y="661.594" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1467, 1504))</text>
+<circle cx="388.912" cy="773.013" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="396.912" y="777.013" font-family="Arial" font-size="10" fill="black">T72</text>
+<text x="388.912" y="762.013" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((819, 1744))</text>
+<circle cx="388.912" cy="652.51" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="396.912" y="656.51" font-family="Arial" font-size="10" fill="black">S40</text>
+<text x="388.912" y="641.51" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((819, 1456))</text>
+<circle cx="215.69" cy="605.649" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="223.69" y="609.649" font-family="Arial" font-size="10" fill="black">T73</text>
+<text x="215.69" y="594.649" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((405, 1344))</text>
+<circle cx="170.502" cy="565.481" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="178.502" y="569.481" font-family="Arial" font-size="10" fill="black">T74</text>
+<text x="170.502" y="554.481" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((297, 1248))</text>
+<circle cx="215.69" cy="585.565" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="223.69" y="589.565" font-family="Arial" font-size="10" fill="black">S41</text>
+<text x="215.69" y="574.565" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((405, 1296))</text>
+<circle cx="328.661" cy="726.151" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="336.661" y="730.151" font-family="Arial" font-size="10" fill="black">T75</text>
+<text x="328.661" y="715.151" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((675, 1632))</text>
+<circle cx="464.226" cy="873.431" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="472.226" y="877.431" font-family="Arial" font-size="10" fill="black">T76</text>
+<text x="464.226" y="862.431" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((999, 1984))</text>
+<circle cx="863.389" cy="558.787" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="871.389" y="562.787" font-family="Arial" font-size="10" fill="black">T77</text>
+<text x="863.389" y="547.787" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1953, 1232))</text>
+<circle cx="50" cy="505.23" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="58" y="509.23" font-family="Arial" font-size="10" fill="black">T78</text>
+<text x="50" y="494.23" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((9, 1104))</text>
+<circle cx="373.849" cy="833.264" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="381.849" y="837.264" font-family="Arial" font-size="10" fill="black">T79</text>
+<text x="373.849" y="822.264" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((783, 1888))</text>
+<circle cx="569.665" cy="813.18" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="577.665" y="817.18" font-family="Arial" font-size="10" fill="black">S44</text>
+<text x="569.665" y="802.18" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1251, 1840))</text>
+<circle cx="185.565" cy="645.816" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="193.565" y="649.816" font-family="Arial" font-size="10" fill="black">S45</text>
+<text x="185.565" y="634.816" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((333, 1440))</text>
+<circle cx="644.979" cy="839.958" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="652.979" y="843.958" font-family="Arial" font-size="10" fill="black">S46</text>
+<text x="644.979" y="828.958" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1431, 1904))</text>
+<circle cx="863.389" cy="619.038" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="871.389" y="623.038" font-family="Arial" font-size="10" fill="black">S47</text>
+<text x="863.389" y="608.038" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1953, 1376))</text>
+<circle cx="780.544" cy="779.707" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="788.544" y="783.707" font-family="Arial" font-size="10" fill="black">T88</text>
+<text x="780.544" y="768.707" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1755, 1760))</text>
+<circle cx="870.921" cy="699.372" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="878.921" y="703.372" font-family="Arial" font-size="10" fill="black">T89</text>
+<text x="870.921" y="688.372" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1971, 1568))</text>
+<circle cx="253.347" cy="826.569" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="261.347" y="830.569" font-family="Arial" font-size="10" fill="black">T90</text>
+<text x="253.347" y="815.569" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((495, 1872))</text>
+<circle cx="253.347" cy="746.234" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="261.347" y="750.234" font-family="Arial" font-size="10" fill="black">S50</text>
+<text x="253.347" y="735.234" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((495, 1680))</text>
+<circle cx="117.782" cy="706.067" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="125.782" y="710.067" font-family="Arial" font-size="10" fill="black">T91</text>
+<text x="117.782" y="695.067" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((171, 1584))</text>
+<circle cx="117.782" cy="645.816" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="125.782" y="649.816" font-family="Arial" font-size="10" fill="black">S51</text>
+<text x="117.782" y="634.816" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((171, 1440))</text>
+<circle cx="735.356" cy="813.18" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="743.356" y="817.18" font-family="Arial" font-size="10" fill="black">S52</text>
+<text x="735.356" y="802.18" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1647, 1840))</text>
+<circle cx="253.347" cy="806.485" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="261.347" y="810.485" font-family="Arial" font-size="10" fill="black">S53</text>
+<text x="253.347" y="795.485" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((495, 1824))</text>
+<circle cx="825.732" cy="819.874" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="833.732" y="823.874" font-family="Arial" font-size="10" fill="black">T94</text>
+<text x="825.732" y="808.874" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1863, 1856))</text>
+<circle cx="780.544" cy="813.18" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="788.544" y="817.18" font-family="Arial" font-size="10" fill="black">S54</text>
+<text x="780.544" y="802.18" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1755, 1840))</text>
+<circle cx="795.607" cy="880.126" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="803.607" y="884.126" font-family="Arial" font-size="10" fill="black">T95</text>
+<text x="795.607" y="869.126" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((1791, 2000))</text>
+<circle cx="931.172" cy="759.623" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="939.172" y="763.623" font-family="Arial" font-size="10" fill="black">T96</text>
+<text x="931.172" y="748.623" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((2115, 1712))</text>
+<circle cx="162.971" cy="866.736" r="6" fill="green" stroke="black" stroke-width="1"/>
+<text x="170.971" y="870.736" font-family="Arial" font-size="10" fill="black">T97</text>
+<text x="162.971" y="855.736" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((279, 1968))</text>
+<circle cx="916.109" cy="759.623" r="6" fill="blue" stroke="black" stroke-width="1"/>
+<text x="924.109" y="763.623" font-family="Arial" font-size="10" fill="black">S55</text>
+<text x="916.109" y="748.623" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">((2079, 1712))</text>
 <text x="20" y="20" font-family="Arial" font-size="12" font-weight="bold">Legend:</text>
 <circle cx="20" cy="36" r="4" fill="red" stroke="black"/>
 <text x="30" y="40" font-family="Arial" font-size="10">Source</text>
@@ -66,8 +638,8 @@
 <circle cx="20" cy="76" r="4" fill="green" stroke="black"/>
 <text x="30" y="80" font-family="Arial" font-size="10">Terminal</text>
 <text x="20" y="110" font-family="Arial" font-size="10" font-weight="bold">Statistics:</text>
-<text x="20" y="125" font-family="Arial" font-size="9">Total Nodes: 13</text>
-<text x="20" y="140" font-family="Arial" font-size="9">Terminals: 7</text>
-<text x="20" y="155" font-family="Arial" font-size="9">Steiner: 5</text>
-<text x="20" y="170" font-family="Arial" font-size="9">Wirelength: 6043</text>
+<text x="20" y="125" font-family="Arial" font-size="9">Total Nodes: 156</text>
+<text x="20" y="140" font-family="Arial" font-size="9">Terminals: 100</text>
+<text x="20" y="155" font-family="Arial" font-size="9">Steiner: 55</text>
+<text x="20" y="170" font-family="Arial" font-size="9">Wirelength: 22390</text>
 </svg>
