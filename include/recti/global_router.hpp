@@ -546,7 +546,7 @@ template <typename IntPoint> class GlobalRouter {
                   [this](const IntPoint& a, const IntPoint& b) {
                       auto da = source_position.min_dist_with(a);
                       auto db = source_position.min_dist_with(b);
-                      return da > db
+                      return da < db
                              || (da == db
                                  && source_position.hull_with(a).measure()
                                         > source_position.hull_with(b).measure());
@@ -555,7 +555,7 @@ template <typename IntPoint> class GlobalRouter {
 
         // Calculate worst wirelength (distance to farthest terminal)
         if (!this->terminal_positions.empty()) {
-            this->worst_wirelength = source_position.min_dist_with(this->terminal_positions[0]);
+            this->worst_wirelength = source_position.min_dist_with(this->terminal_positions.back());
         } else {
             this->worst_wirelength = 0;
         }

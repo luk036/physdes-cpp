@@ -200,7 +200,7 @@ TEST_SUITE("Interactive SVG Tests") {
         CHECK(std::filesystem::exists("test_interactive.svg"));
         
         // Cleanup
-        // std::filesystem::remove("test_interactive.svg");
+        std::filesystem::remove("test_interactive.svg");
     }
     
     TEST_CASE("Create Interactive SVG Without Analysis") {
@@ -223,7 +223,7 @@ TEST_SUITE("Interactive SVG Tests") {
         CHECK(std::filesystem::exists("test_interactive_no_analysis.svg"));
         
         // Cleanup
-        // std::filesystem::remove("test_interactive_no_analysis.svg");
+        std::filesystem::remove("test_interactive_no_analysis.svg");
     }
 }
 
@@ -254,7 +254,7 @@ TEST_SUITE("Comparison Visualization Tests") {
         CHECK(std::filesystem::exists("test_single_comparison.svg"));
         
         // Cleanup
-        // std::filesystem::remove("test_single_comparison.svg");
+        std::filesystem::remove("test_single_comparison.svg");
     }
     
     TEST_CASE("Two Tree Comparison") {
@@ -297,7 +297,7 @@ TEST_SUITE("Comparison Visualization Tests") {
         CHECK(std::filesystem::exists("test_two_comparison.svg"));
         
         // Cleanup
-        // std::filesystem::remove("test_two_comparison.svg");
+        std::filesystem::remove("test_two_comparison.svg");
     }
     
     TEST_CASE("Delay Model Comparison") {
@@ -334,7 +334,7 @@ TEST_SUITE("Comparison Visualization Tests") {
         CHECK(std::filesystem::exists("test_delay_model_comparison.svg"));
         
         // Cleanup
-        // std::filesystem::remove("test_delay_model_comparison.svg");
+        std::filesystem::remove("test_delay_model_comparison.svg");
     }
     
     TEST_CASE("Empty Comparison Data Throws") {
@@ -384,7 +384,7 @@ TEST_SUITE("Integration Tests with DME Algorithm") {
         CHECK(std::filesystem::exists("test_dme_tree.svg"));
         
         // Cleanup
-        // std::filesystem::remove("test_dme_tree.svg");
+        std::filesystem::remove("test_dme_tree.svg");
     }
     
     TEST_CASE("Compare Linear vs Elmore Models") {
@@ -431,7 +431,7 @@ TEST_SUITE("Integration Tests with DME Algorithm") {
         CHECK(std::filesystem::exists("test_model_comparison.svg"));
         
         // Cleanup
-        // std::filesystem::remove("test_model_comparison.svg");
+        std::filesystem::remove("test_model_comparison.svg");
     }
 }
 
@@ -474,7 +474,7 @@ TEST_SUITE("Edge Cases and Error Handling") {
         
         // Cleanup if file was created
         if (std::filesystem::exists("test_large_coords.svg")) {
-            // std::filesystem::remove("test_large_coords.svg");
+            std::filesystem::remove("test_large_coords.svg");
         }
     }
     
@@ -502,7 +502,7 @@ TEST_SUITE("Edge Cases and Error Handling") {
         
         // Cleanup if file was created
         if (std::filesystem::exists("test_duplicate_positions.svg")) {
-            // std::filesystem::remove("test_duplicate_positions.svg");
+            std::filesystem::remove("test_duplicate_positions.svg");
         }
     }
 }
@@ -540,12 +540,13 @@ TEST_CASE("Example Visualization Usage") {
         CHECK(std::filesystem::exists("interactive_clock_tree.svg"));
         
         // Step 6: Cleanup
-        // std::filesystem::remove("basic_clock_tree.svg");
-        // std::filesystem::remove("interactive_clock_tree.svg");
+        std::filesystem::remove("basic_clock_tree.svg");
+        std::filesystem::remove("interactive_clock_tree.svg");
         
         MESSAGE("Example visualization workflow completed successfully");
     }
 }
+
 
 // Test runner main function
 // int main(int argc, char** argv) {
