@@ -65,21 +65,21 @@ namespace recti {
          * @param load_capacitance The total capacitance driven by this wire segment.
          * @return The calculated wire delay in time units.
          */
-        virtual double calculate_wire_delay(int length, double load_capacitance) = 0;
+        virtual double calculate_wire_delay(int length, double load_capacitance) const = 0;
 
         /**
          * @brief Calculates the delay per unit length of a wire.
          * @param load_capacitance The total capacitance driven by this wire segment.
          * @return The delay per unit length in time units per length unit.
          */
-        virtual double calculate_wire_delay_per_unit(double load_capacitance) = 0;
+        virtual double calculate_wire_delay_per_unit(double load_capacitance) const = 0;
 
         /**
          * @brief Calculates the capacitance of a wire segment.
          * @param length The length of the wire.
          * @return The calculated wire capacitance.
          */
-        virtual double calculate_wire_capacitance(int length) = 0;
+        virtual double calculate_wire_capacitance(int length) const = 0;
 
         /**
          * @brief Determines the optimal tapping point for merging two subtrees to achieve zero
@@ -169,7 +169,7 @@ namespace recti {
          * @param load_capacitance The downstream capacitance (ignored in this model).
          * @return The calculated wire delay.
          */
-        double calculate_wire_delay(int length, double) override {
+        double calculate_wire_delay(int length, double) const override {
             return delay_per_unit * static_cast<double>(length);
         }
 
@@ -178,14 +178,14 @@ namespace recti {
          * @param load_capacitance The downstream capacitance (ignored in this model).
          * @return The delay per unit length.
          */
-        double calculate_wire_delay_per_unit(double) override { return delay_per_unit; }
+        double calculate_wire_delay_per_unit(double) const override { return delay_per_unit; }
 
         /**
          * @brief Calculates the wire capacitance using the linear model.
          * @param length The length of the wire.
          * @return The calculated wire capacitance.
          */
-        double calculate_wire_capacitance(int length) override {
+        double calculate_wire_capacitance(int length) const override {
             return capacitance_per_unit * static_cast<double>(length);
         }
 
@@ -263,7 +263,7 @@ namespace recti {
          * @param load_capacitance The downstream capacitance.
          * @return The calculated wire delay.
          */
-        double calculate_wire_delay(int length, double load_capacitance) override {
+        double calculate_wire_delay(int length, double load_capacitance) const override {
             double wire_resistance = unit_resistance * length;
             double wire_capacitance = unit_capacitance * length;
             // Elmore delay formula
@@ -275,7 +275,7 @@ namespace recti {
          * @param load_capacitance The downstream capacitance.
          * @return The delay per unit length.
          */
-        double calculate_wire_delay_per_unit(double load_capacitance) override {
+        double calculate_wire_delay_per_unit(double load_capacitance) const override {
             return unit_resistance * (unit_capacitance / 2 + load_capacitance);
         }
 
@@ -284,7 +284,7 @@ namespace recti {
          * @param length The length of the wire.
          * @return The calculated wire capacitance.
          */
-        double calculate_wire_capacitance(int length) override { return unit_capacitance * length; }
+        double calculate_wire_capacitance(int length) const override { return unit_capacitance * length; }
 
         /**
          * @brief Determines the tapping point for zero skew using the Elmore delay model.
@@ -698,7 +698,7 @@ namespace recti {
          * @return A SkewAnalysis struct containing the analysis results.
          * @throws std::runtime_error if no sink delays are collected (e.g., empty tree).
          */
-        SkewAnalysis analyze_skew(const std::shared_ptr<TreeNode>& root) {
+        SkewAnalysis analyze_skew(const std::shared_ptr<TreeNode>& root) const {
             std::vector<double> sink_delays;  // Stores delays to all sink nodes.
             // Define a recursive lambda function to collect sink delays.
             std::function<void(const std::shared_ptr<TreeNode>&)> collect_sink_delays;
@@ -743,7 +743,7 @@ namespace recti {
          * @param root The root of the clock tree.
          * @return The total wirelength of the clock tree.
          */
-        int total_wirelength(const std::shared_ptr<TreeNode>& root) {
+        int total_wirelength(const std::shared_ptr<TreeNode>& root) const {
             int total = 0;
             // Define a recursive lambda function to sum wire lengths.
             std::function<void(const std::shared_ptr<TreeNode>&)> sum_wirelength;
