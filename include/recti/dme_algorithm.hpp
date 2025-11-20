@@ -726,12 +726,13 @@ namespace recti {
             double skew = max_delay - min_delay;
 
             // Return the comprehensive skew analysis results.
+            const auto& calculator = *delay_calculator;
             return {max_delay,
                     min_delay,
                     skew,
                     sink_delays,
                     total_wirelength(root),
-                    typeid(*delay_calculator).name()};
+                    typeid(calculator).name()};
         }
 
       private:
