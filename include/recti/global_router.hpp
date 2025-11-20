@@ -452,9 +452,10 @@ template <typename IntPoint> class GlobalRoutingTree {
      * @brief Retrieves all terminal nodes in the tree.
      * @return A vector of pointers to all RoutingNodes of type TERMINAL.
      */
-    auto get_all_terminals() const -> std::vector<RoutingNode<IntPoint>*> {
-        std::vector<RoutingNode<IntPoint>*> terms;
-        for (auto& [id, node] : nodes) {
+    auto get_all_terminals() const -> std::vector<const RoutingNode<IntPoint>*> {
+        std::vector<const RoutingNode<IntPoint>*> terms;
+        for (auto& pair : nodes) {
+            const auto& node = pair.second;
             if (node->type == NodeType::TERMINAL) {
                 terms.push_back(node);
             }
@@ -466,9 +467,10 @@ template <typename IntPoint> class GlobalRoutingTree {
      * @brief Retrieves all Steiner nodes in the tree.
      * @return A vector of pointers to all RoutingNodes of type STEINER.
      */
-    auto get_all_steiner_nodes() const -> std::vector<RoutingNode<IntPoint>*> {
-        std::vector<RoutingNode<IntPoint>*> steins;
-        for (auto& [id, node] : nodes) {
+    auto get_all_steiner_nodes() const -> std::vector<const RoutingNode<IntPoint>*> {
+        std::vector<const RoutingNode<IntPoint>*> steins;
+        for (auto& pair : nodes) {
+            const auto& node = pair.second;
             if (node->type == NodeType::STEINER) {
                 steins.push_back(node);
             }
