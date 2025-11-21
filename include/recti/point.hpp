@@ -59,16 +59,10 @@ namespace recti {
          * @param[in] xcoord - x coordinate.
          * @param[in] ycoord - y coordinate.
          */
-        constexpr Point(T1&& xcoord, T2&& ycoord) noexcept : _xcoord{xcoord}, _ycoord{ycoord} {}
+        constexpr Point(T1 xcoord, T2 ycoord) noexcept
+            : _xcoord{std::move(xcoord)}, _ycoord{std::move(ycoord)} {}
 
-        /**
-         * Copy constructor for Point class.
-         * Constructs a new Point by copying the x and y coordinates from an existing Point object.
-         *
-         * @param[in] xcoord - x coordinate to copy.
-         * @param[in] ycoord - y coordinate to copy.
-         */
-        constexpr Point(const T1& xcoord, const T2& ycoord) : _xcoord{xcoord}, _ycoord{ycoord} {}
+
 
         /**
          * Gets the x coordinate of this Point.

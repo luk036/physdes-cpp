@@ -33,20 +33,9 @@ namespace recti {
          * @param[in] vec_x The x-coordinate of the vector.
          * @param[in] vec_y The y-coordinate of the vector.
          */
-        constexpr Vector2(T1&& vec_x, T2&& vec_y) noexcept
+        constexpr Vector2(T1 vec_x, T2 vec_y) noexcept
             : _x{std::move(vec_x)}, _y{std::move(vec_y)} {}
-        /**
-         * @brief Construct a new Vector2 object
-         *
-         * This is a constructor for the `Vector2` class. It takes two parameters `vec_x`
-         * and `vec_y`, both of which are const references (`const T1&` and `const T2&`).
-         * The constructor is marked as `constexpr`, meaning it can be evaluated at
-         * compile-time.
-         *
-         * @param[in] vec_x The x-coordinate of the vector.
-         * @param[in] vec_y The y-coordinate of the vector.
-         */
-        constexpr Vector2(const T1& vec_x, const T2& vec_y) : _x{vec_x}, _y{vec_y} {}
+
 
         /**
          * @brief Construct a new Vector2 object

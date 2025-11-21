@@ -40,7 +40,7 @@ namespace recti {
          * @param[in] vecs Vector of displacement vectors from origin
          */
         constexpr RPolygon(Point<T> origin, std::vector<Vector2<T>> vecs)
-            : _origin{std::move(origin)}, _vecs{std::move(vecs)} {}
+            : _origin{origin}, _vecs{std::move(vecs)} {}
 
         /**
          * @brief Constructs a new RPolygon object from a set of points.

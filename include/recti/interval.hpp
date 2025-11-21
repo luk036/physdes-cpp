@@ -39,20 +39,10 @@ namespace recti {
          * @param[in] upper The "upper" parameter is the upper bound of the interval. It represents
          * the maximum value that can be included in the interval.
          */
-        constexpr Interval(T&& lower, T&& upper) noexcept
+        constexpr Interval(T lower, T upper) noexcept
             : _lb{std::move(lower)}, _ub{std::move(upper)} {}
 
-        /**
-         * @brief Construct a new Interval object
-         *
-         * The function constructs a new Interval object with given lower and upper bounds.
-         *
-         * @param[in] lower The lower bound of the interval. It represents the minimum value that
-         * can be included in the interval.
-         * @param[in] upper The "upper" parameter represents the upper bound of the interval. It is
-         * the maximum value that can be included in the interval.
-         */
-        constexpr Interval(const T& lower, const T& upper) : _lb{lower}, _ub{upper} {}
+
 
         /**
          * @brief Construct a new Interval object
@@ -583,8 +573,13 @@ namespace recti {
     constexpr auto enlarge(const U1& lhs, const U2& rhs) {
         if constexpr (requires { lhs.enlarge_with(rhs); }) {
             return lhs.enlarge_with(rhs);
-        } else /* constexpr */ {
+        } else if constexpr (std::is_arithmetic_v<U1>) {
             return Interval<U1>{lhs - rhs, lhs + rhs};
+        } else {
+            // No default behavior for non-arithmetic types without enlarge_with
+            // This will cause a compile error if enlarge is called with such types,
+            // which is the desired behavior.
+            return lhs;
         }
     }
 }  // namespace recti
