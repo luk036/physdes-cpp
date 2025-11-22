@@ -120,6 +120,51 @@ template <typename IntPoint> class RoutingNode {
  * This class manages the collection of RoutingNodes, including the source,
  * Steiner points, and terminal points, and provides methods for building
  * and manipulating the tree structure.
+ *
+ * @code{.svgbob}
+ * +-----------------------------+
+ * |      GlobalRoutingTree      |
+ * +-----------------------------+
+ * | source_node (SOURCE)        |
+ * |    |                        |
+ * |    v                        |
+ * | +-------------------------+  |
+ * | | RoutingNode             |  |
+ * | | id: source              |  |
+ * | | type: SOURCE            |  |  A tree structure with
+ * | | pt: (x, y)              |  |  source, terminals, 
+ * | | children[]              |  |  and steiner points
+ * | | parent: null            |  |
+ * | +-------------------------+  |
+ * |    |                        |
+ * |    +--> +----------------+   |
+ * |         |RoutingNode     |   |
+ * |         |id: terminal_1  |   |
+ * |         |type: TERMINAL  |   |
+ * |         |pt: (x1, y1)    |   |
+ * |         |children[]      |   |
+ * |         |parent: source  |   |
+ * |         +----------------+   |
+ * |    |                        |
+ * |    +--> +----------------+   |
+ * |         |RoutingNode     |   |
+ * |         |id: steiner_1   |   |
+ * |         |type: STEINER   |   |
+ * |         |pt: (x2, y2)    |   |
+ * |         |children[]      |   |
+ * |         |parent: source  |   |
+ * |         +----------------+   |
+ * |            |                 |
+ * |            +--> +----------+ |
+ * |                 |RoutingNode| |
+ * |                 |id: term_2| |
+ * |                 |type: TERM| |
+ * |                 |pt: (x3,y3)||
+ * |                 |children[]| |
+ * |                 |parent: st| |
+ * |                 +----------+ |
+ * +-----------------------------+
+ * @endcode
  */
 template <typename IntPoint> class GlobalRoutingTree {
   public:

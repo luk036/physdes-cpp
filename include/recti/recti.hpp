@@ -13,6 +13,41 @@ namespace recti {
      * functions of `Point<Interval<T>>`. It is using the `Interval<T>` template
      * parameter to define the type of the x and y coordinates of the rectangle.
      *
+     * @code{.svgbob}
+     * +-----------------------+
+     * |        Recti          |
+     * |      Rectangle        |
+     * +-----------------------+
+     * |                       |
+     * |  +----------+         |
+     * |  |          |         |  A Rectangle template class
+     * |  |   Rect   |         |  inheriting from Point<Interval<T>>
+     * |  |          |         |  with functions to get 
+     * |  +----------+         |  lower-left (ll) and upper-right (ur)
+     * |    ll()----->o--------+  corners, and calculate area
+     * |         ur()----->o--------+
+     * |                       |    |
+     * +-----------------------+    |
+     *                             |
+     * +-----------------------+    |
+     * |    ll() function      |    |
+     * | Returns Point<T>      |    |
+     * | at lower-left corner  |    |
+     * +-----------------------+    |
+     *                             |
+     * +-----------------------+    |
+     * |    ur() function      |    |
+     * | Returns Point<T>      |    |
+     * | at upper-right corner |    |
+     * +-----------------------+    |
+     *                             |
+     * +-----------------------+    |
+     * |     area() function   |    |
+     * | Calculates rectangle  |    |
+     * | area using length()   |    |
+     * +-----------------------+
+     * @endcode
+     *
      * @tparam T
      */
     template <typename T> struct Rectangle : Point<Interval<T>> {

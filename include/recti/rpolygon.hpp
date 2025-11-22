@@ -20,6 +20,26 @@ namespace recti {
      * stores the origin point and a vector of edges that define the polygon. The
      * template parameter `T` specifies the type of the coordinates of the points.
      *
+     * @code{.svgbob}
+     * +-----------------------------+
+     * |        RPolygon<T>          |
+     * +-----------------------------+
+     * | _origin: Point<T>           |
+     * | _vecs: vector<Vector2<T>>   |
+     * |                             |
+     * |        +----+               |
+     * |        |    |               |  A rectilinear polygon class
+     * |    +---+    |               |  with origin point and 
+     * |    |   |    |               |  vectors defining the polygon
+     * |    |   +----+               |  edges. Supports various
+     * |    |                        |  geometric operations
+     * |    +------------------------+
+     * |            vertices()       |
+     * |            signed_area()    |
+     * |            to_polygon()     |
+     * +-----------------------------+
+     * @endcode
+     *
      * @tparam T
      */
     template <typename T> class RPolygon {
