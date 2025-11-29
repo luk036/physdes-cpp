@@ -11,7 +11,7 @@ end
 
 if is_plat("linux") then
 	set_warnings("all", "error")
-	-- add_cxflags("-Wconversion", { force = true })
+	add_cxflags("-Wconversion", { force = true })
 	-- add_cxflags("-nostdinc++", {force = true})
 	-- add_sysincludedirs(os.getenv("PREFIX") .. "/include/c++/v1", {public = true})
 	-- add_sysincludedirs(os.getenv("PREFIX") .. "/include", {public = true})
