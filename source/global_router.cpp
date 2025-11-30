@@ -24,11 +24,11 @@ std::ostream& operator<<(std::ostream& os, const RoutingNode<IntPoint>& node) {
 template <typename IntPoint>
 auto GlobalRoutingTree<IntPoint>::get_tree_structure(const RoutingNode<IntPoint>* node,
                                                      int level) const -> std::string {
-    if (node == nullptr) node = &source_node;
+    if (node == nullptr) node = &this->source_node;
     std::ostringstream oss;
     oss << std::string(level * 2, ' ') << *node << "\n";
     for (auto child : node->children) {
-        oss << get_tree_structure(child, level + 1);
+        oss << this->get_tree_structure(child, level + 1);
     }
     return oss.str();
 }
@@ -36,11 +36,11 @@ auto GlobalRoutingTree<IntPoint>::get_tree_structure(const RoutingNode<IntPoint>
 template <typename IntPoint> void GlobalRoutingTree<IntPoint>::visualize_tree() const {
     std::cout << "Global Routing Tree Structure:\n";
     std::cout << "========================================\n";
-    std::cout << get_tree_structure();
-    std::cout << "Total wirelength: " << calculate_wirelength() << "\n";
-    std::cout << "Total nodes: " << nodes.size() << "\n";
-    std::cout << "Terminals: " << get_all_terminals().size() << "\n";
-    std::cout << "Steiner points: " << get_all_steiner_nodes().size() << "\n";
+    std::cout << this->get_tree_structure();
+    std::cout << "Total wirelength: " << this->calculate_wirelength() << "\n";
+    std::cout << "Total nodes: " << this->nodes.size() << "\n";
+    std::cout << "Terminals: " << this->get_all_terminals().size() << "\n";
+    std::cout << "Steiner points: " << this->get_all_steiner_nodes().size() << "\n";
 }
 
 template <> std::string visualize_routing_tree_svg(

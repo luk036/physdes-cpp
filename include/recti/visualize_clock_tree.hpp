@@ -220,8 +220,8 @@ private:
                 std::ostringstream line;
                 line << "<line x1=\"" << x1 << "\" y1=\"" << y1 
                      << "\" x2=\"" << x2 << "\" y2=\"" << y2
-                     << "\" stroke=\"" << wire_color 
-                     << "\" stroke-width=\"" << wire_width
+                     << "\" stroke=\"" << this->wire_color 
+                     << "\" stroke-width=\"" << this->wire_width
                      << "\" stroke-linecap=\"round\"/>";
                 svg_elements.push_back(line.str());
 
@@ -283,14 +283,14 @@ private:
             std::string color;
             int radius;
             if (is_root) {
-                color = root_color;
-                radius = node_radius + 2;
+                color = this->root_color;
+                radius = this->node_radius + 2;
             } else if (is_sink) {
-                color = sink_color;
-                radius = node_radius;
+                color = this->sink_color;
+                radius = this->node_radius;
             } else {
-                color = internal_color;
-                radius = node_radius - 2;
+                color = this->internal_color;
+                radius = this->node_radius - 2;
             }
 
             // Draw node circle

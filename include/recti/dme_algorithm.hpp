@@ -430,7 +430,7 @@ namespace recti {
          */
         DMEAlgorithm(const std::vector<Sink>& sinks, std::unique_ptr<DelayCalculator> calculator)
             : sinks(sinks), delay_calculator(std::move(calculator)) {
-            if (sinks.empty()) {
+            if (this->sinks.empty()) {
                 throw std::invalid_argument("No sinks provided");
             }
         }
@@ -446,7 +446,7 @@ namespace recti {
         std::shared_ptr<TreeNode> build_clock_tree() {
             // Step 1: Create initial leaf nodes from the provided sinks.
             std::vector<std::shared_ptr<TreeNode>> nodes;
-            for (const auto& sink : sinks) {
+            for (const auto& sink : this->sinks) {
                 auto node = std::make_shared<TreeNode>(sink.name, sink.position);
                 node->capacitance = sink.capacitance;
                 nodes.push_back(node);
@@ -454,20 +454,20 @@ namespace recti {
 
             // Step 2: Build the merging tree topology using a balanced bipartitioning strategy.
             // The 'false' argument indicates starting with a horizontal cut.
-            auto merging_tree = build_merging_tree(nodes, false);
+            auto merging_tree = this->build_merging_tree(nodes, false);
 
             // Step 3: Perform bottom-up computation of merging segments for all nodes.
             // These segments represent the possible locations for parent nodes to achieve zero
             // skew.
             std::map<std::string, ManhattanArc<Interval<int>, Interval<int>>> merging_segments
-                = compute_merging_segments(merging_tree);
+                = this->compute_merging_segments(merging_tree);
 
             // Step 4: Perform top-down embedding to select the actual physical positions
             // for internal nodes within their merging segments.
-            auto clock_tree = embed_tree(merging_tree, merging_segments);
+            auto clock_tree = this->embed_tree(merging_tree, merging_segments);
 
             // Step 5: Compute the final delays and wire lengths for all nodes in the embedded tree.
-            compute_tree_parameters(clock_tree);
+            this->compute_tree_parameters(clock_tree);
 
             return clock_tree;
         }
@@ -517,7 +517,7 @@ namespace recti {
             // Create a new parent node for the two subtrees.
             // Its initial position is set to the left child's position (will be updated during
             // embedding).
-            auto parent = std::make_shared<TreeNode>(fmt::format("n{}", node_id++),
+            auto parent = std::make_shared<TreeNode>(fmt::format("n{}", this->node_id++),
                                                      left_child->position);
             parent->left = left_child;
             parent->right = right_child;
@@ -575,7 +575,7 @@ namespace recti {
                 int distance = left_ms.min_dist_with(right_ms);
 
                 // Calculate the optimal tapping point on the merging segment and the delay to it.
-                auto [extend_left, delay_left] = delay_calculator->calculate_tapping_point(
+                auto [extend_left, delay_left] = this->delay_calculator->calculate_tapping_point(
                     *node->left, *node->right, distance);
 
                 node->delay = delay_left;  // Store the delay at this merging point.
@@ -586,7 +586,7 @@ namespace recti {
 
                 // Update the capacitance of the current node by summing child capacitances and wire
                 // capacitance.
-                double wire_cap = delay_calculator->calculate_wire_capacitance(distance);
+                double wire_cap = this->delay_calculator->calculate_wire_capacitance(distance);
                 node->capacitance = node->left->capacitance + node->right->capacitance + wire_cap;
 
                 return merged_segment;
@@ -670,7 +670,7 @@ namespace recti {
 
                 if (node->parent) {
                     // Calculate wire delay from parent to current node and accumulate total delay.
-                    double wire_delay = delay_calculator->calculate_wire_delay(node->wire_length,
+                    double wire_delay = this->delay_calculator->calculate_wire_delay(node->wire_length,
                                                                                node->capacitance);
                     node->delay = parent_delay + wire_delay;
                 } else {
@@ -726,12 +726,12 @@ namespace recti {
             double skew = max_delay - min_delay;
 
             // Return the comprehensive skew analysis results.
-            const auto& calculator = *delay_calculator;
+            const auto& calculator = *this->delay_calculator;
             return {max_delay,
                     min_delay,
                     skew,
                     sink_delays,
-                    total_wirelength(root),
+                    this->total_wirelength(root),
                     typeid(calculator).name()};
         }
 

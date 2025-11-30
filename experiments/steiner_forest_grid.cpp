@@ -173,9 +173,9 @@ class SteinerForestGrid {
         std::unordered_map<int, std::vector<int>> pairDict;
 
         // Initialize sources, terminals, and pair dictionary
-        for (const auto& pair : pairs) {
-            int s = pair.source.x * w + pair.source.y;
-            int t = pair.target.x * w + pair.target.y;
+        for (const auto& pair : this->pairs) {
+            int s = pair.source.x * this->w + pair.source.y;
+            int t = pair.target.x * this->w + pair.target.y;
             sources.insert(s);
             terminals.insert(t);
             pairDict[s].push_back(t);
@@ -188,16 +188,16 @@ class SteinerForestGrid {
 
         // Generate grid edges (horizontal and vertical only)
         std::vector<Edge> edges;
-        for (int i = 0; i < h; ++i) {
-            for (int j = 0; j < w; ++j) {
-                int node = i * w + j;
+        for (int i = 0; i < this->h; ++i) {
+            for (int j = 0; j < this->w; ++j) {
+                int node = i * this->w + j;
                 // Horizontal edges
-                if (j + 1 < w) {
+                if (j + 1 < this->w) {
                     edges.emplace_back(node, node + 1, 1.0);
                 }
                 // Vertical edges
-                if (i + 1 < h) {
-                    edges.emplace_back(node, node + w, 1.0);
+                if (i + 1 < this->h) {
+                    edges.emplace_back(node, node + this->w, 1.0);
                 }
             }
         }
@@ -315,7 +315,7 @@ class SteinerForestGrid {
         // Reverse delete to prune the forest
         std::vector<Edge> FPruned = F;
         for (int i = FPruned.size() - 1; i >= 0; --i) {
-            UnionFind tempUF(n);
+            UnionFind tempUF(this->n);
             for (int j = 0; j < static_cast<int>(F.size()); ++j) {
                 if (j != i) {
                     tempUF.unionSets(F[j].u, F[j].v);
