@@ -13,7 +13,6 @@ RECURSIVE = YES
 OUTPUT_DIRECTORY = @DOXYGEN_OUTPUT_DIRECTORY@
 
 # Use the README as a main page
-# USE_MDFILE_AS_MAINPAGE = 
 USE_MDFILE_AS_MAINPAGE = @DOXYGEN_PROJECT_ROOT@/README.md
 
 # set relative include paths
@@ -27,6 +26,8 @@ GENERATE_LATEX = NO
 XML_PROGRAMLISTING = NO
 CREATE_SUBDIRS = NO
 
-# Include all directories, files and namespaces in the documentation
-# Disable to include only explicitly documented objects
+# Disable PlantUML to avoid libgs dependency warnings
+HAVE_DOT = NO
+PLANTUML_JAR_PATH =
+
 

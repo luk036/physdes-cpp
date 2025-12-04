@@ -121,7 +121,7 @@ template <typename IntPoint> class RoutingNode {
  * Steiner points, and terminal points, and provides methods for building
  * and manipulating the tree structure.
  *
- * @code{.svgbob}
+ * @code{.txt}
  * +-----------------------------+
  * |      GlobalRoutingTree      |
  * +-----------------------------+

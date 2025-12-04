@@ -13,7 +13,7 @@ namespace recti {
      * functions of `Point<Interval<T>>`. It is using the `Interval<T>` template
      * parameter to define the type of the x and y coordinates of the rectangle.
      *
-     * @code{.svgbob}
+     * @code{.txt}
      * +-----------------------+
      * |        Recti          |
      * |      Rectangle        |

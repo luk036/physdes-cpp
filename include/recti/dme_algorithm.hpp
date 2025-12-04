@@ -1,6 +1,7 @@
 #pragma once
 
 #include <fmt/core.h>
+
 #include <algorithm>
 #include <cmath>
 #include <functional>
@@ -169,7 +170,7 @@ namespace recti {
          * @param load_capacitance The downstream capacitance (ignored in this model).
          * @return The calculated wire delay.
          */
-        double calculate_wire_delay(int length, double) const override {
+        double calculate_wire_delay(int length, double /* load_capacitance */) const override {
             return delay_per_unit * static_cast<double>(length);
         }
 
@@ -178,7 +179,9 @@ namespace recti {
          * @param load_capacitance The downstream capacitance (ignored in this model).
          * @return The delay per unit length.
          */
-        double calculate_wire_delay_per_unit(double) const override { return delay_per_unit; }
+        double calculate_wire_delay_per_unit(double /* load_capacitance */) const override {
+            return delay_per_unit;
+        }
 
         /**
          * @brief Calculates the wire capacitance using the linear model.
@@ -210,8 +213,9 @@ namespace recti {
             node_left.wire_length = extend_left;
             node_right.wire_length = distance - extend_left;
 
-            // If extend_left is negative, it means the tapping point is effectively to the right of node_right's segment.
-            // In this case, node_left's wire length is set to 0, and node_right's wire is extended.
+            // If extend_left is negative, it means the tapping point is effectively to the right of
+            // node_right's segment. In this case, node_left's wire length is set to 0, and
+            // node_right's wire is extended.
             if (extend_left < 0) {
                 // std::cout << "extend_left: " << extend_left << std::endl;  // Debug output
                 node_left.wire_length = 0;
@@ -219,9 +223,10 @@ namespace recti {
                 extend_left = 0;
                 delay_left = node_left.delay;
                 node_right.need_elongation = true;
-            } 
-            // If extend_left is greater than distance, it means the tapping point is effectively to the left of node_left's segment.
-            // In this case, node_right's wire length is set to 0, and node_left's wire is extended.
+            }
+            // If extend_left is greater than distance, it means the tapping point is effectively to
+            // the left of node_left's segment. In this case, node_right's wire length is set to 0,
+            // and node_left's wire is extended.
             else if (extend_left > distance) {
                 // std::cout << "extend_left: " << extend_left << std::endl;  // Debug output
                 node_right.wire_length = 0;
@@ -284,7 +289,9 @@ namespace recti {
          * @param length The length of the wire.
          * @return The calculated wire capacitance.
          */
-        double calculate_wire_capacitance(int length) const override { return unit_capacitance * length; }
+        double calculate_wire_capacitance(int length) const override {
+            return unit_capacitance * length;
+        }
 
         /**
          * @brief Determines the tapping point for zero skew using the Elmore delay model.
@@ -317,8 +324,9 @@ namespace recti {
             node_left.wire_length = extend_left;
             node_right.wire_length = distance - extend_left;
 
-            // If extend_left is negative, it means the tapping point is effectively to the right of node_right's segment.
-            // In this case, node_left's wire length is set to 0, and node_right's wire is extended.
+            // If extend_left is negative, it means the tapping point is effectively to the right of
+            // node_right's segment. In this case, node_left's wire length is set to 0, and
+            // node_right's wire is extended.
             if (extend_left < 0) {
                 // std::cout << "extend_left: " << extend_left << std::endl;  // Debug output
                 node_left.wire_length = 0;
@@ -326,9 +334,10 @@ namespace recti {
                 extend_left = 0;
                 delay_left = node_left.delay;
                 node_right.need_elongation = true;
-            } 
-            // If extend_left is greater than distance, it means the tapping point is effectively to the left of node_left's segment.
-            // In this case, node_right's wire length is set to 0, and node_left's wire is extended.
+            }
+            // If extend_left is greater than distance, it means the tapping point is effectively to
+            // the left of node_left's segment. In this case, node_right's wire length is set to 0,
+            // and node_left's wire is extended.
             else if (extend_left > distance) {
                 // std::cout << "extend_left: " << extend_left << std::endl;  // Debug output
                 node_right.wire_length = 0;
@@ -612,14 +621,14 @@ namespace recti {
          */
         std::shared_ptr<TreeNode> embed_tree(
             const std::shared_ptr<TreeNode>& merging_tree,
-            const std::map<std::string, ManhattanArc<Interval<int>, Interval<int>>>& 
+            const std::map<std::string, ManhattanArc<Interval<int>, Interval<int>>>&
                 merging_segments) {
             // Define a recursive lambda function for embedding nodes.
             std::function<void(const std::shared_ptr<TreeNode>&,
                                const ManhattanArc<Interval<int>, Interval<int>>*)>
                 embed_node;
 
-            embed_node = [&](const std::shared_ptr<TreeNode>& node, 
+            embed_node = [&](const std::shared_ptr<TreeNode>& node,
                              const ManhattanArc<Interval<int>, Interval<int>>* parent_segment) {
                 if (!node) return;
 
@@ -670,8 +679,8 @@ namespace recti {
 
                 if (node->parent) {
                     // Calculate wire delay from parent to current node and accumulate total delay.
-                    double wire_delay = this->delay_calculator->calculate_wire_delay(node->wire_length,
-                                                                               node->capacitance);
+                    double wire_delay = this->delay_calculator->calculate_wire_delay(
+                        node->wire_length, node->capacitance);
                     node->delay = parent_delay + wire_delay;
                 } else {
                     // The root node has zero delay.

@@ -1,4 +1,4 @@
-// global_router.cpp
+// global_router.cpp - Implementation of global routing algorithms
 #include <algorithm>
 #include <fstream>
 #include <iostream>
@@ -14,6 +14,17 @@
 
 using namespace recti;
 
+/**
+ * @brief Stream insertion operator for RoutingNode
+ *
+ * Outputs a routing node to a stream in a readable format showing
+ * the node type, ID, and coordinates.
+ *
+ * @tparam IntPoint The point type used in the routing node
+ * @param[in,out] os The output stream
+ * @param[in] node The routing node to output
+ * @return std::ostream& Reference to the output stream
+ */
 template <typename IntPoint>
 std::ostream& operator<<(std::ostream& os, const RoutingNode<IntPoint>& node) {
     std::string type_name = to_string(node.type);
@@ -21,6 +32,17 @@ std::ostream& operator<<(std::ostream& os, const RoutingNode<IntPoint>& node) {
     return os;
 }
 
+/**
+ * @brief Get tree structure as formatted string
+ *
+ * Recursively builds a string representation of the routing tree
+ * with indentation to show the hierarchical structure.
+ *
+ * @tparam IntPoint The point type used in routing nodes
+ * @param[in] node Starting node (nullptr for root)
+ * @param[in] level Current indentation level
+ * @return std::string Formatted tree structure
+ */
 template <typename IntPoint>
 auto GlobalRoutingTree<IntPoint>::get_tree_structure(const RoutingNode<IntPoint>* node,
                                                      int level) const -> std::string {
@@ -33,6 +55,15 @@ auto GlobalRoutingTree<IntPoint>::get_tree_structure(const RoutingNode<IntPoint>
     return oss.str();
 }
 
+/**
+ * @brief Visualize the routing tree structure
+ *
+ * Outputs a detailed visualization of the routing tree to stdout,
+ * including the tree structure, wirelength, node count, and statistics
+ * about terminals and Steiner points.
+ *
+ * @tparam IntPoint The point type used in routing nodes
+ */
 template <typename IntPoint> void GlobalRoutingTree<IntPoint>::visualize_tree() const {
     std::cout << "Global Routing Tree Structure:\n";
     std::cout << "========================================\n";

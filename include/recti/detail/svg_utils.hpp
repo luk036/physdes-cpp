@@ -8,19 +8,51 @@
 
 namespace recti::detail {
 
+    /**
+     * @brief SVG rendering parameters
+     *
+     * This structure contains all the parameters needed for generating
+     * SVG visualizations of routing trees and geometric objects.
+     */
     struct SvgParams {
-        int width;
-        int height;
-        int margin;
-        double scale;
-        int min_x;
-        int min_y;
+        int width;      ///< Width of the SVG canvas
+        int height;     ///< Height of the SVG canvas
+        int margin;     ///< Margin around the drawing area
+        double scale;   ///< Scaling factor for coordinates
+        int min_x;      ///< Minimum x-coordinate in the data
+        int min_y;      ///< Minimum y-coordinate in the data
     };
 
+    /**
+     * @brief Calculate SVG rendering parameters
+     *
+     * Computes the scaling and translation parameters needed to fit the given
+     * routing nodes into an SVG canvas of specified dimensions.
+     *
+     * @tparam IntPoint The point type used in routing nodes
+     * @param[in] nodes Vector of routing node pointers to calculate bounds for
+     * @param[in] width Desired width of the SVG canvas
+     * @param[in] height Desired height of the SVG canvas
+     * @param[in] margin Margin to leave around the drawing area
+     * @return SvgParams Calculated rendering parameters
+     */
     template <typename IntPoint>
     SvgParams calculate_svg_params(const std::vector<RoutingNode<IntPoint>*>& nodes, int width,
                                    int height, int margin);
 
+    /**
+     * @brief Specialization for Point<int, int> type
+     *
+     * This specialization calculates SVG parameters for routing nodes using
+     * integer point coordinates. It determines the bounding box of all nodes
+     * and computes appropriate scaling to fit within the canvas.
+     *
+     * @param[in] nodes Vector of routing node pointers with integer coordinates
+     * @param[in] width Desired width of the SVG canvas
+     * @param[in] height Desired height of the SVG canvas
+     * @param[in] margin Margin to leave around the drawing area
+     * @return SvgParams Calculated rendering parameters
+     */
     template <> inline SvgParams calculate_svg_params<Point<int, int>>(
         const std::vector<RoutingNode<Point<int, int>>*>& nodes, int width, int height,
         int margin) {

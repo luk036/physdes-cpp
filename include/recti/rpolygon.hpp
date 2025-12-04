@@ -20,7 +20,7 @@ namespace recti {
      * stores the origin point and a vector of edges that define the polygon. The
      * template parameter `T` specifies the type of the coordinates of the points.
      *
-     * @code{.svgbob}
+     * @code{.txt}
      * +-----------------------------+
      * |        RPolygon<T>          |
      * +-----------------------------+

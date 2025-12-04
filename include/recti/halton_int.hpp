@@ -6,12 +6,16 @@
 namespace recti {
 
     /**
-     * @brief van der Corput sequence
+     * @brief van der Corput sequence calculator
      *
-     * @param[in] num - The number to calculate the van der Corput sequence for.
-     * @param[in] base - The base of the van der Corput sequence.
-     * @param[in] scale - The scale of the van der Corput sequence.
-     * @return unsigned
+     * Computes the van der Corput sequence value for a given number. The van der
+     * Corput sequence is a low-discrepancy sequence over the unit interval,
+     * which is useful for quasi-random sampling and numerical integration.
+     *
+     * @param[in] num The number to calculate the van der Corput sequence for
+     * @param[in] base The base of the van der Corput sequence (default: 2)
+     * @param[in] scale The scale factor determining precision (default: 10)
+     * @return unsigned The van der Corput sequence value
      */
     inline auto vdc(const unsigned num, unsigned base = 2, unsigned scale = 10) noexcept
         -> unsigned {
@@ -30,6 +34,10 @@ namespace recti {
     /**
      * @brief van der Corput sequence generator
      *
+     * This class generates van der Corput sequence values incrementally.
+     * The van der Corput sequence is a low-discrepancy sequence that provides
+     * uniform coverage of the unit interval, making it useful for quasi-random
+     * sampling, Monte Carlo methods, and numerical integration.
      */
     class Vdcorput {
       private:
