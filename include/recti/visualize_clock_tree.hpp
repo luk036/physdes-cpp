@@ -76,8 +76,8 @@ public:
         // Create SVG content
         std::vector<std::string> svg_content;
         svg_content.push_back(
-            "<svg width=\"" + std::to_string(width) + 
-            "\" height=\"" + std::to_string(height) + 
+            "<svg width=\"" + std::to_string(width) +
+            "\" height=\"" + std::to_string(height) +
             "\" xmlns=\"http://www.w3.org/2000/svg\">"
         );
         svg_content.push_back("<style>");
@@ -130,7 +130,7 @@ private:
      */
     std::vector<std::shared_ptr<TreeNode>> collect_all_nodes(const std::shared_ptr<TreeNode>& root) {
         std::vector<std::shared_ptr<TreeNode>> nodes;
-        
+
         std::function<void(const std::shared_ptr<TreeNode>&)> collect;
         collect = [&](const std::shared_ptr<TreeNode>& node) {
             if (node) {
@@ -139,7 +139,7 @@ private:
                 collect(node->right);
             }
         };
-        
+
         collect(root);
         return nodes;
     }
@@ -218,9 +218,9 @@ private:
                 );
 
                 std::ostringstream line;
-                line << "<line x1=\"" << x1 << "\" y1=\"" << y1 
+                line << "<line x1=\"" << x1 << "\" y1=\"" << y1
                      << "\" x2=\"" << x2 << "\" y2=\"" << y2
-                     << "\" stroke=\"" << this->wire_color 
+                     << "\" stroke=\"" << this->wire_color
                      << "\" stroke-width=\"" << this->wire_width
                      << "\" stroke-linecap=\"round\"/>";
                 svg_elements.push_back(line.str());
@@ -254,7 +254,7 @@ private:
         const std::function<std::pair<double, double>(double, double)>& scale_coord
     ) {
         std::vector<std::string> svg_elements;
-        
+
         // Create set of sink positions
         std::set<std::pair<int, int>> sink_positions;
         for (const auto& sink : sinks) {
@@ -295,7 +295,7 @@ private:
 
             // Draw node circle
             std::ostringstream circle;
-            circle << "<circle cx=\"" << x << "\" cy=\"" << y 
+            circle << "<circle cx=\"" << x << "\" cy=\"" << y
                    << "\" r=\"" << radius << "\" fill=\"" << color
                    << "\" stroke=\"#333\" stroke-width=\"1\"/>";
             svg_elements.push_back(circle.str());
@@ -339,7 +339,7 @@ private:
      */
     std::vector<std::string> create_analysis_box(const SkewAnalysis& analysis, int ) {
         std::vector<std::string> analysis_box;
-        
+
         analysis_box.push_back("<g class=\"analysis-info\">");
         analysis_box.push_back("<rect x=\"10\" y=\"10\" width=\"220\" height=\"140\" fill=\"white\" stroke=\"#ccc\" stroke-width=\"1\" rx=\"5\"/>");
         analysis_box.push_back("<rect x=\"10\" y=\"10\" width=\"220\" height=\"20\" fill=\"#f0f0f0\" stroke=\"#ccc\" stroke-width=\"1\" rx=\"5\"/>");
@@ -358,7 +358,7 @@ private:
 
         for (size_t i = 0; i < analysis_text.size(); ++i) {
             std::ostringstream tspan;
-            tspan << "<tspan x=\"20\" y=\"" << 45 + (i + 1) * 16 << "\">" 
+            tspan << "<tspan x=\"20\" y=\"" << 45 + (i + 1) * 16 << "\">"
                   << analysis_text[i] << "</tspan>";
             analysis_box.push_back(tspan.str());
         }
@@ -427,8 +427,8 @@ inline std::string create_comparison_visualization(
 
     std::vector<std::string> svg_content;
     svg_content.push_back(
-        "<svg width=\"" + std::to_string(width) + 
-        "\" height=\"" + std::to_string(height) + 
+        "<svg width=\"" + std::to_string(width) +
+        "\" height=\"" + std::to_string(height) +
         "\" xmlns=\"http://www.w3.org/2000/svg\">"
     );
     svg_content.push_back("<style>");
@@ -457,8 +457,8 @@ inline std::string create_comparison_visualization(
 
         // Add title for this subplot
         std::ostringstream title;
-        title << "<text x=\"" << offset_x + sub_width / 2 
-              << "\" y=\"" << offset_y + 20 
+        title << "<text x=\"" << offset_x + sub_width / 2
+              << "\" y=\"" << offset_y + 20
               << "\" class=\"title\" text-anchor=\"middle\">"
               << trees_data[i].title << "</text>";
         svg_content.push_back(title.str());
@@ -478,7 +478,7 @@ inline std::string create_comparison_visualization(
         std::string line;
         std::vector<std::string> tree_lines;
         bool in_clock_tree = false;
-        
+
         while (std::getline(stream, line)) {
             if (line.find("<g class=\"clock-tree\">") != std::string::npos) {
                 in_clock_tree = true;
@@ -493,14 +493,14 @@ inline std::string create_comparison_visualization(
         }
 
         // Remove the background rect if present
-        if (!tree_lines.empty() && 
+        if (!tree_lines.empty() &&
             tree_lines[0].find("<rect width=\"100%\" height=\"100%\" fill=\"white\"/>") != std::string::npos) {
             tree_lines.erase(tree_lines.begin());
         }
 
         // Add transformed group
         std::ostringstream transform;
-        transform << "<g transform=\"translate(" << offset_x + 10 
+        transform << "<g transform=\"translate(" << offset_x + 10
                   << ", " << offset_y + 40 << ")\">";
         svg_content.push_back(transform.str());
         svg_content.insert(svg_content.end(), tree_lines.begin(), tree_lines.end());
@@ -536,7 +536,7 @@ inline std::string create_delay_model_comparison(
 ) {
     TreeComparisonData linear_data = linear_tree_data;
     TreeComparisonData elmore_data = elmore_tree_data;
-    
+
     linear_data.title = "Linear Delay Model";
     elmore_data.title = "Elmore Delay Model";
 
@@ -603,7 +603,7 @@ inline void visualize_example_tree() {
         analysis_linear,
         "Linear Delay Model"
     };
-    
+
     TreeComparisonData elmore_data = {
         clock_tree_elmore,
         example_sinks,

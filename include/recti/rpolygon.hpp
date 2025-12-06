@@ -29,7 +29,7 @@ namespace recti {
      * |                             |
      * |        +----+               |
      * |        |    |               |  A rectilinear polygon class
-     * |    +---+    |               |  with origin point and 
+     * |    +---+    |               |  with origin point and
      * |    |   |    |               |  vectors defining the polygon
      * |    |   +----+               |  edges. Supports various
      * |    |                        |  geometric operations

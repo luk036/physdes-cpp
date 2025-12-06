@@ -132,7 +132,7 @@ template <typename IntPoint> class RoutingNode {
  * | | RoutingNode             |  |
  * | | id: source              |  |
  * | | type: SOURCE            |  |  A tree structure with
- * | | pt: (x, y)              |  |  source, terminals, 
+ * | | pt: (x, y)              |  |  source, terminals,
  * | | children[]              |  |  and steiner points
  * | | parent: null            |  |
  * | +-------------------------+  |

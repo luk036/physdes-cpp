@@ -439,7 +439,7 @@ namespace recti {
             auto ycoord = upper(_ycoord);
             return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord), std::move(ycoord)};
         }
-        
+
         /**
          * Outputs the point object to the given output stream.
          *

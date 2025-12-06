@@ -22,7 +22,7 @@ namespace recti {
      * |  +----------+         |
      * |  |          |         |  A Rectangle template class
      * |  |   Rect   |         |  inheriting from Point<Interval<T>>
-     * |  |          |         |  with functions to get 
+     * |  |          |         |  with functions to get
      * |  +----------+         |  lower-left (ll) and upper-right (ur)
      * |    ll()----->o--------+  corners, and calculate area
      * |         ur()----->o--------+

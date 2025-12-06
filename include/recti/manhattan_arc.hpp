@@ -273,7 +273,7 @@ namespace recti {
             auto y = localimpl.ycoord();
             return ManhattanArc<decltype(x), decltype(y)>{std::move(x), std::move(y)};
         }
-        
+
         /**
          * @brief Overload the stream insertion operator `<<` to output a `ManhattanArc` object.
          *

@@ -60,7 +60,7 @@ TEST_SUITE("RPolygon Stress Tests") {
             auto hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
             CHECK(rpolygon_is_convex<int>(hull));
         }
-    
+
         // SUBCASE("Duplicate points") {
         //     std::vector<Point<int>> S;
         //     for (int i = 0; i < 100; ++i) {

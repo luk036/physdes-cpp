@@ -16,7 +16,7 @@ using namespace recti;
 // Helper function to generate a set of points for testing
 auto generate_random_points(size_t num_terminals, int max_coord)
     -> std::pair<Point<int, int>, std::vector<Point<int, int>>> {
-    
+
     std::mt19937 gen(12345);  // for reproducible results
     std::uniform_int_distribution<> distrib_coord(0, max_coord);
 

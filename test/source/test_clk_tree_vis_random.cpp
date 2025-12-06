@@ -40,28 +40,28 @@ TEST_CASE("Random sink stress test") {
 
         // Step 1: Create clock sinks
         std::vector<recti::Sink> sinks = generate_random_sinks(num_sinks, seed);
-        
+
         // Step 2: Build clock tree using DME algorithm
         auto calculator = std::make_unique<recti::LinearDelayCalculator>(0.8, 0.15);
         recti::DMEAlgorithm dme(sinks, std::move(calculator));
         auto clock_tree = dme.build_clock_tree();
         auto analysis = dme.analyze_skew(clock_tree);
-        
+
         // Step 3: Create basic visualization
         recti::ClockTreeVisualizer basic_viz;
         basic_viz.visualize_tree(clock_tree, sinks, "basic_clock_tree.svg");
-        
+
         // Step 4: Create interactive visualization with analysis
         recti::create_interactive_svg(clock_tree, sinks, &analysis, "interactive_clock_tree.svg");
-        
+
         // Step 5: Verify files were created
         CHECK(std::filesystem::exists("basic_clock_tree.svg"));
         CHECK(std::filesystem::exists("interactive_clock_tree.svg"));
-        
+
         // Step 6: Cleanup
         // std::filesystem::remove("basic_clock_tree.svg");
         // std::filesystem::remove("interactive_clock_tree.svg");
-        
+
         MESSAGE("Example visualization workflow completed successfully");
     }
 }
