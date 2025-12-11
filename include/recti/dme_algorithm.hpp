@@ -167,7 +167,6 @@ namespace recti {
         /**
          * @brief Calculates the wire delay using the linear model.
          * @param length The length of the wire.
-         * @param load_capacitance The downstream capacitance (ignored in this model).
          * @return The calculated wire delay.
          */
         double calculate_wire_delay(int length, double /* load_capacitance */) const override {
@@ -176,7 +175,6 @@ namespace recti {
 
         /**
          * @brief Calculates the delay per unit length (constant in this model).
-         * @param load_capacitance The downstream capacitance (ignored in this model).
          * @return The delay per unit length.
          */
         double calculate_wire_delay_per_unit(double /* load_capacitance */) const override {
