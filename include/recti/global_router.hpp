@@ -35,11 +35,11 @@ enum class NodeType {
 
 /**
  * @brief Converts a NodeType enum value to its string representation.
- * @param t The NodeType to convert.
+ * @param node_type The NodeType to convert.
  * @return A string representation of the NodeType.
  */
-inline std::string to_string(const NodeType t) {
-    switch (t) {
+inline std::string to_string(const NodeType node_type) {
+    switch (node_type) {
         case NodeType::STEINER:
             return "Steiner";
         case NodeType::TERMINAL:
@@ -91,9 +91,9 @@ template <typename IntPoint> class RoutingNode {
      * @param child A pointer to the child RoutingNode<IntPoint> to remove.
      */
     void remove_child(RoutingNode<IntPoint>* child) {
-        auto it = std::find(children.begin(), children.end(), child);
-        if (it != children.end()) {
-            children.erase(it);
+        auto iter = std::find(children.begin(), children.end(), child);
+        if (iter != children.end()) {
+            children.erase(iter);
             child->parent = nullptr;
         }
     }
@@ -335,11 +335,11 @@ template <typename IntPoint> class GlobalRoutingTree {
         if (!parent_id) {
             parent_node = &this->source_node;
         } else {
-            auto it = this->nodes.find(*parent_id);
-            if (it == this->nodes.end()) {
+            auto iter = this->nodes.find(*parent_id);
+            if (iter == this->nodes.end()) {
                 throw std::runtime_error("Parent node " + *parent_id + " not found");
             }
-            parent_node = it->second;
+            parent_node = iter->second;
         }
         parent_node->add_child(node);
         return steiner_id;
@@ -366,11 +366,11 @@ template <typename IntPoint> class GlobalRoutingTree {
         if (!parent_id) {
             parent_node = this->_find_nearest_node(pt);
         } else {
-            auto it = this->nodes.find(*parent_id);
-            if (it == this->nodes.end()) {
+            auto iter = this->nodes.find(*parent_id);
+            if (iter == this->nodes.end()) {
                 throw std::runtime_error("Parent node " + *parent_id + " not found");
             }
-            parent_node = it->second;
+            parent_node = iter->second;
         }
         parent_node->add_child(node);
         return terminal_id;
@@ -389,16 +389,16 @@ template <typename IntPoint> class GlobalRoutingTree {
     auto insert_node_on_branch(NodeType new_node_type, const IntPoint& pt,
                                std::string branch_start_id, std::string branch_end_id)
         -> std::string {
-        auto start_it = this->nodes.find(branch_start_id);
-        auto end_it = this->nodes.find(branch_end_id);
-        if (start_it == this->nodes.end() || end_it == this->nodes.end()) {
+        auto start_iter = this->nodes.find(branch_start_id);
+        auto end_iter = this->nodes.find(branch_end_id);
+        if (start_iter == this->nodes.end() || end_iter == this->nodes.end()) {
             throw std::runtime_error("One or both branch nodes not found");
         }
-        RoutingNode<IntPoint>* start_node = start_it->second;
-        RoutingNode<IntPoint>* end_node = end_it->second;
-        auto child_it
+        RoutingNode<IntPoint>* start_node = start_iter->second;
+        RoutingNode<IntPoint>* end_node = end_iter->second;
+        auto child_iter
             = std::find(start_node->children.begin(), start_node->children.end(), end_node);
-        if (child_it == start_node->children.end()) {
+        if (child_iter == start_node->children.end()) {
             throw std::runtime_error(branch_end_id + " is not a direct child of "
                                      + branch_start_id);
         }
@@ -479,11 +479,11 @@ template <typename IntPoint> class GlobalRoutingTree {
      */
     auto find_path_to_source(const std::string& node_id) const
         -> std::vector<const RoutingNode<IntPoint>*> {
-        auto it = nodes.find(node_id);
-        if (it == nodes.end()) {
+        auto iter = nodes.find(node_id);
+        if (iter == nodes.end()) {
             throw std::runtime_error("Node " + node_id + " not found");
         }
-        const RoutingNode<IntPoint>* current = it->second;
+        const RoutingNode<IntPoint>* current = iter->second;
         std::vector<const RoutingNode<IntPoint>*> path;
         while (current) {
             path.push_back(current);
@@ -545,10 +545,10 @@ template <typename IntPoint> class GlobalRoutingTree {
             parent->add_child(child);
 
             this->nodes.erase(steiner_id);
-            auto owned_it = std::find_if(this->owned_nodes.begin(), this->owned_nodes.end(),
+            auto owned_iter = std::find_if(this->owned_nodes.begin(), this->owned_nodes.end(),
                                          [steiner](const auto& up) { return up.get() == steiner; });
-            if (owned_it != this->owned_nodes.end()) {
-                this->owned_nodes.erase(owned_it);
+            if (owned_iter != this->owned_nodes.end()) {
+                this->owned_nodes.erase(owned_iter);
             }
         }
     }
@@ -588,13 +588,13 @@ template <typename IntPoint> class GlobalRouter {
         : source_position(source_), tree(source_), keepouts(keepouts_) {
         // Sort terminal positions by distance from source (descending order)
         std::sort(terminal_positions.begin(), terminal_positions.end(),
-                  [this](const IntPoint& a, const IntPoint& b) {
-                      auto da = this->source_position.min_dist_with(a);
-                      auto db = this->source_position.min_dist_with(b);
-                      return da < db
-                             || (da == db
-                                 && this->source_position.hull_with(a).measure()
-                                        > this->source_position.hull_with(b).measure());
+                  [this](const IntPoint& pt_a, const IntPoint& pt_b) {
+                      auto dist_a = this->source_position.min_dist_with(pt_a);
+                      auto dist_b = this->source_position.min_dist_with(pt_b);
+                      return dist_a < dist_b
+                             || (dist_a == dist_b
+                                 && this->source_position.hull_with(pt_a).measure()
+                                        > this->source_position.hull_with(pt_b).measure());
                   });
         this->terminal_positions = std::move(terminal_positions);
 
@@ -610,8 +610,8 @@ template <typename IntPoint> class GlobalRouter {
      * @brief Routes terminals simply by connecting each to the nearest existing node.
      */
     void route_simple() {
-        for (const auto& t : this->terminal_positions) {
-            this->tree.insert_terminal_node(t);
+        for (const auto& terminal : this->terminal_positions) {
+            this->tree.insert_terminal_node(terminal);
         }
     }
 
@@ -619,8 +619,8 @@ template <typename IntPoint> class GlobalRouter {
      * @brief Routes terminals, potentially inserting Steiner nodes to optimize connections.
      */
     void route_with_steiners() {
-        for (const auto& t : this->terminal_positions) {
-            this->tree.insert_terminal_with_steiner(t, this->keepouts);
+        for (const auto& terminal : this->terminal_positions) {
+            this->tree.insert_terminal_with_steiner(terminal, this->keepouts);
         }
     }
 
@@ -630,8 +630,8 @@ template <typename IntPoint> class GlobalRouter {
      */
     void route_with_constraints(double alpha = 1.0) {
         int allowed_wirelength = static_cast<int>(std::round(this->worst_wirelength * alpha));
-        for (const auto& t : this->terminal_positions) {
-            this->tree.insert_terminal_with_constraints(t, allowed_wirelength, this->keepouts);
+        for (const auto& terminal : this->terminal_positions) {
+            this->tree.insert_terminal_with_constraints(terminal, allowed_wirelength, this->keepouts);
         }
     }
 

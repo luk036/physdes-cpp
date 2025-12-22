@@ -21,18 +21,26 @@ namespace recti {
  */
 class ClockTreeVisualizer {
 private:
-    int margin;
-    int node_radius;
-    int wire_width;
-    std::string sink_color;
-    std::string internal_color;
-    std::string root_color;
-    std::string wire_color;
-    std::string text_color;
+    int margin;              ///< Margin around the SVG canvas
+    int node_radius;         ///< Radius of nodes in the visualization
+    int wire_width;          ///< Width of wires connecting nodes
+    std::string sink_color;      ///< Color for sink nodes
+    std::string internal_color;  ///< Color for internal nodes
+    std::string root_color;      ///< Color for root nodes
+    std::string wire_color;      ///< Color for wires
+    std::string text_color;      ///< Color for text labels
 
 public:
     /**
      * @brief Initialize the visualizer with styling parameters
+     * @param margin Margin around the SVG canvas
+     * @param node_radius Radius of nodes in the visualization
+     * @param wire_width Width of wires connecting nodes
+     * @param sink_color Color for sink nodes
+     * @param internal_color Color for internal nodes
+     * @param root_color Color for root nodes
+     * @param wire_color Color for wires
+     * @param text_color Color for text labels
      */
     ClockTreeVisualizer(
         int margin = 50,
@@ -67,10 +75,10 @@ public:
         double scale_y = (max_y > min_y) ? (height - 2 * margin) / (max_y - min_y) : 1.0;
         double scale = std::min(scale_x, scale_y);  // Maintain aspect ratio
 
-        auto scale_coord = [&](double x, double y) -> std::pair<double, double> {
-            double scaled_x = (x - min_x) * scale + margin;
-            double scaled_y = (y - min_y) * scale + margin;
-            return {scaled_x, scaled_y};
+        auto scale_coord = [&](double coord_x, double coord_y) -> std::pair<double, double> {
+            double scaled_coord_x = (coord_x - min_x) * scale + margin;
+            double scaled_coord_y = (coord_y - min_y) * scale + margin;
+            return {scaled_coord_x, scaled_coord_y};
         };
 
         // Create SVG content
@@ -108,8 +116,8 @@ public:
         svg_content.push_back("</svg>");
 
         std::string svg_string;
-        for (const auto& line : svg_content) {
-            svg_string += line + "\n";
+        for (const auto& svg_line : svg_content) {
+            svg_string += svg_line + "\n";
         }
 
         // Save to file
@@ -132,11 +140,11 @@ private:
         std::vector<std::shared_ptr<TreeNode>> nodes;
 
         std::function<void(const std::shared_ptr<TreeNode>&)> collect;
-        collect = [&](const std::shared_ptr<TreeNode>& node) {
-            if (node) {
-                nodes.push_back(node);
-                collect(node->left);
-                collect(node->right);
+        collect = [&](const std::shared_ptr<TreeNode>& tree_node) {
+            if (tree_node) {
+                nodes.push_back(tree_node);
+                collect(tree_node->left);
+                collect(tree_node->right);
             }
         };
 
@@ -161,23 +169,23 @@ private:
         double max_y = std::numeric_limits<double>::lowest();
 
         // Add tree nodes
-        for (const auto& node : nodes) {
-            double x = static_cast<double>(node->position.xcoord());
-            double y = static_cast<double>(node->position.ycoord());
-            min_x = std::min(min_x, x);
-            max_x = std::max(max_x, x);
-            min_y = std::min(min_y, y);
-            max_y = std::max(max_y, y);
+        for (const auto& tree_node : nodes) {
+            double coord_x = static_cast<double>(tree_node->position.xcoord());
+            double coord_y = static_cast<double>(tree_node->position.ycoord());
+            min_x = std::min(min_x, coord_x);
+            max_x = std::max(max_x, coord_x);
+            min_y = std::min(min_y, coord_y);
+            max_y = std::max(max_y, coord_y);
         }
 
         // Add original sinks
         for (const auto& sink : sinks) {
-            double x = static_cast<double>(sink.position.xcoord());
-            double y = static_cast<double>(sink.position.ycoord());
-            min_x = std::min(min_x, x);
-            max_x = std::max(max_x, x);
-            min_y = std::min(min_y, y);
-            max_y = std::max(max_y, y);
+            double coord_x = static_cast<double>(sink.position.xcoord());
+            double coord_y = static_cast<double>(sink.position.ycoord());
+            min_x = std::min(min_x, coord_x);
+            max_x = std::max(max_x, coord_x);
+            min_y = std::min(min_y, coord_y);
+            max_y = std::max(max_y, coord_y);
         }
 
         // Add some padding
@@ -203,42 +211,42 @@ private:
         std::vector<std::string> svg_elements;
 
         std::function<void(const std::shared_ptr<TreeNode>&)> draw_wires_recursive;
-        draw_wires_recursive = [&](const std::shared_ptr<TreeNode>& node) {
-            if (!node) return;
+        draw_wires_recursive = [&](const std::shared_ptr<TreeNode>& tree_node) {
+            if (!tree_node) return;
 
-            if (node->parent) {
+            if (tree_node->parent) {
                 // Draw wire from parent to current node
-                auto [x1, y1] = scale_coord(
-                    node->parent->position.xcoord(),
-                    node->parent->position.ycoord()
+                auto [coord_x1, coord_y1] = scale_coord(
+                    tree_node->parent->position.xcoord(),
+                    tree_node->parent->position.ycoord()
                 );
-                auto [x2, y2] = scale_coord(
-                    node->position.xcoord(),
-                    node->position.ycoord()
+                auto [coord_x2, coord_y2] = scale_coord(
+                    tree_node->position.xcoord(),
+                    tree_node->position.ycoord()
                 );
 
                 std::ostringstream line;
-                line << "<line x1=\"" << x1 << "\" y1=\"" << y1
-                     << "\" x2=\"" << x2 << "\" y2=\"" << y2
+                line << "<line x1=\"" << coord_x1 << "\" y1=\"" << coord_y1
+                     << "\" x2=\"" << coord_x2 << "\" y2=\"" << coord_y2
                      << "\" stroke=\"" << this->wire_color
                      << "\" stroke-width=\"" << this->wire_width
                      << "\" stroke-linecap=\"round\"/>";
                 svg_elements.push_back(line.str());
 
                 // Add wire length label
-                double mid_x = (x1 + x2) / 2;
-                double mid_y = (y1 + y2) / 2;
-                if (node->wire_length > 0) {
+                double mid_coord_x = (coord_x1 + coord_x2) / 2;
+                double mid_coord_y = (coord_y1 + coord_y2) / 2;
+                if (tree_node->wire_length > 0) {
                     std::ostringstream label;
-                    label << "<text x=\"" << mid_x << "\" y=\"" << mid_y - 5
+                    label << "<text x=\"" << mid_coord_x << "\" y=\"" << mid_coord_y - 5
                           << "\" class=\"wire-label\" text-anchor=\"middle\">"
-                          << node->wire_length << "</text>";
+                          << tree_node->wire_length << "</text>";
                     svg_elements.push_back(label.str());
                 }
             }
 
-            draw_wires_recursive(node->left);
-            draw_wires_recursive(node->right);
+            draw_wires_recursive(tree_node->left);
+            draw_wires_recursive(tree_node->right);
         };
 
         draw_wires_recursive(root);
@@ -265,69 +273,69 @@ private:
         }
 
         std::function<void(const std::shared_ptr<TreeNode>&, int)>
-        draw_nodes_recursive = [&](const std::shared_ptr<TreeNode>& node, int depth) {
-            if (!node) return;
+        draw_nodes_recursive = [&](const std::shared_ptr<TreeNode>& tree_node, int tree_depth) {
+            if (!tree_node) return;
 
-            auto [x, y] = scale_coord(
-                node->position.xcoord(),
-                node->position.ycoord()
+            auto [coord_x, coord_y] = scale_coord(
+                tree_node->position.xcoord(),
+                tree_node->position.ycoord()
             );
 
             // Determine node type and color
             bool is_sink = sink_positions.count({
-                node->position.xcoord(),
-                node->position.ycoord()
+                tree_node->position.xcoord(),
+                tree_node->position.ycoord()
             }) > 0;
-            bool is_root = !node->parent;
+            bool is_root = !tree_node->parent;
 
             std::string color;
-            int radius;
+            int node_radius;
             if (is_root) {
                 color = this->root_color;
-                radius = this->node_radius + 2;
+                node_radius = this->node_radius + 2;
             } else if (is_sink) {
                 color = this->sink_color;
-                radius = this->node_radius;
+                node_radius = this->node_radius;
             } else {
                 color = this->internal_color;
-                radius = this->node_radius - 2;
+                node_radius = this->node_radius - 2;
             }
 
             // Draw node circle
             std::ostringstream circle;
-            circle << "<circle cx=\"" << x << "\" cy=\"" << y
-                   << "\" r=\"" << radius << "\" fill=\"" << color
+            circle << "<circle cx=\"" << coord_x << "\" cy=\"" << coord_y
+                   << "\" r=\"" << node_radius << "\" fill=\"" << color
                    << "\" stroke=\"#333\" stroke-width=\"1\"/>";
             svg_elements.push_back(circle.str());
 
             // Draw node label
-            double label_y_offset = -radius - 5;
+            double label_y_offset = -node_radius - 5;
             std::ostringstream label;
-            label << "<text x=\"" << x << "\" y=\"" << y + label_y_offset
+            label << "<text x=\"" << coord_x << "\" y=\"" << coord_y + label_y_offset
                   << "\" class=\"node-label\" text-anchor=\"middle\">"
-                  << node->name << "</text>";
+                  << tree_node->name << "</text>";
             svg_elements.push_back(label.str());
 
             // Draw delay information
-            double delay_y_offset = radius + 12;
+            double delay_y_offset = node_radius + 12;
             std::ostringstream delay_label;
-            delay_label << "<text x=\"" << x << "\" y=\"" << y + delay_y_offset
+            delay_label << "<text x=\"" << coord_x << "\" y=\"" << coord_y + delay_y_offset
                        << "\" class=\"delay-label\" text-anchor=\"middle\">d:"
-                       << std::fixed << std::setprecision(1) << node->delay << "</text>";
+                       << std::fixed << std::setprecision(1) << tree_node->delay << "</text>";
             svg_elements.push_back(delay_label.str());
 
             // Draw capacitance information for sinks
             if (is_sink) {
-                double cap_y_offset = radius + 22;
+                double cap_y_offset = node_radius + 22;
                 std::ostringstream cap_label;
-                cap_label << "<text x=\"" << x << "\" y=\"" << y + cap_y_offset
+                cap_label << "<text x=\"" << coord_x << "\" y=\"" << coord_y + cap_y_offset
                          << "\" class=\"delay-label\" text-anchor=\"middle\">c:"
-                         << std::fixed << std::setprecision(1) << node->capacitance << "</text>";
+                         << std::fixed << std::setprecision(1) << tree_node->capacitance << "</text>";
                 svg_elements.push_back(cap_label.str());
             }
 
-            draw_nodes_recursive(node->left, depth + 1);
-            draw_nodes_recursive(node->right, depth + 1);
+            draw_nodes_recursive(tree_node->left, tree_depth + 1);
+            draw_nodes_recursive(tree_node->right, tree_depth + 1);
         };
 
         draw_nodes_recursive(root, 0);
@@ -356,10 +364,10 @@ private:
             "Sinks: " + std::to_string(analysis.sink_delays.size())
         };
 
-        for (size_t i = 0; i < analysis_text.size(); ++i) {
+        for (size_t idx = 0; idx < analysis_text.size(); ++idx) {
             std::ostringstream tspan;
-            tspan << "<tspan x=\"20\" y=\"" << 45 + (i + 1) * 16 << "\">"
-                  << analysis_text[i] << "</tspan>";
+            tspan << "<tspan x=\"20\" y=\"" << 45 + (idx + 1) * 16 << "\">"
+                  << analysis_text[idx] << "</tspan>";
             analysis_box.push_back(tspan.str());
         }
 

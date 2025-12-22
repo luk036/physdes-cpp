@@ -44,8 +44,8 @@ namespace recti {
      */
     template <typename T> class RPolygon {
       private:
-        Point<T> _origin{};
-        std::vector<Vector2<T>> _vecs{};
+        Point<T> _origin{};               ///< Origin point of the polygon
+        std::vector<Vector2<T>> _vecs{};  ///< Vectors defining the polygon edges
 
       public:
         /**
@@ -77,8 +77,8 @@ namespace recti {
             : _origin{pointset.front()} {
             if (pointset.size() <= 1) return;
             _vecs.reserve(pointset.size() - 1);
-            for (auto it = pointset.begin() + 1; it != pointset.end(); ++it) {
-                _vecs.emplace_back(*it - _origin);
+            for (auto iter = pointset.begin() + 1; iter != pointset.end(); ++iter) {
+                _vecs.emplace_back(*iter - _origin);
             }
         }
 
@@ -156,14 +156,14 @@ namespace recti {
         constexpr auto signed_area() const -> T {
             if (_vecs.empty()) return T{0};
 
-            auto it = _vecs.begin();
-            Vector2<T> vec0 = *it++;
-            T res = vec0.x() * vec0.y();
+            auto iter = _vecs.begin();
+            Vector2<T> first_vec = *iter++;
+            T res = first_vec.x() * first_vec.y();
 
-            for (; it != _vecs.end(); ++it) {
-                Vector2<T> vec1 = *it;
-                res += vec1.x() * (vec1.y() - vec0.y());
-                vec0 = vec1;
+            for (; iter != _vecs.end(); ++iter) {
+                Vector2<T> second_vec = *iter;
+                res += second_vec.x() * (second_vec.y() - first_vec.y());
+                first_vec = second_vec;
             }
             return res;
         }
@@ -182,21 +182,21 @@ namespace recti {
             }
 
             std::vector<Vector2<T>> new_vecs;
-            Vector2<T> current_pt(0, 0);
+            Vector2<T> current_point(0, 0);
 
-            for (const auto& next_pt : _vecs) {
-                if (current_pt.x() != next_pt.x() && current_pt.y() != next_pt.y()) {
+            for (const auto& next_point : _vecs) {
+                if (current_point.x() != next_point.x() && current_point.y() != next_point.y()) {
                     // Add intermediate point for non-rectilinear segment
-                    new_vecs.emplace_back(next_pt.x(), current_pt.y());
+                    new_vecs.emplace_back(next_point.x(), current_point.y());
                 }
-                new_vecs.push_back(next_pt);
-                current_pt = next_pt;
+                new_vecs.push_back(next_point);
+                current_point = next_point;
             }
 
             // Handle closing segment
-            Vector2<T> first_pt(0, 0);
-            if (current_pt.x() != first_pt.x() && current_pt.y() != first_pt.y()) {
-                new_vecs.emplace_back(first_pt.x(), current_pt.y());
+            Vector2<T> first_point(0, 0);
+            if (current_point.x() != first_point.x() && current_point.y() != first_point.y()) {
+                new_vecs.emplace_back(first_point.x(), current_point.y());
             }
 
             return Polygon<T>(_origin, std::move(new_vecs));
@@ -233,19 +233,19 @@ namespace recti {
         // Use x-monotone as model
         // Lambda for comparing elements based on the provided direction function.
         auto compare_by_direction
-            = [&dir](const auto& rhs, const auto& lhs) -> bool { return dir(rhs) < dir(lhs); };
+            = [&dir](const auto& right_elem, const auto& left_elem) -> bool { return dir(right_elem) < dir(left_elem); };
         auto result = std::minmax_element(first, last, compare_by_direction);
         const auto leftmost = *result.first;
         const auto rightmost = *result.second;
 
         const auto is_anticw = cmp(dir(leftmost).second, dir(rightmost).second);
         // Lambda to check if an element belongs to the right-to-left chain.
-        auto is_right_to_left_chain = [&leftmost, &dir](const auto& elem) -> bool {
-            return dir(elem).second <= dir(leftmost).second;
+        auto is_right_to_left_chain = [&leftmost, &dir](const auto& element) -> bool {
+            return dir(element).second <= dir(leftmost).second;
         };
         // Lambda to check if an element belongs to the left-to-right chain.
-        auto is_left_to_right_chain = [&leftmost, &dir](const auto& elem) -> bool {
-            return dir(elem).second >= dir(leftmost).second;
+        auto is_left_to_right_chain = [&leftmost, &dir](const auto& element) -> bool {
+            return dir(element).second >= dir(leftmost).second;
         };
         const auto middle = is_anticw
                                 ? std::partition(first, last, std::move(is_right_to_left_chain))
@@ -270,8 +270,8 @@ namespace recti {
     template <typename FwIter> inline auto create_xmono_rpolygon(FwIter&& first, FwIter&& last)
         -> bool {
         return create_mono_rpolygon(
-            first, last, [](const auto& pt) { return std::make_pair(pt.xcoord(), pt.ycoord()); },
-            [](const auto& a, const auto& b) -> bool { return a < b; });
+            first, last, [](const auto& point) { return std::make_pair(point.xcoord(), point.ycoord()); },
+            [](const auto& elem_a, const auto& elem_b) -> bool { return elem_a < elem_b; });
     }
 
     /**
@@ -288,8 +288,8 @@ namespace recti {
     template <typename FwIter> inline auto create_ymono_rpolygon(FwIter&& first, FwIter&& last)
         -> bool {
         return create_mono_rpolygon(
-            first, last, [](const auto& pt) { return std::make_pair(pt.ycoord(), pt.xcoord()); },
-            [](const auto& a, const auto& b) -> bool { return a > b; });
+            first, last, [](const auto& point) { return std::make_pair(point.ycoord(), point.xcoord()); },
+            [](const auto& elem_a, const auto& elem_b) -> bool { return elem_a > elem_b; });
     }
 
     /**
@@ -371,34 +371,34 @@ namespace recti {
         using T = typename std::iterator_traits<FwIter>::value_type::value_type;
         assert(first != last);
 
-        auto dir_x = [](const auto& pt) { return std::make_pair(pt.xcoord(), pt.ycoord()); };
-        auto dir_y = [](const auto& pt) { return std::make_pair(pt.ycoord(), pt.xcoord()); };
+        auto dir_x = [](const auto& point) { return std::make_pair(point.xcoord(), point.ycoord()); };
+        auto dir_y = [](const auto& point) { return std::make_pair(point.ycoord(), point.xcoord()); };
 
-        auto max_pt = *std::max_element(
-            first, last, [&dir_y](const auto& a, const auto& b) { return dir_y(a) < dir_y(b); });
-        auto min_pt = *std::min_element(
-            first, last, [&dir_y](const auto& a, const auto& b) { return dir_y(a) < dir_y(b); });
-        Vector2<T> vec = max_pt - min_pt;
+        auto max_point = *std::max_element(
+            first, last, [&dir_y](const auto& elem_a, const auto& elem_b) { return dir_y(elem_a) < dir_y(elem_b); });
+        auto min_point = *std::min_element(
+            first, last, [&dir_y](const auto& elem_a, const auto& elem_b) { return dir_y(elem_a) < dir_y(elem_b); });
+        Vector2<T> vec = max_point - min_point;
 
         std::vector<typename std::iterator_traits<FwIter>::value_type> upper_chain_points,
             lower_chain_points;
         auto middle = std::partition(
-            first, last, [&min_pt, &vec](const auto& pt) { return vec.cross(pt - min_pt) < 0; });
+            first, last, [&min_point, &vec](const auto& point) { return vec.cross(point - min_point) < 0; });
         upper_chain_points.assign(first, middle);
         lower_chain_points.assign(middle, last);
 
-        auto max_pt1 = *std::max_element(
+        auto max_point1 = *std::max_element(
             upper_chain_points.begin(), upper_chain_points.end(),
-            [&dir_x](const auto& a, const auto& b) { return dir_x(a) < dir_x(b); });
+            [&dir_x](const auto& elem_a, const auto& elem_b) { return dir_x(elem_a) < dir_x(elem_b); });
         auto middle2
             = std::partition(upper_chain_points.begin(), upper_chain_points.end(),
-                             [&max_pt1](const auto& pt) { return pt.ycoord() < max_pt1.ycoord(); });
-        auto min_pt2 = *std::min_element(
+                             [&max_point1](const auto& point) { return point.ycoord() < max_point1.ycoord(); });
+        auto min_point2 = *std::min_element(
             lower_chain_points.begin(), lower_chain_points.end(),
-            [&dir_x](const auto& a, const auto& b) { return dir_x(a) < dir_x(b); });
+            [&dir_x](const auto& elem_a, const auto& elem_b) { return dir_x(elem_a) < dir_x(elem_b); });
         auto middle3
             = std::partition(lower_chain_points.begin(), lower_chain_points.end(),
-                             [&min_pt2](const auto& pt) { return pt.ycoord() > min_pt2.ycoord(); });
+                             [&min_point2](const auto& point) { return point.ycoord() > min_point2.ycoord(); });
 
         std::vector<typename std::iterator_traits<FwIter>::value_type> segment_a_points,
             segment_b_points, segment_c_points, segment_d_points;
