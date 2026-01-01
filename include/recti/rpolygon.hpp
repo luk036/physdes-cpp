@@ -77,8 +77,8 @@ namespace recti {
             : _origin{pointset.front()} {
             if (pointset.size() <= 1) return;
             _vecs.reserve(pointset.size() - 1);
-            for (auto iter = pointset.begin() + 1; iter != pointset.end(); ++iter) {
-                _vecs.emplace_back(*iter - _origin);
+            for (auto iterator = pointset.begin() + 1; iterator != pointset.end(); ++iterator) {
+                _vecs.emplace_back(*iterator - _origin);
             }
         }
 
@@ -100,11 +100,11 @@ namespace recti {
          * This method adds the given vector to the origin point of the rectilinear polygon,
          * effectively translating the entire polygon by the specified vector.
          *
-         * @param[in] rhs The vector to add to the origin.
+         * @param[in] vector_offset The vector to add to the origin.
          * @return A reference to the modified RPolygon object.
          */
-        constexpr auto operator+=(const Vector2<T>& rhs) -> RPolygon& {
-            this->_origin += rhs;
+        constexpr auto operator+=(const Vector2<T>& vector_offset) -> RPolygon& {
+            this->_origin += vector_offset;
             return *this;
         }
 
@@ -114,11 +114,11 @@ namespace recti {
          * This method subtracts the given vector from the origin point of the rectilinear polygon,
          * effectively translating the entire polygon by the negative of the specified vector.
          *
-         * @param[in] rhs The vector to subtract from the origin.
+         * @param[in] vector_offset The vector to subtract from the origin.
          * @return A reference to the modified RPolygon object.
          */
-        constexpr auto operator-=(const Vector2<T>& rhs) -> RPolygon& {
-            this->_origin -= rhs;
+        constexpr auto operator-=(const Vector2<T>& vector_offset) -> RPolygon& {
+            this->_origin -= vector_offset;
             return *this;
         }
 
@@ -156,16 +156,16 @@ namespace recti {
         constexpr auto signed_area() const -> T {
             if (_vecs.empty()) return T{0};
 
-            auto iter = _vecs.begin();
-            Vector2<T> first_vec = *iter++;
-            T res = first_vec.x() * first_vec.y();
+            auto iterator = _vecs.begin();
+            Vector2<T> first_vec = *iterator++;
+            T result = first_vec.x() * first_vec.y();
 
-            for (; iter != _vecs.end(); ++iter) {
-                Vector2<T> second_vec = *iter;
-                res += second_vec.x() * (second_vec.y() - first_vec.y());
+            for (; iterator != _vecs.end(); ++iterator) {
+                Vector2<T> second_vec = *iterator;
+                result += second_vec.x() * (second_vec.y() - first_vec.y());
                 first_vec = second_vec;
             }
-            return res;
+            return result;
         }
 
         /**
@@ -306,31 +306,31 @@ namespace recti {
     template <typename FwIter> inline void create_test_rpolygon_old(FwIter&& first, FwIter&& last) {
         assert(first != last);
 
-        auto upwd = [](const auto& rhs, const auto& lhs) -> bool {
-            return std::make_pair(rhs.ycoord(), rhs.xcoord())
-                   < std::make_pair(lhs.ycoord(), lhs.xcoord());
+        auto upwd = [](const auto& right_point, const auto& left_point) -> bool {
+            return std::make_pair(right_point.ycoord(), right_point.xcoord())
+                   < std::make_pair(left_point.ycoord(), left_point.xcoord());
         };
-        auto down = [](const auto& rhs, const auto& lhs) -> bool {
-            return std::make_pair(rhs.ycoord(), rhs.xcoord())
-                   > std::make_pair(lhs.ycoord(), lhs.xcoord());
+        auto down = [](const auto& right_point, const auto& left_point) -> bool {
+            return std::make_pair(right_point.ycoord(), right_point.xcoord())
+                   > std::make_pair(left_point.ycoord(), left_point.xcoord());
         };
-        auto left = [](const auto& rhs, const auto& lhs) {
-            return std::make_pair(rhs.xcoord(), rhs.ycoord())
-                   < std::make_pair(lhs.xcoord(), lhs.ycoord());
+        auto left = [](const auto& right_point, const auto& left_point) {
+            return std::make_pair(right_point.xcoord(), right_point.ycoord())
+                   < std::make_pair(left_point.xcoord(), left_point.ycoord());
         };
-        auto right = [](const auto& rhs, const auto& lhs) {
-            return std::make_pair(rhs.xcoord(), rhs.ycoord())
-                   > std::make_pair(lhs.xcoord(), lhs.ycoord());
+        auto right = [](const auto& right_point, const auto& left_point) {
+            return std::make_pair(right_point.xcoord(), right_point.ycoord())
+                   > std::make_pair(left_point.xcoord(), left_point.ycoord());
         };
 
         auto result = std::minmax_element(first, last, upwd);
         auto min_pt = *result.first;
         auto max_pt = *result.second;
-        auto d_x = max_pt.xcoord() - min_pt.xcoord();
-        auto d_y = max_pt.ycoord() - min_pt.ycoord();
-        auto middle = std::partition(first, last, [&min_pt, &d_x, &d_y](const auto& elem) -> bool {
-            return d_x * (elem.ycoord() - min_pt.ycoord())
-                   < (elem.xcoord() - min_pt.xcoord()) * d_y;
+        auto delta_x = max_pt.xcoord() - min_pt.xcoord();
+        auto delta_y = max_pt.ycoord() - min_pt.ycoord();
+        auto middle = std::partition(first, last, [&min_pt, &delta_x, &delta_y](const auto& elem) -> bool {
+            return delta_x * (elem.ycoord() - min_pt.ycoord())
+                   < (elem.xcoord() - min_pt.xcoord()) * delta_y;
         });
         auto max_pt1 = *std::max_element(first, middle, left);
         auto middle2 = std::partition(first, middle, [&max_pt1](const auto& elem) -> bool {
@@ -341,7 +341,7 @@ namespace recti {
             return elem.ycoord() > min_pt2.ycoord();
         });
 
-        if (d_x < 0) {  // clockwise
+        if (delta_x < 0) {  // clockwise
             std::sort(first, middle2, down);
             std::sort(middle2, middle, left);
             std::sort(middle, middle3, upwd);
@@ -481,28 +481,28 @@ namespace recti {
         auto& v_min = rdll[min_index];
         auto& v_max = rdll[max_index];
 
-        auto violate = [&pointset, &dir](Dllink<size_t>* vi, Dllink<size_t>* v_stop,
+        auto violate = [&pointset, &dir](Dllink<size_t>* vertex_iterator, Dllink<size_t>* vertex_stop,
                                          std::function<bool(T, T)> cmp) -> bool {
-            auto current = vi;
-            while (current != v_stop) {
-                auto vnext = current->next;
+            auto current = vertex_iterator;
+            while (current != vertex_stop) {
+                auto next_vertex = current->next;
                 auto current_key = dir(pointset[current->data]);
-                auto next_key = dir(pointset[vnext->data]);
+                auto next_key = dir(pointset[next_vertex->data]);
                 if (cmp(std::get<0>(current_key), std::get<0>(next_key))) {
                     return true;
                 }
-                current = vnext;
+                current = next_vertex;
             }
             return false;
         };
 
         // Chain from min to max
-        if (violate(&v_min, &v_max, [](T a, T b) { return a > b; })) {
+        if (violate(&v_min, &v_max, [](T value_a, T value_b) { return value_a > value_b; })) {
             return false;
         }
 
         // Chain from max to min
-        return !violate(&v_max, &v_min, [](T a, T b) { return a < b; });
+        return !violate(&v_max, &v_min, [](T value_a, T value_b) { return value_a < value_b; });
     }
 
     /**
@@ -570,22 +570,22 @@ namespace recti {
      * point is on the boundary of the polygon.
      */
     template <typename T>
-    inline auto point_in_rpolygon(std::span<const Point<T>> pointset, const Point<T>& ptq) -> bool {
-        auto pt0 = pointset.back();
-        const auto& qy = ptq.ycoord();
-        const auto& p0y = pt0.ycoord();
+    inline auto point_in_rpolygon(std::span<const Point<T>> pointset, const Point<T>& query_point) -> bool {
+        auto previous_point = pointset.back();
+        const auto& query_y = query_point.ycoord();
+        const auto& previous_y = previous_point.ycoord();
 
-        auto res = false;
-        for (const auto& pt1 : pointset) {
-            const auto& p1y = pt1.ycoord();
-            if ((p1y <= qy && qy < p0y) || (p0y <= qy && qy < p1y)) {
-                if (pt1.xcoord() > ptq.xcoord()) {
-                    res = !res;
+        auto result = false;
+        for (const auto& current_point : pointset) {
+            const auto& current_y = current_point.ycoord();
+            if ((current_y <= query_y && query_y < previous_y) || (previous_y <= query_y && query_y < current_y)) {
+                if (current_point.xcoord() > query_point.xcoord()) {
+                    result = !result;
                 }
             }
-            pt0 = pt1;
+            previous_point = current_point;
         }
-        return res;
+        return result;
     }
 
     /**
@@ -600,8 +600,8 @@ namespace recti {
      */
     template <typename T> inline auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset)
         -> bool {
-        const auto it1 = std::min_element(pointset.begin(), pointset.end());
-        const auto it0 = it1 != pointset.begin() ? std::prev(it1) : std::prev(pointset.end());
-        return it0->ycoord() > it1->ycoord();
+        const auto min_iterator = std::min_element(pointset.begin(), pointset.end());
+        const auto prev_iterator = min_iterator != pointset.begin() ? std::prev(min_iterator) : std::prev(pointset.end());
+        return prev_iterator->ycoord() > min_iterator->ycoord();
     }
 }  // namespace recti

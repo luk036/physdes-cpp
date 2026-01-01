@@ -147,13 +147,13 @@ namespace recti {
          *
          * @tparam U1 - The x coordinate type of this Point.
          * @tparam U2 - The y coordinate type of this Point.
-         * @param[in] rhs - The vector to translate this Point by.
+         * @param[in] right_point - The vector to translate this Point by.
          * @return Reference to this Point after translation.
          */
-        template <typename U1, typename U2> CONSTEXPR14 auto operator+=(const Vector2<U1, U2>& rhs)
+        template <typename U1, typename U2> CONSTEXPR14 auto operator+=(const Vector2<U1, U2>& right_point)
             -> Self& {
-            this->_xcoord += rhs.x();
-            this->_ycoord += rhs.y();
+            this->_xcoord += right_point.x();
+            this->_ycoord += right_point.y();
             return *this;
         }
 
@@ -164,13 +164,13 @@ namespace recti {
          *
          * @tparam U1 - The x coordinate type of this Point.
          * @tparam U2 - The y coordinate type of this Point.
-         * @param[in] vec2 - The vector to translate this Point by.
+         * @param[in] vector - The vector to translate this Point by.
          * @return A new Point after translation.
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator+(Point lhs, const Vector2<U1, U2>& vec2) {
-            auto xcoord = lhs.xcoord() + vec2.x();
-            auto ycoord = lhs.ycoord() + vec2.y();
+        friend constexpr auto operator+(Point lhs, const Vector2<U1, U2>& vector) {
+            auto xcoord = lhs.xcoord() + vector.x();
+            auto ycoord = lhs.ycoord() + vector.y();
             return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord), std::move(ycoord)};
         }
 
@@ -181,13 +181,13 @@ namespace recti {
          *
          * @tparam U1 - The x coordinate type of this Point.
          * @tparam U2 - The y coordinate type of this Point.
-         * @param[in] rhs - The vector to translate this Point by.
+         * @param[in] right_point - The vector to translate this Point by.
          * @return Reference to this Point after translation.
          */
-        template <typename U1, typename U2> CONSTEXPR14 auto operator-=(const Vector2<U1, U2>& rhs)
+        template <typename U1, typename U2> CONSTEXPR14 auto operator-=(const Vector2<U1, U2>& right_point)
             -> Self& {
-            this->_xcoord -= rhs.x();
-            this->_ycoord -= rhs.y();
+            this->_xcoord -= right_point.x();
+            this->_ycoord -= right_point.y();
             return *this;
         }
 
@@ -198,25 +198,25 @@ namespace recti {
          *
          * @tparam U1 - The x coordinate type of this Point.
          * @tparam U2 - The y coordinate type of this Point.
-         * @param[in] vec2 - The vector to translate this Point by.
+         * @param[in] vector - The vector to translate this Point by.
          * @return A new Point after translation.
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator-(Point lhs, const Vector2<U1, U2>& vec2) {
-            auto xcoord = lhs.xcoord() - vec2.x();
-            auto ycoord = lhs.ycoord() - vec2.y();
+        friend constexpr auto operator-(Point lhs, const Vector2<U1, U2>& vector) {
+            auto xcoord = lhs.xcoord() - vector.x();
+            auto ycoord = lhs.ycoord() - vector.y();
             return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord), std::move(ycoord)};
         }
 
         /**
          * @brief Calculates the displacement vector between this point and another point
          *
-         * @param[in] other The other point to calculate the displacement from
-         * @return The displacement vector from other to this point
+         * @param[in] other_point The other point to calculate the displacement from
+         * @return The displacement vector from other_point to this point
          */
-        constexpr auto operator-(const Self& other) const {
-            auto xcoord = this->xcoord() - other.xcoord();
-            auto ycoord = this->ycoord() - other.ycoord();
+        constexpr auto operator-(const Self& other_point) const {
+            auto xcoord = this->xcoord() - other_point.xcoord();
+            auto ycoord = this->ycoord() - other_point.ycoord();
             return Vector2<decltype(xcoord), decltype(ycoord)>{std::move(xcoord),
                                                                std::move(ycoord)};
         }
@@ -249,13 +249,13 @@ namespace recti {
          *
          * @tparam U1 - The type of the x-coordinate for this point.
          * @tparam U2 - The type of the y-coordinate for this point.
-         * @param other - The other point to check for overlap.
+         * @param other_point - The other point to check for overlap.
          * @return true if the x and y coordinates overlap, false otherwise.
          */
         template <typename U1, typename U2>  //
-        constexpr auto overlaps(const Point<U1, U2>& other) const -> bool {
-            return overlap(this->xcoord(), other.xcoord())
-                   && overlap(this->ycoord(), other.ycoord());
+        constexpr auto overlaps(const Point<U1, U2>& other_point) const -> bool {
+            return overlap(this->xcoord(), other_point.xcoord())
+                   && overlap(this->ycoord(), other_point.ycoord());
         }
 
         /**
@@ -263,13 +263,13 @@ namespace recti {
          *
          * @tparam U1 - The x-coordinate type of the other point.
          * @tparam U2 - The y-coordinate type of the other point.
-         * @param other - The other point to check for intersection.
+         * @param other_point - The other point to check for intersection.
          * @return The intersection point if the points intersect.
          */
         template <typename U1, typename U2>  //
-        constexpr auto intersect_with(const Point<U1, U2>& other) const {
-            auto xcoord = intersection(this->xcoord(), other.xcoord());
-            auto ycoord = intersection(this->ycoord(), other.ycoord());
+        constexpr auto intersect_with(const Point<U1, U2>& other_point) const {
+            auto xcoord = intersection(this->xcoord(), other_point.xcoord());
+            auto ycoord = intersection(this->ycoord(), other_point.ycoord());
             return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord), std::move(ycoord)};
         }
 
@@ -278,13 +278,13 @@ namespace recti {
          *
          * @tparam U1 - The x-coordinate type of the other point.
          * @tparam U2 - The y-coordinate type of the other point.
-         * @param other - The other point to check for hull.
+         * @param other_point - The other point to check for hull.
          * @return The hull "point".
          */
         template <typename U1, typename U2>  //
-        constexpr auto hull_with(const Point<U1, U2>& other) const {
-            auto xcoord = hull(this->xcoord(), other.xcoord());
-            auto ycoord = hull(this->ycoord(), other.ycoord());
+        constexpr auto hull_with(const Point<U1, U2>& other_point) const {
+            auto xcoord = hull(this->xcoord(), other_point.xcoord());
+            auto ycoord = hull(this->ycoord(), other_point.ycoord());
             return Point<decltype(xcoord), decltype(ycoord)>{std::move(xcoord), std::move(ycoord)};
         }
 
@@ -293,13 +293,13 @@ namespace recti {
          *
          * @tparam U1 - The type of the x-coordinate for this point.
          * @tparam U2 - The type of the y-coordinate for this point.
-         * @param other - The other point to check for containment.
+         * @param other_point - The other point to check for containment.
          * @return true if the x and y coordinates contain, false otherwise.
          */
         template <typename U1, typename U2>  //
-        constexpr auto contains(const Point<U1, U2>& other) const -> bool {
-            return contain(this->xcoord(), other.xcoord())
-                   && contain(this->ycoord(), other.ycoord());
+        constexpr auto contains(const Point<U1, U2>& other_point) const -> bool {
+            return contain(this->xcoord(), other_point.xcoord())
+                   && contain(this->ycoord(), other_point.ycoord());
         }
 
         /**
@@ -307,15 +307,15 @@ namespace recti {
          *
          * @tparam U1 - The type of the x-coordinate for this point.
          * @tparam U2 - The type of the y-coordinate for this point.
-         * @param other - The other point to check for containment.
+         * @param other_point - The other point to check for containment.
          * @return true if the x and y coordinates contain, false otherwise.
          */
         template <typename U1, typename U2>  //
-        constexpr auto blocks(const Point<U1, U2>& other) const -> bool {
-            return (contain(this->xcoord(), other.xcoord())
-                    && contain(other.ycoord(), this->ycoord()))
-                   || (contain(this->ycoord(), other.ycoord())
-                       && contain(other.xcoord(), this->xcoord()));
+        constexpr auto blocks(const Point<U1, U2>& other_point) const -> bool {
+            return (contain(this->xcoord(), other_point.xcoord())
+                    && contain(other_point.ycoord(), this->ycoord()))
+                   || (contain(this->ycoord(), other_point.ycoord())
+                       && contain(other_point.xcoord(), this->xcoord()));
         }
 
         /**
@@ -323,13 +323,13 @@ namespace recti {
          *
          * @tparam U1 - The x-coordinate type of the other point.
          * @tparam U2 - The y-coordinate type of the other point.
-         * @param other - The other point to calculate the minimum distance from.
+         * @param other_point - The other point to calculate the minimum distance from.
          * @return The minimum distance between this point and the other point.
          */
         template <typename U1, typename U2>  //
-        constexpr auto min_dist_with(const Point<U1, U2>& other) const {
-            return min_dist(this->xcoord(), other.xcoord())
-                   + min_dist(this->ycoord(), other.ycoord());
+        constexpr auto min_dist_with(const Point<U1, U2>& other_point) const {
+            return min_dist(this->xcoord(), other_point.xcoord())
+                   + min_dist(this->ycoord(), other_point.ycoord());
         }
 
         /**
@@ -337,37 +337,37 @@ namespace recti {
          *
          * @tparam U1 - The x-coordinate type of the other point.
          * @tparam U2 - The y-coordinate type of the other point.
-         * @param other - The other point to calculate the minimum distance from.
+         * @param other_point - The other point to calculate the minimum distance from.
          * @return The minimum distance between this point and the other point.
          */
         template <typename U1, typename U2>  //
-        constexpr auto min_dist_change_with(Point<U1, U2>& other) {
-            return min_dist_change(this->_xcoord, other._xcoord)
-                   + min_dist_change(this->_ycoord, other._ycoord);
+        constexpr auto min_dist_change_with(Point<U1, U2>& other_point) {
+            return min_dist_change(this->_xcoord, other_point._xcoord)
+                   + min_dist_change(this->_ycoord, other_point._ycoord);
         }
 
         /**
-         * @brief Enlarge the point by `alpha`
+         * @brief Enlarge the point by `value`
          *
-         * @param[in] alpha The value to enlarge
+         * @param[in] value The value to enlarge
          * @return A reference to the modified `Interval` object.
          */
-        template <typename T> constexpr auto enlarge_with(const T& alpha) const {
-            auto xb = enlarge(this->xcoord(), alpha);
-            auto yb = enlarge(this->ycoord(), alpha);
+        template <typename T> constexpr auto enlarge_with(const T& value) const {
+            auto xb = enlarge(this->xcoord(), value);
+            auto yb = enlarge(this->ycoord(), value);
             return Point<decltype(xb), decltype(yb)>{std::move(xb), std::move(yb)};
         }
 
         /**
          * Return the point in this object that is nearest to the given point.
          *
-         * @param other - The other point.
+         * @param other_point - The other point.
          * @return The nearest "point".
          */
         template <typename U1, typename U2>  //
-        constexpr auto nearest_to(const Point<U1, U2>& other) const {
-            auto xcoord = nearest(this->xcoord(), other.xcoord());
-            auto ycoord = nearest(this->ycoord(), other.ycoord());
+        constexpr auto nearest_to(const Point<U1, U2>& other_point) const {
+            auto xcoord = nearest(this->xcoord(), other_point.xcoord());
+            auto ycoord = nearest(this->ycoord(), other_point.ycoord());
             return Point<U1, U2>{std::move(xcoord), std::move(ycoord)};
         }
 
@@ -443,13 +443,13 @@ namespace recti {
         /**
          * Outputs the point object to the given output stream.
          *
-         * @param[out] out The output stream to write the point to.
+         * @param[out] output_stream The output stream to write the point to.
          * @param[in] obj The point object to output.
          * @return The output stream after writing the point.
          */
-        template <class Stream> friend auto operator<<(Stream& out, const Point& obj) -> Stream& {
-            out << "(" << obj.xcoord() << ", " << obj.ycoord() << ")";
-            return out;
+        template <class Stream> friend auto operator<<(Stream& output_stream, const Point& obj) -> Stream& {
+            output_stream << "(" << obj.xcoord() << ", " << obj.ycoord() << ")";
+            return output_stream;
         }
 
       protected:

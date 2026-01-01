@@ -513,8 +513,8 @@ namespace recti {
             // Split the sorted nodes into two approximately equal-sized groups.
             size_t mid = sorted_nodes.size() / 2;
             std::vector<std::shared_ptr<TreeNode>> left_group(sorted_nodes.begin(),
-                                                              sorted_nodes.begin() + mid);
-            std::vector<std::shared_ptr<TreeNode>> right_group(sorted_nodes.begin() + mid,
+                                                              sorted_nodes.begin() + static_cast<std::ptrdiff_t>(mid));
+            std::vector<std::shared_ptr<TreeNode>> right_group(sorted_nodes.begin() + static_cast<std::ptrdiff_t>(mid),
                                                                sorted_nodes.end());
 
             // Recursively build the left and right subtrees, alternating the cut direction.

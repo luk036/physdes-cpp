@@ -49,11 +49,11 @@ namespace recti {
          *
          * The function constructs a new Interval object with the same lower and upper bounds.
          *
-         * @param[in] alpha The parameter "alpha" is of type T, which is a template parameter for
+         * @param[in] value The parameter "value" is of type T, which is a template parameter for
          * the Interval class. It represents the value that will be used as both the lower bound and
          * upper bound of the interval.
          */
-        explicit constexpr Interval(const T& alpha) : _lb{alpha}, _ub{alpha} {}
+        explicit constexpr Interval(const T& value) : _lb{value}, _ub{value} {}
 
         /**
          * @brief Assignment operator
@@ -61,13 +61,13 @@ namespace recti {
          * The assignment operator sets the lower and upper bounds of an Interval object to the
          * given value.
          *
-         * @param[in] alpha The parameter "alpha" is of type T, which is the type of the object
+         * @param[in] value The parameter "value" is of type T, which is the type of the object
          * being assigned to the Interval object.
          *
          * @return The assignment operator is returning a reference to the Interval object.
          */
-        constexpr auto operator=(const T& alpha) -> Interval& {
-            this->_lb = this->_ub = alpha;
+        constexpr auto operator=(const T& value) -> Interval& {
+            this->_lb = this->_ub = value;
             return *this;
         }
 
@@ -210,98 +210,98 @@ namespace recti {
         /**
          * @brief Add a value to the lower and upper bounds of the interval.
          *
-         * This function adds the given value `alpha` to both the lower bound (`_lb`) and upper
+         * This function adds the given value `value` to both the lower bound (`_lb`) and upper
          * bound (`_ub`) of the `Interval` object. It then returns a reference to the modified
          * `Interval` object.
          *
          * @tparam U The type of the value to add to the interval bounds.
-         * @param[in] alpha The value to add to the interval bounds.
+         * @param[in] value The value to add to the interval bounds.
          * @return A reference to the modified `Interval` object.
          */
-        template <typename U> constexpr auto operator+=(const U& alpha) -> Interval& {
-            this->_lb += alpha;
-            this->_ub += alpha;
+        template <typename U> constexpr auto operator+=(const U& value) -> Interval& {
+            this->_lb += value;
+            this->_ub += value;
             return *this;
         }
 
         /**
          * @brief Add a scalar value to an `Interval` object.
          *
-         * This function creates a new `Interval` object by adding the scalar value `alpha` to the
+         * This function creates a new `Interval` object by adding the scalar value `value` to the
          * lower and upper bounds of the `rhs` `Interval` object.
          *
          * @tparam U The type of the scalar value to add.
          * @param[in] rhs The `Interval` object to add the scalar value to.
-         * @param[in] alpha The scalar value to add to the `Interval` object.
+         * @param[in] value The scalar value to add to the `Interval` object.
          * @return A new `Interval` object with the scalar value added to the bounds.
          */
-        template <typename U> friend constexpr auto operator+(Interval rhs, const U& alpha)
+        template <typename U> friend constexpr auto operator+(Interval rhs, const U& value)
             -> Interval {
-            return rhs += alpha;
+            return rhs += value;
         }
 
         /**
          * @brief Add (by a scalar)
          *
-         * The function adds a scalar value `alpha` to an `Interval` object `rhs` and returns the
+         * The function adds a scalar value `value` to an `Interval` object `rhs` and returns the
          * resulting `Interval` object.
          *
-         * @param[in] alpha The scalar value to add to the `Interval` object.
+         * @param[in] value The scalar value to add to the `Interval` object.
          * @param[in] rhs The `Interval` object to add the scalar value to.
          *
          * @return A new `Interval` object with the scalar value added to the bounds.
          */
-        friend constexpr auto operator+(const T& alpha, Interval rhs) -> Interval {
-            return rhs += alpha;
+        friend constexpr auto operator+(const T& value, Interval rhs) -> Interval {
+            return rhs += value;
         }
 
         /**
          * @brief Subtract a scalar value from an `Interval` object.
          *
-         * This function subtracts the scalar value `alpha` from the lower and upper bounds of the
+         * This function subtracts the scalar value `value` from the lower and upper bounds of the
          * `Interval` object and returns a reference to the modified `Interval` object.
          *
          * @tparam U The type of the scalar value to subtract.
-         * @param[in] alpha The scalar value to subtract from the `Interval` object.
+         * @param[in] value The scalar value to subtract from the `Interval` object.
          * @return A reference to the modified `Interval` object.
          */
-        template <typename U> constexpr auto operator-=(const U& alpha) -> Interval& {
-            this->_lb -= alpha;
-            this->_ub -= alpha;
+        template <typename U> constexpr auto operator-=(const U& value) -> Interval& {
+            this->_lb -= value;
+            this->_ub -= value;
             return *this;
         }
 
         /**
          * @brief Subtract a scalar value from an `Interval` object.
          *
-         * This function subtracts the scalar value `alpha` from the lower and upper bounds of the
+         * This function subtracts the scalar value `value` from the lower and upper bounds of the
          * `Interval` object `rhs` and returns a new `Interval` object with the modified bounds.
          *
          * @tparam U The type of the scalar value to subtract.
          * @param[in] rhs The `Interval` object to subtract the scalar value from.
-         * @param[in] alpha The scalar value to subtract from the `Interval` object.
+         * @param[in] value The scalar value to subtract from the `Interval` object.
          *
          * @return A new `Interval` object with the scalar value subtracted from the bounds.
          */
-        template <typename U> friend constexpr auto operator-(const Interval& rhs, const U& alpha)
+        template <typename U> friend constexpr auto operator-(const Interval& rhs, const U& value)
             -> Interval {
-            auto lower = rhs.lb() - alpha;
-            auto upper = rhs.ub() - alpha;
+            auto lower = rhs.lb() - value;
+            auto upper = rhs.ub() - value;
             return Interval<decltype(lower)>{std::move(lower), std::move(upper)};
         }
 
         /**
-         * @brief Enlarge the interval by subtracting `alpha` from the lower bound and adding
-         * `alpha` to the upper bound.
+         * @brief Enlarge the interval by subtracting `value` from the lower bound and adding
+         * `value` to the upper bound.
          *
-         * This function modifies the current `Interval` object by subtracting `alpha` from the
-         * lower bound (`_lb`) and adding `alpha` to the upper bound (`_ub`). It returns a reference
+         * This function modifies the current `Interval` object by subtracting `value` from the
+         * lower bound (`_lb`) and adding `value` to the upper bound (`_ub`). It returns a reference
          * to the modified `Interval` object.
          *
-         * @param[in] alpha The value to subtract from the lower bound and add to the upper bound.
+         * @param[in] value The value to subtract from the lower bound and add to the upper bound.
          */
-        constexpr auto enlarge_with(const T& alpha) const {
-            return Interval{this->_lb - alpha, this->_ub + alpha};
+        constexpr auto enlarge_with(const T& value) const {
+            return Interval{this->_lb - value, this->_ub + value};
         }
 
         ///@}
@@ -310,42 +310,42 @@ namespace recti {
          * @brief Checks if the current interval overlaps with another interval.
          *
          * This function checks if the current `Interval` object overlaps with the interval
-         * represented by the `other` parameter. It returns `true` if the intervals overlap, and
+         * represented by the `other_interval` parameter. It returns `true` if the intervals overlap, and
          * `false` otherwise.
          *
-         * @tparam U The type of the `other` interval.
-         * @param[in] other The interval to check for overlap.
+         * @tparam U The type of the `other_interval` interval.
+         * @param[in] other_interval The interval to check for overlap.
          * @return `true` if the intervals overlap, `false` otherwise.
          */
         template <typename U>  // cppcheck-suppress internalAstError
-        constexpr auto overlaps(const U& other) const -> bool {
-            return !(*this < other || other < *this);
+        constexpr auto overlaps(const U& other_interval) const -> bool {
+            return !(*this < other_interval || other_interval < *this);
         }
 
         /**
          * @brief Checks if the current interval contains another interval.
          *
          * This function checks if the current `Interval` object contains the interval
-         * represented by the `other` parameter. If the `other` parameter has a `lb()`
+         * represented by the `other_interval` parameter. If the `other_interval` parameter has a `lb()`
          * and `ub()` member function, it checks if the lower bound of the current
-         * interval is less than or equal to the lower bound of the `other` interval,
+         * interval is less than or equal to the lower bound of the `other_interval` interval,
          * and the upper bound of the current interval is greater than or equal to the
-         * upper bound of the `other` interval. Otherwise, it assumes the `other`
+         * upper bound of the `other_interval` interval. Otherwise, it assumes the `other_interval`
          * parameter is a scalar value and checks if it is within the bounds of the
          * current interval.
          *
-         * @tparam U The type of the `other` interval or scalar value.
-         * @param[in] other The interval or scalar value to check if it is contained
+         * @tparam U The type of the `other_interval` interval or scalar value.
+         * @param[in] other_interval The interval or scalar value to check if it is contained
          * within the current interval.
-         * @return `true` if the current interval contains the `other` interval or
+         * @return `true` if the current interval contains the `other_interval` interval or
          * scalar value, `false` otherwise.
          */
         template <typename U>  // cppcheck-suppress internalAstError
-        constexpr auto contains(const U& other) const -> bool {
-            if constexpr (requires { other.lb(); }) {
-                return this->lb() <= other.lb() && other.ub() <= this->ub();
+        constexpr auto contains(const U& other_interval) const -> bool {
+            if constexpr (requires { other_interval.lb(); }) {
+                return this->lb() <= other_interval.lb() && other_interval.ub() <= this->ub();
             } else /* constexpr */ {  // assume scalar
-                return this->lb() <= other && other <= this->ub();
+                return this->lb() <= other_interval && other_interval <= this->ub();
             }
         }
 
@@ -354,25 +354,25 @@ namespace recti {
          * value.
          *
          * This function returns a new `Interval` object that represents the intersection of the
-         * current `Interval` object with the interval or scalar value represented by the `other`
-         * parameter. If the `other` parameter has `lb()` and `ub()` member functions, it computes
+         * current `Interval` object with the interval or scalar value represented by the `other_interval`
+         * parameter. If the `other_interval` parameter has `lb()` and `ub()` member functions, it computes
          * the intersection using the lower and upper bounds of both intervals. Otherwise, it
-         * assumes the `other` parameter is a scalar value and computes the intersection using the
+         * assumes the `other_interval` parameter is a scalar value and computes the intersection using the
          * lower and upper bounds of the current interval and the scalar value.
          *
-         * @tparam U The type of the `other` interval or scalar value.
-         * @param[in] other The interval or scalar value to intersect with the current interval.
-         * @return The intersection of the current interval with the `other` interval or scalar
+         * @tparam U The type of the `other_interval` interval or scalar value.
+         * @param[in] other_interval The interval or scalar value to intersect with the current interval.
+         * @return The intersection of the current interval with the `other_interval` interval or scalar
          * value.
          */
         template <typename U>  //
-        constexpr auto intersect_with(const U& other) const {
-            if constexpr (requires { other.lb(); }) {
-                return Interval<T>{this->lb() > other.lb() ? this->lb() : T(other.lb()),
-                                   this->ub() < other.ub() ? this->ub() : T(other.ub())};
+        constexpr auto intersect_with(const U& other_interval) const {
+            if constexpr (requires { other_interval.lb(); }) {
+                return Interval<T>{this->lb() > other_interval.lb() ? this->lb() : T(other_interval.lb()),
+                                   this->ub() < other_interval.ub() ? this->ub() : T(other_interval.ub())};
             } else /* constexpr */ {  // assume scalar
-                return Interval<T>{this->lb() > other ? this->lb() : T(other),
-                                   this->ub() < other ? this->ub() : T(other)};
+                return Interval<T>{this->lb() > other_interval ? this->lb() : T(other_interval),
+                                   this->ub() < other_interval ? this->ub() : T(other_interval)};
             }
         }
 
@@ -381,51 +381,51 @@ namespace recti {
          * value.
          *
          * This function returns a new `Interval` object that represents the hull of the
-         * current `Interval` object with the interval or scalar value represented by the `other`
-         * parameter. If the `other` parameter has `lb()` and `ub()` member functions, it computes
+         * current `Interval` object with the interval or scalar value represented by the `other_interval`
+         * parameter. If the `other_interval` parameter has `lb()` and `ub()` member functions, it computes
          * the hull using the lower and upper bounds of both intervals. Otherwise, it
-         * assumes the `other` parameter is a scalar value and computes the hull using the
+         * assumes the `other_interval` parameter is a scalar value and computes the hull using the
          * lower and upper bounds of the current interval and the scalar value.
          *
-         * @tparam U The type of the `other` interval or scalar value.
-         * @param[in] other The interval or scalar value to intersect with the current interval.
-         * @return The hull of the current interval with the `other` interval or scalar
+         * @tparam U The type of the `other_interval` interval or scalar value.
+         * @param[in] other_interval The interval or scalar value to intersect with the current interval.
+         * @return The hull of the current interval with the `other_interval` interval or scalar
          * value.
          */
         template <typename U>  //
-        constexpr auto hull_with(const U& other) const {
-            if constexpr (requires { other.lb(); }) {
-                return Interval<T>{this->lb() < other.lb() ? this->lb() : T(other.lb()),
-                                   this->ub() > other.ub() ? this->ub() : T(other.ub())};
+        constexpr auto hull_with(const U& other_interval) const {
+            if constexpr (requires { other_interval.lb(); }) {
+                return Interval<T>{this->lb() < other_interval.lb() ? this->lb() : T(other_interval.lb()),
+                                   this->ub() > other_interval.ub() ? this->ub() : T(other_interval.ub())};
             } else /* constexpr */ {  // assume scalar
-                return Interval<T>{this->lb() < other ? this->lb() : T(other),
-                                   this->ub() > other ? this->ub() : T(other)};
+                return Interval<T>{this->lb() < other_interval ? this->lb() : T(other_interval),
+                                   this->ub() > other_interval ? this->ub() : T(other_interval)};
             }
         }
 
         /**
-         * @brief Computes the minimum distance between the current interval and the `other`
+         * @brief Computes the minimum distance between the current interval and the `other_interval`
          * interval or scalar value.
          *
          * This function returns the minimum distance between the current interval and the interval
-         * or scalar value represented by the `other` parameter. If the `other` parameter is less
+         * or scalar value represented by the `other_interval` parameter. If the `other_interval` parameter is less
          * than the current interval, the function returns the distance between the lower bound of
-         * the current interval and the `other` parameter. If the `other` parameter is greater than
-         * the current interval, the function returns the distance between the upper bound of the
-         * current interval and the `other` parameter. If the `other` parameter is within the
+         * the current interval and the `other_interval` parameter. If the `other_interval` parameter is greater than
+         * the current interval, the function returns the distance between the upper bound of
+         * current interval and the `other_interval` parameter. If the `other_interval` parameter is within the
          * current interval, the function returns 0.
          *
-         * @tparam U The type of the `other` interval or scalar value.
-         * @param[in] other The interval or scalar value to compute the minimum distance with.
-         * @return The minimum distance between the current interval and the `other` interval or
+         * @tparam U The type of the `other_interval` interval or scalar value.
+         * @param[in] other_interval The interval or scalar value to compute the minimum distance with.
+         * @return The minimum distance between the current interval and the `other_interval` interval or
          * scalar value.
          */
-        template <typename U> constexpr auto min_dist_with(const U& other) const -> T {
-            if (*this < other) {
-                return min_dist(this->_ub, other);
+        template <typename U> constexpr auto min_dist_with(const U& other_interval) const -> T {
+            if (*this < other_interval) {
+                return min_dist(this->_ub, other_interval);
             }
-            if (other < *this) {
-                return min_dist(this->_lb, other);
+            if (other_interval < *this) {
+                return min_dist(this->_lb, other_interval);
             }
             return T(0);
         }
@@ -433,52 +433,52 @@ namespace recti {
         /**
          * @brief Find the nearest point to a given value.
          *
-         * @param[in] other The reference value.
+         * @param[in] reference_value The reference value.
          * @return The nearest point in the interval to `obj`.
          */
-        constexpr auto nearest_to(const T& other) const -> T {
-            if (*this < other) {
-                return nearest(this->_ub, other);
+        constexpr auto nearest_to(const T& reference_value) const -> T {
+            if (*this < reference_value) {
+                return nearest(this->_ub, reference_value);
             }
-            if (other < *this) {
-                return nearest(this->_lb, other);
+            if (reference_value < *this) {
+                return nearest(this->_lb, reference_value);
             }
-            return other;
+            return reference_value;
         }
 
         /**
-         * @brief Computes the minimum distance between the current interval and the `other`
+         * @brief Computes the minimum distance between the current interval and the `other_interval`
          * interval or scalar value, and updates the interval bounds accordingly.
          *
          * This function returns the minimum distance between the current interval and the interval
-         * or scalar value represented by the `other` parameter. If the `other` parameter is less
+         * or scalar value represented by the `other_interval` parameter. If the `other_interval` parameter is less
          * than the current interval, the function updates the lower bound of the current interval
-         * to the upper bound, and returns the distance between the new lower bound and the `other`
-         * parameter. If the `other` parameter is greater than the current interval, the function
+         * to the upper bound, and returns the distance between the new lower bound and the `other_interval`
+         * parameter. If the `other_interval` parameter is greater than the current interval, the function
          * updates the upper bound of the current interval to the lower bound, and returns the
-         * distance between the new upper bound and the `other` parameter. If the `other` parameter
+         * distance between the new upper bound and the `other_interval` parameter. If the `other_interval` parameter
          * is within the current interval, the function updates the interval to the intersection
-         * of the current interval and the `other` interval or scalar value, and returns 0.
+         * of the current interval and the `other_interval` interval or scalar value, and returns 0.
          *
-         * @tparam U The type of the `other` interval or scalar value.
-         * @param[in,out] other The interval or scalar value to compute the minimum distance with.
-         * @return The minimum distance between the current interval and the `other` interval or
+         * @tparam U The type of the `other_interval` interval or scalar value.
+         * @param[in,out] other_interval The interval or scalar value to compute the minimum distance with.
+         * @return The minimum distance between the current interval and the `other_interval` interval or
          * scalar value.
          */
-        template <typename U> constexpr auto min_dist_change_with(U& other) -> T {
-            if (*this < other) {
+        template <typename U> constexpr auto min_dist_change_with(U& other_interval) -> T {
+            if (*this < other_interval) {
                 this->_lb = this->_ub;
-                return min_dist_change(this->_ub, other);
+                return min_dist_change(this->_ub, other_interval);
             }
-            if (other < *this) {
+            if (other_interval < *this) {
                 this->_ub = this->_lb;
-                return min_dist_change(this->_lb, other);
+                return min_dist_change(this->_lb, other_interval);
             }
 
-            if constexpr (requires { other.lb(); }) {
-                *this = other = this->intersect_with(other);
+            if constexpr (requires { other_interval.lb(); }) {
+                *this = other_interval = this->intersect_with(other_interval);
             } else /* constexpr */ {  // assume scalar
-                this->_ub = this->_lb = other;
+                this->_ub = this->_lb = other_interval;
             }
             return T(0);
         }
@@ -530,56 +530,56 @@ namespace recti {
     /**
      * @brief Computes the hull of two objects.
      *
-     * This function computes the hull of the two input objects `lhs` and `rhs`. It first
-     * checks if `lhs` has an `hull_with` member function that can be called with `rhs` as an
-     * argument, and returns the result of that call. If `lhs` does not have an `hull_with`
-     * member function, it checks if `rhs` has an `hull_with` member function that can be
-     * called with `lhs` as an argument, and returns the result of that call. If neither object has
-     * an `hull_with` member function, the function asserts that `lhs` and `rhs` are equal and
-     * returns `lhs`.
+     * This function computes the hull of the two input objects `left` and `right`. It first
+     * checks if `left` has an `hull_with` member function that can be called with `right` as an
+     * argument, and returns the result of that call. If `left` does not have an `hull_with`
+     * member function, it checks if `right` has an `hull_with` member function that can be
+     * called with `left` as an argument, and returns the result of that call. If neither object has
+     * an `hull_with` member function, the function asserts that `left` and `right` are equal and
+     * returns `left`.
      *
      * @tparam U1 The type of the first object.
      * @tparam U2 The type of the second object.
-     * @param[in] lhs The first object.
-     * @param[in] rhs The second object.
-     * @return The hull of `lhs` and `rhs`.
+     * @param[in] left The first object.
+     * @param[in] right The second object.
+     * @return The hull of `left` and `right`.
      */
     template <typename U1, typename U2>  //
-    constexpr auto hull(const U1& lhs, const U2& rhs) {
-        if constexpr (requires { lhs.hull_with(rhs); }) {
-            return lhs.hull_with(rhs);
-        } else if constexpr (requires { rhs.hull_with(lhs); }) {
-            return rhs.hull_with(lhs);
+    constexpr auto hull(const U1& left, const U2& right) {
+        if constexpr (requires { left.hull_with(right); }) {
+            return left.hull_with(right);
+        } else if constexpr (requires { right.hull_with(left); }) {
+            return right.hull_with(left);
         } else /* constexpr */ {
-            return lhs < rhs ? Interval<U1>(lhs, rhs) : Interval<U2>(rhs, lhs);
+            return left < right ? Interval<U1>(left, right) : Interval<U2>(right, left);
         }
     }
 
     /**
      * @brief Enlarges an interval or scalar value by adding and subtracting a given value.
      *
-     * This function takes two parameters, `lhs` and `rhs`, and returns a new interval that
-     * is enlarged by the value of `rhs`. If `lhs` has an `enlarge_with` member function,
+     * This function takes two parameters, `left` and `right`, and returns a new interval that
+     * is enlarged by the value of `right`. If `left` has an `enlarge_with` member function,
      * it is used to enlarge the interval. Otherwise, a new interval is created with the
-     * lower bound as `lhs - rhs` and the upper bound as `lhs + rhs`.
+     * lower bound as `left - right` and the upper bound as `left + right`.
      *
-     * @tparam U1 The type of the first parameter `lhs`.
-     * @tparam U2 The type of the second parameter `rhs`.
-     * @param lhs The interval or scalar value to be enlarged.
-     * @param rhs The value to enlarge the interval or scalar value by.
+     * @tparam U1 The type of the first parameter `left`.
+     * @tparam U2 The type of the second parameter `right`.
+     * @param left The interval or scalar value to be enlarged.
+     * @param right The value to enlarge the interval or scalar value by.
      * @return The enlarged interval or scalar value.
      */
     template <typename U1, typename U2>  //
-    constexpr auto enlarge(const U1& lhs, const U2& rhs) {
-        if constexpr (requires { lhs.enlarge_with(rhs); }) {
-            return lhs.enlarge_with(rhs);
+    constexpr auto enlarge(const U1& left, const U2& right) {
+        if constexpr (requires { left.enlarge_with(right); }) {
+            return left.enlarge_with(right);
         } else if constexpr (std::is_arithmetic_v<U1>) {
-            return Interval<U1>{lhs - rhs, lhs + rhs};
+            return Interval<U1>{left - right, left + right};
         } else {
             // No default behavior for non-arithmetic types without enlarge_with
             // This will cause a compile error if enlarge is called with such types,
             // which is the desired behavior.
-            return lhs;
+            return left;
         }
     }
 }  // namespace recti

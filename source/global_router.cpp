@@ -21,15 +21,15 @@ using namespace recti;
  * the node type, ID, and coordinates.
  *
  * @tparam IntPoint The point type used in the routing node
- * @param[in,out] os The output stream
- * @param[in] node The routing node to output
+ * @param[in,out] output_stream The output stream
+ * @param[in] routing_node The routing node to output
  * @return std::ostream& Reference to the output stream
  */
 template <typename IntPoint>
-std::ostream& operator<<(std::ostream& os, const RoutingNode<IntPoint>& node) {
-    std::string type_name = to_string(node.type);
-    os << type_name << "Node(" << node.id << ", (" << node.pt << "))";
-    return os;
+std::ostream& operator<<(std::ostream& output_stream, const RoutingNode<IntPoint>& routing_node) {
+    std::string type_name = to_string(routing_node.type);
+    output_stream << type_name << "Node(" << routing_node.id << ", (" << routing_node.pt << "))";
+    return output_stream;
 }
 
 /**
@@ -39,17 +39,17 @@ std::ostream& operator<<(std::ostream& os, const RoutingNode<IntPoint>& node) {
  * with indentation to show the hierarchical structure.
  *
  * @tparam IntPoint The point type used in routing nodes
- * @param[in] node Starting node (nullptr for root)
+ * @param[in] current_node Starting node (nullptr for root)
  * @param[in] level Current indentation level
  * @return std::string Formatted tree structure
  */
 template <typename IntPoint>
-auto GlobalRoutingTree<IntPoint>::get_tree_structure(const RoutingNode<IntPoint>* node,
+auto GlobalRoutingTree<IntPoint>::get_tree_structure(const RoutingNode<IntPoint>* current_node,
                                                      int level) const -> std::string {
-    if (node == nullptr) node = &this->source_node;
+    if (current_node == nullptr) current_node = &this->source_node;
     std::ostringstream oss;
-    oss << std::string(level * 2, ' ') << *node << "\n";
-    for (auto child : node->children) {
+    oss << std::string(level * 2, ' ') << *current_node << "\n";
+    for (auto child : current_node->children) {
         oss << this->get_tree_structure(child, level + 1);
     }
     return oss.str();
@@ -79,8 +79,8 @@ template <> std::string visualize_routing_tree_svg(
     std::optional<std::vector<GlobalRoutingTree<Point<int, int>>::Keepout>> keepouts,
     const int width, const int height, const int margin) {
     std::vector<RoutingNode<Point<int, int>>*> all_nodes;
-    for (auto& [id, node] : tree.nodes) {
-        all_nodes.push_back(node);
+    for (auto& [node_id, routing_node] : tree.nodes) {
+        all_nodes.push_back(routing_node);
     }
     if (all_nodes.empty()) return "<svg></svg>";
 
@@ -98,9 +98,9 @@ template <> std::string visualize_routing_tree_svg(
     svg << "</defs>\n";
 
     std::function<void(const RoutingNode<Point<int, int>>*)> draw_connections =
-        [&](const RoutingNode<Point<int, int>>* node) {
-            for (auto child : node->children) {
-                auto [x1, y1] = detail::scale_coords(node->pt.xcoord(), node->pt.ycoord(), params);
+        [&](const RoutingNode<Point<int, int>>* current_node) {
+            for (auto child : current_node->children) {
+                auto [x1, y1] = detail::scale_coords(current_node->pt.xcoord(), current_node->pt.ycoord(), params);
                 auto [x2, y2] = detail::scale_coords(child->pt.xcoord(), child->pt.ycoord(), params);
                 svg << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\"" << x2 << "\" y2=\""
                     << y2
@@ -139,8 +139,8 @@ template <> void save_routing_tree_svg(
     std::optional<std::vector<GlobalRoutingTree<Point<int, int>>::Keepout>> keepouts,
     const std::string filename, const int width, const int height) {
     std::string svg_content = visualize_routing_tree_svg(tree, keepouts, width, height, 50);
-    std::ofstream f(filename);
-    f << svg_content;
+    std::ofstream file_stream(filename);
+    file_stream << svg_content;
     std::cout << "Routing tree saved to " << filename << "\n";
 }
 
@@ -149,8 +149,8 @@ template <> std::string visualize_routing_tree3d_svg(
     std::optional<std::vector<GlobalRoutingTree<Point<Point<int, int>, int>>::Keepout>> keepouts,
     const int scale_z, const int width, const int height, const int margin) {
     std::vector<RoutingNode<Point<Point<int, int>, int>>*> all_nodes;
-    for (auto& [id, node] : tree.nodes) {
-        all_nodes.push_back(node);
+    for (auto& [node_id, routing_node] : tree.nodes) {
+        all_nodes.push_back(routing_node);
     }
     if (all_nodes.empty()) return "<svg></svg>";
 
@@ -170,9 +170,9 @@ template <> std::string visualize_routing_tree3d_svg(
     svg << "</defs>\n";
 
     std::function<void(const RoutingNode<Point<Point<int, int>, int>>*)> draw_connections
-        = [&](const RoutingNode<Point<Point<int, int>, int>>* node) {
-              for (auto child : node->children) {
-                  auto [x1, y1] = detail::scale_coords(node->pt.xcoord().xcoord(), node->pt.ycoord(), params);
+        = [&](const RoutingNode<Point<Point<int, int>, int>>* current_node) {
+              for (auto child : current_node->children) {
+                  auto [x1, y1] = detail::scale_coords(current_node->pt.xcoord().xcoord(), current_node->pt.ycoord(), params);
                   auto [x2, y2] = detail::scale_coords(child->pt.xcoord().xcoord(), child->pt.ycoord(), params);
                   size_t color_index = static_cast<size_t>(child->pt.xcoord().ycoord() / scale_z)
                                        % layer_colors.size();
@@ -216,7 +216,7 @@ template <> void save_routing_tree3d_svg(
     const int scale_z, const std::string filename, const int width, const int height) {
     std::string svg_content
         = visualize_routing_tree3d_svg(tree, keepouts, scale_z, width, height, 50);
-    std::ofstream f(filename);
-    f << svg_content;
+    std::ofstream file_stream(filename);
+    file_stream << svg_content;
     std::cout << "Routing tree (3d) saved to " << filename << "\n";
 }
