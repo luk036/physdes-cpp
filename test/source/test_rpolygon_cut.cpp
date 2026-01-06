@@ -217,3 +217,157 @@ TEST_CASE("RPolygon cut rectangle test") {
     //     CHECK(rpolygon_is_convex<int>(C));
     // }
 }
+
+TEST_CASE("RPolygon convex cut - signed area preservation") {
+    // Test with a random non-convex polygon created by test_rpolygon
+    ildsgen::VdCorput hgenX(3, 7);
+    ildsgen::VdCorput hgenY(2, 11);
+    std::vector<Point<int, int>> S;
+    for (int i = 0; i < 10; ++i) {
+        S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+    }
+    const auto P = create_test_rpolygon(S.begin(), S.end());
+    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+    
+    // Calculate original signed area
+    const auto original_rpolygon = RPolygon<int>(P);
+    const int original_area = original_rpolygon.signed_area();
+    
+    // Verify the original polygon is not convex
+    CHECK(!rpolygon_is_convex<int>(P));
+    
+    // Perform convex decomposition
+    const auto convex_pieces = rpolygon_cut_convex<int>(P, is_anticlockwise);
+    
+    // Verify we have at least one piece
+    CHECK(convex_pieces.size() > 0);
+    
+    // Verify all pieces are convex
+    for (const auto& piece : convex_pieces) {
+        CHECK(rpolygon_is_convex<int>(piece));
+    }
+    
+    // Calculate sum of signed areas of all pieces
+    int total_pieces_area = 0;
+    for (const auto& piece : convex_pieces) {
+        const auto piece_rpolygon = RPolygon<int>(piece);
+        total_pieces_area += piece_rpolygon.signed_area();
+    }
+    
+    // Verify signed area preservation
+    CHECK(original_area == total_pieces_area);
+}
+
+TEST_CASE("RPolygon explicit cut - signed area preservation") {
+    // Test with a random non-convex polygon created by test_rpolygon
+    ildsgen::VdCorput hgenX(3, 7);
+    ildsgen::VdCorput hgenY(2, 11);
+    std::vector<Point<int, int>> S;
+    for (int i = 0; i < 10; ++i) {
+        S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+    }
+    const auto P = create_test_rpolygon(S.begin(), S.end());
+    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+    
+    // First create convex hull
+    const auto convex_hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
+    
+    // Perform explicit decomposition
+    const auto explicit_pieces = rpolygon_cut_explicit<int>(convex_hull, is_anticlockwise);
+    
+    // Verify we have at least one piece
+    CHECK(explicit_pieces.size() > 0);
+    
+    // Verify all pieces are convex
+    for (const auto& piece : explicit_pieces) {
+        CHECK(rpolygon_is_convex<int>(piece));
+    }
+    
+    // Calculate sum of signed areas of all pieces
+    int total_pieces_area = 0;
+    for (const auto& piece : explicit_pieces) {
+        const auto piece_rpolygon = RPolygon<int>(piece);
+        total_pieces_area += piece_rpolygon.signed_area();
+    }
+    
+    // Verify signed area preservation (comparing with hull area)
+    const auto hull_rpolygon = RPolygon<int>(convex_hull);
+    const int hull_area = hull_rpolygon.signed_area();
+    CHECK(hull_area == total_pieces_area);
+}
+
+TEST_CASE("RPolygon implicit cut - signed area preservation") {
+    // Test with a random non-convex polygon created by test_rpolygon
+    ildsgen::VdCorput hgenX(3, 7);
+    ildsgen::VdCorput hgenY(2, 11);
+    std::vector<Point<int, int>> S;
+    for (int i = 0; i < 10; ++i) {
+        S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+    }
+    const auto P = create_test_rpolygon(S.begin(), S.end());
+    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+    
+    // First create convex hull
+    const auto convex_hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
+    
+    // Perform implicit decomposition
+    const auto implicit_pieces = rpolygon_cut_implicit<int>(convex_hull, is_anticlockwise);
+    
+    // Verify we have at least one piece
+    CHECK(implicit_pieces.size() > 0);
+    
+    // Verify all pieces are convex
+    for (const auto& piece : implicit_pieces) {
+        CHECK(rpolygon_is_convex<int>(piece));
+    }
+    
+    // Calculate sum of signed areas of all pieces
+    int total_pieces_area = 0;
+    for (const auto& piece : implicit_pieces) {
+        const auto piece_rpolygon = RPolygon<int>(piece);
+        total_pieces_area += piece_rpolygon.signed_area();
+    }
+    
+    // Verify signed area preservation (comparing with hull area)
+    const auto hull_rpolygon = RPolygon<int>(convex_hull);
+    const int hull_area = hull_rpolygon.signed_area();
+    CHECK(hull_area == total_pieces_area);
+}
+
+TEST_CASE("RPolygon rectangle cut - signed area preservation") {
+    // Test with a random non-convex polygon created by test_rpolygon
+    ildsgen::VdCorput hgenX(3, 7);
+    ildsgen::VdCorput hgenY(2, 11);
+    std::vector<Point<int, int>> S;
+    for (int i = 0; i < 10; ++i) {
+        S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+    }
+    const auto P = create_test_rpolygon(S.begin(), S.end());
+    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+    
+    // First create convex hull
+    const auto convex_hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
+    
+    // Perform rectangle decomposition
+    const auto rectangle_pieces = rpolygon_cut_rectangle<int>(convex_hull, is_anticlockwise);
+    
+    // Verify we have at least one piece
+    CHECK(rectangle_pieces.size() > 0);
+    
+    // Verify all pieces are convex (rectangles are convex)
+    for (const auto& piece : rectangle_pieces) {
+        CHECK(rpolygon_is_convex<int>(piece));
+    }
+    
+    // Calculate sum of signed areas of all pieces
+    int total_pieces_area = 0;
+    for (const auto& piece : rectangle_pieces) {
+        const auto piece_rpolygon = RPolygon<int>(piece);
+        total_pieces_area += piece_rpolygon.signed_area();
+    }
+    
+    // Verify signed area preservation (comparing with hull area)
+    const auto hull_rpolygon = RPolygon<int>(convex_hull);
+    const int hull_area = hull_rpolygon.signed_area();
+    CHECK(hull_area == total_pieces_area);
+}
