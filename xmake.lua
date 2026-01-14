@@ -4,6 +4,7 @@ add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("fmt", { alias = "fmt" })
 add_requires("doctest", { alias = "doctest" })
 add_requires("microsoft-gsl", { alias = "ms-gsl" })
+add_requires("benchmark")
 
 if is_mode("coverage") then
 	add_cxflags("-ftest-coverage", "-fprofile-arcs", { force = true })
@@ -36,6 +37,14 @@ add_includedirs("../lds-gen-cpp/include", { public = true })
 add_files("test/source/*.cpp")
 add_packages("ms-gsl")
 add_packages("fmt", "doctest")
+add_tests("default")
+
+target("benchmark_recti")
+set_kind("binary")
+add_deps("Recti")
+add_includedirs("include", { public = true })
+add_files("bench/*.cpp")
+add_packages("fmt", "benchmark")
 add_tests("default")
 
 --
