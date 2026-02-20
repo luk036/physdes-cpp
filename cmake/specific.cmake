@@ -5,7 +5,13 @@ CPMAddPackage(
   OPTIONS "FMT_INSTALL YES" # create an installable target
 )
 
-CPMAddPackage("gh:microsoft/GSL@4.0.0")
+CPMAddPackage(
+  NAME GSL
+  GITHUB_REPOSITORY "microsoft/GSL"
+  GIT_TAG "v4.0.0"
+  GIT_SHALLOW ON
+  OPTIONS "GSL_INSTALL YES"
+)
 
 CPMAddPackage(
   NAME LdsGen
@@ -14,7 +20,14 @@ CPMAddPackage(
   OPTIONS "INSTALL_ONLY YES" # create an installable target
 )
 
-set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt Microsoft.GSL::GSL)
+CPMAddPackage(
+  NAME spdlog
+  GIT_TAG v1.12.0
+  GITHUB_REPOSITORY gabime/spdlog
+  OPTIONS "SPDLOG_INSTALL YES" # create an installable target
+)
+
+set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt Microsoft.GSL::GSL spdlog::spdlog)
 
 # cpmaddpackage( NAME GSL GITHUB_REPOSITORY "microsoft/GSL" GIT_TAG "v4.0.0" GIT_SHALLOW ON )
 

@@ -5,6 +5,7 @@ add_requires("fmt", { alias = "fmt" })
 add_requires("doctest", { alias = "doctest" })
 add_requires("microsoft-gsl", { alias = "ms-gsl" })
 add_requires("benchmark")
+add_requires("spdlog", { alias = "spdlog" })
 
 if is_mode("coverage") then
 	add_cxflags("-ftest-coverage", "-fprofile-arcs", { force = true })
@@ -27,7 +28,7 @@ target("Recti")
 set_kind("static")
 add_includedirs("include", { public = true })
 add_files("source/*.cpp")
-add_packages("ms-gsl")
+add_packages("ms-gsl", "spdlog")
 
 target("test_recti")
 set_kind("binary")
@@ -35,7 +36,7 @@ add_deps("Recti")
 add_includedirs("include", { public = true })
 add_includedirs("../lds-gen-cpp/include", { public = true })
 add_files("test/source/*.cpp")
-add_packages("ms-gsl")
+add_packages("ms-gsl", "spdlog")
 add_packages("fmt", "doctest")
 
 -- Check if rapidcheck was downloaded by CMake (check both build and build_test directories)
@@ -66,6 +67,13 @@ add_includedirs("include", { public = true })
 add_files("bench/*.cpp")
 add_packages("fmt", "benchmark")
 add_tests("default")
+
+target("test_spdlogger_simple")
+set_kind("binary")
+add_deps("Recti")
+add_includedirs("include", { public = true })
+add_files("test_spdlogger_simple.cpp")
+add_packages("ms-gsl", "spdlog")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
