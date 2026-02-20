@@ -37,6 +37,26 @@ add_includedirs("../lds-gen-cpp/include", { public = true })
 add_files("test/source/*.cpp")
 add_packages("ms-gsl")
 add_packages("fmt", "doctest")
+
+-- Check if rapidcheck was downloaded by CMake (check both build and build_test directories)
+local rapidcheck_dir = path.join(os.projectdir(), "build_test", "_deps", "rapidcheck-src")
+local rapidcheck_lib_dir = path.join(os.projectdir(), "build_test", "_deps", "rapidcheck-build")
+if not os.isdir(rapidcheck_dir) then
+    rapidcheck_dir = path.join(os.projectdir(), "build", "_deps", "rapidcheck-src")
+    rapidcheck_lib_dir = path.join(os.projectdir(), "build", "_deps", "rapidcheck-build")
+end
+
+if is_plat("windows") then
+    rapidcheck_lib_dir = path.join(rapidcheck_lib_dir, "Release")
+end
+
+if os.isdir(rapidcheck_dir) and os.isdir(rapidcheck_lib_dir) then
+    add_includedirs(path.join(rapidcheck_dir, "include"))
+    add_linkdirs(rapidcheck_lib_dir)
+    add_links("rapidcheck")
+    add_defines("RAPIDCHECK_H")
+end
+
 add_tests("default")
 
 target("benchmark_recti")
