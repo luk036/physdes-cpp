@@ -1,9 +1,15 @@
 #ifdef RAPIDCHECK_H
-#    pragma warning(push)
-#    pragma warning(disable : 4180)  // Disable warning C4180 from RapidCheck
 #    include <doctest/doctest.h>
-#    include <rapidcheck.h>
-#    pragma warning(pop)
+
+// Disable C4180 warning from RapidCheck on MSVC
+#    ifdef _MSC_VER
+#        pragma warning(push)
+#        pragma warning(disable : 4180)
+#        include <rapidcheck.h>
+#        pragma warning(pop)
+#    else
+#        include <rapidcheck.h>
+#    endif
 
 #    include "recti/interval.hpp"
 #    include "recti/point.hpp"
