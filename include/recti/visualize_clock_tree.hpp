@@ -57,6 +57,12 @@ public:
 
     /**
      * @brief Create an SVG visualization of the clock tree
+     * @param[in] root The root node of the clock tree
+     * @param[in] sinks The list of sinks in the clock tree
+     * @param[in] filename The output filename for the SVG file
+     * @param[in] width The width of the SVG canvas
+     * @param[in] height The height of the SVG canvas
+     * @param[in] analysis Optional pointer to skew analysis results to display
      */
     std::string visualize_tree(
         const std::shared_ptr<TreeNode>& root,
@@ -135,6 +141,7 @@ public:
 private:
     /**
      * @brief Collect all nodes in the tree
+     * @param[in] root The root node of the clock tree
      */
     std::vector<std::shared_ptr<TreeNode>> collect_all_nodes(const std::shared_ptr<TreeNode>& root) {
         std::vector<std::shared_ptr<TreeNode>> nodes;
@@ -154,6 +161,8 @@ private:
 
     /**
      * @brief Calculate the bounding box of all nodes and sinks
+     * @param[in] nodes The list of tree nodes
+     * @param[in] sinks The list of sink nodes
      */
     std::tuple<double, double, double, double> calculate_bounds(
         const std::vector<std::shared_ptr<TreeNode>>& nodes,
@@ -203,6 +212,8 @@ private:
 
     /**
      * @brief Draw all wires in the clock tree
+     * @param[in] root The root node of the clock tree
+     * @param[in] scale_coord A function that scales coordinates to SVG canvas space
      */
     std::vector<std::string> draw_wires(
         const std::shared_ptr<TreeNode>& root,
@@ -255,6 +266,9 @@ private:
 
     /**
      * @brief Draw all nodes in the clock tree
+     * @param[in] root The root node of the clock tree
+     * @param[in] sinks The list of sink nodes
+     * @param[in] scale_coord A function that scales coordinates to SVG canvas space
      */
     std::vector<std::string> draw_nodes(
         const std::shared_ptr<TreeNode>& root,
@@ -344,8 +358,10 @@ private:
 
     /**
      * @brief Create analysis information box
+     * @param[in] analysis The skew analysis results to display
+     * @param[in] width The width of the SVG canvas (unused)
      */
-    std::vector<std::string> create_analysis_box(const SkewAnalysis& analysis, int ) {
+    std::vector<std::string> create_analysis_box(const SkewAnalysis& analysis, int /* width */) {
         std::vector<std::string> analysis_box;
 
         analysis_box.push_back("<g class=\"analysis-info\">");
@@ -380,6 +396,12 @@ private:
 
 /**
  * @brief Create an interactive SVG with additional information and styling
+ * @param[in] root The root node of the clock tree
+ * @param[in] sinks The list of sinks in the clock tree
+ * @param[in] analysis Optional pointer to skew analysis results to display
+ * @param[in] filename The output filename for the SVG file
+ * @param[in] width The width of the SVG canvas
+ * @param[in] height The height of the SVG canvas
  */
 inline std::string create_interactive_svg(
     const std::shared_ptr<TreeNode>& root,
@@ -415,6 +437,10 @@ struct TreeComparisonData {
 
 /**
  * @brief Create a comparison visualization of multiple clock trees
+ * @param[in] trees_data The data for multiple trees to compare
+ * @param[in] filename The output filename for the SVG file
+ * @param[in] width The width of the SVG canvas
+ * @param[in] height The height of the SVG canvas
  */
 inline std::string create_comparison_visualization(
     const std::vector<TreeComparisonData>& trees_data,
@@ -536,6 +562,9 @@ inline std::string create_comparison_visualization(
 
 /**
  * @brief Create a specialized comparison between linear and Elmore delay models
+ * @param[in] linear_tree_data The tree data using the linear delay model
+ * @param[in] elmore_tree_data The tree data using the Elmore delay model
+ * @param[in] filename The output filename for the SVG file
  */
 inline std::string create_delay_model_comparison(
     const TreeComparisonData& linear_tree_data,

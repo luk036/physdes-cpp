@@ -109,6 +109,13 @@ namespace recti::detail {
         return {width, height, margin, scale, min_x, min_y};
     }
 
+    /**
+     * @brief Scale coordinates from data space to SVG canvas space
+     * @param[in] x The x-coordinate in data space
+     * @param[in] y The y-coordinate in data space
+     * @param[in] params The SVG rendering parameters
+     * @return A pair of scaled coordinates (x, y) in SVG canvas space
+     */
     inline std::pair<double, double> scale_coords(int x, int y, const SvgParams& params) {
         double sx = params.margin + (x - params.min_x) * params.scale;
         double sy = params.margin + (y - params.min_y) * params.scale;
@@ -195,6 +202,10 @@ namespace recti::detail {
             << node->pt << ")</text>\n";
     }
 
+    /**
+     * @brief Draw a legend showing the meaning of different node types
+     * @param[in] svg The output stream to write the SVG elements to
+     */
     inline void draw_legend(std::ostringstream& svg) {
         int legend_y = 20;
         svg << "<text x=\"20\" y=\"" << legend_y
@@ -218,6 +229,12 @@ namespace recti::detail {
         }
     }
 
+    /**
+     * @brief Draw statistics about the routing tree
+     * @tparam IntPoint The point type used in the routing tree
+     * @param[in] svg The output stream to write the SVG elements to
+     * @param[in] tree The global routing tree to display statistics for
+     */
     template <typename IntPoint>
     void draw_stats(std::ostringstream& svg, const GlobalRoutingTree<IntPoint>& tree) {
         int stats_y = 110;
