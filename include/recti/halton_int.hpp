@@ -56,9 +56,8 @@ namespace recti {
             : _base{base}, _scale{scale} {}
 
         /**
-         * @brief
-         *
-         * @return double
+         * @brief Generate the next van der Corput sequence value
+         * @return unsigned The next value in the van der Corput sequence
          */
         auto operator()() noexcept -> unsigned {
             this->_count += 1;
@@ -66,9 +65,8 @@ namespace recti {
         }
 
         /**
-         * @brief
-         *
-         * @param[in] seed
+         * @brief Reset the sequence with a new seed value
+         * @param[in] seed The new seed value for the sequence
          */
         auto reseed(unsigned seed) noexcept -> void { this->_count = seed; }
     };
@@ -93,16 +91,14 @@ namespace recti {
             : _vdc0(base[0], scale[0]), _vdc1(base[1], scale[1]) {}
 
         /**
-         * @brief
-         *
-         * @return auto
+         * @brief Generate the next pair of Halton sequence values
+         * @return std::vector<unsigned> A vector containing the next values in the x and y dimensions
          */
         auto operator()() -> std::vector<unsigned> { return {this->_vdc0(), this->_vdc1()}; }
 
         /**
-         * @brief
-         *
-         * @param[in] seed
+         * @brief Reset both Vdcorput generators with a new seed value
+         * @param[in] seed The new seed value for both generators
          */
         auto reseed(unsigned seed) noexcept -> void {
             this->_vdc0.reseed(seed);

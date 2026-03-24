@@ -152,7 +152,16 @@ namespace recti {
     }
 
     /**
-     * @brief Cut a polygon into convex pieces
+     * @brief Cut a rectilinear polygon into convex pieces
+     * 
+     * This function takes a rectilinear polygon defined by a set of points and
+     * decomposes it into convex polygons using a recursive algorithm. The algorithm
+     * finds concave vertices and inserts new vertices to create convex pieces.
+     * 
+     * @tparam T The numeric type for coordinates
+     * @param[in] pointset Span of points defining the polygon vertices
+     * @param[in] is_anticlockwise Whether the polygon is oriented anti-clockwise
+     * @return std::vector<std::vector<Point<T>>> A vector of convex polygon pieces, each defined by points
      */
     template <typename T>
     inline auto rpolygon_cut_convex(std::span<const Point<T>> pointset, bool is_anticlockwise)
@@ -265,6 +274,9 @@ namespace recti {
 
     /**
      * @brief Cut a polygon into explicit pieces
+     * @param[in] pointset The polygon vertices
+     * @param[in] is_anticlockwise Orientation flag
+     * @return A vector of polygon pieces
      */
     template <typename T>
     inline auto rpolygon_cut_explicit(std::span<const Point<T>> pointset, bool is_anticlockwise)
