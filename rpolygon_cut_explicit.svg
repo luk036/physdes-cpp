@@ -1,14 +1,1 @@
-<svg viewBox="0 0 2187 2048" xmlns="http://www.w3.org/2000/svg">
-  <polygon points="486,768 972,768 972,256 1458,256 1458,512 1701,512 1701,1280 1215,1280 1215,1792 243,1792 243,1536 486,1536 "
-  fill="#88C0D0" stroke="black" opacity="0.5"/>
-  <circle cx="972" cy="256" r="10" />
-  <circle cx="1458" cy="512" r="10" />
-  <circle cx="1701" cy="1280" r="10" />
-  <circle cx="1215" cy="1792" r="10" />
-  <circle cx="243" cy="1536" r="10" />
-  <circle cx="486" cy="768" r="10" />
-  <polygon points="972,256 1458,256 1458,512 972,512 "
-  fill="#D088C0" stroke="black" opacity="0.3"/>
-  <polygon points="486,768 972,768 972,512 1701,512 1701,1280 1215,1280 1215,1792 243,1792 243,1536 486,1536 "
-  fill="#D088C0" stroke="black" opacity="0.3"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2187 2048"><polygon fill="#88C0D0" stroke="#000" points="486 768 972 768 972 256 1458 256 1458 512 1701 512 1701 1280 1215 1280 1215 1792 243 1792 243 1536 486 1536" opacity=".5"/><circle cx="972" cy="256" r="10"/><circle cx="1458" cy="512" r="10"/><circle cx="1701" cy="1280" r="10"/><circle cx="1215" cy="1792" r="10"/><circle cx="243" cy="1536" r="10"/><circle cx="486" cy="768" r="10"/><polygon fill="#D088C0" stroke="#000" points="972 256 1458 256 1458 512 972 512" opacity=".3"/><polygon fill="#D088C0" stroke="#000" points="486 768 972 768 972 512 1701 512 1701 1280 1215 1280 1215 1792 243 1792 243 1536 486 1536" opacity=".3"/></svg>
