@@ -21,7 +21,8 @@ if is_plat("linux") then
         add_sysincludedirs(termux_prefix .. "/include", {public = true})
     end
 elseif is_plat("windows") then
-	add_cxflags("/EHsc /W4 /WX", { force = true })
+	add_cxflags("/EHsc /W4 /WX /utf-8", { force = true })
+	add_ldflags("/FORCE:MULTIPLE", { force = true })
 end
 
 target("Recti")
@@ -36,8 +37,7 @@ add_deps("Recti")
 add_includedirs("include", { public = true })
 add_includedirs("../lds-gen-cpp/include", { public = true })
 add_files("test/source/*.cpp")
-add_packages("ms-gsl", "spdlog")
-add_packages("fmt", "doctest")
+add_packages("doctest", "fmt", "ms-gsl", "spdlog")
 
 -- Check if rapidcheck was downloaded by CMake (check both build and build_test directories)
 local rapidcheck_dir = path.join(os.projectdir(), "build_test", "_deps", "rapidcheck-src")
@@ -65,7 +65,7 @@ set_kind("binary")
 add_deps("Recti")
 add_includedirs("include", { public = true })
 add_files("bench/*.cpp")
-add_packages("fmt", "benchmark")
+add_packages("benchmark", "fmt", "ms-gsl", "spdlog")
 add_tests("default")
 
 target("test_spdlogger_simple")

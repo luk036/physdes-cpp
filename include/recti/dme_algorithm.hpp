@@ -14,6 +14,7 @@
 
 #include "manhattan_arc.hpp"
 #include "point.hpp"
+#include "logger.hpp"
 
 namespace recti {
 
@@ -221,6 +222,7 @@ namespace recti {
                 extend_left = 0;
                 delay_left = node_left.delay;
                 node_right.need_elongation = true;
+                log_with_spdlog("Warning: Right node needs elongation: extend_left < 0  => extend_left set to 0");
             }
             // If extend_left is greater than distance, it means the tapping point is effectively to
             // the left of node_left's segment. In this case, node_right's wire length is set to 0,
@@ -232,6 +234,7 @@ namespace recti {
                 extend_left = distance;
                 delay_left = node_right.delay;
                 node_left.need_elongation = true;
+                log_with_spdlog("Warning: Left node needs elongation: extend_left > distance => extend_left set to distance");
             }
 
             return {extend_left, delay_left};
