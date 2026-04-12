@@ -411,7 +411,7 @@ TEST_SUITE("DMEAlgorithm Tests") {
         // For now, we rely on the leaf count and non-leaf root to indicate a valid tree structure.
 
         // Note: Directly testing merging segments is hard without exposing private members or having a specific API.
-        // The correctness is implicitly tested by the zero-skew property in analyze_skew.
+        // The correctness is implicitly tested by the prescribed-skew (not necessarily zero) property in analyze_skew.
     }
 
     TEST_CASE("DMEAlgorithm Skew Analysis") {
@@ -428,7 +428,7 @@ TEST_SUITE("DMEAlgorithm Tests") {
         CHECK(analysis.total_wirelength > 0);
         CHECK_FALSE(analysis.delay_model.empty());
 
-        // For zero-skew algorithm, skew should be very small
+        // For prescribed-skew (not necessarily zero) algorithm, skew should be very small
         CHECK(analysis.skew == doctest::Approx(0.0).epsilon(0.001));
     }
 }
