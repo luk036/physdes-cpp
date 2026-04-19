@@ -36,7 +36,6 @@ namespace recti {
         constexpr Vector2(T1 vec_x, T2 vec_y) noexcept
             : _x{std::move(vec_x)}, _y{std::move(vec_y)} {}
 
-
         /**
          * @brief Construct a new Vector2 object
          *
@@ -49,7 +48,8 @@ namespace recti {
          * @tparam U2 The type of the y-coordinate of the other `Vector2` object.
          * @param[in] other_vector The other `Vector2` object to copy from.
          */
-        template <typename U1, typename U2> constexpr explicit Vector2(const Vector2<U1, U2>& other_vector)
+        template <typename U1, typename U2>
+        constexpr explicit Vector2(const Vector2<U1, U2>& other_vector)
             : _x(other_vector.x()), _y(other_vector.y()) {}
 
         /**
@@ -206,7 +206,8 @@ namespace recti {
          * @return A new vector that is the sum of the two input vectors.
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator+(Vector2 right_vector, const Vector2<U1, U2>& left_vector) -> Vector2 {
+        friend constexpr auto operator+(Vector2 right_vector, const Vector2<U1, U2>& left_vector)
+            -> Vector2 {
             return right_vector += left_vector;
         }
 
@@ -220,7 +221,8 @@ namespace recti {
          * @return A new vector that is the difference of the two input vectors.
          */
         template <typename U1, typename U2>  //
-        friend constexpr auto operator-(Vector2 right_vector, const Vector2<U1, U2>& left_vector) -> Vector2 {
+        friend constexpr auto operator-(Vector2 right_vector, const Vector2<U1, U2>& left_vector)
+            -> Vector2 {
             return right_vector -= left_vector;
         }
 

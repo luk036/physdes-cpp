@@ -42,8 +42,6 @@ namespace recti {
         constexpr Interval(T lower, T upper) noexcept
             : _lb{std::move(lower)}, _ub{std::move(upper)} {}
 
-
-
         /**
          * @brief Construct a new Interval object
          *
@@ -310,8 +308,8 @@ namespace recti {
          * @brief Checks if the current interval overlaps with another interval.
          *
          * This function checks if the current `Interval` object overlaps with the interval
-         * represented by the `other_interval` parameter. It returns `true` if the intervals overlap, and
-         * `false` otherwise.
+         * represented by the `other_interval` parameter. It returns `true` if the intervals
+         * overlap, and `false` otherwise.
          *
          * @tparam U The type of the `other_interval` interval.
          * @param[in] other_interval The interval to check for overlap.
@@ -326,13 +324,12 @@ namespace recti {
          * @brief Checks if the current interval contains another interval.
          *
          * This function checks if the current `Interval` object contains the interval
-         * represented by the `other_interval` parameter. If the `other_interval` parameter has a `lb()`
-         * and `ub()` member function, it checks if the lower bound of the current
-         * interval is less than or equal to the lower bound of the `other_interval` interval,
-         * and the upper bound of the current interval is greater than or equal to the
-         * upper bound of the `other_interval` interval. Otherwise, it assumes the `other_interval`
-         * parameter is a scalar value and checks if it is within the bounds of the
-         * current interval.
+         * represented by the `other_interval` parameter. If the `other_interval` parameter has a
+         * `lb()` and `ub()` member function, it checks if the lower bound of the current interval
+         * is less than or equal to the lower bound of the `other_interval` interval, and the upper
+         * bound of the current interval is greater than or equal to the upper bound of the
+         * `other_interval` interval. Otherwise, it assumes the `other_interval` parameter is a
+         * scalar value and checks if it is within the bounds of the current interval.
          *
          * @tparam U The type of the `other_interval` interval or scalar value.
          * @param[in] other_interval The interval or scalar value to check if it is contained
@@ -354,22 +351,25 @@ namespace recti {
          * value.
          *
          * This function returns a new `Interval` object that represents the intersection of the
-         * current `Interval` object with the interval or scalar value represented by the `other_interval`
-         * parameter. If the `other_interval` parameter has `lb()` and `ub()` member functions, it computes
-         * the intersection using the lower and upper bounds of both intervals. Otherwise, it
-         * assumes the `other_interval` parameter is a scalar value and computes the intersection using the
-         * lower and upper bounds of the current interval and the scalar value.
+         * current `Interval` object with the interval or scalar value represented by the
+         * `other_interval` parameter. If the `other_interval` parameter has `lb()` and `ub()`
+         * member functions, it computes the intersection using the lower and upper bounds of both
+         * intervals. Otherwise, it assumes the `other_interval` parameter is a scalar value and
+         * computes the intersection using the lower and upper bounds of the current interval and
+         * the scalar value.
          *
          * @tparam U The type of the `other_interval` interval or scalar value.
-         * @param[in] other_interval The interval or scalar value to intersect with the current interval.
-         * @return The intersection of the current interval with the `other_interval` interval or scalar
-         * value.
+         * @param[in] other_interval The interval or scalar value to intersect with the current
+         * interval.
+         * @return The intersection of the current interval with the `other_interval` interval or
+         * scalar value.
          */
         template <typename U>  //
         constexpr auto intersect_with(const U& other_interval) const {
             if constexpr (requires { other_interval.lb(); }) {
-                return Interval<T>{this->lb() > other_interval.lb() ? this->lb() : T(other_interval.lb()),
-                                   this->ub() < other_interval.ub() ? this->ub() : T(other_interval.ub())};
+                return Interval<T>{
+                    this->lb() > other_interval.lb() ? this->lb() : T(other_interval.lb()),
+                    this->ub() < other_interval.ub() ? this->ub() : T(other_interval.ub())};
             } else /* constexpr */ {  // assume scalar
                 return Interval<T>{this->lb() > other_interval ? this->lb() : T(other_interval),
                                    this->ub() < other_interval ? this->ub() : T(other_interval)};
@@ -381,22 +381,25 @@ namespace recti {
          * value.
          *
          * This function returns a new `Interval` object that represents the hull of the
-         * current `Interval` object with the interval or scalar value represented by the `other_interval`
-         * parameter. If the `other_interval` parameter has `lb()` and `ub()` member functions, it computes
-         * the hull using the lower and upper bounds of both intervals. Otherwise, it
-         * assumes the `other_interval` parameter is a scalar value and computes the hull using the
-         * lower and upper bounds of the current interval and the scalar value.
+         * current `Interval` object with the interval or scalar value represented by the
+         * `other_interval` parameter. If the `other_interval` parameter has `lb()` and `ub()`
+         * member functions, it computes the hull using the lower and upper bounds of both
+         * intervals. Otherwise, it assumes the `other_interval` parameter is a scalar value and
+         * computes the hull using the lower and upper bounds of the current interval and the scalar
+         * value.
          *
          * @tparam U The type of the `other_interval` interval or scalar value.
-         * @param[in] other_interval The interval or scalar value to intersect with the current interval.
+         * @param[in] other_interval The interval or scalar value to intersect with the current
+         * interval.
          * @return The hull of the current interval with the `other_interval` interval or scalar
          * value.
          */
         template <typename U>  //
         constexpr auto hull_with(const U& other_interval) const {
             if constexpr (requires { other_interval.lb(); }) {
-                return Interval<T>{this->lb() < other_interval.lb() ? this->lb() : T(other_interval.lb()),
-                                   this->ub() > other_interval.ub() ? this->ub() : T(other_interval.ub())};
+                return Interval<T>{
+                    this->lb() < other_interval.lb() ? this->lb() : T(other_interval.lb()),
+                    this->ub() > other_interval.ub() ? this->ub() : T(other_interval.ub())};
             } else /* constexpr */ {  // assume scalar
                 return Interval<T>{this->lb() < other_interval ? this->lb() : T(other_interval),
                                    this->ub() > other_interval ? this->ub() : T(other_interval)};
@@ -404,21 +407,22 @@ namespace recti {
         }
 
         /**
-         * @brief Computes the minimum distance between the current interval and the `other_interval`
-         * interval or scalar value.
+         * @brief Computes the minimum distance between the current interval and the
+         * `other_interval` interval or scalar value.
          *
          * This function returns the minimum distance between the current interval and the interval
-         * or scalar value represented by the `other_interval` parameter. If the `other_interval` parameter is less
-         * than the current interval, the function returns the distance between the lower bound of
-         * the current interval and the `other_interval` parameter. If the `other_interval` parameter is greater than
-         * the current interval, the function returns the distance between the upper bound of
-         * current interval and the `other_interval` parameter. If the `other_interval` parameter is within the
-         * current interval, the function returns 0.
+         * or scalar value represented by the `other_interval` parameter. If the `other_interval`
+         * parameter is less than the current interval, the function returns the distance between
+         * the lower bound of the current interval and the `other_interval` parameter. If the
+         * `other_interval` parameter is greater than the current interval, the function returns the
+         * distance between the upper bound of current interval and the `other_interval` parameter.
+         * If the `other_interval` parameter is within the current interval, the function returns 0.
          *
          * @tparam U The type of the `other_interval` interval or scalar value.
-         * @param[in] other_interval The interval or scalar value to compute the minimum distance with.
-         * @return The minimum distance between the current interval and the `other_interval` interval or
-         * scalar value.
+         * @param[in] other_interval The interval or scalar value to compute the minimum distance
+         * with.
+         * @return The minimum distance between the current interval and the `other_interval`
+         * interval or scalar value.
          */
         template <typename U> constexpr auto min_dist_with(const U& other_interval) const -> T {
             if (*this < other_interval) {
@@ -447,23 +451,25 @@ namespace recti {
         }
 
         /**
-         * @brief Computes the minimum distance between the current interval and the `other_interval`
-         * interval or scalar value, and updates the interval bounds accordingly.
+         * @brief Computes the minimum distance between the current interval and the
+         * `other_interval` interval or scalar value, and updates the interval bounds accordingly.
          *
          * This function returns the minimum distance between the current interval and the interval
-         * or scalar value represented by the `other_interval` parameter. If the `other_interval` parameter is less
-         * than the current interval, the function updates the lower bound of the current interval
-         * to the upper bound, and returns the distance between the new lower bound and the `other_interval`
-         * parameter. If the `other_interval` parameter is greater than the current interval, the function
-         * updates the upper bound of the current interval to the lower bound, and returns the
-         * distance between the new upper bound and the `other_interval` parameter. If the `other_interval` parameter
-         * is within the current interval, the function updates the interval to the intersection
-         * of the current interval and the `other_interval` interval or scalar value, and returns 0.
+         * or scalar value represented by the `other_interval` parameter. If the `other_interval`
+         * parameter is less than the current interval, the function updates the lower bound of the
+         * current interval to the upper bound, and returns the distance between the new lower bound
+         * and the `other_interval` parameter. If the `other_interval` parameter is greater than the
+         * current interval, the function updates the upper bound of the current interval to the
+         * lower bound, and returns the distance between the new upper bound and the
+         * `other_interval` parameter. If the `other_interval` parameter is within the current
+         * interval, the function updates the interval to the intersection of the current interval
+         * and the `other_interval` interval or scalar value, and returns 0.
          *
          * @tparam U The type of the `other_interval` interval or scalar value.
-         * @param[in,out] other_interval The interval or scalar value to compute the minimum distance with.
-         * @return The minimum distance between the current interval and the `other_interval` interval or
-         * scalar value.
+         * @param[in,out] other_interval The interval or scalar value to compute the minimum
+         * distance with.
+         * @return The minimum distance between the current interval and the `other_interval`
+         * interval or scalar value.
          */
         template <typename U> constexpr auto min_dist_change_with(U& other_interval) -> T {
             if (*this < other_interval) {
@@ -488,9 +494,7 @@ namespace recti {
          *
          * @return The center of the interval.
          */
-        constexpr auto get_center() const -> T {
-            return this->_lb + (this->_ub - this->_lb) / 2;
-        }
+        constexpr auto get_center() const -> T { return this->_lb + (this->_ub - this->_lb) / 2; }
 
         /**
          * @brief Get the lower corner of the interval.

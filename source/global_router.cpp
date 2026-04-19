@@ -105,10 +105,12 @@ template <> std::string visualize_routing_tree_svg(
     std::function<void(const RoutingNode<Point<int, int>>*)> draw_connections =
         [&](const RoutingNode<Point<int, int>>* current_node) {
             for (auto* child : current_node->children) {
-                auto [coord_x1, coord_y1] = detail::scale_coords(current_node->pt.xcoord(), current_node->pt.ycoord(), params);
-                auto [coord_x2, coord_y2] = detail::scale_coords(child->pt.xcoord(), child->pt.ycoord(), params);
-                svg << "<line x1=\"" << coord_x1 << "\" y1=\"" << coord_y1 << "\" x2=\"" << coord_x2 << "\" y2=\""
-                    << coord_y2
+                auto [coord_x1, coord_y1] = detail::scale_coords(current_node->pt.xcoord(),
+                                                                 current_node->pt.ycoord(), params);
+                auto [coord_x2, coord_y2]
+                    = detail::scale_coords(child->pt.xcoord(), child->pt.ycoord(), params);
+                svg << "<line x1=\"" << coord_x1 << "\" y1=\"" << coord_y1 << "\" x2=\"" << coord_x2
+                    << "\" y2=\"" << coord_y2
                     << "\" stroke=\"black\" stroke-width=\"2\" marker-end=\"url(#arrowhead)\"/>\n";
                 draw_connections(child);
             }
@@ -118,8 +120,10 @@ template <> std::string visualize_routing_tree_svg(
     if (keepouts.has_value()) {
         std::string color = "orange";
         for (const auto& keepout : *keepouts) {
-            auto [keepout_x1, keepout_y1] = detail::scale_coords(keepout.xcoord().lb(), keepout.ycoord().lb(), params);
-            auto [keepout_x2, keepout_y2] = detail::scale_coords(keepout.xcoord().ub(), keepout.ycoord().ub(), params);
+            auto [keepout_x1, keepout_y1]
+                = detail::scale_coords(keepout.xcoord().lb(), keepout.ycoord().lb(), params);
+            auto [keepout_x2, keepout_y2]
+                = detail::scale_coords(keepout.xcoord().ub(), keepout.ycoord().ub(), params);
             double rwidth = keepout_x2 - keepout_x1;
             double rheight = keepout_y2 - keepout_y1;
             svg << "<rect x=\"" << keepout_x1 << "\" y=\"" << keepout_y1 << "\" width=\"" << rwidth
@@ -180,14 +184,16 @@ template <> std::string visualize_routing_tree3d_svg(
     std::function<void(const RoutingNode<Point<Point<int, int>, int>>*)> draw_connections
         = [&](const RoutingNode<Point<Point<int, int>, int>>* current_node) {
               for (auto* child : current_node->children) {
-                  auto [coord_x1, coord_y1] = detail::scale_coords(current_node->pt.xcoord().xcoord(), current_node->pt.ycoord(), params);
-                  auto [coord_x2, coord_y2] = detail::scale_coords(child->pt.xcoord().xcoord(), child->pt.ycoord(), params);
+                  auto [coord_x1, coord_y1] = detail::scale_coords(
+                      current_node->pt.xcoord().xcoord(), current_node->pt.ycoord(), params);
+                  auto [coord_x2, coord_y2] = detail::scale_coords(child->pt.xcoord().xcoord(),
+                                                                   child->pt.ycoord(), params);
                   size_t color_index = static_cast<size_t>(child->pt.xcoord().ycoord() / scale_z)
                                        % layer_colors.size();
                   std::string color = layer_colors[color_index];
 
-                  svg << "<line x1=\"" << coord_x1 << "\" y1=\"" << coord_y1 << "\" x2=\"" << coord_x2 << "\" y2=\"" << coord_y2
-                      << "\" stroke=\"" << color
+                  svg << "<line x1=\"" << coord_x1 << "\" y1=\"" << coord_y1 << "\" x2=\""
+                      << coord_x2 << "\" y2=\"" << coord_y2 << "\" stroke=\"" << color
                       << "\" stroke-width=\"2\" marker-end=\"url(#arrowhead)\"/>\n";
                   draw_connections(child);
               }
@@ -197,8 +203,10 @@ template <> std::string visualize_routing_tree3d_svg(
     if (keepouts.has_value()) {
         std::string color = "pink";
         for (const auto& keepout : *keepouts) {
-            auto [keepout_x1, keepout_y1] = detail::scale_coords(keepout.xcoord().xcoord().lb(), keepout.ycoord().lb(), params);
-            auto [keepout_x2, keepout_y2] = detail::scale_coords(keepout.xcoord().xcoord().ub(), keepout.ycoord().ub(), params);
+            auto [keepout_x1, keepout_y1] = detail::scale_coords(keepout.xcoord().xcoord().lb(),
+                                                                 keepout.ycoord().lb(), params);
+            auto [keepout_x2, keepout_y2] = detail::scale_coords(keepout.xcoord().xcoord().ub(),
+                                                                 keepout.ycoord().ub(), params);
             double rwidth = keepout_x2 - keepout_x1;
             double rheight = keepout_y2 - keepout_y1;
             svg << "<rect x=\"" << keepout_x1 << "\" y=\"" << keepout_y1 << "\" width=\"" << rwidth

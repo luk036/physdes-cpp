@@ -1,8 +1,8 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, TEST...
 
-#include <iostream>              // for operator<<, ostream, basic_ostream
-#include <recti/halton_int.hpp>  // for recti
-#include <recti/manhattan_arc.hpp>   // for ManhattanArc, operator+, operator-
+#include <iostream>                 // for operator<<, ostream, basic_ostream
+#include <recti/halton_int.hpp>     // for recti
+#include <recti/manhattan_arc.hpp>  // for ManhattanArc, operator+, operator-
 
 #include "recti/interval.hpp"  // for min_dist, overlap, interval
 
@@ -20,16 +20,16 @@ TEST_CASE("ManhattanArc test") {
 }
 
 TEST_CASE("ManhattanArc class") {
-    ManhattanArc<int, int> a(4 - 5, 4 + 5); // [-1, 9]
+    ManhattanArc<int, int> a(4 - 5, 4 + 5);  // [-1, 9]
     SUBCASE("Equality") {
-        ManhattanArc<int, int> b(7 - 9, 7 + 9); // [-2, 16]
+        ManhattanArc<int, int> b(7 - 9, 7 + 9);  // [-2, 16]
         CHECK(a == a);
         CHECK_FALSE(a == b);
         ManhattanArc<int, int> c(-1, 9);
         CHECK(a == c);
     }
     SUBCASE("min_dist_with") {
-        ManhattanArc<int, int> b(7 - 9, 7 + 9); // [-2, 16]
+        ManhattanArc<int, int> b(7 - 9, 7 + 9);  // [-2, 16]
         CHECK(a.min_dist_with(b) == 7);
     }
     SUBCASE("get_center") {
@@ -54,7 +54,7 @@ TEST_CASE("ManhattanArc class") {
         CHECK(nearest.ycoord() == 5);
     }
     SUBCASE("merge_with") {
-        ManhattanArc<int, int> b(7 - 9, 7 + 9); // [-2, 16]
+        ManhattanArc<int, int> b(7 - 9, 7 + 9);  // [-2, 16]
         auto merged = a.merge_with(b, 3);
         // Expected result: /[-4, 2], [12, 12]/
         CHECK(merged.get_lower_corner().xcoord() == 4);

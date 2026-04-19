@@ -176,7 +176,7 @@ template <typename IntPoint> class GlobalRoutingTree {
     int next_terminal_id = 1;           ///< Counter for generating unique terminal node IDs.
 
     auto _find_nearest_node(const IntPoint& point, std::optional<std::string> exclude_id
-                                                = std::nullopt) -> RoutingNode<IntPoint>* {
+                                                   = std::nullopt) -> RoutingNode<IntPoint>* {
         if (this->nodes.size() <= 1) return &this->source_node;
         RoutingNode<IntPoint>* nearest = &this->source_node;
         int min_dist = this->source_node.pt.min_dist_with(point);
@@ -197,9 +197,10 @@ template <typename IntPoint> class GlobalRoutingTree {
         return _find_nearest_insertion_with_constraints(point, std::nullopt, keepouts);
     }
 
-    auto _find_nearest_insertion_with_constraints(
-        const IntPoint& pt, std::optional<int> allowed_wirelength,
-        std::optional<std::vector<Keepout>> keepouts = std::nullopt)
+    auto _find_nearest_insertion_with_constraints(const IntPoint& pt,
+                                                  std::optional<int> allowed_wirelength,
+                                                  std::optional<std::vector<Keepout>> keepouts
+                                                  = std::nullopt)
         -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*> {
         RoutingNode<IntPoint>* parent_node = nullptr;
         RoutingNode<IntPoint>* nearest_node = &this->source_node;
@@ -326,7 +327,8 @@ template <typename IntPoint> class GlobalRoutingTree {
     auto insert_steiner_node(const IntPoint& point,
                              std::optional<std::string> parent_id = std::nullopt) -> std::string {
         std::string steiner_id = "steiner_" + std::to_string(this->next_steiner_id++);
-        auto node_ptr = std::make_unique<RoutingNode<IntPoint>>(steiner_id, NodeType::STEINER, point);
+        auto node_ptr
+            = std::make_unique<RoutingNode<IntPoint>>(steiner_id, NodeType::STEINER, point);
         RoutingNode<IntPoint>* node = node_ptr.get();
         this->nodes[steiner_id] = node;
         this->owned_nodes.push_back(std::move(node_ptr));
@@ -467,8 +469,8 @@ template <typename IntPoint> class GlobalRoutingTree {
      * @param level The current depth level in the tree (for indentation).
      * @return A string representing the tree structure.
      */
-    auto get_tree_structure(const RoutingNode<IntPoint>* current_node = nullptr, int level = 0) const
-        -> std::string;
+    auto get_tree_structure(const RoutingNode<IntPoint>* current_node = nullptr,
+                            int level = 0) const -> std::string;
 
     /**
      * @brief Finds the path from a given node to the source node.
@@ -545,8 +547,9 @@ template <typename IntPoint> class GlobalRoutingTree {
             parent->add_child(child);
 
             this->nodes.erase(steiner_id);
-            auto owned_iter = std::find_if(this->owned_nodes.begin(), this->owned_nodes.end(),
-                                         [steiner](const auto& up) { return up.get() == steiner; });
+            auto owned_iter
+                = std::find_if(this->owned_nodes.begin(), this->owned_nodes.end(),
+                               [steiner](const auto& up) { return up.get() == steiner; });
             if (owned_iter != this->owned_nodes.end()) {
                 this->owned_nodes.erase(owned_iter);
             }
@@ -600,7 +603,8 @@ template <typename IntPoint> class GlobalRouter {
 
         // Calculate worst wirelength (distance to farthest terminal)
         if (!this->terminal_positions.empty()) {
-            this->worst_wirelength = this->source_position.min_dist_with(this->terminal_positions.back());
+            this->worst_wirelength
+                = this->source_position.min_dist_with(this->terminal_positions.back());
         } else {
             this->worst_wirelength = 0;
         }
@@ -631,7 +635,8 @@ template <typename IntPoint> class GlobalRouter {
     void route_with_constraints(double multiplier = 1.0) {
         int allowed_wirelength = static_cast<int>(std::round(this->worst_wirelength * multiplier));
         for (const auto& terminal : this->terminal_positions) {
-            this->tree.insert_terminal_with_constraints(terminal, allowed_wirelength, this->keepouts);
+            this->tree.insert_terminal_with_constraints(terminal, allowed_wirelength,
+                                                        this->keepouts);
         }
     }
 

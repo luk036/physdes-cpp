@@ -1,6 +1,6 @@
-#include <recti/logger.hpp>
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <recti/logger.hpp>
 
 int main() {
     std::cout << "=== Simple Spdlogger Test ===" << std::endl;
@@ -32,7 +32,8 @@ int main() {
         if (line_count >= 3) {
             std::cout << "\n✓ Test PASSED: All messages were logged successfully!" << std::endl;
         } else {
-            std::cout << "\n✗ Test FAILED: Expected at least 3 lines, got " << line_count << std::endl;
+            std::cout << "\n✗ Test FAILED: Expected at least 3 lines, got " << line_count
+                      << std::endl;
             return 1;
         }
     } else {

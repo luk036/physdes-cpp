@@ -52,9 +52,9 @@ TEST_CASE("min_dist function") {
     // Interval tests
     Interval<int> a(3, 5);
     Interval<int> b(7, 9);
-    CHECK(min_dist(a, 4) == 0); // 4 is within [3,5]
-    CHECK(min_dist(a, 6) == 1); // Distance to upper bound
-    CHECK(min_dist(a, b) == 2); // Distance between [3,5] and [7,9]
+    CHECK(min_dist(a, 4) == 0);  // 4 is within [3,5]
+    CHECK(min_dist(a, 6) == 1);  // Distance to upper bound
+    CHECK(min_dist(a, b) == 2);  // Distance between [3,5] and [7,9]
 }
 
 TEST_CASE("nearest function") {
@@ -63,9 +63,9 @@ TEST_CASE("nearest function") {
     CHECK(nearest(1, 3) == 1);
     // Interval tests
     Interval<int> a(1, 2);
-    CHECK(nearest(a, 4) == 2); // Nearest to upper bound
+    CHECK(nearest(a, 4) == 2);  // Nearest to upper bound
     Interval<int> b(1, 5);
-    CHECK(nearest(b, 4) == 4); // 4 is within [1,5]
+    CHECK(nearest(b, 4) == 4);  // 4 is within [1,5]
 }
 
 TEST_CASE("measure_of function") {

@@ -12,9 +12,9 @@
 #include <string>
 #include <vector>
 
+#include "logger.hpp"
 #include "manhattan_arc.hpp"
 #include "point.hpp"
-#include "logger.hpp"
 
 namespace recti {
 
@@ -192,7 +192,8 @@ namespace recti {
         }
 
         /**
-         * @brief Determines the tapping point for prescribed-skew (not necessarily zero) using the linear delay model.
+         * @brief Determines the tapping point for prescribed-skew (not necessarily zero) using the
+         * linear delay model.
          *
          * This implementation calculates the `extend_left` such that the delays from the tapping
          * point to the sinks of `node_left` and `node_right` are balanced.
@@ -222,7 +223,9 @@ namespace recti {
                 extend_left = 0;
                 delay_left = node_left.delay;
                 node_right.need_elongation = true;
-                log_with_spdlog("Warning: Right node needs elongation: extend_left < 0  => extend_left set to 0");
+                log_with_spdlog(
+                    "Warning: Right node needs elongation: extend_left < 0  => extend_left set to "
+                    "0");
             }
             // If extend_left is greater than distance, it means the tapping point is effectively to
             // the left of node_left's segment. In this case, node_right's wire length is set to 0,
@@ -234,7 +237,9 @@ namespace recti {
                 extend_left = distance;
                 delay_left = node_right.delay;
                 node_left.need_elongation = true;
-                log_with_spdlog("Warning: Left node needs elongation: extend_left > distance => extend_left set to distance");
+                log_with_spdlog(
+                    "Warning: Left node needs elongation: extend_left > distance => extend_left "
+                    "set to distance");
             }
 
             return {extend_left, delay_left};
@@ -295,11 +300,12 @@ namespace recti {
         }
 
         /**
-         * @brief Determines the tapping point for prescribed-skew (not necessarily zero) using the Elmore delay model.
+         * @brief Determines the tapping point for prescribed-skew (not necessarily zero) using the
+         * Elmore delay model.
          *
          * This method solves for the optimal tapping point `z` (fraction of distance from left) to
-         * achieve prescribed-skew (not necessarily zero) between `node_left` and `node_right` considering their delays and
-         * capacitances.
+         * achieve prescribed-skew (not necessarily zero) between `node_left` and `node_right`
+         * considering their delays and capacitances.
          * @param node_left The left child node.
          * @param node_right The right child node.
          * @param distance The Manhattan distance between the child segments.
@@ -313,7 +319,8 @@ namespace recti {
             double r = distance * unit_resistance;
             double c = distance * unit_capacitance;
 
-            // Solve for 'z' (fraction of distance from left) to achieve prescribed-skew (not necessarily zero)
+            // Solve for 'z' (fraction of distance from left) to achieve prescribed-skew (not
+            // necessarily zero)
             double z = (skew + r * (node_right.capacitance + c / 2.0))
                        / (r * (c + node_right.capacitance + node_left.capacitance));
 
@@ -411,8 +418,8 @@ namespace recti {
      * @class DMEAlgorithm
      * @brief Implements the Deferred Merge Embedding (DME) algorithm for clock tree synthesis.
      *
-     * The DME algorithm is a classic method for constructing a prescribed-skew (not necessarily zero) clock tree.
-     * It consists of three main phases:
+     * The DME algorithm is a classic method for constructing a prescribed-skew (not necessarily
+     * zero) clock tree. It consists of three main phases:
      * 1. **Topology Construction (build_merging_tree):** Builds a balanced binary merging tree
      * based on sink locations.
      * 2. **Bottom-up Merging Segment Computation (compute_merging_segments):** Computes Manhattan
@@ -420,8 +427,8 @@ namespace recti {
      * prescribed-skew (not necessarily zero).
      * 3. **Top-down Embedding (embed_tree):** Selects actual physical positions for internal nodes
      *    within their merging segments, starting from the root and moving towards the sinks.
-     * The algorithm aims to minimize total wirelength while achieving prescribed-skew (not necessarily zero) at the merging
-     * points.
+     * The algorithm aims to minimize total wirelength while achieving prescribed-skew (not
+     * necessarily zero) at the merging points.
      */
     class DMEAlgorithm {
       private:
@@ -515,10 +522,10 @@ namespace recti {
 
             // Split the sorted nodes into two approximately equal-sized groups.
             size_t mid = sorted_nodes.size() / 2;
-            std::vector<std::shared_ptr<TreeNode>> left_group(sorted_nodes.begin(),
-                                                              sorted_nodes.begin() + static_cast<std::ptrdiff_t>(mid));
-            std::vector<std::shared_ptr<TreeNode>> right_group(sorted_nodes.begin() + static_cast<std::ptrdiff_t>(mid),
-                                                               sorted_nodes.end());
+            std::vector<std::shared_ptr<TreeNode>> left_group(
+                sorted_nodes.begin(), sorted_nodes.begin() + static_cast<std::ptrdiff_t>(mid));
+            std::vector<std::shared_ptr<TreeNode>> right_group(
+                sorted_nodes.begin() + static_cast<std::ptrdiff_t>(mid), sorted_nodes.end());
 
             // Recursively build the left and right subtrees, alternating the cut direction.
             auto left_child = build_merging_tree(left_group, !vertical);
@@ -544,7 +551,8 @@ namespace recti {
          *
          * This function traverses the merging tree from leaves up to the root. For each node,
          * it computes its merging segment, which is a Manhattan arc representing the locus of
-         * all possible tapping points that achieve prescribed-skew (not necessarily zero) to its descendant sinks.
+         * all possible tapping points that achieve prescribed-skew (not necessarily zero) to its
+         * descendant sinks.
          * @param root The root of the merging tree topology.
          * @return A map where keys are node names and values are their corresponding ManhattanArc
          * merging segments.

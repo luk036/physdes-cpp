@@ -76,9 +76,9 @@ class UnionFind {
  * @brief Represents an edge in the graph with a source node, destination node, and cost.
  */
 struct Edge {
-    int node_u;      ///< Source node identifier
-    int node_v;      ///< Destination node identifier
-    double cost;     ///< Cost of the edge
+    int node_u;   ///< Source node identifier
+    int node_v;   ///< Destination node identifier
+    double cost;  ///< Cost of the edge
 
     Edge(int node_u, int node_v, double cost) : node_u(node_u), node_v(node_v), cost(cost) {}
 };
@@ -88,12 +88,14 @@ struct Edge {
  * @brief Represents a point in a 2D grid with x and y coordinates.
  */
 struct Point {
-    int coord_x;     ///< X coordinate in the grid
-    int coord_y;     ///< Y coordinate in the grid
+    int coord_x;  ///< X coordinate in the grid
+    int coord_y;  ///< Y coordinate in the grid
 
     Point(int coord_x, int coord_y) : coord_x(coord_x), coord_y(coord_y) {}
 
-    bool operator==(const Point& other) const { return coord_x == other.coord_x && coord_y == other.coord_y; }
+    bool operator==(const Point& other) const {
+        return coord_x == other.coord_x && coord_y == other.coord_y;
+    }
 };
 
 /**
@@ -137,9 +139,9 @@ namespace std {
  */
 class SteinerForestGrid {
   private:
-    int height;        ///< Height of the grid
-    int width;         ///< Width of the grid
-    int num_nodes;     ///< Total number of nodes (height * width)
+    int height;               ///< Height of the grid
+    int width;                ///< Width of the grid
+    int num_nodes;            ///< Total number of nodes (height * width)
     std::vector<Pair> pairs;  ///< Terminal pairs to connect
 
   public:
@@ -157,11 +159,11 @@ class SteinerForestGrid {
      * @brief Stores the result of the Steiner Forest computation.
      */
     struct Result {
-        std::vector<Edge> edges;            ///< Edges in the forest
-        double totalCost;                   ///< Total cost of all edges
-        std::unordered_set<int> sources;    ///< Source node identifiers
-        std::unordered_set<int> terminals;  ///< Terminal node identifiers
-        std::unordered_set<int> steinerNodes; ///< Steiner node identifiers
+        std::vector<Edge> edges;               ///< Edges in the forest
+        double totalCost;                      ///< Total cost of all edges
+        std::unordered_set<int> sources;       ///< Source node identifiers
+        std::unordered_set<int> terminals;     ///< Terminal node identifiers
+        std::unordered_set<int> steinerNodes;  ///< Steiner node identifiers
     };
 
     /**
@@ -268,7 +270,8 @@ class SteinerForestGrid {
                 if (activeComps.count(root_v)) num++;
                 if (num == 0) continue;
 
-                auto key = std::make_pair(std::min(edge.node_u, edge.node_v), std::max(edge.node_u, edge.node_v));
+                auto key = std::make_pair(std::min(edge.node_u, edge.node_v),
+                                          std::max(edge.node_u, edge.node_v));
                 double paidVal = paid[key];
                 if (paidVal > edge.cost) continue;
 
@@ -300,7 +303,8 @@ class SteinerForestGrid {
                 if (activeComps.count(root_v)) num++;
                 if (num == 0) continue;
 
-                auto key = std::make_pair(std::min(edge.node_u, edge.node_v), std::max(edge.node_u, edge.node_v));
+                auto key = std::make_pair(std::min(edge.node_u, edge.node_v),
+                                          std::max(edge.node_u, edge.node_v));
                 paid[key] += minDelta * num;
                 if (paid[key] > edge.cost + 1e-6) {
                     paid[key] = edge.cost;
@@ -385,15 +389,16 @@ void generateSVG(const SteinerForestGrid::Result& result, int height, int width,
     // Grid lines horizontal
     for (int row_idx = 0; row_idx <= height; ++row_idx) {
         int coord_y = margin + row_idx * cellSize;
-        file << "<line x1=\"" << margin << "\" y1=\"" << coord_y << "\" x2=\"" << (svg_width - margin)
-             << "\" y2=\"" << coord_y << "\" stroke=\"gray\" stroke-width=\"1\"/>\n";
+        file << "<line x1=\"" << margin << "\" y1=\"" << coord_y << "\" x2=\""
+             << (svg_width - margin) << "\" y2=\"" << coord_y
+             << "\" stroke=\"gray\" stroke-width=\"1\"/>\n";
     }
 
     // Grid lines vertical
     for (int col_idx = 0; col_idx <= width; ++col_idx) {
         int coord_x = margin + col_idx * cellSize;
-        file << "<line x1=\"" << coord_x << "\" y1=\"" << margin << "\" x2=\"" << coord_x << "\" y2=\""
-             << (svg_height - margin) << "\" stroke=\"gray\" stroke-width=\"1\"/>\n";
+        file << "<line x1=\"" << coord_x << "\" y1=\"" << margin << "\" x2=\"" << coord_x
+             << "\" y2=\"" << (svg_height - margin) << "\" stroke=\"gray\" stroke-width=\"1\"/>\n";
     }
 
     // Nodes

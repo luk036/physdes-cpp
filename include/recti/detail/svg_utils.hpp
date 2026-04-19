@@ -15,12 +15,12 @@ namespace recti::detail {
      * SVG visualizations of routing trees and geometric objects.
      */
     struct SvgParams {
-        int width;      ///< Width of the SVG canvas
-        int height;     ///< Height of the SVG canvas
-        int margin;     ///< Margin around the drawing area
-        double scale;   ///< Scaling factor for coordinates
-        int min_x;      ///< Minimum x-coordinate in the data
-        int min_y;      ///< Minimum y-coordinate in the data
+        int width;     ///< Width of the SVG canvas
+        int height;    ///< Height of the SVG canvas
+        int margin;    ///< Margin around the drawing area
+        double scale;  ///< Scaling factor for coordinates
+        int min_x;     ///< Minimum x-coordinate in the data
+        int min_y;     ///< Minimum y-coordinate in the data
     };
 
     /**

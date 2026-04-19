@@ -1,21 +1,18 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, TEST...
+#include <doctest/doctest.h>
 
+#include <filesystem>
+#include <ldsgen/ilds.hpp>  // for VdCorput
+#include <memory>
 #include <recti/halton_int.hpp>            // for recti
 #include <recti/visualize_clock_tree.hpp>  // for ManhattanArc, operator+, operator-
-#include <ldsgen/ilds.hpp>  // for VdCorput
-
-
-#include <doctest/doctest.h>
-#include <memory>
-#include <vector>
 #include <string>
-#include <filesystem>
+#include <vector>
 
 using namespace recti;
 
 // Helper function to generate a set of points for testing
-static auto generate_random_sinks(size_t num_sinks, unsigned int seed)
-    -> std::vector<recti::Sink> {
+static auto generate_random_sinks(size_t num_sinks, unsigned int seed) -> std::vector<recti::Sink> {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
 
@@ -25,8 +22,8 @@ static auto generate_random_sinks(size_t num_sinks, unsigned int seed)
     std::vector<recti::Sink> sinks;
     sinks.reserve(num_sinks);
     for (size_t i = 0; i < num_sinks; ++i) {
-        sinks.emplace_back(fmt::format("s{}", i),
-                           recti::Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+        sinks.emplace_back(fmt::format("s{}", i), recti::Point<int>(static_cast<int>(hgenX.pop()),
+                                                                    static_cast<int>(hgenY.pop())));
     }
 
     return sinks;

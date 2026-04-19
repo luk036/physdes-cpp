@@ -12,26 +12,25 @@
 using namespace recti;
 
 namespace {
-template <typename DelayCalculator, typename... Args>
-auto create_dme_algorithm(const std::vector<recti::Sink>& sinks, Args&&... args) {
-    auto calculator = std::make_unique<DelayCalculator>(std::forward<Args>(args)...);
-    return recti::DMEAlgorithm(sinks, std::move(calculator));
-}
-
-std::vector<recti::Sink> generate_random_sinks(int num_sinks, int max_coord,
-                                               double max_cap) {
-    std::vector<recti::Sink> sinks;
-    std::mt19937 gen(12345);  // for reproducible results
-    std::uniform_int_distribution<> distrib_coord(0, max_coord);
-    std::uniform_real_distribution<> distrib_cap(0.1, max_cap);
-
-    for (int i = 0; i < num_sinks; ++i) {
-        sinks.emplace_back(fmt::format("s{}", i),
-                           recti::Point<int>(distrib_coord(gen), distrib_coord(gen)),
-                           distrib_cap(gen));
+    template <typename DelayCalculator, typename... Args>
+    auto create_dme_algorithm(const std::vector<recti::Sink>& sinks, Args&&... args) {
+        auto calculator = std::make_unique<DelayCalculator>(std::forward<Args>(args)...);
+        return recti::DMEAlgorithm(sinks, std::move(calculator));
     }
-    return sinks;
-}
+
+    std::vector<recti::Sink> generate_random_sinks(int num_sinks, int max_coord, double max_cap) {
+        std::vector<recti::Sink> sinks;
+        std::mt19937 gen(12345);  // for reproducible results
+        std::uniform_int_distribution<> distrib_coord(0, max_coord);
+        std::uniform_real_distribution<> distrib_cap(0.1, max_cap);
+
+        for (int i = 0; i < num_sinks; ++i) {
+            sinks.emplace_back(fmt::format("s{}", i),
+                               recti::Point<int>(distrib_coord(gen), distrib_coord(gen)),
+                               distrib_cap(gen));
+        }
+        return sinks;
+    }
 
 }  // namespace
 
@@ -97,8 +96,7 @@ TEST_SUITE("DMEAlgorithm Stress Tests") {
         std::vector<recti::Sink> sinks;
         const int num_sinks = 50;
         for (int i = 0; i < num_sinks; ++i) {
-            sinks.emplace_back(fmt::format("s{}", i),
-                               recti::Point<int>(i * 100, 500), 1.0);
+            sinks.emplace_back(fmt::format("s{}", i), recti::Point<int>(i * 100, 500), 1.0);
         }
 
         auto dme = create_dme_algorithm<recti::LinearDelayCalculator>(sinks);
@@ -116,8 +114,7 @@ TEST_SUITE("DMEAlgorithm Stress Tests") {
         std::vector<recti::Sink> sinks;
         const int num_sinks = 50;
         for (int i = 0; i < num_sinks; ++i) {
-            sinks.emplace_back(fmt::format("s{}", i),
-                               recti::Point<int>(500, i * 100), 1.0);
+            sinks.emplace_back(fmt::format("s{}", i), recti::Point<int>(500, i * 100), 1.0);
         }
 
         auto dme = create_dme_algorithm<recti::LinearDelayCalculator>(sinks);

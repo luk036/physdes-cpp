@@ -1,10 +1,12 @@
 #pragma once
 
 #include <doctest/doctest.h>
+
 #include <recti/global_router.hpp>
 
 TEST_SUITE("RoutingNode") {
-    TEST_CASE_TEMPLATE("RoutingNode::remove_child - existing child", Point, recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
+    TEST_CASE_TEMPLATE("RoutingNode::remove_child - existing child", Point, recti::Point<int, int>,
+                       recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
         RoutingNode parent("parent", NodeType::SOURCE, Point{});
         RoutingNode child1("child1", NodeType::TERMINAL, Point{});
@@ -24,7 +26,8 @@ TEST_SUITE("RoutingNode") {
         CHECK(child1.parent == nullptr);
     }
 
-    TEST_CASE_TEMPLATE("RoutingNode::remove_child - non-existent child", Point, recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
+    TEST_CASE_TEMPLATE("RoutingNode::remove_child - non-existent child", Point,
+                       recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
         RoutingNode parent("parent", NodeType::SOURCE, Point{});
         RoutingNode child1("child1", NodeType::TERMINAL, Point{});
@@ -43,7 +46,8 @@ TEST_SUITE("RoutingNode") {
         CHECK(child2.parent == nullptr);  // Should still be nullptr
     }
 
-    TEST_CASE_TEMPLATE("RoutingNode::remove_child - from empty children list", Point, recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
+    TEST_CASE_TEMPLATE("RoutingNode::remove_child - from empty children list", Point,
+                       recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
         RoutingNode parent("parent", NodeType::SOURCE, Point{});
         RoutingNode child("child", NodeType::TERMINAL, Point{});
@@ -58,21 +62,24 @@ TEST_SUITE("RoutingNode") {
 }
 
 TEST_SUITE("GTree") {
-    TEST_CASE_TEMPLATE("GTree::insert_steiner_node - invalid parent_id", Point, recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
+    TEST_CASE_TEMPLATE("GTree::insert_steiner_node - invalid parent_id", Point,
+                       recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
         GlobalRoutingTree tree(Point{});
         CHECK_THROWS_AS(tree.insert_steiner_node(Point{}, "non_existent_parent"),
                         std::runtime_error);
     }
 
-    TEST_CASE_TEMPLATE("GTree::insert_terminal_node - invalid parent_id", Point, recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
+    TEST_CASE_TEMPLATE("GTree::insert_terminal_node - invalid parent_id", Point,
+                       recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
         GlobalRoutingTree tree(Point{});
         CHECK_THROWS_AS(tree.insert_terminal_node(Point{}, "non_existent_parent"),
                         std::runtime_error);
     }
 
-    TEST_CASE_TEMPLATE("GTree::insert_node_on_branch - basic insertion", Point, recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
+    TEST_CASE_TEMPLATE("GTree::insert_node_on_branch - basic insertion", Point,
+                       recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
         GlobalRoutingTree tree(Point{});
         std::string s1_id = tree.insert_steiner_node(Point{});
@@ -81,8 +88,7 @@ TEST_SUITE("GTree") {
         CHECK(tree.nodes.at(s1_id)->children.size() == 1);
         CHECK(tree.nodes.at(s1_id)->children[0]->id == s2_id);
 
-        std::string new_s_id
-            = tree.insert_node_on_branch(NodeType::STEINER, Point{}, s1_id, s2_id);
+        std::string new_s_id = tree.insert_node_on_branch(NodeType::STEINER, Point{}, s1_id, s2_id);
 
         CHECK(tree.nodes.at(s1_id)->children.size() == 1);
         CHECK(tree.nodes.at(s1_id)->children[0]->id == new_s_id);
@@ -91,7 +97,8 @@ TEST_SUITE("GTree") {
         CHECK(tree.nodes.at(s2_id)->parent->id == new_s_id);
     }
 
-    TEST_CASE_TEMPLATE("GTree::insert_node_on_branch - invalid branch_start_id", Point, recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
+    TEST_CASE_TEMPLATE("GTree::insert_node_on_branch - invalid branch_start_id", Point,
+                       recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
         GlobalRoutingTree tree(Point{});
         std::string s1_id = tree.insert_steiner_node(Point{});
@@ -101,7 +108,8 @@ TEST_SUITE("GTree") {
             std::runtime_error);
     }
 
-    TEST_CASE_TEMPLATE("GTree::insert_node_on_branch - invalid branch_end_id", Point, recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
+    TEST_CASE_TEMPLATE("GTree::insert_node_on_branch - invalid branch_end_id", Point,
+                       recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
         GlobalRoutingTree tree(Point{});
         std::string s1_id = tree.insert_steiner_node(Point{});
@@ -111,7 +119,8 @@ TEST_SUITE("GTree") {
             std::runtime_error);
     }
 
-    TEST_CASE_TEMPLATE("GTree::insert_node_on_branch - end_node not child of start_node", Point, recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
+    TEST_CASE_TEMPLATE("GTree::insert_node_on_branch - end_node not child of start_node", Point,
+                       recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
         GlobalRoutingTree tree(Point{});
         std::string s1_id = tree.insert_steiner_node(Point{});
@@ -121,7 +130,8 @@ TEST_SUITE("GTree") {
                         std::runtime_error);
     }
 
-    TEST_CASE_TEMPLATE("GTree::find_path_to_source - basic path", Point, recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
+    TEST_CASE_TEMPLATE("GTree::find_path_to_source - basic path", Point, recti::Point<int, int>,
+                       recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
         GlobalRoutingTree tree(Point{});
         std::string s1_id = tree.insert_steiner_node(Point{});
@@ -136,7 +146,8 @@ TEST_SUITE("GTree") {
         CHECK(path[3]->id == t1_id);
     }
 
-    TEST_CASE_TEMPLATE("GTree::find_path_to_source - source node", Point, recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
+    TEST_CASE_TEMPLATE("GTree::find_path_to_source - source node", Point, recti::Point<int, int>,
+                       recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
         GlobalRoutingTree tree(Point{});
         auto path = tree.find_path_to_source("source");
@@ -144,10 +155,10 @@ TEST_SUITE("GTree") {
         CHECK(path[0]->id == "source");
     }
 
-    TEST_CASE_TEMPLATE("GTree::find_path_to_source - non-existent node", Point, recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
+    TEST_CASE_TEMPLATE("GTree::find_path_to_source - non-existent node", Point,
+                       recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
         GlobalRoutingTree tree(Point{});
         CHECK_THROWS_AS(tree.find_path_to_source("non_existent"), std::runtime_error);
     }
 }
-

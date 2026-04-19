@@ -60,8 +60,7 @@ TEST_SUITE("RoutingAlgorithmsWithKeepouts") {
             GlobalRouter<Point<int, int>> router(source, terminals, keepouts);
             router.route_with_constraints(high_stress);
             save_routing_tree_svg(router.get_tree(), keepouts,
-                                  "example_route_with_constraint_and_keepouts.svg", width,
-                                  height);
+                                  "example_route_with_constraint_and_keepouts.svg", width, height);
         }
     }
 }

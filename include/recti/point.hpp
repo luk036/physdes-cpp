@@ -62,8 +62,6 @@ namespace recti {
         constexpr Point(T1 xcoord, T2 ycoord) noexcept
             : _xcoord{std::move(xcoord)}, _ycoord{std::move(ycoord)} {}
 
-
-
         /**
          * Gets the x coordinate of this Point.
          *
@@ -150,8 +148,8 @@ namespace recti {
          * @param[in] right_point - The vector to translate this Point by.
          * @return Reference to this Point after translation.
          */
-        template <typename U1, typename U2> CONSTEXPR14 auto operator+=(const Vector2<U1, U2>& right_point)
-            -> Self& {
+        template <typename U1, typename U2>
+        CONSTEXPR14 auto operator+=(const Vector2<U1, U2>& right_point) -> Self& {
             this->_xcoord += right_point.x();
             this->_ycoord += right_point.y();
             return *this;
@@ -184,8 +182,8 @@ namespace recti {
          * @param[in] right_point - The vector to translate this Point by.
          * @return Reference to this Point after translation.
          */
-        template <typename U1, typename U2> CONSTEXPR14 auto operator-=(const Vector2<U1, U2>& right_point)
-            -> Self& {
+        template <typename U1, typename U2>
+        CONSTEXPR14 auto operator-=(const Vector2<U1, U2>& right_point) -> Self& {
             this->_xcoord -= right_point.x();
             this->_ycoord -= right_point.y();
             return *this;
@@ -447,7 +445,8 @@ namespace recti {
          * @param[in] obj The point object to output.
          * @return The output stream after writing the point.
          */
-        template <class Stream> friend auto operator<<(Stream& output_stream, const Point& obj) -> Stream& {
+        template <class Stream> friend auto operator<<(Stream& output_stream, const Point& obj)
+            -> Stream& {
             output_stream << "(" << obj.xcoord() << ", " << obj.ycoord() << ")";
             return output_stream;
         }

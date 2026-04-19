@@ -1,4 +1,5 @@
 #include <benchmark/benchmark.h>
+
 #include <recti/polygon.hpp>
 #include <recti/rpolygon.hpp>
 #include <vector>

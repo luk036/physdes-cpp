@@ -92,7 +92,8 @@ namespace recti {
 
         /**
          * @brief Generate the next pair of Halton sequence values
-         * @return std::vector<unsigned> A vector containing the next values in the x and y dimensions
+         * @return std::vector<unsigned> A vector containing the next values in the x and y
+         * dimensions
          */
         auto operator()() -> std::vector<unsigned> { return {this->_vdc0(), this->_vdc1()}; }
 

@@ -205,8 +205,7 @@ namespace recti {
      * @param[in] rhs The reference point.
      * @return The nearest point on `lhs` to `rhs`.
      */
-    template <typename U1, typename U2>
-    constexpr auto nearest(const U1& lhs, const U2& rhs) {
+    template <typename U1, typename U2> constexpr auto nearest(const U1& lhs, const U2& rhs) {
         if constexpr (requires { lhs.nearest_to(rhs); }) {
             return lhs.nearest_to(rhs);
         } else {
@@ -224,8 +223,7 @@ namespace recti {
      * @param[in] obj The object to measure.
      * @return The measure of the object.
      */
-    template <typename U>
-    constexpr auto measure_of(const U& obj) {
+    template <typename U> constexpr auto measure_of(const U& obj) {
         if constexpr (requires { obj.measure(); }) {
             return obj.measure();
         } else {
@@ -243,8 +241,7 @@ namespace recti {
      * @param[in] obj The object to find the center of.
      * @return The center of the object.
      */
-    template <typename U>
-    constexpr auto center(const U& obj) {
+    template <typename U> constexpr auto center(const U& obj) {
         if constexpr (requires { obj.get_center(); }) {
             return obj.get_center();
         } else {
@@ -262,8 +259,7 @@ namespace recti {
      * @param[in] obj The object to find the lower corner of.
      * @return The lower corner of the object.
      */
-    template <typename U>
-    constexpr auto lower(const U& obj) {
+    template <typename U> constexpr auto lower(const U& obj) {
         if constexpr (requires { obj.lower_corner(); }) {
             return obj.lower_corner();
         } else {
@@ -281,8 +277,7 @@ namespace recti {
      * @param[in] obj The object to find the upper corner of.
      * @return The upper corner of the object.
      */
-    template <typename U>
-    constexpr auto upper(const U& obj) {
+    template <typename U> constexpr auto upper(const U& obj) {
         if constexpr (requires { obj.upper_corner(); }) {
             return obj.upper_corner();
         } else {

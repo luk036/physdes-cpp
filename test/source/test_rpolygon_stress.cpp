@@ -53,7 +53,7 @@ TEST_SUITE("RPolygon Stress Tests") {
             std::vector<Point<int>> S;
             for (int i = 0; i < 100; ++i) {
                 S.emplace_back(i, i);
-                S.emplace_back(i+1, i);
+                S.emplace_back(i + 1, i);
             }
             auto P = create_test_rpolygon(S.begin(), S.end());
             bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);

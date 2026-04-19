@@ -83,7 +83,8 @@ TEST_CASE("Interval of Interval test") {
     CHECK(interval_a.contains(Interval{4, 5}));
     CHECK(interval_a.contains(Interval{7, 8}));
 
-    CHECK(interval_a.intersect_with(Interval{7, 8}) == Interval{Interval{7, 7}, Interval{8, 8}});  // ???
+    CHECK(interval_a.intersect_with(Interval{7, 8})
+          == Interval{Interval{7, 7}, Interval{8, 8}});  // ???
 
     CHECK(interval_a.contains(interval_b));
     CHECK(interval_a.intersect_with(interval_b) == interval_b);

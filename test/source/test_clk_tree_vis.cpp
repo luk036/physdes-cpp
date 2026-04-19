@@ -1,15 +1,12 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, TEST...
+#include <doctest/doctest.h>
 
+#include <filesystem>
+#include <memory>
 #include <recti/halton_int.hpp>            // for recti
 #include <recti/visualize_clock_tree.hpp>  // for ManhattanArc, operator+, operator-
-
-
-#include <doctest/doctest.h>
-#include <memory>
-#include <vector>
 #include <string>
-#include <filesystem>
-
+#include <vector>
 
 TEST_SUITE("ClockTreeVisualizer Tests") {
     // TEST_CASE("ClockTreeVisualizer Construction") {
@@ -46,14 +43,11 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
         sink->capacitance = 1.5;
         sink->delay = 0.0;
 
-        std::vector<recti::Sink> sinks = {
-            recti::Sink("s1", recti::Point<int>(100, 100), 1.5)
-        };
+        std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(100, 100), 1.5)};
 
         recti::ClockTreeVisualizer visualizer;
-        std::string svg_content = visualizer.visualize_tree(
-            sink, sinks, "test_single_sink.svg", 400, 300
-        );
+        std::string svg_content
+            = visualizer.visualize_tree(sink, sinks, "test_single_sink.svg", 400, 300);
 
         // Check that SVG was generated
         CHECK_FALSE(svg_content.empty());
@@ -90,15 +84,12 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
         sink2->capacitance = 1.0;
         root->capacitance = 2.0;
 
-        std::vector<recti::Sink> sinks = {
-            recti::Sink("s1", recti::Point<int>(50, 50), 1.0),
-            recti::Sink("s2", recti::Point<int>(150, 150), 1.0)
-        };
+        std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(50, 50), 1.0),
+                                          recti::Sink("s2", recti::Point<int>(150, 150), 1.0)};
 
         recti::ClockTreeVisualizer visualizer;
-        std::string svg_content = visualizer.visualize_tree(
-            root, sinks, "test_two_sinks.svg", 600, 400
-        );
+        std::string svg_content
+            = visualizer.visualize_tree(root, sinks, "test_two_sinks.svg", 600, 400);
 
         // Basic SVG structure checks
         CHECK_FALSE(svg_content.empty());
@@ -130,24 +121,21 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
         root->left = sink1;
         root->right = sink2;
 
-        std::vector<recti::Sink> sinks = {
-            recti::Sink("s1", recti::Point<int>(50, 50), 1.0),
-            recti::Sink("s2", recti::Point<int>(150, 50), 1.0)
-        };
+        std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(50, 50), 1.0),
+                                          recti::Sink("s2", recti::Point<int>(150, 50), 1.0)};
 
         recti::SkewAnalysis analysis{
-            10.5,    // max_delay
-            10.0,    // min_delay
-            0.5,     // skew
-            {10.0, 10.5},  // sink_delays
-            100,     // total_wirelength
+            10.5,                    // max_delay
+            10.0,                    // min_delay
+            0.5,                     // skew
+            {10.0, 10.5},            // sink_delays
+            100,                     // total_wirelength
             "LinearDelayCalculator"  // delay_model
         };
 
         recti::ClockTreeVisualizer visualizer;
-        std::string svg_content = visualizer.visualize_tree(
-            root, sinks, "test_with_analysis.svg", 800, 600, &analysis
-        );
+        std::string svg_content
+            = visualizer.visualize_tree(root, sinks, "test_with_analysis.svg", 800, 600, &analysis);
 
         // Check for analysis box
         CHECK(svg_content.find("Clock Tree Analysis") != std::string::npos);
@@ -174,27 +162,22 @@ TEST_SUITE("Interactive SVG Tests") {
         root->left = sink1;
         root->right = sink2;
 
-        std::vector<recti::Sink> sinks = {
-            recti::Sink("sink1", recti::Point<int>(100, 100), 1.0),
-            recti::Sink("sink2", recti::Point<int>(200, 200), 1.0)
-        };
+        std::vector<recti::Sink> sinks = {recti::Sink("sink1", recti::Point<int>(100, 100), 1.0),
+                                          recti::Sink("sink2", recti::Point<int>(200, 200), 1.0)};
 
-        recti::SkewAnalysis analysis{
-            5.0, 5.0, 0.0, {5.0, 5.0}, 50, "TestCalculator"
-        };
+        recti::SkewAnalysis analysis{5.0, 5.0, 0.0, {5.0, 5.0}, 50, "TestCalculator"};
 
-        std::string svg_content = recti::create_interactive_svg(
-            root, sinks, &analysis, "test_interactive.svg"
-        );
+        std::string svg_content
+            = recti::create_interactive_svg(root, sinks, &analysis, "test_interactive.svg");
 
         CHECK_FALSE(svg_content.empty());
         CHECK(svg_content.find("<svg") != std::string::npos);
-        CHECK(svg_content.find("interactive") == std::string::npos); // Name doesn't affect content
+        CHECK(svg_content.find("interactive") == std::string::npos);  // Name doesn't affect content
 
         // Check for custom styling
-        CHECK(svg_content.find("#2E7D32") != std::string::npos); // sink_color
+        CHECK(svg_content.find("#2E7D32") != std::string::npos);  // sink_color
         // CHECK(svg_content.find("#1565C0") != std::string::npos); // internal_color
-        CHECK(svg_content.find("#C62828") != std::string::npos); // root_color
+        CHECK(svg_content.find("#C62828") != std::string::npos);  // root_color
 
         // Verify file was created
         CHECK(std::filesystem::exists("test_interactive.svg"));
@@ -205,13 +188,10 @@ TEST_SUITE("Interactive SVG Tests") {
 
     TEST_CASE("Create Interactive SVG Without Analysis") {
         auto root = std::make_shared<recti::TreeNode>("root", recti::Point<int>(100, 100));
-        std::vector<recti::Sink> sinks = {
-            recti::Sink("s1", recti::Point<int>(100, 100), 1.0)
-        };
+        std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(100, 100), 1.0)};
 
-        std::string svg_content = recti::create_interactive_svg(
-            root, sinks, nullptr, "test_interactive_no_analysis.svg"
-        );
+        std::string svg_content = recti::create_interactive_svg(root, sinks, nullptr,
+                                                                "test_interactive_no_analysis.svg");
 
         CHECK_FALSE(svg_content.empty());
         CHECK(svg_content.find("<svg") != std::string::npos);
@@ -231,20 +211,13 @@ TEST_SUITE("Comparison Visualization Tests") {
     TEST_CASE("Single Tree Comparison") {
         // Create test tree data
         auto tree1 = std::make_shared<recti::TreeNode>("root1", recti::Point<int>(100, 100));
-        std::vector<recti::Sink> sinks1 = {
-            recti::Sink("s1", recti::Point<int>(100, 100), 1.0)
-        };
-        recti::SkewAnalysis analysis1{
-            5.0, 5.0, 0.0, {5.0}, 0, "TestModel1"
-        };
+        std::vector<recti::Sink> sinks1 = {recti::Sink("s1", recti::Point<int>(100, 100), 1.0)};
+        recti::SkewAnalysis analysis1{5.0, 5.0, 0.0, {5.0}, 0, "TestModel1"};
 
-        recti::TreeComparisonData tree_data1{
-            tree1, sinks1, analysis1, "Single Tree Test"
-        };
+        recti::TreeComparisonData tree_data1{tree1, sinks1, analysis1, "Single Tree Test"};
 
         std::string svg_content = recti::create_comparison_visualization(
-            {tree_data1}, "test_single_comparison.svg", 800, 600
-        );
+            {tree_data1}, "test_single_comparison.svg", 800, 600);
 
         CHECK_FALSE(svg_content.empty());
         CHECK(svg_content.find("<svg") != std::string::npos);
@@ -260,30 +233,21 @@ TEST_SUITE("Comparison Visualization Tests") {
     TEST_CASE("Two Tree Comparison") {
         // Create first test tree
         auto tree1 = std::make_shared<recti::TreeNode>("root1", recti::Point<int>(50, 50));
-        std::vector<recti::Sink> sinks1 = {
-            recti::Sink("s1", recti::Point<int>(50, 50), 1.0),
-            recti::Sink("s2", recti::Point<int>(150, 50), 1.0)
-        };
-        recti::SkewAnalysis analysis1{
-            10.0, 10.0, 0.0, {10.0, 10.0}, 100, "LinearModel"
-        };
+        std::vector<recti::Sink> sinks1 = {recti::Sink("s1", recti::Point<int>(50, 50), 1.0),
+                                           recti::Sink("s2", recti::Point<int>(150, 50), 1.0)};
+        recti::SkewAnalysis analysis1{10.0, 10.0, 0.0, {10.0, 10.0}, 100, "LinearModel"};
 
         // Create second test tree
         auto tree2 = std::make_shared<recti::TreeNode>("root2", recti::Point<int>(50, 150));
-        std::vector<recti::Sink> sinks2 = {
-            recti::Sink("s1", recti::Point<int>(50, 150), 1.0),
-            recti::Sink("s2", recti::Point<int>(150, 150), 1.0)
-        };
-        recti::SkewAnalysis analysis2{
-            12.0, 11.0, 1.0, {11.0, 12.0}, 120, "ElmoreModel"
-        };
+        std::vector<recti::Sink> sinks2 = {recti::Sink("s1", recti::Point<int>(50, 150), 1.0),
+                                           recti::Sink("s2", recti::Point<int>(150, 150), 1.0)};
+        recti::SkewAnalysis analysis2{12.0, 11.0, 1.0, {11.0, 12.0}, 120, "ElmoreModel"};
 
         recti::TreeComparisonData tree_data1{tree1, sinks1, analysis1, "Linear Model"};
         recti::TreeComparisonData tree_data2{tree2, sinks2, analysis2, "Elmore Model"};
 
-        std::string svg_content = recti::create_comparison_visualization(
-            {tree_data1, tree_data2}, "test_two_comparison.svg"
-        );
+        std::string svg_content = recti::create_comparison_visualization({tree_data1, tree_data2},
+                                                                         "test_two_comparison.svg");
 
         CHECK_FALSE(svg_content.empty());
         CHECK(svg_content.find("<svg") != std::string::npos);
@@ -302,28 +266,23 @@ TEST_SUITE("Comparison Visualization Tests") {
 
     TEST_CASE("Delay Model Comparison") {
         // Create test data for delay model comparison
-        auto linear_tree = std::make_shared<recti::TreeNode>("linear_root", recti::Point<int>(100, 100));
-        auto elmore_tree = std::make_shared<recti::TreeNode>("elmore_root", recti::Point<int>(100, 100));
+        auto linear_tree
+            = std::make_shared<recti::TreeNode>("linear_root", recti::Point<int>(100, 100));
+        auto elmore_tree
+            = std::make_shared<recti::TreeNode>("elmore_root", recti::Point<int>(100, 100));
 
-        std::vector<recti::Sink> sinks = {
-            recti::Sink("s1", recti::Point<int>(50, 50), 1.0),
-            recti::Sink("s2", recti::Point<int>(150, 150), 1.0)
-        };
+        std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(50, 50), 1.0),
+                                          recti::Sink("s2", recti::Point<int>(150, 150), 1.0)};
 
-        recti::SkewAnalysis linear_analysis{
-            8.5, 8.5, 0.0, {8.5, 8.5}, 80, "LinearDelayCalculator"
-        };
+        recti::SkewAnalysis linear_analysis{8.5, 8.5, 0.0, {8.5, 8.5}, 80, "LinearDelayCalculator"};
 
-        recti::SkewAnalysis elmore_analysis{
-            9.2, 9.0, 0.2, {9.0, 9.2}, 95, "ElmoreDelayCalculator"
-        };
+        recti::SkewAnalysis elmore_analysis{9.2, 9.0, 0.2, {9.0, 9.2}, 95, "ElmoreDelayCalculator"};
 
         recti::TreeComparisonData linear_data{linear_tree, sinks, linear_analysis, ""};
         recti::TreeComparisonData elmore_data{elmore_tree, sinks, elmore_analysis, ""};
 
         std::string svg_content = recti::create_delay_model_comparison(
-            linear_data, elmore_data, "test_delay_model_comparison.svg"
-        );
+            linear_data, elmore_data, "test_delay_model_comparison.svg");
 
         CHECK_FALSE(svg_content.empty());
         CHECK(svg_content.find("<svg") != std::string::npos);
@@ -338,21 +297,17 @@ TEST_SUITE("Comparison Visualization Tests") {
     }
 
     TEST_CASE("Empty Comparison Data Throws") {
-        CHECK_THROWS_AS(
-            recti::create_comparison_visualization({}, "empty_test.svg"),
-            std::invalid_argument
-        );
+        CHECK_THROWS_AS(recti::create_comparison_visualization({}, "empty_test.svg"),
+                        std::invalid_argument);
     }
 }
 
 TEST_SUITE("Integration Tests with DME Algorithm") {
     TEST_CASE("Visualize DME Generated Tree") {
         // Create sinks
-        std::vector<recti::Sink> sinks = {
-            recti::Sink("s1", recti::Point<int>(0, 0), 1.0),
-            recti::Sink("s2", recti::Point<int>(100, 0), 1.0),
-            recti::Sink("s3", recti::Point<int>(50, 100), 1.0)
-        };
+        std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(0, 0), 1.0),
+                                          recti::Sink("s2", recti::Point<int>(100, 0), 1.0),
+                                          recti::Sink("s3", recti::Point<int>(50, 100), 1.0)};
 
         // Build clock tree using DME
         auto calculator = std::make_unique<recti::LinearDelayCalculator>(1.0, 1.0);
@@ -362,9 +317,8 @@ TEST_SUITE("Integration Tests with DME Algorithm") {
 
         // Visualize the tree
         recti::ClockTreeVisualizer visualizer;
-        std::string svg_content = visualizer.visualize_tree(
-            clock_tree, sinks, "test_dme_tree.svg", 800, 600, &analysis
-        );
+        std::string svg_content = visualizer.visualize_tree(clock_tree, sinks, "test_dme_tree.svg",
+                                                            800, 600, &analysis);
 
         // Basic checks
         CHECK_FALSE(svg_content.empty());
@@ -389,11 +343,9 @@ TEST_SUITE("Integration Tests with DME Algorithm") {
 
     TEST_CASE("Compare Linear vs Elmore Models") {
         // Create sinks
-        std::vector<recti::Sink> sinks = {
-            recti::Sink("s1", recti::Point<int>(10, 10), 1.0),
-            recti::Sink("s2", recti::Point<int>(90, 10), 1.0),
-            recti::Sink("s3", recti::Point<int>(50, 90), 1.0)
-        };
+        std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(10, 10), 1.0),
+                                          recti::Sink("s2", recti::Point<int>(90, 10), 1.0),
+                                          recti::Sink("s3", recti::Point<int>(50, 90), 1.0)};
 
         // Build trees with different delay models
         auto linear_calc = std::make_unique<recti::LinearDelayCalculator>(0.5, 0.2);
@@ -407,17 +359,12 @@ TEST_SUITE("Integration Tests with DME Algorithm") {
         auto elmore_analysis = dme_elmore.analyze_skew(elmore_tree);
 
         // Create comparison data
-        recti::TreeComparisonData linear_data{
-            linear_tree, sinks, linear_analysis, "Linear Model"
-        };
-        recti::TreeComparisonData elmore_data{
-            elmore_tree, sinks, elmore_analysis, "Elmore Model"
-        };
+        recti::TreeComparisonData linear_data{linear_tree, sinks, linear_analysis, "Linear Model"};
+        recti::TreeComparisonData elmore_data{elmore_tree, sinks, elmore_analysis, "Elmore Model"};
 
         // Create comparison visualization
         std::string svg_content = recti::create_comparison_visualization(
-            {linear_data, elmore_data}, "test_model_comparison.svg"
-        );
+            {linear_data, elmore_data}, "test_model_comparison.svg");
 
         CHECK_FALSE(svg_content.empty());
         CHECK(svg_content.find("Linear Model") != std::string::npos);
@@ -443,9 +390,7 @@ TEST_SUITE("Edge Cases and Error Handling") {
         recti::ClockTreeVisualizer visualizer;
 
         // Should not throw for empty tree
-        CHECK_NOTHROW(
-            visualizer.visualize_tree(empty_tree, empty_sinks, "test_empty_tree.svg")
-        );
+        CHECK_NOTHROW(visualizer.visualize_tree(empty_tree, empty_sinks, "test_empty_tree.svg"));
 
         // Cleanup if file was created
         if (std::filesystem::exists("test_empty_tree.svg")) {
@@ -461,16 +406,13 @@ TEST_SUITE("Edge Cases and Error Handling") {
         sink->parent = root;
         sink->wire_length = 10000;
 
-        std::vector<recti::Sink> sinks = {
-            recti::Sink("sink", recti::Point<int>(20000, 20000), 1.0)
-        };
+        std::vector<recti::Sink> sinks
+            = {recti::Sink("sink", recti::Point<int>(20000, 20000), 1.0)};
 
         recti::ClockTreeVisualizer visualizer;
 
         // Should handle large coordinates without issues
-        CHECK_NOTHROW(
-            visualizer.visualize_tree(root, sinks, "test_large_coords.svg", 800, 600)
-        );
+        CHECK_NOTHROW(visualizer.visualize_tree(root, sinks, "test_large_coords.svg", 800, 600));
 
         // Cleanup if file was created
         if (std::filesystem::exists("test_large_coords.svg")) {
@@ -480,25 +422,23 @@ TEST_SUITE("Edge Cases and Error Handling") {
 
     TEST_CASE("Duplicate Node Positions") {
         auto sink1 = std::make_shared<recti::TreeNode>("s1", recti::Point<int>(100, 100));
-        auto sink2 = std::make_shared<recti::TreeNode>("s2", recti::Point<int>(100, 100)); // Same position
-        auto root = std::make_shared<recti::TreeNode>("root", recti::Point<int>(100, 100)); // Also same
+        auto sink2 = std::make_shared<recti::TreeNode>(
+            "s2", recti::Point<int>(100, 100));  // Same position
+        auto root
+            = std::make_shared<recti::TreeNode>("root", recti::Point<int>(100, 100));  // Also same
 
         root->left = sink1;
         root->right = sink2;
         sink1->parent = root;
         sink2->parent = root;
 
-        std::vector<recti::Sink> sinks = {
-            recti::Sink("s1", recti::Point<int>(100, 100), 1.0),
-            recti::Sink("s2", recti::Point<int>(100, 100), 1.0)
-        };
+        std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(100, 100), 1.0),
+                                          recti::Sink("s2", recti::Point<int>(100, 100), 1.0)};
 
         recti::ClockTreeVisualizer visualizer;
 
         // Should handle duplicate positions
-        CHECK_NOTHROW(
-            visualizer.visualize_tree(root, sinks, "test_duplicate_positions.svg")
-        );
+        CHECK_NOTHROW(visualizer.visualize_tree(root, sinks, "test_duplicate_positions.svg"));
 
         // Cleanup if file was created
         if (std::filesystem::exists("test_duplicate_positions.svg")) {
@@ -546,7 +486,6 @@ TEST_CASE("Example Visualization Usage") {
         MESSAGE("Example visualization workflow completed successfully");
     }
 }
-
 
 // Test runner main function
 // int main(int argc, char** argv) {

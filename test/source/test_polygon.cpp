@@ -4,11 +4,11 @@
 #include <functional>       // for function
 #include <ldsgen/ilds.hpp>  // for VdCorput
 #include <ostream>
-#include <recti/polygon.hpp>  // for Polygon, create_ymono_polygon, create_xmono_polygon, etc.
-#include <recti/rpolygon.hpp>  // for RPolygon
-#include <recti/rpolygon_cut.hpp>  // for rpolygon_cut_convex, etc.
+#include <recti/polygon.hpp>        // for Polygon, create_ymono_polygon, create_xmono_polygon, etc.
+#include <recti/rpolygon.hpp>       // for RPolygon
+#include <recti/rpolygon_cut.hpp>   // for rpolygon_cut_convex, etc.
 #include <recti/rpolygon_hull.hpp>  // for rpolygon_make_convex_hull, etc.
-#include <vector>             // for vector
+#include <vector>                   // for vector
 
 #include "recti/point.hpp"  // for Point
 
@@ -189,28 +189,28 @@ TEST_CASE("Polygon convex decomposition - signed area preservation") {
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
-    
+
     // Verify the original polygon is not convex
     CHECK(!rpolygon_is_convex<int>(P));
-    
+
     // Perform convex decomposition
     const auto convex_pieces = rpolygon_cut_convex<int>(P, is_anticlockwise);
-    
+
     // Verify we have at least one piece
     CHECK(convex_pieces.size() > 0);
-    
+
     // Verify all pieces are convex
     for (const auto& piece : convex_pieces) {
         CHECK(rpolygon_is_convex<int>(piece));
     }
-    
+
     // Calculate sum of signed areas of all pieces
     int total_pieces_area = 0;
     for (const auto& piece : convex_pieces) {
         const auto piece_rpolygon = RPolygon<int>(piece);
         total_pieces_area += piece_rpolygon.signed_area();
     }
-    
+
     // Verify signed area preservation by comparing with the original RPolygon area
     const auto original_rpolygon = RPolygon<int>(P);
     const int original_rpolygon_area = original_rpolygon.signed_area();
@@ -227,28 +227,28 @@ TEST_CASE("Polygon explicit cut - signed area preservation") {
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
-    
+
     // First create convex hull
     const auto convex_hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
-    
+
     // Perform explicit decomposition
     const auto explicit_pieces = rpolygon_cut_explicit<int>(convex_hull, is_anticlockwise);
-    
+
     // Verify we have at least one piece
     CHECK(explicit_pieces.size() > 0);
-    
+
     // Verify all pieces are convex
     for (const auto& piece : explicit_pieces) {
         CHECK(rpolygon_is_convex<int>(piece));
     }
-    
+
     // Calculate sum of signed areas of all pieces
     int total_pieces_area = 0;
     for (const auto& piece : explicit_pieces) {
         const auto piece_rpolygon = RPolygon<int>(piece);
         total_pieces_area += piece_rpolygon.signed_area();
     }
-    
+
     // Verify signed area preservation
     const auto hull_rpolygon = RPolygon<int>(convex_hull);
     const int hull_area = hull_rpolygon.signed_area();
@@ -265,28 +265,28 @@ TEST_CASE("Polygon implicit cut - signed area preservation") {
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
-    
+
     // First create convex hull
     const auto convex_hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
-    
+
     // Perform implicit decomposition
     const auto implicit_pieces = rpolygon_cut_implicit<int>(convex_hull, is_anticlockwise);
-    
+
     // Verify we have at least one piece
     CHECK(implicit_pieces.size() > 0);
-    
+
     // Verify all pieces are convex
     for (const auto& piece : implicit_pieces) {
         CHECK(rpolygon_is_convex<int>(piece));
     }
-    
+
     // Calculate sum of signed areas of all pieces
     int total_pieces_area = 0;
     for (const auto& piece : implicit_pieces) {
         const auto piece_rpolygon = RPolygon<int>(piece);
         total_pieces_area += piece_rpolygon.signed_area();
     }
-    
+
     // Verify signed area preservation
     const auto hull_rpolygon = RPolygon<int>(convex_hull);
     const int hull_area = hull_rpolygon.signed_area();

@@ -232,8 +232,9 @@ namespace recti {
 
         // Use x-monotone as model
         // Lambda for comparing elements based on the provided direction function.
-        auto compare_by_direction
-            = [&dir](const auto& right_elem, const auto& left_elem) -> bool { return dir(right_elem) < dir(left_elem); };
+        auto compare_by_direction = [&dir](const auto& right_elem, const auto& left_elem) -> bool {
+            return dir(right_elem) < dir(left_elem);
+        };
         auto result = std::minmax_element(first, last, compare_by_direction);
         const auto leftmost = *result.first;
         const auto rightmost = *result.second;
@@ -270,7 +271,8 @@ namespace recti {
     template <typename FwIter> inline auto create_xmono_rpolygon(FwIter&& first, FwIter&& last)
         -> bool {
         return create_mono_rpolygon(
-            first, last, [](const auto& point) { return std::make_pair(point.xcoord(), point.ycoord()); },
+            first, last,
+            [](const auto& point) { return std::make_pair(point.xcoord(), point.ycoord()); },
             [](const auto& elem_a, const auto& elem_b) -> bool { return elem_a < elem_b; });
     }
 
@@ -288,7 +290,8 @@ namespace recti {
     template <typename FwIter> inline auto create_ymono_rpolygon(FwIter&& first, FwIter&& last)
         -> bool {
         return create_mono_rpolygon(
-            first, last, [](const auto& point) { return std::make_pair(point.ycoord(), point.xcoord()); },
+            first, last,
+            [](const auto& point) { return std::make_pair(point.ycoord(), point.xcoord()); },
             [](const auto& elem_a, const auto& elem_b) -> bool { return elem_a > elem_b; });
     }
 
@@ -328,10 +331,11 @@ namespace recti {
         auto max_pt = *result.second;
         auto delta_x = max_pt.xcoord() - min_pt.xcoord();
         auto delta_y = max_pt.ycoord() - min_pt.ycoord();
-        auto middle = std::partition(first, last, [&min_pt, &delta_x, &delta_y](const auto& elem) -> bool {
-            return delta_x * (elem.ycoord() - min_pt.ycoord())
-                   < (elem.xcoord() - min_pt.xcoord()) * delta_y;
-        });
+        auto middle
+            = std::partition(first, last, [&min_pt, &delta_x, &delta_y](const auto& elem) -> bool {
+                  return delta_x * (elem.ycoord() - min_pt.ycoord())
+                         < (elem.xcoord() - min_pt.xcoord()) * delta_y;
+              });
         auto max_pt1 = *std::max_element(first, middle, left);
         auto middle2 = std::partition(first, middle, [&max_pt1](const auto& elem) -> bool {
             return elem.ycoord() < max_pt1.ycoord();
@@ -371,34 +375,43 @@ namespace recti {
         using T = typename std::iterator_traits<FwIter>::value_type::value_type;
         assert(first != last);
 
-        auto dir_x = [](const auto& point) { return std::make_pair(point.xcoord(), point.ycoord()); };
-        auto dir_y = [](const auto& point) { return std::make_pair(point.ycoord(), point.xcoord()); };
+        auto dir_x
+            = [](const auto& point) { return std::make_pair(point.xcoord(), point.ycoord()); };
+        auto dir_y
+            = [](const auto& point) { return std::make_pair(point.ycoord(), point.xcoord()); };
 
-        auto max_point = *std::max_element(
-            first, last, [&dir_y](const auto& elem_a, const auto& elem_b) { return dir_y(elem_a) < dir_y(elem_b); });
-        auto min_point = *std::min_element(
-            first, last, [&dir_y](const auto& elem_a, const auto& elem_b) { return dir_y(elem_a) < dir_y(elem_b); });
+        auto max_point
+            = *std::max_element(first, last, [&dir_y](const auto& elem_a, const auto& elem_b) {
+                  return dir_y(elem_a) < dir_y(elem_b);
+              });
+        auto min_point
+            = *std::min_element(first, last, [&dir_y](const auto& elem_a, const auto& elem_b) {
+                  return dir_y(elem_a) < dir_y(elem_b);
+              });
         Vector2<T> vec = max_point - min_point;
 
         std::vector<typename std::iterator_traits<FwIter>::value_type> upper_chain_points,
             lower_chain_points;
-        auto middle = std::partition(
-            first, last, [&min_point, &vec](const auto& point) { return vec.cross(point - min_point) < 0; });
+        auto middle = std::partition(first, last, [&min_point, &vec](const auto& point) {
+            return vec.cross(point - min_point) < 0;
+        });
         upper_chain_points.assign(first, middle);
         lower_chain_points.assign(middle, last);
 
-        auto max_point1 = *std::max_element(
+        auto max_point1 = *std::max_element(upper_chain_points.begin(), upper_chain_points.end(),
+                                            [&dir_x](const auto& elem_a, const auto& elem_b) {
+                                                return dir_x(elem_a) < dir_x(elem_b);
+                                            });
+        auto middle2 = std::partition(
             upper_chain_points.begin(), upper_chain_points.end(),
-            [&dir_x](const auto& elem_a, const auto& elem_b) { return dir_x(elem_a) < dir_x(elem_b); });
-        auto middle2
-            = std::partition(upper_chain_points.begin(), upper_chain_points.end(),
-                             [&max_point1](const auto& point) { return point.ycoord() < max_point1.ycoord(); });
-        auto min_point2 = *std::min_element(
+            [&max_point1](const auto& point) { return point.ycoord() < max_point1.ycoord(); });
+        auto min_point2 = *std::min_element(lower_chain_points.begin(), lower_chain_points.end(),
+                                            [&dir_x](const auto& elem_a, const auto& elem_b) {
+                                                return dir_x(elem_a) < dir_x(elem_b);
+                                            });
+        auto middle3 = std::partition(
             lower_chain_points.begin(), lower_chain_points.end(),
-            [&dir_x](const auto& elem_a, const auto& elem_b) { return dir_x(elem_a) < dir_x(elem_b); });
-        auto middle3
-            = std::partition(lower_chain_points.begin(), lower_chain_points.end(),
-                             [&min_point2](const auto& point) { return point.ycoord() > min_point2.ycoord(); });
+            [&min_point2](const auto& point) { return point.ycoord() > min_point2.ycoord(); });
 
         std::vector<typename std::iterator_traits<FwIter>::value_type> segment_a_points,
             segment_b_points, segment_c_points, segment_d_points;
@@ -481,8 +494,9 @@ namespace recti {
         auto& v_min = rdll[min_index];
         auto& v_max = rdll[max_index];
 
-        auto violate = [&pointset, &dir](Dllink<size_t>* vertex_iterator, Dllink<size_t>* vertex_stop,
-                                         std::function<bool(T, T)> cmp) -> bool {
+        auto violate
+            = [&pointset, &dir](Dllink<size_t>* vertex_iterator, Dllink<size_t>* vertex_stop,
+                                std::function<bool(T, T)> cmp) -> bool {
             auto current = vertex_iterator;
             while (current != vertex_stop) {
                 auto next_vertex = current->next;
@@ -569,8 +583,8 @@ namespace recti {
      * is strictly outside the polygon, and an unspecified boolean value if the
      * point is on the boundary of the polygon.
      */
-    template <typename T>
-    inline auto point_in_rpolygon(std::span<const Point<T>> pointset, const Point<T>& query_point) -> bool {
+    template <typename T> inline auto point_in_rpolygon(std::span<const Point<T>> pointset,
+                                                        const Point<T>& query_point) -> bool {
         auto previous_point = pointset.back();
         const auto& query_y = query_point.ycoord();
         const auto& previous_y = previous_point.ycoord();
@@ -578,7 +592,8 @@ namespace recti {
         auto result = false;
         for (const auto& current_point : pointset) {
             const auto& current_y = current_point.ycoord();
-            if ((current_y <= query_y && query_y < previous_y) || (previous_y <= query_y && query_y < current_y)) {
+            if ((current_y <= query_y && query_y < previous_y)
+                || (previous_y <= query_y && query_y < current_y)) {
                 if (current_point.xcoord() > query_point.xcoord()) {
                     result = !result;
                 }
@@ -601,7 +616,8 @@ namespace recti {
     template <typename T> inline auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset)
         -> bool {
         const auto min_iterator = std::min_element(pointset.begin(), pointset.end());
-        const auto prev_iterator = min_iterator != pointset.begin() ? std::prev(min_iterator) : std::prev(pointset.end());
+        const auto prev_iterator = min_iterator != pointset.begin() ? std::prev(min_iterator)
+                                                                    : std::prev(pointset.end());
         return prev_iterator->ycoord() > min_iterator->ycoord();
     }
 }  // namespace recti

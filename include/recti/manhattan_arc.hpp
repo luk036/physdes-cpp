@@ -56,8 +56,7 @@ namespace recti {
          * @param[in] xcoord The x coordinate value.
          * @param[in] ycoord The y coordinate value.
          */
-        constexpr ManhattanArc(T1 xcoord, T2 ycoord)
-            : impl{std::move(xcoord), std::move(ycoord)} {}
+        constexpr ManhattanArc(T1 xcoord, T2 ycoord) : impl{std::move(xcoord), std::move(ycoord)} {}
 
         /**
          * @brief Construct a ManhattanArc from a Point.
@@ -94,8 +93,8 @@ namespace recti {
         /**
          * @brief Compares two `ManhattanArc` objects for equality.
          *
-         * This operator overload compares two `ManhattanArc` objects for equality. It returns `true` if
-         * the underlying `Point<T1, T2>` objects are equal, and `false` otherwise.
+         * This operator overload compares two `ManhattanArc` objects for equality. It returns
+         * `true` if the underlying `Point<T1, T2>` objects are equal, and `false` otherwise.
          *
          * @tparam U1 The type of the x-coordinate of the right-hand side `ManhattanArc`.
          * @tparam U2 The type of the y-coordinate of the right-hand side `ManhattanArc`.
@@ -112,8 +111,8 @@ namespace recti {
          *
          * Compares two `ManhattanArc` objects for inequality.
          *
-         * This operator overload compares two `ManhattanArc` objects for inequality. It returns `true`
-         * if the underlying `Point<T1, T2>` objects are not equal, and `false` otherwise.
+         * This operator overload compares two `ManhattanArc` objects for inequality. It returns
+         * `true` if the underlying `Point<T1, T2>` objects are not equal, and `false` otherwise.
          *
          * @tparam U1 The type of the x-coordinate of the right-hand side `ManhattanArc`.
          * @tparam U2 The type of the y-coordinate of the right-hand side `ManhattanArc`.
@@ -128,9 +127,9 @@ namespace recti {
         /**
          * @brief Check if two `ManhattanArc` objects overlap.
          *
-         * This function checks if the x and y coordinates of the current `ManhattanArc` object overlap
-         * with the x and y coordinates of the provided `ManhattanArc` object `other`. The overlap is
-         * determined by checking if the ranges of the x and y coordinates intersect.
+         * This function checks if the x and y coordinates of the current `ManhattanArc` object
+         * overlap with the x and y coordinates of the provided `ManhattanArc` object `other`. The
+         * overlap is determined by checking if the ranges of the x and y coordinates intersect.
          *
          * @tparam U1 The type of the x and y coordinates of the current `ManhattanArc` object.
          * @tparam U2 The type of the x and y coordinates of the `ManhattanArc` object `other`.
@@ -153,16 +152,17 @@ namespace recti {
          *
          * @tparam U1 The type of the x and y coordinates of the current `ManhattanArc` object.
          * @tparam U2 The type of the x and y coordinates of the `ManhattanArc` object `other`.
-         * @param[in] other The `ManhattanArc` object to intersect with the current `ManhattanArc` object.
-         * @return A new `ManhattanArc` object representing the intersection of the two input `ManhattanArc`
-         * objects.
+         * @param[in] other The `ManhattanArc` object to intersect with the current `ManhattanArc`
+         * object.
+         * @return A new `ManhattanArc` object representing the intersection of the two input
+         * `ManhattanArc` objects.
          */
         template <typename U1, typename U2>  //
         constexpr auto intersect_with(const ManhattanArc<U1, U2>& other) const {
             auto xcoord = intersection(this->impl.xcoord(), other.impl.xcoord());
             auto ycoord = intersection(this->impl.ycoord(), other.impl.ycoord());
             return ManhattanArc<decltype(xcoord), decltype(ycoord)>{std::move(xcoord),
-                                                                std::move(ycoord)};
+                                                                    std::move(ycoord)};
         }
 
         /**
@@ -170,9 +170,9 @@ namespace recti {
          * objects.
          *
          * This function calculates the maximum distance between the x and y coordinates of the
-         * current `ManhattanArc` object and the provided `ManhattanArc` object `other`. The distance is
-         * computed by taking the maximum of the distances between the x coordinates and the
-         * distances between the y coordinates of the two `ManhattanArc` objects.
+         * current `ManhattanArc` object and the provided `ManhattanArc` object `other`. The
+         * distance is computed by taking the maximum of the distances between the x coordinates and
+         * the distances between the y coordinates of the two `ManhattanArc` objects.
          *
          * @tparam U1 The type of the x and y coordinates of the current `ManhattanArc` object.
          * @tparam U2 The type of the x and y coordinates of the `ManhattanArc` object `other`.
@@ -188,9 +188,9 @@ namespace recti {
         /**
          * @brief Enlarge the `ManhattanArc` object by a given scale factor.
          *
-         * This function creates a new `ManhattanArc` object by enlarging the x and y coordinates of the
-         * current `ManhattanArc` object by the given scale factor `alpha`. The resulting `ManhattanArc`
-         * object will have larger x and y coordinate ranges.
+         * This function creates a new `ManhattanArc` object by enlarging the x and y coordinates of
+         * the current `ManhattanArc` object by the given scale factor `alpha`. The resulting
+         * `ManhattanArc` object will have larger x and y coordinate ranges.
          *
          * @tparam R The type of the scale factor `alpha`.
          * @param[in] alpha The scale factor to enlarge the `ManhattanArc` object by.
@@ -201,7 +201,7 @@ namespace recti {
             auto xcoord = enlarge(this->impl.xcoord(), alpha);
             auto ycoord = enlarge(this->impl.ycoord(), alpha);
             return ManhattanArc<decltype(xcoord), decltype(ycoord)>{std::move(xcoord),
-                                                                std::move(ycoord)};
+                                                                    std::move(ycoord)};
         }
 
         /**
@@ -277,17 +277,17 @@ namespace recti {
         /**
          * @brief Overload the stream insertion operator `<<` to output a `ManhattanArc` object.
          *
-         * This function overloads the stream insertion operator `<<` to output a `ManhattanArc` object
-         * in the format `"/{xcoord}, {ycoord}/"`, where `{xcoord}` and `{ycoord}` are the x and y
-         * coordinates of the `ManhattanArc` object, respectively.
+         * This function overloads the stream insertion operator `<<` to output a `ManhattanArc`
+         * object in the format `"/{xcoord}, {ycoord}/"`, where `{xcoord}` and `{ycoord}` are the x
+         * and y coordinates of the `ManhattanArc` object, respectively.
          *
          * @tparam Stream The type of the output stream.
          * @param[out] out The output stream to write the `ManhattanArc` object to.
          * @param[in] manhattan_arc The `ManhattanArc` object to be written to the output stream.
          * @return The modified output stream.
          */
-        template <class Stream> friend auto operator<<(Stream& out, const ManhattanArc& manhattan_arc)
-            -> Stream& {
+        template <class Stream>
+        friend auto operator<<(Stream& out, const ManhattanArc& manhattan_arc) -> Stream& {
             out << "/" << manhattan_arc.impl.xcoord() << ", " << manhattan_arc.impl.ycoord() << "/";
             return out;
         }
