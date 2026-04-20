@@ -57,7 +57,7 @@ endif()
 if(NOT TEST_INSTALLED_VERSION)
   if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     target_compile_options(
-      Recti PUBLIC -Wall -Wpedantic -Wextra -Werror -Wno-deprecated-declarations
+      Recti PUBLIC -Wall -Wpedantic -Wextra -Werror -Wno-deprecated-declarations -Wno-deprecated-literal-operator
     )
   elseif(MSVC)
     target_compile_options(Recti PUBLIC /W4 /WX /wd4819 /wd4996)
