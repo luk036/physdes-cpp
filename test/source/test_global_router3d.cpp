@@ -14,33 +14,30 @@
 
 using namespace recti;
 
-namespace {
-    using namespace recti;
-    // Helper function to generate a set of 3D points for testing
-    auto generate_3d_points(size_t num_terminals, unsigned int seed)
-        -> std::pair<Point<Point<int, int>, int>, std::vector<Point<Point<int, int>, int>>> {
-        constexpr int scale_z = 100;
+// Helper function to generate a set of 3D points for testing
+auto generate_3d_points(size_t num_terminals, unsigned int seed)
+    -> std::pair<Point<Point<int, int>, int>, std::vector<Point<Point<int, int>, int>>> {
+    constexpr int scale_z = 100;
 
-        ildsgen::VdCorput hgenX(3, 7);
-        ildsgen::VdCorput hgenY(2, 11);
-        hgenX.reseed(seed);
-        hgenY.reseed(seed);
+    ildsgen::VdCorput hgenX(3, 7);
+    ildsgen::VdCorput hgenY(2, 11);
+    hgenX.reseed(seed);
+    hgenY.reseed(seed);
 
-        using IntPoint3d = Point<Point<int, int>, int>;
+    using IntPoint3d = Point<Point<int, int>, int>;
 
-        std::vector<IntPoint3d> terminals;
-        terminals.reserve(num_terminals);
-        for (size_t i = 0; i < num_terminals; ++i) {
-            terminals.emplace_back(
-                Point{Point{static_cast<int>(hgenX.pop()), (static_cast<int>(i) % 4) * scale_z},
-                      static_cast<int>(hgenY.pop())});
-        }
-        IntPoint3d source(
-            Point{Point{static_cast<int>(hgenX.pop()), 0}, static_cast<int>(hgenY.pop())});
-
-        return {source, terminals};
+    std::vector<IntPoint3d> terminals;
+    terminals.reserve(num_terminals);
+    for (size_t i = 0; i < num_terminals; ++i) {
+        terminals.emplace_back(
+            Point{Point{static_cast<int>(hgenX.pop()), (static_cast<int>(i) % 4) * scale_z},
+                  static_cast<int>(hgenY.pop())});
     }
-}  // namespace
+    IntPoint3d source(
+        Point{Point{static_cast<int>(hgenX.pop()), 0}, static_cast<int>(hgenY.pop())});
+
+    return {source, terminals};
+}
 
 TEST_SUITE("RoutingAlgorithms3d") {
     TEST_CASE("Test routing algorithms in 3D") {

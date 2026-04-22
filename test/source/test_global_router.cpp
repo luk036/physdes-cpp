@@ -11,29 +11,24 @@
 
 #include "TestGlobalRouter.h"
 
-namespace {
-    using namespace recti;
-    // Helper function to generate a set of points for testing
-    auto generate_points(size_t num_terminals, unsigned int seed)
-        -> std::pair<Point<int, int>, std::vector<Point<int, int>>> {
-        ildsgen::VdCorput hgenX(3, 7);
-        ildsgen::VdCorput hgenY(2, 11);
+using namespace recti;
 
-        hgenX.reseed(seed);
-        hgenY.reseed(seed);
-
-        using IntPoint = Point<int, int>;
-
-        std::vector<IntPoint> terminals;
-        terminals.reserve(num_terminals);
-        for (size_t i = 0; i < num_terminals; ++i) {
-            terminals.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
-        }
-        IntPoint source(static_cast<int>(hgenX.pop()), static_cast<int>(hgenX.pop()));
-
-        return {source, terminals};
+// Helper function to generate a set of points for testing
+auto generate_points(size_t num_terminals, unsigned int seed)
+    -> std::pair<Point<int, int>, std::vector<Point<int, int>>> {
+    ildsgen::VdCorput hgenX(3, 7);
+    ildsgen::VdCorput hgenY(2, 11);
+    hgenX.reseed(seed);
+    hgenY.reseed(seed);
+    using IntPoint = Point<int, int>;
+    std::vector<IntPoint> terminals;
+    terminals.reserve(num_terminals);
+    for (size_t i = 0; i < num_terminals; ++i) {
+        terminals.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
-}  // namespace
+    IntPoint source(static_cast<int>(hgenX.pop()), static_cast<int>(hgenX.pop()));
+    return {source, terminals};
+}
 
 TEST_SUITE("RoutingAlgorithms") {
     TEST_CASE("Test routing algorithms") {

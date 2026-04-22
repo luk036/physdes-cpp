@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-using namespace recti;
+namespace recti {
 
 /**
  * @brief Stream insertion operator for RoutingNode
@@ -70,7 +70,7 @@ template <typename IntPoint> void GlobalRoutingTree<IntPoint>::visualize_tree() 
     std::cout << "Global Routing Tree Structure:\n";
     std::cout << "========================================\n";
     std::cout << this->get_tree_structure();
-    std::cout << "Total wirelength: " << this->calculate_wirelength() << "\n";
+    std::cout << "Total wirelength: " << this->calculate_total_wirelength() << "\n";
     std::cout << "Total nodes: " << this->nodes.size() << "\n";
     std::cout << "Terminals: " << this->get_all_terminals().size() << "\n";
     std::cout << "Steiner points: " << this->get_all_steiner_nodes().size() << "\n";
@@ -236,3 +236,5 @@ template <> void save_routing_tree3d_svg(
     file_stream << svg_content;
     std::cout << "Routing tree (3d) saved to " << filename << "\n";
 }
+
+}  // namespace recti

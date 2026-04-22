@@ -10,27 +10,22 @@
 #include <string>
 #include <vector>
 
-namespace {
-    using namespace recti;
+using namespace recti;
 
-    // Helper function to generate a set of points for testing
-    auto generate_random_points(size_t num_terminals, int max_coord)
-        -> std::pair<Point<int, int>, std::vector<Point<int, int>>> {
-        std::mt19937 gen(12345);  // for reproducible results
-        std::uniform_int_distribution<> distrib_coord(0, max_coord);
-
-        using IntPoint = Point<int, int>;
-
-        std::vector<IntPoint> terminals;
-        terminals.reserve(num_terminals);
-        for (size_t i = 0; i < num_terminals; ++i) {
-            terminals.emplace_back(distrib_coord(gen), distrib_coord(gen));
-        }
-        IntPoint source(distrib_coord(gen), distrib_coord(gen));
-
-        return {source, terminals};
+// Helper function to generate a set of points for testing
+auto generate_random_points(size_t num_terminals, int max_coord)
+    -> std::pair<Point<int, int>, std::vector<Point<int, int>>> {
+    std::mt19937 gen(12345);  // for reproducible results
+    std::uniform_int_distribution<> distrib_coord(0, max_coord);
+    using IntPoint = Point<int, int>;
+    std::vector<IntPoint> terminals;
+    terminals.reserve(num_terminals);
+    for (size_t i = 0; i < num_terminals; ++i) {
+        terminals.emplace_back(distrib_coord(gen), distrib_coord(gen));
     }
-}  // namespace
+    IntPoint source(distrib_coord(gen), distrib_coord(gen));
+    return {source, terminals};
+}
 
 TEST_SUITE("GlobalRouter Stress Tests") {
     TEST_CASE("Large number of terminals") {

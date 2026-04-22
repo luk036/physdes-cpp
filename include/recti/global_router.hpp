@@ -23,6 +23,9 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include "logger.hpp"
+
+namespace recti {
 
 /**
  * @brief Defines the type of a routing node.
@@ -191,13 +194,8 @@ template <typename IntPoint> class GlobalRoutingTree {
         return nearest;
     }
 
-    auto _find_nearest_insertion(const IntPoint& point,
-                                 std::optional<std::vector<Keepout>> keepouts = std::nullopt)
-        -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*> {
-        return _find_nearest_insertion_with_constraints(point, std::nullopt, keepouts);
-    }
 
-    auto _find_nearest_insertion_with_constraints(const IntPoint& pt,
+    auto _find_nearest_insertion_with_constraints_old(const IntPoint& pt,
                                                   int allowed_wirelength = std::numeric_limits<int>::max(),
                                                   std::optional<std::vector<Keepout>> keepouts
                                                   = std::nullopt)
@@ -223,10 +221,12 @@ template <typename IntPoint> class GlobalRoutingTree {
                         for (const auto& keepout : *keepouts) {
                             if (keepout.contains(nearest_pt)) {
                                 block = true;
+                                break;
                             }
                             if (keepout.blocks(path1) || keepout.blocks(path2)
                                 || keepout.blocks(path3)) {
                                 block = true;
+                                break;
                             }
                         }
                     }
@@ -251,7 +251,91 @@ template <typename IntPoint> class GlobalRoutingTree {
         return {parent_node, nearest_node};
     }
 
-auto _insert_terminal_impl(const IntPoint& point, int allowed_wirelength = std::numeric_limits<int>::max(),
+    auto _find_nearest_insertion_with_constraints(const IntPoint& pt,
+                                                  int allowed_wirelength = std::numeric_limits<int>::max(),
+                                                  std::optional<std::vector<Keepout>> keepouts
+                                                  = std::nullopt)
+        -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*> {
+        RoutingNode<IntPoint>* parent_node = nullptr;
+        RoutingNode<IntPoint>* nearest_node = &this->source_node;
+        int min_distance = this->worst_wirelength;
+        // int min_distance = std::numeric_limits<int>::max();
+        bool valid_found = false;
+
+        std::function<void(RoutingNode<IntPoint>*)> traverse = [&](RoutingNode<IntPoint>* node) {
+            for (auto* child : node->children) {
+                auto possible_path = node->pt.hull_with(child->pt);
+                auto distance = possible_path.min_dist_with(pt);
+                auto nearest_pt = possible_path.nearest_to(pt);
+
+                if (keepouts.has_value()) {
+                    bool block = false;
+                    auto path1 = nearest_pt.hull_with(pt);
+                    auto path2 = nearest_pt.hull_with(node->pt);
+                    auto path3 = nearest_pt.hull_with(child->pt);
+                    for (const auto& keepout : *keepouts) {
+                        if (keepout.contains(nearest_pt)) {
+                            block = true;
+                            break;
+                        }
+                        if (keepout.blocks(path1) || keepout.blocks(path2)
+                            || keepout.blocks(path3)) {
+                            block = true;
+                            break;
+                        }
+                    }
+                    if (block) {
+                        continue;
+                    }
+                }
+
+                int path_length
+                    = node->path_length + node->pt.min_dist_with(nearest_pt) + distance;
+                bool update = false;
+                if (path_length <= allowed_wirelength) {
+                    if (valid_found) {
+                        if (distance < min_distance) {
+                            update  = true;                        
+                        }
+                    } else {
+                        valid_found = true;
+                        update = true;
+                    }
+                } else {
+                    if (!valid_found) {
+                        // don't care allowed_wirelength if we haven't found any valid point yet
+                        if (path_length <= this->worst_wirelength && distance < min_distance) {
+                            update = true;
+                        }
+                    }
+                }
+
+                if (update) {
+                    min_distance = distance;
+                    if (nearest_pt == node->pt) {
+                        nearest_node = node;
+                        parent_node = nullptr;
+                    } else if (nearest_pt == child->pt) {
+                        nearest_node = child;
+                        parent_node = nullptr;
+                    } else {
+                        parent_node = node;
+                        nearest_node = child;
+                    }
+                }
+                traverse(child);
+            }
+        };
+
+        traverse(&this->source_node);
+        if (!valid_found) {
+            log_with_spdlog("Warning: No valid insertion point found within allowed wirelength. "
+                         "Consider increasing the allowed wirelength or relaxing keepout constraints.");
+        }
+        return {parent_node, nearest_node};
+    }
+
+    auto _insert_terminal_impl(const IntPoint& point, int allowed_wirelength = std::numeric_limits<int>::max(),
                                std::optional<std::vector<Keepout>> keepouts = std::nullopt) -> void {
         std::string terminal_id = "terminal_" + std::to_string(this->next_terminal_id++);
         auto terminal_ptr
@@ -292,6 +376,7 @@ auto _insert_terminal_impl(const IntPoint& point, int allowed_wirelength = std::
         nodes;  ///< Map from node ID to RoutingNode<IntPoint> pointer.
     std::vector<std::unique_ptr<RoutingNode<IntPoint>>>
         owned_nodes;  ///< Stores unique_ptrs for memory management of nodes.
+    int worst_wirelength = 0;  ///< The worst-case wirelength constraint for routing (used in constrained routing).
 
     /**
      * @brief Constructs a new GlobalRoutingTree with a specified source position.
@@ -447,7 +532,7 @@ auto _insert_terminal_impl(const IntPoint& point, int allowed_wirelength = std::
      * @brief Calculates the total wirelength of the routing tree.
      * @return The total wirelength as an integer.
      */
-    auto calculate_wirelength() const -> int {
+    auto calculate_total_wirelength() const -> int {
         int total = 0;
         std::function<void(const RoutingNode<IntPoint>*)> traverse
             = [&](const RoutingNode<IntPoint>* current_node) {
@@ -458,6 +543,25 @@ auto _insert_terminal_impl(const IntPoint& point, int allowed_wirelength = std::
               };
         traverse(&source_node);
         return total;
+    }
+
+    /**
+     * @brief Calculates the worst wirelength of the routing tree.
+     * @return The worst wirelength as an integer.
+     */
+    auto calculate_worst_wirelength() const -> int {
+        int worst_length = 0;
+        std::function<void(const RoutingNode<IntPoint>*)> traverse
+            = [&](const RoutingNode<IntPoint>* current_node) {
+                  for (auto child : current_node->children) {
+                      auto length = traverse(child);
+                      worst_length = std::max(worst_length, length + current_node->manhattan_distance(child));
+                  }
+                  return worst_length;
+              };
+
+        auto length = traverse(&source_node);
+        return length;
     }
 
     /**
@@ -621,6 +725,7 @@ template <typename IntPoint> class GlobalRouter {
      * @brief Routes terminals, potentially inserting Steiner nodes to optimize connections.
      */
     void route_with_steiners() {
+        this->tree.worst_wirelength = this->worst_wirelength;  // Store the allowed wirelength in the tree for reference.q
         for (const auto& terminal : this->terminal_positions) {
             this->tree.insert_terminal_with_steiner(terminal, this->keepouts);
         }
@@ -632,6 +737,7 @@ template <typename IntPoint> class GlobalRouter {
      */
     void route_with_constraints(double multiplier = 1.0) {
         int allowed_wirelength = static_cast<int>(std::round(this->worst_wirelength * multiplier));
+        this->tree.worst_wirelength = this->worst_wirelength;  // Store the allowed wirelength in the tree for reference.q
         for (const auto& terminal : this->terminal_positions) {
             this->tree.insert_terminal_with_constraints(terminal, allowed_wirelength,
                                                         this->keepouts);
@@ -669,3 +775,5 @@ template <typename IntPoint> extern void save_routing_tree3d_svg(
     = std::nullopt,
     const int scale_z = 100, const std::string filename = "routing_tree3d.svg",
     const int width = 800, const int height = 600);
+
+}  // namespace recti

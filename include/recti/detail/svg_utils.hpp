@@ -252,7 +252,7 @@ namespace recti::detail {
             << tree.get_all_steiner_nodes().size() << "</text>\n";
         svg << "<text x=\"20\" y=\"" << stats_y + 60
             << "\" font-family=\"Arial\" font-size=\"9\">Wirelength: "
-            << tree.calculate_wirelength() << "</text>\n";
+            << tree.calculate_total_wirelength() << "</text>\n";
     }
 
 }  // namespace recti::detail
