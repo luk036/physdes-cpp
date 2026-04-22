@@ -198,7 +198,7 @@ template <typename IntPoint> class GlobalRoutingTree {
     }
 
     auto _find_nearest_insertion_with_constraints(const IntPoint& pt,
-                                                  std::optional<int> allowed_wirelength,
+                                                  int allowed_wirelength = std::numeric_limits<int>::max(),
                                                   std::optional<std::vector<Keepout>> keepouts
                                                   = std::nullopt)
         -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*> {
@@ -211,11 +211,9 @@ template <typename IntPoint> class GlobalRoutingTree {
                 auto possible_path = node->pt.hull_with(child->pt);
                 int distance = possible_path.min_dist_with(pt);
                 auto nearest_pt = possible_path.nearest_to(pt);
-                if (allowed_wirelength) {
-                    int path_length
-                        = node->path_length + node->pt.min_dist_with(nearest_pt) + distance;
-                    if (path_length > *allowed_wirelength) continue;
-                }
+                int path_length
+                    = node->path_length + node->pt.min_dist_with(nearest_pt) + distance;
+                if (path_length > allowed_wirelength) continue;
                 if (distance < min_distance) {
                     bool block = false;
                     if (keepouts.has_value()) {
@@ -253,8 +251,8 @@ template <typename IntPoint> class GlobalRoutingTree {
         return {parent_node, nearest_node};
     }
 
-    auto _insert_terminal_impl(const IntPoint& point, std::optional<int> allowed_wirelength,
-                               std::optional<std::vector<Keepout>> keepouts) -> void {
+auto _insert_terminal_impl(const IntPoint& point, int allowed_wirelength = std::numeric_limits<int>::max(),
+                               std::optional<std::vector<Keepout>> keepouts = std::nullopt) -> void {
         std::string terminal_id = "terminal_" + std::to_string(this->next_terminal_id++);
         auto terminal_ptr
             = std::make_unique<RoutingNode<IntPoint>>(terminal_id, NodeType::TERMINAL, point);
@@ -430,7 +428,7 @@ template <typename IntPoint> class GlobalRoutingTree {
     auto insert_terminal_with_steiner(const IntPoint& point,
                                       std::optional<std::vector<Keepout>> keepouts = std::nullopt)
         -> void {
-        _insert_terminal_impl(point, std::nullopt, keepouts);
+        _insert_terminal_impl(point, std::numeric_limits<int>::max(), keepouts);
     }
 
     /**

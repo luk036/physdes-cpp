@@ -5,7 +5,7 @@
 - **Name**: Recti (Physical Design Library)
 - **Type**: Modern C++ library with CMake build system
 - **C++ Standard**: C++20
-- **Test Framework**: doctest + RapidCheck (property-based)
+- **Test Framework**: doctest + RapidCheck (property-based testing)
 
 ## Directory Structure
 
@@ -16,6 +16,8 @@ physdes-cpp/
 ├── test/source/        # Unit tests (*.cpp)
 ├── standalone/         # Standalone executable
 ├── cmake/              # CMake modules
+├── all/                # Combined build (all targets)
+├── bench/              # Benchmarks
 └── .github/workflows/  # CI pipelines
 ```
 
@@ -28,27 +30,36 @@ cmake -S all -B build
 cmake --build build
 ```
 
-### Run Test Suite
+### Test Suite
 
 ```bash
 cmake -S test -B build/test
 cmake --build build/test
 
-# Option 1: Via CTest
+# Via CTest
 CTEST_OUTPUT_ON_FAILURE=1 cmake --build build/test --target test
 
-# Option 2: Direct executable
+# Direct executable
 ./build/test/RectiTests
-# Run specific test:
-./build/test/RectiTests -tc="Vector2"  # Run tests matching "Vector2"
 ```
 
-### Run Single Test Case
+### Running Single Tests (doctest filters)
 
 ```bash
-./build/test/RectiTests -tc="test_case_name"
-./build/test/RectiTests -ts="test_suite_name"
-./build/test/RectiTests -tc="*" -ts="test_suite_name"  # All cases in suite
+# Run specific test case (exact match)
+./build/test/RectiTests -tc="Vector2.DefaultConstructor"
+
+# Run tests matching pattern (wildcard)
+./build/test/RectiTests -tc="Vector2*"       # All Vector2 tests
+./build/test/RectiTests -tc="*Constructor*"   # Any constructor tests
+
+# Run test suite
+./build/test/RectiTests -ts="Vector2"         # All cases in Vector2 suite
+./build/test/RectiTests -tc="*" -ts="Vector2" # Explicit suite+wildcard
+
+# List available tests without running
+./build/test/RectiTests -ltc                    # List test cases
+./build/test/RectiTests -lts                   # List test suites
 ```
 
 ### Standalone Executable
@@ -59,7 +70,7 @@ cmake --build build/standalone
 ./build/standalone/Recti --help
 ```
 
-### Code Formatting
+### Code Formatting (C++ and CMake)
 
 ```bash
 # View changes (dry-run)
@@ -68,7 +79,7 @@ cmake --build build/test --target format
 # Apply fixes
 cmake --build build/test --target fix-format
 
-# Format dependencies (pip):
+# Dependencies (pip)
 pip install clang-format==18.1.2 cmake_format==0.6.13 pyyaml
 ```
 
@@ -98,20 +109,22 @@ cmake -S test -B build/test -DUSE_STATIC_ANALYZER='clang-tidy;cppcheck'
 
 ### Formatting (`.clang-format`)
 
-- **Base Style**: Google
-- **Column Limit**: 100
-- **Indent Width**: 4
-- **Brace Style**: Attach
-- **Namespace Indentation**: All
-- **Always Break**: Before binary operators, ternary operators
-- **Include Sorting**: Regroup (alphabetically within groups)
+| Setting | Value |
+|---------|-------|
+| Base Style | Google |
+| Column Limit | 100 |
+| Indent Width | 4 |
+| Brace Style | Attach |
+| Namespace Indentation | All |
+| Break Before | Binary operators, ternary operators |
+| Include Sorting | Regroup (alphabetically within groups) |
 
 ### Naming Conventions
 
 | Element | Convention | Example |
 |---------|------------|---------|
 | Files | snake_case | `vector2.hpp`, `global_router.cpp` |
-| Classes | PascalCase | `class Vector2`, `class Rpolygon` |
+| Classes | PascalCase | `class Vector2`, `class RPolygon` |
 | Functions/Methods | camelCase | `getX()`, `computeDistance()` |
 | Member Variables | underscore prefix | `_x`, `_y` |
 | Constants | UPPER_SNAKE_CASE | `MAX_BUFFER_SIZE` |
@@ -119,10 +132,10 @@ cmake -S test -B build/test -DUSE_STATIC_ANALYZER='clang-tidy;cppcheck'
 
 ### Include Order
 
-1. Corresponding header (if implementation file)
+1. Corresponding header (implementation file)
 2. Local headers (`#include "..."`)
 3. C++ standard library (`#include <...>`)
-4. External libraries (from CPM)
+4. External libraries (CPM)
 
 ```cpp
 #include "vector2.hpp"           // Local
@@ -130,8 +143,8 @@ cmake -S test -B build/test -DUSE_STATIC_ANALYZER='clang-tidy;cppcheck'
 #include <vector>               // C++ STL
 #include <algorithm>             // C++ STL
 
-#include <doctest/doctest.h>   // External
-#include <fmt/core.h>           // External (fmt)
+#include <doctest/doctest.h>   // External (CPM)
+#include <fmt/core.h>           // External (CPM)
 ```
 
 ### Compiler Flags
@@ -141,17 +154,31 @@ cmake -S test -B build/test -DUSE_STATIC_ANALYZER='clang-tidy;cppcheck'
 
 ### Error Handling
 
-- Prefer `noexcept` specifiers on functions that cannot throw
+- Use `noexcept` on functions that cannot throw
+- Prefer `std::optional<T>` in headers instead of exceptions
 - Use `std::runtime_error` for recoverable runtime errors
-- Avoid exceptions in headers where possible - return `std::optional<T>` instead
-- Use assertions (`assert()`) for invariants that MUST hold
+- Use `assert()` for invariants that MUST hold (debug builds)
+
+```cpp
+// Good: Return optional for failure cases in headers
+auto divide(int a, int b) const -> std::optional<int> {
+    if (b == 0) return std::nullopt;
+    return a / b;
+}
+
+// Good: Use assertions for invariants
+auto Vector2::normalize() -> void {
+    assert(_magnitude > 0 && "Cannot normalize zero vector");
+    // ...
+}
+```
 
 ### Type Annotations
 
-- Use trailing return type syntax where cleaner: `auto foo() const -> int`
-- Prefer `const` correctness - mark members `const` when possible
+- Prefer trailing return type: `auto foo() const -> int`
+- Mark members `const` when possible
 - Use `constexpr` for compile-time evaluation
-- Avoid raw pointers - prefer `std::unique_ptr`, `std::shared_ptr`
+- Prefer `std::unique_ptr` / `std::shared_ptr` over raw pointers
 
 ### Testing Patterns (doctest)
 
@@ -166,12 +193,30 @@ TEST_CASE("Feature Description") {
 }
 ```
 
-### Key Dependencies (CPM.cmake)
+### RapidCheck (Property-Based Testing)
 
-- `doctest@2.4.11` - Testing framework
-- `rapidcheck` - Property-based testing (master branch)
-- `PackageProject.cmake@1.8.0` - Installable targets
-- `Format.cmake@1.7.3` - Code formatting
+```cpp
+#ifdef RAPIDCHECK_H
+#include <rapidcheck.h>
+
+TEST_CASE("Vector2 operations") {
+    rc::prop("addition is commutative", []() {
+        Vector2 a = *rc::gen::inRange(-100, 100);
+        Vector2 b = *rc::gen::inRange(-100, 100);
+        RC_ASSERT(a + b == b + a);
+    });
+}
+#endif
+```
+
+## Key Dependencies (CPM.cmake)
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| doctest | 2.4.11 | Testing framework |
+| rapidcheck | master | Property-based testing |
+| PackageProject.cmake | 1.8.0 | Installable targets |
+| Format.cmake | 1.7.3 | Code formatting |
 
 ## Relevant Files
 
@@ -180,3 +225,4 @@ TEST_CASE("Feature Description") {
 - Main header: `include/recti/recti.hpp`
 - Sample header: `include/recti/vector2.hpp`
 - Sample test: `test/source/test_vector2.cpp`
+- .clang-format: `.clang-format`

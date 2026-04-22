@@ -4,3 +4,15 @@
 [2026-04-08 10:24:32.394] [file_logger] [info] Recti message: Simple test message 1
 [2026-04-08 10:24:32.395] [file_logger] [info] Recti message: Simple test message 2
 [2026-04-08 10:24:32.396] [file_logger] [info] Recti message: Simple test message 3
+[2026-04-22 11:19:06.013] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-22 11:19:06.021] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-22 11:19:06.124] [file_logger] [info] Recti message: Warning: Right node needs elongation: extend_left < 0  => extend_left set to 0
+[2026-04-22 11:19:06.126] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-22 11:19:06.159] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-22 11:19:06.161] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-22 11:19:06.162] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-22 11:19:06.164] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-22 11:19:06.166] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-22 11:19:06.167] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-22 11:19:06.169] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-22 11:19:06.171] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
