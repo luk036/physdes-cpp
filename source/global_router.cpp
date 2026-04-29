@@ -189,12 +189,6 @@ auto GlobalRoutingTree<IntPoint>::_insert_terminal_impl(const IntPoint& point, i
     }
 }
 
-template
-class GlobalRoutingTree<Point<int, int>>;
-
-template
-class GlobalRoutingTree<Point<Point<int, int>, int>>;
-
 template <typename IntPoint>
 GlobalRouter<IntPoint>::GlobalRouter(const IntPoint& source_pos,
                                      std::vector<IntPoint> terminal_positions,
@@ -603,6 +597,8 @@ void GlobalRoutingTree<IntPoint>::optimize_steiner_points() {
     }
 }
 
+template class GlobalRoutingTree<Point<int, int>>;
+template class GlobalRoutingTree<Point<Point<int, int>, int>>;
 template class GlobalRouter<Point<int, int>>;
 template class GlobalRouter<Point<Point<int, int>, int>>;
 
