@@ -204,46 +204,7 @@ namespace recti {
          *         and the resulting delay at the tapping point.
          */
         std::pair<int, double> calculate_tapping_point(TreeNode& node_left, TreeNode& node_right,
-                                                       int distance) override {
-            // Compute required delay balancing based on current delays and total distance
-            double skew = node_right.delay - node_left.delay;
-            int extend_left = static_cast<int>(std::round((skew / delay_per_unit + distance) / 2));
-            double delay_left = node_left.delay + extend_left * delay_per_unit;
-
-            node_left.wire_length = extend_left;
-            node_right.wire_length = distance - extend_left;
-
-            // If extend_left is negative, it means the tapping point is effectively to the right of
-            // node_right's segment. In this case, node_left's wire length is set to 0, and
-            // node_right's wire is extended.
-            if (extend_left < 0) {
-                // std::cout << "extend_left: " << extend_left << std::endl;  // Debug output
-                node_left.wire_length = 0;
-                node_right.wire_length = distance - extend_left;
-                extend_left = 0;
-                delay_left = node_left.delay;
-                node_right.need_elongation = true;
-                log_with_spdlog(
-                    "Warning: Right node needs elongation: extend_left < 0  => extend_left set to "
-                    "0");
-            }
-            // If extend_left is greater than distance, it means the tapping point is effectively to
-            // the left of node_left's segment. In this case, node_right's wire length is set to 0,
-            // and node_left's wire is extended.
-            else if (extend_left > distance) {
-                // std::cout << "extend_left: " << extend_left << std::endl;  // Debug output
-                node_right.wire_length = 0;
-                node_left.wire_length = extend_left;
-                extend_left = distance;
-                delay_left = node_right.delay;
-                node_left.need_elongation = true;
-                log_with_spdlog(
-                    "Warning: Left node needs elongation: extend_left > distance => extend_left "
-                    "set to distance");
-            }
-
-            return {extend_left, delay_left};
-        }
+                                                       int distance) override;
     };
 
     /**
@@ -313,50 +274,7 @@ namespace recti {
          *         and the resulting delay at the tapping point.
          */
         std::pair<int, double> calculate_tapping_point(TreeNode& node_left, TreeNode& node_right,
-                                                       int distance) override {
-            // Compute required delay balancing
-            double skew = node_right.delay - node_left.delay;
-            double r = distance * unit_resistance;
-            double c = distance * unit_capacitance;
-
-            // Solve for 'z' (fraction of distance from left) to achieve prescribed-skew (not
-            // necessarily zero)
-            double z = (skew + r * (node_right.capacitance + c / 2.0))
-                       / (r * (c + node_right.capacitance + node_left.capacitance));
-
-            int extend_left = static_cast<int>(std::round(z * distance));
-            double r_left = extend_left * unit_resistance;
-            double c_left = extend_left * unit_capacitance;
-            double delay_left = node_left.delay + r_left * (c_left / 2.0 + node_left.capacitance);
-
-            node_left.wire_length = extend_left;
-            node_right.wire_length = distance - extend_left;
-
-            // If extend_left is negative, it means the tapping point is effectively to the right of
-            // node_right's segment. In this case, node_left's wire length is set to 0, and
-            // node_right's wire is extended.
-            if (extend_left < 0) {
-                // std::cout << "extend_left: " << extend_left << std::endl;  // Debug output
-                node_left.wire_length = 0;
-                node_right.wire_length = distance - extend_left;
-                extend_left = 0;
-                delay_left = node_left.delay;
-                node_right.need_elongation = true;
-            }
-            // If extend_left is greater than distance, it means the tapping point is effectively to
-            // the left of node_left's segment. In this case, node_right's wire length is set to 0,
-            // and node_left's wire is extended.
-            else if (extend_left > distance) {
-                // std::cout << "extend_left: " << extend_left << std::endl;  // Debug output
-                node_right.wire_length = 0;
-                node_left.wire_length = extend_left;
-                extend_left = distance;
-                delay_left = node_right.delay;
-                node_left.need_elongation = true;
-            }
-
-            return {extend_left, delay_left};
-        }
+                                                       int distance) override;
     };
 
     /**
@@ -787,51 +705,7 @@ namespace recti {
      * @param root The root of the clock tree.
      * @return A TreeStatistics struct containing the extracted data.
      */
-    inline TreeStatistics get_tree_statistics(const std::shared_ptr<TreeNode>& root) {
-        TreeStatistics stats;
-        // Define a recursive lambda function for tree traversal.
-        std::function<void(const std::shared_ptr<TreeNode>&, const std::shared_ptr<TreeNode>&)>
-            traverse;
-
-        traverse
-            = [&](const std::shared_ptr<TreeNode>& node, const std::shared_ptr<TreeNode>& parent) {
-                  if (!node) return;
-
-                  // Add node information to statistics.
-                  stats.nodes.push_back({node->name,
-                                         {node->position.xcoord(), node->position.ycoord()},
-                                         node->is_leaf() ? "sink" : "internal",
-                                         node->delay,
-                                         node->capacitance});
-
-                  // If it's a leaf node, add its name to the sinks list.
-                  if (node->is_leaf()) {
-                      stats.sinks.push_back(node->name);
-                  }
-
-                  // If there's a parent, add wire information to statistics.
-                  if (parent) {
-                      stats.wires.push_back({parent->name,
-                                             node->name,
-                                             node->wire_length,
-                                             {parent->position.xcoord(), parent->position.ycoord()},
-                                             {node->position.xcoord(), node->position.ycoord()}});
-                  }
-
-                  // Recursively traverse left and right children.
-                  traverse(node->left, node);
-                  traverse(node->right, node);
-              };
-
-        traverse(root, nullptr);  // Start traversal from the root with no parent.
-
-        // Populate overall statistics counts.
-        stats.total_nodes = static_cast<int>(stats.nodes.size());
-        stats.total_sinks = static_cast<int>(stats.sinks.size());
-        stats.total_wires = static_cast<int>(stats.wires.size());
-
-        return stats;
-    }
+    TreeStatistics get_tree_statistics(const std::shared_ptr<TreeNode>& root);
 
 }  // namespace recti
 

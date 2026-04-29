@@ -23,7 +23,6 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include "logger.hpp"
 
 namespace recti {
 
@@ -253,87 +252,9 @@ template <typename IntPoint> class GlobalRoutingTree {
 
     auto _find_nearest_insertion_with_constraints(const IntPoint& pt,
                                                   int allowed_wirelength = std::numeric_limits<int>::max(),
-                                                  std::optional<std::vector<Keepout>> keepouts
-                                                  = std::nullopt)
-        -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*> {
-        RoutingNode<IntPoint>* parent_node = nullptr;
-        RoutingNode<IntPoint>* nearest_node = &this->source_node;
-        int min_distance = this->worst_wirelength;
-        // int min_distance = std::numeric_limits<int>::max();
-        bool valid_found = false;
+                                                  std::optional<std::vector<Keepout>> keepouts = std::nullopt)
+        -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*>;
 
-        std::function<void(RoutingNode<IntPoint>*)> traverse = [&](RoutingNode<IntPoint>* node) {
-            for (auto* child : node->children) {
-                auto possible_path = node->pt.hull_with(child->pt);
-                auto distance = possible_path.min_dist_with(pt);
-                auto nearest_pt = possible_path.nearest_to(pt);
-
-                if (keepouts.has_value()) {
-                    bool block = false;
-                    auto path1 = nearest_pt.hull_with(pt);
-                    auto path2 = nearest_pt.hull_with(node->pt);
-                    auto path3 = nearest_pt.hull_with(child->pt);
-                    for (const auto& keepout : *keepouts) {
-                        if (keepout.contains(nearest_pt)) {
-                            block = true;
-                            break;
-                        }
-                        if (keepout.blocks(path1) || keepout.blocks(path2)
-                            || keepout.blocks(path3)) {
-                            block = true;
-                            break;
-                        }
-                    }
-                    if (block) {
-                        continue;
-                    }
-                }
-
-                int path_length
-                    = node->path_length + node->pt.min_dist_with(nearest_pt) + distance;
-                bool update = false;
-                if (path_length <= allowed_wirelength) {
-                    if (valid_found) {
-                        if (distance < min_distance) {
-                            update  = true;                        
-                        }
-                    } else {
-                        valid_found = true;
-                        update = true;
-                    }
-                } else {
-                    if (!valid_found) {
-                        // don't care allowed_wirelength if we haven't found any valid point yet
-                        if (path_length <= this->worst_wirelength && distance < min_distance) {
-                            update = true;
-                        }
-                    }
-                }
-
-                if (update) {
-                    min_distance = distance;
-                    if (nearest_pt == node->pt) {
-                        nearest_node = node;
-                        parent_node = nullptr;
-                    } else if (nearest_pt == child->pt) {
-                        nearest_node = child;
-                        parent_node = nullptr;
-                    } else {
-                        parent_node = node;
-                        nearest_node = child;
-                    }
-                }
-                traverse(child);
-            }
-        };
-
-        traverse(&this->source_node);
-        if (!valid_found) {
-            log_with_spdlog("Warning: No valid insertion point found within allowed wirelength. "
-                         "Consider increasing the allowed wirelength or relaxing keepout constraints.");
-        }
-        return {parent_node, nearest_node};
-    }
 
     auto _insert_terminal_impl(const IntPoint& point, int allowed_wirelength = std::numeric_limits<int>::max(),
                                std::optional<std::vector<Keepout>> keepouts = std::nullopt) -> void {
@@ -535,7 +456,7 @@ template <typename IntPoint> class GlobalRoutingTree {
     auto calculate_total_wirelength() const -> int {
         int total = 0;
         std::function<void(const RoutingNode<IntPoint>*)> traverse
-            = [&](const RoutingNode<IntPoint>* current_node) {
+            = [&](const RoutingNode<IntPoint>* current_node) -> void{
                   for (auto child : current_node->children) {
                       total += current_node->manhattan_distance(child);
                       traverse(child);
@@ -551,8 +472,8 @@ template <typename IntPoint> class GlobalRoutingTree {
      */
     auto calculate_worst_wirelength() const -> int {
         int worst_length = 0;
-        std::function<void(const RoutingNode<IntPoint>*)> traverse
-            = [&](const RoutingNode<IntPoint>* current_node) {
+        std::function<int(const RoutingNode<IntPoint>*)> traverse
+            = [&](const RoutingNode<IntPoint>* current_node) -> int {
                   for (auto child : current_node->children) {
                       auto length = traverse(child);
                       worst_length = std::max(worst_length, length + current_node->manhattan_distance(child));
@@ -627,36 +548,11 @@ template <typename IntPoint> class GlobalRoutingTree {
         return steins;
     }
 
-    /**
+/**
      * @brief Optimizes the routing tree by removing redundant Steiner points.
      * A Steiner point is considered redundant if it has only one child and is not the source node.
      */
-    void optimize_steiner_points() {
-        std::vector<std::string> steiner_ids_to_remove;
-        for (auto& [id, node] : this->nodes) {
-            if (node->type == NodeType::STEINER && node->children.size() == 1
-                && node->parent != nullptr) {
-                steiner_ids_to_remove.push_back(id);
-            }
-        }
-
-        for (const auto& steiner_id : steiner_ids_to_remove) {
-            RoutingNode<IntPoint>* steiner = this->nodes.at(steiner_id);
-            RoutingNode<IntPoint>* parent = steiner->parent;
-            RoutingNode<IntPoint>* child = steiner->children[0];
-
-            parent->remove_child(steiner);
-            parent->add_child(child);
-
-            this->nodes.erase(steiner_id);
-            auto owned_iter
-                = std::find_if(this->owned_nodes.begin(), this->owned_nodes.end(),
-                               [steiner](const auto& up) { return up.get() == steiner; });
-            if (owned_iter != this->owned_nodes.end()) {
-                this->owned_nodes.erase(owned_iter);
-            }
-        }
-    }
+void optimize_steiner_points();
 
     /**
      * @brief Visualizes the routing tree (implementation in .cpp file).

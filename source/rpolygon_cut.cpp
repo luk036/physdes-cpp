@@ -86,10 +86,6 @@ namespace recti {
         return L1;
     }
 
-    template std::vector<std::vector<size_t>> rpolygon_cut_convex_recur<int>(
-        Dllink<size_t>*, std::vector<Point<int>>&,
-        const std::function<bool(int)>&, RDllist&);
-
     template <typename T>
     auto rpolygon_cut_explicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
                                     const std::function<bool(T)>& cmp, RDllist& rdll)
@@ -166,10 +162,6 @@ namespace recti {
         L1.insert(L1.end(), L2.begin(), L2.end());
         return L1;
     }
-
-    template std::vector<std::vector<size_t>> rpolygon_cut_explicit_recur<int>(
-        Dllink<size_t>*, std::vector<Point<int>>&,
-        const std::function<bool(int)>&, RDllist&);
 
     template <typename T>
     auto rpolygon_cut_implicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
@@ -292,6 +284,14 @@ namespace recti {
         L1.insert(L1.end(), L2.begin(), L2.end());
         return L1;
     }
+
+    template std::vector<std::vector<size_t>> rpolygon_cut_convex_recur<int>(
+        Dllink<size_t>*, std::vector<Point<int>>&,
+        const std::function<bool(int)>&, RDllist&);
+
+    template std::vector<std::vector<size_t>> rpolygon_cut_explicit_recur<int>(
+        Dllink<size_t>*, std::vector<Point<int>>&,
+        const std::function<bool(int)>&, RDllist&);
 
     template std::vector<std::vector<size_t>> rpolygon_cut_implicit_recur<int>(
         Dllink<size_t>*, std::vector<Point<int>>&,

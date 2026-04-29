@@ -7,6 +7,7 @@
 #include <recti/global_router.hpp>
 #include <recti/halton_int.hpp>
 #include <recti/interval.hpp>
+#include <recti/logger.hpp>
 #include <recti/point.hpp>
 #include <sstream>
 #include <string>
@@ -56,6 +57,92 @@ auto GlobalRoutingTree<IntPoint>::get_tree_structure(const RoutingNode<IntPoint>
     }
     return oss.str();
 }
+
+template <typename IntPoint>
+auto GlobalRoutingTree<IntPoint>::_find_nearest_insertion_with_constraints(const IntPoint& pt,
+                                              int allowed_wirelength,
+                                              std::optional<std::vector<GlobalRoutingTree<IntPoint>::Keepout>> keepouts)
+    -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*> {
+    RoutingNode<IntPoint>* parent_node = nullptr;
+    RoutingNode<IntPoint>* nearest_node = &this->source_node;
+    int min_distance = this->worst_wirelength;
+    // int min_distance = std::numeric_limits<int>::max();
+    bool valid_found = false;
+
+    std::function<void(RoutingNode<IntPoint>*)> traverse = [&](RoutingNode<IntPoint>* node) {
+        for (auto* child : node->children) {
+            auto possible_path = node->pt.hull_with(child->pt);
+            auto distance = possible_path.min_dist_with(pt);
+            auto nearest_pt = possible_path.nearest_to(pt);
+            if (keepouts.has_value()) {
+                bool block = false;
+                auto path1 = nearest_pt.hull_with(pt);
+                auto path2 = nearest_pt.hull_with(node->pt);
+                auto path3 = nearest_pt.hull_with(child->pt);
+                for (const auto& keepout : *keepouts) {
+                    if (keepout.contains(nearest_pt)) {
+                        block = true;
+                        break;
+                    }
+                    if (keepout.blocks(path1) || keepout.blocks(path2)
+                        || keepout.blocks(path3)) {
+                        block = true;
+                        break;
+                    }
+                }
+                if (block) {
+                    continue;
+                }
+            }
+            int path_length
+                = node->path_length + node->pt.min_dist_with(nearest_pt) + distance;
+            bool update = false;
+            if (path_length <= allowed_wirelength) {
+                if (valid_found) {
+                    if (distance < min_distance) {
+                        update  = true;                        
+                    }
+                } else {
+                    valid_found = true;
+                    update = true;
+                }
+            } else {
+                if (!valid_found) {
+                    // don't care allowed_wirelength if we haven't found any valid point yet
+                    if (path_length <= this->worst_wirelength && distance < min_distance) {
+                        update = true;
+                    }
+                }
+            }
+            if (update) {
+                min_distance = distance;
+                if (nearest_pt == node->pt) {
+                    nearest_node = node;
+                    parent_node = nullptr;
+                } else if (nearest_pt == child->pt) {
+                    nearest_node = child;
+                    parent_node = nullptr;
+                } else {
+                    parent_node = node;
+                    nearest_node = child;
+                }
+            }
+            traverse(child);
+        }
+    };
+    traverse(&this->source_node);
+    if (!valid_found) {
+        log_with_spdlog("Warning: No valid insertion point found within allowed wirelength. "
+                     "Consider increasing the allowed wirelength or relaxing keepout constraints.");
+    }
+    return {parent_node, nearest_node};
+}
+
+template
+class GlobalRoutingTree<Point<int, int>>;
+
+template
+class GlobalRoutingTree<Point<Point<int, int>, int>>;
 
 /**
  * @brief Visualize the routing tree structure
@@ -235,6 +322,34 @@ template <> void save_routing_tree3d_svg(
     std::ofstream file_stream(filename);
     file_stream << svg_content;
     std::cout << "Routing tree (3d) saved to " << filename << "\n";
+}
+
+template <typename IntPoint>
+void GlobalRoutingTree<IntPoint>::optimize_steiner_points() {
+    std::vector<std::string> steiner_ids_to_remove;
+    for (auto& [id, node] : this->nodes) {
+        if (node->type == NodeType::STEINER && node->children.size() == 1
+            && node->parent != nullptr) {
+            steiner_ids_to_remove.push_back(id);
+        }
+    }
+
+    for (const auto& steiner_id : steiner_ids_to_remove) {
+        RoutingNode<IntPoint>* steiner = this->nodes.at(steiner_id);
+        RoutingNode<IntPoint>* parent = steiner->parent;
+        RoutingNode<IntPoint>* child = steiner->children[0];
+
+        parent->remove_child(steiner);
+        parent->add_child(child);
+
+        this->nodes.erase(steiner_id);
+        auto owned_iter
+            = std::find_if(this->owned_nodes.begin(), this->owned_nodes.end(),
+                           [steiner](const auto& up) { return up.get() == steiner; });
+        if (owned_iter != this->owned_nodes.end()) {
+            this->owned_nodes.erase(owned_iter);
+        }
+    }
 }
 
 }  // namespace recti
