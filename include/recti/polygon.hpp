@@ -1,9 +1,7 @@
 #pragma once
 
-#include <algorithm>
 #include <cassert>
 #include <span>
-#include <utility>  // for std::pair
 #include <vector>
 
 #include "recti.hpp"

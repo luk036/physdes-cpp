@@ -268,57 +268,8 @@ namespace recti {
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      */
-    template <typename FwIter> inline void create_test_rpolygon_old(FwIter&& first, FwIter&& last) {
-        assert(first != last);
-
-        auto upwd = [](const auto& right_point, const auto& left_point) -> bool {
-            return std::make_pair(right_point.ycoord(), right_point.xcoord())
-                   < std::make_pair(left_point.ycoord(), left_point.xcoord());
-        };
-        auto down = [](const auto& right_point, const auto& left_point) -> bool {
-            return std::make_pair(right_point.ycoord(), right_point.xcoord())
-                   > std::make_pair(left_point.ycoord(), left_point.xcoord());
-        };
-        auto left = [](const auto& right_point, const auto& left_point) {
-            return std::make_pair(right_point.xcoord(), right_point.ycoord())
-                   < std::make_pair(left_point.xcoord(), left_point.ycoord());
-        };
-        auto right = [](const auto& right_point, const auto& left_point) {
-            return std::make_pair(right_point.xcoord(), right_point.ycoord())
-                   > std::make_pair(left_point.xcoord(), left_point.ycoord());
-        };
-
-        auto result = std::minmax_element(first, last, upwd);
-        auto min_pt = *result.first;
-        auto max_pt = *result.second;
-        auto delta_x = max_pt.xcoord() - min_pt.xcoord();
-        auto delta_y = max_pt.ycoord() - min_pt.ycoord();
-        auto middle
-            = std::partition(first, last, [&min_pt, &delta_x, &delta_y](const auto& elem) -> bool {
-                  return delta_x * (elem.ycoord() - min_pt.ycoord())
-                         < (elem.xcoord() - min_pt.xcoord()) * delta_y;
-              });
-        auto max_pt1 = *std::max_element(first, middle, left);
-        auto middle2 = std::partition(first, middle, [&max_pt1](const auto& elem) -> bool {
-            return elem.ycoord() < max_pt1.ycoord();
-        });
-        auto min_pt2 = *std::min_element(middle, last, left);
-        auto middle3 = std::partition(middle, last, [&min_pt2](const auto& elem) -> bool {
-            return elem.ycoord() > min_pt2.ycoord();
-        });
-
-        if (delta_x < 0) {  // clockwise
-            std::sort(first, middle2, down);
-            std::sort(middle2, middle, left);
-            std::sort(middle, middle3, upwd);
-            std::sort(middle3, last, right);
-        } else {  // anti-clockwise
-            std::sort(first, middle2, left);
-            std::sort(middle2, middle, upwd);
-            std::sort(middle, middle3, right);
-            std::sort(middle3, last, down);
-        }
-    }
+    template <typename FwIter>
+    void create_test_rpolygon_old(FwIter&& first, FwIter&& last);
 
     /**
      * @brief Create a test rectilinear polygon (RPolygon) object.
@@ -332,88 +283,9 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return A vector of points representing the test rectilinear polygon.
      */
-    template <typename FwIter> inline auto create_test_rpolygon(FwIter first, FwIter last)
-        -> std::vector<typename std::iterator_traits<FwIter>::value_type> {
-        using T = typename std::iterator_traits<FwIter>::value_type::value_type;
-        assert(first != last);
-
-        auto dir_x
-            = [](const auto& point) { return std::make_pair(point.xcoord(), point.ycoord()); };
-        auto dir_y
-            = [](const auto& point) { return std::make_pair(point.ycoord(), point.xcoord()); };
-
-        auto max_point
-            = *std::max_element(first, last, [&dir_y](const auto& elem_a, const auto& elem_b) {
-                  return dir_y(elem_a) < dir_y(elem_b);
-              });
-        auto min_point
-            = *std::min_element(first, last, [&dir_y](const auto& elem_a, const auto& elem_b) {
-                  return dir_y(elem_a) < dir_y(elem_b);
-              });
-        Vector2<T> vec = max_point - min_point;
-
-        std::vector<typename std::iterator_traits<FwIter>::value_type> upper_chain_points,
-            lower_chain_points;
-        auto middle = std::partition(first, last, [&min_point, &vec](const auto& point) {
-            return vec.cross(point - min_point) < 0;
-        });
-        upper_chain_points.assign(first, middle);
-        lower_chain_points.assign(middle, last);
-
-        auto max_point1 = *std::max_element(upper_chain_points.begin(), upper_chain_points.end(),
-                                            [&dir_x](const auto& elem_a, const auto& elem_b) {
-                                                return dir_x(elem_a) < dir_x(elem_b);
-                                            });
-        auto middle2 = std::partition(
-            upper_chain_points.begin(), upper_chain_points.end(),
-            [&max_point1](const auto& point) { return point.ycoord() < max_point1.ycoord(); });
-        auto min_point2 = *std::min_element(lower_chain_points.begin(), lower_chain_points.end(),
-                                            [&dir_x](const auto& elem_a, const auto& elem_b) {
-                                                return dir_x(elem_a) < dir_x(elem_b);
-                                            });
-        auto middle3 = std::partition(
-            lower_chain_points.begin(), lower_chain_points.end(),
-            [&min_point2](const auto& point) { return point.ycoord() > min_point2.ycoord(); });
-
-        std::vector<typename std::iterator_traits<FwIter>::value_type> segment_a_points,
-            segment_b_points, segment_c_points, segment_d_points;
-        if (vec.x() < 0) {
-            segment_a_points.assign(middle3, lower_chain_points.end());
-            std::sort(segment_a_points.begin(), segment_a_points.end(),
-                      [&dir_x](const auto& a, const auto& b) { return dir_x(a) > dir_x(b); });
-            segment_b_points.assign(lower_chain_points.begin(), middle3);
-            std::sort(segment_b_points.begin(), segment_b_points.end(),
-                      [&dir_y](const auto& a, const auto& b) { return dir_y(a) < dir_y(b); });
-            segment_c_points.assign(middle2, upper_chain_points.end());
-            std::sort(segment_c_points.begin(), segment_c_points.end(),
-                      [&dir_x](const auto& a, const auto& b) { return dir_x(a) < dir_x(b); });
-            segment_d_points.assign(upper_chain_points.begin(), middle2);
-            std::sort(segment_d_points.begin(), segment_d_points.end(),
-                      [&dir_y](const auto& a, const auto& b) { return dir_y(a) > dir_y(b); });
-        } else {
-            segment_a_points.assign(upper_chain_points.begin(), middle2);
-            std::sort(segment_a_points.begin(), segment_a_points.end(),
-                      [&dir_x](const auto& a, const auto& b) { return dir_x(a) < dir_x(b); });
-            segment_b_points.assign(middle2, upper_chain_points.end());
-            std::sort(segment_b_points.begin(), segment_b_points.end(),
-                      [&dir_y](const auto& a, const auto& b) { return dir_y(a) < dir_y(b); });
-            segment_c_points.assign(lower_chain_points.begin(), middle3);
-            std::sort(segment_c_points.begin(), segment_c_points.end(),
-                      [&dir_x](const auto& a, const auto& b) { return dir_x(a) > dir_x(b); });
-            segment_d_points.assign(middle3, lower_chain_points.end());
-            std::sort(segment_d_points.begin(), segment_d_points.end(),
-                      [&dir_y](const auto& a, const auto& b) { return dir_y(a) > dir_y(b); });
-        }
-
-        std::vector<typename std::iterator_traits<FwIter>::value_type> result;
-        result.reserve(segment_a_points.size() + segment_b_points.size() + segment_c_points.size()
-                       + segment_d_points.size());
-        result.insert(result.end(), segment_a_points.begin(), segment_a_points.end());
-        result.insert(result.end(), segment_b_points.begin(), segment_b_points.end());
-        result.insert(result.end(), segment_c_points.begin(), segment_c_points.end());
-        result.insert(result.end(), segment_d_points.begin(), segment_d_points.end());
-        return result;
-    }
+    template <typename FwIter>
+    auto create_test_rpolygon(FwIter first, FwIter last)
+        -> std::vector<typename std::iterator_traits<FwIter>::value_type>;
 
     /**
      * @brief Check if a polygon is monotone with respect to a given direction function
