@@ -4,7 +4,7 @@
 #include <recti/manhattan_arc.hpp>  // for ManhattanArc, operator+, operator-
 #include <string>
 #include <vector>
-
+#include <iostream>
 #include "recti/dme_algorithm.hpp"  // for min_dist, overlap, interval
 
 using namespace recti;

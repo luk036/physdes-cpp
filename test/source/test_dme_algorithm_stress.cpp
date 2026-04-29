@@ -6,6 +6,7 @@
 #include <recti/manhattan_arc.hpp>
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "recti/dme_algorithm.hpp"
 

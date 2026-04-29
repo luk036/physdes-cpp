@@ -1,4 +1,6 @@
 #include <recti/dme_algorithm.hpp>
+#include <iostream>
+#include <recti/logger.hpp>
 
 namespace recti {
 
@@ -113,3 +115,50 @@ TreeStatistics get_tree_statistics(const std::shared_ptr<TreeNode>& root) {
 }
 
 }  // namespace recti
+
+/**
+ * @brief Example usage function demonstrating the DME algorithm with different delay models.
+ *
+ * This function sets up a sample clock tree synthesis problem with multiple sinks,
+ * applies the DME algorithm using both Linear and Elmore delay models,
+ * and prints the skew analysis results for each.
+ */
+void example_dme_usage() {
+    using namespace recti;
+
+    std::cout << "=== Linear Delay Model ===" << std::endl;
+
+    // Define a set of clock sinks with their positions and capacitances.
+    std::vector<Sink> sinks
+        = {Sink("s1", Point<int>(10, 20), 1.0), Sink("s2", Point<int>(30, 40), 1.0),
+           Sink("s3", Point<int>(50, 10), 1.0), Sink("s4", Point<int>(70, 30), 1.0),
+           Sink("s5", Point<int>(90, 50), 1.0)};
+
+    // Create a LinearDelayCalculator and run the DME algorithm.
+    auto linear_calc = std::make_unique<LinearDelayCalculator>(0.5, 0.2);
+    DMEAlgorithm dme_linear(sinks, std::move(linear_calc));
+    auto clock_tree_linear = dme_linear.build_clock_tree();
+    auto analysis_linear = dme_linear.analyze_skew(clock_tree_linear);
+
+    // Print results for the Linear Delay Model.
+    std::cout << "Delay Model: " << analysis_linear.delay_model << std::endl;
+    std::cout << "Maximum delay: " << analysis_linear.max_delay << std::endl;
+    std::cout << "Minimum delay: " << analysis_linear.min_delay << std::endl;
+    std::cout << "Clock skew: " << analysis_linear.skew << std::endl;
+    std::cout << "Total wirelength: " << analysis_linear.total_wirelength << std::endl;
+
+    std::cout << "\n=== Elmore Delay Model ===" << std::endl;
+
+    // Create an ElmoreDelayCalculator and run the DME algorithm.
+    auto elmore_calc = std::make_unique<ElmoreDelayCalculator>(0.1, 0.2);
+    DMEAlgorithm dme_elmore(sinks, std::move(elmore_calc));
+    auto clock_tree_elmore = dme_elmore.build_clock_tree();
+    auto analysis_elmore = dme_elmore.analyze_skew(clock_tree_elmore);
+
+    // Print results for the Elmore Delay Model.
+    std::cout << "Delay Model: " << analysis_elmore.delay_model << std::endl;
+    std::cout << "Maximum delay: " << analysis_elmore.max_delay << std::endl;
+    std::cout << "Minimum delay: " << analysis_elmore.min_delay << std::endl;
+    std::cout << "Clock skew: " << analysis_elmore.skew << std::endl;
+    std::cout << "Total wirelength: " << analysis_elmore.total_wirelength << std::endl;
+}
