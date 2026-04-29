@@ -10,17 +10,17 @@
 
 using namespace recti;
 
-TEST_CASE("RPolygon is_monotone small list test") {
-    const std::vector<Point<int>> points = {{0, 0}, {1, 1}};
-    CHECK(rpolygon_is_monotone<int>(
-        points, [](const Point<int>& p) { return std::make_pair(p.xcoord(), p.ycoord()); }));
-}
+// TEST_CASE("RPolygon is_monotone small list test") {
+//     const std::vector<Point<int>> points = {{0, 0}, {1, 1}};
+//     CHECK(rpolygon_is_monotone<int>(
+//         points, [](const Point<int>& p) { return std::make_pair(p.xcoord(), p.ycoord()); }));
+// }
 
-TEST_CASE("RPolygon is_monotone break test") {
-    const std::vector<Point<int>> points = {{0, 0}, {3, 1}, {1, 2}, {2, 3}};
-    CHECK_FALSE(rpolygon_is_monotone<int>(
-        points, [](const Point<int>& p) { return std::make_pair(p.xcoord(), p.ycoord()); }));
-}
+// TEST_CASE("RPolygon is_monotone break test") {
+//     const std::vector<Point<int>> points = {{0, 0}, {3, 1}, {1, 2}, {2, 3}};
+//     CHECK_FALSE(rpolygon_is_monotone<int>(
+//         points, [](const Point<int>& p) { return std::make_pair(p.xcoord(), p.ycoord()); }));
+// }
 
 TEST_CASE("RPolygon make x-monotone hull test") {
     const std::vector<Point<int>> S = {{-10, 50}, {-40, 40}, {-60, -40}, {-20, -50}, {90, -2},

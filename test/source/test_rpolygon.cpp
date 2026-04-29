@@ -121,18 +121,6 @@ TEST_CASE("Rectilinear Polygon point_in_rpolygon test") {
     CHECK(!point_in_rpolygon<int>(S, Point<int>{5, 11}));
 }
 
-TEST_CASE("RPolygon to_polygon conversion") {
-    const auto coords = std::vector<Point<int>>{{0, 0}, {10, 10}, {5, 5}};
-    const auto r_poly = RPolygon<int>(coords);
-    const auto poly = r_poly.to_polygon();
-
-    // Expected coordinates after conversion to maintain rectilinearity
-    const auto expected_coords
-        = std::vector<Point<int>>{{0, 0}, {10, 0}, {10, 10}, {5, 10}, {5, 5}, {0, 5}};
-    const auto expected_poly = Polygon<int>(expected_coords);
-
-    CHECK(poly == expected_poly);
-}
 
 TEST_CASE("RPolygon rectilinearity test") {
     // Rectilinear polygon

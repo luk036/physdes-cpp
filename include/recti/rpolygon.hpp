@@ -1,15 +1,10 @@
 #pragma once
 
-#include <algorithm>
-#include <cassert>
-#include <functional>
-#include <iterator>
 #include <span>
-#include <utility>  // for std::pair
 #include <vector>
 
-#include "polygon.hpp"
-#include "rdllist.hpp"
+#include "point.hpp"
+
 
 namespace recti {
 
@@ -36,7 +31,6 @@ namespace recti {
      * |    +------------------------+
      * |            vertices()       |
      * |            signed_area()    |
-     * |            to_polygon()     |
      * +-----------------------------+
      * @endcode
      *
@@ -169,40 +163,6 @@ namespace recti {
         }
 
         /**
-         * @brief Converts the rectilinear polygon to a general polygon
-         *
-         * This method adds intermediate points to ensure the polygon remains rectilinear
-         * when converted to a general polygon representation.
-         *
-         * @return A Polygon object representing the converted polygon
-         */
-        constexpr auto to_polygon() const -> Polygon<T> {
-            if (_vecs.empty()) {
-                return Polygon<T>(_origin, {});
-            }
-
-            std::vector<Vector2<T>> new_vecs;
-            Vector2<T> current_point(0, 0);
-
-            for (const auto& next_point : _vecs) {
-                if (current_point.x() != next_point.x() && current_point.y() != next_point.y()) {
-                    // Add intermediate point for non-rectilinear segment
-                    new_vecs.emplace_back(next_point.x(), current_point.y());
-                }
-                new_vecs.push_back(next_point);
-                current_point = next_point;
-            }
-
-            // Handle closing segment
-            Vector2<T> first_point(0, 0);
-            if (current_point.x() != first_point.x() && current_point.y() != first_point.y()) {
-                new_vecs.emplace_back(first_point.x(), current_point.y());
-            }
-
-            return Polygon<T>(_origin, std::move(new_vecs));
-        }
-
-        /**
          * @brief Checks if the polygon is rectilinear (all edges are horizontal or vertical)
          */
         constexpr auto is_rectilinear() const -> bool { return true; }
@@ -286,69 +246,6 @@ namespace recti {
     template <typename FwIter>
     auto create_test_rpolygon(FwIter first, FwIter last)
         -> std::vector<typename std::iterator_traits<FwIter>::value_type>;
-
-    /**
-     * @brief Check if a polygon is monotone with respect to a given direction function
-     *
-     * A polygon is monotone with respect to a direction if it can be divided into two chains
-     * that are both monotone (either entirely non-decreasing or non-increasing) in that direction.
-     *
-     * @tparam T The type of the coordinates
-     * @tparam DirFunc The type of the direction function
-     * @param pointset The polygon vertices as points
-     * @param dir The direction function that returns a key for comparison
-     * @return true if the polygon is monotone, false otherwise
-     */
-    template <typename T, typename DirFunc>
-    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, const DirFunc& dir)
-        -> bool {
-        if (pointset.size() <= 3) {
-            return true;
-        }
-
-        size_t min_index = 0;
-        size_t max_index = 0;
-        auto min_val = dir(pointset[0]);
-        auto max_val = dir(pointset[0]);
-
-        for (size_t i = 1; i < pointset.size(); ++i) {
-            auto current_val = dir(pointset[i]);
-            if (current_val < min_val) {
-                min_val = current_val;
-                min_index = i;
-            }
-            if (current_val > max_val) {
-                max_val = current_val;
-                max_index = i;
-            }
-        }
-
-        RDllist rdll(pointset.size());
-        auto& v_min = rdll[min_index];
-        auto& v_max = rdll[max_index];
-
-        auto violate
-            = [&pointset, &dir](Dllink<size_t>* vertex_iterator, Dllink<size_t>* vertex_stop,
-                                std::function<bool(T, T)> cmp) -> bool {
-            auto current = vertex_iterator;
-            while (current != vertex_stop) {
-                auto next_vertex = current->next;
-                auto current_key = dir(pointset[current->data]);
-                auto next_key = dir(pointset[next_vertex->data]);
-                if (cmp(std::get<0>(current_key), std::get<0>(next_key))) {
-                    return true;
-                }
-                current = next_vertex;
-            }
-            return false;
-        };
-
-        if (violate(&v_min, &v_max, [](T value_a, T value_b) { return value_a > value_b; })) {
-            return false;
-        }
-
-        return !violate(&v_max, &v_min, [](T value_a, T value_b) { return value_a < value_b; });
-    }
 
     /**
      * @brief Check if a polygon is x-monotone

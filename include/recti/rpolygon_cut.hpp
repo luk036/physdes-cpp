@@ -4,9 +4,11 @@
 #include <span>
 #include <vector>
 
-#include "dllink.hpp"
 #include "point.hpp"
-#include "rdllist.hpp"
+
+// Forward declaration for recursive functions
+class RDllist;
+template <typename T> class Dllink;
 
 namespace recti {
 

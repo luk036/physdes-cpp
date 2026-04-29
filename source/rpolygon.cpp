@@ -9,6 +9,7 @@
 #include <recti/point.hpp>
 #include <recti/rdllist.hpp>
 #include <recti/rpolygon.hpp>
+#include <recti/rdllist.hpp>
 
 namespace recti {
 
@@ -62,6 +63,70 @@ namespace recti {
 
     template auto create_ymono_rpolygon<std::vector<Point<int>>::iterator>(
         std::vector<Point<int>>::iterator&&, std::vector<Point<int>>::iterator&&) -> bool;
+
+
+    /**
+     * @brief Check if a polygon is monotone with respect to a given direction function
+     *
+     * A polygon is monotone with respect to a direction if it can be divided into two chains
+     * that are both monotone (either entirely non-decreasing or non-increasing) in that direction.
+     *
+     * @tparam T The type of the coordinates
+     * @tparam DirFunc The type of the direction function
+     * @param pointset The polygon vertices as points
+     * @param dir The direction function that returns a key for comparison
+     * @return true if the polygon is monotone, false otherwise
+     */
+    template <typename T, typename DirFunc>
+    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, const DirFunc& dir)
+        -> bool {
+        if (pointset.size() <= 3) {
+            return true;
+        }
+
+        size_t min_index = 0;
+        size_t max_index = 0;
+        auto min_val = dir(pointset[0]);
+        auto max_val = dir(pointset[0]);
+
+        for (size_t i = 1; i < pointset.size(); ++i) {
+            auto current_val = dir(pointset[i]);
+            if (current_val < min_val) {
+                min_val = current_val;
+                min_index = i;
+            }
+            if (current_val > max_val) {
+                max_val = current_val;
+                max_index = i;
+            }
+        }
+
+        RDllist rdll(pointset.size());
+        auto& v_min = rdll[min_index];
+        auto& v_max = rdll[max_index];
+
+        auto violate
+            = [&pointset, &dir](Dllink<size_t>* vertex_iterator, Dllink<size_t>* vertex_stop,
+                                std::function<bool(T, T)> cmp) -> bool {
+            auto current = vertex_iterator;
+            while (current != vertex_stop) {
+                auto next_vertex = current->next;
+                auto current_key = dir(pointset[current->data]);
+                auto next_key = dir(pointset[next_vertex->data]);
+                if (cmp(std::get<0>(current_key), std::get<0>(next_key))) {
+                    return true;
+                }
+                current = next_vertex;
+            }
+            return false;
+        };
+
+        if (violate(&v_min, &v_max, [](T value_a, T value_b) { return value_a > value_b; })) {
+            return false;
+        }
+
+        return !violate(&v_max, &v_min, [](T value_a, T value_b) { return value_a < value_b; });
+    }
 
     template <typename T>
     auto rpolygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool {

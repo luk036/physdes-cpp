@@ -1,10 +1,9 @@
 #pragma once
 
-#include <cassert>
 #include <span>
 #include <vector>
 
-#include "recti.hpp"
+#include "point.hpp"
 
 namespace recti {
 
