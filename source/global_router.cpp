@@ -138,6 +138,40 @@ auto GlobalRoutingTree<IntPoint>::_find_nearest_insertion_with_constraints(const
     return {parent_node, nearest_node};
 }
 
+template <typename IntPoint>
+auto GlobalRoutingTree<IntPoint>::_insert_terminal_impl(const IntPoint& point, int allowed_wirelength,
+                               std::optional<std::vector<Keepout>> keepouts) -> void {
+    std::string terminal_id = "terminal_" + std::to_string(this->next_terminal_id++);
+    auto terminal_ptr
+        = std::make_unique<RoutingNode<IntPoint>>(terminal_id, NodeType::TERMINAL, point);
+    RoutingNode<IntPoint>* terminal_node = terminal_ptr.get();
+    this->nodes[terminal_id] = terminal_node;
+    this->owned_nodes.push_back(std::move(terminal_ptr));
+    auto [parent_node, nearest_node]
+        = this->_find_nearest_insertion_with_constraints(point, allowed_wirelength, keepouts);
+    if (parent_node == nullptr) {
+        nearest_node->add_child(terminal_node);
+        terminal_node->path_length
+            = nearest_node->path_length + nearest_node->pt.min_dist_with(point);
+    } else {
+        std::string steiner_id = "steiner_" + std::to_string(this->next_steiner_id++);
+        auto possible_path = parent_node->pt.hull_with(nearest_node->pt);
+        IntPoint nearest_pt = possible_path.nearest_to(point);
+        auto steiner_ptr = std::make_unique<RoutingNode<IntPoint>>(
+            steiner_id, NodeType::STEINER, nearest_pt);
+        RoutingNode<IntPoint>* new_node = steiner_ptr.get();
+        this->nodes[steiner_id] = new_node;
+        this->owned_nodes.push_back(std::move(steiner_ptr));
+        parent_node->remove_child(nearest_node);
+        parent_node->add_child(new_node);
+        new_node->path_length
+            = parent_node->path_length + parent_node->pt.min_dist_with(nearest_pt);
+        new_node->add_child(nearest_node);
+        new_node->add_child(terminal_node);
+        terminal_node->path_length = new_node->path_length + nearest_pt.min_dist_with(point);
+    }
+}
+
 template
 class GlobalRoutingTree<Point<int, int>>;
 
