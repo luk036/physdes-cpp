@@ -5,7 +5,6 @@
 
 #include "point.hpp"
 
-
 namespace recti {
 
     /**
@@ -200,8 +199,7 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
-    template <typename FwIter>
-    auto create_xmono_rpolygon(FwIter&& first, FwIter&& last) -> bool;
+    template <typename FwIter> auto create_xmono_rpolygon(FwIter&& first, FwIter&& last) -> bool;
 
     /**
      * @brief Create a y-monotone rectilinear polygon (RPolygon) object.
@@ -214,8 +212,7 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return `true` if the resulting RPolygon is clockwise, `false` otherwise.
      */
-    template <typename FwIter>
-    auto create_ymono_rpolygon(FwIter&& first, FwIter&& last) -> bool;
+    template <typename FwIter> auto create_ymono_rpolygon(FwIter&& first, FwIter&& last) -> bool;
 
     /**
      * @brief Create a test rectilinear polygon (RPolygon) object.
@@ -228,8 +225,7 @@ namespace recti {
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      */
-    template <typename FwIter>
-    void create_test_rpolygon_old(FwIter&& first, FwIter&& last);
+    template <typename FwIter> void create_test_rpolygon_old(FwIter&& first, FwIter&& last);
 
     /**
      * @brief Create a test rectilinear polygon (RPolygon) object.
@@ -243,8 +239,7 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return A vector of points representing the test rectilinear polygon.
      */
-    template <typename FwIter>
-    auto create_test_rpolygon(FwIter first, FwIter last)
+    template <typename FwIter> auto create_test_rpolygon(FwIter first, FwIter last)
         -> std::vector<typename std::iterator_traits<FwIter>::value_type>;
 
     /**
@@ -257,8 +252,7 @@ namespace recti {
      * @param pointset The polygon vertices as points
      * @return true if the polygon is x-monotone, false otherwise
      */
-    template <typename T>
-    auto rpolygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool;
+    template <typename T> auto rpolygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool;
 
     /**
      * @brief Check if a polygon is y-monotone
@@ -270,8 +264,7 @@ namespace recti {
      * @param pointset The polygon vertices as points
      * @return true if the polygon is y-monotone, false otherwise
      */
-    template <typename T>
-    auto rpolygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool;
+    template <typename T> auto rpolygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool;
 
     /**
      * @brief Check if a polygon is convex
@@ -282,8 +275,7 @@ namespace recti {
      * @param pointset The polygon vertices as points
      * @return true if the polygon is y-monotone, false otherwise
      */
-    template <typename T>
-    auto rpolygon_is_convex(std::span<const Point<T>> pointset) -> bool;
+    template <typename T> auto rpolygon_is_convex(std::span<const Point<T>> pointset) -> bool;
 
     /**
      * @brief Determine if a point is within a rectilinear polygon.
@@ -314,6 +306,6 @@ namespace recti {
      * @param pointset The set of points defining the rectilinear polygon.
      * @return true if the polygon is oriented anti-clockwise, false otherwise.
      */
-    template <typename T>
-    auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset) -> bool;
+    template <typename T> auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset)
+        -> bool;
 }  // namespace recti

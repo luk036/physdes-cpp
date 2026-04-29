@@ -17,8 +17,7 @@ namespace recti {
      * @param rpoly The rectilinear polygon to convert
      * @return A Polygon object representing the converted polygon
      */
-    template <typename T>
-    constexpr auto to_polygon(const RPolygon<T>& rpoly) -> Polygon<T> {
+    template <typename T> constexpr auto to_polygon(const RPolygon<T>& rpoly) -> Polygon<T> {
         const auto& _vecs = rpoly.vectors();
         if (_vecs.empty()) {
             return Polygon<T>(rpoly.origin(), {});

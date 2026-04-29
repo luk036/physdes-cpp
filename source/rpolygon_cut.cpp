@@ -1,13 +1,12 @@
 #include <algorithm>
 #include <functional>
 #include <limits>
-#include <span>
-#include <vector>
-
 #include <recti/dllink.hpp>
 #include <recti/point.hpp>
 #include <recti/rdllist.hpp>
 #include <recti/rpolygon_cut.hpp>
+#include <span>
+#include <vector>
 
 namespace recti {
 
@@ -67,7 +66,7 @@ namespace recti {
         }
 
         auto find_concave_point = [&lst](Dllink<size_t>* vstart,
-                                          const std::function<bool(T)>& cmp2) -> Dllink<size_t>* {
+                                         const std::function<bool(T)>& cmp2) -> Dllink<size_t>* {
             auto vcurr = vstart;
             do {
                 auto vnext = vcurr->next;
@@ -417,16 +416,13 @@ namespace recti {
     }
 
     template std::vector<std::vector<size_t>> rpolygon_cut_convex_recur<int>(
-        Dllink<size_t>*, std::vector<Point<int>>&,
-        const std::function<bool(int)>&, RDllist&);
+        Dllink<size_t>*, std::vector<Point<int>>&, const std::function<bool(int)>&, RDllist&);
 
     template std::vector<std::vector<size_t>> rpolygon_cut_explicit_recur<int>(
-        Dllink<size_t>*, std::vector<Point<int>>&,
-        const std::function<bool(int)>&, RDllist&);
+        Dllink<size_t>*, std::vector<Point<int>>&, const std::function<bool(int)>&, RDllist&);
 
     template std::vector<std::vector<size_t>> rpolygon_cut_implicit_recur<int>(
-        Dllink<size_t>*, std::vector<Point<int>>&,
-        const std::function<bool(int)>&, RDllist&);
+        Dllink<size_t>*, std::vector<Point<int>>&, const std::function<bool(int)>&, RDllist&);
 
     template auto rpolygon_cut_convex<int>(std::span<const Point<int>>, bool)
         -> std::vector<std::vector<Point<int>>>;
@@ -440,4 +436,4 @@ namespace recti {
     template auto rpolygon_cut_rectangle<int>(std::span<const Point<int>>, bool)
         -> std::vector<std::vector<Point<int>>>;
 
-}
+}  // namespace recti

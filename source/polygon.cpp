@@ -1,11 +1,10 @@
 #include <algorithm>
 #include <cassert>
+#include <recti/point.hpp>
+#include <recti/polygon.hpp>
 #include <span>
 #include <utility>
 #include <vector>
-
-#include <recti/point.hpp>
-#include <recti/polygon.hpp>
 
 namespace recti {
 
@@ -25,16 +24,14 @@ namespace recti {
         std::reverse(middle, last);
     }
 
-    template <typename FwIter>
-    auto create_xmono_polygon(FwIter&& first, FwIter&& last) -> void {
+    template <typename FwIter> auto create_xmono_polygon(FwIter&& first, FwIter&& last) -> void {
         return create_mono_polygon(first, last, [](const auto& lhs, const auto& rhs) -> bool {
             return std::make_pair(lhs.xcoord(), lhs.ycoord())
                    < std::make_pair(rhs.xcoord(), rhs.ycoord());
         });
     }
 
-    template <typename FwIter>
-    auto create_ymono_polygon(FwIter&& first, FwIter&& last) -> void {
+    template <typename FwIter> auto create_ymono_polygon(FwIter&& first, FwIter&& last) -> void {
         return create_mono_polygon(first, last, [](const auto& lhs, const auto& rhs) -> bool {
             return std::make_pair(lhs.ycoord(), lhs.xcoord())
                    < std::make_pair(rhs.ycoord(), rhs.xcoord());
@@ -83,15 +80,15 @@ namespace recti {
         return true;
     }
 
-    template <typename T>
-    auto polygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool {
-        auto x_key = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
+    template <typename T> auto polygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool {
+        auto x_key
+            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
         return polygon_is_monotone(pointset, x_key);
     }
 
-    template <typename T>
-    auto polygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool {
-        auto y_key = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
+    template <typename T> auto polygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool {
+        auto y_key
+            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
         return polygon_is_monotone(pointset, y_key);
     }
 
@@ -124,8 +121,8 @@ namespace recti {
         return res;
     }
 
-    template <typename T>
-    auto polygon_is_anticlockwise(std::span<const Point<T>> pointset) -> bool {
+    template <typename T> auto polygon_is_anticlockwise(std::span<const Point<T>> pointset)
+        -> bool {
         const auto it1 = std::min_element(pointset.begin(), pointset.end());
         const auto it0 = it1 != pointset.begin() ? std::prev(it1) : std::prev(pointset.end());
         const auto it2 = std::next(it1) != pointset.end() ? std::next(it1) : pointset.begin();
@@ -145,4 +142,4 @@ namespace recti {
     template auto point_in_polygon<int>(std::span<const Point<int>>, const Point<int>&) -> bool;
     template auto polygon_is_anticlockwise<int>(std::span<const Point<int>>) -> bool;
 
-}
+}  // namespace recti

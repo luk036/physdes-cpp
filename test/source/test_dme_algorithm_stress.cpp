@@ -1,12 +1,12 @@
 #include <doctest/doctest.h>
 #include <fmt/core.h>
 
+#include <iostream>
 #include <memory>
 #include <random>
 #include <recti/manhattan_arc.hpp>
 #include <string>
 #include <vector>
-#include <iostream>
 
 #include "recti/dme_algorithm.hpp"
 

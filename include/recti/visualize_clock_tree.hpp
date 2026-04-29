@@ -61,9 +61,9 @@ namespace recti {
          * @param[in] analysis Optional pointer to skew analysis results to display
          */
         std::string visualize_tree(const std::shared_ptr<TreeNode>& root,
-                                 const std::vector<Sink>& sinks,
-                                 const std::string& filename = "clock_tree.svg", int width = 800,
-                                 int height = 600, const SkewAnalysis* analysis = nullptr);
+                                   const std::vector<Sink>& sinks,
+                                   const std::string& filename = "clock_tree.svg", int width = 800,
+                                   int height = 600, const SkewAnalysis* analysis = nullptr);
 
       private:
         std::vector<std::shared_ptr<TreeNode>> collect_all_nodes(
@@ -80,8 +80,7 @@ namespace recti {
             const std::shared_ptr<TreeNode>& root, const std::vector<Sink>& sinks,
             const std::function<std::pair<double, double>(double, double)>& scale_coord);
 
-        std::vector<std::string> create_analysis_box(const SkewAnalysis& analysis,
-                                                 int width);
+        std::vector<std::string> create_analysis_box(const SkewAnalysis& analysis, int width);
     };
 
     /**
@@ -94,11 +93,10 @@ namespace recti {
      * @param[in] height The height of the SVG canvas
      */
     std::string create_interactive_svg(const std::shared_ptr<TreeNode>& root,
-                                           const std::vector<Sink>& sinks,
-                                           const SkewAnalysis* analysis = nullptr,
-                                           const std::string& filename
-                                           = "clock_tree_interactive.svg",
-                                           int width = 1000, int height = 700);
+                                       const std::vector<Sink>& sinks,
+                                       const SkewAnalysis* analysis = nullptr,
+                                       const std::string& filename = "clock_tree_interactive.svg",
+                                       int width = 1000, int height = 700);
 
     /**
      * @brief Tree data structure for comparison visualization
@@ -117,21 +115,21 @@ namespace recti {
      * @param[in] width The width of the SVG canvas
      * @param[in] height The height of the SVG canvas
      */
-    std::string create_comparison_visualization(
-        const std::vector<TreeComparisonData>& trees_data,
-        const std::string& filename = "clock_tree_comparison.svg", int width = 1200,
-        int height = 800);
+    std::string create_comparison_visualization(const std::vector<TreeComparisonData>& trees_data,
+                                                const std::string& filename
+                                                = "clock_tree_comparison.svg",
+                                                int width = 1200, int height = 800);
 
-/**
+    /**
      * @brief Create a specialized comparison between linear and Elmore delay models
      * @param[in] linear_tree_data The tree data using the linear delay model
      * @param[in] elmore_tree_data The tree data using the Elmore delay model
      * @param[in] filename The output filename for the SVG file
      */
     std::string create_delay_model_comparison(const TreeComparisonData& linear_tree_data,
-                                                const TreeComparisonData& elmore_tree_data,
-                                                const std::string& filename
-                                                = "delay_model_comparison.svg");
+                                              const TreeComparisonData& elmore_tree_data,
+                                              const std::string& filename
+                                              = "delay_model_comparison.svg");
 
     /**
      * @brief Example function demonstrating clock tree visualization with different delay models

@@ -231,8 +231,7 @@ namespace recti {
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      */
-    template <typename FwIter>
-    auto create_xmono_polygon(FwIter&& first, FwIter&& last) -> void;
+    template <typename FwIter> auto create_xmono_polygon(FwIter&& first, FwIter&& last) -> void;
 
     /**
      * @brief Create a ymono Polygon object
@@ -245,8 +244,7 @@ namespace recti {
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      */
-    template <typename FwIter>
-    auto create_ymono_polygon(FwIter&& first, FwIter&& last) -> void;
+    template <typename FwIter> auto create_ymono_polygon(FwIter&& first, FwIter&& last) -> void;
 
     /**
      * @brief Check if a polygon is monotone with respect to a given direction function
@@ -273,8 +271,7 @@ namespace recti {
      * @param pointset The polygon vertices as points
      * @return true if the polygon is x-monotone, false otherwise
      */
-    template <typename T>
-    auto polygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool;
+    template <typename T> auto polygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool;
 
     /**
      * @brief Check if a polygon is y-monotone
@@ -286,8 +283,7 @@ namespace recti {
      * @param pointset The polygon vertices as points
      * @return true if the polygon is y-monotone, false otherwise
      */
-    template <typename T>
-    auto polygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool;
+    template <typename T> auto polygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool;
 
     /**
      * @brief Determine if a point is within a polygon
@@ -322,6 +318,5 @@ namespace recti {
      * @param pointset The range of points representing the polygon.
      * @return true if the polygon is oriented anti-clockwise, false otherwise.
      */
-    template <typename T>
-    auto polygon_is_anticlockwise(std::span<const Point<T>> pointset) -> bool;
+    template <typename T> auto polygon_is_anticlockwise(std::span<const Point<T>> pointset) -> bool;
 }  // namespace recti

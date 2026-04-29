@@ -2,14 +2,12 @@
 #include <cassert>
 #include <functional>
 #include <iterator>
-#include <span>
-#include <utility>
-#include <vector>
-
 #include <recti/point.hpp>
 #include <recti/rdllist.hpp>
 #include <recti/rpolygon.hpp>
-#include <recti/rdllist.hpp>
+#include <span>
+#include <utility>
+#include <vector>
 
 namespace recti {
 
@@ -41,16 +39,14 @@ namespace recti {
         return is_anticw;
     }
 
-    template <typename FwIter>
-    auto create_xmono_rpolygon(FwIter&& first, FwIter&& last) -> bool {
+    template <typename FwIter> auto create_xmono_rpolygon(FwIter&& first, FwIter&& last) -> bool {
         return create_mono_rpolygon(
             first, last,
             [](const auto& point) { return std::make_pair(point.xcoord(), point.ycoord()); },
             [](const auto& elem_a, const auto& elem_b) -> bool { return elem_a < elem_b; });
     }
 
-    template <typename FwIter>
-    auto create_ymono_rpolygon(FwIter&& first, FwIter&& last) -> bool {
+    template <typename FwIter> auto create_ymono_rpolygon(FwIter&& first, FwIter&& last) -> bool {
         return create_mono_rpolygon(
             first, last,
             [](const auto& point) { return std::make_pair(point.ycoord(), point.xcoord()); },
@@ -63,7 +59,6 @@ namespace recti {
 
     template auto create_ymono_rpolygon<std::vector<Point<int>>::iterator>(
         std::vector<Point<int>>::iterator&&, std::vector<Point<int>>::iterator&&) -> bool;
-
 
     /**
      * @brief Check if a polygon is monotone with respect to a given direction function
@@ -128,25 +123,24 @@ namespace recti {
         return !violate(&v_max, &v_min, [](T value_a, T value_b) { return value_a < value_b; });
     }
 
-    template <typename T>
-    auto rpolygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool {
-        auto x_key = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
+    template <typename T> auto rpolygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool {
+        auto x_key
+            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
         return rpolygon_is_monotone(pointset, x_key);
     }
 
-    template <typename T>
-    auto rpolygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool {
-        auto y_key = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
+    template <typename T> auto rpolygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool {
+        auto y_key
+            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
         return rpolygon_is_monotone(pointset, y_key);
     }
 
-    template <typename T>
-    auto rpolygon_is_convex(std::span<const Point<T>> pointset) -> bool {
+    template <typename T> auto rpolygon_is_convex(std::span<const Point<T>> pointset) -> bool {
         return rpolygon_is_xmonotone(pointset) && rpolygon_is_ymonotone(pointset);
     }
 
-    template <typename T>
-    auto point_in_rpolygon(std::span<const Point<T>> pointset, const Point<T>& query_point) -> bool {
+    template <typename T> auto point_in_rpolygon(std::span<const Point<T>> pointset,
+                                                 const Point<T>& query_point) -> bool {
         auto previous_point = pointset.back();
         const auto& query_y = query_point.ycoord();
         const auto& previous_y = previous_point.ycoord();
@@ -165,8 +159,8 @@ namespace recti {
         return result;
     }
 
-    template <typename T>
-    auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset) -> bool {
+    template <typename T> auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset)
+        -> bool {
         const auto min_iterator = std::min_element(pointset.begin(), pointset.end());
         const auto prev_iterator = min_iterator != pointset.begin() ? std::prev(min_iterator)
                                                                     : std::prev(pointset.end());
@@ -180,8 +174,7 @@ namespace recti {
     template auto point_in_rpolygon<int>(std::span<const Point<int>>, const Point<int>&) -> bool;
     template auto rpolygon_is_anticlockwise<int>(std::span<const Point<int>>) -> bool;
 
-    template <typename FwIter>
-    void create_test_rpolygon_old(FwIter&& first, FwIter&& last) {
+    template <typename FwIter> void create_test_rpolygon_old(FwIter&& first, FwIter&& last) {
         assert(first != last);
 
         auto upwd = [](const auto& right_point, const auto& left_point) -> bool {
@@ -233,8 +226,7 @@ namespace recti {
         }
     }
 
-    template <typename FwIter>
-    auto create_test_rpolygon(FwIter first, FwIter last)
+    template <typename FwIter> auto create_test_rpolygon(FwIter first, FwIter last)
         -> std::vector<typename std::iterator_traits<FwIter>::value_type> {
         using T = typename std::iterator_traits<FwIter>::value_type::value_type;
         assert(first != last);
@@ -325,4 +317,4 @@ namespace recti {
         std::vector<Point<int>>::iterator, std::vector<Point<int>>::iterator)
         -> std::vector<Point<int>>;
 
-}
+}  // namespace recti

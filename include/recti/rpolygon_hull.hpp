@@ -18,7 +18,8 @@ namespace recti {
      */
     template <typename T>
     auto rpolygon_make_monotone_hull(std::span<const Point<T>> pointset, bool is_anticlockwise,
-        const std::function<std::pair<T, T>(const Point<T>&)>& dir) -> std::vector<Point<T>>;
+                                     const std::function<std::pair<T, T>(const Point<T>&)>& dir)
+        -> std::vector<Point<T>>;
 
     /**
      * @brief Create an x-monotone hull from a rectilinear polygon

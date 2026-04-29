@@ -121,7 +121,6 @@ TEST_CASE("Rectilinear Polygon point_in_rpolygon test") {
     CHECK(!point_in_rpolygon<int>(S, Point<int>{5, 11}));
 }
 
-
 TEST_CASE("RPolygon rectilinearity test") {
     // Rectilinear polygon
     const auto rectilinear_coords = std::vector<Point<int>>{{0, 0}, {10, 10}, {5, 5}};

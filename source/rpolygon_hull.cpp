@@ -1,14 +1,14 @@
 #include <algorithm>
 #include <functional>
-
-#include <recti/rpolygon_hull.hpp>
 #include <recti/rdllist.hpp>
 #include <recti/rpolygon.hpp>
+#include <recti/rpolygon_hull.hpp>
 
 namespace recti {
     template <typename T>
     auto rpolygon_make_monotone_hull(std::span<const Point<T>> pointset, bool is_anticlockwise,
-        const std::function<std::pair<T, T>(const Point<T>&)>& dir) -> std::vector<Point<T>> {
+                                     const std::function<std::pair<T, T>(const Point<T>&)>& dir)
+        -> std::vector<Point<T>> {
         if (pointset.size() <= 3) {
             return std::vector<Point<T>>(pointset.begin(), pointset.end());
         }
@@ -54,7 +54,7 @@ namespace recti {
                         vcurr = vnext;
                     }
                 } else {
-                        vcurr = vnext;
+                    vcurr = vnext;
                 }
             }
         };
@@ -78,4 +78,4 @@ namespace recti {
         std::span<const Point<int>>, bool,
         const std::function<std::pair<int, int>(const Point<int>&)>&);
 
-}
+}  // namespace recti

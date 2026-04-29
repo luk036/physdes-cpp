@@ -1,9 +1,8 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 
-#include <vector>              // for vector
-
+#include <recti/point.hpp>       // for Point, operator>
 #include <recti/to_polygon.hpp>  // for RPolygon, RPolygon_is_clockwise, cre...
-#include <recti/point.hpp>  // for Point, operator>
+#include <vector>                // for vector
 
 using namespace recti;
 
