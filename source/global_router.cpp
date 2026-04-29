@@ -1,6 +1,7 @@
 // global_router.cpp - Implementation of global routing algorithms
 #include <algorithm>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <recti/detail/svg_utils.hpp>
 #include <recti/generic.hpp>
@@ -11,9 +12,25 @@
 #include <recti/point.hpp>
 #include <sstream>
 #include <string>
+#include <stdexcept>
 #include <vector>
 
 namespace recti {
+
+// NodeType functions
+// =============================================================================
+
+std::string to_string(const NodeType routing_node_type) {
+    switch (routing_node_type) {
+        case NodeType::STEINER:
+            return "Steiner";
+        case NodeType::TERMINAL:
+            return "Terminal";
+        case NodeType::SOURCE:
+            return "Source";
+    }
+    return "Unknown";
+}
 
 /**
  * @brief Stream insertion operator for RoutingNode
@@ -177,6 +194,206 @@ class GlobalRoutingTree<Point<int, int>>;
 
 template
 class GlobalRoutingTree<Point<Point<int, int>, int>>;
+
+template <typename IntPoint>
+GlobalRouter<IntPoint>::GlobalRouter(const IntPoint& source_pos,
+                                     std::vector<IntPoint> terminal_positions,
+                                     std::optional<std::vector<Keepout>> keepout_regions)
+    : source_position(source_pos), tree(source_pos), keepouts(keepout_regions) {
+    std::sort(terminal_positions.begin(), terminal_positions.end(),
+              [this](const IntPoint& point_a, const IntPoint& point_b) {
+                  auto dist_a = this->source_position.min_dist_with(point_a);
+                  auto dist_b = this->source_position.min_dist_with(point_b);
+                  return dist_a < dist_b
+                         || (dist_a == dist_b
+                             && this->source_position.hull_with(point_a).measure()
+                                    > this->source_position.hull_with(point_b).measure());
+              });
+    this->terminal_positions = std::move(terminal_positions);
+
+    if (!this->terminal_positions.empty()) {
+        this->worst_wirelength
+            = this->source_position.min_dist_with(this->terminal_positions.back());
+    } else {
+        this->worst_wirelength = 0;
+    }
+}
+
+template <typename IntPoint>
+auto GlobalRoutingTree<IntPoint>::_find_nearest_node(const IntPoint& point,
+                                                      std::optional<std::string> exclude_id)
+    -> RoutingNode<IntPoint>* {
+    if (this->nodes.size() <= 1) return &this->source_node;
+    RoutingNode<IntPoint>* nearest = &this->source_node;
+    int min_dist = this->source_node.pt.min_dist_with(point);
+    for (auto& [id, node] : this->nodes) {
+        if (exclude_id && id == *exclude_id) continue;
+        int distance = node->pt.min_dist_with(point);
+        if (distance < min_dist) {
+            min_dist = distance;
+            nearest = node;
+        }
+    }
+    return nearest;
+}
+
+template <typename IntPoint>
+auto GlobalRoutingTree<IntPoint>::insert_steiner_node(const IntPoint& point,
+                                                     std::optional<std::string> parent_id)
+    -> std::string {
+    std::string steiner_id = "steiner_" + std::to_string(this->next_steiner_id++);
+    auto node_ptr
+        = std::make_unique<RoutingNode<IntPoint>>(steiner_id, NodeType::STEINER, point);
+    RoutingNode<IntPoint>* node = node_ptr.get();
+    this->nodes[steiner_id] = node;
+    this->owned_nodes.push_back(std::move(node_ptr));
+
+    RoutingNode<IntPoint>* parent_node;
+    if (!parent_id) {
+        parent_node = &this->source_node;
+    } else {
+        auto iter = this->nodes.find(*parent_id);
+        if (iter == this->nodes.end()) {
+            throw std::runtime_error("Parent node " + *parent_id + " not found");
+        }
+        parent_node = iter->second;
+    }
+    parent_node->add_child(node);
+    return steiner_id;
+}
+
+template <typename IntPoint>
+auto GlobalRoutingTree<IntPoint>::insert_terminal_node(const IntPoint& point,
+                                                      std::optional<std::string> parent_id)
+    -> std::string {
+    std::string terminal_id = "terminal_" + std::to_string(this->next_terminal_id++);
+    auto node_ptr
+        = std::make_unique<RoutingNode<IntPoint>>(terminal_id, NodeType::TERMINAL, point);
+    RoutingNode<IntPoint>* node = node_ptr.get();
+    this->nodes[terminal_id] = node;
+    this->owned_nodes.push_back(std::move(node_ptr));
+
+    RoutingNode<IntPoint>* parent_node;
+    if (!parent_id) {
+        parent_node = this->_find_nearest_node(point);
+    } else {
+        auto iter = this->nodes.find(*parent_id);
+        if (iter == this->nodes.end()) {
+            throw std::runtime_error("Parent node " + *parent_id + " not found");
+        }
+        parent_node = iter->second;
+    }
+    parent_node->add_child(node);
+    return terminal_id;
+}
+
+template <typename IntPoint>
+auto GlobalRoutingTree<IntPoint>::insert_node_on_branch(NodeType new_node_type, const IntPoint& point,
+                                                       std::string branch_start_id, std::string branch_end_id)
+    -> std::string {
+    auto start_iter = this->nodes.find(branch_start_id);
+    auto end_iter = this->nodes.find(branch_end_id);
+    if (start_iter == this->nodes.end() || end_iter == this->nodes.end()) {
+        throw std::runtime_error("One or both branch nodes not found");
+    }
+    RoutingNode<IntPoint>* start_node = start_iter->second;
+    RoutingNode<IntPoint>* end_node = end_iter->second;
+    auto child_iter
+        = std::find(start_node->children.begin(), start_node->children.end(), end_node);
+    if (child_iter == start_node->children.end()) {
+        throw std::runtime_error(branch_end_id + " is not a direct child of "
+                                 + branch_start_id);
+    }
+
+    std::string node_id;
+    if (new_node_type == NodeType::STEINER) {
+        node_id = "steiner_" + std::to_string(this->next_steiner_id++);
+    } else if (new_node_type == NodeType::TERMINAL) {
+        node_id = "terminal_" + std::to_string(this->next_terminal_id++);
+    }
+    auto node_ptr = std::make_unique<RoutingNode<IntPoint>>(node_id, new_node_type, point);
+    RoutingNode<IntPoint>* new_node = node_ptr.get();
+    this->nodes[node_id] = new_node;
+    this->owned_nodes.push_back(std::move(node_ptr));
+
+    start_node->remove_child(end_node);
+    start_node->add_child(new_node);
+    new_node->add_child(end_node);
+    return node_id;
+}
+
+template <typename IntPoint>
+auto GlobalRoutingTree<IntPoint>::calculate_total_wirelength() const -> int {
+    int total = 0;
+    std::function<void(const RoutingNode<IntPoint>*)> traverse
+        = [&](const RoutingNode<IntPoint>* current_node) -> void{
+              for (auto child : current_node->children) {
+                  total += current_node->manhattan_distance(child);
+                  traverse(child);
+              }
+          };
+    traverse(&source_node);
+    return total;
+}
+
+template <typename IntPoint>
+auto GlobalRoutingTree<IntPoint>::calculate_worst_wirelength() const -> int {
+    int worst_length = 0;
+    std::function<int(const RoutingNode<IntPoint>*)> traverse
+        = [&](const RoutingNode<IntPoint>* current_node) -> int {
+              for (auto child : current_node->children) {
+                  auto length = traverse(child);
+                  worst_length = std::max(worst_length, length + current_node->manhattan_distance(child));
+              }
+              return worst_length;
+          };
+
+    auto length = traverse(&source_node);
+    return length;
+}
+
+template <typename IntPoint>
+auto GlobalRoutingTree<IntPoint>::find_path_to_source(const std::string& node_id) const
+    -> std::vector<const RoutingNode<IntPoint>*> {
+    auto iter = nodes.find(node_id);
+    if (iter == nodes.end()) {
+        throw std::runtime_error("Node " + node_id + " not found");
+    }
+    const RoutingNode<IntPoint>* current = iter->second;
+    std::vector<const RoutingNode<IntPoint>*> path;
+    while (current) {
+        path.push_back(current);
+        current = current->parent;
+    }
+    std::reverse(path.begin(), path.end());
+    return path;
+}
+
+template <typename IntPoint>
+auto GlobalRoutingTree<IntPoint>::get_all_terminals() const
+    -> std::vector<const RoutingNode<IntPoint>*> {
+    std::vector<const RoutingNode<IntPoint>*> terms;
+    for (auto& pair : this->nodes) {
+        const auto& node = pair.second;
+        if (node->type == NodeType::TERMINAL) {
+            terms.push_back(node);
+        }
+    }
+    return terms;
+}
+
+template <typename IntPoint>
+auto GlobalRoutingTree<IntPoint>::get_all_steiner_nodes() const
+    -> std::vector<const RoutingNode<IntPoint>*> {
+    std::vector<const RoutingNode<IntPoint>*> steins;
+    for (auto& pair : this->nodes) {
+        const auto& node = pair.second;
+        if (node->type == NodeType::STEINER) {
+            steins.push_back(node);
+        }
+    }
+    return steins;
+}
 
 /**
  * @brief Visualize the routing tree structure
@@ -385,5 +602,8 @@ void GlobalRoutingTree<IntPoint>::optimize_steiner_points() {
         }
     }
 }
+
+template class GlobalRouter<Point<int, int>>;
+template class GlobalRouter<Point<Point<int, int>, int>>;
 
 }  // namespace recti
