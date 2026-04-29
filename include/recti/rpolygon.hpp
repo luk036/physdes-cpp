@@ -226,36 +226,8 @@ namespace recti {
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
     template <typename FwIter, typename KeyFn, typename CmpFn>
-    inline auto create_mono_rpolygon(FwIter&& first, FwIter&& last, const KeyFn& dir,
-                                     const CmpFn& cmp) -> bool {
-        assert(first != last);
-
-        // Use x-monotone as model
-        // Lambda for comparing elements based on the provided direction function.
-        auto compare_by_direction = [&dir](const auto& right_elem, const auto& left_elem) -> bool {
-            return dir(right_elem) < dir(left_elem);
-        };
-        auto result = std::minmax_element(first, last, compare_by_direction);
-        const auto leftmost = *result.first;
-        const auto rightmost = *result.second;
-
-        const auto is_anticw = cmp(dir(leftmost).second, dir(rightmost).second);
-        // Lambda to check if an element belongs to the right-to-left chain.
-        auto is_right_to_left_chain = [&leftmost, &dir](const auto& element) -> bool {
-            return dir(element).second <= dir(leftmost).second;
-        };
-        // Lambda to check if an element belongs to the left-to-right chain.
-        auto is_left_to_right_chain = [&leftmost, &dir](const auto& element) -> bool {
-            return dir(element).second >= dir(leftmost).second;
-        };
-        const auto middle = is_anticw
-                                ? std::partition(first, last, std::move(is_right_to_left_chain))
-                                : std::partition(first, last, std::move(is_left_to_right_chain));
-        std::sort(first, middle, compare_by_direction);
-        std::sort(middle, last, std::move(compare_by_direction));
-        std::reverse(middle, last);
-        return is_anticw;  // is_clockwise if y-monotone
-    }
+    auto create_mono_rpolygon(FwIter&& first, FwIter&& last, const KeyFn& dir, const CmpFn& cmp)
+        -> bool;
 
     /**
      * @brief Create a x-monotone rectilinear polygon (RPolygon) object.
@@ -268,13 +240,8 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
-    template <typename FwIter> inline auto create_xmono_rpolygon(FwIter&& first, FwIter&& last)
-        -> bool {
-        return create_mono_rpolygon(
-            first, last,
-            [](const auto& point) { return std::make_pair(point.xcoord(), point.ycoord()); },
-            [](const auto& elem_a, const auto& elem_b) -> bool { return elem_a < elem_b; });
-    }
+    template <typename FwIter>
+    auto create_xmono_rpolygon(FwIter&& first, FwIter&& last) -> bool;
 
     /**
      * @brief Create a y-monotone rectilinear polygon (RPolygon) object.
@@ -287,13 +254,8 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return `true` if the resulting RPolygon is clockwise, `false` otherwise.
      */
-    template <typename FwIter> inline auto create_ymono_rpolygon(FwIter&& first, FwIter&& last)
-        -> bool {
-        return create_mono_rpolygon(
-            first, last,
-            [](const auto& point) { return std::make_pair(point.ycoord(), point.xcoord()); },
-            [](const auto& elem_a, const auto& elem_b) -> bool { return elem_a > elem_b; });
-    }
+    template <typename FwIter>
+    auto create_ymono_rpolygon(FwIter&& first, FwIter&& last) -> bool;
 
     /**
      * @brief Create a test rectilinear polygon (RPolygon) object.
@@ -472,7 +434,6 @@ namespace recti {
             return true;
         }
 
-        // Find min and max indices
         size_t min_index = 0;
         size_t max_index = 0;
         auto min_val = dir(pointset[0]);
@@ -510,12 +471,10 @@ namespace recti {
             return false;
         };
 
-        // Chain from min to max
         if (violate(&v_min, &v_max, [](T value_a, T value_b) { return value_a > value_b; })) {
             return false;
         }
 
-        // Chain from max to min
         return !violate(&v_max, &v_min, [](T value_a, T value_b) { return value_a < value_b; });
     }
 
@@ -529,12 +488,8 @@ namespace recti {
      * @param pointset The polygon vertices as points
      * @return true if the polygon is x-monotone, false otherwise
      */
-    template <typename T> inline auto rpolygon_is_xmonotone(std::span<const Point<T>> pointset)
-        -> bool {
-        auto x_key
-            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
-        return rpolygon_is_monotone(pointset, x_key);
-    }
+    template <typename T>
+    auto rpolygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool;
 
     /**
      * @brief Check if a polygon is y-monotone
@@ -546,12 +501,8 @@ namespace recti {
      * @param pointset The polygon vertices as points
      * @return true if the polygon is y-monotone, false otherwise
      */
-    template <typename T> inline auto rpolygon_is_ymonotone(std::span<const Point<T>> pointset)
-        -> bool {
-        auto y_key
-            = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
-        return rpolygon_is_monotone(pointset, y_key);
-    }
+    template <typename T>
+    auto rpolygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool;
 
     /**
      * @brief Check if a polygon is convex
@@ -562,10 +513,8 @@ namespace recti {
      * @param pointset The polygon vertices as points
      * @return true if the polygon is y-monotone, false otherwise
      */
-    template <typename T> inline auto rpolygon_is_convex(std::span<const Point<T>> pointset)
-        -> bool {
-        return rpolygon_is_xmonotone(pointset) && rpolygon_is_ymonotone(pointset);
-    }
+    template <typename T>
+    auto rpolygon_is_convex(std::span<const Point<T>> pointset) -> bool;
 
     /**
      * @brief Determine if a point is within a rectilinear polygon.
@@ -583,25 +532,8 @@ namespace recti {
      * is strictly outside the polygon, and an unspecified boolean value if the
      * point is on the boundary of the polygon.
      */
-    template <typename T> inline auto point_in_rpolygon(std::span<const Point<T>> pointset,
-                                                        const Point<T>& query_point) -> bool {
-        auto previous_point = pointset.back();
-        const auto& query_y = query_point.ycoord();
-        const auto& previous_y = previous_point.ycoord();
-
-        auto result = false;
-        for (const auto& current_point : pointset) {
-            const auto& current_y = current_point.ycoord();
-            if ((current_y <= query_y && query_y < previous_y) // note the strict inequality to exclude points on the boundary
-                || (previous_y <= query_y && query_y < current_y)) {
-                if (current_point.xcoord() > query_point.xcoord()) {
-                    result = !result;
-                }
-            }
-            previous_point = current_point;
-        }
-        return result;
-    }
+    template <typename T>
+    auto point_in_rpolygon(std::span<const Point<T>> pointset, const Point<T>& query_point) -> bool;
 
     /**
      * @brief Determine if a rectilinear polygon is oriented clockwise.
@@ -613,11 +545,6 @@ namespace recti {
      * @param pointset The set of points defining the rectilinear polygon.
      * @return true if the polygon is oriented anti-clockwise, false otherwise.
      */
-    template <typename T> inline auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset)
-        -> bool {
-        const auto min_iterator = std::min_element(pointset.begin(), pointset.end());
-        const auto prev_iterator = min_iterator != pointset.begin() ? std::prev(min_iterator)
-                                                                    : std::prev(pointset.end());
-        return prev_iterator->ycoord() > min_iterator->ycoord();
-    }
+    template <typename T>
+    auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset) -> bool;
 }  // namespace recti
