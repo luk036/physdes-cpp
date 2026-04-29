@@ -2,10 +2,7 @@
 
 #include <algorithm>
 #include <fstream>
-#include <functional>
-#include <iomanip>
-#include <limits>
-#include <memory>
+#include <iomanip> // for setprecision
 #include <set>
 #include <sstream>
 #include <string>

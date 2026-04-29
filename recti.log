@@ -127,3 +127,114 @@
 [2026-04-27 17:31:45.438] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
 [2026-04-27 17:31:45.440] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
 [2026-04-27 17:31:45.448] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.891] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-29 20:33:04.895] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-29 20:33:04.919] [file_logger] [info] Recti message: Warning: Right node needs elongation: extend_left < 0  => extend_left set to 0
+[2026-04-29 20:33:04.920] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-29 20:33:04.925] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-29 20:33:04.927] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-29 20:33:04.928] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-29 20:33:04.929] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-29 20:33:04.930] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-29 20:33:04.931] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-29 20:33:04.932] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-29 20:33:04.933] [file_logger] [info] Recti message: Warning: Left node needs elongation: extend_left > distance => extend_left set to distance
+[2026-04-29 20:33:04.938] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.941] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.944] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.948] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.951] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.954] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.957] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.960] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.963] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.965] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.966] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.967] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.968] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.969] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.970] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.971] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.972] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.973] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.974] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.974] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.975] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.976] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.977] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.978] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.979] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.980] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.980] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.981] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.983] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.984] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.985] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.986] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.986] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.987] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.988] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.989] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.989] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.990] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.991] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.992] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.993] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.994] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.994] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.996] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.997] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:04.999] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.000] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.001] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.003] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.004] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.005] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.007] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.008] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.008] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.009] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.010] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.011] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.013] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.014] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.015] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.015] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.016] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.017] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.018] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.019] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.020] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.021] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.022] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.022] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.024] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.025] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.026] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.027] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.027] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.028] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.029] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.030] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.031] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.032] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.032] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.033] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.034] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.035] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.036] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.037] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.038] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.039] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.039] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.040] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.041] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.042] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.043] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.044] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.045] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.046] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.047] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.048] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.050] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.
+[2026-04-29 20:33:05.058] [file_logger] [info] Recti message: Warning: No valid insertion point found within allowed wirelength. Consider increasing the allowed wirelength or relaxing keepout constraints.

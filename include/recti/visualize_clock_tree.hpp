@@ -51,7 +51,7 @@ namespace recti {
               wire_color(wire_color),
               text_color(text_color) {}
 
-/**
+        /**
          * @brief Create an SVG visualization of the clock tree
          * @param[in] root The root node of the clock tree
          * @param[in] sinks The list of sinks in the clock tree

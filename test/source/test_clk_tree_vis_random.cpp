@@ -1,5 +1,4 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, TEST...
-#include <doctest/doctest.h>
 
 #include <filesystem>
 #include <ldsgen/ilds.hpp>  // for VdCorput
@@ -8,6 +7,8 @@
 #include <recti/visualize_clock_tree.hpp>  // for ManhattanArc, operator+, operator-
 #include <string>
 #include <vector>
+#include <fmt/core.h>
+
 
 using namespace recti;
 
