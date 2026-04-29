@@ -1,12 +1,9 @@
 #pragma once
 
-#include <algorithm>
-#include <functional>
 #include <span>
 #include <vector>
 
 #include "point.hpp"
-#include "rdllist.hpp"
 
 namespace recti {
     /**

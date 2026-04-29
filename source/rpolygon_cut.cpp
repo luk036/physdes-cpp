@@ -1,9 +1,60 @@
+#include <algorithm>
+#include <functional>
+#include <limits>
+#include <span>
+#include <vector>
+
+#include <recti/dllink.hpp>
+#include <recti/point.hpp>
+#include <recti/rdllist.hpp>
 #include <recti/rpolygon_cut.hpp>
 
 namespace recti {
+
+    template <typename T>
+    static auto _find_min_dist_point(const std::vector<Point<T>>& lst, Dllink<size_t>* vcurr)
+        -> std::pair<Dllink<size_t>*, bool> {
+        auto vnext = vcurr->next;
+        auto vstop = vcurr;
+        auto vi = vnext;
+
+        T min_value = std::numeric_limits<T>::max();
+        bool vertical = true;
+        Dllink<size_t>* v_min = vcurr;
+        const auto& pcurr = lst[vcurr->data];
+
+        while (vi != vstop) {
+            const auto& p0 = lst[vi->prev->data];
+            const auto& p1 = lst[vi->data];
+            const auto& p2 = lst[vi->next->data];
+            auto vec_i = p1 - pcurr;
+
+            if ((p0.ycoord() < pcurr.ycoord() && pcurr.ycoord() <= p1.ycoord())
+                || (p1.ycoord() <= pcurr.ycoord() && pcurr.ycoord() < p0.ycoord())) {
+                auto dist = std::abs(vec_i.x());
+                if (min_value > dist) {
+                    min_value = dist;
+                    v_min = vi;
+                    vertical = true;
+                }
+            }
+            if ((p2.xcoord() < pcurr.xcoord() && pcurr.xcoord() <= p1.xcoord())
+                || (p1.xcoord() <= pcurr.xcoord() && pcurr.xcoord() < p2.xcoord())) {
+                auto dist = std::abs(vec_i.y());
+                if (min_value > dist) {
+                    min_value = dist;
+                    v_min = vi;
+                    vertical = false;
+                }
+            }
+            vi = vi->next;
+        }
+        return {v_min, vertical};
+    }
+
     template <typename T>
     auto rpolygon_cut_convex_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
-                                  const std::function<bool(T)>& cmp, RDllist& rdll)
+                                   const std::function<bool(T)>& cmp, RDllist& rdll)
         -> std::vector<std::vector<size_t>> {
         auto v2 = v1->next;
         auto v3 = v2->next;
@@ -16,7 +67,7 @@ namespace recti {
         }
 
         auto find_concave_point = [&lst](Dllink<size_t>* vstart,
-                                         const std::function<bool(T)>& cmp2) -> Dllink<size_t>* {
+                                          const std::function<bool(T)>& cmp2) -> Dllink<size_t>* {
             auto vcurr = vstart;
             do {
                 auto vnext = vcurr->next;
@@ -88,7 +139,7 @@ namespace recti {
 
     template <typename T>
     auto rpolygon_cut_explicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
-                                    const std::function<bool(T)>& cmp, RDllist& rdll)
+                                     const std::function<bool(T)>& cmp, RDllist& rdll)
         -> std::vector<std::vector<size_t>> {
         const auto v2 = v1->next;
 
@@ -165,7 +216,7 @@ namespace recti {
 
     template <typename T>
     auto rpolygon_cut_implicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
-                                    const std::function<bool(T)>& cmp, RDllist& rdll)
+                                     const std::function<bool(T)>& cmp, RDllist& rdll)
         -> std::vector<std::vector<size_t>> {
         auto v2 = v1->next;
 
@@ -285,6 +336,86 @@ namespace recti {
         return L1;
     }
 
+    template <typename T>
+    auto rpolygon_cut_convex(std::span<const Point<T>> pointset, bool is_anticlockwise)
+        -> std::vector<std::vector<Point<T>>> {
+        std::vector<Point<T>> lst(pointset.begin(), pointset.end());
+        RDllist rdll(lst.size());
+
+        auto cmp = is_anticlockwise ? std::function<bool(T)>([](T a) { return a > 0; })
+                                    : std::function<bool(T)>([](T a) { return a < 0; });
+        auto index_lists = rpolygon_cut_convex_recur(&rdll[0], lst, cmp, rdll);
+
+        std::vector<std::vector<Point<T>>> result;
+        for (const auto& indices : index_lists) {
+            std::vector<Point<T>> polygon;
+            for (auto index : indices) {
+                polygon.push_back(lst[index]);
+            }
+            result.push_back(polygon);
+        }
+
+        return result;
+    }
+
+    template <typename T>
+    auto rpolygon_cut_explicit(std::span<const Point<T>> pointset, bool is_anticlockwise)
+        -> std::vector<std::vector<Point<T>>> {
+        std::vector<Point<T>> lst(pointset.begin(), pointset.end());
+        RDllist rdll(lst.size());
+
+        auto cmp = is_anticlockwise ? std::function<bool(T)>([](T a) { return a > 0; })
+                                    : std::function<bool(T)>([](T a) { return a < 0; });
+        auto index_lists = rpolygon_cut_explicit_recur(&rdll[0], lst, cmp, rdll);
+
+        std::vector<std::vector<Point<T>>> result;
+        for (const auto& indices : index_lists) {
+            std::vector<Point<T>> polygon;
+            for (auto index : indices) {
+                polygon.push_back(lst[index]);
+            }
+            result.push_back(polygon);
+        }
+
+        return result;
+    }
+
+    template <typename T>
+    auto rpolygon_cut_implicit(std::span<const Point<T>> pointset, bool is_anticlockwise)
+        -> std::vector<std::vector<Point<T>>> {
+        std::vector<Point<T>> lst(pointset.begin(), pointset.end());
+        RDllist rdll(lst.size());
+
+        auto cmp = is_anticlockwise ? std::function<bool(T)>([](T a) { return a > 0; })
+                                    : std::function<bool(T)>([](T a) { return a < 0; });
+        auto index_lists = rpolygon_cut_implicit_recur(&rdll[0], lst, cmp, rdll);
+
+        std::vector<std::vector<Point<T>>> result;
+        for (const auto& indices : index_lists) {
+            std::vector<Point<T>> polygon;
+            for (auto index : indices) {
+                polygon.push_back(lst[index]);
+            }
+            result.push_back(polygon);
+        }
+
+        return result;
+    }
+
+    template <typename T>
+    auto rpolygon_cut_rectangle(std::span<const Point<T>> pointset, bool is_anticlockwise)
+        -> std::vector<std::vector<Point<T>>> {
+        std::vector<std::vector<Point<T>>> res{};
+
+        std::vector<Point<T>> lst(pointset.begin(), pointset.end());
+        auto L1 = rpolygon_cut_implicit<T>(lst, is_anticlockwise);
+        for (auto& lst1 : L1) {
+            auto L2 = rpolygon_cut_explicit<T>(lst1, is_anticlockwise);
+            res.insert(res.end(), L2.begin(), L2.end());
+        }
+        return res;
+    }
+
     template std::vector<std::vector<size_t>> rpolygon_cut_convex_recur<int>(
         Dllink<size_t>*, std::vector<Point<int>>&,
         const std::function<bool(int)>&, RDllist&);
@@ -296,5 +427,17 @@ namespace recti {
     template std::vector<std::vector<size_t>> rpolygon_cut_implicit_recur<int>(
         Dllink<size_t>*, std::vector<Point<int>>&,
         const std::function<bool(int)>&, RDllist&);
+
+    template auto rpolygon_cut_convex<int>(std::span<const Point<int>>, bool)
+        -> std::vector<std::vector<Point<int>>>;
+
+    template auto rpolygon_cut_explicit<int>(std::span<const Point<int>>, bool)
+        -> std::vector<std::vector<Point<int>>>;
+
+    template auto rpolygon_cut_implicit<int>(std::span<const Point<int>>, bool)
+        -> std::vector<std::vector<Point<int>>>;
+
+    template auto rpolygon_cut_rectangle<int>(std::span<const Point<int>>, bool)
+        -> std::vector<std::vector<Point<int>>>;
 
 }

@@ -1,4 +1,9 @@
+#include <algorithm>
+#include <functional>
+
 #include <recti/rpolygon_hull.hpp>
+#include <recti/rdllist.hpp>
+#include <recti/rpolygon.hpp>
 
 namespace recti {
     template <typename T>
@@ -49,7 +54,7 @@ namespace recti {
                         vcurr = vnext;
                     }
                 } else {
-                    vcurr = vnext;
+                        vcurr = vnext;
                 }
             }
         };

@@ -592,7 +592,7 @@ namespace recti {
         auto result = false;
         for (const auto& current_point : pointset) {
             const auto& current_y = current_point.ycoord();
-            if ((current_y <= query_y && query_y < previous_y)
+            if ((current_y <= query_y && query_y < previous_y) // note the strict inequality to exclude points on the boundary
                 || (previous_y <= query_y && query_y < current_y)) {
                 if (current_point.xcoord() > query_point.xcoord()) {
                     result = !result;
