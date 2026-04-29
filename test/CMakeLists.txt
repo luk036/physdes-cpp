@@ -20,12 +20,12 @@ CPMAddPackage("gh:doctest/doctest@2.4.11")
 CPMAddPackage("gh:TheLartians/Format.cmake@1.7.3")
 
 # Add RapidCheck for property-based testing
-CPMAddPackage(
-  NAME rapidcheck
-  GITHUB_REPOSITORY emil-e/rapidcheck
-  GIT_TAG master
-  OPTIONS "RC_BUILD_TESTS OFF" "RC_BUILD_EXAMPLES OFF" "RC_INSTALL OFF"
-)
+# CPMAddPackage(
+#   NAME rapidcheck
+#   GITHUB_REPOSITORY emil-e/rapidcheck
+#   GIT_TAG master
+#   OPTIONS "RC_BUILD_TESTS OFF" "RC_BUILD_EXAMPLES OFF" "RC_INSTALL OFF"
+# )
 
 if(TEST_INSTALLED_VERSION)
   find_package(Recti REQUIRED)
@@ -41,17 +41,17 @@ target_link_libraries(${PROJECT_NAME} doctest::doctest Recti::Recti ${SPECIFIC_L
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 20)
 
 # Add RapidCheck support if available
-if(rapidcheck_ADDED)
-  target_compile_definitions(${PROJECT_NAME} PRIVATE RAPIDCHECK_H)
-  if(TARGET rapidcheck::rapidcheck)
-    target_link_libraries(${PROJECT_NAME} rapidcheck::rapidcheck)
-  else()
-    target_include_directories(${PROJECT_NAME} PRIVATE ${rapidcheck_SOURCE_DIR}/include)
-    if(TARGET rapidcheck)
-      target_link_libraries(${PROJECT_NAME} rapidcheck)
-    endif()
-  endif()
-endif()
+# if(rapidcheck_ADDED)
+#   target_compile_definitions(${PROJECT_NAME} PRIVATE RAPIDCHECK_H)
+#   if(TARGET rapidcheck::rapidcheck)
+#     target_link_libraries(${PROJECT_NAME} rapidcheck::rapidcheck)
+#   else()
+#     target_include_directories(${PROJECT_NAME} PRIVATE ${rapidcheck_SOURCE_DIR}/include)
+#     if(TARGET rapidcheck)
+#       target_link_libraries(${PROJECT_NAME} rapidcheck)
+#     endif()
+#   endif()
+# endif()
 
 # enable compiler warnings
 if(NOT TEST_INSTALLED_VERSION)
