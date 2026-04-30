@@ -31,23 +31,23 @@ auto main(int, char**) -> int {
     //     const auto result = options.parse(argc, argv);
 
     //     if (result["help"].as<bool>()) {
-    //         std::cout << options.help() << std::endl;
+    //         std::cout << options.help() << '\n';
     //         return 0;
     //     }
 
     //     if (result["version"].as<bool>()) {
-    //         std::cout << "Recti, version " << RECTI_VERSION << std::endl;
+    //         std::cout << "Recti, version " << RECTI_VERSION << '\n';
     //         return 0;
     //     }
 
     // const auto langIt = languages.find(language);
     // if (langIt == languages.end()) {
-    //     std::cerr << "unknown language code: " << language << std::endl;
+    //     std::cerr << "unknown language code: " << language << '\n';
     //     return 1;
     // }
 
     // recti::Recti recti(name);
-    // std::cout << recti.greet(langIt->second) << std::endl;
+    // std::cout << recti.greet(langIt->second) << '\n';
 
     return 0;
 }

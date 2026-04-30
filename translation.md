@@ -15,19 +15,19 @@ else:
 int main() {
     int i;
     for (i = 0; i < 100; i++) {
-        std::cout << i << std::endl;
+        std::cout << i << '\n';
     }
-    std::cout << i << std::endl;
+    std::cout << i << '\n';
 
     int j;
     for (j = 0; j < 100; j++) {
         if (j > i) {
             break;
         }
-        std::cout << j << std::endl;
+        std::cout << j << '\n';
     }
     if (j == 100) {
-        std::cout << j << std::endl;
+        std::cout << j << '\n';
     }
 
     return 0;

@@ -81,7 +81,7 @@ namespace recti {
             std::ofstream file(filename);
             if (file.is_open()) {
                 file << svg_string;
-                std::cout << "Clock tree visualization saved to " << filename << std::endl;
+                std::cout << "Clock tree visualization saved to " << filename << '\n';
             }
         }
 
@@ -462,7 +462,7 @@ namespace recti {
             std::ofstream file(filename);
             if (file.is_open()) {
                 file << svg_string;
-                std::cout << "Comparison visualization saved to " << filename << std::endl;
+                std::cout << "Comparison visualization saved to " << filename << '\n';
             }
         }
 
@@ -498,7 +498,7 @@ namespace recti {
                Sink("s5", Point<int>(-20, -20), 1.0),  Sink("s6", Point<int>(-30, -50), 1.0),
                Sink("s7", Point<int>(-100, -40), 1.0), Sink("s8", Point<int>(-100, 0), 1.0)};
 
-        std::cout << "=== Generating Clock Trees with Different Delay Models ===" << std::endl;
+        std::cout << "=== Generating Clock Trees with Different Delay Models ===\n";
 
         // Linear delay model
         auto linear_calc = std::make_unique<LinearDelayCalculator>(0.5, 0.2);
@@ -534,10 +534,10 @@ namespace recti {
 
         auto comparison_svg = create_delay_model_comparison(linear_data, elmore_data);
 
-        std::cout << "Visualizations created:" << std::endl;
-        std::cout << "- linear_model_clock_tree.svg: Linear delay model" << std::endl;
-        std::cout << "- elmore_model_clock_tree.svg: Elmore delay model" << std::endl;
-        std::cout << "- delay_model_comparison.svg: Side-by-side comparison" << std::endl;
+        std::cout << "Visualizations created:\n";
+        std::cout << "- linear_model_clock_tree.svg: Linear delay model\n";
+        std::cout << "- elmore_model_clock_tree.svg: Elmore delay model\n";
+        std::cout << "- delay_model_comparison.svg: Side-by-side comparison\n";
     }
 
 }  // namespace recti
