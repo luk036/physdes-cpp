@@ -41,17 +41,17 @@ namespace recti {
 
         // Create SVG content
         std::vector<std::string> svg_content;
-        svg_content.push_back("<svg width=\"" + std::to_string(width) + "\" height=\""
+        svg_content.emplace_back("<svg width=\"" + std::to_string(width) + "\" height=\""
                               + std::to_string(height)
                               + "\" xmlns=\"http://www.w3.org/2000/svg\">");
-        svg_content.push_back("<style>");
-        svg_content.push_back("  .node-label { font: 10px sans-serif; fill: #333; }");
-        svg_content.push_back("  .delay-label { font: 8px sans-serif; fill: #666; }");
-        svg_content.push_back("  .wire-label { font: 9px sans-serif; fill: #444; }");
-        svg_content.push_back("  .analysis-label { font: 12px sans-serif; fill: #333; }");
-        svg_content.push_back("</style>");
-        svg_content.push_back("<rect width=\"100%\" height=\"100%\" fill=\"white\"/>");
-        svg_content.push_back("<g class=\"clock-tree\">");
+        svg_content.emplace_back("<style>");
+        svg_content.emplace_back("  .node-label { font: 10px sans-serif; fill: #333; }");
+        svg_content.emplace_back("  .delay-label { font: 8px sans-serif; fill: #666; }");
+        svg_content.emplace_back("  .wire-label { font: 9px sans-serif; fill: #444; }");
+        svg_content.emplace_back("  .analysis-label { font: 12px sans-serif; fill: #333; }");
+        svg_content.emplace_back("</style>");
+        svg_content.emplace_back("<rect width=\"100%\" height=\"100%\" fill=\"white\"/>");
+        svg_content.emplace_back("<g class=\"clock-tree\">");
 
         // Draw wires first (so they appear behind nodes)
         auto wires = draw_wires(root, scale_coord);
@@ -68,8 +68,8 @@ namespace recti {
         }
 
         // Close SVG
-        svg_content.push_back("</g>");
-        svg_content.push_back("</svg>");
+        svg_content.emplace_back("</g>");
+        svg_content.emplace_back("</svg>");
 
         std::string svg_string;
         for (const auto& svg_line : svg_content) {
@@ -99,7 +99,7 @@ namespace recti {
         std::function<void(const std::shared_ptr<TreeNode>&)> collect;
         collect = [&](const std::shared_ptr<TreeNode>& tree_node) {
             if (tree_node) {
-                nodes.push_back(tree_node);
+                nodes.emplace_back(tree_node);
                 collect(tree_node->left);
                 collect(tree_node->right);
             }
@@ -178,7 +178,7 @@ namespace recti {
                 line << "<line x1=\"" << coord_x1 << "\" y1=\"" << coord_y1 << "\" x2=\""
                      << coord_x2 << "\" y2=\"" << coord_y2 << "\" stroke=\"" << this->wire_color
                      << "\" stroke-width=\"" << this->wire_width << "\" stroke-linecap=\"round\"/>";
-                svg_elements.push_back(line.str());
+                svg_elements.emplace_back(line.str());
 
                 // Add wire length label
                 double mid_coord_x = (coord_x1 + coord_x2) / 2;
@@ -188,7 +188,7 @@ namespace recti {
                     label << "<text x=\"" << mid_coord_x << "\" y=\"" << mid_coord_y - 5
                           << "\" class=\"wire-label\" text-anchor=\"middle\">"
                           << tree_node->wire_length << "</text>";
-                    svg_elements.push_back(label.str());
+                    svg_elements.emplace_back(label.str());
                 }
             }
 
@@ -248,7 +248,7 @@ namespace recti {
                 circle << "<circle cx=\"" << coord_x << "\" cy=\"" << coord_y << "\" r=\""
                        << node_radius << "\" fill=\"" << color
                        << "\" stroke=\"#333\" stroke-width=\"1\"/>";
-                svg_elements.push_back(circle.str());
+                svg_elements.emplace_back(circle.str());
 
                 // Draw node label
                 double label_y_offset = -node_radius - 5;
@@ -256,7 +256,7 @@ namespace recti {
                 label << "<text x=\"" << coord_x << "\" y=\"" << coord_y + label_y_offset
                       << "\" class=\"node-label\" text-anchor=\"middle\">" << tree_node->name
                       << "</text>";
-                svg_elements.push_back(label.str());
+                svg_elements.emplace_back(label.str());
 
                 // Draw delay information
                 double delay_y_offset = node_radius + 12;
@@ -264,7 +264,7 @@ namespace recti {
                 delay_label << "<text x=\"" << coord_x << "\" y=\"" << coord_y + delay_y_offset
                             << "\" class=\"delay-label\" text-anchor=\"middle\">d:" << std::fixed
                             << std::setprecision(1) << tree_node->delay << "</text>";
-                svg_elements.push_back(delay_label.str());
+                svg_elements.emplace_back(delay_label.str());
 
                 // Draw capacitance information for sinks
                 if (is_sink) {
@@ -273,7 +273,7 @@ namespace recti {
                     cap_label << "<text x=\"" << coord_x << "\" y=\"" << coord_y + cap_y_offset
                               << "\" class=\"delay-label\" text-anchor=\"middle\">c:" << std::fixed
                               << std::setprecision(1) << tree_node->capacitance << "</text>";
-                    svg_elements.push_back(cap_label.str());
+                    svg_elements.emplace_back(cap_label.str());
                 }
 
                 draw_nodes_recursive(tree_node->left, tree_depth + 1);
@@ -293,17 +293,17 @@ namespace recti {
                                                                       int /* width */) {
         std::vector<std::string> analysis_box;
 
-        analysis_box.push_back("<g class=\"analysis-info\">");
-        analysis_box.push_back(
+        analysis_box.emplace_back("<g class=\"analysis-info\">");
+        analysis_box.emplace_back(
             "<rect x=\"10\" y=\"10\" width=\"220\" height=\"140\" fill=\"white\" "
             "stroke=\"#ccc\" stroke-width=\"1\" rx=\"5\"/>");
-        analysis_box.push_back(
+        analysis_box.emplace_back(
             "<rect x=\"10\" y=\"10\" width=\"220\" height=\"20\" fill=\"#f0f0f0\" "
             "stroke=\"#ccc\" stroke-width=\"1\" rx=\"5\"/>");
-        analysis_box.push_back(
+        analysis_box.emplace_back(
             "<text x=\"20\" y=\"25\" font-family=\"sans-serif\" font-size=\"12\" "
             "font-weight=\"bold\" fill=\"#333\">Clock Tree Analysis</text>");
-        analysis_box.push_back(
+        analysis_box.emplace_back(
             "<text x=\"20\" y=\"45\" font-family=\"monospace\" font-size=\"11\" "
             "fill=\"#333\">");
 
@@ -320,11 +320,11 @@ namespace recti {
             std::ostringstream tspan;
             tspan << "<tspan x=\"20\" y=\"" << 45 + (idx + 1) * 16 << "\">" << analysis_text[idx]
                   << "</tspan>";
-            analysis_box.push_back(tspan.str());
+            analysis_box.emplace_back(tspan.str());
         }
 
-        analysis_box.push_back("</text>");
-        analysis_box.push_back("</g>");
+        analysis_box.emplace_back("</text>");
+        analysis_box.emplace_back("</g>");
 
         return analysis_box;
     }
@@ -376,16 +376,16 @@ namespace recti {
         int sub_height = height / rows;
 
         std::vector<std::string> svg_content;
-        svg_content.push_back("<svg width=\"" + std::to_string(width) + "\" height=\""
+        svg_content.emplace_back("<svg width=\"" + std::to_string(width) + "\" height=\""
                               + std::to_string(height)
                               + "\" xmlns=\"http://www.w3.org/2000/svg\">");
-        svg_content.push_back("<style>");
-        svg_content.push_back("  .node-label { font: 8px sans-serif; fill: #333; }");
-        svg_content.push_back("  .delay-label { font: 7px sans-serif; fill: #666; }");
-        svg_content.push_back("  .title { font: 14px sans-serif; fill: #333; font-weight: bold; }");
-        svg_content.push_back("  .comparison-label { font: 10px sans-serif; fill: #333; }");
-        svg_content.push_back("</style>");
-        svg_content.push_back("<rect width=\"100%\" height=\"100%\" fill=\"white\"/>");
+        svg_content.emplace_back("<style>");
+        svg_content.emplace_back("  .node-label { font: 8px sans-serif; fill: #333; }");
+        svg_content.emplace_back("  .delay-label { font: 7px sans-serif; fill: #666; }");
+        svg_content.emplace_back("  .title { font: 14px sans-serif; fill: #333; font-weight: bold; }");
+        svg_content.emplace_back("  .comparison-label { font: 10px sans-serif; fill: #333; }");
+        svg_content.emplace_back("</style>");
+        svg_content.emplace_back("<rect width=\"100%\" height=\"100%\" fill=\"white\"/>");
 
         ClockTreeVisualizer visualizer(40,         // margin
                                        6,          // node_radius
@@ -407,7 +407,7 @@ namespace recti {
             title << "<text x=\"" << offset_x + sub_width / 2 << "\" y=\"" << offset_y + 20
                   << "\" class=\"title\" text-anchor=\"middle\">" << trees_data[i].title
                   << "</text>";
-            svg_content.push_back(title.str());
+            svg_content.emplace_back(title.str());
 
             // Create visualization for this tree
             auto temp_svg = visualizer.visualize_tree(trees_data[i].tree, trees_data[i].sinks,
@@ -430,7 +430,7 @@ namespace recti {
                     break;
                 }
                 if (in_clock_tree) {
-                    tree_lines.push_back(line);
+                    tree_lines.emplace_back(line);
                 }
             }
 
@@ -445,13 +445,13 @@ namespace recti {
             std::ostringstream transform;
             transform << "<g transform=\"translate(" << offset_x + 10 << ", " << offset_y + 40
                       << ")\">";
-            svg_content.push_back(transform.str());
+            svg_content.emplace_back(transform.str());
             svg_content.insert(svg_content.end(), tree_lines.begin(), tree_lines.end());
-            svg_content.push_back("</g>");
-            svg_content.push_back("</g>");  // luk
+            svg_content.emplace_back("</g>");
+            svg_content.emplace_back("</g>");  // luk
         }
 
-        svg_content.push_back("</svg>");
+        svg_content.emplace_back("</svg>");
 
         std::string svg_string;
         for (const auto& line : svg_content) {

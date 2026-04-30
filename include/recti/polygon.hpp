@@ -50,7 +50,7 @@ namespace recti {
             if (pointset.size() <= 1) return;
             _vecs.reserve(pointset.size() - 1);
             for (auto it = pointset.begin() + 1; it != pointset.end(); ++it) {
-                _vecs.push_back(*it - _origin);
+                _vecs.emplace_back(*it - _origin);
             }
         }
 
@@ -125,9 +125,9 @@ namespace recti {
         constexpr auto vertices() const -> std::vector<Point<T>> {
             std::vector<Point<T>> result;
             result.reserve(_vecs.size() + 1);
-            result.push_back(_origin);
+            result.emplace_back(_origin);
             for (const auto& vec : _vecs) {
-                result.push_back(_origin + vec);
+                result.emplace_back(_origin + vec);
             }
             return result;
         }

@@ -182,8 +182,8 @@ class SteinerForestGrid {
             int target_node = pair.target.coord_x * this->width + pair.target.coord_y;
             sources.insert(source_node);
             terminals.insert(target_node);
-            pairDict[source_node].push_back(target_node);
-            pairDict[target_node].push_back(source_node);
+            pairDict[source_node].emplace_back(target_node);
+            pairDict[target_node].emplace_back(source_node);
         }
 
         std::unordered_set<int> allTerm;

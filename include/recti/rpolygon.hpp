@@ -131,9 +131,9 @@ namespace recti {
         constexpr auto vertices() const -> std::vector<Point<T>> {
             std::vector<Point<T>> result;
             result.reserve(_vecs.size() + 1);
-            result.push_back(_origin);
+            result.emplace_back(_origin);
             for (const auto& vec : _vecs) {
-                result.push_back(_origin + vec);
+                result.emplace_back(_origin + vec);
             }
             return result;
         }

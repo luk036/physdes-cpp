@@ -97,7 +97,7 @@ namespace recti {
             std::vector<size_t> indices;
             auto current = v1;
             do {
-                indices.push_back(current->data);
+                indices.emplace_back(current->data);
                 current = current->next;
             } while (current != v1);
             return {std::move(indices)};
@@ -128,7 +128,7 @@ namespace recti {
             v_min->next = vcurr;
             p_new = Point<T>(p1.xcoord(), p_min.ycoord());
         }
-        lst.push_back(p_new);
+        lst.emplace_back(p_new);
 
         auto L1 = rpolygon_cut_convex_recur(vcurr, lst, cmp, rdll);
         auto L2 = rpolygon_cut_convex_recur(new_node, lst, cmp, rdll);
@@ -173,7 +173,7 @@ namespace recti {
             std::vector<size_t> indices;
             auto current = v1;
             do {
-                indices.push_back(current->data);
+                indices.emplace_back(current->data);
                 current = current->next;
             } while (current != v1);
             return {std::move(indices)};
@@ -205,7 +205,7 @@ namespace recti {
             p_new = Point<T>(p1.xcoord(), p_min.ycoord());
         }
 
-        lst.push_back(p_new);
+        lst.emplace_back(p_new);
 
         auto L1 = rpolygon_cut_explicit_recur(vcurr, lst, cmp, rdll);
         auto L2 = rpolygon_cut_explicit_recur(new_node, lst, cmp, rdll);
@@ -248,7 +248,7 @@ namespace recti {
             std::vector<size_t> indices;
             auto current = v1;
             do {
-                indices.push_back(current->data);
+                indices.emplace_back(current->data);
                 current = current->next;
             } while (current != v1);
             return {std::move(indices)};
@@ -327,7 +327,7 @@ namespace recti {
             p_new = Point<T>(p1.xcoord(), p_min.ycoord());
         }
 
-        lst.push_back(p_new);
+        lst.emplace_back(p_new);
 
         auto L1 = rpolygon_cut_implicit_recur(v_min, lst, cmp, rdll);
         auto L2 = rpolygon_cut_implicit_recur(new_node, lst, cmp, rdll);
@@ -349,9 +349,9 @@ namespace recti {
         for (const auto& indices : index_lists) {
             std::vector<Point<T>> polygon;
             for (auto index : indices) {
-                polygon.push_back(lst[index]);
+                polygon.emplace_back(lst[index]);
             }
-            result.push_back(polygon);
+            result.emplace_back(polygon);
         }
 
         return result;
@@ -371,9 +371,9 @@ namespace recti {
         for (const auto& indices : index_lists) {
             std::vector<Point<T>> polygon;
             for (auto index : indices) {
-                polygon.push_back(lst[index]);
+                polygon.emplace_back(lst[index]);
             }
-            result.push_back(polygon);
+            result.emplace_back(polygon);
         }
 
         return result;
@@ -393,9 +393,9 @@ namespace recti {
         for (const auto& indices : index_lists) {
             std::vector<Point<T>> polygon;
             for (auto index : indices) {
-                polygon.push_back(lst[index]);
+                polygon.emplace_back(lst[index]);
             }
-            result.push_back(polygon);
+            result.emplace_back(polygon);
         }
 
         return result;

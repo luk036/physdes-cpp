@@ -91,8 +91,8 @@ TEST_CASE("Rectangle 3D test") {
 //             auto xrng = Interval{xcoord, xcoord + 100};
 //             // auto yrng = Interval{ycoord, ycoord + 100};
 //             // auto r = Rectangle{xrng, yrng};
-//             // lst.push_back(r);
-//             lst.push_back(xrng);
+//             // lst.emplace_back(r);
+//             lst.emplace_back(xrng);
 //         }
 //     }
 
@@ -102,7 +102,7 @@ TEST_CASE("Rectangle 3D test") {
 
 //     for (const auto& intvl : lst) {
 //         if (S.find(intvl) != S.end()) {
-//             L.push_back(intvl);
+//             L.emplace_back(intvl);
 //         } else {
 //             S.insert(intvl);
 //         }

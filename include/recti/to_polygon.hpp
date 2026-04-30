@@ -31,7 +31,7 @@ namespace recti {
                 // Add intermediate point for non-rectilinear segment
                 new_vecs.emplace_back(next_point.x(), current_point.y());
             }
-            new_vecs.push_back(next_point);
+            new_vecs.emplace_back(next_point);
             current_point = next_point;
         }
 

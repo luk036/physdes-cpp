@@ -165,7 +165,7 @@ namespace recti {
             = std::make_unique<RoutingNode<IntPoint>>(terminal_id, NodeType::TERMINAL, point);
         RoutingNode<IntPoint>* terminal_node = terminal_ptr.get();
         this->nodes[terminal_id] = terminal_node;
-        this->owned_nodes.push_back(std::move(terminal_ptr));
+        this->owned_nodes.emplace_back(std::move(terminal_ptr));
         auto [parent_node, nearest_node]
             = this->_find_nearest_insertion_with_constraints(point, allowed_wirelength, keepouts);
         if (parent_node == nullptr) {
@@ -180,7 +180,7 @@ namespace recti {
                 steiner_id, NodeType::STEINER, nearest_pt);
             RoutingNode<IntPoint>* new_node = steiner_ptr.get();
             this->nodes[steiner_id] = new_node;
-            this->owned_nodes.push_back(std::move(steiner_ptr));
+            this->owned_nodes.emplace_back(std::move(steiner_ptr));
             parent_node->remove_child(nearest_node);
             parent_node->add_child(new_node);
             new_node->path_length
@@ -242,7 +242,7 @@ namespace recti {
             = std::make_unique<RoutingNode<IntPoint>>(steiner_id, NodeType::STEINER, point);
         RoutingNode<IntPoint>* node = node_ptr.get();
         this->nodes[steiner_id] = node;
-        this->owned_nodes.push_back(std::move(node_ptr));
+        this->owned_nodes.emplace_back(std::move(node_ptr));
 
         RoutingNode<IntPoint>* parent_node;
         if (!parent_id) {
@@ -267,7 +267,7 @@ namespace recti {
             = std::make_unique<RoutingNode<IntPoint>>(terminal_id, NodeType::TERMINAL, point);
         RoutingNode<IntPoint>* node = node_ptr.get();
         this->nodes[terminal_id] = node;
-        this->owned_nodes.push_back(std::move(node_ptr));
+        this->owned_nodes.emplace_back(std::move(node_ptr));
 
         RoutingNode<IntPoint>* parent_node;
         if (!parent_id) {
@@ -312,7 +312,7 @@ namespace recti {
         auto node_ptr = std::make_unique<RoutingNode<IntPoint>>(node_id, new_node_type, point);
         RoutingNode<IntPoint>* new_node = node_ptr.get();
         this->nodes[node_id] = new_node;
-        this->owned_nodes.push_back(std::move(node_ptr));
+        this->owned_nodes.emplace_back(std::move(node_ptr));
 
         start_node->remove_child(end_node);
         start_node->add_child(new_node);
@@ -361,7 +361,7 @@ namespace recti {
         const RoutingNode<IntPoint>* current = iter->second;
         std::vector<const RoutingNode<IntPoint>*> path;
         while (current) {
-            path.push_back(current);
+            path.emplace_back(current);
             current = current->parent;
         }
         std::reverse(path.begin(), path.end());
@@ -374,7 +374,7 @@ namespace recti {
         for (auto& pair : this->nodes) {
             const auto& node = pair.second;
             if (node->type == NodeType::TERMINAL) {
-                terms.push_back(node);
+                terms.emplace_back(node);
             }
         }
         return terms;
@@ -386,7 +386,7 @@ namespace recti {
         for (auto& pair : this->nodes) {
             const auto& node = pair.second;
             if (node->type == NodeType::STEINER) {
-                steins.push_back(node);
+                steins.emplace_back(node);
             }
         }
         return steins;
@@ -418,7 +418,7 @@ namespace recti {
         std::vector<RoutingNode<Point<int, int>>*> all_nodes;
         all_nodes.reserve(tree.nodes.size());
         for (const auto& [node_id, routing_node] : tree.nodes) {
-            all_nodes.push_back(routing_node);
+            all_nodes.emplace_back(routing_node);
         }
         if (all_nodes.empty()) {
             return "<svg></svg>";
@@ -498,7 +498,7 @@ namespace recti {
         std::vector<RoutingNode<Point<Point<int, int>, int>>*> all_nodes;
         all_nodes.reserve(tree.nodes.size());
         for (const auto& [node_id, routing_node] : tree.nodes) {
-            all_nodes.push_back(routing_node);
+            all_nodes.emplace_back(routing_node);
         }
         if (all_nodes.empty()) {
             return "<svg></svg>";
@@ -582,7 +582,7 @@ namespace recti {
         for (auto& [id, node] : this->nodes) {
             if (node->type == NodeType::STEINER && node->children.size() == 1
                 && node->parent != nullptr) {
-                steiner_ids_to_remove.push_back(id);
+                steiner_ids_to_remove.emplace_back(id);
             }
         }
 

@@ -92,7 +92,7 @@ namespace recti {
         for (const auto& sink : this->sinks) {
             auto node = std::make_shared<TreeNode>(sink.name, sink.position);
             node->capacitance = sink.capacitance;
-            nodes.push_back(node);
+            nodes.emplace_back(node);
         }
         // Step 2: Build the merging tree topology using a balanced bipartitioning strategy.
         // The 'false' argument indicates starting with a horizontal cut.
@@ -313,7 +313,7 @@ namespace recti {
         collect_sink_delays = [&](const std::shared_ptr<TreeNode>& node) {
             if (!node) return;
             if (node->is_leaf()) {
-                sink_delays.push_back(node->delay);
+                sink_delays.emplace_back(node->delay);
             }
             collect_sink_delays(node->left);
             collect_sink_delays(node->right);
@@ -375,7 +375,7 @@ namespace recti {
                                          node->capacitance});
 
                   if (node->is_leaf()) {
-                      stats.sinks.push_back(node->name);
+                      stats.sinks.emplace_back(node->name);
                   }
 
                   if (parent) {
