@@ -21,7 +21,7 @@ if is_plat("linux") then
         add_sysincludedirs(termux_prefix .. "/include", {public = true})
     end
 elseif is_plat("windows") then
-	add_cxflags("/EHsc /W4 /WX /utf-8", { force = true })
+	add_cxflags("/EHsc /W4 /WX /wd4459 /utf-8", { force = true })
 	add_ldflags("/FORCE:MULTIPLE", { force = true })
 end
 

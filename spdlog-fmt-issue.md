@@ -65,7 +65,7 @@ Required for fmt 12.x Unicode support on Windows:
 
 ```lua
 elseif is_plat("windows") then
-    add_cxflags("/EHsc /W4 /WX /utf-8", { force = true })
+    add_cxflags("/EHsc /W4 /WX /wd4459 /utf-8", { force = true })
 ```
 
 Without this flag, fmt 12.x fails to compile with:
@@ -79,7 +79,7 @@ The core fix to handle duplicate symbols:
 
 ```lua
 elseif is_plat("windows") then
-    add_cxflags("/EHsc /W4 /WX /utf-8", { force = true })
+    add_cxflags("/EHsc /W4 /WX /wd4459 /utf-8", { force = true })
     add_ldflags("/FORCE:MULTIPLE", { force = true })
 end
 ```
@@ -232,8 +232,8 @@ The project's CMake build doesn't experience this problem because:
 
 ```cmake
 # In cmake/specific.cmake
-CPMAddPackage(NAME fmt GIT_TAG 10.2.1 ...)
-CPMAddPackage(NAME spdlog GIT_TAG v1.12.0 ...)
+CPMAddPackage(NAME fmt GIT_TAG 12.1.0 ...)
+CPMAddPackage(NAME spdlog GIT_TAG v1.17.0 ...)
 
 set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt Microsoft.GSL::GSL spdlog::spdlog)
 ```
@@ -244,8 +244,8 @@ xmake's package system, while functional, has different semantics for dependency
 
 ## Package Versions
 
-- **fmt**: 12.1.0 (note: CMake uses 10.2.1)
-- **spdlog**: 1.17.0 (CMake uses 1.12.0)
+- **fmt**: 12.1.0 (note: CMake uses 12.1.0)
+- **spdlog**: 1.17.0 (CMake uses 1.17.0)
 - **microsoft-gsl**: 4.2.1 (CMake uses 4.0.0)
 - **doctest**: 2.4.12
 - **benchmark**: 1.9.5

@@ -150,7 +150,7 @@ cmake -S test -B build/test -DUSE_STATIC_ANALYZER='clang-tidy;cppcheck'
 ### Compiler Flags
 
 - **GCC/Clang**: `-Wall -Wpedantic -Wextra -Werror -Wno-deprecated-declarations`
-- **MSVC**: `/W4 /WX /wd4819 /wd4996`
+- **MSVC**: `/W4 /WX /wd4459 /wd4819 /wd4996`
 
 ### Error Handling
 

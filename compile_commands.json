@@ -1,0 +1,186 @@
+[
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_spdlogger_simple\\windows\\x64\\release\\test_spdlogger_simple.cpp.obj", "test_spdlogger_simple.cpp"],
+  "file": "test_spdlogger_simple.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\main.cpp.obj", "test\\source\\main.cpp"],
+  "file": "test\\source\\main.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_clk_tree_vis.cpp.obj", "test\\source\\test_clk_tree_vis.cpp"],
+  "file": "test\\source\\test_clk_tree_vis.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_clk_tree_vis_random.cpp.obj", "test\\source\\test_clk_tree_vis_random.cpp"],
+  "file": "test\\source\\test_clk_tree_vis_random.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_dme_algorithm.cpp.obj", "test\\source\\test_dme_algorithm.cpp"],
+  "file": "test\\source\\test_dme_algorithm.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_dme_algorithm_stress.cpp.obj", "test\\source\\test_dme_algorithm_stress.cpp"],
+  "file": "test\\source\\test_dme_algorithm_stress.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_generic.cpp.obj", "test\\source\\test_generic.cpp"],
+  "file": "test\\source\\test_generic.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_global_router.cpp.obj", "test\\source\\test_global_router.cpp"],
+  "file": "test\\source\\test_global_router.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_global_router3d.cpp.obj", "test\\source\\test_global_router3d.cpp"],
+  "file": "test\\source\\test_global_router3d.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_global_router3d_with_keepouts.cpp.obj", "test\\source\\test_global_router3d_with_keepouts.cpp"],
+  "file": "test\\source\\test_global_router3d_with_keepouts.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_global_router_stress.cpp.obj", "test\\source\\test_global_router_stress.cpp"],
+  "file": "test\\source\\test_global_router_stress.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_global_router_with_keepouts.cpp.obj", "test\\source\\test_global_router_with_keepouts.cpp"],
+  "file": "test\\source\\test_global_router_with_keepouts.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_halton_int.cpp.obj", "test\\source\\test_halton_int.cpp"],
+  "file": "test\\source\\test_halton_int.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_halton_int2.cpp.obj", "test\\source\\test_halton_int2.cpp"],
+  "file": "test\\source\\test_halton_int2.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_interval.cpp.obj", "test\\source\\test_interval.cpp"],
+  "file": "test\\source\\test_interval.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_merge.cpp.obj", "test\\source\\test_merge.cpp"],
+  "file": "test\\source\\test_merge.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_point.cpp.obj", "test\\source\\test_point.cpp"],
+  "file": "test\\source\\test_point.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_polygon.cpp.obj", "test\\source\\test_polygon.cpp"],
+  "file": "test\\source\\test_polygon.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_rdllist.cpp.obj", "test\\source\\test_rdllist.cpp"],
+  "file": "test\\source\\test_rdllist.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_recti.cpp.obj", "test\\source\\test_recti.cpp"],
+  "file": "test\\source\\test_recti.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_recti3d.cpp.obj", "test\\source\\test_recti3d.cpp"],
+  "file": "test\\source\\test_recti3d.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_rpolygon.cpp.obj", "test\\source\\test_rpolygon.cpp"],
+  "file": "test\\source\\test_rpolygon.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_rpolygon_cut.cpp.obj", "test\\source\\test_rpolygon_cut.cpp"],
+  "file": "test\\source\\test_rpolygon_cut.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_rpolygon_hull.cpp.obj", "test\\source\\test_rpolygon_hull.cpp"],
+  "file": "test\\source\\test_rpolygon_hull.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_rpolygon_stress.cpp.obj", "test\\source\\test_rpolygon_stress.cpp"],
+  "file": "test\\source\\test_rpolygon_stress.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_to_polygon.cpp.obj", "test\\source\\test_to_polygon.cpp"],
+  "file": "test\\source\\test_to_polygon.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/I..\\lds-gen-cpp\\include", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\d\\doctest\\2.4.12\\570a4b2e9dfb4c439b00b0a06936fa08\\include\\doctest", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\test_recti\\windows\\x64\\release\\test\\source\\test_vector2.cpp.obj", "test\\source\\test_vector2.cpp"],
+  "file": "test\\source\\test_vector2.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\Recti\\windows\\x64\\release\\source\\dme_algorithm.cpp.obj", "source\\dme_algorithm.cpp"],
+  "file": "source\\dme_algorithm.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\Recti\\windows\\x64\\release\\source\\global_router.cpp.obj", "source\\global_router.cpp"],
+  "file": "source\\global_router.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\Recti\\windows\\x64\\release\\source\\logger.cpp.obj", "source\\logger.cpp"],
+  "file": "source\\logger.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\Recti\\windows\\x64\\release\\source\\polygon.cpp.obj", "source\\polygon.cpp"],
+  "file": "source\\polygon.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\Recti\\windows\\x64\\release\\source\\recti.cpp.obj", "source\\recti.cpp"],
+  "file": "source\\recti.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\Recti\\windows\\x64\\release\\source\\rpolygon.cpp.obj", "source\\rpolygon.cpp"],
+  "file": "source\\rpolygon.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\Recti\\windows\\x64\\release\\source\\rpolygon_cut.cpp.obj", "source\\rpolygon_cut.cpp"],
+  "file": "source\\rpolygon_cut.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\Recti\\windows\\x64\\release\\source\\rpolygon_hull.cpp.obj", "source\\rpolygon_hull.cpp"],
+  "file": "source\\rpolygon_hull.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/Iinclude", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\Recti\\windows\\x64\\release\\source\\visualize_clock_tree.cpp.obj", "source\\visualize_clock_tree.cpp"],
+  "file": "source\\visualize_clock_tree.cpp"
+},
+{
+  "directory": "D:\\github\\cpp\\physdes-cpp",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\bin\\HostX64\\x64\\cl.exe", "/c", "/nologo", "/MD", "/O2", "/std:c++20", "/Iinclude", "/DBENCHMARK_STATIC_DEFINE", "/EHsc", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\b\\benchmark\\v1.9.5\\9fbba6372f8b45958deca93ad19d9adf\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\f\\fmt\\12.1.0\\8f0ce3998f644e1ab0b837652267d872\\include", "/IC:\\Users\\luk03\\AppData\\Local\\.xmake\\packages\\s\\spdlog\\v1.17.0\\e7667c08178b44c9a695fa3a9e1258de\\include", "/utf-8", "/EHsc", "/W4", "/WX", "/utf-8", "/DNDEBUG", "/Fobuild\\.objs\\benchmark_recti\\windows\\x64\\release\\bench\\bench_main.cpp.obj", "bench\\bench_main.cpp"],
+  "file": "bench\\bench_main.cpp"
+}]
