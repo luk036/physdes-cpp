@@ -102,7 +102,7 @@ TEST_CASE("Interval overlapping test") {
         for (auto index_j = 0; index_j != max_count; ++index_j) {
             auto x_value = int(hgenX.pop());
             auto x_range = Interval<int>{x_value, x_value + 100};
-            lst.push_back(x_range);
+            lst.emplace_back(x_range);
         }
     }
 
@@ -111,7 +111,7 @@ TEST_CASE("Interval overlapping test") {
 
     for (const auto& intvl : lst) {
         if (S.contains(intvl)) {
-            L.push_back(intvl);
+            L.emplace_back(intvl);
         } else {
             S.insert(intvl);
         }

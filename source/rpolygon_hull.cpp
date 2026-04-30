@@ -69,7 +69,7 @@ namespace recti {
 
         std::vector<Point<T>> result = {min_point};
         for (const auto& v : rdll.from_node(min_index)) {
-            result.push_back(pointset[v.data]);
+            result.emplace_back(pointset[v.data]);
         }
         return result;
     }

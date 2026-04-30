@@ -74,7 +74,7 @@ namespace recti {
          */
         void add_child(RoutingNode<IntPoint>* child_node) {
             child_node->parent = this;
-            children.push_back(child_node);
+            children.emplace_back(child_node);
         }
 
         /**
