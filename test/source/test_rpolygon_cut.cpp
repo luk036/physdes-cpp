@@ -255,7 +255,7 @@ TEST_CASE("RPolygon convex cut - signed area preservation") {
     }
 
     // Verify signed area preservation
-    CHECK(original_area == total_pieces_area);
+    CHECK_EQ(original_area, total_pieces_area);
 }
 
 TEST_CASE("RPolygon explicit cut - signed area preservation") {
@@ -293,7 +293,7 @@ TEST_CASE("RPolygon explicit cut - signed area preservation") {
     // Verify signed area preservation (comparing with hull area)
     const auto hull_rpolygon = RPolygon<int>(convex_hull);
     const int hull_area = hull_rpolygon.signed_area();
-    CHECK(hull_area == total_pieces_area);
+    CHECK_EQ(hull_area, total_pieces_area);
 }
 
 TEST_CASE("RPolygon implicit cut - signed area preservation") {
@@ -331,7 +331,7 @@ TEST_CASE("RPolygon implicit cut - signed area preservation") {
     // Verify signed area preservation (comparing with hull area)
     const auto hull_rpolygon = RPolygon<int>(convex_hull);
     const int hull_area = hull_rpolygon.signed_area();
-    CHECK(hull_area == total_pieces_area);
+    CHECK_EQ(hull_area, total_pieces_area);
 }
 
 TEST_CASE("RPolygon rectangle cut - signed area preservation") {
@@ -369,5 +369,5 @@ TEST_CASE("RPolygon rectangle cut - signed area preservation") {
     // Verify signed area preservation (comparing with hull area)
     const auto hull_rpolygon = RPolygon<int>(convex_hull);
     const int hull_area = hull_rpolygon.signed_area();
-    CHECK(hull_area == total_pieces_area);
+    CHECK_EQ(hull_area, total_pieces_area);
 }

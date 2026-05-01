@@ -13,7 +13,7 @@ end
 
 if is_plat("linux") then
 	set_warnings("all", "error")
-	-- add_cxflags("-Wconversion", { force = true })
+	-- add_cxflags("-Wconversion", {force = true})
     -- Check if we're on Termux/Android
     local termux_prefix = os.getenv("PREFIX")
     if termux_prefix then

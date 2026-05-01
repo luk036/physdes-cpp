@@ -13,12 +13,12 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
     //     SUBCASE("Default parameters") {
     //         recti::ClockTreeVisualizer viz;
 
-    //         CHECK(viz.margin == 50);
-    //         CHECK(viz.node_radius == 8);
-    //         CHECK(viz.wire_width == 2);
-    //         CHECK(viz.sink_color == "#4CAF50");
-    //         CHECK(viz.internal_color == "#2196F3");
-    //         CHECK(viz.root_color == "#F44336");
+    //         CHECK_EQ(viz.margin, 50);
+    //         CHECK_EQ(viz.node_radius, 8);
+    //         CHECK_EQ(viz.wire_width, 2);
+    //         CHECK_EQ(viz.sink_color, "#4CAF50");
+    //         CHECK_EQ(viz.internal_color, "#2196F3");
+    //         CHECK_EQ(viz.root_color, "#F44336");
     //     }
 
     //     SUBCASE("Custom parameters") {
@@ -28,12 +28,12 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
     //             "#CCCCCC", "#333333"
     //         );
 
-    //         CHECK(viz.margin == 10);
-    //         CHECK(viz.node_radius == 5);
-    //         CHECK(viz.wire_width == 1);
-    //         CHECK(viz.sink_color == "#FF0000");
-    //         CHECK(viz.internal_color == "#00FF00");
-    //         CHECK(viz.root_color == "#0000FF");
+    //         CHECK_EQ(viz.margin, 10);
+    //         CHECK_EQ(viz.node_radius, 5);
+    //         CHECK_EQ(viz.wire_width, 1);
+    //         CHECK_EQ(viz.sink_color, "#FF0000");
+    //         CHECK_EQ(viz.internal_color, "#00FF00");
+    //         CHECK_EQ(viz.root_color, "#0000FF");
     //     }
     // }
 
@@ -51,12 +51,12 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
 
         // Check that SVG was generated
         CHECK_FALSE(svg_content.empty());
-        CHECK(svg_content.find("<svg") != std::string::npos);
-        CHECK(svg_content.find("</svg>") != std::string::npos);
+        CHECK_NE(svg_content.find("<svg"), std::string::npos);
+        CHECK_NE(svg_content.find("</svg>"), std::string::npos);
 
         // Check that the sink node is present
-        CHECK(svg_content.find("s1") != std::string::npos);
-        CHECK(svg_content.find("circle") != std::string::npos);
+        CHECK_NE(svg_content.find("s1"), std::string::npos);
+        CHECK_NE(svg_content.find("circle"), std::string::npos);
 
         // Verify file was created
         CHECK(std::filesystem::exists("test_single_sink.svg"));
@@ -93,16 +93,16 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
 
         // Basic SVG structure checks
         CHECK_FALSE(svg_content.empty());
-        CHECK(svg_content.find("<svg") != std::string::npos);
-        CHECK(svg_content.find("</svg>") != std::string::npos);
+        CHECK_NE(svg_content.find("<svg"), std::string::npos);
+        CHECK_NE(svg_content.find("</svg>"), std::string::npos);
 
         // Check for all nodes
-        CHECK(svg_content.find("s1") != std::string::npos);
-        CHECK(svg_content.find("s2") != std::string::npos);
-        CHECK(svg_content.find("root") != std::string::npos);
+        CHECK_NE(svg_content.find("s1"), std::string::npos);
+        CHECK_NE(svg_content.find("s2"), std::string::npos);
+        CHECK_NE(svg_content.find("root"), std::string::npos);
 
         // Check for wire elements
-        CHECK(svg_content.find("line") != std::string::npos);
+        CHECK_NE(svg_content.find("line"), std::string::npos);
 
         // Verify file was created
         CHECK(std::filesystem::exists("test_two_sinks.svg"));
@@ -138,10 +138,10 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
             = visualizer.visualize_tree(root, sinks, "test_with_analysis.svg", 800, 600, &analysis);
 
         // Check for analysis box
-        CHECK(svg_content.find("Clock Tree Analysis") != std::string::npos);
-        CHECK(svg_content.find("LinearDelayCalculator") != std::string::npos);
-        CHECK(svg_content.find("Max Delay") != std::string::npos);
-        CHECK(svg_content.find("Skew") != std::string::npos);
+        CHECK_NE(svg_content.find("Clock Tree Analysis"), std::string::npos);
+        CHECK_NE(svg_content.find("LinearDelayCalculator"), std::string::npos);
+        CHECK_NE(svg_content.find("Max Delay"), std::string::npos);
+        CHECK_NE(svg_content.find("Skew"), std::string::npos);
 
         // Verify file was created
         CHECK(std::filesystem::exists("test_with_analysis.svg"));
@@ -171,13 +171,13 @@ TEST_SUITE("Interactive SVG Tests") {
             = recti::create_interactive_svg(root, sinks, &analysis, "test_interactive.svg");
 
         CHECK_FALSE(svg_content.empty());
-        CHECK(svg_content.find("<svg") != std::string::npos);
-        CHECK(svg_content.find("interactive") == std::string::npos);  // Name doesn't affect content
+        CHECK_NE(svg_content.find("<svg"), std::string::npos);
+        CHECK_EQ(svg_content.find("interactive"), std::string::npos);  // Name doesn't affect content
 
         // Check for custom styling
-        CHECK(svg_content.find("#2E7D32") != std::string::npos);  // sink_color
-        // CHECK(svg_content.find("#1565C0") != std::string::npos); // internal_color
-        CHECK(svg_content.find("#C62828") != std::string::npos);  // root_color
+        CHECK_NE(svg_content.find("#2E7D32"), std::string::npos);  // sink_color
+        // CHECK_NE(svg_content.find("#1565C0"), std::string::npos); // internal_color
+        CHECK_NE(svg_content.find("#C62828"), std::string::npos);  // root_color
 
         // Verify file was created
         CHECK(std::filesystem::exists("test_interactive.svg"));
@@ -194,10 +194,10 @@ TEST_SUITE("Interactive SVG Tests") {
                                                                 "test_interactive_no_analysis.svg");
 
         CHECK_FALSE(svg_content.empty());
-        CHECK(svg_content.find("<svg") != std::string::npos);
+        CHECK_NE(svg_content.find("<svg"), std::string::npos);
 
         // Should not have analysis box when analysis is nullptr
-        CHECK(svg_content.find("Clock Tree Analysis") == std::string::npos);
+        CHECK_EQ(svg_content.find("Clock Tree Analysis"), std::string::npos);
 
         // Verify file was created
         CHECK(std::filesystem::exists("test_interactive_no_analysis.svg"));
@@ -220,8 +220,8 @@ TEST_SUITE("Comparison Visualization Tests") {
             {tree_data1}, "test_single_comparison.svg", 800, 600);
 
         CHECK_FALSE(svg_content.empty());
-        CHECK(svg_content.find("<svg") != std::string::npos);
-        CHECK(svg_content.find("Single Tree Test") != std::string::npos);
+        CHECK_NE(svg_content.find("<svg"), std::string::npos);
+        CHECK_NE(svg_content.find("Single Tree Test"), std::string::npos);
 
         // Verify file was created
         CHECK(std::filesystem::exists("test_single_comparison.svg"));
@@ -250,12 +250,12 @@ TEST_SUITE("Comparison Visualization Tests") {
                                                                          "test_two_comparison.svg");
 
         CHECK_FALSE(svg_content.empty());
-        CHECK(svg_content.find("<svg") != std::string::npos);
-        CHECK(svg_content.find("Linear Model") != std::string::npos);
-        CHECK(svg_content.find("Elmore Model") != std::string::npos);
+        CHECK_NE(svg_content.find("<svg"), std::string::npos);
+        CHECK_NE(svg_content.find("Linear Model"), std::string::npos);
+        CHECK_NE(svg_content.find("Elmore Model"), std::string::npos);
 
         // Should have two columns
-        CHECK(svg_content.find("translate(") != std::string::npos);
+        CHECK_NE(svg_content.find("translate("), std::string::npos);
 
         // Verify file was created
         CHECK(std::filesystem::exists("test_two_comparison.svg"));
@@ -285,9 +285,9 @@ TEST_SUITE("Comparison Visualization Tests") {
             linear_data, elmore_data, "test_delay_model_comparison.svg");
 
         CHECK_FALSE(svg_content.empty());
-        CHECK(svg_content.find("<svg") != std::string::npos);
-        CHECK(svg_content.find("Linear Delay Model") != std::string::npos);
-        CHECK(svg_content.find("Elmore Delay Model") != std::string::npos);
+        CHECK_NE(svg_content.find("<svg"), std::string::npos);
+        CHECK_NE(svg_content.find("Linear Delay Model"), std::string::npos);
+        CHECK_NE(svg_content.find("Elmore Delay Model"), std::string::npos);
 
         // Verify file was created
         CHECK(std::filesystem::exists("test_delay_model_comparison.svg"));
@@ -322,17 +322,17 @@ TEST_SUITE("Integration Tests with DME Algorithm") {
 
         // Basic checks
         CHECK_FALSE(svg_content.empty());
-        CHECK(svg_content.find("<svg") != std::string::npos);
-        CHECK(svg_content.find("</svg>") != std::string::npos);
+        CHECK_NE(svg_content.find("<svg"), std::string::npos);
+        CHECK_NE(svg_content.find("</svg>"), std::string::npos);
 
         // Should contain all sink names
-        CHECK(svg_content.find("s1") != std::string::npos);
-        CHECK(svg_content.find("s2") != std::string::npos);
-        CHECK(svg_content.find("s3") != std::string::npos);
+        CHECK_NE(svg_content.find("s1"), std::string::npos);
+        CHECK_NE(svg_content.find("s2"), std::string::npos);
+        CHECK_NE(svg_content.find("s3"), std::string::npos);
 
         // Should contain analysis information
-        CHECK(svg_content.find("Clock Tree Analysis") != std::string::npos);
-        CHECK(svg_content.find("LinearDelayCalculator") != std::string::npos);
+        CHECK_NE(svg_content.find("Clock Tree Analysis"), std::string::npos);
+        CHECK_NE(svg_content.find("LinearDelayCalculator"), std::string::npos);
 
         // Verify file was created
         CHECK(std::filesystem::exists("test_dme_tree.svg"));
@@ -367,12 +367,12 @@ TEST_SUITE("Integration Tests with DME Algorithm") {
             {linear_data, elmore_data}, "test_model_comparison.svg");
 
         CHECK_FALSE(svg_content.empty());
-        CHECK(svg_content.find("Linear Model") != std::string::npos);
-        CHECK(svg_content.find("Elmore Model") != std::string::npos);
+        CHECK_NE(svg_content.find("Linear Model"), std::string::npos);
+        CHECK_NE(svg_content.find("Elmore Model"), std::string::npos);
 
         // Both trees should have low skew (DME algorithm property)
-        CHECK(linear_analysis.skew == doctest::Approx(0.0).epsilon(0.001));
-        CHECK(elmore_analysis.skew == doctest::Approx(0.0).epsilon(0.001));
+        CHECK_EQ(linear_analysis.skew, doctest::Approx(0.0).epsilon(0.001));
+        CHECK_EQ(elmore_analysis.skew, doctest::Approx(0.0).epsilon(0.001));
 
         // Verify file was created
         CHECK(std::filesystem::exists("test_model_comparison.svg"));

@@ -135,12 +135,12 @@ TEST_CASE("RPolygon equality test") {
     const auto poly1 = RPolygon<int>(coords1);
     const auto poly2 = RPolygon<int>(coords2);
 
-    CHECK(poly1 == poly2);
+    CHECK_EQ(poly1, poly2);
 
     // Test inequality
     auto poly3 = RPolygon<int>(coords1);
     poly3 += Vector2<int>{1, 0};
-    CHECK(poly1 != poly3);
+    CHECK_NE(poly1, poly3);
 }
 
 TEST_CASE("RPolygon vertices access") {
@@ -148,9 +148,9 @@ TEST_CASE("RPolygon vertices access") {
     const auto poly = RPolygon<int>(coords);
 
     const auto vertices = poly.vertices();
-    CHECK(vertices.size() == 4);
-    CHECK(vertices[0] == Point<int>{0, 0});
-    CHECK(vertices[1] == Point<int>{5, 0});
-    CHECK(vertices[2] == Point<int>{5, 5});
-    CHECK(vertices[3] == Point<int>{0, 5});
+    CHECK_EQ(vertices.size(), 4);
+    CHECK_EQ(vertices[0], Point<int>{0, 0});
+    CHECK_EQ(vertices[1], Point<int>{5, 0});
+    CHECK_EQ(vertices[2], Point<int>{5, 5});
+    CHECK_EQ(vertices[3], Point<int>{0, 5});
 }

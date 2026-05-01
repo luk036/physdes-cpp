@@ -21,16 +21,16 @@ TEST_CASE("Point test") {
 
     CHECK(!(a == b));
     CHECK(a != b);
-    CHECK((a + v) + v == b);
-    CHECK((a + v) - v == a);
-    CHECK(a.flip_xy().flip_xy() == a);
-    CHECK(a.flip_y().flip_y() == a);
+    CHECK_EQ((a + v) + v, b);
+    CHECK_EQ((a + v) - v, a);
+    CHECK_EQ(a.flip_xy().flip_xy(), a);
+    CHECK_EQ(a.flip_y().flip_y(), a);
 }
 
 TEST_CASE("Point test hull") {
     const auto a = Point<int>{3, 5};
     const auto b = Point<int>{5, 7};
-    CHECK(a.hull_with(b) == Point<Interval<int>>({3, 5}, {5, 7}));
+    CHECK_EQ(a.hull_with(b), Point<Interval<int>>({3, 5}, {5, 7}));
 }
 
 TEST_CASE("Rectangle test") {
@@ -44,16 +44,16 @@ TEST_CASE("Rectangle test") {
     const auto v = Vector2<int>{5000, 6000};
     const auto r3 = Rectangle<int>(r1 - v);
 
-    CHECK(r1 != r2);
-    CHECK(r3 + v == r1);
+    CHECK_NE(r1, r2);
+    CHECK_EQ(r3 + v, r1);
 
     CHECK(r1.contains(p));
     CHECK(r1.contains(r2));
     CHECK(r1.overlaps(r2));
     CHECK(overlap(r1, r2));
 
-    CHECK(r1.min_dist_with(r2) == 0);
-    CHECK(min_dist(r1, r2) == 0);
+    CHECK_EQ(r1.min_dist_with(r2), 0);
+    CHECK_EQ(min_dist(r1, r2), 0);
 }
 
 TEST_CASE("Segment test") {

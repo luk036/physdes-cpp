@@ -15,15 +15,15 @@ TEST_SUITE("RoutingNode") {
         parent.add_child(&child1);
         parent.add_child(&child2);
 
-        CHECK(parent.children.size() == 2);
-        CHECK(child1.parent == &parent);
-        CHECK(child2.parent == &parent);
+        CHECK_EQ(parent.children.size(), 2);
+        CHECK_EQ(child1.parent, &parent);
+        CHECK_EQ(child2.parent, &parent);
 
         parent.remove_child(&child1);
 
-        CHECK(parent.children.size() == 1);
-        CHECK(parent.children[0] == &child2);
-        CHECK(child1.parent == nullptr);
+        CHECK_EQ(parent.children.size(), 1);
+        CHECK_EQ(parent.children[0], &child2);
+        CHECK_EQ(child1.parent, nullptr);
     }
 
     TEST_CASE_TEMPLATE("RoutingNode::remove_child - non-existent child", Point,
@@ -35,15 +35,15 @@ TEST_SUITE("RoutingNode") {
 
         parent.add_child(&child1);
 
-        CHECK(parent.children.size() == 1);
-        CHECK(child1.parent == &parent);
+        CHECK_EQ(parent.children.size(), 1);
+        CHECK_EQ(child1.parent, &parent);
 
         parent.remove_child(&child2);  // Try to remove a child that was never added
 
-        CHECK(parent.children.size() == 1);  // Size should remain 1
-        CHECK(parent.children[0] == &child1);
-        CHECK(child1.parent == &parent);
-        CHECK(child2.parent == nullptr);  // Should still be nullptr
+        CHECK_EQ(parent.children.size(), 1);  // Size should remain 1
+        CHECK_EQ(parent.children[0], &child1);
+        CHECK_EQ(child1.parent, &parent);
+        CHECK_EQ(child2.parent, nullptr);  // Should still be nullptr
     }
 
     TEST_CASE_TEMPLATE("RoutingNode::remove_child - from empty children list", Point,
@@ -57,7 +57,7 @@ TEST_SUITE("RoutingNode") {
         parent.remove_child(&child);  // Remove from empty list
 
         CHECK(parent.children.empty());
-        CHECK(child.parent == nullptr);
+        CHECK_EQ(child.parent, nullptr);
     }
 }
 
@@ -85,16 +85,16 @@ TEST_SUITE("GTree") {
         std::string s1_id = tree.insert_steiner_node(Point{});
         std::string s2_id = tree.insert_steiner_node(Point{}, s1_id);
 
-        CHECK(tree.nodes.at(s1_id)->children.size() == 1);
-        CHECK(tree.nodes.at(s1_id)->children[0]->id == s2_id);
+        CHECK_EQ(tree.nodes.at(s1_id)->children.size(), 1);
+        CHECK_EQ(tree.nodes.at(s1_id)->children[0]->id, s2_id);
 
         std::string new_s_id = tree.insert_node_on_branch(NodeType::STEINER, Point{}, s1_id, s2_id);
 
-        CHECK(tree.nodes.at(s1_id)->children.size() == 1);
-        CHECK(tree.nodes.at(s1_id)->children[0]->id == new_s_id);
-        CHECK(tree.nodes.at(new_s_id)->children.size() == 1);
-        CHECK(tree.nodes.at(new_s_id)->children[0]->id == s2_id);
-        CHECK(tree.nodes.at(s2_id)->parent->id == new_s_id);
+        CHECK_EQ(tree.nodes.at(s1_id)->children.size(), 1);
+        CHECK_EQ(tree.nodes.at(s1_id)->children[0]->id, new_s_id);
+        CHECK_EQ(tree.nodes.at(new_s_id)->children.size(), 1);
+        CHECK_EQ(tree.nodes.at(new_s_id)->children[0]->id, s2_id);
+        CHECK_EQ(tree.nodes.at(s2_id)->parent->id, new_s_id);
     }
 
     TEST_CASE_TEMPLATE("GTree::insert_node_on_branch - invalid branch_start_id", Point,
@@ -139,11 +139,11 @@ TEST_SUITE("GTree") {
         std::string t1_id = tree.insert_terminal_node(Point{}, s2_id);
 
         auto path = tree.find_path_to_source(t1_id);
-        CHECK(path.size() == 4);  // source -> s1 -> s2 -> t1
-        CHECK(path[0]->id == "source");
-        CHECK(path[1]->id == s1_id);
-        CHECK(path[2]->id == s2_id);
-        CHECK(path[3]->id == t1_id);
+        CHECK_EQ(path.size(), 4);  // source -> s1 -> s2 -> t1
+        CHECK_EQ(path[0]->id, "source");
+        CHECK_EQ(path[1]->id, s1_id);
+        CHECK_EQ(path[2]->id, s2_id);
+        CHECK_EQ(path[3]->id, t1_id);
     }
 
     TEST_CASE_TEMPLATE("GTree::find_path_to_source - source node", Point, recti::Point<int, int>,
@@ -151,8 +151,8 @@ TEST_SUITE("GTree") {
         using namespace recti;
         GlobalRoutingTree tree(Point{});
         auto path = tree.find_path_to_source("source");
-        CHECK(path.size() == 1);
-        CHECK(path[0]->id == "source");
+        CHECK_EQ(path.size(), 1);
+        CHECK_EQ(path[0]->id, "source");
     }
 
     TEST_CASE_TEMPLATE("GTree::find_path_to_source - non-existent node", Point,

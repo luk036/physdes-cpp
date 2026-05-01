@@ -9,9 +9,9 @@ TEST_CASE("test_rdllist_init") {
     */
     RDllist dll(5);
     for (size_t i = 0; i < 5; ++i) {
-        CHECK(dll[i].data == i);
-        CHECK(dll[i].next->data == (i + 1) % 5);
-        CHECK(dll[i].prev->data == (i - 1 + 5) % 5);
+        CHECK_EQ(dll[i].data, i);
+        CHECK_EQ(dll[i].next->data, (i + 1) % 5);
+        CHECK_EQ(dll[i].prev->data, (i - 1 + 5) % 5);
     }
 }
 
@@ -21,9 +21,9 @@ TEST_CASE("test_rdllist_init_reverse") {
     */
     RDllist dll(5, true);
     for (size_t i = 0; i < 5; ++i) {
-        CHECK(dll[i].data == i);
-        CHECK(dll[i].next->data == (i - 1 + 5) % 5);
-        CHECK(dll[i].prev->data == (i + 1) % 5);
+        CHECK_EQ(dll[i].data, i);
+        CHECK_EQ(dll[i].next->data, (i - 1 + 5) % 5);
+        CHECK_EQ(dll[i].prev->data, (i + 1) % 5);
     }
 }
 
@@ -32,8 +32,8 @@ TEST_CASE("test_rdllist_getitem") {
     Test operator[] of RDllist.
     */
     RDllist dll(5);
-    CHECK(dll[0].data == 0);
-    CHECK(dll[4].data == 4);
+    CHECK_EQ(dll[0].data, 0);
+    CHECK_EQ(dll[4].data, 4);
     CHECK_THROWS_AS(dll[5], std::out_of_range);
 }
 
@@ -48,7 +48,7 @@ TEST_CASE("test_rdllist_iter") {
         data.emplace_back(node.data);
     }
     const std::vector<size_t> expected = {1, 2, 3, 4};
-    CHECK(data == expected);
+    CHECK_EQ(data, expected);
 }
 
 TEST_CASE("test_rdllist_from_node") {
@@ -62,5 +62,5 @@ TEST_CASE("test_rdllist_from_node") {
         data.emplace_back(node.data);
     }
     const std::vector<size_t> expected = {3, 4, 0, 1};
-    CHECK(data == expected);
+    CHECK_EQ(data, expected);
 }

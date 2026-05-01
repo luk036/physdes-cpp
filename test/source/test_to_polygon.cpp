@@ -16,5 +16,5 @@ TEST_CASE("RPolygon to_polygon conversion") {
         = std::vector<Point<int>>{{0, 0}, {10, 0}, {10, 10}, {5, 10}, {5, 5}, {0, 5}};
     const auto expected_poly = Polygon<int>(expected_coords);
 
-    CHECK(poly == expected_poly);
+    CHECK_EQ(poly, expected_poly);
 }

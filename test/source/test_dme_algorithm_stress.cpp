@@ -48,10 +48,10 @@ TEST_SUITE("DMEAlgorithm Stress Tests") {
         auto analysis = dme.analyze_skew(tree);
         auto stats = recti::get_tree_statistics(tree);
 
-        CHECK(tree != nullptr);
-        CHECK(analysis.skew == doctest::Approx(0.0).epsilon(1.0));
-        CHECK(stats.total_sinks == num_sinks);
-        CHECK(stats.total_nodes == 2 * num_sinks - 1);
+        CHECK_NE(tree, nullptr);
+        CHECK_EQ(analysis.skew, doctest::Approx(0.0).epsilon(1.0));
+        CHECK_EQ(stats.total_sinks, num_sinks);
+        CHECK_EQ(stats.total_nodes, 2 * num_sinks - 1);
     }
 
     TEST_CASE("Sinks in a grid pattern") {
@@ -69,10 +69,10 @@ TEST_SUITE("DMEAlgorithm Stress Tests") {
         auto analysis = dme.analyze_skew(tree);
         auto stats = recti::get_tree_statistics(tree);
 
-        CHECK(tree != nullptr);
-        CHECK(analysis.skew == doctest::Approx(0.0).epsilon(1.0));
-        CHECK(stats.total_sinks == grid_size * grid_size);
-        CHECK(stats.total_nodes == 2 * grid_size * grid_size - 1);
+        CHECK_NE(tree, nullptr);
+        CHECK_EQ(analysis.skew, doctest::Approx(0.0).epsilon(1.0));
+        CHECK_EQ(stats.total_sinks, grid_size * grid_size);
+        CHECK_EQ(stats.total_nodes, 2 * grid_size * grid_size - 1);
     }
 
     TEST_CASE("Sinks clustered in a small area") {
@@ -87,10 +87,10 @@ TEST_SUITE("DMEAlgorithm Stress Tests") {
         auto analysis = dme.analyze_skew(tree);
         auto stats = recti::get_tree_statistics(tree);
 
-        CHECK(tree != nullptr);
-        CHECK(analysis.skew == doctest::Approx(0.0).epsilon(1.0));
-        CHECK(stats.total_sinks == num_sinks);
-        CHECK(stats.total_nodes == 2 * num_sinks - 1);
+        CHECK_NE(tree, nullptr);
+        CHECK_EQ(analysis.skew, doctest::Approx(0.0).epsilon(1.0));
+        CHECK_EQ(stats.total_sinks, num_sinks);
+        CHECK_EQ(stats.total_nodes, 2 * num_sinks - 1);
     }
 
     TEST_CASE("Sinks along a horizontal line") {
@@ -105,10 +105,10 @@ TEST_SUITE("DMEAlgorithm Stress Tests") {
         auto analysis = dme.analyze_skew(tree);
         auto stats = recti::get_tree_statistics(tree);
 
-        CHECK(tree != nullptr);
-        CHECK(analysis.skew == doctest::Approx(0.0).epsilon(1.0));
-        CHECK(stats.total_sinks == num_sinks);
-        CHECK(stats.total_nodes == 2 * num_sinks - 1);
+        CHECK_NE(tree, nullptr);
+        CHECK_EQ(analysis.skew, doctest::Approx(0.0).epsilon(1.0));
+        CHECK_EQ(stats.total_sinks, num_sinks);
+        CHECK_EQ(stats.total_nodes, 2 * num_sinks - 1);
     }
 
     TEST_CASE("Sinks along a vertical line") {
@@ -123,9 +123,9 @@ TEST_SUITE("DMEAlgorithm Stress Tests") {
         auto analysis = dme.analyze_skew(tree);
         auto stats = recti::get_tree_statistics(tree);
 
-        CHECK(tree != nullptr);
-        CHECK(analysis.skew == doctest::Approx(0.0).epsilon(1.0));
-        CHECK(stats.total_sinks == num_sinks);
-        CHECK(stats.total_nodes == 2 * num_sinks - 1);
+        CHECK_NE(tree, nullptr);
+        CHECK_EQ(analysis.skew, doctest::Approx(0.0).epsilon(1.0));
+        CHECK_EQ(stats.total_sinks, num_sinks);
+        CHECK_EQ(stats.total_nodes, 2 * num_sinks - 1);
     }
 }

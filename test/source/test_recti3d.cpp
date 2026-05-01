@@ -21,10 +21,10 @@ TEST_CASE("Point 3D test") {
 
     CHECK(!(a == b));
     CHECK(a != b);
-    CHECK((a + v) + v == b);  // may not true due to integer division
-    CHECK((a + v) - v == a);
-    CHECK(a.flip_xy().flip_xy() == a);
-    // CHECK(a.flip_y().flip_y() == a);
+    CHECK_EQ((a + v) + v, b);  // may not true due to integer division
+    CHECK_EQ((a + v) - v, a);
+    CHECK_EQ(a.flip_xy().flip_xy(), a);
+    // CHECK_EQ(a.flip_y().flip_y(), a);
 }
 
 TEST_CASE("Interval test") {
@@ -35,12 +35,12 @@ TEST_CASE("Interval test") {
     CHECK(!(b == a));
     CHECK(b != a);
     CHECK(a.contains(b));
-    CHECK(a.intersect_with(b) == b);
+    CHECK_EQ(a.intersect_with(b), b);
     CHECK(!b.contains(a));
     CHECK(a.overlaps(b));
     CHECK(b.overlaps(a));
 
-    CHECK(min_dist(a, b) == 0);
+    CHECK_EQ(min_dist(a, b), 0);
 }
 
 TEST_CASE("Rectangle 3D test") {
@@ -54,7 +54,7 @@ TEST_CASE("Rectangle 3D test") {
     const auto p1 = Point<Point<int>, int>{Point<int>{70000, 60000}, 1000};
     const auto p2 = Point<Point<int>, int>{Point<int>{70000, 60000}, 2000};
 
-    CHECK(r1 != r2);
+    CHECK_NE(r1, r2);
     // CHECK(r1 <= p);
     CHECK(r1.contains(p1));
     CHECK(!r1.contains(p2));
@@ -62,11 +62,11 @@ TEST_CASE("Rectangle 3D test") {
     CHECK(r1.overlaps(r2));
     CHECK(overlap(r1, r2));
 
-    CHECK(r1.min_dist_with(r2) == 0);
-    CHECK(min_dist(r1, r2) == 0);
+    CHECK_EQ(r1.min_dist_with(r2), 0);
+    CHECK_EQ(min_dist(r1, r2), 0);
 
-    CHECK(r1.min_dist_with(p2) == p2.min_dist_with(r1));
-    // CHECK(min_dist(r1, p2) == min_dist(p2, r1));
+    CHECK_EQ(r1.min_dist_with(p2), p2.min_dist_with(r1));
+    // CHECK_EQ(min_dist(r1, p2), min_dist(p2, r1));
 }
 
 // TEST_CASE("Segment test") {
@@ -126,9 +126,9 @@ TEST_CASE("Rectangle 3D test") {
 //     auto m2 = ManhattanArc<Point<int>>{b + 90000, b - 90000};
 //     // auto v = Vector2{Vector2{50000, 60000}, 0};
 
-//     CHECK(m1 != m2);
-//     // CHECK((m1 - v) + v == m1);
+//     CHECK_NE(m1, m2);
+//     // CHECK_EQ((m1 - v) + v, m1);
 //     CHECK(!overlap(m1, m2));
-//     CHECK(m1.min_dist_with(m2) == m2.min_dist_with(m1));
-//     CHECK(min_dist(m1, m2) == min_dist(m2, m1));
+//     CHECK_EQ(m1.min_dist_with(m2), m2.min_dist_with(m1));
+//     CHECK_EQ(min_dist(m1, m2), min_dist(m2, m1));
 // }

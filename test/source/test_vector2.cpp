@@ -18,12 +18,12 @@ TEST_CASE("Vector2") {
     const auto q = Vector2<int, int>{c, d};
 
     CHECK_EQ(Vector2<int, int>{8, 10}, (p + q));
-    CHECK(Vector2<int, int>{8, 2} != (p + q));
+    CHECK_NE(Vector2<int, int>{8, 2}, (p + q));
     CHECK_EQ(Vector2<int, int>{-2, -2}, (p - q));
     CHECK_EQ(Vector2<int, int>{6, 8}, (p * 2));
     CHECK_EQ(Vector2<int, int>{4, 5}, (p + q) / 2);
 
-    CHECK(p != q);
+    CHECK_NE(p, q);
     CHECK_EQ(p + q, q + p);
     CHECK_EQ(p - q, -(q - p));
     CHECK_EQ(p * 3, 3 * p);
