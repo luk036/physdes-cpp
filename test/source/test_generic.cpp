@@ -29,14 +29,14 @@ TEST_CASE("Generic functions") {
     const MyPoint p3{2, 3};
 
     CHECK(recti::overlap(p1, p2));
-    CHECK(!recti::overlap(p1, p3));
+    CHECK_FALSE(recti::overlap(p1, p3));
 
     const MyRect r1{{0, 0}, {4, 4}};
     const MyRect r2{{2, 2}, {6, 6}};
     const MyRect r3{{8, 8}, {10, 10}};
 
     CHECK(recti::overlap(r1, r2));
-    CHECK(!recti::overlap(r1, r3));
+    CHECK_FALSE(recti::overlap(r1, r3));
 
     CHECK(recti::contain(r1, p1));
     CHECK(recti::contain(r1, p3));

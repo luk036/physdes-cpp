@@ -16,11 +16,11 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono)") {
     auto S = std::vector<Point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
                                      {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
     const auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
-    CHECK(!is_clockwise);
+    CHECK_FALSE(is_clockwise);
     CHECK(rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_ymonotone<int>(S));
-    CHECK(!rpolygon_is_xmonotone<int>(S));
-    CHECK(!point_in_rpolygon<int>(S, Point<int>{4, 5}));
+    CHECK_FALSE(rpolygon_is_xmonotone<int>(S));
+    CHECK_FALSE(point_in_rpolygon<int>(S, Point<int>{4, 5}));
     const auto P = RPolygon<int>(S);
     CHECK_EQ(P.signed_area(), 45);
 }
@@ -33,7 +33,7 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono)") {
     CHECK(is_anticlockwise);
     CHECK(rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_xmonotone<int>(S));
-    CHECK(!rpolygon_is_ymonotone<int>(S));
+    CHECK_FALSE(rpolygon_is_ymonotone<int>(S));
     const auto P = RPolygon<int>(S);
     CHECK_EQ(P.signed_area(), 51);
 }
@@ -62,10 +62,10 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono 50)") {
     // }
     // fmt::print("</svg>\n");
 
-    CHECK(!is_anticlockwise);
-    CHECK(!rpolygon_is_anticlockwise<int>(S));
+    CHECK_FALSE(is_anticlockwise);
+    CHECK_FALSE(rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_xmonotone<int>(S));
-    CHECK(!rpolygon_is_ymonotone<int>(S));
+    CHECK_FALSE(rpolygon_is_ymonotone<int>(S));
 
     const auto P = RPolygon<int>(S);
     CHECK_EQ(P.signed_area(), -2098656);
@@ -80,11 +80,11 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono 50)") {
     }
     const auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
     CHECK(is_clockwise);
-    CHECK(!rpolygon_is_anticlockwise<int>(S));
+    CHECK_FALSE(rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_ymonotone<int>(S));
-    CHECK(!rpolygon_is_xmonotone<int>(S));
+    CHECK_FALSE(rpolygon_is_xmonotone<int>(S));
     const auto q = Point<int>(int(hgenX.pop()), int(hgenY.pop()));
-    CHECK(!point_in_rpolygon<int>(S, q));
+    CHECK_FALSE(point_in_rpolygon<int>(S, q));
 
     // SVG output (commented out as per reference)
     // fmt::print("<svg viewBox=\"0 0 2187 2048\" xmlns=\"http://www.w3.org/2000/svg\">\n");
@@ -115,10 +115,10 @@ TEST_CASE("Rectilinear Polygon point_in_rpolygon test") {
     CHECK(point_in_rpolygon<int>(S, Point<int>{9, 9}));
 
     // Test points strictly outside the polygon
-    CHECK(!point_in_rpolygon<int>(S, Point<int>{-1, -1}));
-    CHECK(!point_in_rpolygon<int>(S, Point<int>{11, 5}));
-    CHECK(!point_in_rpolygon<int>(S, Point<int>{5, -1}));
-    CHECK(!point_in_rpolygon<int>(S, Point<int>{5, 11}));
+    CHECK_FALSE(point_in_rpolygon<int>(S, Point<int>{-1, -1}));
+    CHECK_FALSE(point_in_rpolygon<int>(S, Point<int>{11, 5}));
+    CHECK_FALSE(point_in_rpolygon<int>(S, Point<int>{5, -1}));
+    CHECK_FALSE(point_in_rpolygon<int>(S, Point<int>{5, 11}));
 }
 
 TEST_CASE("RPolygon rectilinearity test") {

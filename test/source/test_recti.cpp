@@ -19,7 +19,7 @@ TEST_CASE("Point test") {
     const auto b = Point<int>{5000, 6000};
     const auto v = (b - a) / 2;  // integer division
 
-    CHECK(!(a == b));
+    CHECK_FALSE(a == b);
     CHECK(a != b);
     CHECK_EQ((a + v) + v, b);
     CHECK_EQ((a + v) - v, a);

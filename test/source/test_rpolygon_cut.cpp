@@ -234,13 +234,13 @@ TEST_CASE("RPolygon convex cut - signed area preservation") {
     const int original_area = original_rpolygon.signed_area();
 
     // Verify the original polygon is not convex
-    CHECK(!rpolygon_is_convex<int>(P));
+    CHECK_FALSE(rpolygon_is_convex<int>(P));
 
     // Perform convex decomposition
     const auto convex_pieces = rpolygon_cut_convex<int>(P, is_anticlockwise);
 
     // Verify we have at least one piece
-    CHECK(convex_pieces.size() > 0);
+    CHECK_GT(convex_pieces.size(), 0);
 
     // Verify all pieces are convex
     for (const auto& piece : convex_pieces) {
@@ -276,7 +276,7 @@ TEST_CASE("RPolygon explicit cut - signed area preservation") {
     const auto explicit_pieces = rpolygon_cut_explicit<int>(convex_hull, is_anticlockwise);
 
     // Verify we have at least one piece
-    CHECK(explicit_pieces.size() > 0);
+    CHECK_GT(explicit_pieces.size(), 0);
 
     // Verify all pieces are convex
     for (const auto& piece : explicit_pieces) {
@@ -314,7 +314,7 @@ TEST_CASE("RPolygon implicit cut - signed area preservation") {
     const auto implicit_pieces = rpolygon_cut_implicit<int>(convex_hull, is_anticlockwise);
 
     // Verify we have at least one piece
-    CHECK(implicit_pieces.size() > 0);
+    CHECK_GT(implicit_pieces.size(), 0);
 
     // Verify all pieces are convex
     for (const auto& piece : implicit_pieces) {
@@ -352,7 +352,7 @@ TEST_CASE("RPolygon rectangle cut - signed area preservation") {
     const auto rectangle_pieces = rpolygon_cut_rectangle<int>(convex_hull, is_anticlockwise);
 
     // Verify we have at least one piece
-    CHECK(rectangle_pieces.size() > 0);
+    CHECK_GT(rectangle_pieces.size(), 0);
 
     // Verify all pieces are convex (rectangles are convex)
     for (const auto& piece : rectangle_pieces) {

@@ -19,7 +19,7 @@ TEST_CASE("Point 3D test") {
     const auto b = Point<Point<int>, int>{Point<int>{50000, 60000}, 10000};
     const auto v = (b - a) / 2;  // integer division
 
-    CHECK(!(a == b));
+    CHECK_FALSE(a == b);
     CHECK(a != b);
     CHECK_EQ((a + v) + v, b);  // may not true due to integer division
     CHECK_EQ((a + v) - v, a);
@@ -32,11 +32,11 @@ TEST_CASE("Interval test") {
     const auto b = Point<Interval<int>, int>{Interval<int>{5, 6}, 1};
     // auto v = Vector2<int>{3, 0};
 
-    CHECK(!(b == a));
+    CHECK_FALSE(b == a);
     CHECK(b != a);
     CHECK(a.contains(b));
     CHECK_EQ(a.intersect_with(b), b);
-    CHECK(!b.contains(a));
+    CHECK_FALSE(b.contains(a));
     CHECK(a.overlaps(b));
     CHECK(b.overlaps(a));
 
@@ -55,9 +55,9 @@ TEST_CASE("Rectangle 3D test") {
     const auto p2 = Point<Point<int>, int>{Point<int>{70000, 60000}, 2000};
 
     CHECK_NE(r1, r2);
-    // CHECK(r1 <= p);
+    // CHECK_LE(r1, p);
     CHECK(r1.contains(p1));
-    CHECK(!r1.contains(p2));
+    CHECK_FALSE(r1.contains(p2));
     CHECK(r1.contains(r2));
     CHECK(r1.overlaps(r2));
     CHECK(overlap(r1, r2));
@@ -128,7 +128,7 @@ TEST_CASE("Rectangle 3D test") {
 
 //     CHECK_NE(m1, m2);
 //     // CHECK_EQ((m1 - v) + v, m1);
-//     CHECK(!overlap(m1, m2));
+//     CHECK_FALSE(overlap(m1, m2));
 //     CHECK_EQ(m1.min_dist_with(m2), m2.min_dist_with(m1));
 //     CHECK_EQ(min_dist(m1, m2), min_dist(m2, m1));
 // }

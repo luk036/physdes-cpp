@@ -21,11 +21,11 @@ TEST_CASE("Polygon y-monotone") {
 
     create_ymono_polygon(S.begin(), S.end());
     CHECK(polygon_is_ymonotone<int>(S));
-    CHECK(!polygon_is_xmonotone<int>(S));
+    CHECK_FALSE(polygon_is_xmonotone<int>(S));
     CHECK(polygon_is_anticlockwise<int>(S));
     const auto P = Polygon<int>(S);
     CHECK_EQ(P.signed_area_x2(), 102);
-    CHECK(!point_in_polygon<int>(S, Point<int>{4, 5}));
+    CHECK_FALSE(point_in_polygon<int>(S, Point<int>{4, 5}));
 
     // Test += and -= operators
     auto Q = Polygon<int>(S);
@@ -41,7 +41,7 @@ TEST_CASE("Polygon x-monotone") {
 
     create_xmono_polygon(S.begin(), S.end());
     CHECK(polygon_is_xmonotone<int>(S));
-    CHECK(!polygon_is_ymonotone<int>(S));
+    CHECK_FALSE(polygon_is_ymonotone<int>(S));
     CHECK(polygon_is_anticlockwise<int>(S));
     const auto P = Polygon<int>(S);
     CHECK_EQ(P.signed_area_x2(), 111);
@@ -58,7 +58,7 @@ TEST_CASE("Polygon y-monotone (20 points)") {
 
     create_ymono_polygon(S.begin(), S.end());
     CHECK(polygon_is_ymonotone<int>(S));
-    CHECK(!polygon_is_xmonotone<int>(S));
+    CHECK_FALSE(polygon_is_xmonotone<int>(S));
     CHECK(polygon_is_anticlockwise<int>(S));
     const auto P = Polygon<int>(S);
     CHECK_EQ(P.signed_area_x2(), 4074624);
@@ -75,7 +75,7 @@ TEST_CASE("Polygon x-monotone (20 points)") {
 
     create_xmono_polygon(S.begin(), S.end());
     CHECK(polygon_is_xmonotone<int>(S));
-    CHECK(!polygon_is_ymonotone<int>(S));
+    CHECK_FALSE(polygon_is_ymonotone<int>(S));
     CHECK(polygon_is_anticlockwise<int>(S));
     const auto P = Polygon<int>(S);
     CHECK_EQ(P.signed_area_x2(), 3862080);
@@ -92,7 +92,7 @@ TEST_CASE("Polygon y-monotone (50 points)") {
 
     create_ymono_polygon(S.begin(), S.end());
     CHECK(polygon_is_ymonotone<int>(S));
-    CHECK(!polygon_is_xmonotone<int>(S));
+    CHECK_FALSE(polygon_is_xmonotone<int>(S));
     CHECK(polygon_is_anticlockwise<int>(S));
     const auto q = Point<int>(int(hgenX.pop()), int(hgenY.pop()));
     const auto P = Polygon<int>(S);
@@ -176,7 +176,7 @@ TEST_CASE("Polygon y-monotone (square)") {
     CHECK_EQ(P.signed_area_x2(), 200);
     CHECK(polygon_is_anticlockwise<int>(S));
     CHECK(point_in_polygon<int>(S, Point<int>{5, 5}));
-    CHECK(!point_in_polygon<int>(S, Point<int>{15, 5}));
+    CHECK_FALSE(point_in_polygon<int>(S, Point<int>{15, 5}));
 }
 
 TEST_CASE("Polygon convex decomposition - signed area preservation") {
@@ -191,13 +191,13 @@ TEST_CASE("Polygon convex decomposition - signed area preservation") {
     const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
 
     // Verify the original polygon is not convex
-    CHECK(!rpolygon_is_convex<int>(P));
+    CHECK_FALSE(rpolygon_is_convex<int>(P));
 
     // Perform convex decomposition
     const auto convex_pieces = rpolygon_cut_convex<int>(P, is_anticlockwise);
 
     // Verify we have at least one piece
-    CHECK(convex_pieces.size() > 0);
+    CHECK_GT(convex_pieces.size(), 0);
 
     // Verify all pieces are convex
     for (const auto& piece : convex_pieces) {
@@ -235,7 +235,7 @@ TEST_CASE("Polygon explicit cut - signed area preservation") {
     const auto explicit_pieces = rpolygon_cut_explicit<int>(convex_hull, is_anticlockwise);
 
     // Verify we have at least one piece
-    CHECK(explicit_pieces.size() > 0);
+    CHECK_GT(explicit_pieces.size(), 0);
 
     // Verify all pieces are convex
     for (const auto& piece : explicit_pieces) {
@@ -273,7 +273,7 @@ TEST_CASE("Polygon implicit cut - signed area preservation") {
     const auto implicit_pieces = rpolygon_cut_implicit<int>(convex_hull, is_anticlockwise);
 
     // Verify we have at least one piece
-    CHECK(implicit_pieces.size() > 0);
+    CHECK_GT(implicit_pieces.size(), 0);
 
     // Verify all pieces are convex
     for (const auto& piece : implicit_pieces) {

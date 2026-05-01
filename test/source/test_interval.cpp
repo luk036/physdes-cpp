@@ -14,16 +14,16 @@ TEST_CASE("Interval test") {
     const auto interval_b = Interval{5, 6};
     const auto value = 3;
 
-    CHECK(!(interval_a < interval_b));
-    CHECK(!(interval_b < interval_a));
-    CHECK(!(interval_a > interval_b));
-    CHECK(!(interval_b > interval_a));
-    CHECK(interval_a <= interval_b);
-    CHECK(interval_b <= interval_a);
-    CHECK(interval_a >= interval_b);
-    CHECK(interval_b >= interval_a);
+    CHECK_FALSE(interval_a < interval_b);
+    CHECK_FALSE(interval_b < interval_a);
+    CHECK_FALSE(interval_a > interval_b);
+    CHECK_FALSE(interval_b > interval_a);
+    CHECK_LE(interval_a, interval_b);
+    CHECK_LE(interval_b, interval_a);
+    CHECK_GE(interval_a, interval_b);
+    CHECK_GE(interval_b, interval_a);
 
-    CHECK(!(interval_b == interval_a));
+    CHECK_FALSE(interval_b == interval_a);
     CHECK(interval_b != interval_a);
 
     CHECK_EQ((interval_a - value) + value, interval_a);
@@ -34,7 +34,7 @@ TEST_CASE("Interval test") {
     CHECK(interval_a.intersect_with(10).is_invalid());
     CHECK(interval_a.contains(interval_b));
     CHECK_EQ(interval_a.intersect_with(interval_b), interval_b);
-    CHECK(!interval_b.contains(interval_a));
+    CHECK_FALSE(interval_b.contains(interval_a));
     CHECK(interval_a.overlaps(interval_b));
     CHECK(interval_b.overlaps(interval_a));
 
@@ -66,16 +66,16 @@ TEST_CASE("Interval of Interval test") {
     const auto interval_b = Interval{Interval{5, 6}, Interval{6, 7}};
     const auto value = 3;
 
-    CHECK(!(interval_a < interval_b));
-    CHECK(!(interval_b < interval_a));
-    CHECK(!(interval_a > interval_b));
-    CHECK(!(interval_b > interval_a));
-    CHECK(interval_a <= interval_b);
-    CHECK(interval_b <= interval_a);
-    CHECK(interval_a >= interval_b);
-    CHECK(interval_b >= interval_a);
+    CHECK_FALSE(interval_a < interval_b);
+    CHECK_FALSE(interval_b < interval_a);
+    CHECK_FALSE(interval_a > interval_b);
+    CHECK_FALSE(interval_b > interval_a);
+    CHECK_LE(interval_a, interval_b);
+    CHECK_LE(interval_b, interval_a);
+    CHECK_GE(interval_a, interval_b);
+    CHECK_GE(interval_b, interval_a);
 
-    CHECK(!(interval_b == interval_a));
+    CHECK_FALSE(interval_b == interval_a);
     CHECK(interval_b != interval_a);
 
     CHECK_EQ((interval_a - value) + value, interval_a);
@@ -88,7 +88,7 @@ TEST_CASE("Interval of Interval test") {
 
     CHECK(interval_a.contains(interval_b));
     CHECK_EQ(interval_a.intersect_with(interval_b), interval_b);
-    CHECK(!interval_b.contains(interval_a));
+    CHECK_FALSE(interval_b.contains(interval_a));
     CHECK(interval_a.overlaps(interval_b));
     CHECK(interval_b.overlaps(interval_a));
 }

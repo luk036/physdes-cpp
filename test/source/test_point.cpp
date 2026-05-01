@@ -19,7 +19,7 @@ TEST_CASE("Point") {
     SUBCASE("Comparison") {
         CHECK_EQ(point1, point2);
         CHECK_NE(point1, point3);
-        CHECK(point1 < point3);
+        CHECK_LT(point1, point3);
     }
 
     SUBCASE("Arithmetic Operators") {
@@ -52,10 +52,10 @@ TEST_CASE("Point") {
         const Point point_interval3(Interval(3, 4), Interval(3, 4));
 
         CHECK(point_interval1.overlaps(point_interval2));
-        CHECK(!point_interval1.overlaps(point_interval3));
+        CHECK_FALSE(point_interval1.overlaps(point_interval3));
 
         CHECK(point_interval1.contains(Point(1, 1)));
-        CHECK(!point_interval1.contains(Point(3, 3)));
+        CHECK_FALSE(point_interval1.contains(Point(3, 3)));
 
         const Point intersection = point_interval1.intersect_with(point_interval2);
         CHECK_EQ(intersection.xcoord(), Interval(1, 2));

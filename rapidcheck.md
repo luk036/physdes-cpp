@@ -142,8 +142,8 @@ TEST_CASE("Property-based test: VdCorput generates values in [0,1)") {
     ldsgen::VdCorput gen(2);
     for (size_t i = 0; i < 100; ++i) {
         auto curr = gen.pop();
-        CHECK(curr >= 0.0);
-        CHECK(curr < 1.0);
+        CHECK_GE(curr, 0.0);
+        CHECK_LT(curr, 1.0);
     }
 }
 
@@ -456,8 +456,8 @@ TEST_CASE("Property-based test: VdCorput generates values in [0,1)") {
     ldsgen::VdCorput gen(2);
     for (size_t i = 0; i < 100; ++i) {
         auto curr = gen.pop();
-        CHECK(curr >= 0.0);
-        CHECK(curr < 1.0);
+        CHECK_GE(curr, 0.0);
+        CHECK_LT(curr, 1.0);
     }
 }
 ```

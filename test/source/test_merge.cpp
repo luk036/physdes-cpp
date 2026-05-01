@@ -14,7 +14,7 @@ TEST_CASE("ManhattanArc test") {
 
     CHECK_EQ(r1, r1);
     CHECK_NE(r1, r2);
-    CHECK(!overlap(r1, r2));
+    CHECK_FALSE(overlap(r1, r2));
     CHECK_EQ(r1.min_dist_with(r2), 7);
     CHECK_EQ(min_dist(r1, r2), 7);
 }

@@ -389,7 +389,7 @@ TEST_SUITE("DMEAlgorithm Tests") {
         // Analyze skew
         auto analysis = dme.analyze_skew(tree);
         CHECK(analysis.skew == doctest::Approx(0.0).epsilon(0.001));  // Should be zero skew
-        CHECK(analysis.total_wirelength > 0);
+        CHECK_GT(analysis.total_wirelength, 0);
     }
 
     TEST_CASE("DMEAlgorithm Multiple Sinks - Tree Structure and Merging Segments") {
@@ -429,10 +429,10 @@ TEST_SUITE("DMEAlgorithm Tests") {
         auto tree = dme.build_clock_tree();
         auto analysis = dme.analyze_skew(tree);
 
-        CHECK(analysis.max_delay >= analysis.min_delay);
-        CHECK(analysis.skew >= 0.0);
+        CHECK_GE(analysis.max_delay, analysis.min_delay);
+        CHECK_GE(analysis.skew, 0.0);
         CHECK_EQ(analysis.sink_delays.size(), 3);
-        CHECK(analysis.total_wirelength > 0);
+        CHECK_GT(analysis.total_wirelength, 0);
         CHECK_FALSE(analysis.delay_model.empty());
 
         // For prescribed-skew (not necessarily zero) algorithm, skew should be very small
@@ -544,8 +544,8 @@ TEST_SUITE("Integration Tests") {
         CHECK(analysis_elmore.skew == doctest::Approx(0.0).epsilon(1.0));
 
         // Both should have positive wirelength
-        CHECK(analysis_linear.total_wirelength > 0);
-        CHECK(analysis_elmore.total_wirelength > 0);
+        CHECK_GT(analysis_linear.total_wirelength, 0);
+        CHECK_GT(analysis_elmore.total_wirelength, 0);
 
         // Delay models should be different
         CHECK_NE(analysis_linear.delay_model, analysis_elmore.delay_model);
@@ -598,7 +598,7 @@ TEST_CASE("Edge Cases") {
         auto analysis = dme.analyze_skew(tree);
 
         CHECK_NE(tree, nullptr);
-        CHECK(analysis.total_wirelength >= 2000);  // At least Manhattan distance
+        CHECK_GE(analysis.total_wirelength, 2000);  // At least Manhattan distance
         CHECK(analysis.skew == doctest::Approx(0.0).epsilon(0.001));
     }
 }
