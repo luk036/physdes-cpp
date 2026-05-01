@@ -32,8 +32,7 @@ int main() {
         if (line_count >= 3) {
             std::cout << "\n✓ Test PASSED: All messages were logged successfully!\n";
         } else {
-            std::cout << "\n✗ Test FAILED: Expected at least 3 lines, got " << line_count
-                      << '\n';
+            std::cout << "\n✗ Test FAILED: Expected at least 3 lines, got " << line_count << '\n';
             return 1;
         }
     } else {

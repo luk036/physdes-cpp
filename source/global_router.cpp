@@ -613,8 +613,7 @@ namespace recti {
 
 namespace recti::detail {
 
-    template <>
-    SvgParams calculate_svg_params<Point<int, int>>(
+    template <> SvgParams calculate_svg_params<Point<int, int>>(
         const std::vector<RoutingNode<Point<int, int>>*>& nodes, int width, int height,
         int margin) {
         if (nodes.empty()) {
@@ -642,8 +641,7 @@ namespace recti::detail {
         return {width, height, margin, scale, min_x, min_y};
     }
 
-    template <>
-    SvgParams calculate_svg_params<Point<Point<int, int>, int>>(
+    template <> SvgParams calculate_svg_params<Point<Point<int, int>, int>>(
         const std::vector<RoutingNode<Point<Point<int, int>, int>>*>& nodes, int width, int height,
         int margin) {
         if (nodes.empty()) {
@@ -677,10 +675,9 @@ namespace recti::detail {
     //     return {sx, sy};
     // }
 
-    template <>
-    void draw_node<Point<int, int>>(std::ostringstream& svg,
-                                        const RoutingNode<Point<int, int>>* node,
-                                        const SvgParams& params) {
+    template <> void draw_node<Point<int, int>>(std::ostringstream& svg,
+                                                const RoutingNode<Point<int, int>>* node,
+                                                const SvgParams& params) {
         auto [x, y] = scale_coords(node->pt.xcoord(), node->pt.ycoord(), params);
         std::string color;
         int radius;
@@ -715,8 +712,7 @@ namespace recti::detail {
             << node->pt << ")</text>\n";
     }
 
-    template <>
-    void draw_node<Point<Point<int, int>, int>>(
+    template <> void draw_node<Point<Point<int, int>, int>>(
         std::ostringstream& svg, const RoutingNode<Point<Point<int, int>, int>>* node,
         const SvgParams& params) {
         auto [x, y] = scale_coords(node->pt.xcoord().xcoord(), node->pt.ycoord(), params);
@@ -733,14 +729,14 @@ namespace recti::detail {
             size_t pos = node->id.find('_');
             label = "S";
             label += pos != std::string::npos ? std::string(node->id.substr(pos + 1))
-                                             : std::string("");
+                                              : std::string("");
         } else if (node->type == NodeType::TERMINAL) {
             color = "green";
             radius = 6;
             size_t pos = node->id.find('_');
             label = "T";
             label += pos != std::string::npos ? std::string(node->id.substr(pos + 1))
-                                             : std::string("");
+                                              : std::string("");
         } else {
             color = "gray";
             radius = 5;
@@ -778,9 +774,8 @@ namespace recti::detail {
         }
     }
 
-    template <>
-    void draw_stats<Point<int, int>>(std::ostringstream& svg,
-                                          const GlobalRoutingTree<Point<int, int>>& tree) {
+    template <> void draw_stats<Point<int, int>>(std::ostringstream& svg,
+                                                 const GlobalRoutingTree<Point<int, int>>& tree) {
         int stats_y = 110;
         svg << "<text x=\"20\" y=\"" << stats_y
             << "\" font-family=\"Arial\" font-size=\"10\" "
@@ -799,8 +794,7 @@ namespace recti::detail {
             << tree.calculate_total_wirelength() << "</text>\n";
     }
 
-    template <>
-    void draw_stats<Point<Point<int, int>, int>>(
+    template <> void draw_stats<Point<Point<int, int>, int>>(
         std::ostringstream& svg, const GlobalRoutingTree<Point<Point<int, int>, int>>& tree) {
         int stats_y = 110;
         svg << "<text x=\"20\" y=\"" << stats_y

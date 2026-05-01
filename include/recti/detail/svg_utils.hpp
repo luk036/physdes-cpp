@@ -1,8 +1,8 @@
 // include/recti/detail/svg_utils.hpp
 #pragma once
 
-#include <recti/global_router.hpp>
 #include <iosfwd>
+#include <recti/global_router.hpp>
 #include <vector>
 
 namespace recti::detail {
@@ -28,8 +28,7 @@ namespace recti::detail {
                                    int height, int margin);
 
     template <> SvgParams calculate_svg_params<Point<int, int>>(
-        const std::vector<RoutingNode<Point<int, int>>*>& nodes, int width, int height,
-        int margin);
+        const std::vector<RoutingNode<Point<int, int>>*>& nodes, int width, int height, int margin);
 
     template <> SvgParams calculate_svg_params<Point<Point<int, int>, int>>(
         const std::vector<RoutingNode<Point<Point<int, int>, int>>*>& nodes, int width, int height,
@@ -49,12 +48,12 @@ namespace recti::detail {
     }
 
     template <typename IntPoint> void draw_node(std::ostringstream& svg,
-                                                 const RoutingNode<IntPoint>* node,
-                                                 const SvgParams& params);
+                                                const RoutingNode<IntPoint>* node,
+                                                const SvgParams& params);
 
     template <> void draw_node<Point<int, int>>(std::ostringstream& svg,
-                                                       const RoutingNode<Point<int, int>>* node,
-                                                       const SvgParams& params);
+                                                const RoutingNode<Point<int, int>>* node,
+                                                const SvgParams& params);
 
     template <> void draw_node<Point<Point<int, int>, int>>(
         std::ostringstream& svg, const RoutingNode<Point<Point<int, int>, int>>* node,
@@ -65,12 +64,10 @@ namespace recti::detail {
     template <typename IntPoint>
     void draw_stats(std::ostringstream& svg, const GlobalRoutingTree<IntPoint>& tree);
 
-    template <>
-    void draw_stats<Point<int, int>>(
-        std::ostringstream& svg, const GlobalRoutingTree<Point<int, int>>& tree);
+    template <> void draw_stats<Point<int, int>>(std::ostringstream& svg,
+                                                 const GlobalRoutingTree<Point<int, int>>& tree);
 
-    template <>
-    void draw_stats<Point<Point<int, int>, int>>(
+    template <> void draw_stats<Point<Point<int, int>, int>>(
         std::ostringstream& svg, const GlobalRoutingTree<Point<Point<int, int>, int>>& tree);
 
 }  // namespace recti::detail

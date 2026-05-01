@@ -2,7 +2,9 @@ CPMAddPackage(
   NAME fmt
   GIT_TAG 12.1.0
   GITHUB_REPOSITORY fmtlib/fmt
-  OPTIONS "FMT_INSTALL YES" "FMT_USE_INLINE_VTABLE OFF" "FMT_DISABLE_COMPILE_STRING" # create an installable target
+  OPTIONS "FMT_INSTALL YES" "FMT_USE_INLINE_VTABLE OFF" "FMT_DISABLE_COMPILE_STRING" # create an
+                                                                                     # installable
+                                                                                     # target
 )
 
 CPMAddPackage(
@@ -24,7 +26,8 @@ CPMAddPackage(
   NAME spdlog
   GIT_TAG v1.17.0
   GITHUB_REPOSITORY gabime/spdlog
-  OPTIONS "SPDLOG_INSTALL YES" "SPDLOG_FMT_RUNTIME_CHECKS OFF" "FMT_DEPRECATED_EXTERNAL_ABI" "SPDLOG_FMT_EXTERNAL" # create an installable target
+  OPTIONS "SPDLOG_INSTALL YES" "SPDLOG_FMT_RUNTIME_CHECKS OFF" "FMT_DEPRECATED_EXTERNAL_ABI"
+          "SPDLOG_FMT_EXTERNAL" # create an installable target
 )
 
 set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt Microsoft.GSL::GSL spdlog::spdlog)

@@ -206,7 +206,7 @@ TEST_SUITE("LinearDelayCalculator Tests") {
             // Should be clamped to distance (10)
             CHECK_EQ(extend_left, 10);
             CHECK(delay_left == doctest::Approx(10.0));  // delay_left should be node_right.delay
-            CHECK_EQ(left.wire_length, 14);               // extend_left = 14
+            CHECK_EQ(left.wire_length, 14);              // extend_left = 14
             CHECK_EQ(right.wire_length, 0);
             CHECK_EQ(left.need_elongation, true);
             CHECK_EQ(right.need_elongation, false);
@@ -340,7 +340,7 @@ TEST_SUITE("ElmoreDelayCalculator Tests") {
             // = 11.0 / 4.0 = 2.75 extend_left = round(2.75 * 10) = 28 (clamped to 10)
             CHECK_EQ(extend_left, 10);
             CHECK(delay_left == doctest::Approx(10.0));  // delay_left should be node_right.delay
-            CHECK_EQ(left.wire_length, 28);               // extend_left = 28
+            CHECK_EQ(left.wire_length, 28);              // extend_left = 28
             CHECK_EQ(right.wire_length, 0);
             CHECK_EQ(left.need_elongation, true);
             CHECK_EQ(right.need_elongation, false);

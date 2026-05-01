@@ -172,7 +172,8 @@ TEST_SUITE("Interactive SVG Tests") {
 
         CHECK_FALSE(svg_content.empty());
         CHECK_NE(svg_content.find("<svg"), std::string::npos);
-        CHECK_EQ(svg_content.find("interactive"), std::string::npos);  // Name doesn't affect content
+        CHECK_EQ(svg_content.find("interactive"),
+                 std::string::npos);  // Name doesn't affect content
 
         // Check for custom styling
         CHECK_NE(svg_content.find("#2E7D32"), std::string::npos);  // sink_color

@@ -42,8 +42,8 @@ namespace recti {
         // Create SVG content
         std::vector<std::string> svg_content;
         svg_content.emplace_back("<svg width=\"" + std::to_string(width) + "\" height=\""
-                              + std::to_string(height)
-                              + "\" xmlns=\"http://www.w3.org/2000/svg\">");
+                                 + std::to_string(height)
+                                 + "\" xmlns=\"http://www.w3.org/2000/svg\">");
         svg_content.emplace_back("<style>");
         svg_content.emplace_back("  .node-label { font: 10px sans-serif; fill: #333; }");
         svg_content.emplace_back("  .delay-label { font: 8px sans-serif; fill: #666; }");
@@ -377,12 +377,13 @@ namespace recti {
 
         std::vector<std::string> svg_content;
         svg_content.emplace_back("<svg width=\"" + std::to_string(width) + "\" height=\""
-                              + std::to_string(height)
-                              + "\" xmlns=\"http://www.w3.org/2000/svg\">");
+                                 + std::to_string(height)
+                                 + "\" xmlns=\"http://www.w3.org/2000/svg\">");
         svg_content.emplace_back("<style>");
         svg_content.emplace_back("  .node-label { font: 8px sans-serif; fill: #333; }");
         svg_content.emplace_back("  .delay-label { font: 7px sans-serif; fill: #666; }");
-        svg_content.emplace_back("  .title { font: 14px sans-serif; fill: #333; font-weight: bold; }");
+        svg_content.emplace_back(
+            "  .title { font: 14px sans-serif; fill: #333; font-weight: bold; }");
         svg_content.emplace_back("  .comparison-label { font: 10px sans-serif; fill: #333; }");
         svg_content.emplace_back("</style>");
         svg_content.emplace_back("<rect width=\"100%\" height=\"100%\" fill=\"white\"/>");
