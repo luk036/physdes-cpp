@@ -49,7 +49,6 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="vector2_8hpp.html">&lt;recti/vector2.hpp&gt;</a></div>
           <div class="m-doc-template">template&lt;typename T1, typename T2 = T1&gt;</div>
           <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>Vector2 <span class="m-thin">class</span>
         </h1>
@@ -73,18 +72,13 @@
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#ad3f4955cc17dc0dc7952466ebd09a334" class="m-doc">Vector2</a>(</span><span class="m-doc-wrap">T1&amp;&amp; vec_x,
-              T2&amp;&amp; vec_y) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
-            </dt>
-            <dd>Construct a new <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> object.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a2a028f2c4e2e79032ea16cfdc9dfb7f2" class="m-doc">Vector2</a>(</span><span class="m-doc-wrap">const T1&amp; vec_x,
-              const T2&amp; vec_y) <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#ab722ae22960ddd61379f1a5302b9a18e" class="m-doc">Vector2</a>(</span><span class="m-doc-wrap">T1 vec_x,
+              T2 vec_y) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Construct a new <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> object.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
-              <span class="m-doc-wrap-bumper"><a href="#a0eafe3a00bb206b5c1d25fb0c05672f1" class="m-doc">Vector2</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#adc9884ce4ab7b11d4e3df93a1324a3fb" class="m-doc">Vector2</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other_vector) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Construct a new <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> object.</dd>
           </dl>
@@ -102,7 +96,7 @@
             <dd>Returns a const reference to the y-coordinate of the vector.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a9355146bc4d5b5dd0b6a84c0fd7232ee" class="m-doc">cross</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a981da1ef2aae741e9adba6f4547fd66c" class="m-doc">cross</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other_vector) const -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the cross product of two <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> objects.</dd>
           </dl>
@@ -113,12 +107,12 @@
           <dl class="m-doc">
             <dt>
               <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a9e622a35691730b32e2703f249fd5fe8" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a96dd14fdb2e04f811e4428f41f527e77" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other_vector) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Compares two <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> objects for equality.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a1131b76d6ee08f6f8e4684067fbf74a5" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#acb7d5a2d5ba53923ddb2d9421812228d" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other_vector) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Compares two <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> objects for inequality.</dd>
           </dl>
@@ -133,52 +127,52 @@
             <dd>Negate the vector, returning a new vector with the negated components.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a94e0ed44be1b9978e316806ac2e4924d" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other) -&gt; Vector2 &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab4844ae7f379a134e8b497ea6cc91434" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other_vector) -&gt; Vector2 &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
             </dt>
             <dd>Add the components of the given vector to this vector.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#aff7951c6d40dae8842a37c5514c101e7" class="m-doc">operator-=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other) -&gt; Vector2 &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ada2b6e0d41cba5d663f74b483221e0ff" class="m-doc">operator-=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other_vector) -&gt; Vector2 &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
             </dt>
             <dd>Subtract the components of the given vector from this vector.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename R&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#aff6acfd7230f81fb5432524945d11365" class="m-doc">operator*=</a>(</span><span class="m-doc-wrap">const R&amp; alpha) -&gt; Vector2 &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1cd46724080b3ff705cd016bb251db4e" class="m-doc">operator*=</a>(</span><span class="m-doc-wrap">const R&amp; scalar) -&gt; Vector2 &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
             </dt>
             <dd>Multiply the components of this vector by the given scalar.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename R&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#aa781e1cc3807ddcf4e99985cd9ba1035" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap">const R&amp; alpha) -&gt; Vector2 &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac453bf709d06b9ea8da7e700e92dac03" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap">const R&amp; scalar) -&gt; Vector2 &amp; -&gt; <a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
             </dt>
             <dd>Divide the components of this vector by the given scalar.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a03aed80981f97f4da37156d1f5228f83" class="m-doc">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> rhs,
-              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; lhs) -&gt; Vector2 -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4db2c50b2cbe2f49e0ee3c50481b0bb0" class="m-doc">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> right_vector,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; left_vector) -&gt; Vector2 -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Add the components of the given vector to this vector.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename U1, typename U2&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a2d627251faa60ce8fae09c2629afd3b9" class="m-doc">operator-</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> rhs,
-              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; lhs) -&gt; Vector2 -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#aae8ec3b0133f9e9170c59cb396c8ec97" class="m-doc">operator-</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> right_vector,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; left_vector) -&gt; Vector2 -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Subtract the components of the given vector from this vector.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename R&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a475f5a87dfa6aa2429760c8f508f3d80" class="m-doc">operator*</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> rhs,
-              const R&amp; alpha) -&gt; Vector2 -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab719ce277a5036191b3a118f3859de80" class="m-doc">operator*</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> right_vector,
+              const R&amp; scalar) -&gt; Vector2 -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Multiply the components of this vector by the given scalar.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename R&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#adedbb56f7919cf0c3b921404f3e73997" class="m-doc">operator*</a>(</span><span class="m-doc-wrap">const R&amp; alpha,
-              <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> lhs) -&gt; Vector2 -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0d8f30851a3220f760ad3a15d92dfc5c" class="m-doc">operator*</a>(</span><span class="m-doc-wrap">const R&amp; scalar,
+              <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> left_vector) -&gt; Vector2 -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Multiply the components of the given vector by the scalar.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename R&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a7b49abc99ddc5bf8a74d0e802a4fd7c9" class="m-doc">operator/</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> rhs,
-              const R&amp; alpha) -&gt; Vector2 -&gt; friend auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac74c10f17c7a8fcc6cd0caf37ce4f600" class="m-doc">operator/</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> right_vector,
+              const R&amp; scalar) -&gt; Vector2 -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Divide the components of this vector by the given scalar.</dd>
           </dl>
@@ -188,21 +182,21 @@
           <dl class="m-doc">
             <dt>
               <div class="m-doc-template">template&lt;class Stream&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a2b2b3418d8ae9901b9465ff025460b43" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
-              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&amp; vec2) -&gt; Stream &amp; -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#af6a364ea4928876274be8f847cf1733e" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; output_stream,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&amp; vector) -&gt; Stream &amp; -&gt; auto</span>
             </dt>
             <dd>Overload the stream insertion operator to print a <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> object.</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ad3f4955cc17dc0dc7952466ebd09a334"><div>
+          <section class="m-doc-details" id="ab722ae22960ddd61379f1a5302b9a18e"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad3f4955cc17dc0dc7952466ebd09a334" class="m-doc-self">Vector2</a>(</span><span class="m-doc-wrap">T1&amp;&amp; vec_x,
-              T2&amp;&amp; vec_y) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab722ae22960ddd61379f1a5302b9a18e" class="m-doc-self">Vector2</a>(</span><span class="m-doc-wrap">T1 vec_x,
+              T2 vec_y) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
             </h3>
             <p>Construct a new <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -222,39 +216,13 @@
             </table>
 <p>This is a constructor for the <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> class. It takes two parameters <code>vec_x</code> and <code>vec_y</code>, both of which are rvalue references (<code>T1&amp;&amp;</code> and <code>T2&amp;&amp;</code>). The constructor is marked as <code>constexpr</code>, meaning it can be evaluated at compile-time. The constructor is also marked as <code>noexcept</code>, indicating that it does not throw any exceptions.</p>
           </div></section>
-          <section class="m-doc-details" id="a2a028f2c4e2e79032ea16cfdc9dfb7f2"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename T1, typename T2&gt;
-              </div>
-              <span class="m-doc-wrap-bumper"> recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2a028f2c4e2e79032ea16cfdc9dfb7f2" class="m-doc-self">Vector2</a>(</span><span class="m-doc-wrap">const T1&amp; vec_x,
-              const T2&amp; vec_y) <span class="m-label m-primary">constexpr</span></span></span>
-            </h3>
-            <p>Construct a new <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> object.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">vec_x&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The x-coordinate of the vector.</td>
-                </tr>
-                <tr>
-                  <td>vec_y&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The y-coordinate of the vector.</td>
-                </tr>
-              </tbody>
-            </table>
-<p>This is a constructor for the <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> class. It takes two parameters <code>vec_x</code> and <code>vec_y</code>, both of which are const references (<code>const T1&amp;</code> and <code>const T2&amp;</code>). The constructor is marked as <code>constexpr</code>, meaning it can be evaluated at compile-time.</p>
-          </div></section>
-          <section class="m-doc-details" id="a0eafe3a00bb206b5c1d25fb0c05672f1"><div>
+          <section class="m-doc-details" id="adc9884ce4ab7b11d4e3df93a1324a3fb"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;typename U1, typename U2&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0eafe3a00bb206b5c1d25fb0c05672f1" class="m-doc-self">Vector2</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adc9884ce4ab7b11d4e3df93a1324a3fb" class="m-doc-self">Vector2</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other_vector) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Construct a new <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -276,7 +244,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>other_vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The other <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object to copy from.</td>
                 </tr>
               </tbody>
@@ -319,13 +287,13 @@
             </table>
 <p>This function provides read-only access to the y-coordinate of the <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object.</p>
           </div></section>
-          <section class="m-doc-details" id="a9355146bc4d5b5dd0b6a84c0fd7232ee"><div>
+          <section class="m-doc-details" id="a981da1ef2aae741e9adba6f4547fd66c"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;typename U1, typename U2&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9355146bc4d5b5dd0b6a84c0fd7232ee" class="m-doc-self">cross</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a981da1ef2aae741e9adba6f4547fd66c" class="m-doc-self">cross</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other_vector) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Calculates the cross product of two <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> objects.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -347,7 +315,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>other_vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The other <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object to compute the cross product with.</td>
                 </tr>
               </tbody>
@@ -358,15 +326,15 @@
                 </tr>
               </tfoot>
             </table>
-<p>This function computes the cross product of the current <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object and the provided <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object <code>other</code>. The cross product of two 2D vectors is a scalar value that represents the signed area of the parallelogram formed by the two vectors.</p>
+<p>This function computes the cross product of the current <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object and the provided <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object <code>other_vector</code>. The cross product of two 2D vectors is a scalar value that represents the signed area of the parallelogram formed by the two vectors.</p>
           </div></section>
-          <section class="m-doc-details" id="a9e622a35691730b32e2703f249fd5fe8"><div>
+          <section class="m-doc-details" id="a96dd14fdb2e04f811e4428f41f527e77"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;typename U1, typename U2&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9e622a35691730b32e2703f249fd5fe8" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a96dd14fdb2e04f811e4428f41f527e77" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other_vector) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Compares two <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> objects for equality.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -388,7 +356,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>other_vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The other <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object to compare against.</td>
                 </tr>
               </tbody>
@@ -399,15 +367,15 @@
                 </tr>
               </tfoot>
             </table>
-<p>This operator compares the x and y coordinates of the current <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object with the x and y coordinates of the provided <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object <code>other</code>. The comparison is done using <code>std::tie</code> to compare the individual coordinates.</p>
+<p>This operator compares the x and y coordinates of the current <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object with the x and y coordinates of the provided <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object <code>other_vector</code>. The comparison is done using <code>std::tie</code> to compare the individual coordinates.</p>
           </div></section>
-          <section class="m-doc-details" id="a1131b76d6ee08f6f8e4684067fbf74a5"><div>
+          <section class="m-doc-details" id="acb7d5a2d5ba53923ddb2d9421812228d"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;typename U1, typename U2&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1131b76d6ee08f6f8e4684067fbf74a5" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acb7d5a2d5ba53923ddb2d9421812228d" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other_vector) const -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Compares two <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> objects for inequality.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -429,7 +397,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>other_vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The other <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object to compare against.</td>
                 </tr>
               </tbody>
@@ -440,7 +408,7 @@
                 </tr>
               </tfoot>
             </table>
-<p>This operator compares the x and y coordinates of the current <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object with the x and y coordinates of the provided <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object <code>other</code>. The comparison is done using <code>std::tie</code> to compare the individual coordinates.</p>
+<p>This operator compares the x and y coordinates of the current <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object with the x and y coordinates of the provided <code><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a></code> object <code>other_vector</code>. The comparison is done using <code>std::tie</code> to compare the individual coordinates.</p>
           </div></section>
           <section class="m-doc-details" id="af4978759cbe99f1f48bd882dfbd54819"><div>
             <h3>
@@ -459,13 +427,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a94e0ed44be1b9978e316806ac2e4924d"><div>
+          <section class="m-doc-details" id="ab4844ae7f379a134e8b497ea6cc91434"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;typename U1, typename U2&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a94e0ed44be1b9978e316806ac2e4924d" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other) -&gt; Vector2 &amp;</span></span>
+              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab4844ae7f379a134e8b497ea6cc91434" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other_vector) -&gt; Vector2 &amp;</span></span>
             </h3>
             <p>Add the components of the given vector to this vector.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -487,7 +455,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>other_vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The vector to add to this vector.</td>
                 </tr>
               </tbody>
@@ -499,13 +467,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="aff7951c6d40dae8842a37c5514c101e7"><div>
+          <section class="m-doc-details" id="ada2b6e0d41cba5d663f74b483221e0ff"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;typename U1, typename U2&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aff7951c6d40dae8842a37c5514c101e7" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other) -&gt; Vector2 &amp;</span></span>
+              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ada2b6e0d41cba5d663f74b483221e0ff" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; other_vector) -&gt; Vector2 &amp;</span></span>
             </h3>
             <p>Subtract the components of the given vector from this vector.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -527,7 +495,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>other&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>other_vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The vector to subtract from this vector.</td>
                 </tr>
               </tbody>
@@ -539,13 +507,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="aff6acfd7230f81fb5432524945d11365"><div>
+          <section class="m-doc-details" id="a1cd46724080b3ff705cd016bb251db4e"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;typename R&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aff6acfd7230f81fb5432524945d11365" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">const R&amp; alpha) -&gt; Vector2 &amp;</span></span>
+              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1cd46724080b3ff705cd016bb251db4e" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">const R&amp; scalar) -&gt; Vector2 &amp;</span></span>
             </h3>
             <p>Multiply the components of this vector by the given scalar.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -563,7 +531,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>scalar&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The scalar to multiply the vector components by.</td>
                 </tr>
               </tbody>
@@ -575,13 +543,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="aa781e1cc3807ddcf4e99985cd9ba1035"><div>
+          <section class="m-doc-details" id="ac453bf709d06b9ea8da7e700e92dac03"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;typename R&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa781e1cc3807ddcf4e99985cd9ba1035" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap">const R&amp; alpha) -&gt; Vector2 &amp;</span></span>
+              <span class="m-doc-wrap-bumper"><a href="vector2_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac453bf709d06b9ea8da7e700e92dac03" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap">const R&amp; scalar) -&gt; Vector2 &amp;</span></span>
             </h3>
             <p>Divide the components of this vector by the given scalar.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -599,7 +567,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>scalar&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The scalar to divide the vector components by.</td>
                 </tr>
               </tbody>
@@ -611,14 +579,14 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a03aed80981f97f4da37156d1f5228f83"><div>
+          <section class="m-doc-details" id="a4db2c50b2cbe2f49e0ee3c50481b0bb0"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;typename U1, typename U2&gt;
               </div>
-              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a03aed80981f97f4da37156d1f5228f83" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> rhs,
-              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; lhs) -&gt; Vector2 <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4db2c50b2cbe2f49e0ee3c50481b0bb0" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> right_vector,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; left_vector) -&gt; Vector2 <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Add the components of the given vector to this vector.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -640,11 +608,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>right_vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The vector to add to this vector.</td>
                 </tr>
                 <tr>
-                  <td>lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>left_vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The vector to add to the right-hand side vector.</td>
                 </tr>
               </tbody>
@@ -656,14 +624,14 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a2d627251faa60ce8fae09c2629afd3b9"><div>
+          <section class="m-doc-details" id="aae8ec3b0133f9e9170c59cb396c8ec97"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;typename U1, typename U2&gt;
               </div>
-              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2d627251faa60ce8fae09c2629afd3b9" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> rhs,
-              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; lhs) -&gt; Vector2 <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aae8ec3b0133f9e9170c59cb396c8ec97" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> right_vector,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;U1, U2&gt;&amp; left_vector) -&gt; Vector2 <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Subtract the components of the given vector from this vector.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -685,11 +653,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>right_vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The vector to subtract from this vector.</td>
                 </tr>
                 <tr>
-                  <td>lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>left_vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The vector to subtract the right-hand side vector from.</td>
                 </tr>
               </tbody>
@@ -701,14 +669,14 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a475f5a87dfa6aa2429760c8f508f3d80"><div>
+          <section class="m-doc-details" id="ab719ce277a5036191b3a118f3859de80"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;typename R&gt;
               </div>
-              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a475f5a87dfa6aa2429760c8f508f3d80" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> rhs,
-              const R&amp; alpha) -&gt; Vector2 <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab719ce277a5036191b3a118f3859de80" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> right_vector,
+              const R&amp; scalar) -&gt; Vector2 <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Multiply the components of this vector by the given scalar.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -726,11 +694,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>right_vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The vector to multiply.</td>
                 </tr>
                 <tr>
-                  <td>alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>scalar&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The scalar to multiply the vector components by.</td>
                 </tr>
               </tbody>
@@ -742,14 +710,14 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="adedbb56f7919cf0c3b921404f3e73997"><div>
+          <section class="m-doc-details" id="a0d8f30851a3220f760ad3a15d92dfc5c"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;typename R&gt;
               </div>
-              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adedbb56f7919cf0c3b921404f3e73997" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const R&amp; alpha,
-              <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> lhs) -&gt; Vector2 <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0d8f30851a3220f760ad3a15d92dfc5c" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const R&amp; scalar,
+              <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> left_vector) -&gt; Vector2 <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Multiply the components of the given vector by the scalar.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -767,11 +735,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>scalar&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The scalar to multiply the vector components by.</td>
                 </tr>
                 <tr>
-                  <td>lhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>left_vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The vector to multiply.</td>
                 </tr>
               </tbody>
@@ -783,14 +751,14 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a7b49abc99ddc5bf8a74d0e802a4fd7c9"><div>
+          <section class="m-doc-details" id="ac74c10f17c7a8fcc6cd0caf37ce4f600"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;typename R&gt;
               </div>
-              <span class="m-doc-wrap-bumper">friend auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7b49abc99ddc5bf8a74d0e802a4fd7c9" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> rhs,
-              const R&amp; alpha) -&gt; Vector2 <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vector2&lt;T1, T2&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac74c10f17c7a8fcc6cd0caf37ce4f600" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> right_vector,
+              const R&amp; scalar) -&gt; Vector2 <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Divide the components of this vector by the given scalar.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -808,11 +776,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>right_vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The vector to divide.</td>
                 </tr>
                 <tr>
-                  <td>alpha&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>scalar&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The scalar to divide the vector components by.</td>
                 </tr>
               </tbody>
@@ -824,14 +792,14 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a2b2b3418d8ae9901b9465ff025460b43"><div>
+          <section class="m-doc-details" id="af6a364ea4928876274be8f847cf1733e"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T1, typename T2&gt;
                 template&lt;class Stream&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2b2b3418d8ae9901b9465ff025460b43" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; out,
-              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&amp; vec2) -&gt; Stream &amp;</span></span>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af6a364ea4928876274be8f847cf1733e" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">Stream&amp; output_stream,
+              const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&amp; vector) -&gt; Stream &amp;</span></span>
             </h3>
             <p>Overload the stream insertion operator to print a <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -849,11 +817,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>out&nbsp;<span class="m-label m-flat m-warning">out</span></td>
+                  <td>output_stream&nbsp;<span class="m-label m-flat m-warning">out</span></td>
                   <td>The output stream to insert the <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> into.</td>
                 </tr>
                 <tr>
-                  <td>vec2&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a> object to insert into the stream.</td>
                 </tr>
               </tbody>
@@ -910,7 +878,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

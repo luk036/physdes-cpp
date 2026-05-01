@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>recti/recti.hpp file | Recti</title>
+  <title>recti::TreeStatistics::NodeInfo struct | Recti</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -49,46 +49,43 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="dir_f74a13bbcc6e37b7d69fcb651c6e9ede.html">recti</a>/</span>recti.hpp <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span><span class="m-breadcrumb"><a href="structrecti_1_1TreeStatistics.html">TreeStatistics</a>::<wbr/></span>NodeInfo <span class="m-thin">struct</span>
         </h1>
-        <p><span></span></p>
+        <p>Information about a single node in the clock tree.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
           <dl class="m-doc">
-            <dt>namespace <a href="namespacerecti.html" class="m-doc">recti</a></dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
-          <dl class="m-doc">
-            <dt>
-              <div class="m-doc-template">template&lt;typename T&gt;</div>
-              struct <a href="structrecti_1_1Rectangle.html" class="m-doc">recti::Rectangle</a>
+            <dt id="a4e941d280076b6b4ec92fa30b05900b5">
+              std::string <a href="#a4e941d280076b6b4ec92fa30b05900b5" class="m-doc-self">name</a>
             </dt>
-            <dd><a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a> (Rectilinear)</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;typename T&gt;</div>
-              struct <a href="structrecti_1_1HSegment.html" class="m-doc">recti::HSegment</a>
+            <dd>Name of the node.</dd>
+            <dt id="a2bd4ce7460bd9ed8803a7185147ab6b3">
+              std::pair&lt;int, int&gt; <a href="#a2bd4ce7460bd9ed8803a7185147ab6b3" class="m-doc-self">position</a>
             </dt>
-            <dd>Horizontal Line Segment.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;typename T&gt;</div>
-              struct <a href="structrecti_1_1VSegment.html" class="m-doc">recti::VSegment</a>
+            <dd>(x, y) coordinates of the node.</dd>
+            <dt id="a55b48bddcd5741b87a5e92e32848bad8">
+              std::string <a href="#a55b48bddcd5741b87a5e92e32848bad8" class="m-doc-self">type</a>
             </dt>
-            <dd>Vertical Line Segment.</dd>
+            <dd>Type of the node (e.g., &quot;sink&quot;, &quot;internal&quot;).</dd>
+            <dt id="aa9ebfba1f0e88d278564af4a71abb5b9">
+              double <a href="#aa9ebfba1f0e88d278564af4a71abb5b9" class="m-doc-self">delay</a>
+            </dt>
+            <dd>Accumulated delay to this node.</dd>
+            <dt id="a8d37b651292481d5e7b001debf10617d">
+              double <a href="#a8d37b651292481d5e7b001debf10617d" class="m-doc-self">capacitance</a>
+            </dt>
+            <dd>Downstream capacitance at this node.</dd>
           </dl>
         </section>
       </div>
@@ -135,7 +132,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>recti::Vdcorput class | Recti</title>
+  <title>Dllink class | Recti</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -49,9 +49,10 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>Vdcorput <span class="m-thin">class</span>
+          <div class="m-doc-template">template&lt;typename T&gt;</div>
+          Dllink <span class="m-thin">class</span>
         </h1>
-        <p>van der Corput sequence generator</p>
+        <p>doubly linked node (that may also be a &quot;head&quot; a list)</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -60,88 +61,127 @@
               <ul>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p>This class generates van der Corput sequence values incrementally. The van der Corput sequence is a low-discrepancy sequence that provides uniform coverage of the unit interval, making it useful for quasi-random sampling, Monte Carlo methods, and numerical integration.</p>
+<p>A Doubly-linked List class. This class simply contains a link of node&#x27;s. By adding a &quot;head&quot; node (sentinel), deleting a node is extremely fast (see &quot;Introduction to Algorithm&quot;). This class does not keep the length information as it is not necessary for the FM algorithm. This saves memory and run-time to update the length information. Note that this class does not own the list node. They are supplied by the caller in order to better reuse the nodes.</p>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a839aefcb99b7e386e056f9004bf48edc" class="m-doc">Vdcorput</a>(</span><span class="m-doc-wrap">unsigned base = 2,
-              unsigned scale = 10) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#a6a03742678e678d29736fe9b98a3da1f" class="m-doc">Dllink</a>(</span><span class="m-doc-wrap">T data) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
-            <dd>Construct a new <a href="classrecti_1_1Vdcorput.html" class="m-doc">Vdcorput</a> object.</dd>
+            <dd>Construct a new <a href="classDllink.html" class="m-doc">Dllink</a> object.</dd>
+            <dt id="a25dad516981273f45af47e3b43d0708c">
+              <span class="m-doc-wrap-bumper"><a href="#a25dad516981273f45af47e3b43d0708c" class="m-doc-self">Dllink</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Copy construct a new <a href="classDllink.html" class="m-doc">Dllink</a> object (deleted intentionally)</dd>
           </dl>
         </section>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#add71925c4769058e7f714d009c1c3238" class="m-doc">operator()</a>(</span><span class="m-doc-wrap">) noexcept -&gt; unsigned -&gt; auto</span>
+            <dt id="a27e74bbcaf00f31ee338d9a108e18190">
+              <span class="m-doc-wrap-bumper">auto <a href="#a27e74bbcaf00f31ee338d9a108e18190" class="m-doc-self">lock</a>(</span><span class="m-doc-wrap">) noexcept -&gt; void -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Generate the next van der Corput sequence value.</dd>
+            <dd>lock the node (and don&#x27;t append it to any list)</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#aab388438f26ee6e45da5c4d780fc75ee" class="m-doc">reseed</a>(</span><span class="m-doc-wrap">unsigned seed) noexcept -&gt; void -&gt; auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#acd221d02dd88444bfbff4fd2d5ed4217" class="m-doc">is_locked</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Reset the sequence with a new seed value.</dd>
+            <dd>whether the node is locked</dd>
+            <dt id="ac99050fc06316440338080375450a3cb">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac99050fc06316440338080375450a3cb" class="m-doc-self">detach</a>(</span><span class="m-doc-wrap">) noexcept -&gt; void -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>detach from a list</dd>
+          </dl>
+        </section>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <a href="classDllink.html" class="m-doc">Dllink</a>* <a href="#af4fd13a5eb0b8ebb49e9e718c4d2937b" class="m-doc">next</a>
+            </dt>
+            <dd></dd>
+            <dt>
+              <a href="classDllink.html" class="m-doc">Dllink</a>* <a href="#a95c712b185503e27133ceba25d502d2c" class="m-doc">prev</a>
+            </dt>
+            <dd></dd>
+            <dt>
+              T <a href="#a405e9b6b1d8ca4923501268911725928" class="m-doc">data</a>
+            </dt>
+            <dd></dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a839aefcb99b7e386e056f9004bf48edc"><div>
+          <section class="m-doc-details" id="a6a03742678e678d29736fe9b98a3da1f"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> recti::<wbr />Vdcorput::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a839aefcb99b7e386e056f9004bf48edc" class="m-doc-self">Vdcorput</a>(</span><span class="m-doc-wrap">unsigned base = 2,
-              unsigned scale = 10) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> Dllink&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6a03742678e678d29736fe9b98a3da1f" class="m-doc-self">Dllink</a>(</span><span class="m-doc-wrap">T data) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
             </h3>
-            <p>Construct a new <a href="classrecti_1_1Vdcorput.html" class="m-doc">Vdcorput</a> object.</p>
+            <p>Construct a new <a href="classDllink.html" class="m-doc">Dllink</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">base&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>scale&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td style="width: 1%">data&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>the data</td>
                 </tr>
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="add71925c4769058e7f714d009c1c3238"><div>
+          <section class="m-doc-details" id="acd221d02dd88444bfbff4fd2d5ed4217"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vdcorput::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#add71925c4769058e7f714d009c1c3238" class="m-doc-self">operator()</a>(</span><span class="m-doc-wrap">) noexcept -&gt; unsigned</span></span>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto Dllink&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acd221d02dd88444bfbff4fd2d5ed4217" class="m-doc-self">is_locked</a>(</span><span class="m-doc-wrap">) const noexcept -&gt; bool <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Generate the next van der Corput sequence value.</p>
+            <p>whether the node is locked</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
                   <th style="width: 1%">Returns</th>
-                  <td>unsigned The next value in the van der Corput sequence</td>
+                  <td>True if the node is locked, false otherwise.</td>
                 </tr>
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="aab388438f26ee6e45da5c4d780fc75ee"><div>
+        </section>
+        <section>
+          <h2>Variable documentation</h2>
+          <section class="m-doc-details" id="af4fd13a5eb0b8ebb49e9e718c4d2937b"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vdcorput::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aab388438f26ee6e45da5c4d780fc75ee" class="m-doc-self">reseed</a>(</span><span class="m-doc-wrap">unsigned seed) noexcept -&gt; void</span></span>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <a href="classDllink.html" class="m-doc">Dllink</a>* Dllink&lt;T&gt;::<wbr /><a href="#af4fd13a5eb0b8ebb49e9e718c4d2937b" class="m-doc-self">next</a>
             </h3>
-            <p>Reset the sequence with a new seed value.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">seed&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The new seed value for the sequence</td>
-                </tr>
-              </tbody>
-            </table>
+<p>pointer to the next node</p>
+          </div></section>
+          <section class="m-doc-details" id="a95c712b185503e27133ceba25d502d2c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <a href="classDllink.html" class="m-doc">Dllink</a>* Dllink&lt;T&gt;::<wbr /><a href="#a95c712b185503e27133ceba25d502d2c" class="m-doc-self">prev</a>
+            </h3>
+<p>pointer to the previous node</p>
+          </div></section>
+          <section class="m-doc-details" id="a405e9b6b1d8ca4923501268911725928"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              T Dllink&lt;T&gt;::<wbr /><a href="#a405e9b6b1d8ca4923501268911725928" class="m-doc-self">data</a>
+            </h3>
+<p>data</p>
           </div></section>
         </section>
       </div>

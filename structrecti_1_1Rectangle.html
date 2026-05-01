@@ -49,7 +49,6 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="recti_8hpp.html">&lt;recti/recti.hpp&gt;</a></div>
           <div class="m-doc-template">template&lt;typename T&gt;</div>
           <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>Rectangle <span class="m-thin">struct</span>
         </h1>
@@ -78,7 +77,38 @@
             </li>
           </ul>
         </nav>
-<p>The <code>struct <a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a></code> is inheriting from the <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;<a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&gt;</code> class. This means that <code><a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a></code> will have all the member variables and member functions of <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;<a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&gt;</code>. It is using the <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;</code> template parameter to define the type of the x and y coordinates of the rectangle.</p>
+<p>The <code>struct <a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a></code> is inheriting from the <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;<a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&gt;</code> class. This means that <code><a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a></code> will have all the member variables and member functions of <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;<a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&gt;</code>. It is using the <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;</code> template parameter to define the type of the x and y coordinates of the rectangle.</p><pre class="m-code">+-----------------------+
+|        Recti          |
+|      Rectangle        |
++-----------------------+
+|                       |
+|  +----------+         |
+|  |          |         |  A Rectangle template class
+|  |   Rect   |         |  inheriting from Point&lt;Interval&lt;T&gt;&gt;
+|  |          |         |  with functions to get
+|  +----------+         |  lower-left (ll) and upper-right (ur)
+|    ll()-----&gt;o--------+  corners, and calculate area
+|         ur()-----&gt;o--------+
+|                       |    |
++-----------------------+    |
+                            |
++-----------------------+    |
+|    ll() function      |    |
+| Returns Point&lt;T&gt;      |    |
+| at lower-left corner  |    |
++-----------------------+    |
+                            |
++-----------------------+    |
+|    ur() function      |    |
+| Returns Point&lt;T&gt;      |    |
+| at upper-right corner |    |
++-----------------------+    |
+                            |
++-----------------------+    |
+|     area() function   |    |
+| Calculates rectangle  |    |
+| area using length()   |    |
++-----------------------+</pre>
         <section id="base-classes">
           <h2><a href="#base-classes">Base classes</a></h2>
           <dl class="m-doc">
@@ -93,21 +123,12 @@
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#ae1b9a4d332a36d41a3ad08a222cb4671" class="m-doc">Rectangle</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp;&amp; xcoord,
-              <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp;&amp; ycoord) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#a66cb080b25556a3f5d1305a15feaf156" class="m-doc">Rectangle</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt; xcoord,
+              <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt; ycoord) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Construct a new <a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a> object.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#ae65a4463a41f6cfe0476702cf3dc61ef" class="m-doc">Rectangle</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp; xcoord,
-              const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp; ycoord) <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>Construct a new <a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a> object.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="#aecce2fb9190730ab14e3ca3999c6751f" class="m-doc">Rectangle</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;<a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&gt;&amp;&amp; base) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
-            </dt>
-            <dd>Construct a new <a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a> object from the base object (implicitly)</dd>
-            <dt id="ac4b4c51cfc08a96272233d09d0a41c70">
-              <span class="m-doc-wrap-bumper"><a href="#ac4b4c51cfc08a96272233d09d0a41c70" class="m-doc-self">Rectangle</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;<a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&gt;&amp; base) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#a51b2479833984ef400905ac0c8ee6036" class="m-doc">Rectangle</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;<a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&gt; base) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Construct a new <a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a> object from the base object (implicitly)</dd>
           </dl>
@@ -131,39 +152,13 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ae1b9a4d332a36d41a3ad08a222cb4671"><div>
+          <section class="m-doc-details" id="a66cb080b25556a3f5d1305a15feaf156"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> recti::<wbr />Rectangle&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae1b9a4d332a36d41a3ad08a222cb4671" class="m-doc-self">Rectangle</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp;&amp; xcoord,
-              <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp;&amp; ycoord) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
-            </h3>
-            <p>Construct a new <a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a> object.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">xcoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>ycoord&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
-<p>This is a constructor for the <code><a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a></code> struct. It takes two <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;</code> objects, <code>xcoord</code> and <code>ycoord</code>, as parameters. The <code>&amp;&amp;</code> indicates that the parameters are rvalue references, allowing the constructor to efficiently move the <code><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;</code> objects into the <code><a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a></code> object. The <code>noexcept</code> specifier indicates that this constructor will not throw any exceptions.</p>
-          </div></section>
-          <section class="m-doc-details" id="ae65a4463a41f6cfe0476702cf3dc61ef"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename T&gt;
-              </div>
-              <span class="m-doc-wrap-bumper"> recti::<wbr />Rectangle&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae65a4463a41f6cfe0476702cf3dc61ef" class="m-doc-self">Rectangle</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp; xcoord,
-              const <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&amp; ycoord) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />Rectangle&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a66cb080b25556a3f5d1305a15feaf156" class="m-doc-self">Rectangle</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt; xcoord,
+              <a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt; ycoord) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
             </h3>
             <p>Construct a new <a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a> object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -182,14 +177,25 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="aecce2fb9190730ab14e3ca3999c6751f"><div>
+          <section class="m-doc-details" id="a51b2479833984ef400905ac0c8ee6036"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> recti::<wbr />Rectangle&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aecce2fb9190730ab14e3ca3999c6751f" class="m-doc-self">Rectangle</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;<a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&gt;&amp;&amp; base) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />Rectangle&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a51b2479833984ef400905ac0c8ee6036" class="m-doc-self">Rectangle</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;<a href="classrecti_1_1Interval.html" class="m-doc">Interval</a>&lt;T&gt;&gt; base) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
             </h3>
             <p>Construct a new <a href="structrecti_1_1Rectangle.html" class="m-doc">Rectangle</a> object from the base object (implicitly)</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">base&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
 <p>Note: intentionally allow implicit conversion</p>
           </div></section>
           <section class="m-doc-details" id="ad78a8c389d09f0c41b815634eac9b7d4"><div>
@@ -291,7 +297,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>recti::GlobalRoutingTree class | Recti</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Recti</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li>
+              <a href="pages.html">Pages</a>
+              <ol>
+                <li><a href="about.html">About</a></li>
+              </ol>
+            </li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="global__router_8hpp.html">&lt;recti/global_router.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename IntPoint&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>GlobalRoutingTree <span class="m-thin">class</span>
+        </h1>
+        <p>Represents the entire global routing tree.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p>This class manages the collection of RoutingNodes, including the source, Steiner points, and terminal points, and provides methods for building and manipulating the tree structure.</p><pre class="m-code">+-----------------------------+
+|      GlobalRoutingTree      |
++-----------------------------+
+| source_node (SOURCE)        |
+|    |                        |
+|    v                        |
+| +-------------------------+  |
+| | RoutingNode             |  |
+| | id: source              |  |
+| | type: SOURCE            |  |  A tree structure with
+| | pt: (x, y)              |  |  source, terminals,
+| | children[]              |  |  and steiner points
+| | parent: null            |  |
+| +-------------------------+  |
+|    |                        |
+|    +--&gt; +----------------+   |
+|         |RoutingNode     |   |
+|         |id: terminal_1  |   |
+|         |type: TERMINAL  |   |
+|         |pt: (x1, y1)    |   |
+|         |children[]      |   |
+|         |parent: source  |   |
+|         +----------------+   |
+|    |                        |
+|    +--&gt; +----------------+   |
+|         |RoutingNode     |   |
+|         |id: steiner_1   |   |
+|         |type: STEINER   |   |
+|         |pt: (x2, y2)    |   |
+|         |children[]      |   |
+|         |parent: source  |   |
+|         +----------------+   |
+|            |                 |
+|            +--&gt; +----------+ |
+|                 |RoutingNode| |
+|                 |id: term_2| |
+|                 |type: TERM| |
+|                 |pt: (x3,y3)||
+|                 |children[]| |
+|                 |parent: st| |
+|                 +----------+ |
++-----------------------------+</pre>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a8fe05bd00aaba1b97c34a20e1d8df45d" class="m-doc">GlobalRoutingTree</a>(</span><span class="m-doc-wrap">IntPoint source_position)</span>
+            </dt>
+            <dd>Constructs a new <a href="classrecti_1_1GlobalRoutingTree.html" class="m-doc">GlobalRoutingTree</a> with a specified source position.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8a7d909fcdc81ccbc9ce1a73f39c778a" class="m-doc">get_source</a>(</span><span class="m-doc-wrap">) const -&gt; const RoutingNode&lt; IntPoint &gt; * -&gt; auto</span>
+            </dt>
+            <dd>Gets a const pointer to the source node of the tree.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#acac4e4d9a278556ffdc658ca36c797f9" class="m-doc">get_source</a>(</span><span class="m-doc-wrap">) -&gt; RoutingNode&lt; IntPoint &gt; * -&gt; auto</span>
+            </dt>
+            <dd>Gets a non-const pointer to the source node of the tree.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a882f1e5648a13ad7770ddbcc74f91079" class="m-doc">insert_steiner_node</a>(</span><span class="m-doc-wrap">const IntPoint&amp; point,
+              std::optional&lt;std::string&gt; parent_id = std::nullopt) -&gt; std::string -&gt; auto</span>
+            </dt>
+            <dd>Inserts a new Steiner node into the routing tree.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a97a463c9fcfbd9de59d3fa3a2676bdff" class="m-doc">insert_terminal_node</a>(</span><span class="m-doc-wrap">const IntPoint&amp; point,
+              std::optional&lt;std::string&gt; parent_id = std::nullopt) -&gt; std::string -&gt; auto</span>
+            </dt>
+            <dd>Inserts a new terminal node into the routing tree.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a830819c777b270f0089da5e8d9e30f4c" class="m-doc">insert_node_on_branch</a>(</span><span class="m-doc-wrap"><a href="namespacerecti.html#aa10b643c20623d868438bea3e6978dae" class="m-doc">NodeType</a> new_node_type,
+              const IntPoint&amp; point,
+              std::string branch_start_id,
+              std::string branch_end_id) -&gt; std::string -&gt; auto</span>
+            </dt>
+            <dd>Inserts a new node (Steiner or Terminal) onto an existing branch of the tree.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae873e3c37ceffa9861d5ddf2cf1d304f" class="m-doc">insert_terminal_with_steiner</a>(</span><span class="m-doc-wrap">const IntPoint&amp; point,
+              std::optional&lt;std::vector&lt;<a href="classrecti_1_1GlobalRoutingTree.html#ade7e1885f08db1c0e541f5a7d90c6a23" class="m-doc">Keepout</a>&gt;&gt; keepouts = std::nullopt) -&gt; void -&gt; auto</span>
+            </dt>
+            <dd>Inserts a new terminal node with possible Steiner point.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aff74ee208850867b8156f4f43fd97af4" class="m-doc">insert_terminal_with_constraints</a>(</span><span class="m-doc-wrap">const IntPoint&amp; point,
+              int allowed_wirelength,
+              std::optional&lt;std::vector&lt;<a href="classrecti_1_1GlobalRoutingTree.html#ade7e1885f08db1c0e541f5a7d90c6a23" class="m-doc">Keepout</a>&gt;&gt; keepouts = std::nullopt) -&gt; void -&gt; auto</span>
+            </dt>
+            <dd>Inserts a new terminal node with constraints.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3b8fae9d201ffcca1a6a64a581d02272" class="m-doc">calculate_total_wirelength</a>(</span><span class="m-doc-wrap">) const -&gt; int -&gt; auto</span>
+            </dt>
+            <dd>Calculates the total wirelength of the routing tree.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2bf90855a4e98a1c79a3f4f78c9ed082" class="m-doc">calculate_worst_wirelength</a>(</span><span class="m-doc-wrap">) const -&gt; int -&gt; auto</span>
+            </dt>
+            <dd>Calculates the worst wirelength of the routing tree.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6fb435c5e7c44387fa6ca50497fc774e" class="m-doc">get_tree_structure</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1RoutingNode.html" class="m-doc">RoutingNode</a>&lt;IntPoint&gt;* current_node = nullptr,
+              int level = 0) const -&gt; std::string -&gt; auto</span>
+            </dt>
+            <dd>Generates a string representation of the tree structure for visualization or debugging.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a598c46cd0225bfa0b10bd6c49f7c74ff" class="m-doc">find_path_to_source</a>(</span><span class="m-doc-wrap">const std::string&amp; node_id) const -&gt; std::vector&lt; const RoutingNode&lt; IntPoint &gt; * &gt; -&gt; auto</span>
+            </dt>
+            <dd>Finds the path from a given node to the source node.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8b4834bf7198ea1879dbef7bd06aa936" class="m-doc">get_all_terminals</a>(</span><span class="m-doc-wrap">) const -&gt; std::vector&lt; const RoutingNode&lt; IntPoint &gt; * &gt; -&gt; auto</span>
+            </dt>
+            <dd>Retrieves all terminal nodes in the tree.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a10f0a1b55c6888abf39558d2ffcdb3ad" class="m-doc">get_all_steiner_nodes</a>(</span><span class="m-doc-wrap">) const -&gt; std::vector&lt; const RoutingNode&lt; IntPoint &gt; * &gt; -&gt; auto</span>
+            </dt>
+            <dd>Retrieves all Steiner nodes in the tree.</dd>
+            <dt id="ae704b2749a4801d6daddb93fa13c11b1">
+              <span class="m-doc-wrap-bumper">void <a href="#ae704b2749a4801d6daddb93fa13c11b1" class="m-doc-self">optimize_steiner_points</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Optimizes the routing tree by removing redundant Steiner points. A Steiner point is considered redundant if it has only one child and is not the source node.</dd>
+            <dt id="a8290d2098033dcb3d758939efea168a9">
+              <span class="m-doc-wrap-bumper">void <a href="#a8290d2098033dcb3d758939efea168a9" class="m-doc-self">visualize_tree</a>(</span><span class="m-doc-wrap">) const</span>
+            </dt>
+            <dd>Visualizes the routing tree (implementation in .cpp file).</dd>
+          </dl>
+        </section>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt id="aa2edcee881568c3a2aaa01d5a5094af4">
+              std::unordered_map&lt;std::string, <a href="classrecti_1_1RoutingNode.html" class="m-doc">RoutingNode</a>&lt;IntPoint&gt;*&gt; <a href="#aa2edcee881568c3a2aaa01d5a5094af4" class="m-doc-self">nodes</a>
+            </dt>
+            <dd>Map from node ID to RoutingNode&lt;IntPoint&gt; pointer.</dd>
+            <dt id="a0a93362e4813d9cd48e82476d8706fb2">
+              std::vector&lt;std::unique_ptr&lt;<a href="classrecti_1_1RoutingNode.html" class="m-doc">RoutingNode</a>&lt;IntPoint&gt;&gt;&gt; <a href="#a0a93362e4813d9cd48e82476d8706fb2" class="m-doc-self">owned_nodes</a>
+            </dt>
+            <dd>Stores unique_ptrs for memory management of nodes.</dd>
+            <dt>
+              int <a href="#a4905b76bf7a7f447c03775dc613b4317" class="m-doc">worst_wirelength</a>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a8fe05bd00aaba1b97c34a20e1d8df45d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8fe05bd00aaba1b97c34a20e1d8df45d" class="m-doc-self">GlobalRoutingTree</a>(</span><span class="m-doc-wrap">IntPoint source_position)</span></span>
+            </h3>
+            <p>Constructs a new <a href="classrecti_1_1GlobalRoutingTree.html" class="m-doc">GlobalRoutingTree</a> with a specified source position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">source_position</td>
+                  <td>The 2D integer coordinates of the source node.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8a7d909fcdc81ccbc9ce1a73f39c778a"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8a7d909fcdc81ccbc9ce1a73f39c778a" class="m-doc-self">get_source</a>(</span><span class="m-doc-wrap">) const -&gt; const RoutingNode&lt; IntPoint &gt; *</span></span>
+            </h3>
+            <p>Gets a const pointer to the source node of the tree.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A const pointer to the source RoutingNode&lt;IntPoint&gt;.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="acac4e4d9a278556ffdc658ca36c797f9"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acac4e4d9a278556ffdc658ca36c797f9" class="m-doc-self">get_source</a>(</span><span class="m-doc-wrap">) -&gt; RoutingNode&lt; IntPoint &gt; *</span></span>
+            </h3>
+            <p>Gets a non-const pointer to the source node of the tree.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A non-const pointer to the source RoutingNode&lt;IntPoint&gt;.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a882f1e5648a13ad7770ddbcc74f91079"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a882f1e5648a13ad7770ddbcc74f91079" class="m-doc-self">insert_steiner_node</a>(</span><span class="m-doc-wrap">const IntPoint&amp; point,
+              std::optional&lt;std::string&gt; parent_id = std::nullopt) -&gt; std::string</span></span>
+            </h3>
+            <p>Inserts a new Steiner node into the routing tree.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">point</td>
+                  <td>The position of the new Steiner node.</td>
+                </tr>
+                <tr>
+                  <td>parent_id</td>
+                  <td>Optional ID of the parent node. If not provided, the source node is used as parent.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th>Returns</th>
+                  <td>The ID of the newly inserted Steiner node.</td>
+                </tr>
+              </thead>
+              <thead>
+                <tr><th colspan="2">Exceptions</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>std::runtime_error</td>
+                  <td>if the specified parent node is not found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a97a463c9fcfbd9de59d3fa3a2676bdff"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a97a463c9fcfbd9de59d3fa3a2676bdff" class="m-doc-self">insert_terminal_node</a>(</span><span class="m-doc-wrap">const IntPoint&amp; point,
+              std::optional&lt;std::string&gt; parent_id = std::nullopt) -&gt; std::string</span></span>
+            </h3>
+            <p>Inserts a new terminal node into the routing tree.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">point</td>
+                  <td>The position of the new terminal node.</td>
+                </tr>
+                <tr>
+                  <td>parent_id</td>
+                  <td>Optional ID of the parent node. If not provided, the nearest existing node is used as parent.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th>Returns</th>
+                  <td>The ID of the newly inserted terminal node.</td>
+                </tr>
+              </thead>
+              <thead>
+                <tr><th colspan="2">Exceptions</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>std::runtime_error</td>
+                  <td>if the specified parent node is not found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a830819c777b270f0089da5e8d9e30f4c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a830819c777b270f0089da5e8d9e30f4c" class="m-doc-self">insert_node_on_branch</a>(</span><span class="m-doc-wrap"><a href="namespacerecti.html#aa10b643c20623d868438bea3e6978dae" class="m-doc">NodeType</a> new_node_type,
+              const IntPoint&amp; point,
+              std::string branch_start_id,
+              std::string branch_end_id) -&gt; std::string</span></span>
+            </h3>
+            <p>Inserts a new node (Steiner or Terminal) onto an existing branch of the tree.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">new_node_type</td>
+                  <td>The type of the new node to insert (STEINER or TERMINAL).</td>
+                </tr>
+                <tr>
+                  <td>point</td>
+                  <td>The position of the new node.</td>
+                </tr>
+                <tr>
+                  <td>branch_start_id</td>
+                  <td>The ID of the parent node of the branch.</td>
+                </tr>
+                <tr>
+                  <td>branch_end_id</td>
+                  <td>The ID of the child node of the branch.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th>Returns</th>
+                  <td>The ID of the newly inserted node.</td>
+                </tr>
+              </thead>
+              <thead>
+                <tr><th colspan="2">Exceptions</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>std::runtime_error</td>
+                  <td>if branch nodes are not found or if branch_end_id is not a direct child of branch_start_id.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae873e3c37ceffa9861d5ddf2cf1d304f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae873e3c37ceffa9861d5ddf2cf1d304f" class="m-doc-self">insert_terminal_with_steiner</a>(</span><span class="m-doc-wrap">const IntPoint&amp; point,
+              std::optional&lt;std::vector&lt;<a href="classrecti_1_1GlobalRoutingTree.html#ade7e1885f08db1c0e541f5a7d90c6a23" class="m-doc">Keepout</a>&gt;&gt; keepouts = std::nullopt) -&gt; void</span></span>
+            </h3>
+            <p>Inserts a new terminal node with possible Steiner point.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">point</td>
+                  <td>The position of the terminal.</td>
+                </tr>
+                <tr>
+                  <td>keepouts</td>
+                  <td>Optional keepouts to avoid.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aff74ee208850867b8156f4f43fd97af4"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aff74ee208850867b8156f4f43fd97af4" class="m-doc-self">insert_terminal_with_constraints</a>(</span><span class="m-doc-wrap">const IntPoint&amp; point,
+              int allowed_wirelength,
+              std::optional&lt;std::vector&lt;<a href="classrecti_1_1GlobalRoutingTree.html#ade7e1885f08db1c0e541f5a7d90c6a23" class="m-doc">Keepout</a>&gt;&gt; keepouts = std::nullopt) -&gt; void</span></span>
+            </h3>
+            <p>Inserts a new terminal node with constraints.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">point</td>
+                  <td>The position of the terminal.</td>
+                </tr>
+                <tr>
+                  <td>allowed_wirelength</td>
+                  <td>The allowed wirelength.</td>
+                </tr>
+                <tr>
+                  <td>keepouts</td>
+                  <td>Optional keepouts to avoid.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3b8fae9d201ffcca1a6a64a581d02272"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3b8fae9d201ffcca1a6a64a581d02272" class="m-doc-self">calculate_total_wirelength</a>(</span><span class="m-doc-wrap">) const -&gt; int</span></span>
+            </h3>
+            <p>Calculates the total wirelength of the routing tree.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The total wirelength as an integer.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2bf90855a4e98a1c79a3f4f78c9ed082"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2bf90855a4e98a1c79a3f4f78c9ed082" class="m-doc-self">calculate_worst_wirelength</a>(</span><span class="m-doc-wrap">) const -&gt; int</span></span>
+            </h3>
+            <p>Calculates the worst wirelength of the routing tree.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The worst wirelength as an integer.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6fb435c5e7c44387fa6ca50497fc774e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6fb435c5e7c44387fa6ca50497fc774e" class="m-doc-self">get_tree_structure</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1RoutingNode.html" class="m-doc">RoutingNode</a>&lt;IntPoint&gt;* current_node = nullptr,
+              int level = 0) const -&gt; std::string</span></span>
+            </h3>
+            <p>Generates a string representation of the tree structure for visualization or debugging.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">current_node</td>
+                  <td>The starting node for the traversal (defaults to source_node).</td>
+                </tr>
+                <tr>
+                  <td>level</td>
+                  <td>The current depth level in the tree (for indentation).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A string representing the tree structure.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a598c46cd0225bfa0b10bd6c49f7c74ff"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a598c46cd0225bfa0b10bd6c49f7c74ff" class="m-doc-self">find_path_to_source</a>(</span><span class="m-doc-wrap">const std::string&amp; node_id) const -&gt; std::vector&lt; const RoutingNode&lt; IntPoint &gt; * &gt;</span></span>
+            </h3>
+            <p>Finds the path from a given node to the source node.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">node_id</td>
+                  <td>The ID of the starting node.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th>Returns</th>
+                  <td>A vector of const pointers to RoutingNodes, representing the path from source to the given node.</td>
+                </tr>
+              </thead>
+              <thead>
+                <tr><th colspan="2">Exceptions</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>std::runtime_error</td>
+                  <td>if the specified node is not found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8b4834bf7198ea1879dbef7bd06aa936"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8b4834bf7198ea1879dbef7bd06aa936" class="m-doc-self">get_all_terminals</a>(</span><span class="m-doc-wrap">) const -&gt; std::vector&lt; const RoutingNode&lt; IntPoint &gt; * &gt;</span></span>
+            </h3>
+            <p>Retrieves all terminal nodes in the tree.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A vector of pointers to all RoutingNodes of type TERMINAL.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a10f0a1b55c6888abf39558d2ffcdb3ad"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a10f0a1b55c6888abf39558d2ffcdb3ad" class="m-doc-self">get_all_steiner_nodes</a>(</span><span class="m-doc-wrap">) const -&gt; std::vector&lt; const RoutingNode&lt; IntPoint &gt; * &gt;</span></span>
+            </h3>
+            <p>Retrieves all Steiner nodes in the tree.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>A vector of pointers to all RoutingNodes of type STEINER.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+        <section>
+          <h2>Variable documentation</h2>
+          <section class="m-doc-details" id="a4905b76bf7a7f447c03775dc613b4317"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              int recti::<wbr />GlobalRoutingTree&lt;IntPoint&gt;::<wbr /><a href="#a4905b76bf7a7f447c03775dc613b4317" class="m-doc-self">worst_wirelength</a>
+            </h3>
+<p>The worst-case wirelength constraint for routing (used in constrained routing).</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

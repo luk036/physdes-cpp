@@ -49,7 +49,6 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="rpolygon_8hpp.html">&lt;recti/rpolygon.hpp&gt;</a></div>
           <div class="m-doc-template">template&lt;typename T&gt;</div>
           <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>RPolygon <span class="m-thin">class</span>
         </h1>
@@ -77,52 +76,116 @@
             </li>
           </ul>
         </nav>
-<p><code><a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a></code> is a class template that represents a rectilinear polygon. It stores the origin point and a vector of edges that define the polygon. The template parameter <code>T</code> specifies the type of the coordinates of the points.</p>
+<p><code><a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a></code> is a class template that represents a rectilinear polygon. It stores the origin point and a vector of edges that define the polygon. The template parameter <code>T</code> specifies the type of the coordinates of the points.</p><pre class="m-code">+-----------------------------+
+|        RPolygon&lt;T&gt;          |
++-----------------------------+
+| _origin: Point&lt;T&gt;           |
+| _vecs: vector&lt;Vector2&lt;T&gt;&gt;   |
+|                             |
+|        +----+               |
+|        |    |               |  A rectilinear polygon class
+|    +---+    |               |  with origin point and
+|    |   |    |               |  vectors defining the polygon
+|    |   +----+               |  edges. Supports various
+|    |                        |  geometric operations
+|    +------------------------+
+|            vertices()       |
+|            signed_area()    |
++-----------------------------+</pre>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a4df90a711d6fd4b3b9d33fed7125f84e" class="m-doc">RPolygon</a>(</span><span class="m-doc-wrap">gsl::span&lt;const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T&gt;&gt; pointset) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="a76b0cfef129a7a705e7a75e2d939d8c8">
+              <span class="m-doc-wrap-bumper"><a href="#a76b0cfef129a7a705e7a75e2d939d8c8" class="m-doc-self">RPolygon</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Constructs a new <code><a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a></code> object from a set of points.</dd>
+            <dd>Default constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a3b5972aff1fb0463a98f337fde7cf184" class="m-doc">RPolygon</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T&gt; origin,
+              std::vector&lt;<a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;T&gt;&gt; vecs) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructs a new <a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a> object from origin and vectors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a5e563621411681894622035598e7d18d" class="m-doc">RPolygon</a>(</span><span class="m-doc-wrap">std::span&lt;const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T&gt;&gt; pointset) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructs a new <a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a> object from a set of points.</dd>
           </dl>
         </section>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
+            <dt id="ad2e31bb41175a25f64e85eaa6a59916f">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad2e31bb41175a25f64e85eaa6a59916f" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a>&amp; rhs) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Equality comparison operator.</dd>
+            <dt id="a7c2d4d04e9f77e705dc783e1eb142bcf">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7c2d4d04e9f77e705dc783e1eb142bcf" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a>&amp; rhs) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Inequality comparison operator.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#afd965ad28f599915a0bd8baca48b9805" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;T&gt;&amp; vector) -&gt; RPolygon &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a52538c12ade79f4f59791bd33b83025a" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;T&gt;&amp; vector_offset) -&gt; RPolygon &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Adds a vector to the origin of the rectilinear polygon.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab53edaf41b1e4b7faa16f61747b29858" class="m-doc">operator-=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;T&gt;&amp; vector_offset) -&gt; RPolygon &amp; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Subtracts a vector from the origin of the rectilinear polygon.</dd>
+            <dt id="a0190cdcedc6b66478276b9e432105391">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0190cdcedc6b66478276b9e432105391" class="m-doc-self">origin</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T&gt;&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Gets the origin point of the polygon.</dd>
+            <dt id="ada549a428a47f4dfd8aa1db3e12a02e2">
+              <span class="m-doc-wrap-bumper">auto <a href="#ada549a428a47f4dfd8aa1db3e12a02e2" class="m-doc-self">vectors</a>(</span><span class="m-doc-wrap">) const -&gt; const std::vector&lt;<a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;T&gt;&gt;&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Gets the displacement vectors of the polygon.</dd>
+            <dt id="a419395f749a7660a623debc636ba70a8">
+              <span class="m-doc-wrap-bumper">auto <a href="#a419395f749a7660a623debc636ba70a8" class="m-doc-self">vertices</a>(</span><span class="m-doc-wrap">) const -&gt; std::vector&lt; Point&lt; T &gt; &gt; -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Gets all vertices of the polygon as points.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a224e7490f85f9ea21e50d51f66380476" class="m-doc">signed_area</a>(</span><span class="m-doc-wrap">) const -&gt; T -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the signed area of the rectilinear polygon.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;typename U&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a9fc77506fe9ac2eac0e5912d8dadbbe1" class="m-doc">contains</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U&gt;&amp; rhs) const -&gt; bool -&gt; auto</span>
+            <dt id="a26a768486116a99beb8bbcfb97cc3262">
+              <span class="m-doc-wrap-bumper">auto <a href="#a26a768486116a99beb8bbcfb97cc3262" class="m-doc-self">is_rectilinear</a>(</span><span class="m-doc-wrap">) const -&gt; bool -&gt; auto <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Checks if the given point is contained within the rectilinear polygon.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#aa5411b3683eee75396278373d91c1762" class="m-doc">lb</a>(</span><span class="m-doc-wrap">) const -&gt; Point&lt; T &gt; -&gt; auto</span>
-            </dt>
-            <dd></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a7f0bf64a10db769672d04e0a5520ff80" class="m-doc">ub</a>(</span><span class="m-doc-wrap">) const -&gt; Point&lt; T &gt; -&gt; auto</span>
-            </dt>
-            <dd></dd>
+            <dd>Checks if the polygon is rectilinear (all edges are horizontal or vertical)</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a4df90a711d6fd4b3b9d33fed7125f84e"><div>
+          <section class="m-doc-details" id="a3b5972aff1fb0463a98f337fde7cf184"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> recti::<wbr />RPolygon&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4df90a711d6fd4b3b9d33fed7125f84e" class="m-doc-self">RPolygon</a>(</span><span class="m-doc-wrap">gsl::span&lt;const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T&gt;&gt; pointset) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />RPolygon&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3b5972aff1fb0463a98f337fde7cf184" class="m-doc-self">RPolygon</a>(</span><span class="m-doc-wrap"><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T&gt; origin,
+              std::vector&lt;<a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;T&gt;&gt; vecs) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Constructs a new <code><a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a></code> object from a set of points.</p>
+            <p>Constructs a new <a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a> object from origin and vectors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">origin&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The origin point of the polygon</td>
+                </tr>
+                <tr>
+                  <td>vecs&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>Vector of displacement vectors from origin</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5e563621411681894622035598e7d18d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />RPolygon&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5e563621411681894622035598e7d18d" class="m-doc-self">RPolygon</a>(</span><span class="m-doc-wrap">std::span&lt;const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T&gt;&gt; pointset) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructs a new <a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a> object from a set of points.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -134,14 +197,14 @@
                 </tr>
               </tbody>
             </table>
-<p>This constructor takes a <code>gsl::span</code> of <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T&gt;</code> objects representing the vertices of the rectilinear polygon. The first point in the span is used as the origin of the polygon, and the remaining points are used to construct the vectors that define the edges of the polygon.</p>
+<p>This constructor takes a <code>std::span</code> of <code><a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;T&gt;</code> objects representing the vertices of the rectilinear polygon. The first point in the span is used as the origin of the polygon, and the remaining points are used to construct the vectors that define the edges of the polygon.</p>
           </div></section>
-          <section class="m-doc-details" id="afd965ad28f599915a0bd8baca48b9805"><div>
+          <section class="m-doc-details" id="a52538c12ade79f4f59791bd33b83025a"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename T&gt;
               </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />RPolygon&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afd965ad28f599915a0bd8baca48b9805" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;T&gt;&amp; vector) -&gt; RPolygon &amp; <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />RPolygon&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a52538c12ade79f4f59791bd33b83025a" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;T&gt;&amp; vector_offset) -&gt; RPolygon &amp; <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Adds a vector to the origin of the rectilinear polygon.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -150,7 +213,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">vector&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td style="width: 1%">vector_offset&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>The vector to add to the origin.</td>
                 </tr>
               </tbody>
@@ -162,6 +225,33 @@
               </tfoot>
             </table>
 <p>This method adds the given vector to the origin point of the rectilinear polygon, effectively translating the entire polygon by the specified vector.</p>
+          </div></section>
+          <section class="m-doc-details" id="ab53edaf41b1e4b7faa16f61747b29858"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />RPolygon&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab53edaf41b1e4b7faa16f61747b29858" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Vector2.html" class="m-doc">Vector2</a>&lt;T&gt;&amp; vector_offset) -&gt; RPolygon &amp; <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Subtracts a vector from the origin of the rectilinear polygon.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">vector_offset&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The vector to subtract from the origin.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A reference to the modified <a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a> object.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This method subtracts the given vector from the origin point of the rectilinear polygon, effectively translating the entire polygon by the negative of the specified vector.</p>
           </div></section>
           <section class="m-doc-details" id="a224e7490f85f9ea21e50d51f66380476"><div>
             <h3>
@@ -179,76 +269,7 @@
                 </tr>
               </tfoot>
             </table>
-<p>This method calculates the signed area of the rectilinear polygon represented by this <code><a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a></code> object.</p>
-          </div></section>
-          <section class="m-doc-details" id="a9fc77506fe9ac2eac0e5912d8dadbbe1"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename T&gt;
-                template&lt;typename U&gt;
-              </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />RPolygon&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9fc77506fe9ac2eac0e5912d8dadbbe1" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap">const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;U&gt;&amp; rhs) const -&gt; bool</span></span>
-            </h3>
-            <p>Checks if the given point is contained within the rectilinear polygon.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Template parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">U</td>
-                  <td>The type of the point coordinates.</td>
-                </tr>
-              </tbody>
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>rhs&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The point to check for containment.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>true</code> if the point is contained within the rectilinear polygon, <code>false</code> otherwise.</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>This method checks if the provided point is contained within the rectilinear polygon represented by this <code><a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a></code> object.</p>
-          </div></section>
-          <section class="m-doc-details" id="aa5411b3683eee75396278373d91c1762"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename T&gt;
-              </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />RPolygon&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa5411b3683eee75396278373d91c1762" class="m-doc-self">lb</a>(</span><span class="m-doc-wrap">) const -&gt; Point&lt; T &gt;</span></span>
-            </h3>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><a href="classrecti_1_1Point.html" class="m-doc">Point&lt;T&gt;</a></td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="a7f0bf64a10db769672d04e0a5520ff80"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename T&gt;
-              </div>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />RPolygon&lt;T&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7f0bf64a10db769672d04e0a5520ff80" class="m-doc-self">ub</a>(</span><span class="m-doc-wrap">) const -&gt; Point&lt; T &gt;</span></span>
-            </h3>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><a href="classrecti_1_1Point.html" class="m-doc">Point&lt;T&gt;</a></td>
-                </tr>
-              </tfoot>
-            </table>
+<p>This method calculates the signed area of the rectilinear polygon represented by this <code><a href="classrecti_1_1RPolygon.html" class="m-doc">RPolygon</a></code> object using the shoelace formula.</p>
           </div></section>
         </section>
       </div>
@@ -295,7 +316,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

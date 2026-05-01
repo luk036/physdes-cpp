@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>recti/greeter.h file | Recti</title>
+  <title>recti::TreeNode class | Recti</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -49,36 +49,101 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="dir_f74a13bbcc6e37b7d69fcb651c6e9ede.html">recti</a>/</span>greeter.h <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>TreeNode <span class="m-thin">class</span>
         </h1>
-        <p><span></span></p>
+        <p>Represents a node in the clock tree.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
-          <dl class="m-doc">
-            <dt>namespace <a href="namespacerecti.html" class="m-doc">recti</a></dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
+<p>A <a href="classrecti_1_1TreeNode.html" class="m-doc">TreeNode</a> can be a sink (leaf) or an internal merging point. It stores information about its physical position, connectivity (left, right, parent children), and electrical properties such as wire length to its parent, accumulated delay from the root, and total downstream capacitance.</p>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              class <a href="classrecti_1_1Recti.html" class="m-doc">recti::Recti</a>
+              <span class="m-doc-wrap-bumper"><a href="#a89d37e16cc872ad7f1682ea760c91128" class="m-doc">TreeNode</a>(</span><span class="m-doc-wrap">const std::string&amp; name,
+              const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;int&gt;&amp; position)</span>
             </dt>
-            <dd>A class for saying hello in multiple languages.</dd>
+            <dd>Constructs a new <a href="classrecti_1_1TreeNode.html" class="m-doc">TreeNode</a>.</dd>
           </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#adfe7e3f68b4ee47ed8697f174b8e4fad" class="m-doc">is_leaf</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Checks if the node is a leaf (a sink).</dd>
+          </dl>
+        </section>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt id="af5b7b17a53d36dd4c353274903e2f098">
+              int <a href="#af5b7b17a53d36dd4c353274903e2f098" class="m-doc-self">wire_length</a>
+            </dt>
+            <dd>Length of the wire connecting this node to its parent.</dd>
+            <dt id="af4fe330d058b98bd6fb83ef3c3e533cb">
+              double <a href="#af4fe330d058b98bd6fb83ef3c3e533cb" class="m-doc-self">delay</a>
+            </dt>
+            <dd>Accumulated delay from the clock source to this node.</dd>
+            <dt id="a6c30b898b56af083905f2530afeee408">
+              double <a href="#a6c30b898b56af083905f2530afeee408" class="m-doc-self">capacitance</a>
+            </dt>
+            <dd>Total downstream capacitance seen from this node.</dd>
+            <dt id="a9e4305a4ae566c6237abece93f670d62">
+              bool <a href="#a9e4305a4ae566c6237abece93f670d62" class="m-doc-self">need_elongation</a>
+            </dt>
+            <dd>Flag indicating if a branch needed elongation for skew balancing.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a89d37e16cc872ad7f1682ea760c91128"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />TreeNode::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a89d37e16cc872ad7f1682ea760c91128" class="m-doc-self">TreeNode</a>(</span><span class="m-doc-wrap">const std::string&amp; name,
+              const <a href="classrecti_1_1Point.html" class="m-doc">Point</a>&lt;int&gt;&amp; position)</span></span>
+            </h3>
+            <p>Constructs a new <a href="classrecti_1_1TreeNode.html" class="m-doc">TreeNode</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">name</td>
+                  <td>The unique name of the node.</td>
+                </tr>
+                <tr>
+                  <td>position</td>
+                  <td>The physical coordinates of the node in the grid.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="adfe7e3f68b4ee47ed8697f174b8e4fad"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool recti::<wbr />TreeNode::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adfe7e3f68b4ee47ed8697f174b8e4fad" class="m-doc-self">is_leaf</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Checks if the node is a leaf (a sink).</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>True if the node has no children (i.e., it&#x27;s a sink), false otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>
@@ -124,7 +189,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

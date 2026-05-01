@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>recti/polygon.hpp file | Recti</title>
+  <title>recti/global_router.hpp file | Recti</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -49,36 +49,39 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="dir_f74a13bbcc6e37b7d69fcb651c6e9ede.html">recti</a>/</span>polygon.hpp <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="dir_f74a13bbcc6e37b7d69fcb651c6e9ede.html">recti</a>/</span>global_router.hpp <span class="m-thin">file</span>
         </h1>
-        <p><span></span></p>
+        <p>Defines data structures and algorithms for global routing in physical design.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#namespaces">Namespaces</a></li>
                 <li><a href="#nested-classes">Classes</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
-          <dl class="m-doc">
-            <dt>namespace <a href="namespacerecti.html" class="m-doc">recti</a></dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
+<p>This file provides the core components for constructing and manipulating routing trees, including nodes, the tree structure itself, and a global router that can build these trees with various strategies (simple, with Steiner points, and with wirelength constraints). It also includes utilities for visualizing the routing trees.</p>
         <section id="nested-classes">
           <h2><a href="#nested-classes">Classes</a></h2>
           <dl class="m-doc">
             <dt>
-              <div class="m-doc-template">template&lt;typename T&gt;</div>
-              class <a href="classrecti_1_1Polygon.html" class="m-doc">recti::Polygon</a>
+              <div class="m-doc-template">template&lt;typename IntPoint&gt;</div>
+              class <a href="classrecti_1_1RoutingNode.html" class="m-doc">recti::RoutingNode</a>
             </dt>
-            <dd><a href="classrecti_1_1Polygon.html" class="m-doc">Polygon</a>.</dd>
+            <dd>Represents a node in the global routing tree.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename IntPoint&gt;</div>
+              class <a href="classrecti_1_1GlobalRoutingTree.html" class="m-doc">recti::GlobalRoutingTree</a>
+            </dt>
+            <dd>Represents the entire global routing tree.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename IntPoint&gt;</div>
+              class <a href="classrecti_1_1GlobalRouter.html" class="m-doc">recti::GlobalRouter</a>
+            </dt>
+            <dd>Manages the global routing process, constructing a <a href="classrecti_1_1GlobalRoutingTree.html" class="m-doc">GlobalRoutingTree</a>.</dd>
           </dl>
         </section>
       </div>
@@ -125,7 +128,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

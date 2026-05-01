@@ -50,7 +50,6 @@
       <div class="m-col-l-10 m-push-l-1">
         <h1>
           <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>halton <span class="m-thin">class</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="halton__int_8hpp.html">&lt;recti/halton_int.hpp&gt;</a></div>
         </h1>
         <p>Halton sequence generator.</p>
         <nav class="m-block m-default">
@@ -81,11 +80,11 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ab33f569ea033b0320c7af30d171910f9" class="m-doc">operator()</a>(</span><span class="m-doc-wrap">) -&gt; std::vector&lt; unsigned &gt; -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Generate the next pair of Halton sequence values.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a39f4907b450d38189c2b3e30ceb598c3" class="m-doc">reseed</a>(</span><span class="m-doc-wrap">unsigned seed) noexcept -&gt; void -&gt; auto</span>
             </dt>
-            <dd></dd>
+            <dd>Reset both <a href="classrecti_1_1Vdcorput.html" class="m-doc">Vdcorput</a> generators with a new seed value.</dd>
           </dl>
         </section>
         <section>
@@ -116,11 +115,12 @@
             <h3>
               <span class="m-doc-wrap-bumper">auto recti::<wbr />halton::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab33f569ea033b0320c7af30d171910f9" class="m-doc-self">operator()</a>(</span><span class="m-doc-wrap">) -&gt; std::vector&lt; unsigned &gt;</span></span>
             </h3>
+            <p>Generate the next pair of Halton sequence values.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
                   <th style="width: 1%">Returns</th>
-                  <td>auto</td>
+                  <td>std::vector&lt;unsigned&gt; A vector containing the next values in the x and y dimensions</td>
                 </tr>
               </tfoot>
             </table>
@@ -129,6 +129,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">auto recti::<wbr />halton::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a39f4907b450d38189c2b3e30ceb598c3" class="m-doc-self">reseed</a>(</span><span class="m-doc-wrap">unsigned seed) noexcept -&gt; void</span></span>
             </h3>
+            <p>Reset both <a href="classrecti_1_1Vdcorput.html" class="m-doc">Vdcorput</a> generators with a new seed value.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -136,7 +137,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">seed&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>The new seed value for both generators</td>
                 </tr>
               </tbody>
             </table>
@@ -186,7 +187,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

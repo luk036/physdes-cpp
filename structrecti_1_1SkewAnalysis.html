@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>about.dox file | Recti</title>
+  <title>recti::SkewAnalysis struct | Recti</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -49,9 +49,50 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          about.dox <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>SkewAnalysis <span class="m-thin">struct</span>
         </h1>
-        <p><span></span></p>
+        <p>Stores the results of the clock skew analysis for a clock tree.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-attribs">Public variables</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p>This structure provides key metrics such as maximum delay, minimum delay, overall skew, individual sink delays, total wirelength, and the delay model used.</p>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt id="a4442ecb24b30061facd17c1f01249605">
+              double <a href="#a4442ecb24b30061facd17c1f01249605" class="m-doc-self">max_delay</a>
+            </dt>
+            <dd>The maximum delay from the clock source to any sink.</dd>
+            <dt id="a007d827253ffb0facbbc0476c60483ff">
+              double <a href="#a007d827253ffb0facbbc0476c60483ff" class="m-doc-self">min_delay</a>
+            </dt>
+            <dd>The minimum delay from the clock source to any sink.</dd>
+            <dt id="a3fe742dbb94b584c8791954374b783cb">
+              double <a href="#a3fe742dbb94b584c8791954374b783cb" class="m-doc-self">skew</a>
+            </dt>
+            <dd>The difference between max_delay and min_delay.</dd>
+            <dt id="abd38fae1f9580fbc7fdba084506d4fbb">
+              std::vector&lt;double&gt; <a href="#abd38fae1f9580fbc7fdba084506d4fbb" class="m-doc-self">sink_delays</a>
+            </dt>
+            <dd>A list of delays to each individual sink.</dd>
+            <dt id="a5c0f55984ca7475195ee378c67078b2f">
+              int <a href="#a5c0f55984ca7475195ee378c67078b2f" class="m-doc-self">total_wirelength</a>
+            </dt>
+            <dd>The sum of all wire lengths in the clock tree.</dd>
+            <dt id="a978478aa508908d52b8aac53badb9421">
+              std::string <a href="#a978478aa508908d52b8aac53badb9421" class="m-doc-self">delay_model</a>
+            </dt>
+            <dd>The name of the delay model used (e.g., &quot;LinearDelayCalculator&quot;).</dd>
+          </dl>
+        </section>
       </div>
     </div>
   </div>
@@ -96,7 +137,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>recti/vector2.hpp file | Recti</title>
+  <title>recti::TreeStatistics struct | Recti</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -49,46 +49,62 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="dir_f74a13bbcc6e37b7d69fcb651c6e9ede.html">recti</a>/</span>vector2.hpp <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>TreeStatistics <span class="m-thin">struct</span>
         </h1>
-        <p><span></span></p>
+        <p>Provides detailed statistics about the generated clock tree structure and properties.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
-                <li><a href="#define-members">Defines</a></li>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
-          <dl class="m-doc">
-            <dt>namespace <a href="namespacerecti.html" class="m-doc">recti</a></dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
+<p>This structure includes information about each node and wire in the tree, as well as overall counts for nodes, sinks, and wires.</p>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
             <dt>
-              <div class="m-doc-template">template&lt;typename T1, typename T2 = T1&gt;</div>
-              class <a href="classrecti_1_1Vector2.html" class="m-doc">recti::Vector2</a>
+              struct <a href="structrecti_1_1TreeStatistics_1_1NodeInfo.html" class="m-doc">NodeInfo</a>
             </dt>
-            <dd>vector2</dd>
+            <dd>Information about a single node in the clock tree.</dd>
+            <dt>
+              struct <a href="structrecti_1_1TreeStatistics_1_1WireInfo.html" class="m-doc">WireInfo</a>
+            </dt>
+            <dd>Information about a single wire segment in the clock tree.</dd>
           </dl>
         </section>
-        <section id="define-members">
-          <h2><a href="#define-members">Defines</a></h2>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
           <dl class="m-doc">
-            <dt id="a46d983a6cf6b8e418426de1b7e33dc46">
-              <span class="m-doc-wrap-bumper">#define <a href="#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc-self">CONSTEXPR14</a></span>
+            <dt id="a466bef56587a4d699c688cc4433ccf93">
+              std::vector&lt;<a href="structrecti_1_1TreeStatistics_1_1NodeInfo.html" class="m-doc">NodeInfo</a>&gt; <a href="#a466bef56587a4d699c688cc4433ccf93" class="m-doc-self">nodes</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>List of all nodes in the tree.</dd>
+            <dt id="af80daa8ea4fa2b84a1e5ddbe9d4c4f7c">
+              std::vector&lt;<a href="structrecti_1_1TreeStatistics_1_1WireInfo.html" class="m-doc">WireInfo</a>&gt; <a href="#af80daa8ea4fa2b84a1e5ddbe9d4c4f7c" class="m-doc-self">wires</a>
+            </dt>
+            <dd>List of all wire segments in the tree.</dd>
+            <dt id="a1e4c4a91972c84be2fdbefab308564eb">
+              std::vector&lt;std::string&gt; <a href="#a1e4c4a91972c84be2fdbefab308564eb" class="m-doc-self">sinks</a>
+            </dt>
+            <dd>List of names of all sink nodes.</dd>
+            <dt id="a1497ea8933f47db5639dcbe617b5b466">
+              int <a href="#a1497ea8933f47db5639dcbe617b5b466" class="m-doc-self">total_nodes</a>
+            </dt>
+            <dd>Total count of nodes.</dd>
+            <dt id="a7c5566c6dcf20b04735663b3aafb8d78">
+              int <a href="#a7c5566c6dcf20b04735663b3aafb8d78" class="m-doc-self">total_sinks</a>
+            </dt>
+            <dd>Total count of sink nodes.</dd>
+            <dt id="a131b82e910addedb4466c77a59f58a49">
+              int <a href="#a131b82e910addedb4466c77a59f58a49" class="m-doc-self">total_wires</a>
+            </dt>
+            <dd>Total count of wire segments.</dd>
           </dl>
         </section>
       </div>
@@ -135,7 +151,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Recti. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>recti::Vdcorput class | Recti</title>
+  <title>recti::GlobalRouter class | Recti</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -49,9 +49,11 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>Vdcorput <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="global__router_8hpp.html">&lt;recti/global_router.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename IntPoint&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacerecti.html">recti</a>::<wbr/></span>GlobalRouter <span class="m-thin">class</span>
         </h1>
-        <p>van der Corput sequence generator</p>
+        <p>Manages the global routing process, constructing a <a href="classrecti_1_1GlobalRoutingTree.html" class="m-doc">GlobalRoutingTree</a>.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -64,83 +66,106 @@
             </li>
           </ul>
         </nav>
-<p>This class generates van der Corput sequence values incrementally. The van der Corput sequence is a low-discrepancy sequence that provides uniform coverage of the unit interval, making it useful for quasi-random sampling, Monte Carlo methods, and numerical integration.</p>
+<p>This class takes a source position and a list of terminal positions and can build a routing tree using different strategies.</p>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a839aefcb99b7e386e056f9004bf48edc" class="m-doc">Vdcorput</a>(</span><span class="m-doc-wrap">unsigned base = 2,
-              unsigned scale = 10) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#a6655e55c46745c0a3388707b453b1cd1" class="m-doc">GlobalRouter</a>(</span><span class="m-doc-wrap">const IntPoint&amp; source_pos,
+              std::vector&lt;IntPoint&gt; terminal_positions,
+              std::optional&lt;std::vector&lt;<a href="classrecti_1_1GlobalRouter.html#a174e4753c4b5f6917432e6611efdea05" class="m-doc">Keepout</a>&gt;&gt; keepout_regions = std::nullopt)</span>
             </dt>
-            <dd>Construct a new <a href="classrecti_1_1Vdcorput.html" class="m-doc">Vdcorput</a> object.</dd>
+            <dd>Constructs a new <a href="classrecti_1_1GlobalRouter.html" class="m-doc">GlobalRouter</a>.</dd>
           </dl>
         </section>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#add71925c4769058e7f714d009c1c3238" class="m-doc">operator()</a>(</span><span class="m-doc-wrap">) noexcept -&gt; unsigned -&gt; auto</span>
+            <dt id="aaa376c37926672fdf5645118eced71f0">
+              <span class="m-doc-wrap-bumper">void <a href="#aaa376c37926672fdf5645118eced71f0" class="m-doc-self">route_simple</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
-            <dd>Generate the next van der Corput sequence value.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#aab388438f26ee6e45da5c4d780fc75ee" class="m-doc">reseed</a>(</span><span class="m-doc-wrap">unsigned seed) noexcept -&gt; void -&gt; auto</span>
+            <dd>Routes terminals simply by connecting each to the nearest existing node.</dd>
+            <dt id="a528fd1c88b5806563de80db1681da414">
+              <span class="m-doc-wrap-bumper">void <a href="#a528fd1c88b5806563de80db1681da414" class="m-doc-self">route_with_steiners</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
-            <dd>Reset the sequence with a new seed value.</dd>
+            <dd>Routes terminals, potentially inserting Steiner nodes to optimize connections.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ad302e52c719683a9f9b29e9bcfac8164" class="m-doc">route_with_constraints</a>(</span><span class="m-doc-wrap">double multiplier = 1.0)</span>
+            </dt>
+            <dd>Routes terminals with wirelength constraints.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4943a05089468585b30806136df926aa" class="m-doc">get_tree</a>(</span><span class="m-doc-wrap">) const -&gt; const GlobalRoutingTree&lt; IntPoint &gt; &amp; -&gt; auto</span>
+            </dt>
+            <dd>Gets a const reference to the constructed GlobalRoutingTree&lt;IntPoint&gt;.</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a839aefcb99b7e386e056f9004bf48edc"><div>
+          <section class="m-doc-details" id="a6655e55c46745c0a3388707b453b1cd1"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> recti::<wbr />Vdcorput::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a839aefcb99b7e386e056f9004bf48edc" class="m-doc-self">Vdcorput</a>(</span><span class="m-doc-wrap">unsigned base = 2,
-              unsigned scale = 10) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> recti::<wbr />GlobalRouter&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6655e55c46745c0a3388707b453b1cd1" class="m-doc-self">GlobalRouter</a>(</span><span class="m-doc-wrap">const IntPoint&amp; source_pos,
+              std::vector&lt;IntPoint&gt; terminal_positions,
+              std::optional&lt;std::vector&lt;<a href="classrecti_1_1GlobalRouter.html#a174e4753c4b5f6917432e6611efdea05" class="m-doc">Keepout</a>&gt;&gt; keepout_regions = std::nullopt)</span></span>
             </h3>
-            <p>Construct a new <a href="classrecti_1_1Vdcorput.html" class="m-doc">Vdcorput</a> object.</p>
+            <p>Constructs a new <a href="classrecti_1_1GlobalRouter.html" class="m-doc">GlobalRouter</a>.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">base&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td style="width: 1%">source_pos</td>
+                  <td>The source position.</td>
                 </tr>
                 <tr>
-                  <td>scale&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td></td>
+                  <td>terminal_positions</td>
+                  <td>A vector of terminal positions.</td>
+                </tr>
+                <tr>
+                  <td>keepout_regions</td>
+                  <td>Optional keepouts.</td>
                 </tr>
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="add71925c4769058e7f714d009c1c3238"><div>
+          <section class="m-doc-details" id="ad302e52c719683a9f9b29e9bcfac8164"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vdcorput::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#add71925c4769058e7f714d009c1c3238" class="m-doc-self">operator()</a>(</span><span class="m-doc-wrap">) noexcept -&gt; unsigned</span></span>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void recti::<wbr />GlobalRouter&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad302e52c719683a9f9b29e9bcfac8164" class="m-doc-self">route_with_constraints</a>(</span><span class="m-doc-wrap">double multiplier = 1.0)</span></span>
             </h3>
-            <p>Generate the next van der Corput sequence value.</p>
+            <p>Routes terminals with wirelength constraints.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">multiplier</td>
+                  <td>A multiplier for the worst wirelength to determine the allowed wirelength.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4943a05089468585b30806136df926aa"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename IntPoint&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto recti::<wbr />GlobalRouter&lt;IntPoint&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4943a05089468585b30806136df926aa" class="m-doc-self">get_tree</a>(</span><span class="m-doc-wrap">) const -&gt; const GlobalRoutingTree&lt; IntPoint &gt; &amp;</span></span>
+            </h3>
+            <p>Gets a const reference to the constructed GlobalRoutingTree&lt;IntPoint&gt;.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
                   <th style="width: 1%">Returns</th>
-                  <td>unsigned The next value in the van der Corput sequence</td>
+                  <td>A const reference to the GlobalRoutingTree&lt;IntPoint&gt;.</td>
                 </tr>
               </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="aab388438f26ee6e45da5c4d780fc75ee"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">auto recti::<wbr />Vdcorput::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aab388438f26ee6e45da5c4d780fc75ee" class="m-doc-self">reseed</a>(</span><span class="m-doc-wrap">unsigned seed) noexcept -&gt; void</span></span>
-            </h3>
-            <p>Reset the sequence with a new seed value.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">seed&nbsp;<span class="m-label m-flat m-info">in</span></td>
-                  <td>The new seed value for the sequence</td>
-                </tr>
-              </tbody>
             </table>
           </div></section>
         </section>
