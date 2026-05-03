@@ -1,10 +1,10 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, TEST...
 
 #include <iostream>                 // for operator<<, ostream, basic_ostream
-#include <recti/halton_int.hpp>     // for recti
+// #include <recti/halton_int.hpp>     // for recti
 #include <recti/manhattan_arc.hpp>  // for ManhattanArc, operator+, operator-
 
-#include "recti/interval.hpp"  // for min_dist, overlap, interval
+// #include "recti/interval.hpp"  // for min_dist, overlap, interval
 
 using namespace recti;
 

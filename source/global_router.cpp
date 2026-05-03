@@ -6,7 +6,7 @@
 #include <recti/detail/svg_utils.hpp>
 #include <recti/generic.hpp>
 #include <recti/global_router.hpp>
-#include <recti/halton_int.hpp>
+// #include <recti/halton_int.hpp>
 #include <recti/interval.hpp>
 #include <recti/logger.hpp>
 #include <recti/point.hpp>

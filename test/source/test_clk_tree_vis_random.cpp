@@ -4,7 +4,8 @@
 #include <filesystem>
 #include <ldsgen/ilds.hpp>  // for VdCorput
 #include <memory>
-#include <recti/halton_int.hpp>            // for recti
+// #include <recti/halton_int.hpp>            // for recti
+#include <lds/ilds.hpp>
 #include <recti/visualize_clock_tree.hpp>  // for ManhattanArc, operator+, operator-
 #include <string>
 #include <vector>
@@ -13,8 +14,10 @@ using namespace recti;
 
 // Helper function to generate a set of points for testing
 static auto generate_random_sinks(size_t num_sinks, unsigned int seed) -> std::vector<recti::Sink> {
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    // ildsgen::VdCorput hgenX(3, 7);
+    // ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
 
     hgenX.reseed(seed);
     hgenY.reseed(seed);

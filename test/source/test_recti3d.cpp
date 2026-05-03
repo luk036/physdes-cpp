@@ -1,7 +1,7 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 
 #include <ostream>                  // for operator<<
-#include <recti/halton_int.hpp>     // for recti
+// #include <recti/halton_int.hpp>     // for recti
 #include <recti/manhattan_arc.hpp>  // for manhattan_arc
 #include <recti/recti.hpp>          // for Rectangle
 

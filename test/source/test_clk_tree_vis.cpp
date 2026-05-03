@@ -3,7 +3,7 @@
 
 #include <filesystem>
 #include <memory>
-#include <recti/halton_int.hpp>            // for recti
+// #include <recti/halton_int.hpp>            // for recti
 #include <recti/visualize_clock_tree.hpp>  // for ManhattanArc, operator+, operator-
 #include <string>
 #include <vector>

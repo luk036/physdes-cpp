@@ -1,9 +1,9 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 
-#include <recti/halton_int.hpp>  // for recti
+// #include <recti/halton_int.hpp>  // for recti
 #include <recti/recti.hpp>       // for Rectangle, HSegment, VSegment
 // #include <random>
-#include <ostream>  // for operator<<
+#include <ostream>  // for doctest
 
 #include "recti/interval.hpp"  // for Interval, min_dist, overlap
 #include "recti/point.hpp"     // for Point, operator<<, operator+, operat...
