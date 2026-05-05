@@ -1,5 +1,9 @@
 #pragma once
 
+#include <algorithm>   // for std::sort
+#include <optional>    // for std::optional, std::nullopt
+#include <vector>      // for std::vector
+
 #include "interval.hpp"  // for Interval
 #include "point.hpp"     // for Point
 
@@ -172,5 +176,71 @@ namespace recti {
             Point<T, Interval<T>> base) noexcept  // Note: intentionally allow implicit conversion
             : Point<T, Interval<T>>{std::move(base)} {}
     };
+
+    /**
+     * @brief Detect if any pair of rectangles overlap using the line sweep algorithm.
+     *
+     * The algorithm uses a sweep line approach:
+     * 1. Create events for left and right edges of each rectangle
+     * 2. Sort events by x-coordinate
+     * 3. Sweep from left to right, maintaining active rectangles
+     * 4. Check y-overlap when a new rectangle becomes active
+     *
+     * @tparam Container A container of Rectangle objects (e.g., std::vector<Rectangle<int>>)
+     * @param rectangles The list of rectangles to check for overlaps
+     * @return A pair of overlapping rectangles if found, otherwise std::nullopt
+     */
+    template <typename Container>
+    constexpr auto detect_overlap(const Container& rectangles)
+        -> std::optional<std::pair<typename Container::value_type, typename Container::value_type>> {
+        using RectT = typename Container::value_type;
+        using T = typename RectT::value_type;  // Extract the underlying type (int)
+
+        if (rectangles.size() < 2) {
+            return std::nullopt;
+        }
+
+        using Event = std::tuple<T, int, size_t>;
+        std::vector<Event> events;
+
+        size_t idx = 0;
+        for (const auto& rect : rectangles) {
+            if (rect.xcoord().is_invalid() || rect.ycoord().is_invalid()) {
+                ++idx;
+                continue;
+            }
+            events.emplace_back(rect.xcoord().lb(), 1, idx);
+            events.emplace_back(rect.xcoord().ub(), -1, idx);
+            ++idx;
+        }
+
+        std::sort(events.begin(), events.end(),
+                  [](const Event& a, const Event& b) { return std::get<0>(a) < std::get<0>(b); });
+
+        std::vector<std::pair<size_t, Interval<T>>> active;
+
+        for (const auto& [x, event_type, rect_idx] : events) {
+            const auto& rect = rectangles[rect_idx];
+
+            if (event_type == 1) {
+                for (const auto& [other_idx, other_y] : active) {
+                    if (rect.ycoord().overlaps(other_y)) {
+                        return std::make_optional(
+                            std::make_pair(rect, rectangles[other_idx]));
+                    }
+                }
+                active.emplace_back(rect_idx, rect.ycoord());
+            } else {
+                for (size_t i = 0; i < active.size(); ++i) {
+                    if (active[i].first == rect_idx) {
+                        active.erase(active.begin() + i);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return std::nullopt;
+    }
 
 }  // namespace recti

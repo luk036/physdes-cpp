@@ -64,3 +64,75 @@ TEST_CASE("Segment test") {
 
     CHECK(s1.overlaps(s2));
 }
+
+TEST_CASE("Detect overlap basic") {
+    const auto r1 = Rectangle<int>{Interval{0, 5}, Interval{0, 5}};
+    const auto r2 = Rectangle<int>{Interval{3, 8}, Interval{3, 8}};
+    auto result = detect_overlap(std::vector<Rectangle<int>>{r1, r2});
+    CHECK(result.has_value());
+}
+
+TEST_CASE("Detect overlap no overlap") {
+    const auto r1 = Rectangle<int>{Interval{0, 2}, Interval{0, 2}};
+    const auto r2 = Rectangle<int>{Interval{3, 5}, Interval{3, 5}};
+    auto result = detect_overlap(std::vector<Rectangle<int>>{r1, r2});
+    CHECK_FALSE(result.has_value());
+}
+
+TEST_CASE("Detect overlap multiple rectangles") {
+    const auto r1 = Rectangle<int>{Interval{0, 2}, Interval{0, 2}};
+    const auto r2 = Rectangle<int>{Interval{1, 3}, Interval{1, 3}};
+    const auto r3 = Rectangle<int>{Interval{10, 12}, Interval{10, 12}};
+    auto result = detect_overlap(std::vector<Rectangle<int>>{r1, r2, r3});
+    CHECK(result.has_value());
+}
+
+TEST_CASE("Detect overlap single rectangle") {
+    const auto r1 = Rectangle<int>{Interval{0, 5}, Interval{0, 5}};
+    auto result = detect_overlap(std::vector<Rectangle<int>>{r1});
+    CHECK_FALSE(result.has_value());
+}
+
+TEST_CASE("Detect overlap empty list") {
+    auto result = detect_overlap(std::vector<Rectangle<int>>{});
+    CHECK_FALSE(result.has_value());
+}
+
+TEST_CASE("Detect overlap touching edges") {
+    const auto r1 = Rectangle<int>{Interval{0, 5}, Interval{0, 5}};
+    const auto r2 = Rectangle<int>{Interval{5, 10}, Interval{5, 10}};
+    auto result = detect_overlap(std::vector<Rectangle<int>>{r1, r2});
+    CHECK_FALSE(result.has_value());
+}
+
+TEST_CASE("Detect overlap partial y overlap") {
+    const auto r1 = Rectangle<int>{Interval{0, 5}, Interval{0, 3}};
+    const auto r2 = Rectangle<int>{Interval{3, 8}, Interval{2, 6}};
+    auto result = detect_overlap(std::vector<Rectangle<int>>{r1, r2});
+    CHECK(result.has_value());
+}
+
+TEST_CASE("Detect overlap no x overlap") {
+    const auto r1 = Rectangle<int>{Interval{0, 2}, Interval{0, 5}};
+    const auto r2 = Rectangle<int>{Interval{3, 5}, Interval{0, 5}};
+    auto result = detect_overlap(std::vector<Rectangle<int>>{r1, r2});
+    CHECK_FALSE(result.has_value());
+}
+
+TEST_CASE("Detect overlap 11 rectangles") {
+    std::vector<Rectangle<int>> rects = {
+        Rectangle<int>{Interval{0, 4}, Interval{0, 4}},
+        Rectangle<int>{Interval{2, 6}, Interval{2, 6}},
+        Rectangle<int>{Interval{5, 9}, Interval{5, 9}},
+        Rectangle<int>{Interval{8, 12}, Interval{8, 12}},
+        Rectangle<int>{Interval{11, 15}, Interval{11, 15}},
+        Rectangle<int>{Interval{3, 7}, Interval{10, 14}},
+        Rectangle<int>{Interval{14, 18}, Interval{14, 18}},
+        Rectangle<int>{Interval{16, 20}, Interval{4, 8}},
+        Rectangle<int>{Interval{6, 10}, Interval{6, 10}},
+        Rectangle<int>{Interval{9, 13}, Interval{12, 16}},
+        Rectangle<int>{Interval{0, 3}, Interval{8, 11}},
+    };
+    auto result = detect_overlap(rects);
+    CHECK(result.has_value());
+}
