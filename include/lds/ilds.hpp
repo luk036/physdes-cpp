@@ -23,11 +23,12 @@ namespace ilds {
      * Implementation based on pre-calculating the scale factor.
      *
      */
-    template <unsigned long Base = 2>
-    class VdCorput {
+    template <unsigned long Base = 2> class VdCorput {
         unsigned long _count;  ///< Current count in the sequence
-        std::array<unsigned long, MAX_REVERSE_BITS> factor_lst;  ///< Precomputed scale factors for each digit
-        static_assert(MAX_REVERSE_BITS >= sizeof(unsigned long) * 8, "MAX_REVERSE_BITS must be at least the number of bits in unsigned long");
+        std::array<unsigned long, MAX_REVERSE_BITS>
+            factor_lst;  ///< Precomputed scale factors for each digit
+        static_assert(MAX_REVERSE_BITS >= sizeof(unsigned long) * 8,
+                      "MAX_REVERSE_BITS must be at least the number of bits in unsigned long");
 
       public:
         /**
@@ -35,8 +36,7 @@ namespace ilds {
          *
          * @param[in] scale The number of digits (default: 10)
          */
-        constexpr explicit VdCorput(unsigned int scale = DEFAULT_SCALE)
-            : _count{0},  factor_lst{} {
+        constexpr explicit VdCorput(unsigned int scale = DEFAULT_SCALE) : _count{0}, factor_lst{} {
             unsigned long factor = static_cast<unsigned long>(std::pow(Base, scale));
             for (unsigned int i = 0; i < MAX_REVERSE_BITS; ++i) {
                 factor /= Base;
@@ -67,9 +67,7 @@ namespace ilds {
          *
          * @param[in] seed
          */
-        constexpr auto reseed(const unsigned long& seed) -> void {
-            this->_count = seed;
-        }
+        constexpr auto reseed(const unsigned long& seed) -> void { this->_count = seed; }
 
         VdCorput(VdCorput&&) noexcept = delete;
         VdCorput& operator=(VdCorput&&) noexcept = delete;
@@ -85,8 +83,7 @@ namespace ilds {
      *     ...
      * @endverbatim
      */
-    template <unsigned long Base1, unsigned long Base2>
-    class Halton {
+    template <unsigned long Base1, unsigned long Base2> class Halton {
         VdCorput<Base1> vdc0;
         VdCorput<Base2> vdc1;
 

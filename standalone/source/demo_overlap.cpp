@@ -22,10 +22,7 @@ using namespace recti;
 std::string visualize_overlap_svg(
     const std::vector<Rectangle<int>>& rectangles,
     const std::optional<std::pair<Rectangle<int>, Rectangle<int>>>& overlapping_pair,
-    int width = 800,
-    int height = 600,
-    int margin = 50) {
-
+    int width = 800, int height = 600, int margin = 50) {
     if (rectangles.empty()) {
         return "<svg></svg>";
     }
@@ -51,9 +48,8 @@ std::string visualize_overlap_svg(
     double scale_y = (height - 2.0 * margin) / content_h;
     double scale = std::min(scale_x, scale_y);
 
-    auto to_svg_x = [margin, min_x, scale](int x) -> double {
-        return margin + (x - min_x) * scale;
-    };
+    auto to_svg_x
+        = [margin, min_x, scale](int x) -> double { return margin + (x - min_x) * scale; };
     auto to_svg_y = [height, margin, min_y, scale](int y) -> double {
         return height - margin - (y - min_y) * scale;
     };
@@ -64,8 +60,8 @@ std::string visualize_overlap_svg(
         const auto& r2 = overlapping_pair->second;
         for (size_t i = 0; i < rectangles.size(); ++i) {
             const auto& r = rectangles[i];
-            if ((r.xcoord() == r1.xcoord() && r.ycoord() == r1.ycoord()) ||
-                (r.xcoord() == r2.xcoord() && r.ycoord() == r2.ycoord())) {
+            if ((r.xcoord() == r1.xcoord() && r.ycoord() == r1.ycoord())
+                || (r.xcoord() == r2.xcoord() && r.ycoord() == r2.ycoord())) {
                 overlap_indices.push_back(i);
             }
         }
@@ -76,7 +72,8 @@ std::string visualize_overlap_svg(
         << "\" style=\"background-color:#f8f9fa;\">\n";
 
     int legend_y = 30;
-    svg << "<text x=\"" << margin << "\" y=\"" << legend_y << "\" font-size=\"14\" fill=\"#333\">Rectangles</text>\n";
+    svg << "<text x=\"" << margin << "\" y=\"" << legend_y
+        << "\" font-size=\"14\" fill=\"#333\">Rectangles</text>\n";
     legend_y += 20;
     svg << "<rect x=\"" << margin << "\" y=\"" << (legend_y - 12)
         << "\" width=\"16\" height=\"12\" fill=\"#4a90d9\" stroke=\"#333\"/>\n";
@@ -122,8 +119,8 @@ std::string visualize_overlap_svg(
         std::string opacity = is_overlap ? "0.7" : "0.5";
 
         svg << "<rect x=\"" << x1 << "\" y=\"" << y1 << "\" width=\"" << w << "\" height=\"" << h
-            << "\" fill=\"" << fill << "\" stroke=\"" << stroke << "\" stroke-width=\"2\" opacity=\""
-            << opacity << "\"/>\n";
+            << "\" fill=\"" << fill << "\" stroke=\"" << stroke
+            << "\" stroke-width=\"2\" opacity=\"" << opacity << "\"/>\n";
 
         double cx = x1 + w / 2;
         double cy = y1 + h / 2;
@@ -155,7 +152,8 @@ void demo() {
 
     std::cout << "Testing with " << rects.size() << " rectangles:\n";
     for (size_t i = 0; i < rects.size(); ++i) {
-        std::cout << "  " << (i + 1) << ": (" << rects[i].xcoord() << ", " << rects[i].ycoord() << ")\n";
+        std::cout << "  " << (i + 1) << ": (" << rects[i].xcoord() << ", " << rects[i].ycoord()
+                  << ")\n";
     }
 
     auto result = detect_overlap(rects);

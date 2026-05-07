@@ -1,7 +1,7 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 
 // #include <recti/halton_int.hpp>  // for recti
-#include <recti/recti.hpp>       // for Rectangle, HSegment, VSegment
+#include <recti/recti.hpp>  // for Rectangle, HSegment, VSegment
 // #include <random>
 #include <ostream>  // for doctest
 

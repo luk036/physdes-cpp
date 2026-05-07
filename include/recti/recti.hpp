@@ -1,8 +1,8 @@
 #pragma once
 
-#include <algorithm>   // for std::sort
-#include <optional>    // for std::optional, std::nullopt
-#include <vector>      // for std::vector
+#include <algorithm>  // for std::sort
+#include <optional>   // for std::optional, std::nullopt
+#include <vector>     // for std::vector
 
 #include "interval.hpp"  // for Interval
 #include "point.hpp"     // for Point
@@ -190,9 +190,9 @@ namespace recti {
      * @param rectangles The list of rectangles to check for overlaps
      * @return A pair of overlapping rectangles if found, otherwise std::nullopt
      */
-    template <typename Container>
-    constexpr auto detect_overlap(const Container& rectangles)
-        -> std::optional<std::pair<typename Container::value_type, typename Container::value_type>> {
+    template <typename Container> constexpr auto detect_overlap(const Container& rectangles)
+        -> std::optional<
+            std::pair<typename Container::value_type, typename Container::value_type>> {
         using RectT = typename Container::value_type;
         using T = typename RectT::value_type;  // Extract the underlying type (int)
 
@@ -225,8 +225,7 @@ namespace recti {
             if (event_type == 1) {
                 for (const auto& [other_idx, other_y] : active) {
                     if (rect.ycoord().overlaps(other_y)) {
-                        return std::make_optional(
-                            std::make_pair(rect, rectangles[other_idx]));
+                        return std::make_optional(std::make_pair(rect, rectangles[other_idx]));
                     }
                 }
                 active.emplace_back(rect_idx, rect.ycoord());
