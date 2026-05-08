@@ -15,7 +15,8 @@ TEST_CASE("RPolygon convex cut test") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int, int>> S;
-    for (int i = 0; i < 40; ++i) {
+    S.reserve(40);
+for (int i = 0; i < 40; ++i) {
         S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
@@ -64,7 +65,8 @@ TEST_CASE("RPolygon explicit cut test") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int, int>> S;
-    for (int i = 0; i < 7; ++i) {
+    S.reserve(7);
+for (int i = 0; i < 7; ++i) {
         S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());

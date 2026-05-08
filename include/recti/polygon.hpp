@@ -202,25 +202,6 @@ namespace recti {
     };
 
     /**
-     * @brief Create a monotone polygon from a range of points.
-     *
-     * This function takes a range of points represented by the iterators `first` and `last`, and a
-     * comparison function `dir` that defines the order of the points. It then creates a monotone
-     * polygon from the points by partitioning them into two halves based on their position relative
-     * to the line connecting the minimum and maximum points in the range. The two halves are then
-     * sorted in ascending order using the provided comparison function, and the second half is
-     * reversed.
-     *
-     * @tparam FwIter The type of the forward iterator over the points.
-     * @tparam Compare The type of the comparison function for the points.
-     * @param first The beginning of the range of points.
-     * @param last The end of the range of points.
-     * @param dir The comparison function for the points.
-     */
-    template <typename FwIter, typename Compare>
-    void create_mono_polygon(FwIter&& first, FwIter&& last, const Compare& dir);
-
-    /**
      * @brief Create a xmono Polygon object
      *
      * This function creates a monotone polygon from a range of points represented by the iterators
@@ -231,7 +212,7 @@ namespace recti {
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      */
-    template <typename FwIter> auto create_xmono_polygon(FwIter&& first, FwIter&& last) -> void;
+    template <typename FwIter> auto create_xmono_polygon(FwIter first, FwIter last) -> void;
 
     /**
      * @brief Create a ymono Polygon object
@@ -244,7 +225,7 @@ namespace recti {
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      */
-    template <typename FwIter> auto create_ymono_polygon(FwIter&& first, FwIter&& last) -> void;
+    template <typename FwIter> auto create_ymono_polygon(FwIter first, FwIter last) -> void;
 
     /**
      * @brief Check if a polygon is monotone with respect to a given direction function

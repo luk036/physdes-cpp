@@ -4,12 +4,11 @@
 #include <recti/polygon.hpp>
 #include <span>
 #include <utility>
-#include <vector>
 
 namespace recti {
 
     template <typename FwIter, typename Compare>
-    void create_mono_polygon(FwIter&& first, FwIter&& last, const Compare& dir) {
+    void create_mono_polygon(FwIter first, FwIter last, const Compare& dir) {
         assert(first != last);
 
         auto result = std::minmax_element(first, last, dir);
@@ -24,14 +23,14 @@ namespace recti {
         std::reverse(middle, last);
     }
 
-    template <typename FwIter> auto create_xmono_polygon(FwIter&& first, FwIter&& last) -> void {
+    template <typename FwIter> auto create_xmono_polygon(FwIter first, FwIter last) -> void {
         return create_mono_polygon(first, last, [](const auto& lhs, const auto& rhs) -> bool {
             return std::make_pair(lhs.xcoord(), lhs.ycoord())
                    < std::make_pair(rhs.xcoord(), rhs.ycoord());
         });
     }
 
-    template <typename FwIter> auto create_ymono_polygon(FwIter&& first, FwIter&& last) -> void {
+    template <typename FwIter> auto create_ymono_polygon(FwIter first, FwIter last) -> void {
         return create_mono_polygon(first, last, [](const auto& lhs, const auto& rhs) -> bool {
             return std::make_pair(lhs.ycoord(), lhs.xcoord())
                    < std::make_pair(rhs.ycoord(), rhs.xcoord());
@@ -131,10 +130,10 @@ namespace recti {
 
     // Explicit instantiations for std::vector<Point<int>>::iterator
     template auto create_xmono_polygon<std::vector<Point<int>>::iterator>(
-        std::vector<Point<int>>::iterator&&, std::vector<Point<int>>::iterator&&) -> void;
+        std::vector<Point<int>>::iterator, std::vector<Point<int>>::iterator) -> void;
 
     template auto create_ymono_polygon<std::vector<Point<int>>::iterator>(
-        std::vector<Point<int>>::iterator&&, std::vector<Point<int>>::iterator&&) -> void;
+        std::vector<Point<int>>::iterator, std::vector<Point<int>>::iterator) -> void;
 
     // Explicit instantiations for std::span<const Point<int>>
     template auto polygon_is_xmonotone<int>(std::span<const Point<int>>) -> bool;

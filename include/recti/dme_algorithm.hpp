@@ -49,6 +49,12 @@ namespace recti {
      */
     class DelayCalculator {
       public:
+        DelayCalculator() = default;
+        DelayCalculator(const DelayCalculator&) = default;
+        DelayCalculator& operator=(const DelayCalculator&) = default;
+        DelayCalculator(DelayCalculator&&) = default;
+        DelayCalculator& operator=(DelayCalculator&&) = default;
+
         /**
          * @brief Virtual destructor for DelayCalculator.
          */

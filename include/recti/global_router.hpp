@@ -464,7 +464,7 @@ namespace recti {
         const GlobalRoutingTree<IntPoint>& tree,
         std::optional<std::vector<typename GlobalRoutingTree<IntPoint>::Keepout>> keepouts
         = std::nullopt,
-        const std::string filename = "routing_tree.svg", const int width = 800,
+        const std::string& filename = "routing_tree.svg", const int width = 800,
         const int height = 600);
 
     template <typename IntPoint> extern std::string visualize_routing_tree3d_svg(
@@ -478,7 +478,7 @@ namespace recti {
         const GlobalRoutingTree<IntPoint>& tree,
         std::optional<std::vector<typename GlobalRoutingTree<IntPoint>::Keepout>> keepouts
         = std::nullopt,
-        const int scale_z = 100, const std::string filename = "routing_tree3d.svg",
+        const int scale_z = 100, const std::string& filename = "routing_tree3d.svg",
         const int width = 800, const int height = 600);
 
 }  // namespace recti

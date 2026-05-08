@@ -1,5 +1,4 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, TEST...
-#include <doctest/doctest.h>
 
 #include <filesystem>
 #include <memory>

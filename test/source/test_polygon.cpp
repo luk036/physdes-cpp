@@ -1,7 +1,5 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TestCase, Expr...
 
-#include <algorithm>        // for generate
-#include <functional>       // for function
 #include <ldsgen/ilds.hpp>  // for VdCorput
 #include <ostream>
 #include <recti/polygon.hpp>        // for Polygon, create_ymono_polygon, create_xmono_polygon, etc.

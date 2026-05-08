@@ -13,6 +13,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace recti {
@@ -167,7 +168,7 @@ namespace recti {
         this->nodes[terminal_id] = terminal_node;
         this->owned_nodes.emplace_back(std::move(terminal_ptr));
         auto [parent_node, nearest_node]
-            = this->_find_nearest_insertion_with_constraints(point, allowed_wirelength, keepouts);
+            = this->_find_nearest_insertion_with_constraints(point, allowed_wirelength, std::move(keepouts));
         if (parent_node == nullptr) {
             nearest_node->add_child(terminal_node);
             terminal_node->path_length
@@ -195,7 +196,7 @@ namespace recti {
     GlobalRouter<IntPoint>::GlobalRouter(const IntPoint& source_pos,
                                          std::vector<IntPoint> terminal_positions,
                                          std::optional<std::vector<Keepout>> keepout_regions)
-        : source_position(source_pos), tree(source_pos), keepouts(keepout_regions) {
+        : source_position(source_pos), terminal_positions(std::move(terminal_positions)), tree(source_pos), keepouts(std::move(keepout_regions)) {
         std::sort(terminal_positions.begin(), terminal_positions.end(),
                   [this](const IntPoint& point_a, const IntPoint& point_b) {
                       auto dist_a = this->source_position.min_dist_with(point_a);
@@ -205,7 +206,7 @@ namespace recti {
                                  && this->source_position.hull_with(point_a).measure()
                                         > this->source_position.hull_with(point_b).measure());
                   });
-        this->terminal_positions = std::move(terminal_positions);
+        
 
         if (!this->terminal_positions.empty()) {
             this->worst_wirelength
@@ -244,7 +245,7 @@ namespace recti {
         this->nodes[steiner_id] = node;
         this->owned_nodes.emplace_back(std::move(node_ptr));
 
-        RoutingNode<IntPoint>* parent_node;
+        RoutingNode<IntPoint>* parent_node = nullptr;
         if (!parent_id) {
             parent_node = &this->source_node;
         } else {
@@ -269,7 +270,7 @@ namespace recti {
         this->nodes[terminal_id] = node;
         this->owned_nodes.emplace_back(std::move(node_ptr));
 
-        RoutingNode<IntPoint>* parent_node;
+        RoutingNode<IntPoint>* parent_node = nullptr;
         if (!parent_id) {
             parent_node = this->_find_nearest_node(point);
         } else {
@@ -483,8 +484,8 @@ namespace recti {
     template <> void save_routing_tree_svg(
         const GlobalRoutingTree<Point<int, int>>& tree,
         std::optional<std::vector<GlobalRoutingTree<Point<int, int>>::Keepout>> keepouts,
-        const std::string filename, const int width, const int height) {
-        std::string svg_content = visualize_routing_tree_svg(tree, keepouts, width, height, 50);
+        const std::string& filename, const int width, const int height) {
+        std::string svg_content = visualize_routing_tree_svg(tree, std::move(keepouts), width, height, 50);
         std::ofstream file_stream(filename);
         file_stream << svg_content;
         std::cout << "Routing tree saved to " << filename << "\n";
@@ -569,9 +570,9 @@ namespace recti {
         const GlobalRoutingTree<Point<Point<int, int>, int>>& tree,
         std::optional<std::vector<GlobalRoutingTree<Point<Point<int, int>, int>>::Keepout>>
             keepouts,
-        const int scale_z, const std::string filename, const int width, const int height) {
+        const int scale_z, const std::string& filename, const int width, const int height) {
         std::string svg_content
-            = visualize_routing_tree3d_svg(tree, keepouts, scale_z, width, height, 50);
+            = visualize_routing_tree3d_svg(tree, std::move(keepouts), scale_z, width, height, 50);
         std::ofstream file_stream(filename);
         file_stream << svg_content;
         std::cout << "Routing tree (3d) saved to " << filename << "\n";

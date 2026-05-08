@@ -44,7 +44,7 @@ TEST_CASE("test_rdllist_iter") {
     RDllist dll(5);
     const auto it = dll.begin();
     std::vector<size_t> data;
-    for (auto& node : it) {
+    for (const auto& node : it) {
         data.emplace_back(node.data);
     }
     const std::vector<size_t> expected = {1, 2, 3, 4};
@@ -58,7 +58,7 @@ TEST_CASE("test_rdllist_from_node") {
     RDllist dll(5);
     const auto it = dll.from_node(2);
     std::vector<size_t> data;
-    for (auto& node : it) {
+    for (const auto& node : it) {
         data.emplace_back(node.data);
     }
     const std::vector<size_t> expected = {3, 4, 0, 1};
