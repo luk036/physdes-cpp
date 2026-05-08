@@ -100,7 +100,7 @@ TEST_CASE("Interval overlapping test") {
 
     for (auto index_i = 0; index_i != max_count; ++index_i) {
         for (auto index_j = 0; index_j != max_count; ++index_j) {
-            auto x_value = int(hgenX.pop());
+            auto x_value = static_cast<int>(hgenX.pop());
             auto x_range = Interval<int>{x_value, x_value + 100};
             lst.emplace_back(x_range);
         }

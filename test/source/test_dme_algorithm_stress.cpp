@@ -25,6 +25,7 @@ namespace {
         std::uniform_int_distribution<> distrib_coord(0, max_coord);
         std::uniform_real_distribution<> distrib_cap(0.1, max_cap);
 
+        sinks.reserve(num_sinks);
         for (int i = 0; i < num_sinks; ++i) {
             sinks.emplace_back(fmt::format("s{}", i),
                                recti::Point<int>(distrib_coord(gen), distrib_coord(gen)),
@@ -96,6 +97,7 @@ TEST_SUITE("DMEAlgorithm Stress Tests") {
     TEST_CASE("Sinks along a horizontal line") {
         std::vector<recti::Sink> sinks;
         const int num_sinks = 50;
+        sinks.reserve(num_sinks);
         for (int i = 0; i < num_sinks; ++i) {
             sinks.emplace_back(fmt::format("s{}", i), recti::Point<int>(i * 100, 500), 1.0);
         }
@@ -114,6 +116,7 @@ TEST_SUITE("DMEAlgorithm Stress Tests") {
     TEST_CASE("Sinks along a vertical line") {
         std::vector<recti::Sink> sinks;
         const int num_sinks = 50;
+        sinks.reserve(num_sinks);
         for (int i = 0; i < num_sinks; ++i) {
             sinks.emplace_back(fmt::format("s{}", i), recti::Point<int>(500, i * 100), 1.0);
         }

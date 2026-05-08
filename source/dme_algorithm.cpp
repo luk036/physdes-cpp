@@ -128,11 +128,11 @@ namespace recti {
         // Sort nodes along the appropriate axis to enable balanced bipartitioning.
         auto sorted_nodes = nodes;
         if (vertical) {
-            std::sort(sorted_nodes.begin(), sorted_nodes.end(), [](const auto& a, const auto& b) {
+            std::ranges::sort(sorted_nodes, [](const auto& a, const auto& b) {
                 return a->position.xcoord() < b->position.xcoord();
             });
         } else {
-            std::sort(sorted_nodes.begin(), sorted_nodes.end(), [](const auto& a, const auto& b) {
+            std::ranges::sort(sorted_nodes, [](const auto& a, const auto& b) {
                 return a->position.ycoord() < b->position.ycoord();
             });
         }
@@ -323,17 +323,17 @@ namespace recti {
             throw std::runtime_error("No sink delays collected");
         }
         // Calculate max, min, and skew from collected sink delays.
-        double max_delay = *std::max_element(sink_delays.begin(), sink_delays.end());
-        double min_delay = *std::min_element(sink_delays.begin(), sink_delays.end());
+        double max_delay = *std::ranges::max_element(sink_delays);
+        double min_delay = *std::ranges::min_element(sink_delays);
         double skew = max_delay - min_delay;
         // Return the comprehensive skew analysis results.
         const auto& calculator = *this->delay_calculator;
-        return {max_delay,
-                min_delay,
-                skew,
-                sink_delays,
-                this->total_wirelength(root),
-                typeid(calculator).name()};
+        return {.max_delay=max_delay,
+                .min_delay=min_delay,
+                .skew=skew,
+                .sink_delays=sink_delays,
+                .total_wirelength=this->total_wirelength(root),
+                .delay_model=typeid(calculator).name()};
     }
 
     /**
@@ -368,22 +368,22 @@ namespace recti {
             = [&](const std::shared_ptr<TreeNode>& node, const std::shared_ptr<TreeNode>& parent) {
                   if (!node) return;
 
-                  stats.nodes.push_back({node->name,
-                                         {node->position.xcoord(), node->position.ycoord()},
-                                         node->is_leaf() ? "sink" : "internal",
-                                         node->delay,
-                                         node->capacitance});
+                  stats.nodes.push_back({.name=node->name,
+                                         .position={node->position.xcoord(), node->position.ycoord()},
+                                         .type=node->is_leaf() ? "sink" : "internal",
+                                         .delay=node->delay,
+                                         .capacitance=node->capacitance});
 
                   if (node->is_leaf()) {
                       stats.sinks.emplace_back(node->name);
                   }
 
                   if (parent) {
-                      stats.wires.push_back({parent->name,
-                                             node->name,
-                                             node->wire_length,
-                                             {parent->position.xcoord(), parent->position.ycoord()},
-                                             {node->position.xcoord(), node->position.ycoord()}});
+                      stats.wires.push_back({.from_node=parent->name,
+                                             .to_node=node->name,
+                                             .length=node->wire_length,
+                                             .from_pos={parent->position.xcoord(), parent->position.ycoord()},
+                                             .to_pos={node->position.xcoord(), node->position.ycoord()}});
                   }
 
                   traverse(node->left, node);

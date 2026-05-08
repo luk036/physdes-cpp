@@ -17,7 +17,7 @@ TEST_CASE("RPolygon convex cut test") {
     std::vector<Point<int, int>> S;
     S.reserve(40);
 for (int i = 0; i < 40; ++i) {
-        S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     // CHECK((!rpolygon_is_xmonotone<int>(P) || !rpolygon_is_ymonotone<int>(P)));
@@ -67,7 +67,7 @@ TEST_CASE("RPolygon explicit cut test") {
     std::vector<Point<int, int>> S;
     S.reserve(7);
 for (int i = 0; i < 7; ++i) {
-        S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     // CHECK((!rpolygon_is_xmonotone<int>(P) || !rpolygon_is_ymonotone<int>(P)));
@@ -119,8 +119,9 @@ TEST_CASE("RPolygon implicit cut test") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int, int>> S;
-    for (int i = 0; i < 20; ++i) {
-        S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+    S.reserve(20);
+for (int i = 0; i < 20; ++i) {
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     // CHECK((!rpolygon_is_xmonotone<int>(P) || !rpolygon_is_ymonotone<int>(P)));
@@ -171,8 +172,9 @@ TEST_CASE("RPolygon cut rectangle test") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int, int>> S;
-    for (int i = 0; i < 7; ++i) {
-        S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+    S.reserve(7);
+for (int i = 0; i < 7; ++i) {
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     // CHECK((!rpolygon_is_xmonotone<int>(P) || !rpolygon_is_ymonotone<int>(P)));
@@ -225,8 +227,9 @@ TEST_CASE("RPolygon convex cut - signed area preservation") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int, int>> S;
-    for (int i = 0; i < 10; ++i) {
-        S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+    S.reserve(10);
+for (int i = 0; i < 10; ++i) {
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
@@ -265,8 +268,9 @@ TEST_CASE("RPolygon explicit cut - signed area preservation") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int, int>> S;
-    for (int i = 0; i < 10; ++i) {
-        S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+    S.reserve(10);
+for (int i = 0; i < 10; ++i) {
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
@@ -303,8 +307,9 @@ TEST_CASE("RPolygon implicit cut - signed area preservation") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int, int>> S;
-    for (int i = 0; i < 10; ++i) {
-        S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+    S.reserve(10);
+for (int i = 0; i < 10; ++i) {
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
@@ -341,8 +346,9 @@ TEST_CASE("RPolygon rectangle cut - signed area preservation") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int, int>> S;
-    for (int i = 0; i < 10; ++i) {
-        S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+    S.reserve(10);
+for (int i = 0; i < 10; ++i) {
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);

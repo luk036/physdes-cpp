@@ -38,14 +38,14 @@ TEST_SUITE("GlobalRouter Stress Tests") {
         SUBCASE("route_with_steiners") {
             GlobalRouter router(source, terminals);
             router.route_with_steiners();
-            auto& tree = router.get_tree();
+            const auto& tree = router.get_tree();
             CHECK_GE(tree.nodes.size(), num_terminals + 1);
         }
 
         SUBCASE("route_with_constraints") {
             GlobalRouter router(source, terminals);
             router.route_with_constraints(high_stress);
-            auto& tree = router.get_tree();
+            const auto& tree = router.get_tree();
             CHECK_GE(tree.nodes.size(), num_terminals + 1);
         }
     }
@@ -59,21 +59,21 @@ TEST_SUITE("GlobalRouter Stress Tests") {
         SUBCASE("Low stress") {
             GlobalRouter router(source, terminals);
             router.route_with_constraints(0.1);
-            auto& tree = router.get_tree();
+            const auto& tree = router.get_tree();
             CHECK_GE(tree.nodes.size(), num_terminals + 1);
         }
 
         SUBCASE("Medium stress") {
             GlobalRouter router(source, terminals);
             router.route_with_constraints(0.5);
-            auto& tree = router.get_tree();
+            const auto& tree = router.get_tree();
             CHECK_GE(tree.nodes.size(), num_terminals + 1);
         }
 
         SUBCASE("High stress") {
             GlobalRouter router(source, terminals);
             router.route_with_constraints(1.0);
-            auto& tree = router.get_tree();
+            const auto& tree = router.get_tree();
             CHECK_GE(tree.nodes.size(), num_terminals + 1);
         }
     }

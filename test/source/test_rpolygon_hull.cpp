@@ -96,8 +96,9 @@ TEST_CASE("RPolygon make convex hull test with Halton points") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int>> S;
-    for (int i = 0; i < 100; ++i) {
-        S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
+    S.reserve(100);
+for (int i = 0; i < 100; ++i) {
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     CHECK_FALSE(rpolygon_is_xmonotone<int>(P));
@@ -137,7 +138,7 @@ TEST_CASE("RPolygon make xmono hull test") {
     auto hgenY = ildsgen::VdCorput(2, 11);
     auto S = std::vector<Point<int>>{};
     for (auto i = 0; i != 50; ++i) {
-        S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
     CHECK(rpolygon_is_ymonotone<int>(S));
@@ -180,7 +181,7 @@ TEST_CASE("RPolygon make ymono hull test") {
     auto hgenY = ildsgen::VdCorput(2, 11);
     auto S = std::vector<Point<int>>{};
     for (auto i = 0; i != 50; ++i) {
-        S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
     CHECK(rpolygon_is_xmonotone<int>(S));

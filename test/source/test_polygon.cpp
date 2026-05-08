@@ -51,7 +51,7 @@ TEST_CASE("Polygon y-monotone (20 points)") {
 
     auto S = std::vector<Point<int>>{};
     for (auto i = 0U; i != 20; ++i) {
-        S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
 
     create_ymono_polygon(S.begin(), S.end());
@@ -68,7 +68,7 @@ TEST_CASE("Polygon x-monotone (20 points)") {
 
     auto S = std::vector<Point<int>>{};
     for (auto i = 0U; i != 20; ++i) {
-        S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
 
     create_xmono_polygon(S.begin(), S.end());
@@ -85,14 +85,14 @@ TEST_CASE("Polygon y-monotone (50 points)") {
 
     auto S = std::vector<Point<int>>{};
     for (auto i = 0U; i != 50; ++i) {
-        S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
 
     create_ymono_polygon(S.begin(), S.end());
     CHECK(polygon_is_ymonotone<int>(S));
     CHECK_FALSE(polygon_is_xmonotone<int>(S));
     CHECK(polygon_is_anticlockwise<int>(S));
-    const auto q = Point<int>(int(hgenX.pop()), int(hgenY.pop()));
+    const auto q = Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     const auto P = Polygon<int>(S);
     CHECK_EQ(P.signed_area_x2(), 4409856);
     CHECK(point_in_polygon<int>(S, q));
@@ -182,8 +182,9 @@ TEST_CASE("Polygon convex decomposition - signed area preservation") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int>> S;
-    for (int i = 0; i < 10; ++i) {
-        S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
+    S.reserve(10);
+for (int i = 0; i < 10; ++i) {
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
@@ -220,8 +221,9 @@ TEST_CASE("Polygon explicit cut - signed area preservation") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int>> S;
-    for (int i = 0; i < 10; ++i) {
-        S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
+    S.reserve(10);
+for (int i = 0; i < 10; ++i) {
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
@@ -258,8 +260,9 @@ TEST_CASE("Polygon implicit cut - signed area preservation") {
     ildsgen::VdCorput hgenX(3, 7);
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int>> S;
-    for (int i = 0; i < 10; ++i) {
-        S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
+    S.reserve(10);
+for (int i = 0; i < 10; ++i) {
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
     const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);

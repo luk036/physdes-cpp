@@ -22,8 +22,8 @@ namespace recti {
                                                  return std::invoke(dir, a) < std::invoke(dir, b);
                                              });
 
-        const size_t min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
-        const size_t max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
+        const auto min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
+        const auto max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
         const Point<T> min_point = *min_it;
 
         RDllist rdll(pointset.size());
@@ -34,8 +34,8 @@ namespace recti {
                                          const std::function<bool(T, T)>& cmp,
                                          const std::function<bool(T)>& cmp2) {
             while (vcurr != vstop) {
-                auto vnext = vcurr->next;
-                auto vprev = vcurr->prev;
+                auto *vnext = vcurr->next;
+                auto *vprev = vcurr->prev;
                 const auto& p0 = pointset[vprev->data];
                 const auto& p1 = pointset[vcurr->data];
                 const auto& p2 = pointset[vnext->data];

@@ -43,7 +43,7 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono 50)") {
     auto hgenY = ildsgen::VdCorput(2, 11);
     auto S = std::vector<Point<int>>{};
     for (auto i = 0; i != 50; ++i) {
-        S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
 
@@ -76,14 +76,14 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono 50)") {
     auto hgenY = ildsgen::VdCorput(2, 11);
     auto S = std::vector<Point<int>>{};
     for (auto i = 0; i != 50; ++i) {
-        S.emplace_back(Point<int>(int(hgenX.pop()), int(hgenY.pop())));
+        S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
     CHECK(is_clockwise);
     CHECK_FALSE(rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_ymonotone<int>(S));
     CHECK_FALSE(rpolygon_is_xmonotone<int>(S));
-    const auto q = Point<int>(int(hgenX.pop()), int(hgenY.pop()));
+    const auto q = Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     CHECK_FALSE(point_in_rpolygon<int>(S, q));
 
     // SVG output (commented out as per reference)

@@ -17,6 +17,7 @@ namespace {
         std::mt19937 gen(12345);
         std::uniform_int_distribution<> distrib_coord(0, max_coord);
 
+        S.reserve(num_points);
         for (size_t i = 0; i < num_points; ++i) {
             S.emplace_back(distrib_coord(gen), distrib_coord(gen));
         }

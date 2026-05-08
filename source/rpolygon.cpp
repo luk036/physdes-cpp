@@ -102,10 +102,10 @@ namespace recti {
 
         auto violate
             = [&pointset, &dir](Dllink<size_t>* vertex_iterator, Dllink<size_t>* vertex_stop,
-                                std::function<bool(T, T)> cmp) -> bool {
-            auto current = vertex_iterator;
+                                const std::function<bool(T, T)>& cmp) -> bool {
+            auto *current = vertex_iterator;
             while (current != vertex_stop) {
-                auto next_vertex = current->next;
+                auto *next_vertex = current->next;
                 auto current_key = dir(pointset[current->data]);
                 auto next_key = dir(pointset[next_vertex->data]);
                 if (cmp(std::get<0>(current_key), std::get<0>(next_key))) {
@@ -228,7 +228,7 @@ namespace recti {
 
     template <typename FwIter> auto create_test_rpolygon(FwIter first, FwIter last)
         -> std::vector<typename std::iterator_traits<FwIter>::value_type> {
-        using T = typename std::iterator_traits<FwIter>::value_type::value_type;
+        using T = std::iterator_traits<FwIter>::value_type::value_type;
         assert(first != last);
 
         auto dir_x
@@ -246,8 +246,8 @@ namespace recti {
               });
         Vector2<T> vec = max_point - min_point;
 
-        std::vector<typename std::iterator_traits<FwIter>::value_type> upper_chain_points,
-            lower_chain_points;
+        std::vector<typename std::iterator_traits<FwIter>::value_type> upper_chain_points;
+        std::vector<typename std::iterator_traits<FwIter>::value_type> lower_chain_points;
         auto middle = std::partition(first, last, [&min_point, &vec](const auto& point) {
             return vec.cross(point - min_point) < 0;
         });
@@ -269,8 +269,10 @@ namespace recti {
             lower_chain_points.begin(), lower_chain_points.end(),
             [&min_point2](const auto& point) { return point.ycoord() > min_point2.ycoord(); });
 
-        std::vector<typename std::iterator_traits<FwIter>::value_type> segment_a_points,
-            segment_b_points, segment_c_points, segment_d_points;
+        std::vector<typename std::iterator_traits<FwIter>::value_type> segment_a_points;
+        std::vector<typename std::iterator_traits<FwIter>::value_type> segment_b_points;
+        std::vector<typename std::iterator_traits<FwIter>::value_type> segment_c_points;
+        std::vector<typename std::iterator_traits<FwIter>::value_type> segment_d_points;
         if (vec.x() < 0) {
             segment_a_points.assign(middle3, lower_chain_points.end());
             std::sort(segment_a_points.begin(), segment_a_points.end(),

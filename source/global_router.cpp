@@ -530,7 +530,7 @@ namespace recti {
                                                                      child->pt.ycoord(), params);
                     size_t color_index = static_cast<size_t>(child->pt.xcoord().ycoord() / scale_z)
                                          % layer_colors.size();
-                    std::string color = layer_colors[color_index];
+                    const std::string& color = layer_colors[color_index];
 
                     svg << "<line x1=\"" << coord_x1 << "\" y1=\"" << coord_y1 << "\" x2=\""
                         << coord_x2 << "\" y2=\"" << coord_y2 << "\" stroke=\"" << color
@@ -618,12 +618,14 @@ namespace recti::detail {
         const std::vector<RoutingNode<Point<int, int>>*>& nodes, int width, int height,
         int margin) {
         if (nodes.empty()) {
-            return {width, height, margin, 1.0, 0, 0};
+            return {.width=width, .height=height, .margin=margin, .scale=1.0, .min_x=0, .min_y=0};
         }
 
-        int min_x = nodes[0]->pt.xcoord(), max_x = min_x;
-        int min_y = nodes[0]->pt.ycoord(), max_y = min_y;
-        for (auto node : nodes) {
+        int min_x = nodes[0]->pt.xcoord();
+        int max_x = min_x;
+        int min_y = nodes[0]->pt.ycoord();
+        int max_y = min_y;
+        for (auto *node : nodes) {
             min_x = std::min(min_x, node->pt.xcoord());
             max_x = std::max(max_x, node->pt.xcoord());
             min_y = std::min(min_y, node->pt.ycoord());
@@ -639,19 +641,21 @@ namespace recti::detail {
         double scale_y = (height - 2.0 * margin) / range_y;
         double scale = std::min(scale_x, scale_y);
 
-        return {width, height, margin, scale, min_x, min_y};
+        return {.width=width, .height=height, .margin=margin, .scale=scale, .min_x=min_x, .min_y=min_y};
     }
 
     template <> SvgParams calculate_svg_params<Point<Point<int, int>, int>>(
         const std::vector<RoutingNode<Point<Point<int, int>, int>>*>& nodes, int width, int height,
         int margin) {
         if (nodes.empty()) {
-            return {width, height, margin, 1.0, 0, 0};
+            return {.width=width, .height=height, .margin=margin, .scale=1.0, .min_x=0, .min_y=0};
         }
 
-        int min_x = nodes[0]->pt.xcoord().xcoord(), max_x = min_x;
-        int min_y = nodes[0]->pt.ycoord(), max_y = min_y;
-        for (auto node : nodes) {
+        int min_x = nodes[0]->pt.xcoord().xcoord();
+        int max_x = min_x;
+        int min_y = nodes[0]->pt.ycoord();
+        int max_y = min_y;
+        for (auto *node : nodes) {
             min_x = std::min(min_x, node->pt.xcoord().xcoord());
             max_x = std::max(max_x, node->pt.xcoord().xcoord());
             min_y = std::min(min_y, node->pt.ycoord());
@@ -667,7 +671,7 @@ namespace recti::detail {
         double scale_y = (height - 2.0 * margin) / range_y;
         double scale = std::min(scale_x, scale_y);
 
-        return {width, height, margin, scale, min_x, min_y};
+        return {.width=width, .height=height, .margin=margin, .scale=scale, .min_x=min_x, .min_y=min_y};
     }
 
     // std::pair<double, double> scale_coords(int x, int y, const SvgParams& params) {
@@ -681,7 +685,7 @@ namespace recti::detail {
                                                 const SvgParams& params) {
         auto [x, y] = scale_coords(node->pt.xcoord(), node->pt.ycoord(), params);
         std::string color;
-        int radius;
+        int radius = 0;
         std::string label;
         if (node->type == NodeType::SOURCE) {
             color = "red";
@@ -707,9 +711,9 @@ namespace recti::detail {
         svg << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"" << radius << "\" fill=\""
             << color << "\" stroke=\"black\" stroke-width=\"1\"/>\n";
         svg << "<text x=\"" << x + radius + 2 << "\" y=\"" << y + 4
-            << "\" font-family=\"Arial\" font-size=\"10\" fill=\"black\">" << label << "</text>\n";
+            << R"(" font-family="Arial" font-size="10" fill="black">)" << label << "</text>\n";
         svg << "<text x=\"" << x << "\" y=\"" << y - radius - 5
-            << "\" font-family=\"Arial\" font-size=\"8\" fill=\"gray\" text-anchor=\"middle\">("
+            << R"(" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">()"
             << node->pt << ")</text>\n";
     }
 
@@ -718,7 +722,7 @@ namespace recti::detail {
         const SvgParams& params) {
         auto [x, y] = scale_coords(node->pt.xcoord().xcoord(), node->pt.ycoord(), params);
         std::string color;
-        int radius;
+        int radius = 0;
         std::string label;
         if (node->type == NodeType::SOURCE) {
             color = "red";
@@ -746,15 +750,15 @@ namespace recti::detail {
         svg << "<circle cx=\"" << x << "\" cy=\"" << y << "\" r=\"" << radius << "\" fill=\""
             << color << "\" stroke=\"black\" stroke-width=\"1\"/>\n";
         svg << "<text x=\"" << x + radius + 2 << "\" y=\"" << y + 4
-            << "\" font-family=\"Arial\" font-size=\"10\" fill=\"black\">" << label << "</text>\n";
+            << R"(" font-family="Arial" font-size="10" fill="black">)" << label << "</text>\n";
         svg << "<text x=\"" << x << "\" y=\"" << y - radius - 5
-            << "\" font-family=\"Arial\" font-size=\"8\" fill=\"gray\" text-anchor=\"middle\">("
+            << R"(" font-family="Arial" font-size="8" fill="gray" text-anchor="middle">()"
             << node->pt << ")</text>\n";
     }
 
     void draw_legend(std::ostringstream& svg) {
         int legend_y = 20;
-        svg << "<text x=\"20\" y=\"" << legend_y
+        svg << R"(<text x="20" y=")" << legend_y
             << "\" font-family=\"Arial\" font-size=\"12\" font-weight=\"bold\">Legend:</text>\n";
 
         struct LegendItem {
@@ -763,55 +767,55 @@ namespace recti::detail {
             int x, y;
         };
         std::vector<LegendItem> legend_items = {
-            {"Source", "red", 20, legend_y + 20},
-            {"Steiner", "blue", 20, legend_y + 40},
-            {"Terminal", "green", 20, legend_y + 60},
+            {.text="Source", .color="red", .x=20, .y=legend_y + 20},
+            {.text="Steiner", .color="blue", .x=20, .y=legend_y + 40},
+            {.text="Terminal", .color="green", .x=20, .y=legend_y + 60},
         };
         for (const auto& item : legend_items) {
-            svg << "<circle cx=\"" << item.x << "\" cy=\"" << item.y - 4 << "\" r=\"4\" fill=\""
+            svg << "<circle cx=\"" << item.x << "\" cy=\"" << item.y - 4 << R"(" r="4" fill=")"
                 << item.color << "\" stroke=\"black\"/>\n";
             svg << "<text x=\"" << item.x + 10 << "\" y=\"" << item.y
-                << "\" font-family=\"Arial\" font-size=\"10\">" << item.text << "</text>\n";
+                << R"(" font-family="Arial" font-size="10">)" << item.text << "</text>\n";
         }
     }
 
     template <> void draw_stats<Point<int, int>>(std::ostringstream& svg,
                                                  const GlobalRoutingTree<Point<int, int>>& tree) {
         int stats_y = 110;
-        svg << "<text x=\"20\" y=\"" << stats_y
+        svg << R"(<text x="20" y=")" << stats_y
             << "\" font-family=\"Arial\" font-size=\"10\" "
                "font-weight=\"bold\">Statistics:</text>\n";
-        svg << "<text x=\"20\" y=\"" << stats_y + 15
-            << "\" font-family=\"Arial\" font-size=\"9\">Total Nodes: " << tree.nodes.size()
+        svg << R"(<text x="20" y=")" << stats_y + 15
+            << R"(" font-family="Arial" font-size="9">Total Nodes: )" << tree.nodes.size()
             << "</text>\n";
-        svg << "<text x=\"20\" y=\"" << stats_y + 30
-            << "\" font-family=\"Arial\" font-size=\"9\">Terminals: "
+        svg << R"(<text x="20" y=")" << stats_y + 30
+            << R"(" font-family="Arial" font-size="9">Terminals: )"
             << tree.get_all_terminals().size() << "</text>\n";
-        svg << "<text x=\"20\" y=\"" << stats_y + 45
-            << "\" font-family=\"Arial\" font-size=\"9\">Steiner: "
+        svg << R"(<text x="20" y=")" << stats_y + 45
+            << R"(" font-family="Arial" font-size="9">Steiner: )"
             << tree.get_all_steiner_nodes().size() << "</text>\n";
-        svg << "<text x=\"20\" y=\"" << stats_y + 60
-            << "\" font-family=\"Arial\" font-size=\"9\">Wirelength: "
+        svg << R"(<text x="20" y=")" << stats_y + 60
+            << R"(" font-family="Arial" font-size="9">Wirelength: )"
             << tree.calculate_total_wirelength() << "</text>\n";
     }
 
     template <> void draw_stats<Point<Point<int, int>, int>>(
         std::ostringstream& svg, const GlobalRoutingTree<Point<Point<int, int>, int>>& tree) {
         int stats_y = 110;
-        svg << "<text x=\"20\" y=\"" << stats_y
+        svg << R"(<text x="20" y=")" << stats_y
             << "\" font-family=\"Arial\" font-size=\"10\" "
                "font-weight=\"bold\">Statistics:</text>\n";
-        svg << "<text x=\"20\" y=\"" << stats_y + 15
-            << "\" font-family=\"Arial\" font-size=\"9\">Total Nodes: " << tree.nodes.size()
+        svg << R"(<text x="20" y=")" << stats_y + 15
+            << R"(" font-family="Arial" font-size="9">Total Nodes: )" << tree.nodes.size()
             << "</text>\n";
-        svg << "<text x=\"20\" y=\"" << stats_y + 30
-            << "\" font-family=\"Arial\" font-size=\"9\">Terminals: "
+        svg << R"(<text x="20" y=")" << stats_y + 30
+            << R"(" font-family="Arial" font-size="9">Terminals: )"
             << tree.get_all_terminals().size() << "</text>\n";
-        svg << "<text x=\"20\" y=\"" << stats_y + 45
-            << "\" font-family=\"Arial\" font-size=\"9\">Steiner: "
+        svg << R"(<text x="20" y=")" << stats_y + 45
+            << R"(" font-family="Arial" font-size="9">Steiner: )"
             << tree.get_all_steiner_nodes().size() << "</text>\n";
-        svg << "<text x=\"20\" y=\"" << stats_y + 60
-            << "\" font-family=\"Arial\" font-size=\"9\">Wirelength: "
+        svg << R"(<text x="20" y=")" << stats_y + 60
+            << R"(" font-family="Arial" font-size="9">Wirelength: )"
             << tree.calculate_total_wirelength() << "</text>\n";
     }
 

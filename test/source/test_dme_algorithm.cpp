@@ -469,7 +469,9 @@ TEST_SUITE("Tree Statistics Tests") {
         CHECK_EQ(stats.wires.size(), 2);
 
         // Check node information
-        bool found_s1 = false, found_s2 = false, found_root = false;
+        bool found_s1 = false;
+        bool found_s2 = false;
+        bool found_root = false;
         for (const auto& node : stats.nodes) {
             if (node.name == "s1") {
                 found_s1 = true;
@@ -554,6 +556,7 @@ TEST_SUITE("Integration Tests") {
     TEST_CASE("Large Tree Construction") {
         // Create a larger set of sinks
         std::vector<recti::Sink> sinks;
+        sinks.reserve(8);
         for (int i = 0; i < 8; ++i) {
             sinks.emplace_back(std::string("s") + std::to_string(i),
                                recti::Point<int>(i * 10, i * 5), 1.0 + i * 0.1);

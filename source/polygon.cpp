@@ -49,8 +49,8 @@ namespace recti {
             pointset.begin(), pointset.end(),
             [&dir](const Point<T>& a, const Point<T>& b) { return dir(a) < dir(b); });
 
-        size_t min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
-        size_t max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
+        auto min_index = static_cast<size_t>(std::distance(pointset.begin(), min_it));
+        auto max_index = static_cast<size_t>(std::distance(pointset.begin(), max_it));
 
         size_t i = min_index;
         while (i != max_index) {
