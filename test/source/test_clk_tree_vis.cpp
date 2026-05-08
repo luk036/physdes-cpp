@@ -124,12 +124,12 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
                                           recti::Sink("s2", recti::Point<int>(150, 50), 1.0)};
 
         recti::SkewAnalysis analysis{
-            .max_delay=10.5,                    // max_delay
-            .min_delay=10.0,                    // min_delay
-            .skew=0.5,                     // skew
-            .sink_delays={10.0, 10.5},            // sink_delays
-            .total_wirelength=100,                     // total_wirelength
-            .delay_model="LinearDelayCalculator"  // delay_model
+            .max_delay = 10.5,                      // max_delay
+            .min_delay = 10.0,                      // min_delay
+            .skew = 0.5,                            // skew
+            .sink_delays = {10.0, 10.5},            // sink_delays
+            .total_wirelength = 100,                // total_wirelength
+            .delay_model = "LinearDelayCalculator"  // delay_model
         };
 
         recti::ClockTreeVisualizer visualizer;
@@ -164,7 +164,12 @@ TEST_SUITE("Interactive SVG Tests") {
         std::vector<recti::Sink> sinks = {recti::Sink("sink1", recti::Point<int>(100, 100), 1.0),
                                           recti::Sink("sink2", recti::Point<int>(200, 200), 1.0)};
 
-        recti::SkewAnalysis analysis{.max_delay=5.0, .min_delay=5.0, .skew=0.0, .sink_delays={5.0, 5.0}, .total_wirelength=50, .delay_model="TestCalculator"};
+        recti::SkewAnalysis analysis{.max_delay = 5.0,
+                                     .min_delay = 5.0,
+                                     .skew = 0.0,
+                                     .sink_delays = {5.0, 5.0},
+                                     .total_wirelength = 50,
+                                     .delay_model = "TestCalculator"};
 
         std::string svg_content
             = recti::create_interactive_svg(root, sinks, &analysis, "test_interactive.svg");
@@ -212,9 +217,15 @@ TEST_SUITE("Comparison Visualization Tests") {
         // Create test tree data
         auto tree1 = std::make_shared<recti::TreeNode>("root1", recti::Point<int>(100, 100));
         std::vector<recti::Sink> sinks1 = {recti::Sink("s1", recti::Point<int>(100, 100), 1.0)};
-        recti::SkewAnalysis analysis1{.max_delay=5.0, .min_delay=5.0, .skew=0.0, .sink_delays={5.0}, .total_wirelength=0, .delay_model="TestModel1"};
+        recti::SkewAnalysis analysis1{.max_delay = 5.0,
+                                      .min_delay = 5.0,
+                                      .skew = 0.0,
+                                      .sink_delays = {5.0},
+                                      .total_wirelength = 0,
+                                      .delay_model = "TestModel1"};
 
-        recti::TreeComparisonData tree_data1{.tree=tree1, .sinks=sinks1, .analysis=analysis1, .title="Single Tree Test"};
+        recti::TreeComparisonData tree_data1{
+            .tree = tree1, .sinks = sinks1, .analysis = analysis1, .title = "Single Tree Test"};
 
         std::string svg_content = recti::create_comparison_visualization(
             {tree_data1}, "test_single_comparison.svg", 800, 600);
@@ -235,16 +246,28 @@ TEST_SUITE("Comparison Visualization Tests") {
         auto tree1 = std::make_shared<recti::TreeNode>("root1", recti::Point<int>(50, 50));
         std::vector<recti::Sink> sinks1 = {recti::Sink("s1", recti::Point<int>(50, 50), 1.0),
                                            recti::Sink("s2", recti::Point<int>(150, 50), 1.0)};
-        recti::SkewAnalysis analysis1{.max_delay=10.0, .min_delay=10.0, .skew=0.0, .sink_delays={10.0, 10.0}, .total_wirelength=100, .delay_model="LinearModel"};
+        recti::SkewAnalysis analysis1{.max_delay = 10.0,
+                                      .min_delay = 10.0,
+                                      .skew = 0.0,
+                                      .sink_delays = {10.0, 10.0},
+                                      .total_wirelength = 100,
+                                      .delay_model = "LinearModel"};
 
         // Create second test tree
         auto tree2 = std::make_shared<recti::TreeNode>("root2", recti::Point<int>(50, 150));
         std::vector<recti::Sink> sinks2 = {recti::Sink("s1", recti::Point<int>(50, 150), 1.0),
                                            recti::Sink("s2", recti::Point<int>(150, 150), 1.0)};
-        recti::SkewAnalysis analysis2{.max_delay=12.0, .min_delay=11.0, .skew=1.0, .sink_delays={11.0, 12.0}, .total_wirelength=120, .delay_model="ElmoreModel"};
+        recti::SkewAnalysis analysis2{.max_delay = 12.0,
+                                      .min_delay = 11.0,
+                                      .skew = 1.0,
+                                      .sink_delays = {11.0, 12.0},
+                                      .total_wirelength = 120,
+                                      .delay_model = "ElmoreModel"};
 
-        recti::TreeComparisonData tree_data1{.tree=tree1, .sinks=sinks1, .analysis=analysis1, .title="Linear Model"};
-        recti::TreeComparisonData tree_data2{.tree=tree2, .sinks=sinks2, .analysis=analysis2, .title="Elmore Model"};
+        recti::TreeComparisonData tree_data1{
+            .tree = tree1, .sinks = sinks1, .analysis = analysis1, .title = "Linear Model"};
+        recti::TreeComparisonData tree_data2{
+            .tree = tree2, .sinks = sinks2, .analysis = analysis2, .title = "Elmore Model"};
 
         std::string svg_content = recti::create_comparison_visualization({tree_data1, tree_data2},
                                                                          "test_two_comparison.svg");
@@ -274,12 +297,24 @@ TEST_SUITE("Comparison Visualization Tests") {
         std::vector<recti::Sink> sinks = {recti::Sink("s1", recti::Point<int>(50, 50), 1.0),
                                           recti::Sink("s2", recti::Point<int>(150, 150), 1.0)};
 
-        recti::SkewAnalysis linear_analysis{.max_delay=8.5, .min_delay=8.5, .skew=0.0, .sink_delays={8.5, 8.5}, .total_wirelength=80, .delay_model="LinearDelayCalculator"};
+        recti::SkewAnalysis linear_analysis{.max_delay = 8.5,
+                                            .min_delay = 8.5,
+                                            .skew = 0.0,
+                                            .sink_delays = {8.5, 8.5},
+                                            .total_wirelength = 80,
+                                            .delay_model = "LinearDelayCalculator"};
 
-        recti::SkewAnalysis elmore_analysis{.max_delay=9.2, .min_delay=9.0, .skew=0.2, .sink_delays={9.0, 9.2}, .total_wirelength=95, .delay_model="ElmoreDelayCalculator"};
+        recti::SkewAnalysis elmore_analysis{.max_delay = 9.2,
+                                            .min_delay = 9.0,
+                                            .skew = 0.2,
+                                            .sink_delays = {9.0, 9.2},
+                                            .total_wirelength = 95,
+                                            .delay_model = "ElmoreDelayCalculator"};
 
-        recti::TreeComparisonData linear_data{.tree=linear_tree, .sinks=sinks, .analysis=linear_analysis, .title=""};
-        recti::TreeComparisonData elmore_data{.tree=elmore_tree, .sinks=sinks, .analysis=elmore_analysis, .title=""};
+        recti::TreeComparisonData linear_data{
+            .tree = linear_tree, .sinks = sinks, .analysis = linear_analysis, .title = ""};
+        recti::TreeComparisonData elmore_data{
+            .tree = elmore_tree, .sinks = sinks, .analysis = elmore_analysis, .title = ""};
 
         std::string svg_content = recti::create_delay_model_comparison(
             linear_data, elmore_data, "test_delay_model_comparison.svg");
@@ -359,8 +394,14 @@ TEST_SUITE("Integration Tests with DME Algorithm") {
         auto elmore_analysis = dme_elmore.analyze_skew(elmore_tree);
 
         // Create comparison data
-        recti::TreeComparisonData linear_data{.tree=linear_tree, .sinks=sinks, .analysis=linear_analysis, .title="Linear Model"};
-        recti::TreeComparisonData elmore_data{.tree=elmore_tree, .sinks=sinks, .analysis=elmore_analysis, .title="Elmore Model"};
+        recti::TreeComparisonData linear_data{.tree = linear_tree,
+                                              .sinks = sinks,
+                                              .analysis = linear_analysis,
+                                              .title = "Linear Model"};
+        recti::TreeComparisonData elmore_data{.tree = elmore_tree,
+                                              .sinks = sinks,
+                                              .analysis = elmore_analysis,
+                                              .title = "Elmore Model"};
 
         // Create comparison visualization
         std::string svg_content = recti::create_comparison_visualization(

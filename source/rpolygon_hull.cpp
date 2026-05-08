@@ -34,8 +34,8 @@ namespace recti {
                                          const std::function<bool(T, T)>& cmp,
                                          const std::function<bool(T)>& cmp2) {
             while (vcurr != vstop) {
-                auto *vnext = vcurr->next;
-                auto *vprev = vcurr->prev;
+                auto* vnext = vcurr->next;
+                auto* vprev = vcurr->prev;
                 const auto& p0 = pointset[vprev->data];
                 const auto& p1 = pointset[vcurr->data];
                 const auto& p2 = pointset[vnext->data];

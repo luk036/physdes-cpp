@@ -97,7 +97,7 @@ TEST_CASE("RPolygon make convex hull test with Halton points") {
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int>> S;
     S.reserve(100);
-for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < 100; ++i) {
         S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());

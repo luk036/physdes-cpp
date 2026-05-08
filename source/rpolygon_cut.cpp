@@ -13,9 +13,9 @@ namespace recti {
     template <typename T>
     static auto _find_min_dist_point(const std::vector<Point<T>>& lst, Dllink<size_t>* vcurr)
         -> std::pair<Dllink<size_t>*, bool> {
-        auto *vnext = vcurr->next;
-        auto *vstop = vcurr;
-        auto *vi = vnext;
+        auto* vnext = vcurr->next;
+        auto* vstop = vcurr;
+        auto* vi = vnext;
 
         T min_value = std::numeric_limits<T>::max();
         bool vertical = true;
@@ -55,8 +55,8 @@ namespace recti {
     auto rpolygon_cut_convex_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
                                    const std::function<bool(T)>& cmp, RDllist& rdll)
         -> std::vector<std::vector<size_t>> {
-        auto *v2 = v1->next;
-        auto *v3 = v2->next;
+        auto* v2 = v1->next;
+        auto* v3 = v2->next;
 
         if (v3 == v1) {
             return {{v1->data, v2->data}};
@@ -67,10 +67,10 @@ namespace recti {
 
         auto find_concave_point = [&lst](Dllink<size_t>* vstart,
                                          const std::function<bool(T)>& cmp2) -> Dllink<size_t>* {
-            auto *vcurr = vstart;
+            auto* vcurr = vstart;
             do {
-                auto *vnext = vcurr->next;
-                auto *vprev = vcurr->prev;
+                auto* vnext = vcurr->next;
+                auto* vprev = vcurr->prev;
 
                 auto p0 = lst[vprev->data];
                 auto p1 = lst[vcurr->data];
@@ -95,7 +95,7 @@ namespace recti {
 
         if (vcurr == nullptr) {
             std::vector<size_t> indices;
-            auto *current = v1;
+            auto* current = v1;
             do {
                 indices.emplace_back(current->data);
                 current = current->next;
@@ -106,7 +106,7 @@ namespace recti {
         auto [v_min, vertical] = _find_min_dist_point<T>(lst, vcurr);
         size_t n = lst.size();
         rdll.cycle.emplace_back(n);
-        auto *new_node = &rdll.cycle[n];
+        auto* new_node = &rdll.cycle[n];
         auto p_min = lst[v_min->data];
         auto p1 = lst[vcurr->data];
 
@@ -140,7 +140,7 @@ namespace recti {
     auto rpolygon_cut_explicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
                                      const std::function<bool(T)>& cmp, RDllist& rdll)
         -> std::vector<std::vector<size_t>> {
-        auto *const v2 = v1->next;
+        auto* const v2 = v1->next;
 
         if (v2->next == v1) {
             return {{v1->data, v2->data}};
@@ -148,10 +148,10 @@ namespace recti {
 
         auto find_explicit_concave_point =
             [&lst](Dllink<size_t>* vstart, const std::function<bool(T)>& cmp2) -> Dllink<size_t>* {
-            auto *vcurr = vstart;
+            auto* vcurr = vstart;
             do {
-                auto *vnext = vcurr->next;
-                auto *vprev = vcurr->prev;
+                auto* vnext = vcurr->next;
+                auto* vprev = vcurr->prev;
 
                 auto& p0 = lst[vprev->data];
                 auto& p1 = lst[vcurr->data];
@@ -171,7 +171,7 @@ namespace recti {
 
         if (vcurr == nullptr) {
             std::vector<size_t> indices;
-            auto *current = v1;
+            auto* current = v1;
             do {
                 indices.emplace_back(current->data);
                 current = current->next;
@@ -182,7 +182,7 @@ namespace recti {
         auto [v_min, vertical] = _find_min_dist_point<T>(lst, vcurr);
         size_t n = lst.size();
         rdll.cycle.emplace_back(n);
-        auto *new_node = &rdll.cycle[n];
+        auto* new_node = &rdll.cycle[n];
         auto p_min = lst[v_min->data];
         auto p1 = lst[vcurr->data];
 
@@ -217,7 +217,7 @@ namespace recti {
     auto rpolygon_cut_implicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
                                      const std::function<bool(T)>& cmp, RDllist& rdll)
         -> std::vector<std::vector<size_t>> {
-        auto *v2 = v1->next;
+        auto* v2 = v1->next;
 
         if (v2->next == v1) {
             return {{v1->data, v2->data}};
@@ -225,9 +225,9 @@ namespace recti {
 
         auto find_implicit_concave_point =
             [&lst](Dllink<size_t>* vstart, const std::function<bool(T)>& cmp2) -> Dllink<size_t>* {
-            auto *vcurr = vstart;
+            auto* vcurr = vstart;
             do {
-                auto *vnext = vcurr->next;
+                auto* vnext = vcurr->next;
 
                 auto p1 = lst[vcurr->data];
                 auto p2 = lst[vnext->data];
@@ -246,7 +246,7 @@ namespace recti {
 
         if (vcurr == nullptr) {
             std::vector<size_t> indices;
-            auto *current = v1;
+            auto* current = v1;
             do {
                 indices.emplace_back(current->data);
                 current = current->next;
@@ -256,9 +256,9 @@ namespace recti {
 
         auto find_min_dist_point
             = [&lst](Dllink<size_t>* vcurr) -> std::pair<Dllink<size_t>*, bool> {
-            auto *vnext = vcurr->next;
-            auto *vstop = vcurr;
-            auto *vi = vnext->next;
+            auto* vnext = vcurr->next;
+            auto* vstop = vcurr;
+            auto* vi = vnext->next;
 
             T min_value = std::numeric_limits<T>::max();
             bool vertical = true;
@@ -301,7 +301,7 @@ namespace recti {
         auto [v_min, vertical] = find_min_dist_point(vcurr);
         size_t n = lst.size();
         rdll.cycle.emplace_back(n);
-        auto *new_node = &rdll.cycle[n];
+        auto* new_node = &rdll.cycle[n];
         const auto& p_min = lst[v_min->data];
         const auto& pc1 = lst[vcurr->data];
         const auto& pc2 = lst[vcurr->next->data];

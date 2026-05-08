@@ -103,9 +103,9 @@ namespace recti {
         auto violate
             = [&pointset, &dir](Dllink<size_t>* vertex_iterator, Dllink<size_t>* vertex_stop,
                                 const std::function<bool(T, T)>& cmp) -> bool {
-            auto *current = vertex_iterator;
+            auto* current = vertex_iterator;
             while (current != vertex_stop) {
-                auto *next_vertex = current->next;
+                auto* next_vertex = current->next;
                 auto current_key = dir(pointset[current->data]);
                 auto next_key = dir(pointset[next_vertex->data]);
                 if (cmp(std::get<0>(current_key), std::get<0>(next_key))) {

@@ -328,12 +328,12 @@ namespace recti {
         double skew = max_delay - min_delay;
         // Return the comprehensive skew analysis results.
         const auto& calculator = *this->delay_calculator;
-        return {.max_delay=max_delay,
-                .min_delay=min_delay,
-                .skew=skew,
-                .sink_delays=sink_delays,
-                .total_wirelength=this->total_wirelength(root),
-                .delay_model=typeid(calculator).name()};
+        return {.max_delay = max_delay,
+                .min_delay = min_delay,
+                .skew = skew,
+                .sink_delays = sink_delays,
+                .total_wirelength = this->total_wirelength(root),
+                .delay_model = typeid(calculator).name()};
     }
 
     /**
@@ -364,31 +364,32 @@ namespace recti {
         std::function<void(const std::shared_ptr<TreeNode>&, const std::shared_ptr<TreeNode>&)>
             traverse;
 
-        traverse
-            = [&](const std::shared_ptr<TreeNode>& node, const std::shared_ptr<TreeNode>& parent) {
-                  if (!node) return;
+        traverse = [&](const std::shared_ptr<TreeNode>& node,
+                       const std::shared_ptr<TreeNode>& parent) {
+            if (!node) return;
 
-                  stats.nodes.push_back({.name=node->name,
-                                         .position={node->position.xcoord(), node->position.ycoord()},
-                                         .type=node->is_leaf() ? "sink" : "internal",
-                                         .delay=node->delay,
-                                         .capacitance=node->capacitance});
+            stats.nodes.push_back({.name = node->name,
+                                   .position = {node->position.xcoord(), node->position.ycoord()},
+                                   .type = node->is_leaf() ? "sink" : "internal",
+                                   .delay = node->delay,
+                                   .capacitance = node->capacitance});
 
-                  if (node->is_leaf()) {
-                      stats.sinks.emplace_back(node->name);
-                  }
+            if (node->is_leaf()) {
+                stats.sinks.emplace_back(node->name);
+            }
 
-                  if (parent) {
-                      stats.wires.push_back({.from_node=parent->name,
-                                             .to_node=node->name,
-                                             .length=node->wire_length,
-                                             .from_pos={parent->position.xcoord(), parent->position.ycoord()},
-                                             .to_pos={node->position.xcoord(), node->position.ycoord()}});
-                  }
+            if (parent) {
+                stats.wires.push_back(
+                    {.from_node = parent->name,
+                     .to_node = node->name,
+                     .length = node->wire_length,
+                     .from_pos = {parent->position.xcoord(), parent->position.ycoord()},
+                     .to_pos = {node->position.xcoord(), node->position.ycoord()}});
+            }
 
-                  traverse(node->left, node);
-                  traverse(node->right, node);
-              };
+            traverse(node->left, node);
+            traverse(node->right, node);
+        };
 
         traverse(root, nullptr);
 

@@ -167,8 +167,8 @@ namespace recti {
         RoutingNode<IntPoint>* terminal_node = terminal_ptr.get();
         this->nodes[terminal_id] = terminal_node;
         this->owned_nodes.emplace_back(std::move(terminal_ptr));
-        auto [parent_node, nearest_node]
-            = this->_find_nearest_insertion_with_constraints(point, allowed_wirelength, std::move(keepouts));
+        auto [parent_node, nearest_node] = this->_find_nearest_insertion_with_constraints(
+            point, allowed_wirelength, std::move(keepouts));
         if (parent_node == nullptr) {
             nearest_node->add_child(terminal_node);
             terminal_node->path_length
@@ -196,7 +196,10 @@ namespace recti {
     GlobalRouter<IntPoint>::GlobalRouter(const IntPoint& source_pos,
                                          std::vector<IntPoint> terminal_positions,
                                          std::optional<std::vector<Keepout>> keepout_regions)
-        : source_position(source_pos), terminal_positions(std::move(terminal_positions)), tree(source_pos), keepouts(std::move(keepout_regions)) {
+        : source_position(source_pos),
+          terminal_positions(std::move(terminal_positions)),
+          tree(source_pos),
+          keepouts(std::move(keepout_regions)) {
         std::sort(terminal_positions.begin(), terminal_positions.end(),
                   [this](const IntPoint& point_a, const IntPoint& point_b) {
                       auto dist_a = this->source_position.min_dist_with(point_a);
@@ -206,7 +209,6 @@ namespace recti {
                                  && this->source_position.hull_with(point_a).measure()
                                         > this->source_position.hull_with(point_b).measure());
                   });
-        
 
         if (!this->terminal_positions.empty()) {
             this->worst_wirelength
@@ -485,7 +487,8 @@ namespace recti {
         const GlobalRoutingTree<Point<int, int>>& tree,
         std::optional<std::vector<GlobalRoutingTree<Point<int, int>>::Keepout>> keepouts,
         const std::string& filename, const int width, const int height) {
-        std::string svg_content = visualize_routing_tree_svg(tree, std::move(keepouts), width, height, 50);
+        std::string svg_content
+            = visualize_routing_tree_svg(tree, std::move(keepouts), width, height, 50);
         std::ofstream file_stream(filename);
         file_stream << svg_content;
         std::cout << "Routing tree saved to " << filename << "\n";
@@ -618,14 +621,19 @@ namespace recti::detail {
         const std::vector<RoutingNode<Point<int, int>>*>& nodes, int width, int height,
         int margin) {
         if (nodes.empty()) {
-            return {.width=width, .height=height, .margin=margin, .scale=1.0, .min_x=0, .min_y=0};
+            return {.width = width,
+                    .height = height,
+                    .margin = margin,
+                    .scale = 1.0,
+                    .min_x = 0,
+                    .min_y = 0};
         }
 
         int min_x = nodes[0]->pt.xcoord();
         int max_x = min_x;
         int min_y = nodes[0]->pt.ycoord();
         int max_y = min_y;
-        for (auto *node : nodes) {
+        for (auto* node : nodes) {
             min_x = std::min(min_x, node->pt.xcoord());
             max_x = std::max(max_x, node->pt.xcoord());
             min_y = std::min(min_y, node->pt.ycoord());
@@ -641,21 +649,31 @@ namespace recti::detail {
         double scale_y = (height - 2.0 * margin) / range_y;
         double scale = std::min(scale_x, scale_y);
 
-        return {.width=width, .height=height, .margin=margin, .scale=scale, .min_x=min_x, .min_y=min_y};
+        return {.width = width,
+                .height = height,
+                .margin = margin,
+                .scale = scale,
+                .min_x = min_x,
+                .min_y = min_y};
     }
 
     template <> SvgParams calculate_svg_params<Point<Point<int, int>, int>>(
         const std::vector<RoutingNode<Point<Point<int, int>, int>>*>& nodes, int width, int height,
         int margin) {
         if (nodes.empty()) {
-            return {.width=width, .height=height, .margin=margin, .scale=1.0, .min_x=0, .min_y=0};
+            return {.width = width,
+                    .height = height,
+                    .margin = margin,
+                    .scale = 1.0,
+                    .min_x = 0,
+                    .min_y = 0};
         }
 
         int min_x = nodes[0]->pt.xcoord().xcoord();
         int max_x = min_x;
         int min_y = nodes[0]->pt.ycoord();
         int max_y = min_y;
-        for (auto *node : nodes) {
+        for (auto* node : nodes) {
             min_x = std::min(min_x, node->pt.xcoord().xcoord());
             max_x = std::max(max_x, node->pt.xcoord().xcoord());
             min_y = std::min(min_y, node->pt.ycoord());
@@ -671,7 +689,12 @@ namespace recti::detail {
         double scale_y = (height - 2.0 * margin) / range_y;
         double scale = std::min(scale_x, scale_y);
 
-        return {.width=width, .height=height, .margin=margin, .scale=scale, .min_x=min_x, .min_y=min_y};
+        return {.width = width,
+                .height = height,
+                .margin = margin,
+                .scale = scale,
+                .min_x = min_x,
+                .min_y = min_y};
     }
 
     // std::pair<double, double> scale_coords(int x, int y, const SvgParams& params) {
@@ -767,9 +790,9 @@ namespace recti::detail {
             int x, y;
         };
         std::vector<LegendItem> legend_items = {
-            {.text="Source", .color="red", .x=20, .y=legend_y + 20},
-            {.text="Steiner", .color="blue", .x=20, .y=legend_y + 40},
-            {.text="Terminal", .color="green", .x=20, .y=legend_y + 60},
+            {.text = "Source", .color = "red", .x = 20, .y = legend_y + 20},
+            {.text = "Steiner", .color = "blue", .x = 20, .y = legend_y + 40},
+            {.text = "Terminal", .color = "green", .x = 20, .y = legend_y + 60},
         };
         for (const auto& item : legend_items) {
             svg << "<circle cx=\"" << item.x << "\" cy=\"" << item.y - 4 << R"(" r="4" fill=")"

@@ -217,67 +217,67 @@ namespace recti {
             sink_positions.insert({sink.position.xcoord(), sink.position.ycoord()});
         }
 
-        std::function<void(const std::shared_ptr<TreeNode>&, int)> draw_nodes_recursive =
-            [&](const std::shared_ptr<TreeNode>& tree_node, int tree_depth) {
-                if (!tree_node) return;
+        std::function<void(const std::shared_ptr<TreeNode>&, int)> draw_nodes_recursive
+            = [&](const std::shared_ptr<TreeNode>& tree_node, int tree_depth) {
+                  if (!tree_node) return;
 
-                auto [coord_x, coord_y]
-                    = scale_coord(tree_node->position.xcoord(), tree_node->position.ycoord());
+                  auto [coord_x, coord_y]
+                      = scale_coord(tree_node->position.xcoord(), tree_node->position.ycoord());
 
-                // Determine node type and color
-                bool is_sink = sink_positions.contains(
-                                   {tree_node->position.xcoord(), tree_node->position.ycoord()});
-                bool is_root = !tree_node->parent;
+                  // Determine node type and color
+                  bool is_sink = sink_positions.contains(
+                      {tree_node->position.xcoord(), tree_node->position.ycoord()});
+                  bool is_root = !tree_node->parent;
 
-                std::string color;
-                int node_radius = 0;
-                if (is_root) {
-                    color = this->root_color;
-                    node_radius = this->node_radius + 2;
-                } else if (is_sink) {
-                    color = this->sink_color;
-                    node_radius = this->node_radius;
-                } else {
-                    color = this->internal_color;
-                    node_radius = this->node_radius - 2;
-                }
+                  std::string color;
+                  int node_radius = 0;
+                  if (is_root) {
+                      color = this->root_color;
+                      node_radius = this->node_radius + 2;
+                  } else if (is_sink) {
+                      color = this->sink_color;
+                      node_radius = this->node_radius;
+                  } else {
+                      color = this->internal_color;
+                      node_radius = this->node_radius - 2;
+                  }
 
-                // Draw node circle
-                std::ostringstream circle;
-                circle << "<circle cx=\"" << coord_x << "\" cy=\"" << coord_y << "\" r=\""
-                       << node_radius << "\" fill=\"" << color
-                       << R"(" stroke="#333" stroke-width="1"/>)";
-                svg_elements.emplace_back(circle.str());
+                  // Draw node circle
+                  std::ostringstream circle;
+                  circle << "<circle cx=\"" << coord_x << "\" cy=\"" << coord_y << "\" r=\""
+                         << node_radius << "\" fill=\"" << color
+                         << R"(" stroke="#333" stroke-width="1"/>)";
+                  svg_elements.emplace_back(circle.str());
 
-                // Draw node label
-                double label_y_offset = -node_radius - 5;
-                std::ostringstream label;
-                label << "<text x=\"" << coord_x << "\" y=\"" << coord_y + label_y_offset
-                      << R"(" class="node-label" text-anchor="middle">)" << tree_node->name
-                      << "</text>";
-                svg_elements.emplace_back(label.str());
+                  // Draw node label
+                  double label_y_offset = -node_radius - 5;
+                  std::ostringstream label;
+                  label << "<text x=\"" << coord_x << "\" y=\"" << coord_y + label_y_offset
+                        << R"(" class="node-label" text-anchor="middle">)" << tree_node->name
+                        << "</text>";
+                  svg_elements.emplace_back(label.str());
 
-                // Draw delay information
-                double delay_y_offset = node_radius + 12;
-                std::ostringstream delay_label;
-                delay_label << "<text x=\"" << coord_x << "\" y=\"" << coord_y + delay_y_offset
-                            << R"(" class="delay-label" text-anchor="middle">d:)" << std::fixed
-                            << std::setprecision(1) << tree_node->delay << "</text>";
-                svg_elements.emplace_back(delay_label.str());
+                  // Draw delay information
+                  double delay_y_offset = node_radius + 12;
+                  std::ostringstream delay_label;
+                  delay_label << "<text x=\"" << coord_x << "\" y=\"" << coord_y + delay_y_offset
+                              << R"(" class="delay-label" text-anchor="middle">d:)" << std::fixed
+                              << std::setprecision(1) << tree_node->delay << "</text>";
+                  svg_elements.emplace_back(delay_label.str());
 
-                // Draw capacitance information for sinks
-                if (is_sink) {
-                    double cap_y_offset = node_radius + 22;
-                    std::ostringstream cap_label;
-                    cap_label << "<text x=\"" << coord_x << "\" y=\"" << coord_y + cap_y_offset
-                              << R"(" class="delay-label" text-anchor="middle">c:)" << std::fixed
-                              << std::setprecision(1) << tree_node->capacitance << "</text>";
-                    svg_elements.emplace_back(cap_label.str());
-                }
+                  // Draw capacitance information for sinks
+                  if (is_sink) {
+                      double cap_y_offset = node_radius + 22;
+                      std::ostringstream cap_label;
+                      cap_label << "<text x=\"" << coord_x << "\" y=\"" << coord_y + cap_y_offset
+                                << R"(" class="delay-label" text-anchor="middle">c:)" << std::fixed
+                                << std::setprecision(1) << tree_node->capacitance << "</text>";
+                      svg_elements.emplace_back(cap_label.str());
+                  }
 
-                draw_nodes_recursive(tree_node->left, tree_depth + 1);
-                draw_nodes_recursive(tree_node->right, tree_depth + 1);
-            };
+                  draw_nodes_recursive(tree_node->left, tree_depth + 1);
+                  draw_nodes_recursive(tree_node->right, tree_depth + 1);
+              };
 
         draw_nodes_recursive(root, 0);
         return svg_elements;
@@ -405,8 +405,7 @@ namespace recti {
             // Add title for this subplot
             std::ostringstream title;
             title << "<text x=\"" << offset_x + sub_width / 2 << "\" y=\"" << offset_y + 20
-                  << R"(" class="title" text-anchor="middle">)" << trees_data[i].title
-                  << "</text>";
+                  << R"(" class="title" text-anchor="middle">)" << trees_data[i].title << "</text>";
             svg_content.emplace_back(title.str());
 
             // Create visualization for this tree
@@ -526,11 +525,15 @@ namespace recti {
                                         "elmore_model_clock_tree.svg", 800, 600, &analysis_elmore);
 
         // Comparison visualization
-        TreeComparisonData linear_data
-            = {.tree=clock_tree_linear, .sinks=example_sinks, .analysis=analysis_linear, .title="Linear Delay Model"};
+        TreeComparisonData linear_data = {.tree = clock_tree_linear,
+                                          .sinks = example_sinks,
+                                          .analysis = analysis_linear,
+                                          .title = "Linear Delay Model"};
 
-        TreeComparisonData elmore_data
-            = {.tree=clock_tree_elmore, .sinks=example_sinks, .analysis=analysis_elmore, .title="Elmore Delay Model"};
+        TreeComparisonData elmore_data = {.tree = clock_tree_elmore,
+                                          .sinks = example_sinks,
+                                          .analysis = analysis_elmore,
+                                          .title = "Elmore Delay Model"};
 
         auto comparison_svg = create_delay_model_comparison(linear_data, elmore_data);
 

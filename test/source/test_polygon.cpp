@@ -183,7 +183,7 @@ TEST_CASE("Polygon convex decomposition - signed area preservation") {
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int>> S;
     S.reserve(10);
-for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 10; ++i) {
         S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
@@ -222,7 +222,7 @@ TEST_CASE("Polygon explicit cut - signed area preservation") {
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int>> S;
     S.reserve(10);
-for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 10; ++i) {
         S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());
@@ -261,7 +261,7 @@ TEST_CASE("Polygon implicit cut - signed area preservation") {
     ildsgen::VdCorput hgenY(2, 11);
     std::vector<Point<int>> S;
     S.reserve(10);
-for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 10; ++i) {
         S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto P = create_test_rpolygon(S.begin(), S.end());

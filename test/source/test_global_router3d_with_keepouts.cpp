@@ -30,7 +30,7 @@ auto generate_3d_points_and_keepouts(size_t num_terminals, unsigned int seed) ->
     for (size_t i = 0; i < num_terminals; ++i) {
         terminals.emplace_back(
             Point{static_cast<int>(hgenX.pop()), static_cast<int>(i % 4) * scale_z},
-                  static_cast<int>(hgenY.pop()));
+            static_cast<int>(hgenY.pop()));
     }
     IntPoint3d source(
         Point{Point{static_cast<int>(hgenX.pop()), 0}, static_cast<int>(hgenY.pop())});
