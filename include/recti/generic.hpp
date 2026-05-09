@@ -5,8 +5,7 @@
 // #include <cmath>  // for abs
 
 namespace recti {
-    template <typename T>
-    constexpr auto my_abs(const T& value) -> T  {
+    template <typename T> constexpr auto my_abs(const T& value) -> T {
         return value < 0 ? -value : value;
     }
 
