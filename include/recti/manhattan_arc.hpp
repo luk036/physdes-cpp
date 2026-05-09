@@ -81,7 +81,7 @@ namespace recti {
          * @param[in] ycoord The y coordinate value.
          * @return A new `ManhattanArc` object constructed from the given coordinates.
          */
-        static constexpr auto construct(T1&& xcoord, T2&& ycoord) -> ManhattanArc {
+        static constexpr auto construct(const T1& xcoord, const T2& ycoord) -> ManhattanArc {
             return ManhattanArc{xcoord - ycoord, xcoord + ycoord};
         }
 

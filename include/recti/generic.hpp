@@ -2,9 +2,14 @@
 
 // #include <algorithm> // import std::min, std::max
 #include <cassert>
-#include <cmath>  // for abs
+// #include <cmath>  // for abs
 
 namespace recti {
+    template <typename T>
+    constexpr auto my_abs(const T& value) -> T  {
+        return value < 0 ? -value : value;
+    }
+
     /**
      * @brief Checks if two objects overlap.
      *
@@ -150,7 +155,7 @@ namespace recti {
         } else if constexpr (requires { rhs.min_dist_with(lhs); }) {
             return rhs.min_dist_with(lhs);
         } else /* constexpr */ {
-            return std::abs(lhs - rhs);
+            return my_abs(lhs - rhs);
         }
     }
 
@@ -179,7 +184,7 @@ namespace recti {
         } else if constexpr (requires { rhs.min_dist_change_with(lhs); }) {
             return rhs.min_dist_change_with(lhs);
         } else /* constexpr */ {
-            return std::abs(lhs - rhs);
+            return my_abs(lhs - rhs);
         }
     }
 
