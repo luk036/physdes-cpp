@@ -13,8 +13,8 @@
 #pragma once
 
 #include <algorithm>
-#include <limits>
 #include <cmath>
+#include <limits>
 #include <memory>
 #include <optional>
 #include <recti/generic.hpp>  // for enlarge_with
