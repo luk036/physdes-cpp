@@ -1,9 +1,9 @@
 #pragma once
 
-#include <map>
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "manhattan_arc.hpp"
@@ -401,13 +401,12 @@ namespace recti {
          * all possible tapping points that achieve prescribed-skew (not necessarily zero) to its
          * descendant sinks.
          * @param root The root of the merging tree topology.
-         * @return A map where keys are node names and values are their corresponding ManhattanArc
-         * merging segments.
+         * @return A map keyed by TreeNode* with their corresponding ManhattanArc merging segments.
          * @throws std::runtime_error if an internal node does not have both left and right
          * children.
          */
-        std::map<std::string, ManhattanArc<Interval<int>, Interval<int>>> compute_merging_segments(
-            const std::shared_ptr<TreeNode>& root);
+        std::unordered_map<const TreeNode*, ManhattanArc<Interval<int>, Interval<int>>>
+            compute_merging_segments(const std::shared_ptr<TreeNode>& root);
 
         /**
          * @brief Performs top-down embedding to determine the physical locations of internal nodes.
@@ -425,7 +424,7 @@ namespace recti {
          */
         std::shared_ptr<TreeNode> embed_tree(
             const std::shared_ptr<TreeNode>& merging_tree,
-            const std::map<std::string, ManhattanArc<Interval<int>, Interval<int>>>&
+            const std::unordered_map<const TreeNode*, ManhattanArc<Interval<int>, Interval<int>>>&
                 merging_segments);
 
         /**
@@ -461,6 +460,20 @@ namespace recti {
          * @return The total wirelength of the clock tree.
          */
         int total_wirelength(const std::shared_ptr<TreeNode>& root) const;
+
+        // Recursive helpers (replace std::function-based lambdas for performance)
+        ManhattanArc<Interval<int>, Interval<int>> _compute_merging_segment(
+            const std::shared_ptr<TreeNode>& node,
+            std::unordered_map<const TreeNode*, ManhattanArc<Interval<int>, Interval<int>>>&
+                merging_segments);
+
+        void _embed_node(
+            const std::shared_ptr<TreeNode>& node,
+            const ManhattanArc<Interval<int>, Interval<int>>* parent_segment,
+            const std::unordered_map<const TreeNode*, ManhattanArc<Interval<int>, Interval<int>>>&
+                merging_segments);
+
+        void _compute_delays(const std::shared_ptr<TreeNode>& node, double parent_delay);
     };
 
     /**

@@ -232,7 +232,9 @@ namespace recti {
             } else {
                 for (size_t i = 0; i < active.size(); ++i) {
                     if (active[i].first == rect_idx) {
-                        active.erase(active.begin() + i);
+                        // O(1) removal: swap with back and pop
+                        active[i] = active.back();
+                        active.pop_back();
                         break;
                     }
                 }

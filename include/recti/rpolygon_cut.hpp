@@ -1,6 +1,5 @@
 #pragma once
 
-#include <functional>
 #include <span>
 #include <vector>
 
@@ -15,26 +14,23 @@ namespace recti {
     /**
      * @brief Recursive function for convex decomposition
      */
-    template <typename T>
-    auto rpolygon_cut_convex_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
-                                   const std::function<bool(T)>& cmp, RDllist& rdll)
-        -> std::vector<std::vector<size_t>>;
+    template <typename T, typename Cmp>
+    auto rpolygon_cut_convex_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst, const Cmp& cmp,
+                                   RDllist& rdll) -> std::vector<std::vector<size_t>>;
 
     /**
      * @brief Recursive function for explicit decomposition
      */
-    template <typename T>
-    auto rpolygon_cut_explicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
-                                     const std::function<bool(T)>& cmp, RDllist& rdll)
-        -> std::vector<std::vector<size_t>>;
+    template <typename T, typename Cmp>
+    auto rpolygon_cut_explicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst, const Cmp& cmp,
+                                     RDllist& rdll) -> std::vector<std::vector<size_t>>;
 
     /**
      * @brief Recursive function for implicit decomposition
      */
-    template <typename T>
-    auto rpolygon_cut_implicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
-                                     const std::function<bool(T)>& cmp, RDllist& rdll)
-        -> std::vector<std::vector<size_t>>;
+    template <typename T, typename Cmp>
+    auto rpolygon_cut_implicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst, const Cmp& cmp,
+                                     RDllist& rdll) -> std::vector<std::vector<size_t>>;
 
     /**
      * @brief Cut a rectilinear polygon into convex pieces

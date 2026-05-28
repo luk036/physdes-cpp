@@ -1,7 +1,6 @@
 #include <fmt/core.h>
 
 #include <algorithm>
-#include <functional>
 #include <iostream>
 #include <recti/dme_algorithm.hpp>
 #include <recti/logger.hpp>
@@ -100,8 +99,7 @@ namespace recti {
         // Step 3: Perform bottom-up computation of merging segments for all nodes.
         // These segments represent the possible locations for parent nodes to achieve zero
         // skew.
-        std::map<std::string, ManhattanArc<Interval<int>, Interval<int>>> merging_segments
-            = this->compute_merging_segments(merging_tree);
+        auto merging_segments = this->compute_merging_segments(merging_tree);
         // Step 4: Perform top-down embedding to select the actual physical positions
         // for internal nodes within their merging segments.
         auto clock_tree = this->embed_tree(merging_tree, merging_segments);
@@ -159,6 +157,38 @@ namespace recti {
     }
 
     /**
+     * @brief Recursive helper for compute_merging_segments (avoids std::function overhead).
+     */
+    ManhattanArc<Interval<int>, Interval<int>>
+    DMEAlgorithm::_compute_merging_segment(
+        const std::shared_ptr<TreeNode>& node,
+        std::unordered_map<const TreeNode*, ManhattanArc<Interval<int>, Interval<int>>>&
+            merging_segments) {
+        if (node->is_leaf()) {
+            auto ms1 = ManhattanArc<int, int>::from_point(node->position);
+            ManhattanArc<Interval<int>, Interval<int>> ms(
+                Interval{ms1.impl.xcoord(), ms1.impl.xcoord()},
+                Interval{ms1.impl.ycoord(), ms1.impl.ycoord()});
+            merging_segments[node.get()] = ms;
+            return ms;
+        }
+        if (!node->left || !node->right) {
+            throw std::runtime_error("Internal node must have both left and right children");
+        }
+        auto left_ms = _compute_merging_segment(node->left, merging_segments);
+        auto right_ms = _compute_merging_segment(node->right, merging_segments);
+        int distance = left_ms.min_dist_with(right_ms);
+        auto [extend_left, delay_left] = this->delay_calculator->calculate_tapping_point(
+            *node->left, *node->right, distance);
+        node->delay = delay_left;
+        auto merged_segment = left_ms.merge_with(right_ms, extend_left);
+        merging_segments[node.get()] = merged_segment;
+        double wire_cap = this->delay_calculator->calculate_wire_capacitance(distance);
+        node->capacitance = node->left->capacitance + node->right->capacitance + wire_cap;
+        return merged_segment;
+    }
+
+    /**
      * @brief Computes the merging segments for all nodes in a bottom-up manner.
      *
      * This function traverses the merging tree from leaves up to the root. For each node,
@@ -166,52 +196,42 @@ namespace recti {
      * all possible tapping points that achieve prescribed-skew (not necessarily zero) to its
      * descendant sinks.
      * @param root The root of the merging tree topology.
-     * @return A map where keys are node names and values are their corresponding ManhattanArc
-     * merging segments.
+     * @return A map keyed by TreeNode* with their corresponding ManhattanArc merging segments.
      * @throws std::runtime_error if an internal node does not have both left and right
      * children.
      */
-    std::map<std::string, ManhattanArc<Interval<int>, Interval<int>>>
+    std::unordered_map<const TreeNode*, ManhattanArc<Interval<int>, Interval<int>>>
     DMEAlgorithm::compute_merging_segments(const std::shared_ptr<TreeNode>& root) {
-        std::map<std::string, ManhattanArc<Interval<int>, Interval<int>>> merging_segments;
-        // Define a recursive lambda function for computing segments.
-        std::function<ManhattanArc<Interval<int>, Interval<int>>(const std::shared_ptr<TreeNode>&)>
-            compute_segment;
-        compute_segment = [&](const std::shared_ptr<TreeNode>& node)
-            -> ManhattanArc<Interval<int>, Interval<int>> {
-            if (node->is_leaf()) {
-                // For a leaf node (sink), its merging segment is a point (its own position).
-                auto ms1 = ManhattanArc<int, int>::from_point(node->position);
-                ManhattanArc<Interval<int>, Interval<int>> ms(
-                    Interval{ms1.impl.xcoord(), ms1.impl.xcoord()},
-                    Interval{ms1.impl.ycoord(), ms1.impl.ycoord()});
-                merging_segments[node->name] = ms;
-                return ms;
-            }
-            // Ensure internal nodes have two children.
-            if (!node->left || !node->right) {
-                throw std::runtime_error("Internal node must have both left and right children");
-            }
-            // Recursively compute merging segments for child nodes.
-            auto left_ms = compute_segment(node->left);
-            auto right_ms = compute_segment(node->right);
-            // Calculate the Manhattan distance between the two child merging segments.
-            int distance = left_ms.min_dist_with(right_ms);
-            // Calculate the optimal tapping point on the merging segment and the delay to it.
-            auto [extend_left, delay_left] = this->delay_calculator->calculate_tapping_point(
-                *node->left, *node->right, distance);
-            node->delay = delay_left;  // Store the delay at this merging point.
-            // Merge the child segments to form the current node's merging segment.
-            auto merged_segment = left_ms.merge_with(right_ms, extend_left);
-            merging_segments[node->name] = merged_segment;
-            // Update the capacitance of the current node by summing child capacitances and wire
-            // capacitance.
-            double wire_cap = this->delay_calculator->calculate_wire_capacitance(distance);
-            node->capacitance = node->left->capacitance + node->right->capacitance + wire_cap;
-            return merged_segment;
-        };
-        compute_segment(root);  // Start the recursive computation from the root.
+        std::unordered_map<const TreeNode*, ManhattanArc<Interval<int>, Interval<int>>>
+            merging_segments;
+        _compute_merging_segment(root, merging_segments);
         return merging_segments;
+    }
+
+    /**
+     * @brief Recursive helper for embed_tree (avoids std::function overhead).
+     */
+    void DMEAlgorithm::_embed_node(
+        const std::shared_ptr<TreeNode>& node,
+        const ManhattanArc<Interval<int>, Interval<int>>* parent_segment,
+        const std::unordered_map<const TreeNode*, ManhattanArc<Interval<int>, Interval<int>>>&
+            merging_segments) {
+        if (!node) return;
+        auto it = merging_segments.find(node.get());
+        if (it == merging_segments.end()) {
+            throw std::runtime_error("Merging segment not found for node: " + node->name);
+        }
+        const auto& node_segment = it->second;
+        if (parent_segment == nullptr) {
+            node->position = node_segment.get_upper_corner();
+        } else {
+            node->position = node_segment.nearest_point_to(node->parent->position);
+            if (node->parent) {
+                node->wire_length = node->position.min_dist_with(node->parent->position);
+            }
+        }
+        _embed_node(node->left, &node_segment, merging_segments);
+        _embed_node(node->right, &node_segment, merging_segments);
     }
 
     /**
@@ -230,40 +250,26 @@ namespace recti {
      */
     std::shared_ptr<TreeNode> DMEAlgorithm::embed_tree(
         const std::shared_ptr<TreeNode>& merging_tree,
-        const std::map<std::string, ManhattanArc<Interval<int>, Interval<int>>>& merging_segments) {
-        // Define a recursive lambda function for embedding nodes.
-        std::function<void(const std::shared_ptr<TreeNode>&,
-                           const ManhattanArc<Interval<int>, Interval<int>>*)>
-            embed_node;
-        embed_node = [&](const std::shared_ptr<TreeNode>& node,
-                         const ManhattanArc<Interval<int>, Interval<int>>* parent_segment) {
-            if (!node) return;
-            // Retrieve the merging segment for the current node.
-            auto it = merging_segments.find(node->name);
-            if (it == merging_segments.end()) {
-                throw std::runtime_error("Merging segment not found for node: " + node->name);
-            }
-            const auto& node_segment = it->second;
-            if (!parent_segment) {
-                // For the root node, choose the upper corner of its merging segment as its
-                // position.
-                node->position = node_segment.get_upper_corner();
-            } else {
-                // For internal nodes, choose the point on its merging segment nearest to its
-                // parent's position.
-                node->position = node_segment.nearest_point_to(node->parent->position);
-                // Calculate the wire length to the parent.
-                if (node->parent) {
-                    node->wire_length = node->position.min_dist_with(node->parent->position);
-                }
-            }
-            // Recursively embed the children nodes.
-            embed_node(node->left, &node_segment);
-            embed_node(node->right, &node_segment);
-        };
-        embed_node(merging_tree,
-                   nullptr);  // Start embedding from the root with no parent segment.
+        const std::unordered_map<const TreeNode*, ManhattanArc<Interval<int>, Interval<int>>>&
+            merging_segments) {
+        _embed_node(merging_tree, nullptr, merging_segments);
         return merging_tree;
+    }
+
+    /**
+     * @brief Recursive helper for compute_tree_parameters (avoids std::function overhead).
+     */
+    void DMEAlgorithm::_compute_delays(const std::shared_ptr<TreeNode>& node, double parent_delay) {
+        if (!node) return;
+        if (node->parent) {
+            double wire_delay = this->delay_calculator->calculate_wire_delay(node->wire_length,
+                                                                             node->capacitance);
+            node->delay = parent_delay + wire_delay;
+        } else {
+            node->delay = 0.0;
+        }
+        _compute_delays(node->left, node->delay);
+        _compute_delays(node->right, node->delay);
     }
 
     /**
@@ -275,25 +281,30 @@ namespace recti {
      * @param root The root of the embedded clock tree.
      */
     void DMEAlgorithm::compute_tree_parameters(const std::shared_ptr<TreeNode>& root) {
-        // Define a recursive lambda function for computing delays.
-        std::function<void(const std::shared_ptr<TreeNode>&, double)> compute_delays;
-        compute_delays = [&](const std::shared_ptr<TreeNode>& node, double parent_delay) {
-            if (!node) return;
-            if (node->parent) {
-                // Calculate wire delay from parent to current node and accumulate total delay.
-                double wire_delay = this->delay_calculator->calculate_wire_delay(node->wire_length,
-                                                                                 node->capacitance);
-                node->delay = parent_delay + wire_delay;
-            } else {
-                // The root node has zero delay.
-                node->delay = 0.0;
-            }
-            // Recursively compute delays for children.
-            compute_delays(node->left, node->delay);
-            compute_delays(node->right, node->delay);
-        };
-        compute_delays(root,
-                       0.0);  // Start delay computation from the root with initial delay 0.
+        _compute_delays(root, 0.0);
+    }
+
+    /**
+     * @brief Collect sink delays recursively (avoids std::function overhead).
+     */
+    static void _collect_sink_delays(const std::shared_ptr<TreeNode>& node,
+                                     std::vector<double>& sink_delays) {
+        if (!node) return;
+        if (node->is_leaf()) {
+            sink_delays.emplace_back(node->delay);
+        }
+        _collect_sink_delays(node->left, sink_delays);
+        _collect_sink_delays(node->right, sink_delays);
+    }
+
+    /**
+     * @brief Sum wirelength recursively (avoids std::function overhead).
+     */
+    static void _sum_wirelength(const std::shared_ptr<TreeNode>& node, int& total) {
+        if (!node) return;
+        total += node->wire_length;
+        _sum_wirelength(node->left, total);
+        _sum_wirelength(node->right, total);
     }
 
     /**
@@ -307,26 +318,14 @@ namespace recti {
      * @throws std::runtime_error if no sink delays are collected (e.g., empty tree).
      */
     SkewAnalysis DMEAlgorithm::analyze_skew(const std::shared_ptr<TreeNode>& root) const {
-        std::vector<double> sink_delays;  // Stores delays to all sink nodes.
-        // Define a recursive lambda function to collect sink delays.
-        std::function<void(const std::shared_ptr<TreeNode>&)> collect_sink_delays;
-        collect_sink_delays = [&](const std::shared_ptr<TreeNode>& node) {
-            if (!node) return;
-            if (node->is_leaf()) {
-                sink_delays.emplace_back(node->delay);
-            }
-            collect_sink_delays(node->left);
-            collect_sink_delays(node->right);
-        };
-        collect_sink_delays(root);  // Start collecting sink delays from the root.
+        std::vector<double> sink_delays;
+        _collect_sink_delays(root, sink_delays);
         if (sink_delays.empty()) {
             throw std::runtime_error("No sink delays collected");
         }
-        // Calculate max, min, and skew from collected sink delays.
         double max_delay = *std::ranges::max_element(sink_delays);
         double min_delay = *std::ranges::min_element(sink_delays);
         double skew = max_delay - min_delay;
-        // Return the comprehensive skew analysis results.
         const auto& calculator = *this->delay_calculator;
         return {.max_delay = max_delay,
                 .min_delay = min_delay,
@@ -346,52 +345,42 @@ namespace recti {
      */
     int DMEAlgorithm::total_wirelength(const std::shared_ptr<TreeNode>& root) const {
         int total = 0;
-        // Define a recursive lambda function to sum wire lengths.
-        std::function<void(const std::shared_ptr<TreeNode>&)> sum_wirelength;
-        sum_wirelength = [&](const std::shared_ptr<TreeNode>& node) {
-            if (!node) return;
-            total += node->wire_length;
-            sum_wirelength(node->left);
-            sum_wirelength(node->right);
-        };
-        sum_wirelength(root);  // Start summing from the root.
+        _sum_wirelength(root, total);
         return total;
     }
 
     // get_tree_statistics implementation
     TreeStatistics get_tree_statistics(const std::shared_ptr<TreeNode>& root) {
         TreeStatistics stats;
-        std::function<void(const std::shared_ptr<TreeNode>&, const std::shared_ptr<TreeNode>&)>
-            traverse;
 
-        traverse = [&](const std::shared_ptr<TreeNode>& node,
-                       const std::shared_ptr<TreeNode>& parent) {
-            if (!node) return;
-
-            stats.nodes.push_back({.name = node->name,
-                                   .position = {node->position.xcoord(), node->position.ycoord()},
-                                   .type = node->is_leaf() ? "sink" : "internal",
-                                   .delay = node->delay,
-                                   .capacitance = node->capacitance});
-
-            if (node->is_leaf()) {
-                stats.sinks.emplace_back(node->name);
+        struct TraverseHelper {
+            TreeStatistics& stats;
+            void operator()(const std::shared_ptr<TreeNode>& node,
+                            const std::shared_ptr<TreeNode>& parent) {
+                if (!node) return;
+                stats.nodes.push_back({.name = node->name,
+                                       .position = {node->position.xcoord(),
+                                                    node->position.ycoord()},
+                                       .type = node->is_leaf() ? "sink" : "internal",
+                                       .delay = node->delay,
+                                       .capacitance = node->capacitance});
+                if (node->is_leaf()) {
+                    stats.sinks.emplace_back(node->name);
+                }
+                if (parent) {
+                    stats.wires.push_back(
+                        {.from_node = parent->name,
+                         .to_node = node->name,
+                         .length = node->wire_length,
+                         .from_pos = {parent->position.xcoord(), parent->position.ycoord()},
+                         .to_pos = {node->position.xcoord(), node->position.ycoord()}});
+                }
+                (*this)(node->left, node);
+                (*this)(node->right, node);
             }
-
-            if (parent) {
-                stats.wires.push_back(
-                    {.from_node = parent->name,
-                     .to_node = node->name,
-                     .length = node->wire_length,
-                     .from_pos = {parent->position.xcoord(), parent->position.ycoord()},
-                     .to_pos = {node->position.xcoord(), node->position.ycoord()}});
-            }
-
-            traverse(node->left, node);
-            traverse(node->right, node);
         };
 
-        traverse(root, nullptr);
+        TraverseHelper{stats}(root, nullptr);
 
         stats.total_nodes = static_cast<int>(stats.nodes.size());
         stats.total_sinks = static_cast<int>(stats.sinks.size());

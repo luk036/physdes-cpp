@@ -51,10 +51,9 @@ namespace recti {
         return {v_min, vertical};
     }
 
-    template <typename T>
-    auto rpolygon_cut_convex_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
-                                   const std::function<bool(T)>& cmp, RDllist& rdll)
-        -> std::vector<std::vector<size_t>> {
+    template <typename T, typename Cmp>
+    auto rpolygon_cut_convex_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst, const Cmp& cmp,
+                                   RDllist& rdll) -> std::vector<std::vector<size_t>> {
         auto* v2 = v1->next;
         auto* v3 = v2->next;
 
@@ -65,8 +64,7 @@ namespace recti {
             return {{v1->data, v2->data, v3->data}};
         }
 
-        auto find_concave_point = [&lst](Dllink<size_t>* vstart,
-                                         const std::function<bool(T)>& cmp2) -> Dllink<size_t>* {
+        auto find_concave_point = [&lst, &cmp](Dllink<size_t>* vstart) -> Dllink<size_t>* {
             auto* vcurr = vstart;
             do {
                 auto* vnext = vcurr->next;
@@ -81,7 +79,7 @@ namespace recti {
                 auto v2_vec = p2 - p1;
 
                 if (v1_vec.x() * v2_vec.x() < 0 || v1_vec.y() * v2_vec.y() < 0) {
-                    if (cmp2(area_diff)) {
+                    if (cmp(area_diff)) {
                         return vcurr;
                     }
                 }
@@ -91,7 +89,7 @@ namespace recti {
             return nullptr;
         };
 
-        auto vcurr = find_concave_point(v1, cmp);
+        auto vcurr = find_concave_point(v1);
 
         if (vcurr == nullptr) {
             std::vector<size_t> indices;
@@ -136,18 +134,16 @@ namespace recti {
         return L1;
     }
 
-    template <typename T>
-    auto rpolygon_cut_explicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
-                                     const std::function<bool(T)>& cmp, RDllist& rdll)
-        -> std::vector<std::vector<size_t>> {
+    template <typename T, typename Cmp>
+    auto rpolygon_cut_explicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst, const Cmp& cmp,
+                                     RDllist& rdll) -> std::vector<std::vector<size_t>> {
         auto* const v2 = v1->next;
 
         if (v2->next == v1) {
             return {{v1->data, v2->data}};
         }
 
-        auto find_explicit_concave_point =
-            [&lst](Dllink<size_t>* vstart, const std::function<bool(T)>& cmp2) -> Dllink<size_t>* {
+        auto find_explicit_concave_point = [&lst, &cmp](Dllink<size_t>* vstart) -> Dllink<size_t>* {
             auto* vcurr = vstart;
             do {
                 auto* vnext = vcurr->next;
@@ -158,7 +154,7 @@ namespace recti {
                 auto& p2 = lst[vnext->data];
                 auto area_diff = (p1.ycoord() - p0.ycoord()) * (p2.xcoord() - p1.xcoord());
 
-                if (cmp2(area_diff)) {
+                if (cmp(area_diff)) {
                     return vcurr;
                 }
                 vcurr = vnext;
@@ -167,7 +163,7 @@ namespace recti {
             return nullptr;
         };
 
-        auto vcurr = find_explicit_concave_point(v1, cmp);
+        auto vcurr = find_explicit_concave_point(v1);
 
         if (vcurr == nullptr) {
             std::vector<size_t> indices;
@@ -213,18 +209,16 @@ namespace recti {
         return L1;
     }
 
-    template <typename T>
-    auto rpolygon_cut_implicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst,
-                                     const std::function<bool(T)>& cmp, RDllist& rdll)
-        -> std::vector<std::vector<size_t>> {
+    template <typename T, typename Cmp>
+    auto rpolygon_cut_implicit_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst, const Cmp& cmp,
+                                     RDllist& rdll) -> std::vector<std::vector<size_t>> {
         auto* v2 = v1->next;
 
         if (v2->next == v1) {
             return {{v1->data, v2->data}};
         }
 
-        auto find_implicit_concave_point =
-            [&lst](Dllink<size_t>* vstart, const std::function<bool(T)>& cmp2) -> Dllink<size_t>* {
+        auto find_implicit_concave_point = [&lst, &cmp](Dllink<size_t>* vstart) -> Dllink<size_t>* {
             auto* vcurr = vstart;
             do {
                 auto* vnext = vcurr->next;
@@ -233,7 +227,7 @@ namespace recti {
                 auto p2 = lst[vnext->data];
                 auto area_diff = -(p2.ycoord() - p1.ycoord()) * (p2.xcoord() - p1.xcoord());
 
-                if (cmp2(area_diff)) {
+                if (cmp(area_diff)) {
                     return vcurr;
                 }
                 vcurr = vnext;
@@ -242,7 +236,7 @@ namespace recti {
             return nullptr;
         };
 
-        auto vcurr = find_implicit_concave_point(v1, cmp);
+        auto vcurr = find_implicit_concave_point(v1);
 
         if (vcurr == nullptr) {
             std::vector<size_t> indices;
@@ -415,14 +409,17 @@ namespace recti {
         return res;
     }
 
-    template std::vector<std::vector<size_t>> rpolygon_cut_convex_recur<int>(
-        Dllink<size_t>*, std::vector<Point<int>>&, const std::function<bool(int)>&, RDllist&);
+    template std::vector<std::vector<size_t>> rpolygon_cut_convex_recur<int,
+        std::function<bool(int)>>(Dllink<size_t>*, std::vector<Point<int>>&,
+                                  const std::function<bool(int)>&, RDllist&);
 
-    template std::vector<std::vector<size_t>> rpolygon_cut_explicit_recur<int>(
-        Dllink<size_t>*, std::vector<Point<int>>&, const std::function<bool(int)>&, RDllist&);
+    template std::vector<std::vector<size_t>> rpolygon_cut_explicit_recur<int,
+        std::function<bool(int)>>(Dllink<size_t>*, std::vector<Point<int>>&,
+                                  const std::function<bool(int)>&, RDllist&);
 
-    template std::vector<std::vector<size_t>> rpolygon_cut_implicit_recur<int>(
-        Dllink<size_t>*, std::vector<Point<int>>&, const std::function<bool(int)>&, RDllist&);
+    template std::vector<std::vector<size_t>> rpolygon_cut_implicit_recur<int,
+        std::function<bool(int)>>(Dllink<size_t>*, std::vector<Point<int>>&,
+                                  const std::function<bool(int)>&, RDllist&);
 
     template auto rpolygon_cut_convex<int>(std::span<const Point<int>>, bool)
         -> std::vector<std::vector<Point<int>>>;

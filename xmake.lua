@@ -11,6 +11,16 @@ if is_mode("coverage") then
 	add_cxflags("-ftest-coverage", "-fprofile-arcs", { force = true })
 end
 
+if is_mode("release") then
+    if is_plat("windows") then
+        add_cxflags("/GL", { force = true })
+        add_ldflags("/LTCG", { force = true })
+    elseif is_plat("linux") then
+        add_cxflags("-flto", { force = true })
+        add_ldflags("-flto", { force = true })
+    end
+end
+
 if is_plat("linux") then
 	set_warnings("all", "error")
 	-- add_cxflags("-Wconversion", {force = true})
@@ -21,7 +31,7 @@ if is_plat("linux") then
         add_sysincludedirs(termux_prefix .. "/include", {public = true})
     end
 elseif is_plat("windows") then
-	add_cxflags("/EHsc /W4 /WX /wd4459 /utf-8", { force = true })
+	add_cxflags("/EHsc /W4 /WX /wd4459", { force = true })
 	add_ldflags("/FORCE:MULTIPLE", { force = true })
 end
 

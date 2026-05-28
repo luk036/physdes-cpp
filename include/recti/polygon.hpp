@@ -141,22 +141,21 @@ namespace recti {
          * @return true if the polygon is rectilinear, false otherwise.
          */
         constexpr auto is_rectilinear() const -> bool {
-            // Create a pointset with all vertices relative to origin
-            std::vector<Vector2<T>> pointset;
-            pointset.reserve(_vecs.size() + 1);
-            pointset.emplace_back(0, 0);
-            pointset.insert(pointset.end(), _vecs.begin(), _vecs.end());
+            if (_vecs.empty()) return true;
 
-            // Check all consecutive edges
-            for (size_t i = 0; i < pointset.size(); ++i) {
-                size_t next = (i + 1) % pointset.size();
-                const auto& v1 = pointset[i];
-                const auto& v2 = pointset[next];
+            // Check from origin (0,0) to first vec
+            if (_vecs[0].x() != 0 && _vecs[0].y() != 0) return false;
 
-                if (v1.x() != v2.x() && v1.y() != v2.y()) {
+            // Check consecutive vecs directly (no vector allocation)
+            for (size_t i = 0; i < _vecs.size() - 1; ++i) {
+                if (_vecs[i].x() != _vecs[i + 1].x()
+                    && _vecs[i].y() != _vecs[i + 1].y()) {
                     return false;
                 }
             }
+
+            // Check closing: last vec back to origin (0,0)
+            if (_vecs.back().x() != 0 && _vecs.back().y() != 0) return false;
 
             return true;
         }
@@ -170,29 +169,23 @@ namespace recti {
          */
         constexpr auto is_convex() const -> bool {
             if (_vecs.size() < 2) return false;
-            if (_vecs.size() == 2) return true;  // Triangle is convex
+            if (_vecs.size() == 2) return true;
 
-            // Create a pointset with all vertices relative to origin
-            std::vector<Vector2<T>> pointset;
-            pointset.reserve(_vecs.size() + 1);
-            pointset.emplace_back(0, 0);
-            pointset.insert(pointset.end(), _vecs.begin(), _vecs.end());
+            // pointset[i] maps to: _vecs[i-1] for i>0, or (0,0) for i=0
+            // cross_product_sign uses _vecs[N-2] and _vecs[0]
+            T cross_product_sign
+                = -_vecs[_vecs.size() - 2].x() * _vecs[0].y()
+                  + _vecs[_vecs.size() - 2].y() * _vecs[0].x();
 
-            // Determine initial cross product sign
-            const auto& pv0 = pointset[pointset.size() - 2];
-            const auto& pv2 = pointset[1];
-            T cross_product_sign = -pv0.x() * pv2.y() + pv0.y() * pv2.x();
+            for (size_t i = 0; i < _vecs.size() - 1; ++i) {
+                auto v0 = (i == 0) ? Vector2<T>(0, 0) : _vecs[i - 1];
+                const auto& v1 = _vecs[i];
+                const auto& v2 = _vecs[i + 1];
 
-            // Check all consecutive edges
-            for (size_t i = 1; i < pointset.size() - 1; ++i) {
-                const auto& v0 = pointset[i - 1];
-                const auto& v1 = pointset[i];
-                const auto& v2 = pointset[i + 1];
+                T current_cross = (v1.x() - v0.x()) * (v2.y() - v1.y())
+                                - (v1.y() - v0.y()) * (v2.x() - v1.x());
 
-                T current_cross_product
-                    = (v1.x() - v0.x()) * (v2.y() - v1.y()) - (v1.y() - v0.y()) * (v2.x() - v1.x());
-
-                if ((cross_product_sign > 0) != (current_cross_product > 0)) {
+                if ((cross_product_sign > 0) != (current_cross > 0)) {
                     return false;
                 }
             }
