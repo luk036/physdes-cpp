@@ -148,8 +148,7 @@ namespace recti {
 
             // Check consecutive vecs directly (no vector allocation)
             for (size_t i = 0; i < _vecs.size() - 1; ++i) {
-                if (_vecs[i].x() != _vecs[i + 1].x()
-                    && _vecs[i].y() != _vecs[i + 1].y()) {
+                if (_vecs[i].x() != _vecs[i + 1].x() && _vecs[i].y() != _vecs[i + 1].y()) {
                     return false;
                 }
             }
@@ -173,17 +172,16 @@ namespace recti {
 
             // pointset[i] maps to: _vecs[i-1] for i>0, or (0,0) for i=0
             // cross_product_sign uses _vecs[N-2] and _vecs[0]
-            T cross_product_sign
-                = -_vecs[_vecs.size() - 2].x() * _vecs[0].y()
-                  + _vecs[_vecs.size() - 2].y() * _vecs[0].x();
+            T cross_product_sign = -_vecs[_vecs.size() - 2].x() * _vecs[0].y()
+                                   + _vecs[_vecs.size() - 2].y() * _vecs[0].x();
 
             for (size_t i = 0; i < _vecs.size() - 1; ++i) {
                 auto v0 = (i == 0) ? Vector2<T>(0, 0) : _vecs[i - 1];
                 const auto& v1 = _vecs[i];
                 const auto& v2 = _vecs[i + 1];
 
-                T current_cross = (v1.x() - v0.x()) * (v2.y() - v1.y())
-                                - (v1.y() - v0.y()) * (v2.x() - v1.x());
+                T current_cross
+                    = (v1.x() - v0.x()) * (v2.y() - v1.y()) - (v1.y() - v0.y()) * (v2.x() - v1.x());
 
                 if ((cross_product_sign > 0) != (current_cross > 0)) {
                     return false;

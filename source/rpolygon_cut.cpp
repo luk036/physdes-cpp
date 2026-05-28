@@ -409,17 +409,23 @@ namespace recti {
         return res;
     }
 
-    template std::vector<std::vector<size_t>> rpolygon_cut_convex_recur<int,
-        std::function<bool(int)>>(Dllink<size_t>*, std::vector<Point<int>>&,
-                                  const std::function<bool(int)>&, RDllist&);
+    template std::vector<std::vector<size_t>>
+    rpolygon_cut_convex_recur<int, std::function<bool(int)>>(Dllink<size_t>*,
+                                                             std::vector<Point<int>>&,
+                                                             const std::function<bool(int)>&,
+                                                             RDllist&);
 
-    template std::vector<std::vector<size_t>> rpolygon_cut_explicit_recur<int,
-        std::function<bool(int)>>(Dllink<size_t>*, std::vector<Point<int>>&,
-                                  const std::function<bool(int)>&, RDllist&);
+    template std::vector<std::vector<size_t>>
+    rpolygon_cut_explicit_recur<int, std::function<bool(int)>>(Dllink<size_t>*,
+                                                               std::vector<Point<int>>&,
+                                                               const std::function<bool(int)>&,
+                                                               RDllist&);
 
-    template std::vector<std::vector<size_t>> rpolygon_cut_implicit_recur<int,
-        std::function<bool(int)>>(Dllink<size_t>*, std::vector<Point<int>>&,
-                                  const std::function<bool(int)>&, RDllist&);
+    template std::vector<std::vector<size_t>>
+    rpolygon_cut_implicit_recur<int, std::function<bool(int)>>(Dllink<size_t>*,
+                                                               std::vector<Point<int>>&,
+                                                               const std::function<bool(int)>&,
+                                                               RDllist&);
 
     template auto rpolygon_cut_convex<int>(std::span<const Point<int>>, bool)
         -> std::vector<std::vector<Point<int>>>;

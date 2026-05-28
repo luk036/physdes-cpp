@@ -406,7 +406,7 @@ namespace recti {
          * children.
          */
         std::unordered_map<const TreeNode*, ManhattanArc<Interval<int>, Interval<int>>>
-            compute_merging_segments(const std::shared_ptr<TreeNode>& root);
+        compute_merging_segments(const std::shared_ptr<TreeNode>& root);
 
         /**
          * @brief Performs top-down embedding to determine the physical locations of internal nodes.

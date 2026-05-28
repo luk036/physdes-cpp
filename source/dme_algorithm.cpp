@@ -159,8 +159,7 @@ namespace recti {
     /**
      * @brief Recursive helper for compute_merging_segments (avoids std::function overhead).
      */
-    ManhattanArc<Interval<int>, Interval<int>>
-    DMEAlgorithm::_compute_merging_segment(
+    ManhattanArc<Interval<int>, Interval<int>> DMEAlgorithm::_compute_merging_segment(
         const std::shared_ptr<TreeNode>& node,
         std::unordered_map<const TreeNode*, ManhattanArc<Interval<int>, Interval<int>>>&
             merging_segments) {
@@ -178,8 +177,8 @@ namespace recti {
         auto left_ms = _compute_merging_segment(node->left, merging_segments);
         auto right_ms = _compute_merging_segment(node->right, merging_segments);
         int distance = left_ms.min_dist_with(right_ms);
-        auto [extend_left, delay_left] = this->delay_calculator->calculate_tapping_point(
-            *node->left, *node->right, distance);
+        auto [extend_left, delay_left]
+            = this->delay_calculator->calculate_tapping_point(*node->left, *node->right, distance);
         node->delay = delay_left;
         auto merged_segment = left_ms.merge_with(right_ms, extend_left);
         merging_segments[node.get()] = merged_segment;
@@ -358,12 +357,12 @@ namespace recti {
             void operator()(const std::shared_ptr<TreeNode>& node,
                             const std::shared_ptr<TreeNode>& parent) {
                 if (!node) return;
-                stats.nodes.push_back({.name = node->name,
-                                       .position = {node->position.xcoord(),
-                                                    node->position.ycoord()},
-                                       .type = node->is_leaf() ? "sink" : "internal",
-                                       .delay = node->delay,
-                                       .capacitance = node->capacitance});
+                stats.nodes.push_back(
+                    {.name = node->name,
+                     .position = {node->position.xcoord(), node->position.ycoord()},
+                     .type = node->is_leaf() ? "sink" : "internal",
+                     .delay = node->delay,
+                     .capacitance = node->capacitance});
                 if (node->is_leaf()) {
                     stats.sinks.emplace_back(node->name);
                 }
