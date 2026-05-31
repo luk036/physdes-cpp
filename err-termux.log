@@ -1,0 +1,49 @@
+u0_a379 in 🌐 localhost in physdes-cpp on  master via △ v4.3.3 via 🌙 v5.1.5 via 🐍 v3.13.13 via △ v3.0.9
+❯ xmake -j4
+checking for platform ... linux (arm64)
+[  8%]: <benchmark_recti> cache compiling.release bench/bench_main.cpp
+[  8%]: <Recti> cache compiling.release source/logger.cpp
+[  8%]: <Recti> cache compiling.release source/global_router.cpp
+[  8%]: <Recti> cache compiling.release source/recti.cpp
+[ 10%]: <Recti> cache compiling.release source/rpolygon_cut.cpp
+[ 12%]: <Recti> cache compiling.release source/rpolygon_hull.cpp
+[ 14%]: <Recti> cache compiling.release source/dme_algorithm.cpp
+[ 16%]: <Recti> cache compiling.release source/visualize_clock_tree.cpp
+[ 18%]: <Recti> cache compiling.release source/polygon.cpp
+[ 20%]: <Recti> cache compiling.release source/rpolygon.cpp
+[ 22%]: <test_recti> cache compiling.release test/source/main.cpp
+[ 24%]: <test_recti> cache compiling.release test/source/test_clk_tree_vis.cpp
+[ 26%]: <test_recti> cache compiling.release test/source/test_clk_tree_vis_random.cpp
+[ 28%]: <test_recti> cache compiling.release test/source/test_dme_algorithm.cpp
+[ 30%]: <test_recti> cache compiling.release test/source/test_dme_algorithm_stress.cpp
+[ 32%]: <test_recti> cache compiling.release test/source/test_generic.cpp
+[ 34%]: <test_recti> cache compiling.release test/source/test_global_router.cpp
+[ 36%]: <test_recti> cache compiling.release test/source/test_global_router3d.cpp
+[ 38%]: <test_recti> cache compiling.release test/source/test_global_router3d_with_keepouts.cpp
+[ 40%]: <test_recti> cache compiling.release test/source/test_global_router_stress.cpp
+[ 42%]: <test_recti> cache compiling.release test/source/test_global_router_with_keepouts.cpp
+[ 44%]: <test_recti> cache compiling.release test/source/test_interval.cpp
+[ 46%]: <test_recti> cache compiling.release test/source/test_merge.cpp
+[ 48%]: <test_recti> cache compiling.release test/source/test_point.cpp
+[ 50%]: <test_recti> cache compiling.release test/source/test_polygon.cpp
+[ 52%]: <test_recti> cache compiling.release test/source/test_rdllist.cpp
+[ 54%]: <test_recti> cache compiling.release test/source/test_recti.cpp
+[ 56%]: <test_recti> cache compiling.release test/source/test_recti3d.cpp
+[ 58%]: <test_recti> cache compiling.release test/source/test_vector2.cpp
+[ 60%]: <test_recti> cache compiling.release test/source/test_rpolygon.cpp
+[ 62%]: <test_recti> cache compiling.release test/source/test_rpolygon_cut.cpp
+[ 64%]: <test_recti> cache compiling.release test/source/test_rpolygon_hull.cpp
+[ 66%]: <test_recti> cache compiling.release test/source/test_rpolygon_stress.cpp
+[ 68%]: <test_recti> cache compiling.release test/source/test_to_polygon.cpp
+[ 70%]: <test_spdlogger_simple> cache compiling.release test_spdlogger_simple.cpp
+[ 72%]: <Recti> archiving.release libRecti.a
+[ 76%]: <benchmark_recti> linking.release benchmark_recti
+[ 84%]: <test_recti> linking.release test_recti
+[ 86%]: <test_spdlogger_simple> linking.release test_spdlogger_simple
+error: ld.lld: error: undefined symbol: fmt::v11::vformat(fmt::v11::basic_string_view<char>, fmt::v11::basic_format_args<fmt::v11::context>)
+>>> referenced by ld-temp.o
+>>>               build/linux/arm64/release/test_recti.lto.o:(recti::DMEAlgorithm::build_merging_tree(std::__ndk1::vector<std::__ndk1::shared_ptr<recti::TreeNode>, std::__ndk1::allocator<std::__ndk1::shared_ptr<recti::TreeNode>>> const&, bool))
+>>> did you mean: fmt::v12::vformat(fmt::v12::basic_string_view<char>, fmt::v12::basic_format_args<fmt::v12::context>)
+>>> defined in: /data/data/com.termux/files/home/.xmake/packages/f/fmt/12.1.0/a82c8b35627c4aa98f43e32b49492a57/lib/libfmt.a(format.cc.o)
+g++: error: linker command failed with exit code 1 (use -v to see invocation)
+

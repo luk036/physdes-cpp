@@ -1,11 +1,11 @@
 set_languages("c++20")
 
 add_rules("mode.debug", "mode.release", "mode.coverage")
-add_requires("fmt", { alias = "fmt" })
+add_requires("fmt >= 12.1.0", { alias = "fmt" })
 add_requires("doctest", { alias = "doctest" })
 -- add_requires("microsoft-gsl", { alias = "ms-gsl" })
 add_requires("benchmark")
-add_requires("spdlog", { alias = "spdlog" })
+add_requires("spdlog v1.17.0", { alias = "spdlog", configs = {fmt_external = true} })
 
 if is_mode("coverage") then
 	add_cxflags("-ftest-coverage", "-fprofile-arcs", { force = true })
