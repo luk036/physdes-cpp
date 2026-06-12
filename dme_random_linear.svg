@@ -1,0 +1,149 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+<style>
+  .node-label { font: 10px sans-serif; fill: #333; }
+  .delay-label { font: 8px sans-serif; fill: #666; }
+  .wire-label { font: 9px sans-serif; fill: #444; }
+  .analysis-label { font: 12px sans-serif; fill: #333; }
+</style>
+<rect width="100%" height="100%" fill="white"/>
+<g class="clock-tree">
+<line x1="268.682" y1="271.405" x2="176.089" y2="252.342" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="222.386" y="256.874" class="wire-label" text-anchor="middle">41</text>
+<line x1="176.089" y1="252.342" x2="148.856" y2="151.58" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="162.473" y="196.961" class="wire-label" text-anchor="middle">47</text>
+<line x1="148.856" y1="151.58" x2="91.6667" y2="91.6667" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="120.261" y="116.623" class="wire-label" text-anchor="middle">43</text>
+<line x1="148.856" y1="151.58" x2="186.983" y2="151.58" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="167.919" y="146.58" class="wire-label" text-anchor="middle">14</text>
+<line x1="186.983" y1="151.58" x2="110.73" y2="151.58" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="148.856" y="146.58" class="wire-label" text-anchor="middle">28</text>
+<line x1="186.983" y1="151.58" x2="260.512" y2="151.58" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="223.747" y="146.58" class="wire-label" text-anchor="middle">27</text>
+<line x1="176.089" y1="252.342" x2="271.405" y2="252.342" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="223.747" y="247.342" class="wire-label" text-anchor="middle">35</text>
+<line x1="271.405" y1="252.342" x2="265.959" y2="108.007" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="268.682" y="175.174" class="wire-label" text-anchor="middle">55</text>
+<line x1="271.405" y1="252.342" x2="328.595" y2="252.342" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="300" y="247.342" class="wire-label" text-anchor="middle">21</text>
+<line x1="328.595" y1="252.342" x2="328.595" y2="344.935" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="328.595" y="293.638" class="wire-label" text-anchor="middle">34</text>
+<line x1="328.595" y1="252.342" x2="415.741" y2="246.895" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="372.168" y="244.619" class="wire-label" text-anchor="middle">34</text>
+<line x1="268.682" y1="271.405" x2="268.682" y2="415.741" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="268.682" y="338.573" class="wire-label" text-anchor="middle">53</text>
+<line x1="268.682" y1="415.741" x2="159.749" y2="415.741" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="214.216" y="410.741" class="wire-label" text-anchor="middle">40</text>
+<line x1="159.749" y1="415.741" x2="129.793" y2="344.935" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="144.771" y="375.338" class="wire-label" text-anchor="middle">37</text>
+<line x1="159.749" y1="415.741" x2="159.749" y2="462.037" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="159.749" y="433.889" class="wire-label" text-anchor="middle">17</text>
+<line x1="159.749" y1="462.037" x2="146.133" y2="500.163" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="152.941" y="476.1" class="wire-label" text-anchor="middle">19</text>
+<line x1="159.749" y1="462.037" x2="211.492" y2="462.037" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="185.621" y="457.037" class="wire-label" text-anchor="middle">19</text>
+<line x1="268.682" y1="415.741" x2="374.891" y2="442.974" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="321.786" y="424.357" class="wire-label" text-anchor="middle">49</text>
+<line x1="374.891" y1="442.974" x2="350.381" y2="391.231" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="362.636" y="412.102" class="wire-label" text-anchor="middle">28</text>
+<line x1="374.891" y1="442.974" x2="383.061" y2="442.974" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="378.976" y="437.974" class="wire-label" text-anchor="middle">3</text>
+<line x1="383.061" y1="442.974" x2="383.061" y2="508.333" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="383.061" y="470.654" class="wire-label" text-anchor="middle">24</text>
+<line x1="383.061" y1="442.974" x2="407.571" y2="402.124" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="395.316" y="417.549" class="wire-label" text-anchor="middle">24</text>
+<circle cx="268.682" cy="271.405" r="10" fill="#F44336" stroke="#333" stroke-width="1"/>
+<text x="268.682" y="256.405" class="node-label" text-anchor="middle">n10</text>
+<text x="268.682" y="293.405" class="delay-label" text-anchor="middle">d:0.0</text>
+<circle cx="176.089" cy="252.342" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="176.089" y="241.342" class="node-label" text-anchor="middle">n4</text>
+<text x="176.089" y="270.342" class="delay-label" text-anchor="middle">d:20.5</text>
+<circle cx="148.856" cy="151.58" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="148.856" y="140.58" class="node-label" text-anchor="middle">n1</text>
+<text x="148.856" y="169.58" class="delay-label" text-anchor="middle">d:44.0</text>
+<circle cx="91.6667" cy="91.6667" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="91.6667" y="78.6667" class="node-label" text-anchor="middle">r10</text>
+<text x="91.6667" y="111.667" class="delay-label" text-anchor="middle">d:65.5</text>
+<text x="91.6667" y="121.667" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="186.983" cy="151.58" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="186.983" y="140.58" class="node-label" text-anchor="middle">n0</text>
+<text x="186.983" y="169.58" class="delay-label" text-anchor="middle">d:51.0</text>
+<circle cx="110.73" cy="151.58" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="110.73" y="138.58" class="node-label" text-anchor="middle">r5</text>
+<text x="110.73" y="171.58" class="delay-label" text-anchor="middle">d:65.0</text>
+<text x="110.73" y="181.58" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="260.512" cy="151.58" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="260.512" y="138.58" class="node-label" text-anchor="middle">r4</text>
+<text x="260.512" y="171.58" class="delay-label" text-anchor="middle">d:64.5</text>
+<text x="260.512" y="181.58" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="271.405" cy="252.342" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="271.405" y="241.342" class="node-label" text-anchor="middle">n3</text>
+<text x="271.405" y="270.342" class="delay-label" text-anchor="middle">d:38.0</text>
+<circle cx="265.959" cy="108.007" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="265.959" y="95.0065" class="node-label" text-anchor="middle">r6</text>
+<text x="265.959" y="128.007" class="delay-label" text-anchor="middle">d:65.5</text>
+<text x="265.959" y="138.007" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="328.595" cy="252.342" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="328.595" y="241.342" class="node-label" text-anchor="middle">n2</text>
+<text x="328.595" y="270.342" class="delay-label" text-anchor="middle">d:48.5</text>
+<circle cx="328.595" cy="344.935" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="328.595" y="331.935" class="node-label" text-anchor="middle">r3</text>
+<text x="328.595" y="364.935" class="delay-label" text-anchor="middle">d:65.5</text>
+<text x="328.595" y="374.935" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="415.741" cy="246.895" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="415.741" y="233.895" class="node-label" text-anchor="middle">r0</text>
+<text x="415.741" y="266.895" class="delay-label" text-anchor="middle">d:65.5</text>
+<text x="415.741" y="276.895" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="268.682" cy="415.741" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="268.682" y="404.741" class="node-label" text-anchor="middle">n9</text>
+<text x="268.682" y="433.741" class="delay-label" text-anchor="middle">d:26.5</text>
+<circle cx="159.749" cy="415.741" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="159.749" y="404.741" class="node-label" text-anchor="middle">n6</text>
+<text x="159.749" y="433.741" class="delay-label" text-anchor="middle">d:46.5</text>
+<circle cx="129.793" cy="344.935" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="129.793" y="331.935" class="node-label" text-anchor="middle">r8</text>
+<text x="129.793" y="364.935" class="delay-label" text-anchor="middle">d:65.0</text>
+<text x="129.793" y="374.935" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="159.749" cy="462.037" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="159.749" y="451.037" class="node-label" text-anchor="middle">n5</text>
+<text x="159.749" y="480.037" class="delay-label" text-anchor="middle">d:55.0</text>
+<circle cx="146.133" cy="500.163" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="146.133" y="487.163" class="node-label" text-anchor="middle">r1</text>
+<text x="146.133" y="520.163" class="delay-label" text-anchor="middle">d:64.5</text>
+<text x="146.133" y="530.163" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="211.492" cy="462.037" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="211.492" y="449.037" class="node-label" text-anchor="middle">r7</text>
+<text x="211.492" y="482.037" class="delay-label" text-anchor="middle">d:64.5</text>
+<text x="211.492" y="492.037" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="374.891" cy="442.974" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="374.891" y="431.974" class="node-label" text-anchor="middle">n8</text>
+<text x="374.891" y="460.974" class="delay-label" text-anchor="middle">d:51.0</text>
+<circle cx="350.381" cy="391.231" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="350.381" y="378.231" class="node-label" text-anchor="middle">r9</text>
+<text x="350.381" y="411.231" class="delay-label" text-anchor="middle">d:65.0</text>
+<text x="350.381" y="421.231" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="383.061" cy="442.974" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="383.061" y="431.974" class="node-label" text-anchor="middle">n7</text>
+<text x="383.061" y="460.974" class="delay-label" text-anchor="middle">d:52.5</text>
+<circle cx="383.061" cy="508.333" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="383.061" y="495.333" class="node-label" text-anchor="middle">r11</text>
+<text x="383.061" y="528.333" class="delay-label" text-anchor="middle">d:64.5</text>
+<text x="383.061" y="538.333" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="407.571" cy="402.124" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="407.571" y="389.124" class="node-label" text-anchor="middle">r2</text>
+<text x="407.571" y="422.124" class="delay-label" text-anchor="middle">d:64.5</text>
+<text x="407.571" y="432.124" class="delay-label" text-anchor="middle">c:1.0</text>
+<g class="analysis-info">
+<rect x="10" y="10" width="220" height="140" fill="white" stroke="#ccc" stroke-width="1" rx="5"/>
+<rect x="10" y="10" width="220" height="20" fill="#f0f0f0" stroke="#ccc" stroke-width="1" rx="5"/>
+<text x="20" y="25" font-family="sans-serif" font-size="12" font-weight="bold" fill="#333">Clock Tree Analysis</text>
+<text x="20" y="45" font-family="monospace" font-size="11" fill="#333">
+<tspan x="20" y="61">Delay Model: class recti::LinearDelayCalculator</tspan>
+<tspan x="20" y="77">Max Delay: 65.500000</tspan>
+<tspan x="20" y="93">Min Delay: 64.500000</tspan>
+<tspan x="20" y="109">Skew: 1.000000</tspan>
+<tspan x="20" y="125">Total Wirelength: 692</tspan>
+<tspan x="20" y="141">Sinks: 12</tspan>
+</text>
+</g>
+</g>
+</svg>

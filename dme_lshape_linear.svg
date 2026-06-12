@@ -1,0 +1,84 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+<style>
+  .node-label { font: 10px sans-serif; fill: #333; }
+  .delay-label { font: 8px sans-serif; fill: #666; }
+  .wire-label { font: 9px sans-serif; fill: #444; }
+  .analysis-label { font: 12px sans-serif; fill: #333; }
+</style>
+<rect width="100%" height="100%" fill="white"/>
+<g class="clock-tree">
+<line x1="393.75" y1="206.25" x2="300" y2="112.5" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="346.875" y="154.375" class="wire-label" text-anchor="middle">30</text>
+<line x1="300" y1="112.5" x2="112.5" y2="112.5" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="206.25" y="107.5" class="wire-label" text-anchor="middle">30</text>
+<line x1="300" y1="112.5" x2="393.75" y2="112.5" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="346.875" y="107.5" class="wire-label" text-anchor="middle">15</text>
+<line x1="393.75" y1="112.5" x2="300" y2="112.5" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="346.875" y="107.5" class="wire-label" text-anchor="middle">15</text>
+<line x1="393.75" y1="112.5" x2="487.5" y2="112.5" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="440.625" y="107.5" class="wire-label" text-anchor="middle">15</text>
+<line x1="393.75" y1="206.25" x2="393.75" y2="393.75" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="393.75" y="295" class="wire-label" text-anchor="middle">30</text>
+<line x1="393.75" y1="393.75" x2="300" y2="487.5" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="346.875" y="435.625" class="wire-label" text-anchor="middle">30</text>
+<line x1="393.75" y1="393.75" x2="487.5" y2="393.75" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="440.625" y="388.75" class="wire-label" text-anchor="middle">15</text>
+<line x1="487.5" y1="393.75" x2="487.5" y2="300" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="487.5" y="341.875" class="wire-label" text-anchor="middle">15</text>
+<line x1="487.5" y1="393.75" x2="487.5" y2="487.5" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+<text x="487.5" y="435.625" class="wire-label" text-anchor="middle">15</text>
+<circle cx="393.75" cy="206.25" r="10" fill="#F44336" stroke="#333" stroke-width="1"/>
+<text x="393.75" y="191.25" class="node-label" text-anchor="middle">n4</text>
+<text x="393.75" y="228.25" class="delay-label" text-anchor="middle">d:0.0</text>
+<circle cx="300" cy="112.5" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="300" y="99.5" class="node-label" text-anchor="middle">n1</text>
+<text x="300" y="132.5" class="delay-label" text-anchor="middle">d:15.0</text>
+<text x="300" y="142.5" class="delay-label" text-anchor="middle">c:18.0</text>
+<circle cx="112.5" cy="112.5" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="112.5" y="99.5" class="node-label" text-anchor="middle">l0</text>
+<text x="112.5" y="132.5" class="delay-label" text-anchor="middle">d:30.0</text>
+<text x="112.5" y="142.5" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="393.75" cy="112.5" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="393.75" y="101.5" class="node-label" text-anchor="middle">n0</text>
+<text x="393.75" y="130.5" class="delay-label" text-anchor="middle">d:22.5</text>
+<circle cx="300" cy="112.5" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="300" y="99.5" class="node-label" text-anchor="middle">l1</text>
+<text x="300" y="132.5" class="delay-label" text-anchor="middle">d:30.0</text>
+<text x="300" y="142.5" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="487.5" cy="112.5" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="487.5" y="99.5" class="node-label" text-anchor="middle">l2</text>
+<text x="487.5" y="132.5" class="delay-label" text-anchor="middle">d:30.0</text>
+<text x="487.5" y="142.5" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="393.75" cy="393.75" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="393.75" y="382.75" class="node-label" text-anchor="middle">n3</text>
+<text x="393.75" y="411.75" class="delay-label" text-anchor="middle">d:15.0</text>
+<circle cx="300" cy="487.5" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="300" y="474.5" class="node-label" text-anchor="middle">l5</text>
+<text x="300" y="507.5" class="delay-label" text-anchor="middle">d:30.0</text>
+<text x="300" y="517.5" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="487.5" cy="393.75" r="6" fill="#2196F3" stroke="#333" stroke-width="1"/>
+<text x="487.5" y="382.75" class="node-label" text-anchor="middle">n2</text>
+<text x="487.5" y="411.75" class="delay-label" text-anchor="middle">d:22.5</text>
+<circle cx="487.5" cy="300" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="487.5" y="287" class="node-label" text-anchor="middle">l3</text>
+<text x="487.5" y="320" class="delay-label" text-anchor="middle">d:30.0</text>
+<text x="487.5" y="330" class="delay-label" text-anchor="middle">c:1.0</text>
+<circle cx="487.5" cy="487.5" r="8" fill="#4CAF50" stroke="#333" stroke-width="1"/>
+<text x="487.5" y="474.5" class="node-label" text-anchor="middle">l4</text>
+<text x="487.5" y="507.5" class="delay-label" text-anchor="middle">d:30.0</text>
+<text x="487.5" y="517.5" class="delay-label" text-anchor="middle">c:1.0</text>
+<g class="analysis-info">
+<rect x="10" y="10" width="220" height="140" fill="white" stroke="#ccc" stroke-width="1" rx="5"/>
+<rect x="10" y="10" width="220" height="20" fill="#f0f0f0" stroke="#ccc" stroke-width="1" rx="5"/>
+<text x="20" y="25" font-family="sans-serif" font-size="12" font-weight="bold" fill="#333">Clock Tree Analysis</text>
+<text x="20" y="45" font-family="monospace" font-size="11" fill="#333">
+<tspan x="20" y="61">Delay Model: class recti::LinearDelayCalculator</tspan>
+<tspan x="20" y="77">Max Delay: 30.000000</tspan>
+<tspan x="20" y="93">Min Delay: 30.000000</tspan>
+<tspan x="20" y="109">Skew: 0.000000</tspan>
+<tspan x="20" y="125">Total Wirelength: 210</tspan>
+<tspan x="20" y="141">Sinks: 6</tspan>
+</text>
+</g>
+</g>
+</svg>

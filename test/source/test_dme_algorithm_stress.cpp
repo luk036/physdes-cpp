@@ -13,27 +13,26 @@
 using namespace recti;
 
 namespace {
-    template <typename DelayCalculator, typename... Args>
-    auto create_dme_algorithm(const std::vector<recti::Sink>& sinks, Args&&... args) {
-        auto calculator = std::make_unique<DelayCalculator>(std::forward<Args>(args)...);
-        return recti::DMEAlgorithm(sinks, std::move(calculator));
+    template <typename DelayCalcT, typename... Args>
+    auto create_dme_algorithm(const std::vector<Sink>& sinks, Args&&... args) {
+        auto calculator = std::make_unique<DelayCalcT>(std::forward<Args>(args)...);
+        return DMEAlgorithm(sinks, std::move(calculator));
     }
 
-    std::vector<recti::Sink> generate_random_sinks(int num_sinks, int max_coord, double max_cap) {
-        std::vector<recti::Sink> sinks;
-        std::mt19937 gen(12345);  // for reproducible results
+    std::vector<Sink> generate_random_sinks(int num_sinks, int max_coord, double max_cap) {
+        std::vector<Sink> sinks;
+        std::mt19937 gen(12345);
         std::uniform_int_distribution<> distrib_coord(0, max_coord);
         std::uniform_real_distribution<> distrib_cap(0.1, max_cap);
 
         sinks.reserve(num_sinks);
         for (int i = 0; i < num_sinks; ++i) {
             sinks.emplace_back(fmt::format("s{}", i),
-                               recti::Point<int>(distrib_coord(gen), distrib_coord(gen)),
+                               Point<int>(distrib_coord(gen), distrib_coord(gen)),
                                distrib_cap(gen));
         }
         return sinks;
     }
-
 }  // namespace
 
 TEST_SUITE("DMEAlgorithm Stress Tests") {
@@ -43,34 +42,33 @@ TEST_SUITE("DMEAlgorithm Stress Tests") {
         const double max_cap = 5.0;
 
         auto sinks = generate_random_sinks(num_sinks, max_coord, max_cap);
-        auto dme = create_dme_algorithm<recti::LinearDelayCalculator>(sinks);
+        auto dme = create_dme_algorithm<LinearDelayCalculator>(sinks);
+        NodeIdx root = dme.build_clock_tree();
+        auto analysis = dme.analyze_skew(root);
+        auto stats = get_tree_statistics(dme.get_tree(), root);
 
-        auto tree = dme.build_clock_tree();
-        auto analysis = dme.analyze_skew(tree);
-        auto stats = recti::get_tree_statistics(tree);
-
-        CHECK_NE(tree, nullptr);
+        CHECK_NE(root, SIZE_MAX);
         CHECK_EQ(analysis.skew, doctest::Approx(0.0).epsilon(1.0));
         CHECK_EQ(stats.total_sinks, num_sinks);
         CHECK_EQ(stats.total_nodes, 2 * num_sinks - 1);
     }
 
     TEST_CASE("Sinks in a grid pattern") {
-        std::vector<recti::Sink> sinks;
+        std::vector<Sink> sinks;
         const int grid_size = 10;
         for (int i = 0; i < grid_size; ++i) {
             for (int j = 0; j < grid_size; ++j) {
                 sinks.emplace_back(fmt::format("s{}", i * grid_size + j),
-                                   recti::Point<int>(i * 100, j * 100), 1.0);
+                                   Point<int>(i * 100, j * 100), 1.0);
             }
         }
 
-        auto dme = create_dme_algorithm<recti::LinearDelayCalculator>(sinks);
-        auto tree = dme.build_clock_tree();
-        auto analysis = dme.analyze_skew(tree);
-        auto stats = recti::get_tree_statistics(tree);
+        auto dme = create_dme_algorithm<LinearDelayCalculator>(sinks);
+        NodeIdx root = dme.build_clock_tree();
+        auto analysis = dme.analyze_skew(root);
+        auto stats = get_tree_statistics(dme.get_tree(), root);
 
-        CHECK_NE(tree, nullptr);
+        CHECK_NE(root, SIZE_MAX);
         CHECK_EQ(analysis.skew, doctest::Approx(0.0).epsilon(1.0));
         CHECK_EQ(stats.total_sinks, grid_size * grid_size);
         CHECK_EQ(stats.total_nodes, 2 * grid_size * grid_size - 1);
@@ -78,55 +76,54 @@ TEST_SUITE("DMEAlgorithm Stress Tests") {
 
     TEST_CASE("Sinks clustered in a small area") {
         const int num_sinks = 100;
-        const int max_coord = 100;  // Small area
+        const int max_coord = 100;
         const double max_cap = 2.0;
 
         auto sinks = generate_random_sinks(num_sinks, max_coord, max_cap);
-        auto dme = create_dme_algorithm<recti::ElmoreDelayCalculator>(sinks, 0.1, 0.2);
+        auto dme = create_dme_algorithm<ElmoreDelayCalculator>(sinks, 0.1, 0.2);
+        NodeIdx root = dme.build_clock_tree();
+        auto analysis = dme.analyze_skew(root);
+        auto stats = get_tree_statistics(dme.get_tree(), root);
 
-        auto tree = dme.build_clock_tree();
-        auto analysis = dme.analyze_skew(tree);
-        auto stats = recti::get_tree_statistics(tree);
-
-        CHECK_NE(tree, nullptr);
+        CHECK_NE(root, SIZE_MAX);
         CHECK_EQ(analysis.skew, doctest::Approx(0.0).epsilon(1.0));
         CHECK_EQ(stats.total_sinks, num_sinks);
         CHECK_EQ(stats.total_nodes, 2 * num_sinks - 1);
     }
 
     TEST_CASE("Sinks along a horizontal line") {
-        std::vector<recti::Sink> sinks;
+        std::vector<Sink> sinks;
         const int num_sinks = 50;
         sinks.reserve(num_sinks);
         for (int i = 0; i < num_sinks; ++i) {
-            sinks.emplace_back(fmt::format("s{}", i), recti::Point<int>(i * 100, 500), 1.0);
+            sinks.emplace_back(fmt::format("s{}", i), Point<int>(i * 100, 500), 1.0);
         }
 
-        auto dme = create_dme_algorithm<recti::LinearDelayCalculator>(sinks);
-        auto tree = dme.build_clock_tree();
-        auto analysis = dme.analyze_skew(tree);
-        auto stats = recti::get_tree_statistics(tree);
+        auto dme = create_dme_algorithm<LinearDelayCalculator>(sinks);
+        NodeIdx root = dme.build_clock_tree();
+        auto analysis = dme.analyze_skew(root);
+        auto stats = get_tree_statistics(dme.get_tree(), root);
 
-        CHECK_NE(tree, nullptr);
+        CHECK_NE(root, SIZE_MAX);
         CHECK_EQ(analysis.skew, doctest::Approx(0.0).epsilon(1.0));
         CHECK_EQ(stats.total_sinks, num_sinks);
         CHECK_EQ(stats.total_nodes, 2 * num_sinks - 1);
     }
 
     TEST_CASE("Sinks along a vertical line") {
-        std::vector<recti::Sink> sinks;
+        std::vector<Sink> sinks;
         const int num_sinks = 50;
         sinks.reserve(num_sinks);
         for (int i = 0; i < num_sinks; ++i) {
-            sinks.emplace_back(fmt::format("s{}", i), recti::Point<int>(500, i * 100), 1.0);
+            sinks.emplace_back(fmt::format("s{}", i), Point<int>(500, i * 100), 1.0);
         }
 
-        auto dme = create_dme_algorithm<recti::LinearDelayCalculator>(sinks);
-        auto tree = dme.build_clock_tree();
-        auto analysis = dme.analyze_skew(tree);
-        auto stats = recti::get_tree_statistics(tree);
+        auto dme = create_dme_algorithm<LinearDelayCalculator>(sinks);
+        NodeIdx root = dme.build_clock_tree();
+        auto analysis = dme.analyze_skew(root);
+        auto stats = get_tree_statistics(dme.get_tree(), root);
 
-        CHECK_NE(tree, nullptr);
+        CHECK_NE(root, SIZE_MAX);
         CHECK_EQ(analysis.skew, doctest::Approx(0.0).epsilon(1.0));
         CHECK_EQ(stats.total_sinks, num_sinks);
         CHECK_EQ(stats.total_nodes, 2 * num_sinks - 1);
