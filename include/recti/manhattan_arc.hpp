@@ -291,7 +291,6 @@ namespace recti {
             out << "/" << manhattan_arc.impl.xcoord() << ", " << manhattan_arc.impl.ycoord() << "/";
             return out;
         }
-
     };
 #pragma pack(pop)
 

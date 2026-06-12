@@ -208,7 +208,7 @@ namespace recti {
         -> bool {
         const auto min_iterator = std::min_element(pointset.begin(), pointset.end());
         const auto prev_iterator = min_iterator != pointset.begin() ? std::prev(min_iterator)
-                                                                     : std::prev(pointset.end());
+                                                                    : std::prev(pointset.end());
         return prev_iterator->ycoord() > min_iterator->ycoord();
     }
 

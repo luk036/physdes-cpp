@@ -39,8 +39,8 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
 
         std::vector<Sink> sinks = {Sink("s1", Point<int>(100, 100), 1.5)};
         ClockTreeVisualizer visualizer;
-        std::string svg = visualizer.visualize_tree(tree, sink, sinks,
-                                                    "test_single_sink.svg", 400, 300);
+        std::string svg
+            = visualizer.visualize_tree(tree, sink, sinks, "test_single_sink.svg", 400, 300);
         CHECK_FALSE(svg.empty());
         CHECK_NE(svg.find("<svg"), std::string::npos);
         CHECK_NE(svg.find("</svg>"), std::string::npos);
@@ -55,11 +55,11 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
         Tree tree;
         NodeIdx root = build_two_sink_tree(tree);
 
-        std::vector<Sink> sinks = {Sink("s1", Point<int>(50, 50), 1.0),
-                                   Sink("s2", Point<int>(150, 150), 1.0)};
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(50, 50), 1.0), Sink("s2", Point<int>(150, 150), 1.0)};
         ClockTreeVisualizer visualizer;
-        std::string svg = visualizer.visualize_tree(tree, root, sinks,
-                                                    "test_two_sinks.svg", 600, 400);
+        std::string svg
+            = visualizer.visualize_tree(tree, root, sinks, "test_two_sinks.svg", 600, 400);
 
         CHECK_FALSE(svg.empty());
         CHECK_NE(svg.find("<svg"), std::string::npos);
@@ -83,8 +83,8 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
         tree.get_mut(root).left = s1;
         tree.get_mut(root).right = s2;
 
-        std::vector<Sink> sinks = {Sink("s1", Point<int>(50, 50), 1.0),
-                                   Sink("s2", Point<int>(150, 50), 1.0)};
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(50, 50), 1.0), Sink("s2", Point<int>(150, 50), 1.0)};
         SkewAnalysis analysis{.max_delay = 10.5,
                               .min_delay = 10.0,
                               .skew = 0.5,
@@ -93,8 +93,7 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
                               .delay_model = "LinearDelayCalculator"};
 
         ClockTreeVisualizer visualizer;
-        std::string svg = visualizer.visualize_tree(tree, root, sinks,
-                                                    "test_with_analysis.svg",
+        std::string svg = visualizer.visualize_tree(tree, root, sinks, "test_with_analysis.svg",
                                                     800, 600, &analysis);
         CHECK_NE(svg.find("Clock Tree Analysis"), std::string::npos);
         CHECK_NE(svg.find("LinearDelayCalculator"), std::string::npos);
@@ -117,13 +116,16 @@ TEST_SUITE("Interactive SVG Tests") {
         tree.get_mut(root).left = s1;
         tree.get_mut(root).right = s2;
 
-        std::vector<Sink> sinks = {Sink("sink1", Point<int>(100, 100), 1.0),
-                                   Sink("sink2", Point<int>(200, 200), 1.0)};
-        SkewAnalysis analysis{.max_delay = 5.0, .min_delay = 5.0, .skew = 0.0,
-                              .sink_delays = {5.0, 5.0}, .total_wirelength = 50,
+        std::vector<Sink> sinks
+            = {Sink("sink1", Point<int>(100, 100), 1.0), Sink("sink2", Point<int>(200, 200), 1.0)};
+        SkewAnalysis analysis{.max_delay = 5.0,
+                              .min_delay = 5.0,
+                              .skew = 0.0,
+                              .sink_delays = {5.0, 5.0},
+                              .total_wirelength = 50,
                               .delay_model = "TestCalculator"};
-        std::string svg = create_interactive_svg(tree, root, sinks, &analysis,
-                                                 "test_interactive.svg");
+        std::string svg
+            = create_interactive_svg(tree, root, sinks, &analysis, "test_interactive.svg");
         CHECK_FALSE(svg.empty());
         CHECK_NE(svg.find("<svg"), std::string::npos);
         CHECK_NE(svg.find("#2E7D32"), std::string::npos);
@@ -153,13 +155,19 @@ TEST_SUITE("Comparison Visualization Tests") {
         Tree tree;
         NodeIdx root = tree.add(TreeNode("root1", Point<int>(100, 100)));
         std::vector<Sink> sinks1 = {Sink("s1", Point<int>(100, 100), 1.0)};
-        SkewAnalysis analysis1{.max_delay = 5.0, .min_delay = 5.0, .skew = 0.0,
-                               .sink_delays = {5.0}, .total_wirelength = 0,
+        SkewAnalysis analysis1{.max_delay = 5.0,
+                               .min_delay = 5.0,
+                               .skew = 0.0,
+                               .sink_delays = {5.0},
+                               .total_wirelength = 0,
                                .delay_model = "TestModel1"};
-        TreeComparisonData data{.tree = &tree, .root = root, .sinks = sinks1,
-                                .analysis = analysis1, .title = "Single Tree Test"};
-        std::string svg = create_comparison_visualization({data}, "test_single_comparison.svg",
-                                                          800, 600);
+        TreeComparisonData data{.tree = &tree,
+                                .root = root,
+                                .sinks = sinks1,
+                                .analysis = analysis1,
+                                .title = "Single Tree Test"};
+        std::string svg
+            = create_comparison_visualization({data}, "test_single_comparison.svg", 800, 600);
         CHECK_FALSE(svg.empty());
         CHECK_NE(svg.find("<svg"), std::string::npos);
         CHECK_NE(svg.find("Single Tree Test"), std::string::npos);
@@ -172,22 +180,27 @@ TEST_SUITE("Comparison Visualization Tests") {
         Tree tree1, tree2;
         NodeIdx r1 = tree1.add(TreeNode("root1", Point<int>(50, 50)));
         NodeIdx r2 = tree2.add(TreeNode("root2", Point<int>(50, 150)));
-        std::vector<Sink> sinks1 = {Sink("s1", Point<int>(50, 50), 1.0),
-                                    Sink("s2", Point<int>(150, 50), 1.0)};
-        std::vector<Sink> sinks2 = {Sink("s1", Point<int>(50, 150), 1.0),
-                                    Sink("s2", Point<int>(150, 150), 1.0)};
-        SkewAnalysis a1{.max_delay = 10.0, .min_delay = 10.0, .skew = 0.0,
-                        .sink_delays = {10.0, 10.0}, .total_wirelength = 100,
+        std::vector<Sink> sinks1
+            = {Sink("s1", Point<int>(50, 50), 1.0), Sink("s2", Point<int>(150, 50), 1.0)};
+        std::vector<Sink> sinks2
+            = {Sink("s1", Point<int>(50, 150), 1.0), Sink("s2", Point<int>(150, 150), 1.0)};
+        SkewAnalysis a1{.max_delay = 10.0,
+                        .min_delay = 10.0,
+                        .skew = 0.0,
+                        .sink_delays = {10.0, 10.0},
+                        .total_wirelength = 100,
                         .delay_model = "LinearModel"};
-        SkewAnalysis a2{.max_delay = 12.0, .min_delay = 11.0, .skew = 1.0,
-                        .sink_delays = {11.0, 12.0}, .total_wirelength = 120,
+        SkewAnalysis a2{.max_delay = 12.0,
+                        .min_delay = 11.0,
+                        .skew = 1.0,
+                        .sink_delays = {11.0, 12.0},
+                        .total_wirelength = 120,
                         .delay_model = "ElmoreModel"};
-        TreeComparisonData d1{.tree = &tree1, .root = r1, .sinks = sinks1,
-                              .analysis = a1, .title = "Linear Model"};
-        TreeComparisonData d2{.tree = &tree2, .root = r2, .sinks = sinks2,
-                              .analysis = a2, .title = "Elmore Model"};
-        std::string svg = create_comparison_visualization({d1, d2},
-                                                          "test_two_comparison.svg");
+        TreeComparisonData d1{
+            .tree = &tree1, .root = r1, .sinks = sinks1, .analysis = a1, .title = "Linear Model"};
+        TreeComparisonData d2{
+            .tree = &tree2, .root = r2, .sinks = sinks2, .analysis = a2, .title = "Elmore Model"};
+        std::string svg = create_comparison_visualization({d1, d2}, "test_two_comparison.svg");
         CHECK_FALSE(svg.empty());
         CHECK_NE(svg.find("Linear Model"), std::string::npos);
         CHECK_NE(svg.find("Elmore Model"), std::string::npos);
@@ -201,20 +214,25 @@ TEST_SUITE("Comparison Visualization Tests") {
         Tree linear_tree, elmore_tree;
         NodeIdx lr = linear_tree.add(TreeNode("linear_root", Point<int>(100, 100)));
         NodeIdx er = elmore_tree.add(TreeNode("elmore_root", Point<int>(100, 100)));
-        std::vector<Sink> sinks = {Sink("s1", Point<int>(50, 50), 1.0),
-                                   Sink("s2", Point<int>(150, 150), 1.0)};
-        SkewAnalysis la{.max_delay = 8.5, .min_delay = 8.5, .skew = 0.0,
-                        .sink_delays = {8.5, 8.5}, .total_wirelength = 80,
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(50, 50), 1.0), Sink("s2", Point<int>(150, 150), 1.0)};
+        SkewAnalysis la{.max_delay = 8.5,
+                        .min_delay = 8.5,
+                        .skew = 0.0,
+                        .sink_delays = {8.5, 8.5},
+                        .total_wirelength = 80,
                         .delay_model = "LinearDelayCalculator"};
-        SkewAnalysis ea{.max_delay = 9.2, .min_delay = 9.0, .skew = 0.2,
-                        .sink_delays = {9.0, 9.2}, .total_wirelength = 95,
+        SkewAnalysis ea{.max_delay = 9.2,
+                        .min_delay = 9.0,
+                        .skew = 0.2,
+                        .sink_delays = {9.0, 9.2},
+                        .total_wirelength = 95,
                         .delay_model = "ElmoreDelayCalculator"};
-        TreeComparisonData ld{.tree = &linear_tree, .root = lr, .sinks = sinks,
-                              .analysis = la, .title = ""};
-        TreeComparisonData ed{.tree = &elmore_tree, .root = er, .sinks = sinks,
-                              .analysis = ea, .title = ""};
-        std::string svg = create_delay_model_comparison(ld, ed,
-                                                        "test_delay_model_comparison.svg");
+        TreeComparisonData ld{
+            .tree = &linear_tree, .root = lr, .sinks = sinks, .analysis = la, .title = ""};
+        TreeComparisonData ed{
+            .tree = &elmore_tree, .root = er, .sinks = sinks, .analysis = ea, .title = ""};
+        std::string svg = create_delay_model_comparison(ld, ed, "test_delay_model_comparison.svg");
         CHECK_FALSE(svg.empty());
         CHECK_NE(svg.find("Linear Delay Model"), std::string::npos);
         CHECK_NE(svg.find("Elmore Delay Model"), std::string::npos);
@@ -231,9 +249,9 @@ TEST_SUITE("Comparison Visualization Tests") {
 TEST_SUITE("Integration Tests with DME Algorithm") {
     TEST_CASE("Visualize DME Generated Tree") {
         using namespace recti;
-        std::vector<Sink> sinks = {Sink("s1", Point<int>(0, 0), 1.0),
-                                   Sink("s2", Point<int>(100, 0), 1.0),
-                                   Sink("s3", Point<int>(50, 100), 1.0)};
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(0, 0), 1.0), Sink("s2", Point<int>(100, 0), 1.0),
+               Sink("s3", Point<int>(50, 100), 1.0)};
         auto calculator = std::make_unique<LinearDelayCalculator>(1.0, 1.0);
         DMEAlgorithm dme(sinks, std::move(calculator));
         NodeIdx root = dme.build_clock_tree();
@@ -256,9 +274,9 @@ TEST_SUITE("Integration Tests with DME Algorithm") {
 
     TEST_CASE("Compare Linear vs Elmore Models") {
         using namespace recti;
-        std::vector<Sink> sinks = {Sink("s1", Point<int>(10, 10), 1.0),
-                                   Sink("s2", Point<int>(90, 10), 1.0),
-                                   Sink("s3", Point<int>(50, 90), 1.0)};
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(10, 10), 1.0), Sink("s2", Point<int>(90, 10), 1.0),
+               Sink("s3", Point<int>(50, 90), 1.0)};
 
         auto lc = std::make_unique<LinearDelayCalculator>(0.5, 0.2);
         DMEAlgorithm dme_linear(sinks, std::move(lc));
@@ -270,12 +288,17 @@ TEST_SUITE("Integration Tests with DME Algorithm") {
         NodeIdx re = dme_elmore.build_clock_tree();
         auto ae = dme_elmore.analyze_skew(re);
 
-        TreeComparisonData ld{.tree = &dme_linear.get_tree(), .root = rl,
-                              .sinks = sinks, .analysis = al, .title = "Linear Model"};
-        TreeComparisonData ed{.tree = &dme_elmore.get_tree(), .root = re,
-                              .sinks = sinks, .analysis = ae, .title = "Elmore Model"};
-        std::string svg = create_comparison_visualization({ld, ed},
-                                                          "test_model_comparison.svg");
+        TreeComparisonData ld{.tree = &dme_linear.get_tree(),
+                              .root = rl,
+                              .sinks = sinks,
+                              .analysis = al,
+                              .title = "Linear Model"};
+        TreeComparisonData ed{.tree = &dme_elmore.get_tree(),
+                              .root = re,
+                              .sinks = sinks,
+                              .analysis = ae,
+                              .title = "Elmore Model"};
+        std::string svg = create_comparison_visualization({ld, ed}, "test_model_comparison.svg");
         CHECK_FALSE(svg.empty());
         CHECK_NE(svg.find("Linear Model"), std::string::npos);
         CHECK_NE(svg.find("Elmore Model"), std::string::npos);
@@ -293,8 +316,7 @@ TEST_SUITE("Edge Cases and Error Handling") {
         NodeIdx root = tree.add(TreeNode("single", Point<int>(0, 0)));
         std::vector<Sink> empty_sinks;
         ClockTreeVisualizer visualizer;
-        CHECK_NOTHROW(visualizer.visualize_tree(tree, root, empty_sinks,
-                                                "test_single_node.svg"));
+        CHECK_NOTHROW(visualizer.visualize_tree(tree, root, empty_sinks, "test_single_node.svg"));
         if (std::filesystem::exists("test_single_node.svg")) {
             std::filesystem::remove("test_single_node.svg");
         }
@@ -311,8 +333,8 @@ TEST_SUITE("Edge Cases and Error Handling") {
 
         std::vector<Sink> sinks = {Sink("sink", Point<int>(20000, 20000), 1.0)};
         ClockTreeVisualizer visualizer;
-        CHECK_NOTHROW(visualizer.visualize_tree(tree, root, sinks,
-                                                "test_large_coords.svg", 800, 600));
+        CHECK_NOTHROW(
+            visualizer.visualize_tree(tree, root, sinks, "test_large_coords.svg", 800, 600));
         if (std::filesystem::exists("test_large_coords.svg")) {
             std::filesystem::remove("test_large_coords.svg");
         }
@@ -329,11 +351,10 @@ TEST_SUITE("Edge Cases and Error Handling") {
         tree.get_mut(s1).parent = root;
         tree.get_mut(s2).parent = root;
 
-        std::vector<Sink> sinks = {Sink("s1", Point<int>(100, 100), 1.0),
-                                   Sink("s2", Point<int>(100, 100), 1.0)};
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(100, 100), 1.0), Sink("s2", Point<int>(100, 100), 1.0)};
         ClockTreeVisualizer visualizer;
-        CHECK_NOTHROW(visualizer.visualize_tree(tree, root, sinks,
-                                                "test_duplicate_positions.svg"));
+        CHECK_NOTHROW(visualizer.visualize_tree(tree, root, sinks, "test_duplicate_positions.svg"));
         if (std::filesystem::exists("test_duplicate_positions.svg")) {
             std::filesystem::remove("test_duplicate_positions.svg");
         }
@@ -344,9 +365,9 @@ TEST_CASE("Example Visualization Usage") {
     using namespace recti;
     SUBCASE("Complete Workflow Example") {
         std::vector<Sink> sinks = {
-            Sink("s1", Point<int>(-100, 40), 1.0), Sink("s2", Point<int>(-60, 60), 1.0),
-            Sink("s3", Point<int>(0, 40), 1.0),    Sink("s4", Point<int>(20, 20), 1.0),
-            Sink("s5", Point<int>(-20, -20), 1.0), Sink("s6", Point<int>(-30, -50), 1.0),
+            Sink("s1", Point<int>(-100, 40), 1.0),  Sink("s2", Point<int>(-60, 60), 1.0),
+            Sink("s3", Point<int>(0, 40), 1.0),     Sink("s4", Point<int>(20, 20), 1.0),
+            Sink("s5", Point<int>(-20, -20), 1.0),  Sink("s6", Point<int>(-30, -50), 1.0),
             Sink("s7", Point<int>(-100, -40), 1.0), Sink("s8", Point<int>(-100, 0), 1.0),
         };
 

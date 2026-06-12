@@ -369,7 +369,7 @@ namespace recti {
          */
         void route_with_steiners() {
             this->tree.worst_wirelength = this->worst_wirelength;  // Store the allowed wirelength
-                                                                    // in the tree for reference
+                                                                   // in the tree for reference
             for (const auto& terminal : this->terminal_positions) {
                 this->tree.insert_terminal_with_steiner(terminal, this->keepouts);
             }
@@ -384,7 +384,7 @@ namespace recti {
             int allowed_wirelength
                 = static_cast<int>(std::round(this->worst_wirelength * multiplier));
             this->tree.worst_wirelength = this->worst_wirelength;  // Store the allowed wirelength
-                                                                    // in the tree for reference
+                                                                   // in the tree for reference
             for (const auto& terminal : this->terminal_positions) {
                 this->tree.insert_terminal_with_constraints(terminal, allowed_wirelength,
                                                             this->keepouts);

@@ -222,8 +222,7 @@ namespace recti {
          *         raw `raw_extend_left`, and the resulting `delay_left`.
          */
         virtual TappingResult calculate_tapping_point(int distance, double left_delay,
-                                                      double right_delay,
-                                                      double left_capacitance,
+                                                      double right_delay, double left_capacitance,
                                                       double right_capacitance) const
             = 0;
     };
@@ -268,8 +267,7 @@ namespace recti {
          * `raw_extend_left` so that the caller can apply the original elongation
          * wire-length rules.
          */
-        TappingResult calculate_tapping_point(int distance, double left_delay,
-                                              double right_delay,
+        TappingResult calculate_tapping_point(int distance, double left_delay, double right_delay,
                                               double /* left_capacitance */,
                                               double /* right_capacitance */) const override;
     };
@@ -319,8 +317,7 @@ namespace recti {
          * When the raw `extend_left` falls below 0 or above `distance`, clamping
          * and elongation logic applies (see `LinearDelayCalculator`).
          */
-        TappingResult calculate_tapping_point(int distance, double left_delay,
-                                              double right_delay,
+        TappingResult calculate_tapping_point(int distance, double left_delay, double right_delay,
                                               double left_capacitance,
                                               double right_capacitance) const override;
     };
@@ -456,9 +453,8 @@ namespace recti {
          * on the nodes involved, including the full elongation logic (raw extend_left).
          */
         ManhattanArc<Interval<int>, Interval<int>> _compute_merging_segment(
-            NodeIdx node,
-            std::unordered_map<NodeIdx, ManhattanArc<Interval<int>, Interval<int>>>&
-                merging_segments);
+            NodeIdx node, std::unordered_map<NodeIdx, ManhattanArc<Interval<int>, Interval<int>>>&
+                              merging_segments);
 
         /**
          * @brief Computes merging segments for all nodes bottom-up.
@@ -474,8 +470,7 @@ namespace recti {
          * parent and updates `wire_length`.
          */
         void _embed_node(
-            NodeIdx node,
-            const ManhattanArc<Interval<int>, Interval<int>>* parent_segment,
+            NodeIdx node, const ManhattanArc<Interval<int>, Interval<int>>* parent_segment,
             const std::unordered_map<NodeIdx, ManhattanArc<Interval<int>, Interval<int>>>&
                 merging_segments);
 

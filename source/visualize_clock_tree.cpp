@@ -137,16 +137,13 @@ namespace recti {
 
             if (node.parent != SIZE_MAX) {
                 const auto& parent = tree.get(node.parent);
-                auto [x1, y1]
-                    = scale_coord(parent.position.xcoord(), parent.position.ycoord());
-                auto [x2, y2]
-                    = scale_coord(node.position.xcoord(), node.position.ycoord());
+                auto [x1, y1] = scale_coord(parent.position.xcoord(), parent.position.ycoord());
+                auto [x2, y2] = scale_coord(node.position.xcoord(), node.position.ycoord());
 
                 std::ostringstream line;
-                line << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\"" << x2
-                     << "\" y2=\"" << y2 << "\" stroke=\"" << this->wire_color
-                     << "\" stroke-width=\"" << this->wire_width
-                     << R"(" stroke-linecap="round"/>)";
+                line << "<line x1=\"" << x1 << "\" y1=\"" << y1 << "\" x2=\"" << x2 << "\" y2=\""
+                     << y2 << "\" stroke=\"" << this->wire_color << "\" stroke-width=\""
+                     << this->wire_width << R"(" stroke-linecap="round"/>)";
                 svg_elements.emplace_back(line.str());
 
                 if (node.wire_length > 0) {
@@ -154,8 +151,8 @@ namespace recti {
                     double my = (y1 + y2) / 2;
                     std::ostringstream label;
                     label << "<text x=\"" << mx << "\" y=\"" << my - 5
-                          << R"(" class="wire-label" text-anchor="middle">)"
-                          << node.wire_length << "</text>";
+                          << R"(" class="wire-label" text-anchor="middle">)" << node.wire_length
+                          << "</text>";
                     svg_elements.emplace_back(label.str());
                 }
             }
@@ -183,11 +180,10 @@ namespace recti {
             if (n == SIZE_MAX) return;
             const auto& node = tree.get(n);
 
-            auto [cx, cy]
-                = scale_coord(node.position.xcoord(), node.position.ycoord());
+            auto [cx, cy] = scale_coord(node.position.xcoord(), node.position.ycoord());
 
-            bool is_sink = sink_positions.contains(
-                {node.position.xcoord(), node.position.ycoord()});
+            bool is_sink
+                = sink_positions.contains({node.position.xcoord(), node.position.ycoord()});
             bool is_root = (node.parent == SIZE_MAX);
 
             std::string color;
@@ -204,31 +200,29 @@ namespace recti {
             }
 
             std::ostringstream circle;
-            circle << "<circle cx=\"" << cx << "\" cy=\"" << cy << "\" r=\"" << r
-                   << "\" fill=\"" << color << R"(" stroke="#333" stroke-width="1"/>)";
+            circle << "<circle cx=\"" << cx << "\" cy=\"" << cy << "\" r=\"" << r << "\" fill=\""
+                   << color << R"(" stroke="#333" stroke-width="1"/>)";
             svg_elements.emplace_back(circle.str());
 
             double label_y_off = -r - 5;
             std::ostringstream label;
             label << "<text x=\"" << cx << "\" y=\"" << cy + label_y_off
-                  << R"(" class="node-label" text-anchor="middle">)" << node.name
-                  << "</text>";
+                  << R"(" class="node-label" text-anchor="middle">)" << node.name << "</text>";
             svg_elements.emplace_back(label.str());
 
             double delay_y_off = r + 12;
             std::ostringstream delay_label;
             delay_label << "<text x=\"" << cx << "\" y=\"" << cy + delay_y_off
-                        << R"(" class="delay-label" text-anchor="middle">d:)"
-                        << std::fixed << std::setprecision(1) << node.delay << "</text>";
+                        << R"(" class="delay-label" text-anchor="middle">d:)" << std::fixed
+                        << std::setprecision(1) << node.delay << "</text>";
             svg_elements.emplace_back(delay_label.str());
 
             if (is_sink) {
                 double cap_y_off = r + 22;
                 std::ostringstream cap_label;
                 cap_label << "<text x=\"" << cx << "\" y=\"" << cy + cap_y_off
-                          << R"(" class="delay-label" text-anchor="middle">c:)"
-                          << std::fixed << std::setprecision(1) << node.capacitance
-                          << "</text>";
+                          << R"(" class="delay-label" text-anchor="middle">c:)" << std::fixed
+                          << std::setprecision(1) << node.capacitance << "</text>";
                 svg_elements.emplace_back(cap_label.str());
             }
 
@@ -240,8 +234,8 @@ namespace recti {
         return svg_elements;
     }
 
-    std::vector<std::string> ClockTreeVisualizer::create_analysis_box(
-        const SkewAnalysis& analysis, int /* width */) {
+    std::vector<std::string> ClockTreeVisualizer::create_analysis_box(const SkewAnalysis& analysis,
+                                                                      int /* width */) {
         std::vector<std::string> box;
         box.emplace_back("<g class=\"analysis-info\">");
         box.emplace_back(
@@ -281,11 +275,9 @@ namespace recti {
     // Free functions
     // -----------------------------------------------------------------------
     std::string create_interactive_svg(const Tree& tree, NodeIdx root,
-                                       const std::vector<Sink>& sinks,
-                                       const SkewAnalysis* analysis,
+                                       const std::vector<Sink>& sinks, const SkewAnalysis* analysis,
                                        const std::string& filename, int width, int height) {
-        ClockTreeVisualizer viz(60, 10, 3, "#2E7D32", "#1565C0", "#C62828", "#455A64",
-                                "#263238");
+        ClockTreeVisualizer viz(60, 10, 3, "#2E7D32", "#1565C0", "#C62828", "#455A64", "#263238");
         return viz.visualize_tree(tree, root, sinks, filename, width, height, analysis);
     }
 
@@ -304,8 +296,7 @@ namespace recti {
 
         std::vector<std::string> svg;
         svg.emplace_back("<svg width=\"" + std::to_string(width) + "\" height=\""
-                         + std::to_string(height)
-                         + R"(" xmlns="http://www.w3.org/2000/svg">)");
+                         + std::to_string(height) + R"(" xmlns="http://www.w3.org/2000/svg">)");
         svg.emplace_back("<style>");
         svg.emplace_back("  .node-label { font: 8px sans-serif; fill: #333; }");
         svg.emplace_back("  .delay-label { font: 7px sans-serif; fill: #666; }");
@@ -324,13 +315,12 @@ namespace recti {
 
             std::ostringstream title;
             title << "<text x=\"" << ox + sub_w / 2 << "\" y=\"" << oy + 20
-                  << R"(" class="title" text-anchor="middle">)" << trees_data[i].title
-                  << "</text>";
+                  << R"(" class="title" text-anchor="middle">)" << trees_data[i].title << "</text>";
             svg.emplace_back(title.str());
 
-            auto temp_svg = viz.visualize_tree(*trees_data[i].tree, trees_data[i].root,
-                                               trees_data[i].sinks, "", sub_w - 20,
-                                               sub_h - 40, &trees_data[i].analysis);
+            auto temp_svg
+                = viz.visualize_tree(*trees_data[i].tree, trees_data[i].root, trees_data[i].sinks,
+                                     "", sub_w - 20, sub_h - 40, &trees_data[i].analysis);
 
             std::istringstream stream(temp_svg);
             std::string line;
@@ -417,13 +407,13 @@ namespace recti {
 
         ClockTreeVisualizer visualizer;
 
-        auto linear_svg = visualizer.visualize_tree(dme_linear.get_tree(), root_linear,
-                                                    sinks, "linear_model_clock_tree.svg",
-                                                    800, 600, &analysis_linear);
+        auto linear_svg
+            = visualizer.visualize_tree(dme_linear.get_tree(), root_linear, sinks,
+                                        "linear_model_clock_tree.svg", 800, 600, &analysis_linear);
 
-        auto elmore_svg = visualizer.visualize_tree(dme_elmore.get_tree(), root_elmore,
-                                                    sinks, "elmore_model_clock_tree.svg",
-                                                    800, 600, &analysis_elmore);
+        auto elmore_svg
+            = visualizer.visualize_tree(dme_elmore.get_tree(), root_elmore, sinks,
+                                        "elmore_model_clock_tree.svg", 800, 600, &analysis_elmore);
 
         TreeComparisonData linear_data = {.tree = &dme_linear.get_tree(),
                                           .root = root_linear,

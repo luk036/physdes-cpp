@@ -11,14 +11,13 @@ namespace recti {
     // LinearDelayCalculator
     // ---------------------------------------------------------------------------
     TappingResult LinearDelayCalculator::calculate_tapping_point(
-        int distance, double left_delay, double right_delay,
-        double /* left_capacitance */, double /* right_capacitance */) const {
+        int distance, double left_delay, double right_delay, double /* left_capacitance */,
+        double /* right_capacitance */) const {
         if (distance == 0) {
             return {0, 0, std::max(left_delay, right_delay)};
         }
         double skew = right_delay - left_delay;
-        int raw_extend_left
-            = static_cast<int>(std::round((skew / delay_per_unit + distance) / 2));
+        int raw_extend_left = static_cast<int>(std::round((skew / delay_per_unit + distance) / 2));
         double delay_left = left_delay + raw_extend_left * delay_per_unit;
 
         int extend_left = raw_extend_left;
@@ -35,9 +34,10 @@ namespace recti {
     // ---------------------------------------------------------------------------
     // ElmoreDelayCalculator
     // ---------------------------------------------------------------------------
-    TappingResult ElmoreDelayCalculator::calculate_tapping_point(
-        int distance, double left_delay, double right_delay,
-        double left_capacitance, double right_capacitance) const {
+    TappingResult ElmoreDelayCalculator::calculate_tapping_point(int distance, double left_delay,
+                                                                 double right_delay,
+                                                                 double left_capacitance,
+                                                                 double right_capacitance) const {
         if (distance == 0) {
             return {0, 0, std::max(left_delay, right_delay)};
         }
@@ -51,8 +51,7 @@ namespace recti {
         int raw_extend_left = static_cast<int>(std::round(z * distance));
         double r_left = raw_extend_left * unit_resistance;
         double c_left = raw_extend_left * unit_capacitance;
-        double delay_left
-            = left_delay + r_left * (c_left / 2.0 + left_capacitance);
+        double delay_left = left_delay + r_left * (c_left / 2.0 + left_capacitance);
 
         int extend_left = raw_extend_left;
         if (raw_extend_left < 0) {
@@ -121,8 +120,8 @@ namespace recti {
         size_t mid = sorted.size() / 2;
         std::vector<NodeIdx> left_group(sorted.begin(),
                                         sorted.begin() + static_cast<std::ptrdiff_t>(mid));
-        std::vector<NodeIdx> right_group(
-            sorted.begin() + static_cast<std::ptrdiff_t>(mid), sorted.end());
+        std::vector<NodeIdx> right_group(sorted.begin() + static_cast<std::ptrdiff_t>(mid),
+                                         sorted.end());
 
         NodeIdx left_child = build_merging_tree(left_group, !vertical);
         NodeIdx right_child = build_merging_tree(right_group, !vertical);
@@ -141,8 +140,7 @@ namespace recti {
 
     ManhattanArc<Interval<int>, Interval<int>> DMEAlgorithm::_compute_merging_segment(
         NodeIdx node,
-        std::unordered_map<NodeIdx, ManhattanArc<Interval<int>, Interval<int>>>&
-            merging_segments) {
+        std::unordered_map<NodeIdx, ManhattanArc<Interval<int>, Interval<int>>>& merging_segments) {
         if (tree.get(node).is_leaf()) {
             Point<int> pos = tree.get(node).position;
             auto ms1 = ManhattanArc<int, int>::from_point(pos);
@@ -209,8 +207,7 @@ namespace recti {
 
     std::unordered_map<NodeIdx, ManhattanArc<Interval<int>, Interval<int>>>
     DMEAlgorithm::compute_merging_segments(NodeIdx root) {
-        std::unordered_map<NodeIdx, ManhattanArc<Interval<int>, Interval<int>>>
-            merging_segments;
+        std::unordered_map<NodeIdx, ManhattanArc<Interval<int>, Interval<int>>> merging_segments;
         _compute_merging_segment(root, merging_segments);
         return merging_segments;
     }
@@ -223,8 +220,7 @@ namespace recti {
 
         auto it = merging_segments.find(node);
         if (it == merging_segments.end()) {
-            throw std::runtime_error("Merging segment not found for node: "
-                                     + tree.get(node).name);
+            throw std::runtime_error("Merging segment not found for node: " + tree.get(node).name);
         }
         const auto& node_segment = it->second;
 
@@ -236,8 +232,7 @@ namespace recti {
             NodeIdx p = tree.get(node).parent;
             Point<int> parent_pos = tree.get(p).position;
             tree.get_mut(node).position = node_segment.nearest_point_to(parent_pos);
-            tree.get_mut(node).wire_length
-                = tree.get(node).position.min_dist_with(parent_pos);
+            tree.get_mut(node).wire_length = tree.get(node).position.min_dist_with(parent_pos);
         }
 
         _embed_node(tree.get(node).left, &node_segment, merging_segments);
@@ -256,8 +251,8 @@ namespace recti {
         if (node == SIZE_MAX) return;
 
         if (tree.get(node).parent != SIZE_MAX) {
-            double wire_delay = delay_calculator->calculate_wire_delay(
-                tree.get(node).wire_length, tree.get(node).capacitance);
+            double wire_delay = delay_calculator->calculate_wire_delay(tree.get(node).wire_length,
+                                                                       tree.get(node).capacitance);
             tree.get_mut(node).delay = parent_delay + wire_delay;
         } else {
             tree.get_mut(node).delay = 0.0;
@@ -268,16 +263,13 @@ namespace recti {
         _compute_delays(tree.get(node).right, current_delay);
     }
 
-    void DMEAlgorithm::compute_tree_parameters(NodeIdx root) {
-        _compute_delays(root, 0.0);
-    }
+    void DMEAlgorithm::compute_tree_parameters(NodeIdx root) { _compute_delays(root, 0.0); }
 
     // -----------------------------------------------------------------------
     // Free helpers for analyze_skew / total_wirelength
     // -----------------------------------------------------------------------
     namespace {
-        void collect_sink_delays(const Tree& tree, NodeIdx node,
-                                 std::vector<double>& sink_delays) {
+        void collect_sink_delays(const Tree& tree, NodeIdx node, std::vector<double>& sink_delays) {
             if (node == SIZE_MAX) return;
             if (tree.get(node).is_leaf()) {
                 sink_delays.push_back(tree.get(node).delay);
@@ -311,9 +303,7 @@ namespace recti {
                 .delay_model = typeid(*delay_calculator).name()};
     }
 
-    int DMEAlgorithm::total_wirelength(NodeIdx root) const {
-        return sum_wirelength(tree, root);
-    }
+    int DMEAlgorithm::total_wirelength(NodeIdx root) const { return sum_wirelength(tree, root); }
 
     // -----------------------------------------------------------------------
     // get_tree_statistics
@@ -328,23 +318,21 @@ namespace recti {
             void operator()(NodeIdx node, NodeIdx parent) {
                 if (node == SIZE_MAX) return;
                 const auto& n = tree.get(node);
-                stats.nodes.push_back(
-                    {.name = n.name,
-                     .position = {n.position.xcoord(), n.position.ycoord()},
-                     .type = n.is_leaf() ? "sink" : "internal",
-                     .delay = n.delay,
-                     .capacitance = n.capacitance});
+                stats.nodes.push_back({.name = n.name,
+                                       .position = {n.position.xcoord(), n.position.ycoord()},
+                                       .type = n.is_leaf() ? "sink" : "internal",
+                                       .delay = n.delay,
+                                       .capacitance = n.capacitance});
                 if (n.is_leaf()) {
                     stats.sinks.emplace_back(n.name);
                 }
                 if (parent != SIZE_MAX) {
                     const auto& p = tree.get(parent);
-                    stats.wires.push_back(
-                        {.from_node = p.name,
-                         .to_node = n.name,
-                         .length = n.wire_length,
-                         .from_pos = {p.position.xcoord(), p.position.ycoord()},
-                         .to_pos = {n.position.xcoord(), n.position.ycoord()}});
+                    stats.wires.push_back({.from_node = p.name,
+                                           .to_node = n.name,
+                                           .length = n.wire_length,
+                                           .from_pos = {p.position.xcoord(), p.position.ycoord()},
+                                           .to_pos = {n.position.xcoord(), n.position.ycoord()}});
                 }
                 (*this)(n.left, node);
                 (*this)(n.right, node);

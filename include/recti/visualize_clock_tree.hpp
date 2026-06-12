@@ -38,11 +38,9 @@ namespace recti {
               wire_color(wire_color),
               text_color(text_color) {}
 
-        std::string visualize_tree(const Tree& tree, NodeIdx root,
-                                   const std::vector<Sink>& sinks,
-                                   const std::string& filename = "clock_tree.svg",
-                                   int width = 800, int height = 600,
-                                   const SkewAnalysis* analysis = nullptr);
+        std::string visualize_tree(const Tree& tree, NodeIdx root, const std::vector<Sink>& sinks,
+                                   const std::string& filename = "clock_tree.svg", int width = 800,
+                                   int height = 600, const SkewAnalysis* analysis = nullptr);
 
       private:
         std::vector<NodeIdx> collect_all_nodes(const Tree& tree, NodeIdx root);

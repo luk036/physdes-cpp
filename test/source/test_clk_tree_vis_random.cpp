@@ -2,8 +2,8 @@
 #include <fmt/core.h>
 
 #include <filesystem>
-#include <ldsgen/ilds.hpp>
 #include <lds/ilds.hpp>
+#include <ldsgen/ilds.hpp>
 #include <memory>
 #include <recti/visualize_clock_tree.hpp>
 #include <string>
@@ -22,7 +22,7 @@ static auto generate_random_sinks(size_t num_sinks, unsigned int seed) -> std::v
     sinks.reserve(num_sinks);
     for (size_t i = 0; i < num_sinks; ++i) {
         sinks.emplace_back(fmt::format("s{}", i), Point<int>(static_cast<int>(hgenX.pop()),
-                                                              static_cast<int>(hgenY.pop())));
+                                                             static_cast<int>(hgenY.pop())));
     }
     return sinks;
 }

@@ -18,8 +18,7 @@ namespace {
         if (tree.get(node).is_leaf()) {
             return 1;
         }
-        return count_leaves(tree, tree.get(node).left)
-               + count_leaves(tree, tree.get(node).right);
+        return count_leaves(tree, tree.get(node).left) + count_leaves(tree, tree.get(node).right);
     }
 
     template <typename DelayCalcT, typename... Args>
@@ -204,8 +203,8 @@ TEST_SUITE("DMEAlgorithm Tests") {
     }
 
     TEST_CASE("DMEAlgorithm Two Sinks") {
-        std::vector<Sink> sinks = {Sink("s1", Point<int>(0, 0), 1.0),
-                                   Sink("s2", Point<int>(10, 0), 1.0)};
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(0, 0), 1.0), Sink("s2", Point<int>(10, 0), 1.0)};
         auto dme = create_dme_algorithm<LinearDelayCalculator>(sinks, 1.0, 1.0);
         NodeIdx root = dme.build_clock_tree();
         const Tree& tree = dme.get_tree();
@@ -222,10 +221,9 @@ TEST_SUITE("DMEAlgorithm Tests") {
     }
 
     TEST_CASE("DMEAlgorithm Multiple Sinks") {
-        std::vector<Sink> sinks = {Sink("s1", Point<int>(10, 10), 1.0),
-                                   Sink("s2", Point<int>(20, 10), 1.0),
-                                   Sink("s3", Point<int>(15, 30), 1.0),
-                                   Sink("s4", Point<int>(25, 30), 1.0)};
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(10, 10), 1.0), Sink("s2", Point<int>(20, 10), 1.0),
+               Sink("s3", Point<int>(15, 30), 1.0), Sink("s4", Point<int>(25, 30), 1.0)};
         auto dme = create_dme_algorithm<LinearDelayCalculator>(sinks, 1.0, 1.0);
         NodeIdx root = dme.build_clock_tree();
         const Tree& tree = dme.get_tree();
@@ -238,9 +236,9 @@ TEST_SUITE("DMEAlgorithm Tests") {
     }
 
     TEST_CASE("DMEAlgorithm Skew Analysis") {
-        std::vector<Sink> sinks = {Sink("s1", Point<int>(0, 0), 1.0),
-                                   Sink("s2", Point<int>(10, 10), 1.0),
-                                   Sink("s3", Point<int>(20, 0), 1.0)};
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(0, 0), 1.0), Sink("s2", Point<int>(10, 10), 1.0),
+               Sink("s3", Point<int>(20, 0), 1.0)};
         auto dme = create_dme_algorithm<LinearDelayCalculator>(sinks, 1.0, 1.0);
         NodeIdx root = dme.build_clock_tree();
         auto analysis = dme.analyze_skew(root);
@@ -326,9 +324,9 @@ TEST_SUITE("Tree Statistics Tests") {
 
 TEST_SUITE("Integration Tests") {
     TEST_CASE("Linear vs Elmore Comparison") {
-        std::vector<Sink> sinks = {Sink("s1", Point<int>(10, 20), 1.0),
-                                   Sink("s2", Point<int>(30, 40), 1.0),
-                                   Sink("s3", Point<int>(50, 10), 1.0)};
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(10, 20), 1.0), Sink("s2", Point<int>(30, 40), 1.0),
+               Sink("s3", Point<int>(50, 10), 1.0)};
 
         auto dme_linear = create_dme_algorithm<LinearDelayCalculator>(sinks, 0.5, 0.2);
         NodeIdx rl = dme_linear.build_clock_tree();
@@ -349,8 +347,8 @@ TEST_SUITE("Integration Tests") {
         std::vector<Sink> sinks;
         sinks.reserve(8);
         for (int i = 0; i < 8; ++i) {
-            sinks.emplace_back(std::string("s") + std::to_string(i),
-                               Point<int>(i * 10, i * 5), 1.0 + i * 0.1);
+            sinks.emplace_back(std::string("s") + std::to_string(i), Point<int>(i * 10, i * 5),
+                               1.0 + i * 0.1);
         }
 
         auto dme = create_dme_algorithm<LinearDelayCalculator>(sinks);
@@ -484,9 +482,9 @@ TEST_SUITE("Elongation Integration Tests") {
 
 TEST_CASE("Edge Cases") {
     SUBCASE("Sinks at same position") {
-        std::vector<Sink> sinks = {Sink("s1", Point<int>(10, 10), 1.0),
-                                   Sink("s2", Point<int>(10, 10), 1.0),
-                                   Sink("s3", Point<int>(10, 10), 1.0)};
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(10, 10), 1.0), Sink("s2", Point<int>(10, 10), 1.0),
+               Sink("s3", Point<int>(10, 10), 1.0)};
         auto calculator = std::make_unique<LinearDelayCalculator>();
         DMEAlgorithm dme(sinks, std::move(calculator));
         NodeIdx root = dme.build_clock_tree();
@@ -496,8 +494,8 @@ TEST_CASE("Edge Cases") {
     }
 
     SUBCASE("Very distant sinks") {
-        std::vector<Sink> sinks = {Sink("s1", Point<int>(0, 0), 1.0),
-                                   Sink("s2", Point<int>(1000, 1000), 1.0)};
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(0, 0), 1.0), Sink("s2", Point<int>(1000, 1000), 1.0)};
         auto calculator = std::make_unique<LinearDelayCalculator>();
         DMEAlgorithm dme(sinks, std::move(calculator));
         NodeIdx root = dme.build_clock_tree();
