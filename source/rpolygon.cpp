@@ -123,22 +123,57 @@ namespace recti {
         return !violate(&v_max, &v_min, [](T value_a, T value_b) { return value_a < value_b; });
     }
 
+    /**
+     * @brief Check if a rectilinear polygon is x-monotone.
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Polygon vertices.
+     * @return true if the polygon is x-monotone.
+     */
     template <typename T> auto rpolygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool {
         auto x_key
             = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
         return rpolygon_is_monotone(pointset, x_key);
     }
 
+    /**
+     * @brief Check if a rectilinear polygon is y-monotone.
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Polygon vertices.
+     * @return true if the polygon is y-monotone.
+     */
     template <typename T> auto rpolygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool {
         auto y_key
             = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
         return rpolygon_is_monotone(pointset, y_key);
     }
 
+    /**
+     * @brief Check if a rectilinear polygon is convex.
+     *
+     * A rectilinear polygon is convex iff it is both x-monotone and y-monotone.
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Polygon vertices.
+     * @return true if the polygon is convex.
+     */
     template <typename T> auto rpolygon_is_convex(std::span<const Point<T>> pointset) -> bool {
         return rpolygon_is_xmonotone(pointset) && rpolygon_is_ymonotone(pointset);
     }
 
+    /**
+     * @brief Determine if a point is strictly inside a rectilinear polygon.
+     *
+     * Uses a simplified ray casting algorithm optimized for rectilinear
+     * polygons, checking x-coordinate crossing when the query y lies
+     * between consecutive edge y-coordinates.
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Polygon vertices.
+     * @param[in] query_point The point to test.
+     * @return true if the point is strictly inside the polygon.
+     */
     template <typename T> auto point_in_rpolygon(std::span<const Point<T>> pointset,
                                                  const Point<T>& query_point) -> bool {
         auto previous_point = pointset.back();
@@ -159,11 +194,21 @@ namespace recti {
         return result;
     }
 
+    /**
+     * @brief Determine if a rectilinear polygon is oriented anti-clockwise.
+     *
+     * Uses the minimum point and its predecessor to infer orientation,
+     * which is sufficient for rectilinear polygons.
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Polygon vertices.
+     * @return true if the polygon is oriented anti-clockwise.
+     */
     template <typename T> auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset)
         -> bool {
         const auto min_iterator = std::min_element(pointset.begin(), pointset.end());
         const auto prev_iterator = min_iterator != pointset.begin() ? std::prev(min_iterator)
-                                                                    : std::prev(pointset.end());
+                                                                     : std::prev(pointset.end());
         return prev_iterator->ycoord() > min_iterator->ycoord();
     }
 
@@ -174,6 +219,16 @@ namespace recti {
     template auto point_in_rpolygon<int>(std::span<const Point<int>>, const Point<int>&) -> bool;
     template auto rpolygon_is_anticlockwise<int>(std::span<const Point<int>>) -> bool;
 
+    /**
+     * @brief Create a test rectilinear polygon from a range of points (legacy version).
+     *
+     * Partitions and sorts points into four segments to produce a rectilinear
+     * polygon shape. This is an older implementation kept for compatibility.
+     *
+     * @tparam FwIter Forward iterator type over Point<T>.
+     * @param[in] first Beginning of the point range.
+     * @param[in] last End of the point range.
+     */
     template <typename FwIter> void create_test_rpolygon_old(FwIter&& first, FwIter&& last) {
         assert(first != last);
 
@@ -226,6 +281,18 @@ namespace recti {
         }
     }
 
+    /**
+     * @brief Create a test rectilinear polygon from a range of points.
+     *
+     * Uses cross product partitioning to separate upper and lower chains,
+     * then sorts the four resulting segments to form a valid rectilinear
+     * polygon.
+     *
+     * @tparam FwIter Forward iterator type over Point<T>.
+     * @param[in] first Beginning of the point range.
+     * @param[in] last End of the point range.
+     * @return A vector of points forming the test rectilinear polygon.
+     */
     template <typename FwIter> auto create_test_rpolygon(FwIter first, FwIter last)
         -> std::vector<typename std::iterator_traits<FwIter>::value_type> {
         using T = std::iterator_traits<FwIter>::value_type::value_type;

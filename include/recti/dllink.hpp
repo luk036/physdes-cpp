@@ -28,9 +28,9 @@ template <typename T> class Dllink {
     /**
      * @brief Construct a new Dllink object
      *
-     * @param[in] data the data
+     * @param[in] dat the data
      */
-    constexpr explicit Dllink(T data) noexcept : data{std::move(data)} {
+    constexpr explicit Dllink(T dat) noexcept : data{std::move(dat)} {
         static_assert(sizeof(Dllink) <= 24, "keep this class small");
     }
 

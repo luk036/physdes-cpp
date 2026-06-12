@@ -6,7 +6,6 @@
 #include <recti/detail/svg_utils.hpp>
 #include <recti/generic.hpp>
 #include <recti/global_router.hpp>
-// #include <recti/halton_int.hpp>
 #include <recti/interval.hpp>
 #include <recti/logger.hpp>
 #include <recti/point.hpp>
@@ -21,6 +20,11 @@ namespace recti {
     // NodeType functions
     // =============================================================================
 
+    /**
+     * @brief Convert a NodeType enum value to its string representation.
+     * @param[in] routing_node_type The NodeType to convert.
+     * @return A string representation of the NodeType.
+     */
     std::string to_string(const NodeType routing_node_type) {
         switch (routing_node_type) {
             case NodeType::STEINER:
@@ -696,12 +700,6 @@ namespace recti::detail {
                 .min_x = min_x,
                 .min_y = min_y};
     }
-
-    // std::pair<double, double> scale_coords(int x, int y, const SvgParams& params) {
-    //     double sx = params.margin + (x - params.min_x) * params.scale;
-    //     double sy = params.margin + (y - params.min_y) * params.scale;
-    //     return {sx, sy};
-    // }
 
     template <> void draw_node<Point<int, int>>(std::ostringstream& svg,
                                                 const RoutingNode<Point<int, int>>* node,

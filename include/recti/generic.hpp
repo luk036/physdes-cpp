@@ -5,6 +5,17 @@
 // #include <cmath>  // for abs
 
 namespace recti {
+    /**
+     * @brief Compute the absolute value of a number.
+     *
+     * Returns the absolute (non-negative) value of the input.
+     * Unlike std::abs, this function works for any type supporting
+     * comparison against zero and unary negation.
+     *
+     * @tparam T The type of the value.
+     * @param[in] value The input value.
+     * @return The absolute value of the input.
+     */
     template <typename T> constexpr auto my_abs(const T& value) -> T {
         return value < 0 ? -value : value;
     }

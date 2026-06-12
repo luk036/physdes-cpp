@@ -292,34 +292,7 @@ namespace recti {
             return out;
         }
 
-        // /**
-        //  * @brief minimum distance with
-        //  *
-        //  * @param[in] other
-        //  * @return constexpr auto
-        //  */
-        // constexpr auto min_dist_change_with(ManhattanArc& other) {
-        //     auto minDist = this->min_dist_with(other);
-        //     auto mobj1 = this->enlarge_with(minDist);
-        //     auto mobj2 = other.enlarge_with(minDist);
-        //     other = mobj1.intersect_with(other);
-        //     *this = mobj2.intersect_with(*this);
-        //     return minDist;
-        // }
     };
 #pragma pack(pop)
-
-    // template <typename U1, typename U2>  //
-    // constexpr auto min_dist_change_merge(U1& lhs, U2& rhs) {
-    //     if constexpr (std::is_scalar<U1>::value) {
-    //         if constexpr (std::is_scalar<U2>::value) {
-    //             return std::abs(lhs - rhs);
-    //         } else {
-    //             return rhs.min_dist_change_with(lhs);
-    //         }
-    //     } else {
-    //         return lhs.min_dist_change_with(rhs);
-    //     }
-    // }
 
 }  // namespace recti

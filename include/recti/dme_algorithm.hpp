@@ -497,13 +497,4 @@ namespace recti {
  */
 extern void example_dme_usage();
 
-// Main function for testing (commented out by default)
-// int main() {
-//     try {
-//         example_dme_usage(); // Call the example usage function.
-//     } catch (const std::exception& e) {
-//         std::cerr << "Error: " << e.what() << '\n';
-//         return 1;
-//     }
-//     return 0;
-// }
+

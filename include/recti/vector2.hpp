@@ -66,7 +66,7 @@ namespace recti {
          *
          * This function provides read-only access to the y-coordinate of the `Vector2` object.
          *
-         * @return constexpr const T1& A const reference to the y-coordinate of the vector.
+         * @return constexpr const T2& A const reference to the y-coordinate of the vector.
          */
         constexpr auto y() const noexcept -> const T2& { return this->_y; }
 

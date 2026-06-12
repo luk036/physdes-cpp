@@ -10,6 +10,18 @@
 
 namespace recti {
 
+    /**
+     * @brief Find the nearest edge to a concave vertex.
+     *
+     * Searches the polygon for the edge connected to `vcurr` (via vertical or
+     * horizontal projection) that yields the minimum distance, used to decide
+     * where to insert a new cut vertex during convex decomposition.
+     *
+     * @tparam T Coordinate type.
+     * @param[in] lst All polygon points (including newly inserted ones).
+     * @param[in] vcurr The current concave vertex to cut from.
+     * @return Pair containing the nearest edge node and whether the cut is vertical.
+     */
     template <typename T>
     static auto _find_min_dist_point(const std::vector<Point<T>>& lst, Dllink<size_t>* vcurr)
         -> std::pair<Dllink<size_t>*, bool> {

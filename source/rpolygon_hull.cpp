@@ -5,6 +5,19 @@
 #include <recti/rpolygon_hull.hpp>
 
 namespace recti {
+    /**
+     * @brief Create a monotone hull from a rectilinear polygon.
+     *
+     * Iteratively removes concave vertices from the polygon boundary by
+     * walking the circular linked list and detaching points that violate
+     * monotonicity or have the wrong turn direction.
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Polygon vertices.
+     * @param[in] is_anticlockwise Whether the polygon is oriented anti-clockwise.
+     * @param[in] dir Function extracting comparison coordinates from a point.
+     * @return A vector of points forming the monotone hull.
+     */
     template <typename T>
     auto rpolygon_make_monotone_hull(std::span<const Point<T>> pointset, bool is_anticlockwise,
                                      const std::function<std::pair<T, T>(const Point<T>&)>& dir)

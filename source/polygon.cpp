@@ -7,6 +7,19 @@
 
 namespace recti {
 
+    /**
+     * @brief Create a monotone polygon from a range of points.
+     *
+     * Partitions and sorts the point range into two monotone chains
+     * using the given comparison function. The resulting polygon is
+     * monotone with respect to the direction defined by `dir`.
+     *
+     * @tparam FwIter Forward iterator type over Point<T>.
+     * @tparam Compare Comparison function type.
+     * @param[in] first Beginning of the point range.
+     * @param[in] last End of the point range.
+     * @param[in] dir Comparison function for ordering points.
+     */
     template <typename FwIter, typename Compare>
     void create_mono_polygon(FwIter first, FwIter last, const Compare& dir) {
         assert(first != last);
@@ -23,6 +36,13 @@ namespace recti {
         std::reverse(middle, last);
     }
 
+    /**
+     * @brief Create an x-monotone polygon from a range of points.
+     *
+     * @tparam FwIter Forward iterator type over Point<T>.
+     * @param[in] first Beginning of the point range.
+     * @param[in] last End of the point range.
+     */
     template <typename FwIter> auto create_xmono_polygon(FwIter first, FwIter last) -> void {
         return create_mono_polygon(first, last, [](const auto& lhs, const auto& rhs) -> bool {
             return std::make_pair(lhs.xcoord(), lhs.ycoord())
@@ -30,6 +50,13 @@ namespace recti {
         });
     }
 
+    /**
+     * @brief Create a y-monotone polygon from a range of points.
+     *
+     * @tparam FwIter Forward iterator type over Point<T>.
+     * @param[in] first Beginning of the point range.
+     * @param[in] last End of the point range.
+     */
     template <typename FwIter> auto create_ymono_polygon(FwIter first, FwIter last) -> void {
         return create_mono_polygon(first, last, [](const auto& lhs, const auto& rhs) -> bool {
             return std::make_pair(lhs.ycoord(), lhs.xcoord())
@@ -37,6 +64,15 @@ namespace recti {
         });
     }
 
+    /**
+     * @brief Check if a polygon is monotone with respect to a given direction.
+     *
+     * @tparam T Coordinate type.
+     * @tparam DirFunc Direction function type returning a pair key.
+     * @param[in] pointset Polygon vertices.
+     * @param[in] dir Function extracting a comparison key from a point.
+     * @return true if the polygon is monotone in the given direction.
+     */
     template <typename T, typename DirFunc>
     auto polygon_is_monotone(std::span<const Point<T>> pointset, const DirFunc& dir) -> bool {
         if (pointset.size() <= 3) {
@@ -79,18 +115,42 @@ namespace recti {
         return true;
     }
 
+    /**
+     * @brief Check if a polygon is x-monotone.
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Polygon vertices.
+     * @return true if the polygon is x-monotone.
+     */
     template <typename T> auto polygon_is_xmonotone(std::span<const Point<T>> pointset) -> bool {
         auto x_key
             = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.xcoord(), pt.ycoord()}; };
         return polygon_is_monotone(pointset, x_key);
     }
 
+    /**
+     * @brief Check if a polygon is y-monotone.
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Polygon vertices.
+     * @return true if the polygon is y-monotone.
+     */
     template <typename T> auto polygon_is_ymonotone(std::span<const Point<T>> pointset) -> bool {
         auto y_key
             = [](const Point<T>& pt) -> std::pair<T, T> { return {pt.ycoord(), pt.xcoord()}; };
         return polygon_is_monotone(pointset, y_key);
     }
 
+    /**
+     * @brief Determine if a point is within a polygon using the winding number algorithm.
+     *
+     * See http://www.faqs.org/faqs/graphics/algorithms-faq/ Subject 2.03
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Polygon vertices.
+     * @param[in] ptq The query point.
+     * @return true if strictly inside, false if strictly outside.
+     */
     template <typename T>
     auto point_in_polygon(std::span<const Point<T>> pointset, const Point<T>& ptq) -> bool {
         if (pointset.empty()) return false;
@@ -120,6 +180,13 @@ namespace recti {
         return res;
     }
 
+    /**
+     * @brief Check if a polygon is oriented anti-clockwise.
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Polygon vertices.
+     * @return true if the polygon is oriented anti-clockwise.
+     */
     template <typename T> auto polygon_is_anticlockwise(std::span<const Point<T>> pointset)
         -> bool {
         const auto it1 = std::min_element(pointset.begin(), pointset.end());

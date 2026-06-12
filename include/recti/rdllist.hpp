@@ -86,23 +86,55 @@ class RDllist {
         }
     }
 
+    /**
+     * @brief Access a node by index (mutable).
+     *
+     * @param[in] k The index of the node to access.
+     * @return A mutable reference to the Dllink at index k.
+     */
     auto operator[](size_t k) -> Dllink<size_t>& { return cycle.at(k); }
 
+    /**
+     * @brief Access a node by index (const).
+     *
+     * @param[in] k The index of the node to access.
+     * @return A const reference to the Dllink at index k.
+     */
     auto operator[](size_t k) const -> const Dllink<size_t>& { return cycle.at(k); }
 
+    /**
+     * @brief Get an iterator starting from a given node (mutable).
+     *
+     * @param[in] k The index of the starting node.
+     * @return An RDllIterator beginning at the given node.
+     */
     auto from_node(size_t k) -> RDllIterator { return RDllIterator{&cycle.at(k)}; }
 
+    /**
+     * @brief Get an iterator starting from a given node (const).
+     *
+     * @param[in] k The index of the starting node.
+     * @return An RDllIterator beginning at the given node.
+     */
     auto from_node(size_t k) const -> RDllIterator {
         return RDllIterator{const_cast<Dllink<size_t>*>(&cycle.at(k))};
     }
 
+    /**
+     * @brief Get an iterator to the beginning of the list.
+     *
+     * @return An RDllIterator to the first node.
+     */
     auto begin() -> RDllIterator { return from_node(0); }
 
+    /**
+     * @brief Get an iterator to the beginning of the list (const).
+     *
+     * @return An RDllIterator to the first node.
+     */
     auto begin() const -> RDllIterator { return from_node(0); }
 
-    auto end() -> RDllIterator {
-        return RDllIterator{nullptr};  // Dummy end iterator
-    }
-
-    auto end() const -> RDllIterator { return RDllIterator{nullptr}; }
+    // auto end() -> RDllIterator { return RDllIterator{nullptr}; }
+    // auto end() const -> RDllIterator { return RDllIterator{nullptr}; }
+    // end() is unused for circular iteration — from_node(k) provides the stop sentinel
 };

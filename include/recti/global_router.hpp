@@ -171,64 +171,6 @@ namespace recti {
         auto _find_nearest_node(const IntPoint& point, std::optional<std::string> exclude_id
                                                        = std::nullopt) -> RoutingNode<IntPoint>*;
 
-        // auto _find_nearest_insertion_with_constraints_old(const IntPoint& pt,
-        //                                               int allowed_wirelength =
-        //                                               std::numeric_limits<int>::max(),
-        //                                               std::optional<std::vector<Keepout>>
-        //                                               keepouts = std::nullopt)
-        //     -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*> {
-        //     RoutingNode<IntPoint>* parent_node = nullptr;
-        //     RoutingNode<IntPoint>* nearest_node = &this->source_node;
-        //     int min_distance = this->source_node.pt.min_dist_with(pt);
-
-        //     std::function<void(RoutingNode<IntPoint>*)> traverse = [&](RoutingNode<IntPoint>*
-        //     node) {
-        //         for (auto* child : node->children) {
-        //             auto possible_path = node->pt.hull_with(child->pt);
-        //             int distance = possible_path.min_dist_with(pt);
-        //             auto nearest_pt = possible_path.nearest_to(pt);
-        //             int path_length
-        //                 = node->path_length + node->pt.min_dist_with(nearest_pt) + distance;
-        //             if (path_length > allowed_wirelength) continue;
-        //             if (distance < min_distance) {
-        //                 bool block = false;
-        //                 if (keepouts.has_value()) {
-        //                     auto path1 = nearest_pt.hull_with(pt);
-        //                     auto path2 = nearest_pt.hull_with(node->pt);
-        //                     auto path3 = nearest_pt.hull_with(child->pt);
-        //                     for (const auto& keepout : *keepouts) {
-        //                         if (keepout.contains(nearest_pt)) {
-        //                             block = true;
-        //                             break;
-        //                         }
-        //                         if (keepout.blocks(path1) || keepout.blocks(path2)
-        //                             || keepout.blocks(path3)) {
-        //                             block = true;
-        //                             break;
-        //                         }
-        //                     }
-        //                 }
-        //                 if (!block) {
-        //                     min_distance = distance;
-        //                     if (nearest_pt == node->pt) {
-        //                         nearest_node = node;
-        //                         parent_node = nullptr;
-        //                     } else if (nearest_pt == child->pt) {
-        //                         nearest_node = child;
-        //                         parent_node = nullptr;
-        //                     } else {
-        //                         parent_node = node;
-        //                         nearest_node = child;
-        //                     }
-        //                 }
-        //             }
-        //             traverse(child);
-        //         }
-        //     };
-        //     traverse(&this->source_node);
-        //     return {parent_node, nearest_node};
-        // }
-
         auto _find_nearest_insertion_with_constraints(const IntPoint& pt,
                                                       int allowed_wirelength
                                                       = std::numeric_limits<int>::max(),
@@ -427,7 +369,7 @@ namespace recti {
          */
         void route_with_steiners() {
             this->tree.worst_wirelength = this->worst_wirelength;  // Store the allowed wirelength
-                                                                   // in the tree for reference.q
+                                                                    // in the tree for reference
             for (const auto& terminal : this->terminal_positions) {
                 this->tree.insert_terminal_with_steiner(terminal, this->keepouts);
             }
@@ -435,14 +377,14 @@ namespace recti {
 
         /**
          * @brief Routes terminals with wirelength constraints.
-         * @param multiplier A multiplier for the worst wirelength to determine the allowed
-         * wirelength.
+         * @param[in] multiplier A multiplier for the worst wirelength to determine the allowed
+         *                       wirelength.
          */
         void route_with_constraints(double multiplier = 1.0) {
             int allowed_wirelength
                 = static_cast<int>(std::round(this->worst_wirelength * multiplier));
             this->tree.worst_wirelength = this->worst_wirelength;  // Store the allowed wirelength
-                                                                   // in the tree for reference.q
+                                                                    // in the tree for reference
             for (const auto& terminal : this->terminal_positions) {
                 this->tree.insert_terminal_with_constraints(terminal, allowed_wirelength,
                                                             this->keepouts);
