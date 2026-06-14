@@ -295,12 +295,17 @@ namespace recti {
         double min_delay = *std::ranges::min_element(sink_delays);
         double skew = max_delay - min_delay;
 
+        // NOTE: dereference is extracted to a local ref *before* the typeid call.
+        // clang -Wpotentially-evaluated-expression fires when a unique_ptr
+        // dereference appears directly inside typeid() for polymorphic types,
+        // because the expression is actually evaluated at runtime.
+        const auto& delay_calc_ref = *delay_calculator;
         return {.max_delay = max_delay,
                 .min_delay = min_delay,
                 .skew = skew,
                 .sink_delays = sink_delays,
                 .total_wirelength = total_wirelength(root),
-                .delay_model = typeid(*delay_calculator).name()};
+                .delay_model = typeid(delay_calc_ref).name()};
     }
 
     int DMEAlgorithm::total_wirelength(NodeIdx root) const { return sum_wirelength(tree, root); }
