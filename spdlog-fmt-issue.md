@@ -65,7 +65,7 @@ Required for fmt 12.x Unicode support on Windows:
 
 ```lua
 elseif is_plat("windows") then
-    add_cxflags("/EHsc /W4 /WX /wd4459 /utf-8", { force = true })
+    add_cxflags("/EHsc /W4 /WX /wd5285 /wd4459 /utf-8", { force = true })
 ```
 
 Without this flag, fmt 12.x fails to compile with:
@@ -79,7 +79,7 @@ The core fix to handle duplicate symbols:
 
 ```lua
 elseif is_plat("windows") then
-    add_cxflags("/EHsc /W4 /WX /wd4459 /utf-8", { force = true })
+    add_cxflags("/EHsc /W4 /WX /wd5285 /wd4459 /utf-8", { force = true })
     add_ldflags("/FORCE:MULTIPLE", { force = true })
 end
 ```
