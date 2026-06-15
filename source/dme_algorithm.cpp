@@ -14,7 +14,9 @@ namespace recti {
         int distance, double left_delay, double right_delay, double /* left_capacitance */,
         double /* right_capacitance */) const {
         if (distance == 0) {
-            return {.extend_left=0, .raw_extend_left=0, .delay_left=std::max(left_delay, right_delay)};
+            return {.extend_left = 0,
+                    .raw_extend_left = 0,
+                    .delay_left = std::max(left_delay, right_delay)};
         }
         double skew = right_delay - left_delay;
         int raw_extend_left = static_cast<int>(std::round((skew / delay_per_unit + distance) / 2));
@@ -28,7 +30,9 @@ namespace recti {
             extend_left = distance;
             delay_left = right_delay;
         }
-        return {.extend_left=extend_left, .raw_extend_left=raw_extend_left, .delay_left=delay_left};
+        return {.extend_left = extend_left,
+                .raw_extend_left = raw_extend_left,
+                .delay_left = delay_left};
     }
 
     // ---------------------------------------------------------------------------
@@ -39,7 +43,9 @@ namespace recti {
                                                                  double left_capacitance,
                                                                  double right_capacitance) const {
         if (distance == 0) {
-            return {.extend_left=0, .raw_extend_left=0, .delay_left=std::max(left_delay, right_delay)};
+            return {.extend_left = 0,
+                    .raw_extend_left = 0,
+                    .delay_left = std::max(left_delay, right_delay)};
         }
         double skew = right_delay - left_delay;
         double r = distance * unit_resistance;
@@ -61,7 +67,9 @@ namespace recti {
             extend_left = distance;
             delay_left = right_delay;
         }
-        return {.extend_left=extend_left, .raw_extend_left=raw_extend_left, .delay_left=delay_left};
+        return {.extend_left = extend_left,
+                .raw_extend_left = raw_extend_left,
+                .delay_left = delay_left};
     }
 
     // -----------------------------------------------------------------------
@@ -344,7 +352,7 @@ namespace recti {
             }
         };
 
-        TraverseHelper{.tree=tree, .stats=stats}(root, SIZE_MAX);
+        TraverseHelper{.tree = tree, .stats = stats}(root, SIZE_MAX);
 
         stats.total_nodes = static_cast<int>(stats.nodes.size());
         stats.total_sinks = static_cast<int>(stats.sinks.size());
