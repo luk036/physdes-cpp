@@ -280,7 +280,9 @@ TEST_SUITE("Tree Statistics Tests") {
         CHECK_EQ(stats.nodes.size(), 3);
         CHECK_EQ(stats.wires.size(), 2);
 
-        bool found_s1 = false, found_s2 = false, found_root = false;
+        bool found_s1 = false;
+        bool found_s2 = false;
+        bool found_root = false;
         for (const auto& node : stats.nodes) {
             if (node.name == "s1") {
                 found_s1 = true;
@@ -380,7 +382,8 @@ TEST_SUITE("Elongation Integration Tests") {
             // Caller-side logic (matching _compute_merging_segment):
             int left_wl = tp.extend_left;
             int right_wl = distance - tp.raw_extend_left;
-            bool left_el = false, right_el = false;
+            bool left_el = false;
+            bool right_el = false;
             if (tp.raw_extend_left < 0) {
                 left_wl = 0;
                 right_wl = distance - tp.raw_extend_left;
@@ -407,7 +410,8 @@ TEST_SUITE("Elongation Integration Tests") {
 
             int left_wl = tp.extend_left;
             int right_wl = distance - tp.raw_extend_left;
-            bool left_el = false, right_el = false;
+            bool left_el = false;
+            bool right_el = false;
             if (tp.raw_extend_left < 0) {
                 left_wl = 0;
                 right_wl = distance - tp.raw_extend_left;
@@ -437,7 +441,8 @@ TEST_SUITE("Elongation Integration Tests") {
 
             int left_wl = tp.extend_left;
             int right_wl = distance - tp.raw_extend_left;
-            bool left_el = false, right_el = false;
+            bool left_el = false;
+            bool right_el = false;
             if (tp.raw_extend_left < 0) {
                 left_wl = 0;
                 right_wl = distance - tp.raw_extend_left;
@@ -461,7 +466,8 @@ TEST_SUITE("Elongation Integration Tests") {
 
             int left_wl = tp.extend_left;
             int right_wl = distance - tp.raw_extend_left;
-            bool left_el = false, right_el = false;
+            bool left_el = false;
+            bool right_el = false;
             if (tp.raw_extend_left < 0) {
                 left_wl = 0;
                 right_wl = distance - tp.raw_extend_left;

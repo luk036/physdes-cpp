@@ -177,7 +177,8 @@ TEST_SUITE("Comparison Visualization Tests") {
 
     TEST_CASE("Two Tree Comparison") {
         using namespace recti;
-        Tree tree1, tree2;
+        Tree tree1;
+        Tree tree2;
         NodeIdx r1 = tree1.add(TreeNode("root1", Point<int>(50, 50)));
         NodeIdx r2 = tree2.add(TreeNode("root2", Point<int>(50, 150)));
         std::vector<Sink> sinks1
@@ -211,7 +212,8 @@ TEST_SUITE("Comparison Visualization Tests") {
 
     TEST_CASE("Delay Model Comparison") {
         using namespace recti;
-        Tree linear_tree, elmore_tree;
+        Tree linear_tree;
+        Tree elmore_tree;
         NodeIdx lr = linear_tree.add(TreeNode("linear_root", Point<int>(100, 100)));
         NodeIdx er = elmore_tree.add(TreeNode("elmore_root", Point<int>(100, 100)));
         std::vector<Sink> sinks
