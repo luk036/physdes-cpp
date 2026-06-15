@@ -150,7 +150,7 @@ cmake -S test -B build/test -DUSE_STATIC_ANALYZER='clang-tidy;cppcheck'
 ### Compiler Flags
 
 - **GCC/Clang**: `-Wall -Wpedantic -Wextra -Werror -Wno-deprecated-declarations`
-- **MSVC**: `/utf-8 /W4 /WX /wd5285`
+- **MSVC**: `/utf-8 /W4 /WX`
 
 ### Error Handling
 
@@ -213,7 +213,7 @@ TEST_CASE("Vector2 operations") {
 
 | Package | Version | Purpose |
 |---------|---------|---------|
-| doctest | 2.4.11 | Testing framework |
+| doctest | 2.5.2 | Testing framework |
 | rapidcheck | master | Property-based testing |
 | PackageProject.cmake | 1.8.0 | Installable targets |
 | Format.cmake | 1.7.3 | Code formatting |
