@@ -1,3 +1,7 @@
+/** @file dllink.hpp
+ *  @brief Doubly-linked list node template class.
+ */
+
 #pragma once
 
 #include <cassert>
@@ -17,6 +21,8 @@ class RDllIterator;
  * algorithm. This saves memory and run-time to update the length
  * information. Note that this class does not own the list node. They
  * are supplied by the caller in order to better reuse the nodes.
+ *
+ * @tparam T The data type stored in each node.
  */
 #pragma pack(push, 1)
 template <typename T> class Dllink {

@@ -1,3 +1,7 @@
+/** @file rpolygon_hull.hpp
+ *  @brief Functions to compute monotone and convex hulls of rectilinear polygons.
+ */
+
 #pragma once
 
 #include <functional>

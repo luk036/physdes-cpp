@@ -1,3 +1,7 @@
+/** @file interval.hpp
+ *  @brief Interval (range) template class with arithmetic and set operations.
+ */
+
 #pragma once
 
 // #include <algorithm> // import std::min, std::max

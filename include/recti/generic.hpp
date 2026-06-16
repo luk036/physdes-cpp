@@ -1,3 +1,7 @@
+/** @file generic.hpp
+ *  @brief Generic free functions for geometric operations (overlap, intersection, hull, distance).
+ */
+
 #pragma once
 
 // #include <algorithm> // import std::min, std::max

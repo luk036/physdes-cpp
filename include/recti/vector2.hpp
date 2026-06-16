@@ -1,3 +1,7 @@
+/** @file vector2.hpp
+ *  @brief 2D vector template class with arithmetic and comparison operations.
+ */
+
 #pragma once
 
 #include <tuple>    // import std::tie()
@@ -12,8 +16,14 @@
 namespace recti {
 
     /**
-     * @brief vector2
+     * @brief 2D vector template class.
      *
+     * Represents a 2-dimensional vector with x and y components.
+     * Supports arithmetic operations (addition, subtraction, scaling, cross product)
+     * and comparison operators.
+     *
+     * @tparam T1 Type of the x-component.
+     * @tparam T2 Type of the y-component (defaults to T1).
      */
     template <typename T1, typename T2 = T1> class Vector2 {
       private:
@@ -201,7 +211,7 @@ namespace recti {
          *
          * @tparam U1 The type of the x component of the other vector.
          * @tparam U2 The type of the y component of the other vector.
-         * @param[in] right_vector The vector to add to this vector.
+         * @param[in] right_vector The vector to add.
          * @param[in] left_vector The vector to add to the right-hand side vector.
          * @return A new vector that is the sum of the two input vectors.
          */
@@ -216,8 +226,8 @@ namespace recti {
          *
          * @tparam U1 The type of the x component of the other vector.
          * @tparam U2 The type of the y component of the other vector.
-         * @param[in] right_vector The vector to subtract from this vector.
-         * @param[in] left_vector The vector to subtract the right-hand side vector from.
+         * @param[in] right_vector The vector to subtract from.
+         * @param[in] left_vector The vector to subtract.
          * @return A new vector that is the difference of the two input vectors.
          */
         template <typename U1, typename U2>  //

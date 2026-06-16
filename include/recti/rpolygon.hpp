@@ -1,3 +1,7 @@
+/** @file rpolygon.hpp
+ *  @brief Rectilinear polygon (RPolygon) template class.
+ */
+
 #pragma once
 
 #include <span>

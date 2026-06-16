@@ -1,3 +1,7 @@
+/** @file polygon.hpp
+ *  @brief General polygon template class with geometric properties.
+ */
+
 #pragma once
 
 #include <span>

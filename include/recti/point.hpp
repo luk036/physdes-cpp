@@ -1,3 +1,7 @@
+/** @file point.hpp
+ *  @brief 2D Point template class supporting intervals, arithmetic, and geometric queries.
+ */
+
 #pragma once
 
 #include <tuple>    // for std::tie()
@@ -63,15 +67,13 @@ namespace recti {
             : _xcoord{std::move(xcoord)}, _ycoord{std::move(ycoord)} {}
 
         /**
-         * Gets the x coordinate of this Point.
-         *
+         * @brief Gets the x coordinate of this Point.
          * @return Const reference to the x coordinate.
          */
         constexpr auto xcoord() const -> const T1& { return this->_xcoord; }
 
         /**
-         * Gets the y coordinate of this Point.
-         *
+         * @brief Gets the y coordinate of this Point.
          * @return Const reference to the y coordinate.
          */
         constexpr auto ycoord() const -> const T2& { return this->_ycoord; }
@@ -82,7 +84,7 @@ namespace recti {
         ///@{
 
         /**
-         * Compares this Point object with another Point object for equality.
+         * @brief Compares this Point object with another Point object for equality.
          *
          * This operator checks if the x and y coordinates of this Point are equal
          * to the x and y coordinates of the given Point object. It allows Points
@@ -99,7 +101,7 @@ namespace recti {
         }
 
         /**
-         * Compares this Point object with another Point object to check if it is less than.
+         * @brief Compares this Point object with another Point object to check if it is less than.
          *
          * This operator checks if this Point is less than the given Point by comparing
          * their x and y coordinates. It allows Points to be compared in a generic way.
@@ -115,11 +117,11 @@ namespace recti {
         }
 
         /**
-         * Compares this Point object with another Point object for equality.
+         * @brief Compares this Point object with another Point object for inequality.
          *
          * This operator checks if the x and y coordinates of this Point are not equal
          * to the x and y coordinates of the given Point object. It allows Points
-         * to be compared for equality in a generic way.
+         * to be compared for inequality in a generic way.
          *
          * @tparam U1 - The type of x coordinate for this Point.
          * @tparam U2 - The type of y coordinate for this Point.
@@ -139,12 +141,12 @@ namespace recti {
         ///@{
 
         /**
-         * Adds a vector (translation) to this Point.
+         * @brief Adds a vector (translation) to this Point.
          *
          * Translates this Point by the given vector's x and y components.
          *
-         * @tparam U1 - The x coordinate type of this Point.
-         * @tparam U2 - The y coordinate type of this Point.
+         * @tparam U1 - The x coordinate type of the vector.
+         * @tparam U2 - The y coordinate type of the vector.
          * @param[in] right_point - The vector to translate this Point by.
          * @return Reference to this Point after translation.
          */
@@ -156,12 +158,12 @@ namespace recti {
         }
 
         /**
-         * Adds a vector (translation) to this Point.
+         * @brief Adds a vector (translation) to this Point.
          *
          * Translates this Point by the given vector's x and y components.
          *
-         * @tparam U1 - The x coordinate type of this Point.
-         * @tparam U2 - The y coordinate type of this Point.
+         * @tparam U1 - The x coordinate type of the vector.
+         * @tparam U2 - The y coordinate type of the vector.
          * @param[in] vector - The vector to translate this Point by.
          * @return A new Point after translation.
          */
@@ -173,12 +175,12 @@ namespace recti {
         }
 
         /**
-         * Subtracts a vector (translation) from this Point.
+         * @brief Subtracts a vector (translation) from this Point.
          *
          * Translates this Point by the given vector's x and y components.
          *
-         * @tparam U1 - The x coordinate type of this Point.
-         * @tparam U2 - The y coordinate type of this Point.
+         * @tparam U1 - The x coordinate type of the vector.
+         * @tparam U2 - The y coordinate type of the vector.
          * @param[in] right_point - The vector to translate this Point by.
          * @return Reference to this Point after translation.
          */

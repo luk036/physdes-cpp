@@ -1,3 +1,7 @@
+/** @file to_polygon.hpp
+ *  @brief Conversion function from RPolygon to general Polygon.
+ */
+
 #pragma once
 
 #include <vector>

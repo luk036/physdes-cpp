@@ -1,3 +1,7 @@
+/** @file dme_algorithm.hpp
+ *  @brief Deferred Merge Embedding (DME) algorithm for clock tree synthesis.
+ */
+
 #pragma once
 
 #include <cstddef>
@@ -222,8 +226,8 @@ namespace recti {
          *         raw `raw_extend_left`, and the resulting `delay_left`.
          */
         virtual TappingResult calculate_tapping_point(int distance, double left_delay,
-                                                      double right_delay, double left_capacitance,
-                                                      double right_capacitance) const
+                                                       double right_delay, double left_capacitance,
+                                                       double right_capacitance) const
             = 0;
     };
 
@@ -268,8 +272,8 @@ namespace recti {
          * wire-length rules.
          */
         TappingResult calculate_tapping_point(int distance, double left_delay, double right_delay,
-                                              double /* left_capacitance */,
-                                              double /* right_capacitance */) const override;
+                                               double /* left_capacitance */,
+                                               double /* right_capacitance */) const override;
     };
 
     /**
@@ -318,8 +322,8 @@ namespace recti {
          * and elongation logic applies (see `LinearDelayCalculator`).
          */
         TappingResult calculate_tapping_point(int distance, double left_delay, double right_delay,
-                                              double left_capacitance,
-                                              double right_capacitance) const override;
+                                               double left_capacitance,
+                                               double right_capacitance) const override;
     };
 
     /**

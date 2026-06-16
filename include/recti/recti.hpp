@@ -1,3 +1,7 @@
+/** @file recti.hpp
+ *  @brief Top-level header: Rectangle, HSegment, VSegment types and overlap detection.
+ */
+
 #pragma once
 
 #include <algorithm>  // for std::sort

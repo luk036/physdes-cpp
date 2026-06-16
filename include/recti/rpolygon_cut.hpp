@@ -1,3 +1,7 @@
+/** @file rpolygon_cut.hpp
+ *  @brief Functions for decomposing rectilinear polygons into convex/rectangular pieces.
+ */
+
 #pragma once
 
 #include <span>

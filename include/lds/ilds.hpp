@@ -1,3 +1,7 @@
+/** @file ilds.hpp
+ *  @brief Integer low-discrepancy sequence generators (van der Corput and Halton).
+ */
+
 #pragma once
 
 #include <array>
@@ -22,6 +26,7 @@ namespace ilds {
      *
      * Implementation based on pre-calculating the scale factor.
      *
+     * @tparam Base The base of the sequence (default 2).
      */
     template <unsigned long Base = 2> class VdCorput {
         unsigned long _count;  ///< Current count in the sequence
@@ -82,6 +87,9 @@ namespace ilds {
      *     pop() -> [2, 5]   (next in each sequence)
      *     ...
      * @endverbatim
+     *
+     * @tparam Base1 Base for the first dimension.
+     * @tparam Base2 Base for the second dimension.
      */
     template <unsigned long Base1, unsigned long Base2> class Halton {
         VdCorput<Base1> vdc0;

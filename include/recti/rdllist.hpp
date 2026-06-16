@@ -1,3 +1,7 @@
+/** @file rdllist.hpp
+ *  @brief Circular doubly-linked list implementation for polygon decomposition.
+ */
+
 #pragma once
 
 #include <cstddef>  // for size_t
