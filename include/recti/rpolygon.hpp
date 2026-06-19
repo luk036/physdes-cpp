@@ -292,7 +292,7 @@ namespace recti {
      *
      * @tparam T The numeric type of the point coordinates.
      * @param pointset The set of points defining the rectilinear polygon.
-     * @param ptq The point to test for inclusion in the polygon.
+     * @param query_point The point to test for inclusion in the polygon.
      * @return true if the point is strictly inside the polygon, false if the point
      * is strictly outside the polygon, and an unspecified boolean value if the
      * point is on the boundary of the polygon.
