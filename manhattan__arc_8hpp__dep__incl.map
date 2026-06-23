@@ -1,0 +1,7 @@
+<map id="recti/manhattan_arc.hpp" name="recti/manhattan_arc.hpp">
+<area shape="rect" id="Node000001" title="ManhattanArc template class for the DME algorithm merging segments." alt="" coords="6,5,187,31"/>
+<area shape="rect" id="Node000002" href="$dme__algorithm_8hpp.html" title="Deferred Merge Embedding (DME) algorithm for clock tree synthesis." alt="" coords="5,79,188,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,44,99,79,94,79,94,44"/>
+<area shape="rect" id="Node000003" href="$visualize__clock__tree_8hpp.html" title="SVG visualization utilities for clock trees." alt="" coords="19,152,174,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="99,118,99,152,94,152,94,118"/>
+</map>

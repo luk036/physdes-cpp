@@ -1,0 +1,22 @@
+<map id="recti/manhattan_arc.hpp" name="recti/manhattan_arc.hpp">
+<area shape="rect" id="Node000001" title="ManhattanArc template class for the DME algorithm merging segments." alt="" coords="68,5,249,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="155,225,215,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,31,185,211,180,211,157,31"/>
+<area shape="rect" id="Node000003" href="$interval_8hpp.html" title="Interval (range) template class with arithmetic and set operations." alt="" coords="21,79,121,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="146,33,97,72,94,68,143,29"/>
+<area shape="rect" id="Node000006" href="$point_8hpp.html" title="2D Point template class supporting intervals, arithmetic, and geometric queries." alt="" coords="196,79,279,104"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="173,29,216,68,213,71,170,33"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="54,106,35,121,18,139,9,158,9,167,13,176,32,191,65,204,142,225,141,230,64,209,30,195,9,179,4,168,3,157,13,136,31,117,51,102"/>
+<area shape="rect" id="Node000004" href="$generic_8hpp.html" title="Generic free functions for geometric operations (overlap, intersection, hull, distance)." alt="" coords="23,152,121,177"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="74,104,74,138,69,139,68,104"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="37,225,107,251"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="75,178,75,212,69,212,69,178"/>
+<area shape="poly" id="edge8_Node000006_Node000002" title=" " alt="" coords="236,105,197,213,192,212,231,104"/>
+<area shape="poly" id="edge9_Node000006_Node000004" title=" " alt="" coords="212,106,112,149,110,144,210,102"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="311,225,366,251"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="280,99,323,117,344,132,360,151,365,166,365,183,355,213,350,212,360,182,360,167,355,153,340,136,321,122,278,104"/>
+<area shape="rect" id="Node000008" href="$vector2_8hpp.html" title="2D vector template class with arithmetic and comparison operations." alt="" coords="247,152,345,177"/>
+<area shape="poly" id="edge10_Node000006_Node000008" title=" " alt="" coords="249,103,280,140,276,143,245,106"/>
+<area shape="poly" id="edge12_Node000008_Node000002" title=" " alt="" coords="280,180,217,220,214,215,277,175"/>
+<area shape="poly" id="edge11_Node000008_Node000007" title=" " alt="" coords="305,176,327,212,323,215,301,179"/>
+</map>

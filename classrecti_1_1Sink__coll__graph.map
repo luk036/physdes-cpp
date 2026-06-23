@@ -1,0 +1,5 @@
+<map id="recti::Sink" name="recti::Sink">
+<area shape="rect" id="Node000001" title="Represents a clock sink in the clock tree network." alt="" coords="31,93,118,119"/>
+<area shape="rect" id="Node000002" href="$classrecti_1_1Point.html" title=" " alt="" coords="5,5,144,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,45,77,93,72,93,72,45"/>
+</map>

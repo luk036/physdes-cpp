@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['y_0',['y',['../classrecti_1_1Vector2.html#a6e34f2977ea58a1f7d01b8e42607b310',1,'recti::Vector2']]],
+  ['ycoord_1',['ycoord',['../classrecti_1_1Point.html#aefcd6bdf06cbde541121f02866fea423',1,'recti::Point']]],
+  ['your_20needs_2',['Adjust the template to your needs',['../index.html#autotoc_md3',1,'']]]
+];

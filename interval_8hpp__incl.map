@@ -1,0 +1,9 @@
+<map id="recti/interval.hpp" name="recti/interval.hpp">
+<area shape="rect" id="Node000001" title="Interval (range) template class with arithmetic and set operations." alt="" coords="21,5,154,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,65,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,33,54,69,50,66,77,29"/>
+<area shape="rect" id="Node000003" href="$generic_8hpp.html" title="Generic free functions for geometric operations (overlap, intersection, hull, distance)." alt="" coords="90,79,189,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="98,29,125,66,121,69,94,33"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="105,152,174,177"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="142,104,142,138,137,138,137,104"/>
+</map>

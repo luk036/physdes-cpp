@@ -1,0 +1,15 @@
+<map id="recti/interval.hpp" name="recti/interval.hpp">
+<area shape="rect" id="Node000001" title="Interval (range) template class with arithmetic and set operations." alt="" coords="234,5,367,31"/>
+<area shape="rect" id="Node000002" href="$global__router_8hpp.html" title="Data structures and algorithms for global routing in physical design." alt="" coords="14,79,182,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="256,38,132,81,130,76,255,33"/>
+<area shape="rect" id="Node000004" href="$manhattan__arc_8hpp.html" title="ManhattanArc template class for the DME algorithm merging segments." alt="" coords="210,79,391,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="303,44,303,79,298,79,298,44"/>
+<area shape="rect" id="Node000007" href="$recti_8hpp.html" title="Top&#45;level header: Rectangle, HSegment, VSegment types and overlap detection." alt="" coords="415,79,527,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="342,33,444,76,442,81,340,38"/>
+<area shape="rect" id="Node000003" href="$svg__utils_8hpp.html" title="SVG rendering parameters and utilities for routing tree visualization." alt="" coords="5,152,188,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="100,118,100,152,94,152,95,118"/>
+<area shape="rect" id="Node000005" href="$dme__algorithm_8hpp.html" title="Deferred Merge Embedding (DME) algorithm for clock tree synthesis." alt="" coords="212,152,395,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="304,118,306,152,300,152,299,118"/>
+<area shape="rect" id="Node000006" href="$visualize__clock__tree_8hpp.html" title="SVG visualization utilities for clock trees." alt="" coords="226,225,381,265"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="306,191,306,225,301,225,301,191"/>
+</map>

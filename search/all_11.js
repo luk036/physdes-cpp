@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['tappingresult_0',['TappingResult',['../structrecti_1_1TappingResult.html',1,'recti']]],
+  ['target_1',['Build and run the standalone target',['../index.html#autotoc_md4',1,'']]],
+  ['template_20to_20your_20needs_2',['Adjust the template to your needs',['../index.html#autotoc_md3',1,'']]],
+  ['terminal_3',['TERMINAL',['../namespacerecti.html#aa10b643c20623d868438bea3e6978daea6c7748bd0ad3fbdff996e81581ad64d6',1,'recti']]],
+  ['test_20suite_4',['Build and run test suite',['../index.html#autotoc_md5',1,'']]],
+  ['the_20documentation_5',['Build the documentation',['../index.html#autotoc_md7',1,'']]],
+  ['the_20standalone_20target_6',['Build and run the standalone target',['../index.html#autotoc_md4',1,'']]],
+  ['the_20template_20to_20your_20needs_7',['Adjust the template to your needs',['../index.html#autotoc_md3',1,'']]],
+  ['title_8',['title',['../structrecti_1_1TreeComparisonData.html#adda5ceea7f008378ff366f9222465bc7',1,'recti::TreeComparisonData']]],
+  ['to_20your_20needs_9',['Adjust the template to your needs',['../index.html#autotoc_md3',1,'']]],
+  ['to_5fnode_10',['to_node',['../structrecti_1_1TreeStatistics_1_1WireInfo.html#ad7cfa51aab85069939a62c362b3c75b8',1,'recti::TreeStatistics::WireInfo']]],
+  ['to_5fpolygon_11',['to_polygon',['../namespacerecti.html#ade9fe5998d7c458658417650a37c341a',1,'recti']]],
+  ['to_5fpolygon_2ehpp_12',['to_polygon.hpp',['../to__polygon_8hpp.html',1,'']]],
+  ['to_5fpos_13',['to_pos',['../structrecti_1_1TreeStatistics_1_1WireInfo.html#a2b8733e21ed969d58e60979bd7156e40',1,'recti::TreeStatistics::WireInfo']]],
+  ['to_5fstring_14',['to_string',['../namespacerecti.html#acc081a71ebed0a87e395f63e36a8b83c',1,'recti']]],
+  ['tools_15',['Additional tools',['../index.html#autotoc_md9',1,'']]],
+  ['total_5fnodes_16',['total_nodes',['../structrecti_1_1TreeStatistics.html#a1497ea8933f47db5639dcbe617b5b466',1,'recti::TreeStatistics']]],
+  ['total_5fsinks_17',['total_sinks',['../structrecti_1_1TreeStatistics.html#a7c5566c6dcf20b04735663b3aafb8d78',1,'recti::TreeStatistics']]],
+  ['total_5fwirelength_18',['total_wirelength',['../structrecti_1_1SkewAnalysis.html#a5c0f55984ca7475195ee378c67078b2f',1,'recti::SkewAnalysis']]],
+  ['total_5fwires_19',['total_wires',['../structrecti_1_1TreeStatistics.html#a131b82e910addedb4466c77a59f58a49',1,'recti::TreeStatistics']]],
+  ['tree_20',['tree',['../classrecti_1_1Tree.html#a5ddcfc0483daaf942a94a362d611b1b0',1,'recti::Tree::Tree()'],['../structrecti_1_1TreeComparisonData.html#a85ca8fa5352cd30ae44afeed439685dd',1,'recti::TreeComparisonData::tree'],['../classrecti_1_1Tree.html',1,'recti::Tree']]],
+  ['treecomparisondata_21',['TreeComparisonData',['../structrecti_1_1TreeComparisonData.html',1,'recti']]],
+  ['treenode_22',['treenode',['../classrecti_1_1TreeNode.html#a89d37e16cc872ad7f1682ea760c91128',1,'recti::TreeNode::TreeNode()'],['../classrecti_1_1TreeNode.html',1,'recti::TreeNode']]],
+  ['treestatistics_23',['TreeStatistics',['../structrecti_1_1TreeStatistics.html',1,'recti']]],
+  ['type_24',['type',['../classrecti_1_1RoutingNode.html#aef2790c51e678b72a8dad02f56939468',1,'recti::RoutingNode::type'],['../structrecti_1_1TreeStatistics_1_1NodeInfo.html#a55b48bddcd5741b87a5e92e32848bad8',1,'recti::TreeStatistics::NodeInfo::type']]]
+];

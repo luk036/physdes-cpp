@@ -1,0 +1,21 @@
+<map id="recti/rpolygon.hpp" name="recti/rpolygon.hpp">
+<area shape="rect" id="Node000001" title="Rectilinear polygon (RPolygon) template class." alt="" coords="45,5,185,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,59,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,33,58,72,54,67,100,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="83,79,146,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="117,31,117,65,112,65,112,31"/>
+<area shape="rect" id="Node000004" href="$point_8hpp.html" title="2D Point template class supporting intervals, arithmetic, and geometric queries." alt="" coords="171,79,253,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="132,29,186,68,183,72,129,33"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="99,225,154,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="174,106,138,125,123,138,110,153,106,167,106,182,115,212,110,214,101,183,100,166,106,151,119,134,135,120,171,102"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="181,225,241,251"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="220,103,231,136,234,157,233,178,223,213,218,212,228,177,229,157,226,138,215,105"/>
+<area shape="rect" id="Node000007" href="$generic_8hpp.html" title="Generic free functions for geometric operations (overlap, intersection, hull, distance)." alt="" coords="293,152,392,177"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="234,102,311,143,308,148,232,106"/>
+<area shape="rect" id="Node000009" href="$vector2_8hpp.html" title="2D vector template class with arithmetic and comparison operations." alt="" coords="120,152,219,177"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="207,106,185,142,181,139,203,103"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="308,225,377,251"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="345,178,345,212,340,212,340,178"/>
+<area shape="poly" id="edge9_Node000009_Node000005" title=" " alt="" coords="165,179,143,215,138,212,160,176"/>
+<area shape="poly" id="edge10_Node000009_Node000006" title=" " alt="" coords="178,176,199,212,195,215,174,179"/>
+</map>

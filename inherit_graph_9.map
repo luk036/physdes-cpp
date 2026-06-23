@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$classrecti_1_1DelayCalculator.html" title="Abstract base class for delay calculation models." alt="" coords="5,31,168,56"/>
+<area shape="rect" id="Node000001" href="$classrecti_1_1ElmoreDelayCalculator.html" title="Implements the Elmore delay model for RC trees." alt="" coords="216,5,425,31"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="182,30,216,27,216,32,182,36"/>
+<area shape="rect" id="Node000002" href="$classrecti_1_1LinearDelayCalculator.html" title="Implements a simple linear delay model." alt="" coords="219,55,422,80"/>
+<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="182,50,220,54,219,60,181,56"/>
+</map>

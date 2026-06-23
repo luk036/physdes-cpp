@@ -1,0 +1,7 @@
+<map id="recti::TreeComparisonData" name="recti::TreeComparisonData">
+<area shape="rect" id="Node000001" title=" " alt="" coords="22,93,217,119"/>
+<area shape="rect" id="Node000002" href="$classrecti_1_1Tree.html" title="Arena&#45;allocated tree of TreeNodes." alt="" coords="5,5,92,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="69,39,112,91,107,94,65,43"/>
+<area shape="rect" id="Node000003" href="$structrecti_1_1SkewAnalysis.html" title="Stores the results of the clock skew analysis for a clock tree." alt="" coords="116,5,264,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="174,43,131,94,127,91,170,39"/>
+</map>

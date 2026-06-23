@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['parent_0',['parent',['../classrecti_1_1RoutingNode.html#a9c2024b3efbac30e22bcca008864d8f7',1,'recti::RoutingNode::parent'],['../classrecti_1_1TreeNode.html#a1053d8551cefe29da8cce7dbdcdcda3d',1,'recti::TreeNode::parent']]],
+  ['path_5flength_1',['path_length',['../classrecti_1_1RoutingNode.html#af36e0e25b765167f10bf61b47038c9c0',1,'recti::RoutingNode']]],
+  ['physdescpp_20documentation_2',['PhysDesCpp Documentation',['../about.html#doc',1,'']]],
+  ['physical_20design_20c_20code_3',['🧱 Physical design C++ Code',['../index.html#autotoc_md0',1,'']]],
+  ['point_4',['point',['../classrecti_1_1Point.html',1,'recti::Point&lt; T1, T2 &gt;'],['../classrecti_1_1Point.html#a230207d2291c44b86cc9e248e933775d',1,'recti::Point::Point(T1 xcoord, T2 ycoord) noexcept'],['../classrecti_1_1Point.html#a0e6541510dcab72f3bfb1f680dca0a6c',1,'recti::Point::Point()']]],
+  ['point_2ehpp_5',['point.hpp',['../point_8hpp.html',1,'']]],
+  ['point_3c_20int_20_3e_6',['Point&lt; int &gt;',['../classrecti_1_1Point.html',1,'recti']]],
+  ['point_3c_20interval_3c_20t_20_3e_20_3e_7',['Point&lt; Interval&lt; T &gt; &gt;',['../classrecti_1_1Point.html',1,'recti']]],
+  ['point_3c_20interval_3c_20t_20_3e_2c_20t_20_3e_8',['Point&lt; Interval&lt; T &gt;, T &gt;',['../classrecti_1_1Point.html',1,'recti']]],
+  ['point_3c_20t_20_3e_9',['Point&lt; T &gt;',['../classrecti_1_1Point.html',1,'recti']]],
+  ['point_3c_20t_2c_20interval_3c_20t_20_3e_20_3e_10',['Point&lt; T, Interval&lt; T &gt; &gt;',['../classrecti_1_1Point.html',1,'recti']]],
+  ['point_3c_20t1_2c_20t1_20_3e_11',['Point&lt; T1, T1 &gt;',['../classrecti_1_1Point.html',1,'recti']]],
+  ['point_5fin_5fpolygon_12',['point_in_polygon',['../namespacerecti.html#a7da3c4179f6f52972d821463f65c24ce',1,'recti']]],
+  ['point_5fin_5frpolygon_13',['point_in_rpolygon',['../namespacerecti.html#a4a373c1eb158c62390b921e05e2263bb',1,'recti']]],
+  ['polygon_14',['polygon',['../classrecti_1_1Polygon.html',1,'recti::Polygon&lt; T &gt;'],['../classrecti_1_1Polygon.html#a5e03355bd0fbda7efdec3d8e47bb9603',1,'recti::Polygon::Polygon(std::span&lt; const Point&lt; T &gt; &gt; pointset)'],['../classrecti_1_1Polygon.html#a9923a02fd5b21d15dfe3462c6d4f1670',1,'recti::Polygon::Polygon(Point&lt; T &gt; origin, std::vector&lt; Vector2&lt; T &gt; &gt; vecs)'],['../classrecti_1_1Polygon.html#ae228a75e42647856ddc03fd625927c26',1,'recti::Polygon::Polygon()=default']]],
+  ['polygon_2ehpp_15',['polygon.hpp',['../polygon_8hpp.html',1,'']]],
+  ['polygon_5fis_5fanticlockwise_16',['polygon_is_anticlockwise',['../namespacerecti.html#af0acf1fcdfbf8ff391cb3360f93f7e5c',1,'recti']]],
+  ['polygon_5fis_5fmonotone_17',['polygon_is_monotone',['../namespacerecti.html#acec41865b89b99f867e694fb9b40ff3b',1,'recti']]],
+  ['polygon_5fis_5fxmonotone_18',['polygon_is_xmonotone',['../namespacerecti.html#a5f237b7ca48bfe03950553454ed27c65',1,'recti']]],
+  ['polygon_5fis_5fymonotone_19',['polygon_is_ymonotone',['../namespacerecti.html#aa5bd5990ce1c1a2ea275fc2f58ebca09',1,'recti']]],
+  ['pop_20',['pop',['../classilds_1_1VdCorput.html#aaec845f4e52eb87c479d936f61c4cf29',1,'ilds::VdCorput::pop()'],['../classilds_1_1Halton.html#aebdebc420b9d10175709e97850c28b1b',1,'ilds::Halton::pop()']]],
+  ['position_21',['position',['../classrecti_1_1Sink.html#aab3b707210642acb0f044130ee63dea7',1,'recti::Sink::position'],['../classrecti_1_1TreeNode.html#a84a148f5e10ac41716e8cda8a21e2391',1,'recti::TreeNode::position'],['../structrecti_1_1TreeStatistics_1_1NodeInfo.html#a2bd4ce7460bd9ed8803a7185147ab6b3',1,'recti::TreeStatistics::NodeInfo::position']]],
+  ['prev_22',['prev',['../classDllink.html#a95c712b185503e27133ceba25d502d2c',1,'Dllink']]],
+  ['projects_20and_20alternatives_23',['Related projects and alternatives',['../index.html#autotoc_md14',1,'']]],
+  ['pt_24',['pt',['../classrecti_1_1RoutingNode.html#ac28915730569ff58cdfe4b75932a802f',1,'recti::RoutingNode']]]
+];

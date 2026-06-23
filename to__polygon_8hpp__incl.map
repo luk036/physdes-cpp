@@ -1,0 +1,29 @@
+<map id="recti/to_polygon.hpp" name="recti/to_polygon.hpp">
+<area shape="rect" id="Node000001" title="Conversion function from RPolygon to general Polygon." alt="" coords="19,5,174,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,152,68,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,33,53,53,34,80,28,109,32,138,27,139,23,109,29,78,50,49,75,29"/>
+<area shape="rect" id="Node000003" href="$polygon_8hpp.html" title="General polygon template class with geometric properties." alt="" coords="175,79,277,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="119,28,194,69,191,74,116,33"/>
+<area shape="rect" id="Node000011" href="$rpolygon_8hpp.html" title="Rectilinear polygon (RPolygon) template class." alt="" coords="43,79,150,104"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="99,31,99,65,94,65,94,31"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="197,107,81,149,80,144,195,102"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="199,152,253,177"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="229,104,229,138,223,138,223,104"/>
+<area shape="rect" id="Node000005" href="$point_8hpp.html" title="2D Point template class supporting intervals, arithmetic, and geometric queries." alt="" coords="93,152,175,177"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="213,106,161,146,158,141,210,102"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="21,299,76,324"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="96,180,60,198,45,211,32,227,28,241,28,256,37,285,32,287,23,256,22,240,28,224,41,207,57,194,93,175"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="103,299,163,324"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="142,177,153,210,156,230,155,251,145,287,140,285,150,250,151,231,148,211,137,178"/>
+<area shape="rect" id="Node000008" href="$generic_8hpp.html" title="Generic free functions for geometric operations (overlap, intersection, hull, distance)." alt="" coords="215,225,314,251"/>
+<area shape="poly" id="edge8_Node000005_Node000008" title=" " alt="" coords="156,175,233,216,230,221,154,180"/>
+<area shape="rect" id="Node000010" href="$vector2_8hpp.html" title="2D vector template class with arithmetic and comparison operations." alt="" coords="42,225,141,251"/>
+<area shape="poly" id="edge10_Node000005_Node000010" title=" " alt="" coords="129,179,107,215,103,212,125,176"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="230,299,299,324"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="267,251,267,285,262,285,262,251"/>
+<area shape="poly" id="edge11_Node000010_Node000006" title=" " alt="" coords="87,252,65,288,60,286,82,250"/>
+<area shape="poly" id="edge12_Node000010_Node000007" title=" " alt="" coords="100,250,121,285,117,288,96,252"/>
+<area shape="poly" id="edge15_Node000011_Node000002" title=" " alt="" coords="89,106,57,143,53,140,85,103"/>
+<area shape="poly" id="edge14_Node000011_Node000004" title=" " alt="" coords="119,102,194,143,191,147,116,106"/>
+<area shape="poly" id="edge16_Node000011_Node000005" title=" " alt="" coords="105,103,124,139,119,141,100,106"/>
+</map>

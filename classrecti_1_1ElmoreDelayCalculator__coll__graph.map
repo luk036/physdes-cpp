@@ -1,0 +1,5 @@
+<map id="recti::ElmoreDelayCalculator" name="recti::ElmoreDelayCalculator">
+<area shape="rect" id="Node000001" title="Implements the Elmore delay model for RC trees." alt="" coords="5,79,215,104"/>
+<area shape="rect" id="Node000002" href="$classrecti_1_1DelayCalculator.html" title="Abstract base class for delay calculation models." alt="" coords="29,5,191,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,44,113,79,107,79,107,44"/>
+</map>

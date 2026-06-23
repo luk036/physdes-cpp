@@ -1,0 +1,13 @@
+<map id="recti/rdllist.hpp" name="recti/rdllist.hpp">
+<area shape="rect" id="Node000001" title="Circular doubly&#45;linked list implementation for polygon decomposition." alt="" coords="71,5,191,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,76,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,33,68,72,65,68,115,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="100,79,163,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="134,31,134,65,129,65,129,31"/>
+<area shape="rect" id="Node000004" href="$dllink_8hpp.html" title="Doubly&#45;linked list node template class." alt="" coords="187,79,273,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="149,29,204,68,201,73,146,33"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="150,152,219,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="225,106,202,142,197,139,220,103"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="244,152,304,177"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="240,103,262,139,257,142,235,106"/>
+</map>

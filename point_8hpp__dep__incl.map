@@ -1,0 +1,27 @@
+<map id="recti/point.hpp" name="recti/point.hpp">
+<area shape="rect" id="Node000001" title="2D Point template class supporting intervals, arithmetic, and geometric queries." alt="" coords="555,5,671,31"/>
+<area shape="rect" id="Node000002" href="$dme__algorithm_8hpp.html" title="Deferred Merge Embedding (DME) algorithm for clock tree synthesis." alt="" coords="5,152,188,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="541,24,411,31,260,42,131,58,87,69,64,80,58,97,62,116,74,134,87,150,83,153,69,137,58,118,52,96,60,77,85,64,130,53,260,37,410,26,541,19"/>
+<area shape="rect" id="Node000004" href="$global__router_8hpp.html" title="Data structures and algorithms for global routing in physical design." alt="" coords="279,79,447,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="560,37,404,81,403,76,559,32"/>
+<area shape="rect" id="Node000006" href="$manhattan__arc_8hpp.html" title="ManhattanArc template class for the DME algorithm merging segments." alt="" coords="74,79,255,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="542,33,237,81,236,76,541,28"/>
+<area shape="rect" id="Node000007" href="$polygon_8hpp.html" title="General polygon template class with geometric properties." alt="" coords="472,79,607,104"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="593,42,553,80,549,77,589,38"/>
+<area shape="rect" id="Node000009" href="$recti_8hpp.html" title="Top&#45;level header: Rectangle, HSegment, VSegment types and overlap detection." alt="" coords="631,79,743,104"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="636,38,677,77,673,80,633,42"/>
+<area shape="rect" id="Node000010" href="$rpolygon_8hpp.html" title="Rectilinear polygon (RPolygon) template class." alt="" coords="768,79,908,104"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="663,32,802,76,801,81,661,37"/>
+<area shape="rect" id="Node000011" href="$rpolygon__cut_8hpp.html" title="Functions for decomposing rectilinear polygons into convex/rectangular pieces." alt="" coords="932,79,1099,104"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="685,29,951,76,950,81,684,35"/>
+<area shape="rect" id="Node000012" href="$rpolygon__hull_8hpp.html" title="Functions to compute monotone and convex hulls of rectilinear polygons." alt="" coords="1123,79,1294,104"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="685,25,1123,77,1123,82,684,30"/>
+<area shape="rect" id="Node000003" href="$visualize__clock__tree_8hpp.html" title="SVG visualization utilities for clock trees." alt="" coords="19,225,174,265"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="99,191,99,225,94,225,94,191"/>
+<area shape="rect" id="Node000005" href="$svg__utils_8hpp.html" title="SVG rendering parameters and utilities for routing tree visualization." alt="" coords="272,152,455,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="366,118,366,152,361,152,361,118"/>
+<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="146,116,110,154,106,150,142,112"/>
+<area shape="rect" id="Node000008" href="$to__polygon_8hpp.html" title="Conversion function from RPolygon to general Polygon." alt="" coords="619,152,774,177"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="578,107,672,149,670,154,576,112"/>
+<area shape="poly" id="edge11_Node000010_Node000008" title=" " alt="" coords="805,112,721,154,719,149,802,108"/>
+</map>
