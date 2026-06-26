@@ -27,6 +27,7 @@ if is_plat("linux") then
     -- Check if we're on Termux/Android
     local termux_prefix = os.getenv("PREFIX")
     if termux_prefix then
+        add_cxflags("-Wno-unused-command-line-argument", {force = true})
         add_sysincludedirs(termux_prefix .. "/include/c++/v1", {public = true})
         add_sysincludedirs(termux_prefix .. "/include", {public = true})
     end
