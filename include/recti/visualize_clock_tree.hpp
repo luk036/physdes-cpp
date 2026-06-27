@@ -43,8 +43,8 @@ namespace recti {
               text_color(text_color) {}
 
         std::string visualize_tree(const Tree& tree, NodeIdx root, const std::vector<Sink>& sinks,
-                                    const std::string& filename = "clock_tree.svg", int width = 800,
-                                    int height = 600, const SkewAnalysis* analysis = nullptr);
+                                   const std::string& filename = "clock_tree.svg", int width = 800,
+                                   int height = 600, const SkewAnalysis* analysis = nullptr);
 
       private:
         std::vector<NodeIdx> collect_all_nodes(const Tree& tree, NodeIdx root);
@@ -65,10 +65,10 @@ namespace recti {
     };
 
     std::string create_interactive_svg(const Tree& tree, NodeIdx root,
-                                        const std::vector<Sink>& sinks,
-                                        const SkewAnalysis* analysis = nullptr,
-                                        const std::string& filename = "clock_tree_interactive.svg",
-                                        int width = 1000, int height = 700);
+                                       const std::vector<Sink>& sinks,
+                                       const SkewAnalysis* analysis = nullptr,
+                                       const std::string& filename = "clock_tree_interactive.svg",
+                                       int width = 1000, int height = 700);
 
     struct TreeComparisonData {
         const Tree* tree;
@@ -79,14 +79,14 @@ namespace recti {
     };
 
     std::string create_comparison_visualization(const std::vector<TreeComparisonData>& trees_data,
-                                                 const std::string& filename
-                                                 = "clock_tree_comparison.svg",
-                                                 int width = 1200, int height = 800);
+                                                const std::string& filename
+                                                = "clock_tree_comparison.svg",
+                                                int width = 1200, int height = 800);
 
     std::string create_delay_model_comparison(const TreeComparisonData& linear_tree_data,
-                                               const TreeComparisonData& elmore_tree_data,
-                                               const std::string& filename
-                                               = "delay_model_comparison.svg");
+                                              const TreeComparisonData& elmore_tree_data,
+                                              const std::string& filename
+                                              = "delay_model_comparison.svg");
 
     void visualize_example_tree();
 
