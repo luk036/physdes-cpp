@@ -171,18 +171,18 @@ namespace recti {
         int next_terminal_id = 1;           ///< Counter for generating unique terminal node IDs.
 
         auto _find_nearest_node(const IntPoint& point, std::optional<std::string> exclude_id
-                                                        = std::nullopt) -> RoutingNode<IntPoint>*;
+                                                       = std::nullopt) -> RoutingNode<IntPoint>*;
 
         auto _find_nearest_insertion_with_constraints(const IntPoint& pt,
-                                                       int allowed_wirelength
-                                                       = std::numeric_limits<int>::max(),
-                                                       std::optional<std::vector<Keepout>> keepouts
-                                                       = std::nullopt)
+                                                      int allowed_wirelength
+                                                      = std::numeric_limits<int>::max(),
+                                                      std::optional<std::vector<Keepout>> keepouts
+                                                      = std::nullopt)
             -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*>;
 
         auto _insert_terminal_impl(const IntPoint& point,
-                                    int allowed_wirelength = std::numeric_limits<int>::max(),
-                                    std::optional<std::vector<Keepout>> keepouts = std::nullopt)
+                                   int allowed_wirelength = std::numeric_limits<int>::max(),
+                                   std::optional<std::vector<Keepout>> keepouts = std::nullopt)
             -> void;
 
       public:
@@ -223,7 +223,7 @@ namespace recti {
          * @throws std::runtime_error if the specified parent node is not found.
          */
         auto insert_steiner_node(const IntPoint& point, std::optional<std::string> parent_id
-                                                         = std::nullopt) -> std::string;
+                                                        = std::nullopt) -> std::string;
 
         /**
          * @brief Inserts a new terminal node into the routing tree.
@@ -234,7 +234,7 @@ namespace recti {
          * @throws std::runtime_error if the specified parent node is not found.
          */
         auto insert_terminal_node(const IntPoint& point, std::optional<std::string> parent_id
-                                                          = std::nullopt) -> std::string;
+                                                         = std::nullopt) -> std::string;
 
         /**
          * @brief Inserts a new node (Steiner or Terminal) onto an existing branch of the tree.
@@ -247,7 +247,7 @@ namespace recti {
          * direct child of branch_start_id.
          */
         auto insert_node_on_branch(NodeType new_node_type, const IntPoint& point,
-                                    std::string branch_start_id, std::string branch_end_id)
+                                   std::string branch_start_id, std::string branch_end_id)
             -> std::string;
 
         /**
@@ -256,8 +256,8 @@ namespace recti {
          * @param keepouts Optional keepouts to avoid.
          */
         auto insert_terminal_with_steiner(const IntPoint& point,
-                                           std::optional<std::vector<Keepout>> keepouts
-                                           = std::nullopt) -> void {
+                                          std::optional<std::vector<Keepout>> keepouts
+                                          = std::nullopt) -> void {
             _insert_terminal_impl(point, std::numeric_limits<int>::max(), keepouts);
         }
 
@@ -268,8 +268,8 @@ namespace recti {
          * @param keepouts Optional keepouts to avoid.
          */
         auto insert_terminal_with_constraints(const IntPoint& point, int allowed_wirelength,
-                                               std::optional<std::vector<Keepout>> keepouts
-                                               = std::nullopt) -> void {
+                                              std::optional<std::vector<Keepout>> keepouts
+                                              = std::nullopt) -> void {
             _insert_terminal_impl(point, allowed_wirelength, keepouts);
         }
 
@@ -293,7 +293,7 @@ namespace recti {
          * @return A string representing the tree structure.
          */
         auto get_tree_structure(const RoutingNode<IntPoint>* current_node = nullptr,
-                                 int level = 0) const -> std::string;
+                                int level = 0) const -> std::string;
 
         /**
          * @brief Finds the path from a given node to the source node.
@@ -357,7 +357,7 @@ namespace recti {
          * @param keepout_regions Optional keepouts.
          */
         GlobalRouter(const IntPoint& source_pos, std::vector<IntPoint> terminal_positions,
-                      std::optional<std::vector<Keepout>> keepout_regions = std::nullopt);
+                     std::optional<std::vector<Keepout>> keepout_regions = std::nullopt);
 
         /**
          * @brief Routes terminals simply by connecting each to the nearest existing node.
@@ -373,7 +373,7 @@ namespace recti {
          */
         void route_with_steiners() {
             this->tree.worst_wirelength = this->worst_wirelength;  // Store the allowed wirelength
-                                                                    // in the tree for reference
+                                                                   // in the tree for reference
             for (const auto& terminal : this->terminal_positions) {
                 this->tree.insert_terminal_with_steiner(terminal, this->keepouts);
             }
@@ -388,10 +388,10 @@ namespace recti {
             int allowed_wirelength
                 = static_cast<int>(std::round(this->worst_wirelength * multiplier));
             this->tree.worst_wirelength = this->worst_wirelength;  // Store the allowed wirelength
-                                                                    // in the tree for reference
+                                                                   // in the tree for reference
             for (const auto& terminal : this->terminal_positions) {
                 this->tree.insert_terminal_with_constraints(terminal, allowed_wirelength,
-                                                             this->keepouts);
+                                                            this->keepouts);
             }
         }
 

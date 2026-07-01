@@ -166,7 +166,7 @@ namespace recti {
             auto xcoord = intersection(this->impl.xcoord(), other.impl.xcoord());
             auto ycoord = intersection(this->impl.ycoord(), other.impl.ycoord());
             return ManhattanArc<decltype(xcoord), decltype(ycoord)>{std::move(xcoord),
-                                                                     std::move(ycoord)};
+                                                                    std::move(ycoord)};
         }
 
         /**
@@ -205,7 +205,7 @@ namespace recti {
             auto xcoord = enlarge(this->impl.xcoord(), alpha);
             auto ycoord = enlarge(this->impl.ycoord(), alpha);
             return ManhattanArc<decltype(xcoord), decltype(ycoord)>{std::move(xcoord),
-                                                                     std::move(ycoord)};
+                                                                    std::move(ycoord)};
         }
 
         /**
