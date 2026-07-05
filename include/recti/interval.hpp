@@ -11,7 +11,6 @@
 
 namespace recti {
 
-#pragma pack(push, 1)
     /**
      * @brief Interval
      *
@@ -533,7 +532,6 @@ namespace recti {
             return out;
         }
     };
-#pragma pack(pop)
 
     /**
      * @brief Computes the hull of two objects.

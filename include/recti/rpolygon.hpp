@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <cstddef>
+#include <iterator>
 #include <span>
 #include <vector>
 
@@ -39,16 +41,75 @@ namespace recti {
      *
      * @tparam T
      */
+    /**
+     * @brief Forward iterator for RPolygon vertices.
+     *
+     * Lazily computes vertices from origin + vectors on dereference,
+     * avoiding the heap allocation of `vertices()`.
+     */
+    template <typename T> class RPolygonVertexIterator {
+      public:
+        using iterator_category = std::forward_iterator_tag;
+        using value_type = Point<T>;
+        using difference_type = std::ptrdiff_t;
+        using pointer = const value_type*;
+        using reference = value_type;
+
+        constexpr RPolygonVertexIterator(const Point<T>* origin,
+                                         const Vector2<T>* vecs_begin,
+                                         std::size_t idx)
+            : _origin(origin), _vecs_begin(vecs_begin), _idx(idx) {}
+
+        constexpr auto operator*() const -> value_type {
+            if (_idx == 0) return *_origin;
+            return *_origin + _vecs_begin[_idx - 1];
+        }
+
+        constexpr auto operator++() -> RPolygonVertexIterator& {
+            ++_idx;
+            return *this;
+        }
+
+        constexpr auto operator==(const RPolygonVertexIterator& other) const -> bool {
+            return _idx == other._idx;
+        }
+
+        constexpr auto operator!=(const RPolygonVertexIterator& other) const -> bool {
+            return _idx != other._idx;
+        }
+
+      private:
+        const Point<T>* _origin;
+        const Vector2<T>* _vecs_begin;
+        std::size_t _idx;
+    };
+
     template <typename T> class RPolygon {
       private:
         Point<T> _origin{};               ///< Origin point of the polygon
         std::vector<Vector2<T>> _vecs{};  ///< Vectors defining the polygon edges
 
       public:
+        using const_iterator = RPolygonVertexIterator<T>;
+
         /**
          * @brief Default constructor
          */
         constexpr RPolygon() = default;
+
+        /**
+         * @brief Iterator to first vertex (the origin).
+         */
+        constexpr auto begin() const -> const_iterator {
+            return const_iterator(&_origin, _vecs.data(), 0);
+        }
+
+        /**
+         * @brief Past-the-end iterator.
+         */
+        constexpr auto end() const -> const_iterator {
+            return const_iterator(&_origin, _vecs.data(), _vecs.size() + 1);
+        }
 
         /**
          * @brief Constructs a new RPolygon object from origin and vectors

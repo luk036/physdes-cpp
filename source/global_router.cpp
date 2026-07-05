@@ -72,7 +72,7 @@ namespace recti {
     auto GlobalRoutingTree<IntPoint>::get_tree_structure(const RoutingNode<IntPoint>* current_node,
                                                          int level) const -> std::string {
         if (current_node == nullptr) {
-            current_node = &this->source_node;
+            current_node = &this->_arena[0];
         }
         std::ostringstream oss;
         oss << std::string(static_cast<size_t>(level) * 2, ' ') << *current_node << "\n";
@@ -88,7 +88,7 @@ namespace recti {
         std::optional<std::vector<GlobalRoutingTree<IntPoint>::Keepout>> keepouts)
         -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*> {
         RoutingNode<IntPoint>* parent_node = nullptr;
-        RoutingNode<IntPoint>* nearest_node = &this->source_node;
+        RoutingNode<IntPoint>* nearest_node = &this->_arena[0];
         int min_distance = this->worst_wirelength;
         // int min_distance = std::numeric_limits<int>::max();
         bool valid_found = false;
@@ -153,7 +153,7 @@ namespace recti {
                 traverse(child);
             }
         };
-        traverse(&this->source_node);
+        traverse(&this->_arena[0]);
         if (!valid_found) {
             log_with_spdlog(
                 "Warning: No valid insertion point found within allowed wirelength. "
@@ -166,11 +166,9 @@ namespace recti {
         const IntPoint& point, int allowed_wirelength, std::optional<std::vector<Keepout>> keepouts)
         -> void {
         std::string terminal_id = "terminal_" + std::to_string(this->next_terminal_id++);
-        auto terminal_ptr
-            = std::make_unique<RoutingNode<IntPoint>>(terminal_id, NodeType::TERMINAL, point);
-        RoutingNode<IntPoint>* terminal_node = terminal_ptr.get();
+        this->_arena.emplace_back(terminal_id, NodeType::TERMINAL, point);
+        RoutingNode<IntPoint>* terminal_node = &this->_arena.back();
         this->nodes[terminal_id] = terminal_node;
-        this->owned_nodes.emplace_back(std::move(terminal_ptr));
         auto [parent_node, nearest_node] = this->_find_nearest_insertion_with_constraints(
             point, allowed_wirelength, std::move(keepouts));
         if (parent_node == nullptr) {
@@ -181,11 +179,9 @@ namespace recti {
             std::string steiner_id = "steiner_" + std::to_string(this->next_steiner_id++);
             auto possible_path = parent_node->pt.hull_with(nearest_node->pt);
             IntPoint nearest_pt = possible_path.nearest_to(point);
-            auto steiner_ptr = std::make_unique<RoutingNode<IntPoint>>(
-                steiner_id, NodeType::STEINER, nearest_pt);
-            RoutingNode<IntPoint>* new_node = steiner_ptr.get();
+            this->_arena.emplace_back(steiner_id, NodeType::STEINER, nearest_pt);
+            RoutingNode<IntPoint>* new_node = &this->_arena.back();
             this->nodes[steiner_id] = new_node;
-            this->owned_nodes.emplace_back(std::move(steiner_ptr));
             parent_node->remove_child(nearest_node);
             parent_node->add_child(new_node);
             new_node->path_length
@@ -226,9 +222,9 @@ namespace recti {
     auto GlobalRoutingTree<IntPoint>::_find_nearest_node(const IntPoint& point,
                                                          std::optional<std::string> exclude_id)
         -> RoutingNode<IntPoint>* {
-        if (this->nodes.size() <= 1) return &this->source_node;
-        RoutingNode<IntPoint>* nearest = &this->source_node;
-        int min_dist = this->source_node.pt.min_dist_with(point);
+        if (this->nodes.size() <= 1) return &this->_arena[0];
+        RoutingNode<IntPoint>* nearest = &this->_arena[0];
+        int min_dist = this->_arena[0].pt.min_dist_with(point);
         for (auto& [id, node] : this->nodes) {
             if (exclude_id && id == *exclude_id) continue;
             int distance = node->pt.min_dist_with(point);
@@ -245,15 +241,13 @@ namespace recti {
                                                           std::optional<std::string> parent_id)
         -> std::string {
         std::string steiner_id = "steiner_" + std::to_string(this->next_steiner_id++);
-        auto node_ptr
-            = std::make_unique<RoutingNode<IntPoint>>(steiner_id, NodeType::STEINER, point);
-        RoutingNode<IntPoint>* node = node_ptr.get();
+        this->_arena.emplace_back(steiner_id, NodeType::STEINER, point);
+        RoutingNode<IntPoint>* node = &this->_arena.back();
         this->nodes[steiner_id] = node;
-        this->owned_nodes.emplace_back(std::move(node_ptr));
 
         RoutingNode<IntPoint>* parent_node = nullptr;
         if (!parent_id) {
-            parent_node = &this->source_node;
+            parent_node = &this->_arena[0];
         } else {
             auto iter = this->nodes.find(*parent_id);
             if (iter == this->nodes.end()) {
@@ -270,11 +264,9 @@ namespace recti {
                                                            std::optional<std::string> parent_id)
         -> std::string {
         std::string terminal_id = "terminal_" + std::to_string(this->next_terminal_id++);
-        auto node_ptr
-            = std::make_unique<RoutingNode<IntPoint>>(terminal_id, NodeType::TERMINAL, point);
-        RoutingNode<IntPoint>* node = node_ptr.get();
+        this->_arena.emplace_back(terminal_id, NodeType::TERMINAL, point);
+        RoutingNode<IntPoint>* node = &this->_arena.back();
         this->nodes[terminal_id] = node;
-        this->owned_nodes.emplace_back(std::move(node_ptr));
 
         RoutingNode<IntPoint>* parent_node = nullptr;
         if (!parent_id) {
@@ -316,10 +308,9 @@ namespace recti {
         } else if (new_node_type == NodeType::TERMINAL) {
             node_id = "terminal_" + std::to_string(this->next_terminal_id++);
         }
-        auto node_ptr = std::make_unique<RoutingNode<IntPoint>>(node_id, new_node_type, point);
-        RoutingNode<IntPoint>* new_node = node_ptr.get();
+        this->_arena.emplace_back(node_id, new_node_type, point);
+        RoutingNode<IntPoint>* new_node = &this->_arena.back();
         this->nodes[node_id] = new_node;
-        this->owned_nodes.emplace_back(std::move(node_ptr));
 
         start_node->remove_child(end_node);
         start_node->add_child(new_node);
@@ -337,7 +328,7 @@ namespace recti {
                 traverse(child);
             }
         };
-        traverse(&source_node);
+        traverse(&this->_arena[0]);
         return total;
     }
 
@@ -354,7 +345,7 @@ namespace recti {
             return worst_length;
         };
 
-        auto length = traverse(&source_node);
+        auto length = traverse(&this->_arena[0]);
         return length;
     }
 
@@ -603,12 +594,6 @@ namespace recti {
             parent->add_child(child);
 
             this->nodes.erase(steiner_id);
-            auto owned_iter
-                = std::find_if(this->owned_nodes.begin(), this->owned_nodes.end(),
-                               [steiner](const auto& up) { return up.get() == steiner; });
-            if (owned_iter != this->owned_nodes.end()) {
-                this->owned_nodes.erase(owned_iter);
-            }
         }
     }
 

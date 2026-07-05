@@ -12,6 +12,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <deque>
 #include <limits>
 #include <memory>
 #include <optional>
@@ -166,18 +167,20 @@ namespace recti {
         using Keepout = decltype(std::declval<IntPoint>().enlarge_with(1));
 
       private:
-        RoutingNode<IntPoint> source_node;  ///< The root node of the routing tree.
-        int next_steiner_id = 1;            ///< Counter for generating unique Steiner node IDs.
-        int next_terminal_id = 1;           ///< Counter for generating unique terminal node IDs.
+        /// Single contiguous arena for all RoutingNodes (deque guarantees stable
+        /// pointers on push_back — existing pointers remain valid as the tree grows).
+        std::deque<RoutingNode<IntPoint>> _arena;
+        int next_steiner_id = 1;   ///< Counter for generating unique Steiner node IDs.
+        int next_terminal_id = 1;  ///< Counter for generating unique terminal node IDs.
 
         auto _find_nearest_node(const IntPoint& point, std::optional<std::string> exclude_id
                                                        = std::nullopt) -> RoutingNode<IntPoint>*;
 
         auto _find_nearest_insertion_with_constraints(const IntPoint& pt,
-                                                      int allowed_wirelength
-                                                      = std::numeric_limits<int>::max(),
-                                                      std::optional<std::vector<Keepout>> keepouts
-                                                      = std::nullopt)
+                                                       int allowed_wirelength
+                                                       = std::numeric_limits<int>::max(),
+                                                       std::optional<std::vector<Keepout>> keepouts
+                                                       = std::nullopt)
             -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*>;
 
         auto _insert_terminal_impl(const IntPoint& point,
@@ -188,8 +191,6 @@ namespace recti {
       public:
         std::unordered_map<std::string, RoutingNode<IntPoint>*>
             nodes;  ///< Map from node ID to RoutingNode<IntPoint> pointer.
-        std::vector<std::unique_ptr<RoutingNode<IntPoint>>>
-            owned_nodes;           ///< Stores unique_ptrs for memory management of nodes.
         int worst_wirelength = 0;  ///< The worst-case wirelength constraint for routing (used in
                                    ///< constrained routing).
 
@@ -197,22 +198,22 @@ namespace recti {
          * @brief Constructs a new GlobalRoutingTree with a specified source position.
          * @param source_position The 2D integer coordinates of the source node.
          */
-        GlobalRoutingTree(IntPoint source_position)
-            : source_node("source", NodeType::SOURCE, source_position) {
-            nodes["source"] = &source_node;
+        GlobalRoutingTree(IntPoint source_position) {
+            _arena.emplace_back("source", NodeType::SOURCE, source_position);
+            nodes["source"] = &this->_arena.back();
         }
 
         /**
          * @brief Gets a const pointer to the source node of the tree.
          * @return A const pointer to the source RoutingNode<IntPoint>.
          */
-        auto get_source() const -> const RoutingNode<IntPoint>* { return &source_node; }
+        auto get_source() const -> const RoutingNode<IntPoint>* { return &this->_arena[0]; }
 
         /**
          * @brief Gets a non-const pointer to the source node of the tree.
          * @return A non-const pointer to the source RoutingNode<IntPoint>.
          */
-        auto get_source() -> RoutingNode<IntPoint>* { return &source_node; }
+        auto get_source() -> RoutingNode<IntPoint>* { return &this->_arena[0]; }
 
         /**
          * @brief Inserts a new Steiner node into the routing tree.

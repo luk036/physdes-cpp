@@ -80,8 +80,8 @@ namespace recti {
         tree = Tree{};
         node_id = 0;
 
-        for (const auto& sink : sinks) {
-            TreeNode node(sink.name, sink.position);
+        for (auto& sink : sinks) {
+            TreeNode node(std::move(sink.name), sink.position);
             node.capacitance = sink.capacitance;
             tree.add(std::move(node));
         }
