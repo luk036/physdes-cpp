@@ -55,8 +55,7 @@ namespace recti {
         using pointer = const value_type*;
         using reference = value_type;
 
-        constexpr RPolygonVertexIterator(const Point<T>* origin,
-                                         const Vector2<T>* vecs_begin,
+        constexpr RPolygonVertexIterator(const Point<T>* origin, const Vector2<T>* vecs_begin,
                                          std::size_t idx)
             : _origin(origin), _vecs_begin(vecs_begin), _idx(idx) {}
 

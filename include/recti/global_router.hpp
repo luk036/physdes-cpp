@@ -177,10 +177,10 @@ namespace recti {
                                                        = std::nullopt) -> RoutingNode<IntPoint>*;
 
         auto _find_nearest_insertion_with_constraints(const IntPoint& pt,
-                                                       int allowed_wirelength
-                                                       = std::numeric_limits<int>::max(),
-                                                       std::optional<std::vector<Keepout>> keepouts
-                                                       = std::nullopt)
+                                                      int allowed_wirelength
+                                                      = std::numeric_limits<int>::max(),
+                                                      std::optional<std::vector<Keepout>> keepouts
+                                                      = std::nullopt)
             -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*>;
 
         auto _insert_terminal_impl(const IntPoint& point,
@@ -190,7 +190,7 @@ namespace recti {
 
       public:
         std::unordered_map<std::string, RoutingNode<IntPoint>*>
-            nodes;  ///< Map from node ID to RoutingNode<IntPoint> pointer.
+            nodes;                 ///< Map from node ID to RoutingNode<IntPoint> pointer.
         int worst_wirelength = 0;  ///< The worst-case wirelength constraint for routing (used in
                                    ///< constrained routing).
 
