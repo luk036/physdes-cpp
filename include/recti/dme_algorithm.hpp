@@ -6,6 +6,7 @@
 
 #include <cstddef>
 #include <memory>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -390,6 +391,7 @@ namespace recti {
         std::unique_ptr<DelayCalculator> delay_calculator;
         int node_id = 0;
         Tree tree;
+        std::optional<Point<int>> source;
 
       public:
         /**
@@ -400,6 +402,21 @@ namespace recti {
          */
         DMEAlgorithm(const std::vector<Sink>& sinks, std::unique_ptr<DelayCalculator> calculator)
             : sinks(sinks), delay_calculator(std::move(calculator)) {
+            if (this->sinks.empty()) {
+                throw std::invalid_argument("No sinks provided");
+            }
+        }
+
+        /**
+         * @brief Constructs a DMEAlgorithm with a specified clock source position.
+         * @param sinks A vector of clock sinks.
+         * @param calculator A unique pointer to a DelayCalculator implementation.
+         * @param source_position The clock source position.
+         * @throws std::invalid_argument if sinks is empty.
+         */
+        DMEAlgorithm(const std::vector<Sink>& sinks, std::unique_ptr<DelayCalculator> calculator,
+                     Point<int> source_position)
+            : sinks(sinks), delay_calculator(std::move(calculator)), source(source_position) {
             if (this->sinks.empty()) {
                 throw std::invalid_argument("No sinks provided");
             }

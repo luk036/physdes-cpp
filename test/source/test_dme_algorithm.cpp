@@ -217,7 +217,19 @@ TEST_SUITE("DMEAlgorithm Tests") {
 
         auto analysis = dme.analyze_skew(root);
         CHECK(analysis.skew == doctest::Approx(0.0).epsilon(0.001));
-        CHECK_GT(analysis.total_wirelength, 0);
+        CHECK(analysis.total_wirelength == 10);
+    }
+
+    TEST_CASE("DMEAlgorithm 2 Sinks Exact Cross-Language") {
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(0, 0), 1.0), Sink("s2", Point<int>(10, 0), 1.0)};
+        auto calc = std::make_unique<LinearDelayCalculator>(1.0, 0.1);
+        DMEAlgorithm dme(sinks, std::move(calc));
+        NodeIdx root = dme.build_clock_tree();
+        auto analysis = dme.analyze_skew(root);
+        // Must match Rust (cross_lang_2_sinks) and Python: skew=0, wirelen=10
+        CHECK(analysis.skew == doctest::Approx(0.0));
+        CHECK(analysis.total_wirelength == 10);
     }
 
     TEST_CASE("DMEAlgorithm Multiple Sinks") {
@@ -509,5 +521,44 @@ TEST_CASE("Edge Cases") {
         CHECK_NE(root, SIZE_MAX);
         CHECK_GE(analysis.total_wirelength, 2000);
         CHECK(analysis.skew == doctest::Approx(0.0).epsilon(0.001));
+    }
+
+    SUBCASE("Cross-language 8-sink linear") {
+        // Must match Rust cross_lang_8_sinks_linear and Python verification
+        std::vector<Sink> sinks;
+        for (int i = 0; i < 8; ++i) {
+            int x = (i * 37) % 100;
+            int y = (i * 53) % 100;
+            sinks.emplace_back("s" + std::to_string(i), Point<int>(x, y),
+                               1.0 + static_cast<double>(i % 5) * 0.2);
+        }
+        auto calc = std::make_unique<LinearDelayCalculator>(0.5, 0.1);
+        DMEAlgorithm dme(sinks, std::move(calc));
+        NodeIdx root = dme.build_clock_tree();
+        auto analysis = dme.analyze_skew(root);
+        // Rust/Python: skew=0.000000, wirelen=298, max=37.500000, min=37.500000
+        CHECK(analysis.skew == doctest::Approx(0.0));
+        CHECK(analysis.total_wirelength == 298);
+        CHECK(analysis.max_delay == doctest::Approx(37.5));
+        CHECK(analysis.min_delay == doctest::Approx(37.5));
+    }
+
+    SUBCASE("Cross-language 8-sink elmore") {
+        std::vector<Sink> sinks;
+        for (int i = 0; i < 8; ++i) {
+            int x = (i * 37) % 100;
+            int y = (i * 53) % 100;
+            sinks.emplace_back("s" + std::to_string(i), Point<int>(x, y),
+                               1.0 + static_cast<double>(i % 5) * 0.2);
+        }
+        auto calc = std::make_unique<ElmoreDelayCalculator>(0.1, 0.1);
+        DMEAlgorithm dme(sinks, std::move(calc));
+        NodeIdx root = dme.build_clock_tree();
+        auto analysis = dme.analyze_skew(root);
+        // Rust/Python: skew=0.920000, wirelen=292, max=80.415000, min=79.495000
+        CHECK(analysis.skew == doctest::Approx(0.92).epsilon(0.001));
+        CHECK(analysis.total_wirelength == 292);
+        CHECK(analysis.max_delay == doctest::Approx(80.415).epsilon(0.001));
+        CHECK(analysis.min_delay == doctest::Approx(79.495).epsilon(0.001));
     }
 }

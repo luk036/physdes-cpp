@@ -29,9 +29,9 @@ namespace recti {
      * @brief Defines the type of a routing node.
      */
     enum class NodeType {
-        STEINER,   ///< A Steiner point, an intermediate point added to optimize routing.
-        TERMINAL,  ///< A terminal point, representing a pin or a component connection.
-        SOURCE     ///< The source point of the routing tree.
+        Steiner,   ///< A Steiner point, an intermediate point added to optimize routing.
+        Terminal,  ///< A terminal point, representing a pin or a component connection.
+        Source     ///< The source point of the routing tree.
     };
 
     /**
@@ -52,7 +52,7 @@ namespace recti {
     template <typename IntPoint> class RoutingNode {
       public:
         std::string id;  ///< Unique identifier for the node.
-        NodeType type;   ///< The type of the node (STEINER, TERMINAL, SOURCE).
+        NodeType node_type;   ///< The type of the node.
         IntPoint pt;     ///< The 2D integer coordinates of the node.
         std::vector<RoutingNode<IntPoint>*>
             children;  ///< Pointers to child nodes in the routing tree.
@@ -69,7 +69,7 @@ namespace recti {
          * @param node_position The 2D integer coordinates of the node.
          */
         RoutingNode(std::string node_id, NodeType node_type, IntPoint node_position)
-            : id(std::move(node_id)), type(node_type), pt(node_position) {}
+            : id(std::move(node_id)), node_type(node_type), pt(node_position) {}
 
         /**
          * @brief Adds a child node to this node.
@@ -199,7 +199,7 @@ namespace recti {
          * @param source_position The 2D integer coordinates of the source node.
          */
         GlobalRoutingTree(IntPoint source_position) {
-            _arena.emplace_back("source", NodeType::SOURCE, source_position);
+            _arena.emplace_back("source", NodeType::Source, source_position);
             nodes["source"] = &this->_arena.back();
         }
 

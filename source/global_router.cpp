@@ -27,11 +27,11 @@ namespace recti {
      */
     std::string to_string(const NodeType routing_node_type) {
         switch (routing_node_type) {
-            case NodeType::STEINER:
+            case NodeType::Steiner:
                 return "Steiner";
-            case NodeType::TERMINAL:
+            case NodeType::Terminal:
                 return "Terminal";
-            case NodeType::SOURCE:
+            case NodeType::Source:
                 return "Source";
         }
         return "Unknown";
@@ -51,7 +51,7 @@ namespace recti {
     template <typename IntPoint>
     std::ostream& operator<<(std::ostream& output_stream,
                              const RoutingNode<IntPoint>& routing_node) {
-        std::string type_name = to_string(routing_node.type);
+        std::string type_name = to_string(routing_node.node_type);
         output_stream << type_name << "Node(" << routing_node.id << ", (" << routing_node.pt
                       << "))";
         return output_stream;
@@ -166,7 +166,7 @@ namespace recti {
         const IntPoint& point, int allowed_wirelength, std::optional<std::vector<Keepout>> keepouts)
         -> void {
         std::string terminal_id = "terminal_" + std::to_string(this->next_terminal_id++);
-        this->_arena.emplace_back(terminal_id, NodeType::TERMINAL, point);
+        this->_arena.emplace_back(terminal_id, NodeType::Terminal, point);
         RoutingNode<IntPoint>* terminal_node = &this->_arena.back();
         this->nodes[terminal_id] = terminal_node;
         auto [parent_node, nearest_node] = this->_find_nearest_insertion_with_constraints(
@@ -179,7 +179,7 @@ namespace recti {
             std::string steiner_id = "steiner_" + std::to_string(this->next_steiner_id++);
             auto possible_path = parent_node->pt.hull_with(nearest_node->pt);
             IntPoint nearest_pt = possible_path.nearest_to(point);
-            this->_arena.emplace_back(steiner_id, NodeType::STEINER, nearest_pt);
+            this->_arena.emplace_back(steiner_id, NodeType::Steiner, nearest_pt);
             RoutingNode<IntPoint>* new_node = &this->_arena.back();
             this->nodes[steiner_id] = new_node;
             parent_node->remove_child(nearest_node);
@@ -241,7 +241,7 @@ namespace recti {
                                                           std::optional<std::string> parent_id)
         -> std::string {
         std::string steiner_id = "steiner_" + std::to_string(this->next_steiner_id++);
-        this->_arena.emplace_back(steiner_id, NodeType::STEINER, point);
+        this->_arena.emplace_back(steiner_id, NodeType::Steiner, point);
         RoutingNode<IntPoint>* node = &this->_arena.back();
         this->nodes[steiner_id] = node;
 
@@ -264,7 +264,7 @@ namespace recti {
                                                            std::optional<std::string> parent_id)
         -> std::string {
         std::string terminal_id = "terminal_" + std::to_string(this->next_terminal_id++);
-        this->_arena.emplace_back(terminal_id, NodeType::TERMINAL, point);
+        this->_arena.emplace_back(terminal_id, NodeType::Terminal, point);
         RoutingNode<IntPoint>* node = &this->_arena.back();
         this->nodes[terminal_id] = node;
 
@@ -303,9 +303,9 @@ namespace recti {
         }
 
         std::string node_id;
-        if (new_node_type == NodeType::STEINER) {
+        if (new_node_type == NodeType::Steiner) {
             node_id = "steiner_" + std::to_string(this->next_steiner_id++);
-        } else if (new_node_type == NodeType::TERMINAL) {
+        } else if (new_node_type == NodeType::Terminal) {
             node_id = "terminal_" + std::to_string(this->next_terminal_id++);
         }
         this->_arena.emplace_back(node_id, new_node_type, point);
@@ -371,7 +371,7 @@ namespace recti {
         std::vector<const RoutingNode<IntPoint>*> terms;
         for (auto& pair : this->nodes) {
             const auto& node = pair.second;
-            if (node->type == NodeType::TERMINAL) {
+            if (node->node_type == NodeType::Terminal) {
                 terms.emplace_back(node);
             }
         }
@@ -383,7 +383,7 @@ namespace recti {
         std::vector<const RoutingNode<IntPoint>*> steins;
         for (auto& pair : this->nodes) {
             const auto& node = pair.second;
-            if (node->type == NodeType::STEINER) {
+            if (node->node_type == NodeType::Steiner) {
                 steins.emplace_back(node);
             }
         }
@@ -579,7 +579,7 @@ namespace recti {
     template <typename IntPoint> void GlobalRoutingTree<IntPoint>::optimize_steiner_points() {
         std::vector<std::string> steiner_ids_to_remove;
         for (auto& [id, node] : this->nodes) {
-            if (node->type == NodeType::STEINER && node->children.size() == 1
+            if (node->node_type == NodeType::Steiner && node->children.size() == 1
                 && node->parent != nullptr) {
                 steiner_ids_to_remove.emplace_back(id);
             }
@@ -693,17 +693,17 @@ namespace recti::detail {
         std::string color;
         int radius = 0;
         std::string label;
-        if (node->type == NodeType::SOURCE) {
+        if (node->node_type == NodeType::Source) {
             color = "red";
             radius = 8;
             label = "S";
-        } else if (node->type == NodeType::STEINER) {
+        } else if (node->node_type == NodeType::Steiner) {
             color = "blue";
             radius = 6;
             size_t pos = node->id.find('_');
             label = "S";
             label += pos != std::string::npos ? node->id.substr(pos + 1) : std::string("");
-        } else if (node->type == NodeType::TERMINAL) {
+        } else if (node->node_type == NodeType::Terminal) {
             color = "green";
             radius = 6;
             size_t pos = node->id.find('_');
@@ -730,18 +730,18 @@ namespace recti::detail {
         std::string color;
         int radius = 0;
         std::string label;
-        if (node->type == NodeType::SOURCE) {
+        if (node->node_type == NodeType::Source) {
             color = "red";
             radius = 8;
             label = "S";
-        } else if (node->type == NodeType::STEINER) {
+        } else if (node->node_type == NodeType::Steiner) {
             color = "blue";
             radius = 6;
             size_t pos = node->id.find('_');
             label = "S";
             label += pos != std::string::npos ? std::string(node->id.substr(pos + 1))
                                               : std::string("");
-        } else if (node->type == NodeType::TERMINAL) {
+        } else if (node->node_type == NodeType::Terminal) {
             color = "green";
             radius = 6;
             size_t pos = node->id.find('_');

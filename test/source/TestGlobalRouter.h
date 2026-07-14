@@ -8,9 +8,9 @@ TEST_SUITE("RoutingNode") {
     TEST_CASE_TEMPLATE("RoutingNode::remove_child - existing child", Point, recti::Point<int, int>,
                        recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
-        RoutingNode parent("parent", NodeType::SOURCE, Point{});
-        RoutingNode child1("child1", NodeType::TERMINAL, Point{});
-        RoutingNode child2("child2", NodeType::TERMINAL, Point{});
+        RoutingNode parent("parent", NodeType::Source, Point{});
+        RoutingNode child1("child1", NodeType::Terminal, Point{});
+        RoutingNode child2("child2", NodeType::Terminal, Point{});
 
         parent.add_child(&child1);
         parent.add_child(&child2);
@@ -29,9 +29,9 @@ TEST_SUITE("RoutingNode") {
     TEST_CASE_TEMPLATE("RoutingNode::remove_child - non-existent child", Point,
                        recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
-        RoutingNode parent("parent", NodeType::SOURCE, Point{});
-        RoutingNode child1("child1", NodeType::TERMINAL, Point{});
-        RoutingNode child2("child2", NodeType::TERMINAL, Point{});
+        RoutingNode parent("parent", NodeType::Source, Point{});
+        RoutingNode child1("child1", NodeType::Terminal, Point{});
+        RoutingNode child2("child2", NodeType::Terminal, Point{});
 
         parent.add_child(&child1);
 
@@ -49,8 +49,8 @@ TEST_SUITE("RoutingNode") {
     TEST_CASE_TEMPLATE("RoutingNode::remove_child - from empty children list", Point,
                        recti::Point<int, int>, recti::Point<recti::Point<int, int>, int>) {
         using namespace recti;
-        RoutingNode parent("parent", NodeType::SOURCE, Point{});
-        RoutingNode child("child", NodeType::TERMINAL, Point{});
+        RoutingNode parent("parent", NodeType::Source, Point{});
+        RoutingNode child("child", NodeType::Terminal, Point{});
 
         CHECK(parent.children.empty());
 
@@ -88,7 +88,7 @@ TEST_SUITE("GTree") {
         CHECK_EQ(tree.nodes.at(s1_id)->children.size(), 1);
         CHECK_EQ(tree.nodes.at(s1_id)->children[0]->id, s2_id);
 
-        std::string new_s_id = tree.insert_node_on_branch(NodeType::STEINER, Point{}, s1_id, s2_id);
+        std::string new_s_id = tree.insert_node_on_branch(NodeType::Steiner, Point{}, s1_id, s2_id);
 
         CHECK_EQ(tree.nodes.at(s1_id)->children.size(), 1);
         CHECK_EQ(tree.nodes.at(s1_id)->children[0]->id, new_s_id);
@@ -104,7 +104,7 @@ TEST_SUITE("GTree") {
         std::string s1_id = tree.insert_steiner_node(Point{});
         std::string s2_id = tree.insert_steiner_node(Point{}, s1_id);
         CHECK_THROWS_AS(
-            tree.insert_node_on_branch(NodeType::STEINER, Point{}, "non_existent", s2_id),
+            tree.insert_node_on_branch(NodeType::Steiner, Point{}, "non_existent", s2_id),
             std::runtime_error);
     }
 
@@ -115,7 +115,7 @@ TEST_SUITE("GTree") {
         std::string s1_id = tree.insert_steiner_node(Point{});
         std::string s2_id = tree.insert_steiner_node(Point{}, s1_id);
         CHECK_THROWS_AS(
-            tree.insert_node_on_branch(NodeType::STEINER, Point{}, s1_id, "non_existent"),
+            tree.insert_node_on_branch(NodeType::Steiner, Point{}, s1_id, "non_existent"),
             std::runtime_error);
     }
 
@@ -126,7 +126,7 @@ TEST_SUITE("GTree") {
         std::string s1_id = tree.insert_steiner_node(Point{});
         std::string s2_id = tree.insert_steiner_node(Point{});  // s2 is not child of s1
 
-        CHECK_THROWS_AS(tree.insert_node_on_branch(NodeType::STEINER, Point{}, s1_id, s2_id),
+        CHECK_THROWS_AS(tree.insert_node_on_branch(NodeType::Steiner, Point{}, s1_id, s2_id),
                         std::runtime_error);
     }
 
