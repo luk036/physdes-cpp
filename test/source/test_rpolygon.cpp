@@ -154,3 +154,19 @@ TEST_CASE("RPolygon vertices access") {
     CHECK_EQ(vertices[2], Point<int>{5, 5});
     CHECK_EQ(vertices[3], Point<int>{0, 5});
 }
+
+TEST_CASE("RPolygon iterator") {
+    const auto coords = std::vector<Point<int>>{{0, 0}, {5, 0}, {5, 5}, {0, 5}};
+    const auto poly = RPolygon<int>(coords);
+
+    // Iterate using begin()/end() — no heap allocation
+    std::vector<Point<int>> iterated;
+    for (const auto& v : poly) {
+        iterated.push_back(v);
+    }
+    REQUIRE_EQ(iterated.size(), 4);
+    CHECK_EQ(iterated[0], Point<int>{0, 0});
+    CHECK_EQ(iterated[1], Point<int>{5, 0});
+    CHECK_EQ(iterated[2], Point<int>{5, 5});
+    CHECK_EQ(iterated[3], Point<int>{0, 5});
+}

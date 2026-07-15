@@ -14,7 +14,6 @@ namespace recti {
 
     template <typename T1, typename T2> class Point;
 
-#pragma pack(push, 1)
     /**
      * @brief Point
      *
@@ -482,6 +481,5 @@ namespace recti {
          */
         constexpr auto get_ycoord() const -> const T2& { return this->_ycoord; }
     };
-#pragma pack(pop)
 
 }  // namespace recti

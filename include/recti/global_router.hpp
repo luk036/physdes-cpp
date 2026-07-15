@@ -12,6 +12,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <deque>
 #include <limits>
 #include <memory>
 #include <optional>
@@ -28,9 +29,9 @@ namespace recti {
      * @brief Defines the type of a routing node.
      */
     enum class NodeType {
-        STEINER,   ///< A Steiner point, an intermediate point added to optimize routing.
-        TERMINAL,  ///< A terminal point, representing a pin or a component connection.
-        SOURCE     ///< The source point of the routing tree.
+        Steiner,   ///< A Steiner point, an intermediate point added to optimize routing.
+        Terminal,  ///< A terminal point, representing a pin or a component connection.
+        Source     ///< The source point of the routing tree.
     };
 
     /**
@@ -51,7 +52,7 @@ namespace recti {
     template <typename IntPoint> class RoutingNode {
       public:
         std::string id;  ///< Unique identifier for the node.
-        NodeType type;   ///< The type of the node (STEINER, TERMINAL, SOURCE).
+        NodeType node_type;   ///< The type of the node.
         IntPoint pt;     ///< The 2D integer coordinates of the node.
         std::vector<RoutingNode<IntPoint>*>
             children;  ///< Pointers to child nodes in the routing tree.
@@ -68,7 +69,7 @@ namespace recti {
          * @param node_position The 2D integer coordinates of the node.
          */
         RoutingNode(std::string node_id, NodeType node_type, IntPoint node_position)
-            : id(std::move(node_id)), type(node_type), pt(node_position) {}
+            : id(std::move(node_id)), node_type(node_type), pt(node_position) {}
 
         /**
          * @brief Adds a child node to this node.
@@ -166,9 +167,11 @@ namespace recti {
         using Keepout = decltype(std::declval<IntPoint>().enlarge_with(1));
 
       private:
-        RoutingNode<IntPoint> source_node;  ///< The root node of the routing tree.
-        int next_steiner_id = 1;            ///< Counter for generating unique Steiner node IDs.
-        int next_terminal_id = 1;           ///< Counter for generating unique terminal node IDs.
+        /// Single contiguous arena for all RoutingNodes (deque guarantees stable
+        /// pointers on push_back — existing pointers remain valid as the tree grows).
+        std::deque<RoutingNode<IntPoint>> _arena;
+        int next_steiner_id = 1;   ///< Counter for generating unique Steiner node IDs.
+        int next_terminal_id = 1;  ///< Counter for generating unique terminal node IDs.
 
         auto _find_nearest_node(const IntPoint& point, std::optional<std::string> exclude_id
                                                        = std::nullopt) -> RoutingNode<IntPoint>*;
@@ -187,9 +190,7 @@ namespace recti {
 
       public:
         std::unordered_map<std::string, RoutingNode<IntPoint>*>
-            nodes;  ///< Map from node ID to RoutingNode<IntPoint> pointer.
-        std::vector<std::unique_ptr<RoutingNode<IntPoint>>>
-            owned_nodes;           ///< Stores unique_ptrs for memory management of nodes.
+            nodes;                 ///< Map from node ID to RoutingNode<IntPoint> pointer.
         int worst_wirelength = 0;  ///< The worst-case wirelength constraint for routing (used in
                                    ///< constrained routing).
 
@@ -197,22 +198,22 @@ namespace recti {
          * @brief Constructs a new GlobalRoutingTree with a specified source position.
          * @param source_position The 2D integer coordinates of the source node.
          */
-        GlobalRoutingTree(IntPoint source_position)
-            : source_node("source", NodeType::SOURCE, source_position) {
-            nodes["source"] = &source_node;
+        GlobalRoutingTree(IntPoint source_position) {
+            _arena.emplace_back("source", NodeType::Source, source_position);
+            nodes["source"] = &this->_arena.back();
         }
 
         /**
          * @brief Gets a const pointer to the source node of the tree.
          * @return A const pointer to the source RoutingNode<IntPoint>.
          */
-        auto get_source() const -> const RoutingNode<IntPoint>* { return &source_node; }
+        auto get_source() const -> const RoutingNode<IntPoint>* { return &this->_arena[0]; }
 
         /**
          * @brief Gets a non-const pointer to the source node of the tree.
          * @return A non-const pointer to the source RoutingNode<IntPoint>.
          */
-        auto get_source() -> RoutingNode<IntPoint>* { return &source_node; }
+        auto get_source() -> RoutingNode<IntPoint>* { return &this->_arena[0]; }
 
         /**
          * @brief Inserts a new Steiner node into the routing tree.

@@ -80,8 +80,8 @@ namespace recti {
         tree = Tree{};
         node_id = 0;
 
-        for (const auto& sink : sinks) {
-            TreeNode node(sink.name, sink.position);
+        for (auto& sink : sinks) {
+            TreeNode node(std::move(sink.name), sink.position);
             node.capacitance = sink.capacitance;
             tree.add(std::move(node));
         }
@@ -115,17 +115,21 @@ namespace recti {
         }
 
         auto sorted = node_ids;
+        size_t mid = sorted.size() / 2;
         if (vertical) {
-            std::ranges::sort(sorted, [this](NodeIdx a, NodeIdx b) {
-                return tree.get(a).position.xcoord() < tree.get(b).position.xcoord();
-            });
+            std::nth_element(sorted.begin(), sorted.begin() + static_cast<std::ptrdiff_t>(mid),
+                             sorted.end(), [this](NodeIdx a, NodeIdx b) {
+                                 return tree.get(a).position.xcoord()
+                                        < tree.get(b).position.xcoord();
+                             });
         } else {
-            std::ranges::sort(sorted, [this](NodeIdx a, NodeIdx b) {
-                return tree.get(a).position.ycoord() < tree.get(b).position.ycoord();
-            });
+            std::nth_element(sorted.begin(), sorted.begin() + static_cast<std::ptrdiff_t>(mid),
+                             sorted.end(), [this](NodeIdx a, NodeIdx b) {
+                                 return tree.get(a).position.ycoord()
+                                        < tree.get(b).position.ycoord();
+                             });
         }
 
-        size_t mid = sorted.size() / 2;
         std::vector<NodeIdx> left_group(sorted.begin(),
                                         sorted.begin() + static_cast<std::ptrdiff_t>(mid));
         std::vector<NodeIdx> right_group(sorted.begin() + static_cast<std::ptrdiff_t>(mid),
@@ -233,8 +237,11 @@ namespace recti {
         const auto& node_segment = it->second;
 
         if (parent_segment == nullptr) {
-            // Root node: pick upper corner of its merging segment
-            tree.get_mut(node).position = node_segment.get_upper_corner();
+            if (this->source.has_value()) {
+                tree.get_mut(node).position = node_segment.nearest_point_to(this->source.value());
+            } else {
+                tree.get_mut(node).position = node_segment.get_upper_corner();
+            }
         } else {
             // Internal node: nearest point on segment to parent
             NodeIdx p = tree.get(node).parent;

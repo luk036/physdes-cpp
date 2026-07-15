@@ -4,6 +4,8 @@
 #include <list>                // for list, __list_iterator, operator!=
 #include <ostream>             // for operator<<
 #include <recti/interval.hpp>  // for Interval, operator<<, operator+, ope...
+#include <recti/point.hpp>     // for Point
+#include <recti/recti.hpp>     // for Rectangle
 #include <set>                 // for set, set<>::iterator
 
 using recti::hull;
@@ -158,4 +160,21 @@ TEST_CASE("Interval class") {
         CHECK_EQ(enlarged.lb(), 1);
         CHECK_EQ(enlarged.ub(), 7);
     }
+}
+
+// --- Memory regression: class sizes ---
+
+TEST_CASE("sizeof Interval<int>") {
+    // Two ints = 8 bytes (no padding, packing removed)
+    CHECK_EQ(sizeof(recti::Interval<int>), 2 * sizeof(int));
+}
+
+TEST_CASE("sizeof Point<int, int>") {
+    // Two ints = 8 bytes (no padding, packing removed)
+    CHECK_EQ(sizeof(recti::Point<int, int>), 2 * sizeof(int));
+}
+
+TEST_CASE("sizeof Rectangle<int>") {
+    // Inherits Point<Interval<int>, Interval<int>> = 2 * Interval<int> = 16
+    CHECK_EQ(sizeof(recti::Rectangle<int>), 2 * sizeof(recti::Interval<int>));
 }
