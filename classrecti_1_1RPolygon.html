@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Recti<span id="projectnumber">&#160;1.2.2;  VERSION ${PROJECT_VERSION}</span>
+   <div id="projectname">Recti<span id="projectnumber">&#160;1.2.3;  VERSION ${PROJECT_VERSION}</span>
    </div>
   </td>
  </tr>
@@ -81,27 +81,36 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classrecti_1_1RPolygon-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">recti::RPolygon&lt; T &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Rectilinear <a class="el" href="classrecti_1_1Polygon.html" title="Polygon.">Polygon</a>.  
- <a href="classrecti_1_1RPolygon.html#details">More...</a></p>
-
 <p><code>#include &lt;<a class="el" href="rpolygon_8hpp_source.html">rpolygon.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a7d45dfefd4129f8083e6d61dd821e935" id="r_a7d45dfefd4129f8083e6d61dd821e935"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrecti_1_1RPolygon.html#a7d45dfefd4129f8083e6d61dd821e935">const_iterator</a> = <a class="el" href="classrecti_1_1RPolygonVertexIterator.html">RPolygonVertexIterator</a>&lt; T &gt;</td></tr>
+<tr class="separator:a7d45dfefd4129f8083e6d61dd821e935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a76b0cfef129a7a705e7a75e2d939d8c8" id="r_a76b0cfef129a7a705e7a75e2d939d8c8"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrecti_1_1RPolygon.html#a76b0cfef129a7a705e7a75e2d939d8c8">RPolygon</a> ()=default</td></tr>
 <tr class="memdesc:a76b0cfef129a7a705e7a75e2d939d8c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <br /></td></tr>
 <tr class="separator:a76b0cfef129a7a705e7a75e2d939d8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab979982cf2529eb061bffc9c8edb71e8" id="r_ab979982cf2529eb061bffc9c8edb71e8"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrecti_1_1RPolygon.html#ab979982cf2529eb061bffc9c8edb71e8">begin</a> () const -&gt; <a class="el" href="classrecti_1_1RPolygon.html#a7d45dfefd4129f8083e6d61dd821e935">const_iterator</a></td></tr>
+<tr class="memdesc:ab979982cf2529eb061bffc9c8edb71e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator to first vertex (the origin).  <br /></td></tr>
+<tr class="separator:ab979982cf2529eb061bffc9c8edb71e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ecadbb78785f4b627cfa9d333e45333" id="r_a1ecadbb78785f4b627cfa9d333e45333"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrecti_1_1RPolygon.html#a1ecadbb78785f4b627cfa9d333e45333">end</a> () const -&gt; <a class="el" href="classrecti_1_1RPolygon.html#a7d45dfefd4129f8083e6d61dd821e935">const_iterator</a></td></tr>
+<tr class="memdesc:a1ecadbb78785f4b627cfa9d333e45333"><td class="mdescLeft">&#160;</td><td class="mdescRight">Past-the-end iterator.  <br /></td></tr>
+<tr class="separator:a1ecadbb78785f4b627cfa9d333e45333"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b5972aff1fb0463a98f337fde7cf184" id="r_a3b5972aff1fb0463a98f337fde7cf184"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrecti_1_1RPolygon.html#a3b5972aff1fb0463a98f337fde7cf184">RPolygon</a> (<a class="el" href="classrecti_1_1Point.html">Point</a>&lt; T &gt; <a class="el" href="classrecti_1_1RPolygon.html#a0190cdcedc6b66478276b9e432105391">origin</a>, std::vector&lt; <a class="el" href="classrecti_1_1Vector2.html">Vector2</a>&lt; T &gt; &gt; vecs)</td></tr>
-<tr class="memdesc:a3b5972aff1fb0463a98f337fde7cf184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> object from origin and vectors.  <br /></td></tr>
+<tr class="memdesc:a3b5972aff1fb0463a98f337fde7cf184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> object from origin and vectors.  <br /></td></tr>
 <tr class="separator:a3b5972aff1fb0463a98f337fde7cf184"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e563621411681894622035598e7d18d" id="r_a5e563621411681894622035598e7d18d"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrecti_1_1RPolygon.html#a5e563621411681894622035598e7d18d">RPolygon</a> (std::span&lt; const <a class="el" href="classrecti_1_1Point.html">Point</a>&lt; T &gt; &gt; pointset)</td></tr>
-<tr class="memdesc:a5e563621411681894622035598e7d18d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> object from a set of points.  <br /></td></tr>
+<tr class="memdesc:a5e563621411681894622035598e7d18d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> object from a set of points.  <br /></td></tr>
 <tr class="separator:a5e563621411681894622035598e7d18d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2e31bb41175a25f64e85eaa6a59916f" id="r_ad2e31bb41175a25f64e85eaa6a59916f"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrecti_1_1RPolygon.html#ad2e31bb41175a25f64e85eaa6a59916f">operator==</a> (const <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> &amp;rhs) const</td></tr>
 <tr class="memdesc:ad2e31bb41175a25f64e85eaa6a59916f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality comparison operator.  <br /></td></tr>
@@ -131,39 +140,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a26a768486116a99beb8bbcfb97cc3262"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the polygon is rectilinear (all edges are horizontal or vertical)  <br /></td></tr>
 <tr class="separator:a26a768486116a99beb8bbcfb97cc3262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
-class recti::RPolygon&lt; T &gt;</div><p>Rectilinear <a class="el" href="classrecti_1_1Polygon.html" title="Polygon.">Polygon</a>. </p>
-<p><code><a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a></code> is a class template that represents a rectilinear polygon. It stores the origin point and a vector of edges that define the polygon. The template parameter <code>T</code> specifies the type of the coordinates of the points.</p>
-<div class="fragment"><div class="line">+-----------------------------+</div>
-<div class="line">|        <a class="code hl_class" href="classrecti_1_1RPolygon.html">RPolygon&lt;T&gt;</a>          |</div>
-<div class="line">+-----------------------------+</div>
-<div class="line">| _origin: <a class="code hl_class" href="classrecti_1_1Point.html">Point&lt;T&gt;</a>           |</div>
-<div class="line">| _vecs: vector&lt;Vector2&lt;T&gt;&gt;   |</div>
-<div class="line">|                             |</div>
-<div class="line">|        +----+               |</div>
-<div class="line">|        |    |               |  A rectilinear polygon <span class="keyword">class</span></div>
-<div class="line">|    +---+    |               |  with <a class="code hl_function" href="classrecti_1_1RPolygon.html#a0190cdcedc6b66478276b9e432105391">origin</a> point and</div>
-<div class="line">|    |   |    |               |  <a class="code hl_function" href="classrecti_1_1RPolygon.html#ada549a428a47f4dfd8aa1db3e12a02e2">vectors</a> defining the polygon</div>
-<div class="line">|    |   +----+               |  edges. Supports various</div>
-<div class="line">|    |                        |  geometric operations</div>
-<div class="line">|    +------------------------+</div>
-<div class="line">|            <a class="code hl_function" href="classrecti_1_1RPolygon.html#a419395f749a7660a623debc636ba70a8">vertices</a>()       |</div>
-<div class="line">|            <a class="code hl_function" href="classrecti_1_1RPolygon.html#a224e7490f85f9ea21e50d51f66380476">signed_area</a>()    |</div>
-<div class="line">+-----------------------------+</div>
-<div class="ttc" id="aclassrecti_1_1Point_html"><div class="ttname"><a href="classrecti_1_1Point.html">recti::Point</a></div><div class="ttdoc">Point.</div><div class="ttdef"><b>Definition</b> point.hpp:31</div></div>
-<div class="ttc" id="aclassrecti_1_1RPolygon_html"><div class="ttname"><a href="classrecti_1_1RPolygon.html">recti::RPolygon</a></div><div class="ttdoc">Rectilinear Polygon.</div><div class="ttdef"><b>Definition</b> rpolygon.hpp:42</div></div>
-<div class="ttc" id="aclassrecti_1_1RPolygon_html_a0190cdcedc6b66478276b9e432105391"><div class="ttname"><a href="classrecti_1_1RPolygon.html#a0190cdcedc6b66478276b9e432105391">recti::RPolygon::origin</a></div><div class="ttdeci">constexpr const Point&lt; T &gt; &amp; origin() const</div><div class="ttdoc">Gets the origin point of the polygon.</div><div class="ttdef"><b>Definition</b> rpolygon.hpp:125</div></div>
-<div class="ttc" id="aclassrecti_1_1RPolygon_html_a224e7490f85f9ea21e50d51f66380476"><div class="ttname"><a href="classrecti_1_1RPolygon.html#a224e7490f85f9ea21e50d51f66380476">recti::RPolygon::signed_area</a></div><div class="ttdeci">constexpr auto signed_area() const -&gt; T</div><div class="ttdoc">Calculates the signed area of the rectilinear polygon.</div><div class="ttdef"><b>Definition</b> rpolygon.hpp:153</div></div>
-<div class="ttc" id="aclassrecti_1_1RPolygon_html_a419395f749a7660a623debc636ba70a8"><div class="ttname"><a href="classrecti_1_1RPolygon.html#a419395f749a7660a623debc636ba70a8">recti::RPolygon::vertices</a></div><div class="ttdeci">constexpr auto vertices() const -&gt; std::vector&lt; Point&lt; T &gt; &gt;</div><div class="ttdoc">Gets all vertices of the polygon as points.</div><div class="ttdef"><b>Definition</b> rpolygon.hpp:135</div></div>
-<div class="ttc" id="aclassrecti_1_1RPolygon_html_ada549a428a47f4dfd8aa1db3e12a02e2"><div class="ttname"><a href="classrecti_1_1RPolygon.html#ada549a428a47f4dfd8aa1db3e12a02e2">recti::RPolygon::vectors</a></div><div class="ttdeci">constexpr const std::vector&lt; Vector2&lt; T &gt; &gt; &amp; vectors() const</div><div class="ttdoc">Gets the displacement vectors of the polygon.</div><div class="ttdef"><b>Definition</b> rpolygon.hpp:130</div></div>
-</div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a7d45dfefd4129f8083e6d61dd821e935" name="a7d45dfefd4129f8083e6d61dd821e935"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d45dfefd4129f8083e6d61dd821e935">&#9670;&#160;</a></span>const_iterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classrecti_1_1RPolygon.html">recti::RPolygon</a>&lt; T &gt;::const_iterator =  <a class="el" href="classrecti_1_1RPolygonVertexIterator.html">RPolygonVertexIterator</a>&lt;T&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a76b0cfef129a7a705e7a75e2d939d8c8" name="a76b0cfef129a7a705e7a75e2d939d8c8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a76b0cfef129a7a705e7a75e2d939d8c8">&#9670;&#160;</a></span>RPolygon() <span class="overload">[1/3]</span></h2>
 
@@ -229,7 +223,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Constructs a new <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> object from origin and vectors. </p>
+<p>Constructs a new <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> object from origin and vectors. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">origin</td><td>The origin point of the polygon </td></tr>
@@ -266,7 +260,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Constructs a new <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> object from a set of points. </p>
+<p>Constructs a new <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> object from a set of points. </p>
 <p>This constructor takes a <code>std::span</code> of <code><a class="el" href="classrecti_1_1Point.html" title="Point.">Point</a>&lt;T&gt;</code> objects representing the vertices of the rectilinear polygon. The first point in the span is used as the origin of the polygon, and the remaining points are used to construct the vectors that define the edges of the polygon.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -278,6 +272,64 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab979982cf2529eb061bffc9c8edb71e8" name="ab979982cf2529eb061bffc9c8edb71e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab979982cf2529eb061bffc9c8edb71e8">&#9670;&#160;</a></span>begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto <a class="el" href="classrecti_1_1RPolygon.html">recti::RPolygon</a>&lt; T &gt;::begin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const -&gt; <a class="el" href="classrecti_1_1RPolygon.html#a7d45dfefd4129f8083e6d61dd821e935">const_iterator</a> </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Iterator to first vertex (the origin). </p>
+
+</div>
+</div>
+<a id="a1ecadbb78785f4b627cfa9d333e45333" name="a1ecadbb78785f4b627cfa9d333e45333"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ecadbb78785f4b627cfa9d333e45333">&#9670;&#160;</a></span>end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto <a class="el" href="classrecti_1_1RPolygon.html">recti::RPolygon</a>&lt; T &gt;::end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const -&gt; <a class="el" href="classrecti_1_1RPolygon.html#a7d45dfefd4129f8083e6d61dd821e935">const_iterator</a> </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Past-the-end iterator. </p>
+
+</div>
+</div>
 <a id="a26a768486116a99beb8bbcfb97cc3262" name="a26a768486116a99beb8bbcfb97cc3262"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a26a768486116a99beb8bbcfb97cc3262">&#9670;&#160;</a></span>is_rectilinear()</h2>
 
@@ -371,7 +423,7 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to the modified <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> object. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to the modified <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> object. </dd></dl>
 
 </div>
 </div>
@@ -409,7 +461,7 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to the modified <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> object. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to the modified <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> object. </dd></dl>
 
 </div>
 </div>
@@ -498,7 +550,7 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Calculates the signed area of the rectilinear polygon. </p>
-<p>This method calculates the signed area of the rectilinear polygon represented by this <code><a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a></code> object using the shoelace formula.</p>
+<p>This method calculates the signed area of the rectilinear polygon represented by this <code><a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a></code> object using the shoelace formula.</p>
 <dl class="section return"><dt>Returns</dt><dd>The signed area of the rectilinear polygon. </dd></dl>
 
 </div>

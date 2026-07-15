@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['raw_5fextend_5fleft_0',['raw_extend_left',['../structrecti_1_1TappingResult.html#a9b5f6e9ac25c54bbaa54d9fe417a0933',1,'recti::TappingResult']]],
-  ['right_1',['right',['../classrecti_1_1TreeNode.html#a8f37e60b6aee0f6a8f59f1628f5e4943',1,'recti::TreeNode']]],
-  ['root_2',['root',['../classrecti_1_1Tree.html#aeaeb5d28f74b4d0ff1b9580c03ce88ac',1,'recti::Tree::root'],['../structrecti_1_1TreeComparisonData.html#a3cfabce84e9858927ea2101497892dfe',1,'recti::TreeComparisonData::root']]]
+  ['scale_0',['scale',['../structrecti_1_1detail_1_1SvgParams.html#a4cf76cabe221704ce18d092e1646a69f',1,'recti::detail::SvgParams']]],
+  ['sink_5fdelays_1',['sink_delays',['../structrecti_1_1SkewAnalysis.html#abd38fae1f9580fbc7fdba084506d4fbb',1,'recti::SkewAnalysis']]],
+  ['sinks_2',['sinks',['../structrecti_1_1TreeStatistics.html#a1e4c4a91972c84be2fdbefab308564eb',1,'recti::TreeStatistics::sinks'],['../structrecti_1_1TreeComparisonData.html#a332497880290b6528146c7dcf99dc940',1,'recti::TreeComparisonData::sinks']]],
+  ['skew_3',['skew',['../structrecti_1_1SkewAnalysis.html#a3fe742dbb94b584c8791954374b783cb',1,'recti::SkewAnalysis']]]
 ];

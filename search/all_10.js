@@ -13,11 +13,11 @@ var searchData=
   ['size_10',['size',['../classrecti_1_1Tree.html#a07278fb833d2531ec70c490f1ec857d9',1,'recti::Tree']]],
   ['skew_11',['skew',['../structrecti_1_1SkewAnalysis.html#a3fe742dbb94b584c8791954374b783cb',1,'recti::SkewAnalysis']]],
   ['skewanalysis_12',['SkewAnalysis',['../structrecti_1_1SkewAnalysis.html',1,'recti']]],
-  ['source_13',['SOURCE',['../namespacerecti.html#aa10b643c20623d868438bea3e6978daeae60b4854b44ccfb2d92aa6f035171bb4',1,'recti']]],
+  ['source_13',['Source',['../namespacerecti.html#aa10b643c20623d868438bea3e6978daeaf31bbdd1b3e85bccd652680e16935819',1,'recti']]],
   ['standalone_20target_14',['Build and run the standalone target',['../index.html#autotoc_md4',1,'']]],
   ['star_20history_15',['Star History',['../index.html#autotoc_md15',1,'']]],
   ['static_20analyzers_16',['Static Analyzers',['../index.html#autotoc_md11',1,'']]],
-  ['steiner_17',['STEINER',['../namespacerecti.html#aa10b643c20623d868438bea3e6978daeaf325ad53168e6f3210b868c6b3eccf64',1,'recti']]],
+  ['steiner_17',['Steiner',['../namespacerecti.html#aa10b643c20623d868438bea3e6978daea94665c88b4a74c52f9467ca5b324c838',1,'recti']]],
   ['suite_18',['Build and run test suite',['../index.html#autotoc_md5',1,'']]],
   ['svg_5futils_2ehpp_19',['svg_utils.hpp',['../svg__utils_8hpp.html',1,'']]],
   ['svgparams_20',['SvgParams',['../structrecti_1_1detail_1_1SvgParams.html',1,'recti::detail']]]

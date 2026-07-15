@@ -2,7 +2,7 @@ var searchData=
 [
   ['rdllist_0',['RDllist',['../classRDllist.html#a40f019de43b1f8e65fae04180c8ca934',1,'RDllist']]],
   ['rdlliterator_1',['RDllIterator',['../classRDllIterator.html#af7432755ef0c3add69a9546f30c6c09c',1,'RDllIterator']]],
-  ['rectangle_2',['rectangle',['../structrecti_1_1Rectangle.html#a66cb080b25556a3f5d1305a15feaf156',1,'recti::Rectangle::Rectangle(Interval&lt; T &gt; xcoord, Interval&lt; T &gt; ycoord) noexcept'],['../structrecti_1_1Rectangle.html#a51b2479833984ef400905ac0c8ee6036',1,'recti::Rectangle::Rectangle(Point&lt; Interval&lt; T &gt; &gt; base) noexcept']]],
+  ['rectangle_2',['rectangle',['../structrecti_1_1Rectangle.html#a51b2479833984ef400905ac0c8ee6036',1,'recti::Rectangle::Rectangle(Point&lt; Interval&lt; T &gt; &gt; base) noexcept'],['../structrecti_1_1Rectangle.html#a66cb080b25556a3f5d1305a15feaf156',1,'recti::Rectangle::Rectangle(Interval&lt; T &gt; xcoord, Interval&lt; T &gt; ycoord) noexcept']]],
   ['remove_5fchild_3',['remove_child',['../classrecti_1_1RoutingNode.html#a3d7d98172d8390f0a89ec1fd404912bc',1,'recti::RoutingNode']]],
   ['reseed_4',['reseed',['../classilds_1_1VdCorput.html#ad1ad1c2af5c9ef2513a8dd13ee3d6660',1,'ilds::VdCorput::reseed()'],['../classilds_1_1Halton.html#a6dd86f98480c0be4bb9d9eaa3bed5ac0',1,'ilds::Halton::reseed()']]],
   ['rotates_5',['rotates',['../classrecti_1_1Point.html#a0e2eecab66e2556bc9193ad892a8f342',1,'recti::Point']]],
@@ -25,5 +25,6 @@ var searchData=
   ['rpolygon_5fmake_5fconvex_5fhull_22',['rpolygon_make_convex_hull',['../namespacerecti.html#a6ad8b04771b20b3ba3a963af28fbd5d8',1,'recti']]],
   ['rpolygon_5fmake_5fmonotone_5fhull_23',['rpolygon_make_monotone_hull',['../namespacerecti.html#a75c5e8c3c3de7102c94ca9fd434be185',1,'recti']]],
   ['rpolygon_5fmake_5fxmonotone_5fhull_24',['rpolygon_make_xmonotone_hull',['../namespacerecti.html#a6aef38759f7c24c12f73d95d89f6683e',1,'recti']]],
-  ['rpolygon_5fmake_5fymonotone_5fhull_25',['rpolygon_make_ymonotone_hull',['../namespacerecti.html#ad7868a6cbb32b3df623b9ba1840adfb5',1,'recti']]]
+  ['rpolygon_5fmake_5fymonotone_5fhull_25',['rpolygon_make_ymonotone_hull',['../namespacerecti.html#ad7868a6cbb32b3df623b9ba1840adfb5',1,'recti']]],
+  ['rpolygonvertexiterator_26',['RPolygonVertexIterator',['../classrecti_1_1RPolygonVertexIterator.html#a256c5c1ebef362fc971c9e1e106dfed1',1,'recti::RPolygonVertexIterator']]]
 ];

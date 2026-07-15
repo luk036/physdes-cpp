@@ -19,5 +19,6 @@ var searchData=
   ['is_5finvalid_16',['is_invalid',['../classrecti_1_1Interval.html#af160ecd97b42437d322fc06cd232cfba',1,'recti::Interval']]],
   ['is_5fleaf_17',['is_leaf',['../classrecti_1_1TreeNode.html#adfe7e3f68b4ee47ed8697f174b8e4fad',1,'recti::TreeNode']]],
   ['is_5flocked_18',['is_locked',['../classDllink.html#acd221d02dd88444bfbff4fd2d5ed4217',1,'Dllink']]],
-  ['is_5frectilinear_19',['is_rectilinear',['../classrecti_1_1Polygon.html#a06845a68f158bb85d887b0ab8b765bb3',1,'recti::Polygon::is_rectilinear()'],['../classrecti_1_1RPolygon.html#a26a768486116a99beb8bbcfb97cc3262',1,'recti::RPolygon::is_rectilinear()']]]
+  ['is_5frectilinear_19',['is_rectilinear',['../classrecti_1_1Polygon.html#a06845a68f158bb85d887b0ab8b765bb3',1,'recti::Polygon::is_rectilinear()'],['../classrecti_1_1RPolygon.html#a26a768486116a99beb8bbcfb97cc3262',1,'recti::RPolygon::is_rectilinear()']]],
+  ['iterator_5fcategory_20',['iterator_category',['../classrecti_1_1RPolygonVertexIterator.html#a54a3b65f2401a3c6eceb90cc0682d8b1',1,'recti::RPolygonVertexIterator']]]
 ];

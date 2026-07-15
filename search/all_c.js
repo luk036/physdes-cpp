@@ -7,8 +7,9 @@ var searchData=
   ['need_5felongation_4',['need_elongation',['../classrecti_1_1TreeNode.html#a9e4305a4ae566c6237abece93f670d62',1,'recti::TreeNode']]],
   ['needs_5',['Adjust the template to your needs',['../index.html#autotoc_md3',1,'']]],
   ['next_6',['next',['../classDllink.html#af4fd13a5eb0b8ebb49e9e718c4d2937b',1,'Dllink']]],
-  ['nodeidx_7',['NodeIdx',['../namespacerecti.html#a346c5abf9066d4b007b9d198fa5f69b6',1,'recti']]],
-  ['nodeinfo_8',['NodeInfo',['../structrecti_1_1TreeStatistics_1_1NodeInfo.html',1,'recti::TreeStatistics']]],
-  ['nodes_9',['nodes',['../structrecti_1_1TreeStatistics.html#a466bef56587a4d699c688cc4433ccf93',1,'recti::TreeStatistics::nodes'],['../classrecti_1_1GlobalRoutingTree.html#aa2edcee881568c3a2aaa01d5a5094af4',1,'recti::GlobalRoutingTree::nodes']]],
-  ['nodetype_10',['NodeType',['../namespacerecti.html#aa10b643c20623d868438bea3e6978dae',1,'recti']]]
+  ['node_5ftype_7',['node_type',['../classrecti_1_1RoutingNode.html#a13bbeaae3817f7e9a0e0358a3fcd655d',1,'recti::RoutingNode']]],
+  ['nodeidx_8',['NodeIdx',['../namespacerecti.html#a346c5abf9066d4b007b9d198fa5f69b6',1,'recti']]],
+  ['nodeinfo_9',['NodeInfo',['../structrecti_1_1TreeStatistics_1_1NodeInfo.html',1,'recti::TreeStatistics']]],
+  ['nodes_10',['nodes',['../structrecti_1_1TreeStatistics.html#a466bef56587a4d699c688cc4433ccf93',1,'recti::TreeStatistics::nodes'],['../classrecti_1_1GlobalRoutingTree.html#aa2edcee881568c3a2aaa01d5a5094af4',1,'recti::GlobalRoutingTree::nodes']]],
+  ['nodetype_11',['NodeType',['../namespacerecti.html#aa10b643c20623d868438bea3e6978dae',1,'recti']]]
 ];

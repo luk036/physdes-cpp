@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['terminal_0',['TERMINAL',['../namespacerecti.html#aa10b643c20623d868438bea3e6978daea6c7748bd0ad3fbdff996e81581ad64d6',1,'recti']]]
+  ['terminal_0',['Terminal',['../namespacerecti.html#aa10b643c20623d868438bea3e6978daea514d8a494f087c0d549b9536c2ef3bd9',1,'recti']]]
 ];

@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Recti<span id="projectnumber">&#160;1.2.2;  VERSION ${PROJECT_VERSION}</span>
+   <div id="projectname">Recti<span id="projectnumber">&#160;1.2.3;  VERSION ${PROJECT_VERSION}</span>
    </div>
   </td>
  </tr>
@@ -97,6 +97,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4046a30f1996f6936e9846ef953cd451" id="r_a4046a30f1996f6936e9846ef953cd451"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrecti_1_1DMEAlgorithm.html#a4046a30f1996f6936e9846ef953cd451">DMEAlgorithm</a> (const std::vector&lt; <a class="el" href="classrecti_1_1Sink.html">Sink</a> &gt; &amp;sinks, std::unique_ptr&lt; <a class="el" href="classrecti_1_1DelayCalculator.html">DelayCalculator</a> &gt; calculator)</td></tr>
 <tr class="memdesc:a4046a30f1996f6936e9846ef953cd451"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classrecti_1_1DMEAlgorithm.html" title="Implements the Deferred Merge Embedding (DME) algorithm for clock tree synthesis.">DMEAlgorithm</a> object.  <br /></td></tr>
 <tr class="separator:a4046a30f1996f6936e9846ef953cd451"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1871515c59d2fbdb5d845de31c579f05" id="r_a1871515c59d2fbdb5d845de31c579f05"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrecti_1_1DMEAlgorithm.html#a1871515c59d2fbdb5d845de31c579f05">DMEAlgorithm</a> (const std::vector&lt; <a class="el" href="classrecti_1_1Sink.html">Sink</a> &gt; &amp;sinks, std::unique_ptr&lt; <a class="el" href="classrecti_1_1DelayCalculator.html">DelayCalculator</a> &gt; calculator, <a class="el" href="classrecti_1_1Point.html">Point</a>&lt; int &gt; source_position)</td></tr>
+<tr class="memdesc:a1871515c59d2fbdb5d845de31c579f05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classrecti_1_1DMEAlgorithm.html" title="Implements the Deferred Merge Embedding (DME) algorithm for clock tree synthesis.">DMEAlgorithm</a> with a specified clock source position.  <br /></td></tr>
+<tr class="separator:a1871515c59d2fbdb5d845de31c579f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af95a2e50dfca85865f1e5b99a9262314" id="r_af95a2e50dfca85865f1e5b99a9262314"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacerecti.html#a346c5abf9066d4b007b9d198fa5f69b6">NodeIdx</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrecti_1_1DMEAlgorithm.html#af95a2e50dfca85865f1e5b99a9262314">build_clock_tree</a> ()</td></tr>
 <tr class="memdesc:af95a2e50dfca85865f1e5b99a9262314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds the clock tree for the given sinks.  <br /></td></tr>
 <tr class="separator:af95a2e50dfca85865f1e5b99a9262314"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -120,7 +123,7 @@ Public Member Functions</h2></td></tr>
 </ol>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4046a30f1996f6936e9846ef953cd451" name="a4046a30f1996f6936e9846ef953cd451"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4046a30f1996f6936e9846ef953cd451">&#9670;&#160;</a></span>DMEAlgorithm()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4046a30f1996f6936e9846ef953cd451">&#9670;&#160;</a></span>DMEAlgorithm() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -158,6 +161,64 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">sinks</td><td>A vector of clock sinks. </td></tr>
     <tr><td class="paramname">calculator</td><td>A unique pointer to a <a class="el" href="classrecti_1_1DelayCalculator.html" title="Abstract base class for delay calculation models.">DelayCalculator</a> implementation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid_argument</td><td>if sinks is empty. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1871515c59d2fbdb5d845de31c579f05" name="a1871515c59d2fbdb5d845de31c579f05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1871515c59d2fbdb5d845de31c579f05">&#9670;&#160;</a></span>DMEAlgorithm() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">recti::DMEAlgorithm::DMEAlgorithm </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="classrecti_1_1Sink.html">Sink</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sinks</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classrecti_1_1DelayCalculator.html">DelayCalculator</a> &gt;&#160;</td>
+          <td class="paramname"><em>calculator</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classrecti_1_1Point.html">Point</a>&lt; int &gt;&#160;</td>
+          <td class="paramname"><em>source_position</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a <a class="el" href="classrecti_1_1DMEAlgorithm.html" title="Implements the Deferred Merge Embedding (DME) algorithm for clock tree synthesis.">DMEAlgorithm</a> with a specified clock source position. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sinks</td><td>A vector of clock sinks. </td></tr>
+    <tr><td class="paramname">calculator</td><td>A unique pointer to a <a class="el" href="classrecti_1_1DelayCalculator.html" title="Abstract base class for delay calculation models.">DelayCalculator</a> implementation. </td></tr>
+    <tr><td class="paramname">source_position</td><td>The clock source position. </td></tr>
   </table>
   </dd>
 </dl>
