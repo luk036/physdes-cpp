@@ -51,9 +51,9 @@ namespace recti {
      */
     template <typename IntPoint> class RoutingNode {
       public:
-        std::string id;  ///< Unique identifier for the node.
-        NodeType node_type;   ///< The type of the node.
-        IntPoint pt;     ///< The 2D integer coordinates of the node.
+        std::string id;      ///< Unique identifier for the node.
+        NodeType node_type;  ///< The type of the node.
+        IntPoint pt;         ///< The 2D integer coordinates of the node.
         std::vector<RoutingNode<IntPoint>*>
             children;  ///< Pointers to child nodes in the routing tree.
         RoutingNode<IntPoint>* parent
