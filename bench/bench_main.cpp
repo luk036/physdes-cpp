@@ -1,4 +1,5 @@
-#include <benchmark/benchmark.h>
+#define ANKERL_NANOBENCH_IMPLEMENT
+#include <nanobench.h>
 
 #include <recti/polygon.hpp>
 #include <recti/rpolygon.hpp>
@@ -6,22 +7,19 @@
 
 using namespace recti;
 
-static void BM_Polygon_Area(benchmark::State& state) {
-    auto S = std::vector<Point<int>>{{0, 0}, {100, 0}, {100, 100}, {0, 100}};
-    auto poly = Polygon<int>(S);
-    for (auto _ : state) {
-        benchmark::DoNotOptimize(poly.signed_area_x2());
-    }
-}
-BENCHMARK(BM_Polygon_Area);
+int main() {
+    ankerl::nanobench::Bench bench;
+    bench.title("Polygon Area Benchmarks").unit("op").warmup(100).epochs(50);
 
-static void BM_RPolygon_Area(benchmark::State& state) {
-    auto S = std::vector<Point<int>>{{0, 0}, {100, 100}};
-    auto rpoly = RPolygon<int>(S);
-    for (auto _ : state) {
-        benchmark::DoNotOptimize(rpoly.signed_area());
-    }
-}
-BENCHMARK(BM_RPolygon_Area);
+    bench.run("Polygon signed_area_x2", [&] {
+        auto S = std::vector<Point<int>>{{0, 0}, {100, 0}, {100, 100}, {0, 100}};
+        auto poly = Polygon<int>(S);
+        ankerl::nanobench::doNotOptimizeAway(poly.signed_area_x2());
+    });
 
-BENCHMARK_MAIN();
+    bench.run("RPolygon signed_area", [&] {
+        auto S = std::vector<Point<int>>{{0, 0}, {100, 100}};
+        auto rpoly = RPolygon<int>(S);
+        ankerl::nanobench::doNotOptimizeAway(rpoly.signed_area());
+    });
+}

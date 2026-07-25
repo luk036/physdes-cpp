@@ -4,4 +4,3 @@ channels:
 dependencies:
   # - cmake
   - doxygen
-  - benchmark

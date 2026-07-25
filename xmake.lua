@@ -4,7 +4,7 @@ add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("fmt >= 12.1.0", { alias = "fmt" })
 add_requires("doctest", { alias = "doctest" })
 -- add_requires("microsoft-gsl", { alias = "ms-gsl" })
-add_requires("benchmark")
+add_requires("nanobench")
 add_requires("spdlog v1.17.0", { alias = "spdlog", configs = {fmt_external = true} })
 
 if is_mode("coverage") then
@@ -76,14 +76,14 @@ target("bench_dme")
     add_deps("Recti")
     add_includedirs("include", { public = true })
     add_files("bench/bench_dme.cpp")
-    add_packages("benchmark", "fmt", "spdlog")
-
-target("benchmark_recti")
+    add_packages("nanobench", "fmt", "spdlog")
+ 
+target("bench_main")
 set_kind("binary")
 add_deps("Recti")
 add_includedirs("include", { public = true })
-add_files("bench/*.cpp")
-add_packages("benchmark", "fmt", "spdlog")
+add_files("bench/bench_main.cpp")
+add_packages("nanobench", "fmt", "spdlog")
 add_tests("default")
 
 target("bench_full")
