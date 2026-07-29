@@ -1,9 +1,9 @@
 #define ANKERL_NANOBENCH_IMPLEMENT
 #include <nanobench.h>
 
-#include <recti/point.hpp>
-#include <recti/dme_algorithm.hpp>
 #include <memory>
+#include <recti/dme_algorithm.hpp>
+#include <recti/point.hpp>
 
 using namespace recti;
 using IntPoint = Point<int, int>;

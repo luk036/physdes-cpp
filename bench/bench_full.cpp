@@ -1,9 +1,9 @@
 #include <chrono>
 #include <cstdio>
-#include <vector>
 #include <memory>
-#include <recti/point.hpp>
 #include <recti/dme_algorithm.hpp>
+#include <recti/point.hpp>
+#include <vector>
 
 using namespace recti;
 using IntPoint = Point<int, int>;
@@ -26,9 +26,9 @@ static void bench_dme(const std::vector<Sink>& sinks, const char* label) {
     }
     volatile size_t dummy = accum;
     (void)dummy;
-    auto ns = std::chrono::duration<double, std::nano>(std::chrono::steady_clock::now() - start)
-                  .count()
-              / n;
+    auto ns
+        = std::chrono::duration<double, std::nano>(std::chrono::steady_clock::now() - start).count()
+          / n;
     std::printf("  %-40s %8.1f ns/op  (%zu sinks)\n", label, ns, sinks.size());
 }
 

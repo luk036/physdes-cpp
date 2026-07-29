@@ -1,8 +1,8 @@
 #include <chrono>
 #include <cstdio>
-#include <vector>
 #include <recti/polygon.hpp>
 #include <recti/rpolygon.hpp>
+#include <vector>
 
 using namespace recti;
 
