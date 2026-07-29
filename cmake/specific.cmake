@@ -1,11 +1,18 @@
-CPMAddPackage(
-  NAME fmt
-  GIT_TAG 12.1.0
-  GITHUB_REPOSITORY fmtlib/fmt
-  OPTIONS "FMT_INSTALL YES" "FMT_USE_INLINE_VTABLE OFF" "FMT_DISABLE_COMPILE_STRING" # create an
-                                                                                     # installable
-                                                                                     # target
-)
+# Try system-installed fmt first (Ubuntu: libfmt-dev, macOS: brew install fmt, Termux: fmt)
+find_package(fmt CONFIG QUIET)
+
+if(fmt_FOUND)
+  message(STATUS "Found system fmt: ${fmt_DIR}")
+else()
+  CPMAddPackage(
+    NAME fmt
+    GIT_TAG 12.1.0
+    GITHUB_REPOSITORY fmtlib/fmt
+    OPTIONS "FMT_INSTALL YES" "FMT_USE_INLINE_VTABLE OFF" "FMT_DISABLE_COMPILE_STRING" # create an
+                                                                                        # installable
+                                                                                        # target
+  )
+endif()
 
 CPMAddPackage(
   NAME GSL
@@ -22,13 +29,20 @@ CPMAddPackage(
   OPTIONS "INSTALL_ONLY YES" # create an installable target
 )
 
-CPMAddPackage(
-  NAME spdlog
-  GIT_TAG v1.17.0
-  GITHUB_REPOSITORY gabime/spdlog
-  OPTIONS "SPDLOG_INSTALL YES" "SPDLOG_FMT_RUNTIME_CHECKS OFF" "FMT_DEPRECATED_EXTERNAL_ABI"
-          "SPDLOG_FMT_EXTERNAL" # create an installable target
-)
+# Try system-installed spdlog first (Ubuntu: libspdlog-dev, macOS: brew install spdlog, Termux: spdlog)
+find_package(spdlog CONFIG QUIET)
+
+if(spdlog_FOUND)
+  message(STATUS "Found system spdlog: ${spdlog_DIR}")
+else()
+  CPMAddPackage(
+    NAME spdlog
+    GIT_TAG v1.17.0
+    GITHUB_REPOSITORY gabime/spdlog
+    OPTIONS "SPDLOG_INSTALL YES" "SPDLOG_FMT_RUNTIME_CHECKS OFF" "FMT_DEPRECATED_EXTERNAL_ABI"
+            "SPDLOG_FMT_EXTERNAL" # create an installable target
+  )
+endif()
 
 set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt Microsoft.GSL::GSL spdlog::spdlog)
 
