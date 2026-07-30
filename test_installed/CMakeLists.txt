@@ -15,11 +15,17 @@ project(Recti LANGUAGES CXX)
 
 include(../cmake/tools.cmake)
 
-# ---- Dependencies ----
+# ---- Dependencies (all installed by the parent build) ----
 
 include(../cmake/CPM.cmake)
-include(../cmake/specific.cmake)
 
+# Find dependencies first — LdsGenConfig.cmake references fmt::fmt, spdlog::spdlog etc.
+find_package(fmt REQUIRED)
+find_package(spdlog REQUIRED)
+find_package(Microsoft.GSL CONFIG REQUIRED)
+find_package(LdsGen REQUIRED)
 find_package(${PROJECT_NAME} REQUIRED)
+
+set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt Microsoft.GSL::GSL spdlog::spdlog)
 
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../standalone ${CMAKE_BINARY_DIR}/test_installed)
