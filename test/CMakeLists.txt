@@ -14,7 +14,23 @@ include(../cmake/tools.cmake)
 # ---- Dependencies ----
 
 include(../cmake/CPM.cmake)
-include(../cmake/specific.cmake)
+
+if(TEST_INSTALLED_VERSION)
+  # All dependencies are installed — use find_package to avoid
+  # CPM re-fetching fmt/spdlog transitively, causing ALIAS conflicts
+  find_package(fmt REQUIRED)
+  find_package(spdlog REQUIRED)
+  find_package(Microsoft.GSL CONFIG REQUIRED)
+  find_package(LdsGen REQUIRED)
+  set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt Microsoft.GSL::GSL spdlog::spdlog)
+  find_package(Recti REQUIRED)
+else()
+  include(../cmake/specific.cmake)
+
+  if(NOT TARGET Recti)
+    CPMAddPackage(NAME Recti SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
+  endif()
+endif()
 
 # Try system-installed doctest first (Ubuntu: doctest-dev, macOS: brew install doctest, Termux: doctest)
 find_package(doctest CONFIG QUIET)
@@ -27,12 +43,6 @@ CPMAddPackage("gh:TheLartians/Format.cmake@1.7.3")
 # Add RapidCheck for property-based testing CPMAddPackage( NAME rapidcheck GITHUB_REPOSITORY
 # emil-e/rapidcheck GIT_TAG master OPTIONS "RC_BUILD_TESTS OFF" "RC_BUILD_EXAMPLES OFF" "RC_INSTALL
 # OFF" )
-
-if(TEST_INSTALLED_VERSION)
-  find_package(Recti REQUIRED)
-else()
-  CPMAddPackage(NAME Recti SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
-endif()
 
 # ---- Create binary ----
 
