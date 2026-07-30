@@ -9,7 +9,12 @@ include(../cmake/tools.cmake)
 # ---- Dependencies ----
 
 include(../cmake/CPM.cmake)
-include(../cmake/specific.cmake)
+
+# If SPECIFIC_LIBS is already set, deps were handled by the parent (e.g. test_installed).
+# Otherwise, pull them via specific.cmake.
+if(NOT SPECIFIC_LIBS)
+  include(../cmake/specific.cmake)
+endif()
 
 CPMAddPackage(
   GITHUB_REPOSITORY jarro2783/cxxopts
@@ -17,7 +22,9 @@ CPMAddPackage(
   OPTIONS "CXXOPTS_BUILD_EXAMPLES NO" "CXXOPTS_BUILD_TESTS NO" "CXXOPTS_ENABLE_INSTALL YES"
 )
 
-CPMAddPackage(NAME Recti SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
+if(NOT TARGET Recti::Recti)
+  CPMAddPackage(NAME Recti SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
+endif()
 
 # ---- Create standalone executable ----
 
