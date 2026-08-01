@@ -10,8 +10,8 @@ include(../cmake/tools.cmake)
 
 include(../cmake/CPM.cmake)
 
-# If SPECIFIC_LIBS is already set, deps were handled by the parent (e.g. test_installed).
-# Otherwise, pull them via specific.cmake.
+# If SPECIFIC_LIBS is already set, deps were handled by the parent (e.g. test_installed). Otherwise,
+# pull them via specific.cmake.
 if(NOT SPECIFIC_LIBS)
   include(../cmake/specific.cmake)
 endif()
