@@ -73,15 +73,6 @@ else()
   )
 endif()
 
-# GSL is used for spans in the public headers.
-CPMAddPackage(
-  NAME GSL
-  GITHUB_REPOSITORY "microsoft/GSL"
-  GIT_TAG "v4.0.0"
-  GIT_SHALLOW ON
-  OPTIONS "GSL_INSTALL YES"
-)
-
 # spdlog must be added before LdsGen (which also adds spdlog) to ensure SPDLOG_FMT_EXTERNAL is
 # set, avoiding linker conflicts with fmt when local fmt package is a shared library. Try
 # system-installed spdlog first (Ubuntu: libspdlog-dev, macOS: brew install spdlog, Termux: spdlog)
@@ -106,7 +97,7 @@ CPMAddPackage(
   OPTIONS "LDSGEN_BUILD_TESTS OFF" "LDSGEN_BUILD_STANDALONE OFF"
 )
 
-set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt Microsoft.GSL::GSL spdlog::spdlog)
+set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt spdlog::spdlog)
 
 # ---------------------------------------------------------------------------
 # Library target
@@ -158,7 +149,7 @@ packageProject(
   INCLUDE_DESTINATION include/${PROJECT_NAME}-${PROJECT_VERSION}
   VERSION_HEADER "${VERSION_HEADER_LOCATION}"
   COMPATIBILITY SameMajorVersion
-  DEPENDENCIES "fmt 12.1.0" "Microsoft.GSL 4.0.0" "LdsGen 1.2.5"
+  DEPENDENCIES "fmt 12.1.0" "LdsGen 1.2.5"
 )
 
 # ---------------------------------------------------------------------------

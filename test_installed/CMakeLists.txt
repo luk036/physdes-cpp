@@ -5,10 +5,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Find dependencies first - the installed config references fmt, GSL, LdsGen and spdlog.
+# Find dependencies first - the installed config references fmt and LdsGen.
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
-find_package(Microsoft.GSL CONFIG REQUIRED)
 find_package(LdsGen REQUIRED)
 find_package(Recti REQUIRED)
 
