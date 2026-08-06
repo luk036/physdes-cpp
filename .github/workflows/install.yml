@@ -2,45 +2,35 @@ name: Install
 
 on:
   push:
-    branches:
-      - master
-      - main
-      - dev
+    branches: [master, main, dev]
   pull_request:
-    branches:
-      - master
-      - main
-      - dev
+    branches: [master, main, dev]
 
 env:
   CTEST_OUTPUT_ON_FAILURE: 1
-  CPM_SOURCE_CACHE: ${{ github.workspace }}/cpm_modules
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/cache@v3
-        with:
-          path: "**/cpm_modules"
-          key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
-
-      - name: build and install library
+      - name: Build and install library
         run: |
-          cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
-          sudo cmake --build build --target install
+          cmake -B build -DCMAKE_BUILD_TYPE=Release -DRECTI_BUILD_TESTS=OFF
+          cmake --build build
+          sudo cmake --install build
           rm -rf build
 
-      - name: configure
-        run: cmake -Stest -Bbuild -DTEST_INSTALLED_VERSION=1
+      - name: Install system dependencies for consumer
+        run: sudo apt-get install -y libfmt-dev
 
-      - name: build
-        run: cmake --build build --config Debug -j4
+      - name: Configure consumer
+        run: cmake -Stest_installed -B build_installed -DCMAKE_BUILD_TYPE=Release
 
-      - name: test
-        run: |
-          cd build
-          ctest --build-config Debug
+      - name: Build consumer
+        run: cmake --build build_installed
+
+      - name: Test
+        run: ctest --test-dir build_installed --output-on-failure

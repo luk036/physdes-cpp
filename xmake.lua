@@ -4,7 +4,7 @@ add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("fmt >= 12.1.0", { alias = "fmt" })
 add_requires("doctest", { alias = "doctest" })
 -- add_requires("microsoft-gsl", { alias = "ms-gsl" })
-add_requires("benchmark")
+add_requires("nanobench")
 add_requires("spdlog v1.17.0", { alias = "spdlog", configs = {fmt_external = true} })
 
 if is_mode("coverage") then
@@ -32,7 +32,7 @@ if is_plat("linux") then
         add_sysincludedirs(termux_prefix .. "/include", {public = true})
     end
 elseif is_plat("windows") then
-	add_cxflags("/EHsc /utf-8 /W4 /WX", { force = true })
+	add_cxflags("/EHsc /utf-8 /W4 /WX /wd4702", { force = true })
 	add_ldflags("/FORCE:MULTIPLE", { force = true })
 end
 
@@ -71,13 +71,35 @@ add_packages("doctest", "fmt", "spdlog")
 
 add_tests("default")
 
-target("benchmark_recti")
+target("bench_dme")
+    set_kind("binary")
+    add_deps("Recti")
+    add_includedirs("include", { public = true })
+    add_files("bench/bench_dme.cpp")
+    add_packages("nanobench", "fmt", "spdlog")
+ 
+target("bench_main")
 set_kind("binary")
 add_deps("Recti")
 add_includedirs("include", { public = true })
-add_files("bench/*.cpp")
-add_packages("benchmark", "fmt", "spdlog")
+add_files("bench/bench_main.cpp")
+add_packages("nanobench", "fmt", "spdlog")
 add_tests("default")
+
+target("bench_full")
+    set_kind("binary")
+    add_deps("Recti")
+    add_includedirs("include", { public = true })
+    add_includedirs("experiments", { public = true })
+    add_files("bench/bench_full.cpp")
+    add_packages("fmt", "spdlog")
+
+target("bench_robust")
+    set_kind("binary")
+    add_deps("Recti")
+    add_includedirs("include", { public = true })
+    add_files("bench/bench_robust.cpp")
+    add_packages("fmt", "spdlog")
 
 target("test_spdlogger_simple")
 set_kind("binary")
