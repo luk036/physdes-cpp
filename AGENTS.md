@@ -26,58 +26,58 @@ physdes-cpp/
 ### Full Build (All Targets)
 
 ```bash
-cmake -S all -B build
+cmake -B build
 cmake --build build
 ```
 
 ### Test Suite
 
 ```bash
-cmake -S test -B build/test
-cmake --build build/test
+cmake -B build
+cmake --build build
 
 # Via CTest
-CTEST_OUTPUT_ON_FAILURE=1 cmake --build build/test --target test
+ctest --test-dir build --output-on-failure
 
 # Direct executable
-./build/test/RectiTests
+./build/RectiTests
 ```
 
 ### Running Single Tests (doctest filters)
 
 ```bash
 # Run specific test case (exact match)
-./build/test/RectiTests -tc="Vector2.DefaultConstructor"
+./build/RectiTests -tc="Vector2.DefaultConstructor"
 
 # Run tests matching pattern (wildcard)
-./build/test/RectiTests -tc="Vector2*"       # All Vector2 tests
-./build/test/RectiTests -tc="*Constructor*"   # Any constructor tests
+./build/RectiTests -tc="Vector2*"       # All Vector2 tests
+./build/RectiTests -tc="*Constructor*"   # Any constructor tests
 
 # Run test suite
-./build/test/RectiTests -ts="Vector2"         # All cases in Vector2 suite
-./build/test/RectiTests -tc="*" -ts="Vector2" # Explicit suite+wildcard
+./build/RectiTests -ts="Vector2"         # All cases in Vector2 suite
+./build/RectiTests -tc="*" -ts="Vector2" # Explicit suite+wildcard
 
 # List available tests without running
-./build/test/RectiTests -ltc                    # List test cases
-./build/test/RectiTests -lts                   # List test suites
+./build/RectiTests -ltc                    # List test cases
+./build/RectiTests -lts                   # List test suites
 ```
 
 ### Standalone Executable
 
 ```bash
-cmake -S standalone -B build/standalone
-cmake --build build/standalone
-./build/standalone/Recti --help
+cmake -B build
+cmake --build build
+./build/Recti --help
 ```
 
 ### Code Formatting (C++ and CMake)
 
 ```bash
 # View changes (dry-run)
-cmake --build build/test --target format
+cmake --build build --target format
 
 # Apply fixes
-cmake --build build/test --target fix-format
+cmake --build build --target fix-format
 
 # Dependencies (pip)
 pip install clang-format==18.1.2 cmake_format==0.6.13 pyyaml
@@ -86,23 +86,23 @@ pip install clang-format==18.1.2 cmake_format==0.6.13 pyyaml
 ### Code Coverage
 
 ```bash
-cmake -S test -B build/test -DENABLE_TEST_COVERAGE=1
-cmake --build build/test
-./build/test/RectiTests
+cmake -B build -DENABLE_TEST_COVERAGE=1
+cmake --build build
+./build/RectiTests
 ```
 
 ### Sanitizers
 
 ```bash
-cmake -S test -B build/test -DUSE_SANITIZER=Address
-cmake -S test -B build/test -DUSE_SANITIZER='Address;Undefined'
+cmake -B build -DUSE_SANITIZER=Address
+cmake -B build -DUSE_SANITIZER='Address;Undefined'
 ```
 
 ### Static Analyzers
 
 ```bash
-cmake -S test -B build/test -DUSE_STATIC_ANALYZER=clang-tidy
-cmake -S test -B build/test -DUSE_STATIC_ANALYZER='clang-tidy;cppcheck'
+cmake -B build -DUSE_STATIC_ANALYZER=clang-tidy
+cmake -B build -DUSE_STATIC_ANALYZER='clang-tidy;cppcheck'
 ```
 
 ## Code Style Guidelines
