@@ -121,7 +121,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC ${SPECIFIC_LIBS})
 
 # Any TU using spdlog must compile with spdlog's own interface definitions (SPDLOG_COMPILED_LIB,
 # SPDLOG_FMT_EXTERNAL) or the header-only and compiled registries diverge.
-get_target_property(SPDLOG_COMPILE_DEFS spdlog INTERFACE_COMPILE_DEFINITIONS)
+get_target_property(SPDLOG_COMPILE_DEFS spdlog::spdlog INTERFACE_COMPILE_DEFINITIONS)
 if(SPDLOG_COMPILE_DEFS)
   target_compile_definitions(${PROJECT_NAME} PRIVATE ${SPDLOG_COMPILE_DEFS})
 endif()
