@@ -158,9 +158,7 @@ namespace recti {
             }
 
             // Check closing: last vec back to origin (0,0)
-            if (_vecs.back().x() != 0 && _vecs.back().y() != 0) return false;
-
-            return true;
+            return !static_cast<bool>(_vecs.back().x() != 0 && _vecs.back().y() != 0);
         }
 
         /**

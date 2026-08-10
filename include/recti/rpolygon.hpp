@@ -14,34 +14,6 @@
 namespace recti {
 
     /**
-     * @brief Rectilinear Polygon
-     *
-     * `RPolygon` is a class template that represents a rectilinear polygon. It
-     * stores the origin point and a vector of edges that define the polygon. The
-     * template parameter `T` specifies the type of the coordinates of the points.
-     *
-     * @code{.txt}
-     * +-----------------------------+
-     * |        RPolygon<T>          |
-     * +-----------------------------+
-     * | _origin: Point<T>           |
-     * | _vecs: vector<Vector2<T>>   |
-     * |                             |
-     * |        +----+               |
-     * |        |    |               |  A rectilinear polygon class
-     * |    +---+    |               |  with origin point and
-     * |    |   |    |               |  vectors defining the polygon
-     * |    |   +----+               |  edges. Supports various
-     * |    |                        |  geometric operations
-     * |    +------------------------+
-     * |            vertices()       |
-     * |            signed_area()    |
-     * +-----------------------------+
-     * @endcode
-     *
-     * @tparam T
-     */
-    /**
      * @brief Forward iterator for RPolygon vertices.
      *
      * Lazily computes vertices from origin + vectors on dereference,
@@ -83,6 +55,34 @@ namespace recti {
         std::size_t _idx;
     };
 
+    /**
+     * @brief Rectilinear Polygon
+     *
+     * `RPolygon` is a class template that represents a rectilinear polygon. It
+     * stores the origin point and a vector of edges that define the polygon. The
+     * template parameter `T` specifies the type of the coordinates of the points.
+     *
+     * @code{.txt}
+     * +-----------------------------+
+     * |        RPolygon<T>          |
+     * +-----------------------------+
+     * | _origin: Point<T>           |
+     * | _vecs: vector<Vector2<T>>   |
+     * |                             |
+     * |        +----+               |
+     * |        |    |               |  A rectilinear polygon class
+     * |    +---+    |               |  with origin point and
+     * |    |   |    |               |  vectors defining the polygon
+     * |    |   +----+               |  edges. Supports various
+     * |    |                        |  geometric operations
+     * |    +------------------------+
+     * |            vertices()       |
+     * |            signed_area()    |
+     * +-----------------------------+
+     * @endcode
+     *
+     * @tparam T
+     */
     template <typename T> class RPolygon {
       private:
         Point<T> _origin{};               ///< Origin point of the polygon
@@ -206,7 +206,7 @@ namespace recti {
          * @brief Calculates the signed area of the rectilinear polygon.
          *
          * This method calculates the signed area of the rectilinear polygon represented by this
-         * `RPolygon` object using the shoelace formula.
+         * `RPolygon` object using the shoelace-like formula.
          *
          * @return The signed area of the rectilinear polygon.
          */
