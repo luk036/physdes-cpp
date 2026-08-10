@@ -22,7 +22,6 @@
 - Reproducible dependency management via [CPM.cmake](https://github.com/TheLartians/CPM.cmake)
 - Installable target with automatic versioning information and header generation via [PackageProject.cmake](https://github.com/TheLartians/PackageProject.cmake)
 - Automatic [documentation](https://thelartians.github.io/ModernCppStarter) and deployment with [Doxygen](https://www.doxygen.nl) and [GitHub Pages](https://pages.github.com)
-- Support for sanitizer tools, and more
 
 
 ## Usage
@@ -124,16 +123,7 @@ cmake --build build --target fix-format
 cmake --build build --target GenerateDocs
 ```
 
-### Additional tools
-
-The test and standalone subprojects include the [tools.cmake](cmake/tools.cmake) file which is used to import additional tools on-demand through CMake configuration arguments.
-The following are currently supported.
-
-#### Sanitizers
-
-Sanitizers can be enabled by configuring CMake with `-DUSE_SANITIZER=<Address | Memory | MemoryWithOrigins | Undefined | Thread | Leak | 'Address;Undefined'>`.
-
-#### Static Analyzers
+### Static analysis
 
 clang-tidy can be enabled by configuring CMake with `-DRECTI_ENABLE_CLANG_TIDY=ON` and building the `clang-tidy` target.
 It analyzes the public headers using the checks configured in `.clang-tidy`.
@@ -142,10 +132,6 @@ It analyzes the public headers using the checks configured in `.clang-tidy`.
 cmake -B build -DRECTI_ENABLE_CLANG_TIDY=ON
 cmake --build build --target clang-tidy
 ```
-
-#### Ccache
-
-Ccache can be enabled by configuring with `-DUSE_CCACHE=<ON | OFF>`.
 
 ## ❓ FAQ
 
