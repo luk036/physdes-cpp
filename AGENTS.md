@@ -99,10 +99,10 @@ cmake -B build -DUSE_SANITIZER='Address;Undefined'
 ```
 
 ### Static Analyzers
-
 ```bash
-cmake -B build -DUSE_STATIC_ANALYZER=clang-tidy
-cmake -B build -DUSE_STATIC_ANALYZER='clang-tidy;cppcheck'
+# clang-tidy over the public headers (uses the checks in .clang-tidy)
+cmake -S . -B build -DRECTI_ENABLE_CLANG_TIDY=ON
+cmake --build build --target clang-tidy
 ```
 
 ## Code Style Guidelines
