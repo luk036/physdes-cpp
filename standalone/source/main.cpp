@@ -1,8 +1,8 @@
-#include <recti/recti.hpp>
 #include <recti/version.h>
 
 #include <cxxopts.hpp>
 #include <iostream>
+#include <recti/recti.hpp>
 #include <string>
 #include <vector>
 
