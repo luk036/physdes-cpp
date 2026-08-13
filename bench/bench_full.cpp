@@ -1,5 +1,5 @@
 #include <chrono>
-#include <cstdio>
+#include <fmt/format.h>
 #include <memory>
 #include <recti/dme_algorithm.hpp>
 #include <recti/point.hpp>
@@ -29,11 +29,11 @@ static void bench_dme(const std::vector<Sink>& sinks, const char* label) {
     auto ns
         = std::chrono::duration<double, std::nano>(std::chrono::steady_clock::now() - start).count()
           / n;
-    std::printf("  %-40s %8.1f ns/op  (%zu sinks)\n", label, ns, sinks.size());
+    fmt::print("  {:<40} {:8.1f} ns/op  ({} sinks)\n", label, ns, sinks.size());
 }
 
 int main() {
-    std::printf("=== C++ (physdes-cpp) — Full Algorithm Benchmarks ===\n\n");
+    fmt::print("=== C++ (physdes-cpp) — Full Algorithm Benchmarks ===\n\n");
 
     // DME Algorithm
     {
@@ -55,6 +55,6 @@ int main() {
         bench_dme(sinks, "DME build_clock_tree (64 sinks)");
     }
 
-    std::printf("\n  Note: GlobalRouter has template compat issue with Point<int,int>,\n");
-    std::printf("  C++ Steiner Forest is in experiments/ (not library), skipped.\n");
+    fmt::print("\n  Note: GlobalRouter has template compat issue with Point<int,int>,\n");
+    fmt::print("  C++ Steiner Forest is in experiments/ (not library), skipped.\n");
 }
