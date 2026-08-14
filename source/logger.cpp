@@ -9,8 +9,8 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 
-#include <recti/logger.hpp>
 #include <memory>
+#include <recti/logger.hpp>
 
 namespace recti {
 

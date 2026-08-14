@@ -1,5 +1,6 @@
-#include <chrono>
 #include <fmt/format.h>
+
+#include <chrono>
 #include <recti/polygon.hpp>
 #include <recti/rpolygon.hpp>
 #include <vector>

@@ -1,5 +1,6 @@
-#include <chrono>
 #include <fmt/format.h>
+
+#include <chrono>
 #include <memory>
 #include <recti/dme_algorithm.hpp>
 #include <recti/point.hpp>
