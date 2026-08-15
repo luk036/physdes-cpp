@@ -58,12 +58,20 @@ include(${CPM_DOWNLOAD_LOCATION})
 # PackageProject.cmake will be used to make our target installable
 CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.8.0")
 
-# fmt is a transitive dependency of spdlog; prefer a system-installed fmt when available.
-find_package(fmt CONFIG QUIET)
-if(fmt_FOUND)
-  message(STATUS "Found system fmt: ${fmt_DIR}")
-  set(CPM_fmt_ADDED YES)
-else()
+# fmt is a transitive dependency of spdlog. Prefer a system-installed fmt when available.
+# On MSVC, skip prebuilt system packages (e.g. conda): they are Release-only shared
+# libraries whose std::string ABI (_ITERATOR_DEBUG_LEVEL=0) mismatches Debug builds
+# (_ITERATOR_DEBUG_LEVEL=2), corrupting std::strings returned by fmt::format. Build fmt
+# from source on MSVC so the ABI always matches (same as CI's windows-latest runner).
+if(NOT MSVC)
+  find_package(fmt CONFIG QUIET)
+  if(fmt_FOUND)
+    message(STATUS "Found system fmt: ${fmt_DIR}")
+    set(CPM_fmt_ADDED YES)
+  endif()
+endif()
+
+if(NOT fmt_FOUND)
   CPMAddPackage(
     NAME fmt
     GIT_TAG 12.1.0
@@ -72,20 +80,25 @@ else()
   )
 endif()
 
-# spdlog must be added before LdsGen (which also adds spdlog) to ensure SPDLOG_FMT_EXTERNAL is set,
-# avoiding linker conflicts with fmt when local fmt package is a shared library. Try
-# system-installed spdlog first (Ubuntu: libspdlog-dev, macOS: brew install spdlog, Termux: spdlog)
-find_package(spdlog CONFIG QUIET)
-if(spdlog_FOUND)
-  message(STATUS "Found system spdlog: ${spdlog_DIR}")
-  set(CPM_spdlog_ADDED YES)
-  # Some system spdlog packages (e.g. conda) only export the namespaced spdlog::spdlog target, while
-  # LdsGen queries the bare `spdlog` target for its interface definitions. Provide an alias so both
-  # work whichever spdlog is used.
-  if(NOT TARGET spdlog AND TARGET spdlog::spdlog)
-    add_library(spdlog ALIAS spdlog::spdlog)
+# spdlog must be added before Lds (which also adds spdlog) to ensure SPDLOG_FMT_EXTERNAL is set,
+# avoiding linker conflicts with fmt when local fmt package is a shared library. Prefer a
+# system-installed spdlog on non-MSVC platforms (Ubuntu: libspdlog-dev, macOS: brew install
+# spdlog, Termux: spdlog). On MSVC, build from source for the same std::string ABI reason as fmt.
+if(NOT MSVC)
+  find_package(spdlog CONFIG QUIET)
+  if(spdlog_FOUND)
+    message(STATUS "Found system spdlog: ${spdlog_DIR}")
+    set(CPM_spdlog_ADDED YES)
+    # Some system spdlog packages (e.g. conda) only export the namespaced spdlog::spdlog target,
+    # while Lds queries the bare `spdlog` target for its interface definitions. Provide an alias so
+    # both work whichever spdlog is used.
+    if(NOT TARGET spdlog AND TARGET spdlog::spdlog)
+      add_library(spdlog ALIAS spdlog::spdlog)
+    endif()
   endif()
-else()
+endif()
+
+if(NOT spdlog_FOUND)
   CPMAddPackage(
     NAME spdlog
     GIT_TAG v1.17.0
@@ -94,15 +107,15 @@ else()
   )
 endif()
 
-# LdsGen provides the low-discrepancy sequence generators used by the tests and examples.
+# Lds provides the low-discrepancy sequence generators used by the tests and examples.
 CPMAddPackage(
-  NAME LdsGen
+  NAME Lds
   GIT_TAG v1.2.5
-  GITHUB_REPOSITORY luk036/lds-gen-cpp
-  OPTIONS "LDSGEN_BUILD_TESTS OFF" "LDSGEN_BUILD_STANDALONE OFF"
+  GITHUB_REPOSITORY luk036/lds-cpp
+  OPTIONS "LDS_BUILD_TESTS OFF" "LDS_BUILD_STANDALONE OFF"
 )
 
-set(SPECIFIC_LIBS LdsGen::LdsGen fmt::fmt spdlog::spdlog)
+set(SPECIFIC_LIBS Lds::Lds fmt::fmt spdlog::spdlog)
 
 # ---------------------------------------------------------------------------
 # Library target
@@ -153,7 +166,7 @@ packageProject(
   INCLUDE_DESTINATION include/${PROJECT_NAME}-${PROJECT_VERSION}
   VERSION_HEADER "${VERSION_HEADER_LOCATION}"
   COMPATIBILITY SameMajorVersion
-  DEPENDENCIES "fmt 12.1.0" "LdsGen 1.2.5"
+  DEPENDENCIES "fmt 12.1.0" "Lds 1.2.5"
 )
 
 # ---------------------------------------------------------------------------

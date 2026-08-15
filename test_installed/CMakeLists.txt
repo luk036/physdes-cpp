@@ -5,10 +5,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Find dependencies first - the installed config references fmt and LdsGen.
+# Find dependencies first - the installed config references fmt and Lds.
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
-find_package(LdsGen REQUIRED)
+find_package(Lds REQUIRED)
 find_package(Recti REQUIRED)
 
 add_executable(recti_installed_test main.cpp)
