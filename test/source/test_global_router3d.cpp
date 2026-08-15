@@ -11,18 +11,17 @@
 
 
 using namespace recti;
+using IntPoint3d = Point<Point<int, int>, int>;
 
 // Helper function to generate a set of 3D points for testing
 auto generate_3d_points(size_t num_terminals, unsigned int seed)
-    -> std::pair<Point<Point<int, int>, int>, std::vector<Point<Point<int, int>, int>>> {
+    -> std::pair<IntPoint3d, std::vector<IntPoint3d>> {
     constexpr int scale_z = 100;
 
     ilds::VdCorput<3> hgenX(7);
     ilds::VdCorput<2> hgenY(11);
     hgenX.reseed(seed);
     hgenY.reseed(seed);
-
-    using IntPoint3d = Point<Point<int, int>, int>;
 
     std::vector<IntPoint3d> terminals;
     terminals.reserve(num_terminals);

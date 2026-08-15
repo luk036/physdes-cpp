@@ -9,11 +9,12 @@
 #include <vector>
 
 using namespace recti;
+using IntPoint3d = Point<Point<int, int>, int>;
 
 // Helper function to generate a set of 3D points and keepouts for testing
 auto generate_3d_points_and_keepouts(size_t num_terminals, unsigned int seed) -> std::tuple<
-    Point<Point<int, int>, int>, std::vector<Point<Point<int, int>, int>>,
-    std::vector<decltype(std::declval<Point<Point<int, int>, int>>().enlarge_with(1))>> {
+    IntPoint3d, std::vector<IntPoint3d>,
+    std::vector<decltype(std::declval<IntPoint3d>().enlarge_with(1))>> {
     constexpr int scale_z = 100;
 
     ilds::VdCorput<3> hgenX(7);
@@ -21,7 +22,6 @@ auto generate_3d_points_and_keepouts(size_t num_terminals, unsigned int seed) ->
     hgenX.reseed(seed);
     hgenY.reseed(seed);
 
-    using IntPoint3d = Point<Point<int, int>, int>;
     using Keepout3d = decltype(std::declval<IntPoint3d>().enlarge_with(1));
 
     std::vector<IntPoint3d> terminals;
@@ -54,14 +54,14 @@ TEST_SUITE("RoutingAlgorithms3dWithKeepouts") {
         auto [source, terminals, keepouts] = generate_3d_points_and_keepouts(num_terminals, seed);
 
         SUBCASE("route_with_steiners") {
-            GlobalRouter<Point<Point<int, int>, int>> router(source, terminals, keepouts);
+            GlobalRouter<IntPoint3d> router(source, terminals, keepouts);
             router.route_with_steiners();
             save_routing_tree3d_svg(router.get_tree(), keepouts, scale_z,
                                     "example_route3d_with_steiner_and_keepouts.svg", width, height);
         }
 
         SUBCASE("route_with_constraints") {
-            GlobalRouter<Point<Point<int, int>, int>> router(source, terminals, keepouts);
+            GlobalRouter<IntPoint3d> router(source, terminals, keepouts);
             router.route_with_constraints(high_stress);
             save_routing_tree3d_svg(router.get_tree(), keepouts, scale_z,
                                     "example_route3d_with_constraint_and_keepouts.svg", width,
