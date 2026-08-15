@@ -10,6 +10,7 @@
 #include <vector>
 
 namespace recti::detail {
+    using IntPoint3d = Point<Point<int, int>, int>;
 
     /**
      * @brief SVG rendering parameters
@@ -34,8 +35,8 @@ namespace recti::detail {
     template <> SvgParams calculate_svg_params<Point<int, int>>(
         const std::vector<RoutingNode<Point<int, int>>*>& nodes, int width, int height, int margin);
 
-    template <> SvgParams calculate_svg_params<Point<Point<int, int>, int>>(
-        const std::vector<RoutingNode<Point<Point<int, int>, int>>*>& nodes, int width, int height,
+    template <> SvgParams calculate_svg_params<IntPoint3d>(
+        const std::vector<RoutingNode<IntPoint3d>*>& nodes, int width, int height,
         int margin);
 
     /**
@@ -59,8 +60,8 @@ namespace recti::detail {
                                                 const RoutingNode<Point<int, int>>* node,
                                                 const SvgParams& params);
 
-    template <> void draw_node<Point<Point<int, int>, int>>(
-        std::ostringstream& svg, const RoutingNode<Point<Point<int, int>, int>>* node,
+    template <> void draw_node<IntPoint3d>(
+        std::ostringstream& svg, const RoutingNode<IntPoint3d>* node,
         const SvgParams& params);
 
     void draw_legend(std::ostringstream& svg);
@@ -71,7 +72,7 @@ namespace recti::detail {
     template <> void draw_stats<Point<int, int>>(std::ostringstream& svg,
                                                  const GlobalRoutingTree<Point<int, int>>& tree);
 
-    template <> void draw_stats<Point<Point<int, int>, int>>(
-        std::ostringstream& svg, const GlobalRoutingTree<Point<Point<int, int>, int>>& tree);
+    template <> void draw_stats<IntPoint3d>(
+        std::ostringstream& svg, const GlobalRoutingTree<IntPoint3d>& tree);
 
 }  // namespace recti::detail

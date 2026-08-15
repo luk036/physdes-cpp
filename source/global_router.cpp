@@ -17,6 +17,8 @@
 
 namespace recti {
 
+    using IntPoint3d = Point<Point<int, int>, int>;
+
     // NodeType functions
     // =============================================================================
 
@@ -490,11 +492,11 @@ namespace recti {
     }
 
     template <> std::string visualize_routing_tree3d_svg(
-        const GlobalRoutingTree<Point<Point<int, int>, int>>& tree,
-        std::optional<std::vector<GlobalRoutingTree<Point<Point<int, int>, int>>::Keepout>>
+        const GlobalRoutingTree<IntPoint3d>& tree,
+        std::optional<std::vector<GlobalRoutingTree<IntPoint3d>::Keepout>>
             keepouts,
         const int scale_z, const int width, const int height, const int margin) {
-        std::vector<RoutingNode<Point<Point<int, int>, int>>*> all_nodes;
+        std::vector<RoutingNode<IntPoint3d>*> all_nodes;
         all_nodes.reserve(tree.nodes.size());
         for (const auto& [node_id, routing_node] : tree.nodes) {
             all_nodes.emplace_back(routing_node);
@@ -519,8 +521,8 @@ namespace recti {
         svg << "</marker>\n";
         svg << "</defs>\n";
 
-        std::function<void(const RoutingNode<Point<Point<int, int>, int>>*)> draw_connections =
-            [&](const RoutingNode<Point<Point<int, int>, int>>* current_node) {
+        std::function<void(const RoutingNode<IntPoint3d>*)> draw_connections =
+            [&](const RoutingNode<IntPoint3d>* current_node) {
                 for (auto* child : current_node->children) {
                     auto [coord_x1, coord_y1] = detail::scale_coords(
                         current_node->pt.xcoord().xcoord(), current_node->pt.ycoord(), params);
@@ -565,8 +567,8 @@ namespace recti {
     }
 
     template <> void save_routing_tree3d_svg(
-        const GlobalRoutingTree<Point<Point<int, int>, int>>& tree,
-        std::optional<std::vector<GlobalRoutingTree<Point<Point<int, int>, int>>::Keepout>>
+        const GlobalRoutingTree<IntPoint3d>& tree,
+        std::optional<std::vector<GlobalRoutingTree<IntPoint3d>::Keepout>>
             keepouts,
         const int scale_z, const std::string& filename, const int width, const int height) {
         std::string svg_content
@@ -598,13 +600,14 @@ namespace recti {
     }
 
     template class GlobalRoutingTree<Point<int, int>>;
-    template class GlobalRoutingTree<Point<Point<int, int>, int>>;
+    template class GlobalRoutingTree<IntPoint3d>;
     template class GlobalRouter<Point<int, int>>;
-    template class GlobalRouter<Point<Point<int, int>, int>>;
+    template class GlobalRouter<IntPoint3d>;
 
 }  // namespace recti
 
 namespace recti::detail {
+    using IntPoint3d = Point<Point<int, int>, int>;
 
     template <> SvgParams calculate_svg_params<Point<int, int>>(
         const std::vector<RoutingNode<Point<int, int>>*>& nodes, int width, int height,
@@ -646,8 +649,8 @@ namespace recti::detail {
                 .min_y = min_y};
     }
 
-    template <> SvgParams calculate_svg_params<Point<Point<int, int>, int>>(
-        const std::vector<RoutingNode<Point<Point<int, int>, int>>*>& nodes, int width, int height,
+    template <> SvgParams calculate_svg_params<IntPoint3d>(
+        const std::vector<RoutingNode<IntPoint3d>*>& nodes, int width, int height,
         int margin) {
         if (nodes.empty()) {
             return {.width = width,
@@ -723,8 +726,8 @@ namespace recti::detail {
             << node->pt << ")</text>\n";
     }
 
-    template <> void draw_node<Point<Point<int, int>, int>>(
-        std::ostringstream& svg, const RoutingNode<Point<Point<int, int>, int>>* node,
+    template <> void draw_node<IntPoint3d>(
+        std::ostringstream& svg, const RoutingNode<IntPoint3d>* node,
         const SvgParams& params) {
         auto [x, y] = scale_coords(node->pt.xcoord().xcoord(), node->pt.ycoord(), params);
         std::string color;
@@ -805,8 +808,8 @@ namespace recti::detail {
             << tree.calculate_total_wirelength() << "</text>\n";
     }
 
-    template <> void draw_stats<Point<Point<int, int>, int>>(
-        std::ostringstream& svg, const GlobalRoutingTree<Point<Point<int, int>, int>>& tree) {
+    template <> void draw_stats<IntPoint3d>(
+        std::ostringstream& svg, const GlobalRoutingTree<IntPoint3d>& tree) {
         int stats_y = 110;
         svg << R"(<text x="20" y=")" << stats_y
             << "\" font-family=\"Arial\" font-size=\"10\" "
