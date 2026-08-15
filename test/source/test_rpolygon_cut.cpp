@@ -1,7 +1,7 @@
 #include <doctest/doctest.h>
 #include <fmt/core.h>
 
-#include <ldsgen/ilds.hpp>     // for VdCorput
+#include <lds/ilds.hpp>     // for VdCorput
 #include <recti/point.hpp>     // for Point
 #include <recti/rpolygon.hpp>  // for create_xmono_rpolygon, create_test_rpolygon
 #include <recti/rpolygon_cut.hpp>
@@ -12,8 +12,8 @@
 using namespace recti;
 
 TEST_CASE("RPolygon convex cut test") {
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     std::vector<Point<int, int>> S;
     S.reserve(40);
     for (int i = 0; i < 40; ++i) {
@@ -62,8 +62,8 @@ TEST_CASE("RPolygon convex cut test") {
 }
 
 TEST_CASE("RPolygon explicit cut test") {
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     std::vector<Point<int, int>> S;
     S.reserve(7);
     for (int i = 0; i < 7; ++i) {
@@ -116,8 +116,8 @@ TEST_CASE("RPolygon explicit cut test") {
 }
 
 TEST_CASE("RPolygon implicit cut test") {
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     std::vector<Point<int, int>> S;
     S.reserve(20);
     for (int i = 0; i < 20; ++i) {
@@ -169,8 +169,8 @@ TEST_CASE("RPolygon implicit cut test") {
 }
 
 TEST_CASE("RPolygon cut rectangle test") {
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     std::vector<Point<int, int>> S;
     S.reserve(7);
     for (int i = 0; i < 7; ++i) {
@@ -224,8 +224,8 @@ TEST_CASE("RPolygon cut rectangle test") {
 
 TEST_CASE("RPolygon convex cut - signed area preservation") {
     // Test with a random non-convex polygon created by test_rpolygon
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     std::vector<Point<int, int>> S;
     S.reserve(10);
     for (int i = 0; i < 10; ++i) {
@@ -265,8 +265,8 @@ TEST_CASE("RPolygon convex cut - signed area preservation") {
 
 TEST_CASE("RPolygon explicit cut - signed area preservation") {
     // Test with a random non-convex polygon created by test_rpolygon
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     std::vector<Point<int, int>> S;
     S.reserve(10);
     for (int i = 0; i < 10; ++i) {
@@ -304,8 +304,8 @@ TEST_CASE("RPolygon explicit cut - signed area preservation") {
 
 TEST_CASE("RPolygon implicit cut - signed area preservation") {
     // Test with a random non-convex polygon created by test_rpolygon
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     std::vector<Point<int, int>> S;
     S.reserve(10);
     for (int i = 0; i < 10; ++i) {
@@ -343,8 +343,8 @@ TEST_CASE("RPolygon implicit cut - signed area preservation") {
 
 TEST_CASE("RPolygon rectangle cut - signed area preservation") {
     // Test with a random non-convex polygon created by test_rpolygon
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     std::vector<Point<int, int>> S;
     S.reserve(10);
     for (int i = 0; i < 10; ++i) {

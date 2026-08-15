@@ -1,13 +1,11 @@
 #include <doctest/doctest.h>
 #include <fmt/core.h>
 
-#include <iostream>
-#include <ldsgen/ilds.hpp>
+#include <lds/ilds.hpp>
 #include <random>
 #include <recti/global_router.hpp>
 #include <recti/interval.hpp>
 #include <recti/point.hpp>
-#include <string>
 #include <vector>
 
 using namespace recti;

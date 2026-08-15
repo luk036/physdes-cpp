@@ -1,23 +1,21 @@
 #include <doctest/doctest.h>
 #include <fmt/core.h>
 
-#include <iostream>         // for operator<<
-#include <ldsgen/ilds.hpp>  // for VdCorput
+#include <lds/ilds.hpp>  // for VdCorput
 #include <recti/global_router.hpp>
 #include <recti/interval.hpp>
 #include <recti/point.hpp>
 #include <string>
 #include <vector>
 
-#include "TestGlobalRouter.h"
 
 using namespace recti;
 
 // Helper function to generate a set of points for testing
 auto generate_points(size_t num_terminals, unsigned int seed)
     -> std::pair<Point<int, int>, std::vector<Point<int, int>>> {
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     hgenX.reseed(seed);
     hgenY.reseed(seed);
     using IntPoint = Point<int, int>;

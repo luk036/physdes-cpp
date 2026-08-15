@@ -2,15 +2,13 @@
 #include <fmt/core.h>
 
 #include <cstdlib>          // for rand()
-#include <iostream>         // for operator<<
-#include <ldsgen/ilds.hpp>  // for VdCorput
+#include <lds/ilds.hpp>  // for VdCorput
 #include <recti/global_router.hpp>
 #include <recti/interval.hpp>
 #include <recti/point.hpp>
 #include <string>
 #include <vector>
 
-#include "TestGlobalRouter.h"
 
 using namespace recti;
 
@@ -19,8 +17,8 @@ auto generate_3d_points(size_t num_terminals, unsigned int seed)
     -> std::pair<Point<Point<int, int>, int>, std::vector<Point<Point<int, int>, int>>> {
     constexpr int scale_z = 100;
 
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     hgenX.reseed(seed);
     hgenY.reseed(seed);
 

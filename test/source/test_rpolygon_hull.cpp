@@ -1,7 +1,7 @@
 #include <doctest/doctest.h>
 #include <fmt/core.h>
 
-#include <ldsgen/ilds.hpp>          // for VdCorput
+#include <lds/ilds.hpp>          // for VdCorput
 #include <recti/point.hpp>          // for Point
 #include <recti/rpolygon.hpp>       // for create_xmono_rpolygon, create_test_rpolygon
 #include <recti/rpolygon_hull.hpp>  // for rpolygon_is_monotone, rpolygon_make_xmonotone_hull, etc.
@@ -93,8 +93,8 @@ TEST_CASE("RPolygon make y-monotone hull test") {
 }
 
 TEST_CASE("RPolygon make convex hull test with Halton points") {
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     std::vector<Point<int>> S;
     S.reserve(100);
     for (int i = 0; i < 100; ++i) {
@@ -134,8 +134,8 @@ TEST_CASE("RPolygon make convex hull test with Halton points") {
 }
 
 TEST_CASE("RPolygon make xmono hull test") {
-    auto hgenX = ildsgen::VdCorput(3, 7);
-    auto hgenY = ildsgen::VdCorput(2, 11);
+    auto hgenX = ilds::VdCorput<3>(7);
+    auto hgenY = ilds::VdCorput<2>(11);
     auto S = std::vector<Point<int>>{};
     for (auto i = 0; i != 50; ++i) {
         S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
@@ -177,8 +177,8 @@ TEST_CASE("RPolygon make xmono hull test") {
 }
 
 TEST_CASE("RPolygon make ymono hull test") {
-    auto hgenX = ildsgen::VdCorput(3, 7);
-    auto hgenY = ildsgen::VdCorput(2, 11);
+    auto hgenX = ilds::VdCorput<3>(7);
+    auto hgenY = ilds::VdCorput<2>(11);
     auto S = std::vector<Point<int>>{};
     for (auto i = 0; i != 50; ++i) {
         S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));

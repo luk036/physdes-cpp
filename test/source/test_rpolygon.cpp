@@ -4,7 +4,7 @@
 #include <ostream>
 
 // #include <span>            // for span
-#include <ldsgen/ilds.hpp>     // for VdCorput
+#include <lds/ilds.hpp>     // for VdCorput
 #include <recti/rpolygon.hpp>  // for RPolygon, RPolygon_is_clockwise, cre...
 #include <vector>              // for vector
 
@@ -39,8 +39,8 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono)") {
 }
 
 TEST_CASE("Rectilinear Polygon test (xcoord-mono 50)") {
-    auto hgenX = ildsgen::VdCorput(3, 7);
-    auto hgenY = ildsgen::VdCorput(2, 11);
+    auto hgenX = ilds::VdCorput<3>(7);
+    auto hgenY = ilds::VdCorput<2>(11);
     auto S = std::vector<Point<int>>{};
     for (auto i = 0; i != 50; ++i) {
         S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
@@ -72,8 +72,8 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono 50)") {
 }
 
 TEST_CASE("Rectilinear Polygon test (ycoord-mono 50)") {
-    auto hgenX = ildsgen::VdCorput(3, 7);
-    auto hgenY = ildsgen::VdCorput(2, 11);
+    auto hgenX = ilds::VdCorput<3>(7);
+    auto hgenY = ilds::VdCorput<2>(11);
     auto S = std::vector<Point<int>>{};
     for (auto i = 0; i != 50; ++i) {
         S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));

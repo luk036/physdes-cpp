@@ -1,6 +1,6 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 
-#include <ldsgen/ilds.hpp>     // for Vdcorput
+#include <lds/ilds.hpp>     // for Vdcorput
 #include <list>                // for list, __list_iterator, operator!=
 #include <ostream>             // for operator<<
 #include <recti/interval.hpp>  // for Interval, operator<<, operator+, ope...
@@ -98,7 +98,7 @@ TEST_CASE("Interval of Interval test") {
 TEST_CASE("Interval overlapping test") {
     constexpr auto max_count = 20;
     auto lst = std::list<Interval<int>>{};
-    auto hgenX = ildsgen::VdCorput(3, 7);
+    auto hgenX = ilds::VdCorput<3>(7);
 
     for (auto index_i = 0; index_i != max_count; ++index_i) {
         for (auto index_j = 0; index_j != max_count; ++index_j) {

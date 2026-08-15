@@ -4,7 +4,7 @@
 #include <vector>
 #include <span>
 
-#include <ldsgen/ilds.hpp>     // for VdCorput
+#include <lds/ilds.hpp>     // for VdCorput
 #include <recti/rpolygon.hpp>  // for create_xmono_rpolygon, create_test_rpolygon
 #include <recti/rpolygon_hull.hpp> // for rpolygon_is_monotone, rpolygon_make_xmonotone_hull, etc.
 #include <recti/point.hpp>     // for Point
@@ -100,8 +100,8 @@ TEST_CASE("RPolygon make y-monotone hull test") {
 }
 
 TEST_CASE("RPolygon make convex hull test with Halton points") {
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     std::vector<Point<int>> S;
     for (int i = 0; i < 100; ++i) {
         S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
@@ -140,8 +140,8 @@ TEST_CASE("RPolygon make convex hull test with Halton points") {
 }
 
 TEST_CASE("RPolygon convex cut test") {
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     std::vector<Point<int, int>> S;
     for (int i = 0; i < 30; ++i) {
         S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));
@@ -187,8 +187,8 @@ TEST_CASE("RPolygon convex cut test") {
 }
 
 // TEST_CASE("RPolygon make convex hull test") {
-//     ildsgen::VdCorput hgenX(3, 7);
-//     ildsgen::VdCorput hgenY(2, 11);
+//     ilds::VdCorput<3> hgenX(7);
+//     ilds::VdCorput<2> hgenY(11);
 //     std::vector<Point<int>> S;
 //     for (int i = 0; i < 100; ++i) {
 //         S.emplace_back(Point<int>(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop())));

@@ -1,7 +1,7 @@
 #include <doctest/doctest.h>
 #include <fmt/core.h>
 
-#include <ldsgen/ilds.hpp>
+#include <lds/ilds.hpp>
 #include <random>
 #include <recti/point.hpp>
 #include <recti/rpolygon.hpp>
