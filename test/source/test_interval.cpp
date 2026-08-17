@@ -1,6 +1,6 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, Expression_lhs
 
-#include <lds/ilds.hpp>     // for Vdcorput
+#include <lds/ilds.hpp>        // for Vdcorput
 #include <list>                // for list, __list_iterator, operator!=
 #include <ostream>             // for operator<<
 #include <recti/interval.hpp>  // for Interval, operator<<, operator+, ope...

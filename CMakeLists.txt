@@ -58,11 +58,11 @@ include(${CPM_DOWNLOAD_LOCATION})
 # PackageProject.cmake will be used to make our target installable
 CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.8.0")
 
-# fmt is a transitive dependency of spdlog. Prefer a system-installed fmt when available.
-# On MSVC, skip prebuilt system packages (e.g. conda): they are Release-only shared
-# libraries whose std::string ABI (_ITERATOR_DEBUG_LEVEL=0) mismatches Debug builds
-# (_ITERATOR_DEBUG_LEVEL=2), corrupting std::strings returned by fmt::format. Build fmt
-# from source on MSVC so the ABI always matches (same as CI's windows-latest runner).
+# fmt is a transitive dependency of spdlog. Prefer a system-installed fmt when available. On MSVC,
+# skip prebuilt system packages (e.g. conda): they are Release-only shared libraries whose
+# std::string ABI (_ITERATOR_DEBUG_LEVEL=0) mismatches Debug builds (_ITERATOR_DEBUG_LEVEL=2),
+# corrupting std::strings returned by fmt::format. Build fmt from source on MSVC so the ABI always
+# matches (same as CI's windows-latest runner).
 if(NOT MSVC)
   find_package(fmt CONFIG QUIET)
   if(fmt_FOUND)
@@ -82,8 +82,8 @@ endif()
 
 # spdlog must be added before Lds (which also adds spdlog) to ensure SPDLOG_FMT_EXTERNAL is set,
 # avoiding linker conflicts with fmt when local fmt package is a shared library. Prefer a
-# system-installed spdlog on non-MSVC platforms (Ubuntu: libspdlog-dev, macOS: brew install
-# spdlog, Termux: spdlog). On MSVC, build from source for the same std::string ABI reason as fmt.
+# system-installed spdlog on non-MSVC platforms (Ubuntu: libspdlog-dev, macOS: brew install spdlog,
+# Termux: spdlog). On MSVC, build from source for the same std::string ABI reason as fmt.
 if(NOT MSVC)
   find_package(spdlog CONFIG QUIET)
   if(spdlog_FOUND)

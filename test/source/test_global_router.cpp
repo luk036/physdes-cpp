@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 
-
 using namespace recti;
 
 // Helper function to generate a set of points for testing

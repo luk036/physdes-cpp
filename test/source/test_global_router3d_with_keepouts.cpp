@@ -12,9 +12,9 @@ using namespace recti;
 using IntPoint3d = Point<Point<int, int>, int>;
 
 // Helper function to generate a set of 3D points and keepouts for testing
-auto generate_3d_points_and_keepouts(size_t num_terminals, unsigned int seed) -> std::tuple<
-    IntPoint3d, std::vector<IntPoint3d>,
-    std::vector<decltype(std::declval<IntPoint3d>().enlarge_with(1))>> {
+auto generate_3d_points_and_keepouts(size_t num_terminals, unsigned int seed)
+    -> std::tuple<IntPoint3d, std::vector<IntPoint3d>,
+                  std::vector<decltype(std::declval<IntPoint3d>().enlarge_with(1))>> {
     constexpr int scale_z = 100;
 
     ilds::VdCorput<3> hgenX(7);

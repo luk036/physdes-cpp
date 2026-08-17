@@ -1,14 +1,13 @@
 #include <doctest/doctest.h>
 #include <fmt/core.h>
 
-#include <cstdlib>          // for rand()
+#include <cstdlib>       // for rand()
 #include <lds/ilds.hpp>  // for VdCorput
 #include <recti/global_router.hpp>
 #include <recti/interval.hpp>
 #include <recti/point.hpp>
 #include <string>
 #include <vector>
-
 
 using namespace recti;
 using IntPoint3d = Point<Point<int, int>, int>;
