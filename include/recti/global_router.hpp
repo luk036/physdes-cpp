@@ -188,6 +188,20 @@ namespace recti {
                                    std::optional<std::vector<Keepout>> keepouts = std::nullopt)
             -> void;
 
+        /**
+         * @brief Creates a new routing node of the given type and registers it in
+         *        the arena and the node map (Factory Method).
+         *
+         * Generates the node ID from the type-specific counter (e.g. "steiner_3"),
+         * allocates the node in the arena, and registers it in the `nodes` map.
+         * All node creation in the tree funnels through this single method.
+         *
+         * @param[in] type The type of node to create (Steiner, Terminal, or Source).
+         * @param[in] pt The position of the new node.
+         * @return A pointer to the newly created node.
+         */
+        auto _create_node(NodeType type, const IntPoint& pt) -> RoutingNode<IntPoint>*;
+
       public:
         std::unordered_map<std::string, RoutingNode<IntPoint>*>
             nodes;                 ///< Map from node ID to RoutingNode<IntPoint> pointer.
@@ -199,8 +213,7 @@ namespace recti {
          * @param source_position The 2D integer coordinates of the source node.
          */
         GlobalRoutingTree(IntPoint source_position) {
-            _arena.emplace_back("source", NodeType::Source, source_position);
-            nodes["source"] = &this->_arena.back();
+            this->_create_node(NodeType::Source, source_position);
         }
 
         /**

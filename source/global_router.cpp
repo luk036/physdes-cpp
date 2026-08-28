@@ -164,13 +164,31 @@ namespace recti {
         return {parent_node, nearest_node};
     }
 
+    template <typename IntPoint>
+    auto GlobalRoutingTree<IntPoint>::_create_node(NodeType type, const IntPoint& pt)
+        -> RoutingNode<IntPoint>* {
+        std::string id;
+        switch (type) {
+            case NodeType::Steiner:
+                id = "steiner_" + std::to_string(this->next_steiner_id++);
+                break;
+            case NodeType::Terminal:
+                id = "terminal_" + std::to_string(this->next_terminal_id++);
+                break;
+            case NodeType::Source:
+                id = "source";
+                break;
+        }
+        this->_arena.emplace_back(id, type, pt);
+        RoutingNode<IntPoint>* node = &this->_arena.back();
+        this->nodes[id] = node;
+        return node;
+    }
+
     template <typename IntPoint> auto GlobalRoutingTree<IntPoint>::_insert_terminal_impl(
         const IntPoint& point, int allowed_wirelength, std::optional<std::vector<Keepout>> keepouts)
         -> void {
-        std::string terminal_id = "terminal_" + std::to_string(this->next_terminal_id++);
-        this->_arena.emplace_back(terminal_id, NodeType::Terminal, point);
-        RoutingNode<IntPoint>* terminal_node = &this->_arena.back();
-        this->nodes[terminal_id] = terminal_node;
+        RoutingNode<IntPoint>* terminal_node = this->_create_node(NodeType::Terminal, point);
         auto [parent_node, nearest_node] = this->_find_nearest_insertion_with_constraints(
             point, allowed_wirelength, std::move(keepouts));
         if (parent_node == nullptr) {
@@ -178,12 +196,9 @@ namespace recti {
             terminal_node->path_length
                 = nearest_node->path_length + nearest_node->pt.min_dist_with(point);
         } else {
-            std::string steiner_id = "steiner_" + std::to_string(this->next_steiner_id++);
             auto possible_path = parent_node->pt.hull_with(nearest_node->pt);
             IntPoint nearest_pt = possible_path.nearest_to(point);
-            this->_arena.emplace_back(steiner_id, NodeType::Steiner, nearest_pt);
-            RoutingNode<IntPoint>* new_node = &this->_arena.back();
-            this->nodes[steiner_id] = new_node;
+            RoutingNode<IntPoint>* new_node = this->_create_node(NodeType::Steiner, nearest_pt);
             parent_node->remove_child(nearest_node);
             parent_node->add_child(new_node);
             new_node->path_length
@@ -242,10 +257,8 @@ namespace recti {
     auto GlobalRoutingTree<IntPoint>::insert_steiner_node(const IntPoint& point,
                                                           std::optional<std::string> parent_id)
         -> std::string {
-        std::string steiner_id = "steiner_" + std::to_string(this->next_steiner_id++);
-        this->_arena.emplace_back(steiner_id, NodeType::Steiner, point);
-        RoutingNode<IntPoint>* node = &this->_arena.back();
-        this->nodes[steiner_id] = node;
+        RoutingNode<IntPoint>* node = this->_create_node(NodeType::Steiner, point);
+        std::string steiner_id = node->id;
 
         RoutingNode<IntPoint>* parent_node = nullptr;
         if (!parent_id) {
@@ -265,10 +278,8 @@ namespace recti {
     auto GlobalRoutingTree<IntPoint>::insert_terminal_node(const IntPoint& point,
                                                            std::optional<std::string> parent_id)
         -> std::string {
-        std::string terminal_id = "terminal_" + std::to_string(this->next_terminal_id++);
-        this->_arena.emplace_back(terminal_id, NodeType::Terminal, point);
-        RoutingNode<IntPoint>* node = &this->_arena.back();
-        this->nodes[terminal_id] = node;
+        RoutingNode<IntPoint>* node = this->_create_node(NodeType::Terminal, point);
+        std::string terminal_id = node->id;
 
         RoutingNode<IntPoint>* parent_node = nullptr;
         if (!parent_id) {
@@ -304,15 +315,8 @@ namespace recti {
                                      + branch_start_id);
         }
 
-        std::string node_id;
-        if (new_node_type == NodeType::Steiner) {
-            node_id = "steiner_" + std::to_string(this->next_steiner_id++);
-        } else if (new_node_type == NodeType::Terminal) {
-            node_id = "terminal_" + std::to_string(this->next_terminal_id++);
-        }
-        this->_arena.emplace_back(node_id, new_node_type, point);
-        RoutingNode<IntPoint>* new_node = &this->_arena.back();
-        this->nodes[node_id] = new_node;
+        RoutingNode<IntPoint>* new_node = this->_create_node(new_node_type, point);
+        std::string node_id = new_node->id;
 
         start_node->remove_child(end_node);
         start_node->add_child(new_node);
