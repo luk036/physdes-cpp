@@ -102,6 +102,48 @@ TEST_SUITE("ClockTreeVisualizer Tests") {
         CHECK(std::filesystem::exists("test_with_analysis.svg"));
         std::filesystem::remove("test_with_analysis.svg");
     }
+    TEST_CASE("Builder Configuration") {
+        using namespace recti;
+        Tree tree;
+        NodeIdx s1 = tree.add(TreeNode("s1", Point<int>(50, 50)));
+        NodeIdx s2 = tree.add(TreeNode("s2", Point<int>(150, 50)));
+        NodeIdx root = tree.add(TreeNode("root", Point<int>(100, 50)));
+        tree.get_mut(s1).parent = root;
+        tree.get_mut(s2).parent = root;
+        tree.get_mut(root).left = s1;
+        tree.get_mut(root).right = s2;
+
+        std::vector<Sink> sinks
+            = {Sink("s1", Point<int>(50, 50), 1.0), Sink("s2", Point<int>(150, 50), 1.0)};
+
+        auto viz = ClockTreeVisualizer::Builder()
+                       .margin(20)
+                       .node_radius(12)
+                       .wire_width(4)
+                       .sink_color("#112233")
+                       .internal_color("#445566")
+                       .root_color("#778899")
+                       .wire_color("#AABBCC")
+                       .text_color("#DDEEFF")
+                       .build();
+        std::string svg = viz.visualize_tree(tree, root, sinks, "", 600, 400);
+        CHECK_FALSE(svg.empty());
+        CHECK_NE(svg.find("<svg"), std::string::npos);
+        CHECK_NE(svg.find("</svg>"), std::string::npos);
+        CHECK_NE(svg.find("stroke=\"#AABBCC\""), std::string::npos);
+    }
+
+    TEST_CASE("Builder Defaults Match Default Constructor") {
+        using namespace recti;
+        Tree tree;
+        NodeIdx root = tree.add(TreeNode("root", Point<int>(0, 0)));
+        std::vector<Sink> sinks;
+
+        auto from_builder = ClockTreeVisualizer::Builder().build();
+        ClockTreeVisualizer from_default;
+        CHECK_EQ(from_builder.visualize_tree(tree, root, sinks, "", 400, 300),
+                 from_default.visualize_tree(tree, root, sinks, "", 400, 300));
+    }
 }
 
 TEST_SUITE("Interactive SVG Tests") {

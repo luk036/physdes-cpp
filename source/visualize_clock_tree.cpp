@@ -277,7 +277,16 @@ namespace recti {
     std::string create_interactive_svg(const Tree& tree, NodeIdx root,
                                        const std::vector<Sink>& sinks, const SkewAnalysis* analysis,
                                        const std::string& filename, int width, int height) {
-        ClockTreeVisualizer viz(60, 10, 3, "#2E7D32", "#1565C0", "#C62828", "#455A64", "#263238");
+        auto viz = ClockTreeVisualizer::Builder()
+                       .margin(60)
+                       .node_radius(10)
+                       .wire_width(3)
+                       .sink_color("#2E7D32")
+                       .internal_color("#1565C0")
+                       .root_color("#C62828")
+                       .wire_color("#455A64")
+                       .text_color("#263238")
+                       .build();
         return viz.visualize_tree(tree, root, sinks, filename, width, height, analysis);
     }
 
@@ -305,7 +314,14 @@ namespace recti {
         svg.emplace_back("</style>");
         svg.emplace_back(R"(<rect width="100%" height="100%" fill="white"/>)");
 
-        ClockTreeVisualizer viz(40, 6, 2, "#4CAF50", "#2196F3", "#F44336");
+        auto viz = ClockTreeVisualizer::Builder()
+                       .margin(40)
+                       .node_radius(6)
+                       .wire_width(2)
+                       .sink_color("#4CAF50")
+                       .internal_color("#2196F3")
+                       .root_color("#F44336")
+                       .build();
 
         for (size_t i = 0; i < trees_data.size(); ++i) {
             int row = static_cast<int>(i) / cols;
