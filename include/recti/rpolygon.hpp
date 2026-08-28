@@ -249,7 +249,7 @@ namespace recti {
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
     template <typename FwIter, typename KeyFn, typename CmpFn>
-    auto create_mono_rpolygon(FwIter&& first, FwIter&& last, const KeyFn& dir, const CmpFn& cmp)
+    auto create_mono_rpolygon(FwIter first, FwIter last, const KeyFn& dir, const CmpFn& cmp)
         -> bool;
 
     /**
@@ -263,7 +263,7 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
-    template <typename FwIter> auto create_xmono_rpolygon(FwIter&& first, FwIter&& last) -> bool;
+    template <typename FwIter> auto create_xmono_rpolygon(FwIter first, FwIter last) -> bool;
 
     /**
      * @brief Create a y-monotone rectilinear polygon (RPolygon) object.
@@ -276,7 +276,7 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return `true` if the resulting RPolygon is clockwise, `false` otherwise.
      */
-    template <typename FwIter> auto create_ymono_rpolygon(FwIter&& first, FwIter&& last) -> bool;
+    template <typename FwIter> auto create_ymono_rpolygon(FwIter first, FwIter last) -> bool;
 
     /**
      * @brief Create a test rectilinear polygon (RPolygon) object.
@@ -289,7 +289,7 @@ namespace recti {
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      */
-    template <typename FwIter> void create_test_rpolygon_old(FwIter&& first, FwIter&& last);
+    template <typename FwIter> void create_test_rpolygon_old(FwIter first, FwIter last);
 
     /**
      * @brief Create a test rectilinear polygon (RPolygon) object.

@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <functional>
 #include <limits>
 #include <recti/dllink.hpp>

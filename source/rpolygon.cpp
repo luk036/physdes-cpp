@@ -12,7 +12,7 @@
 namespace recti {
 
     template <typename FwIter, typename KeyFn, typename CmpFn>
-    auto create_mono_rpolygon(FwIter&& first, FwIter&& last, const KeyFn& dir, const CmpFn& cmp)
+    auto create_mono_rpolygon(FwIter first, FwIter last, const KeyFn& dir, const CmpFn& cmp)
         -> bool {
         assert(first != last);
 
@@ -39,14 +39,14 @@ namespace recti {
         return is_anticw;
     }
 
-    template <typename FwIter> auto create_xmono_rpolygon(FwIter&& first, FwIter&& last) -> bool {
+    template <typename FwIter> auto create_xmono_rpolygon(FwIter first, FwIter last) -> bool {
         return create_mono_rpolygon(
             first, last,
             [](const auto& point) { return std::make_pair(point.xcoord(), point.ycoord()); },
             [](const auto& elem_a, const auto& elem_b) -> bool { return elem_a < elem_b; });
     }
 
-    template <typename FwIter> auto create_ymono_rpolygon(FwIter&& first, FwIter&& last) -> bool {
+    template <typename FwIter> auto create_ymono_rpolygon(FwIter first, FwIter last) -> bool {
         return create_mono_rpolygon(
             first, last,
             [](const auto& point) { return std::make_pair(point.ycoord(), point.xcoord()); },
@@ -55,10 +55,10 @@ namespace recti {
 
     // Explicit instantiations for std::vector<Point<int>>::iterator
     template auto create_xmono_rpolygon<std::vector<Point<int>>::iterator>(
-        std::vector<Point<int>>::iterator&&, std::vector<Point<int>>::iterator&&) -> bool;
+        std::vector<Point<int>>::iterator, std::vector<Point<int>>::iterator) -> bool;
 
     template auto create_ymono_rpolygon<std::vector<Point<int>>::iterator>(
-        std::vector<Point<int>>::iterator&&, std::vector<Point<int>>::iterator&&) -> bool;
+        std::vector<Point<int>>::iterator, std::vector<Point<int>>::iterator) -> bool;
 
     /**
      * @brief Check if a polygon is monotone with respect to a given direction function
@@ -229,7 +229,7 @@ namespace recti {
      * @param[in] first Beginning of the point range.
      * @param[in] last End of the point range.
      */
-    template <typename FwIter> void create_test_rpolygon_old(FwIter&& first, FwIter&& last) {
+    template <typename FwIter> void create_test_rpolygon_old(FwIter first, FwIter last) {
         assert(first != last);
 
         auto upwd = [](const auto& right_point, const auto& left_point) -> bool {
@@ -380,7 +380,7 @@ namespace recti {
 
     // Explicit instantiations for std::vector<Point<int>>::iterator
     template void create_test_rpolygon_old<std::vector<Point<int>>::iterator>(
-        std::vector<Point<int>>::iterator&&, std::vector<Point<int>>::iterator&&);
+        std::vector<Point<int>>::iterator, std::vector<Point<int>>::iterator);
 
     template auto create_test_rpolygon<std::vector<Point<int>>::iterator>(
         std::vector<Point<int>>::iterator, std::vector<Point<int>>::iterator)
