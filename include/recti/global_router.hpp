@@ -176,17 +176,15 @@ namespace recti {
         auto _find_nearest_node(const IntPoint& point, std::optional<std::string> exclude_id
                                                        = std::nullopt) -> RoutingNode<IntPoint>*;
 
-        auto _find_nearest_insertion_with_constraints(const IntPoint& pt,
-                                                      int allowed_wirelength
-                                                      = std::numeric_limits<int>::max(),
-                                                      std::optional<std::vector<Keepout>> keepouts
-                                                      = std::nullopt)
+        auto _find_nearest_insertion_with_constraints(
+            const IntPoint& pt, int allowed_wirelength = std::numeric_limits<int>::max(),
+            const std::optional<std::vector<Keepout>>& keepouts = std::nullopt)
             -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*>;
 
         auto _insert_terminal_impl(const IntPoint& point,
                                    int allowed_wirelength = std::numeric_limits<int>::max(),
-                                   std::optional<std::vector<Keepout>> keepouts = std::nullopt)
-            -> void;
+                                   const std::optional<std::vector<Keepout>>& keepouts
+                                   = std::nullopt) -> void;
 
         /**
          * @brief Creates a new routing node of the given type and registers it in
@@ -270,7 +268,7 @@ namespace recti {
          * @param keepouts Optional keepouts to avoid.
          */
         auto insert_terminal_with_steiner(const IntPoint& point,
-                                          std::optional<std::vector<Keepout>> keepouts
+                                          const std::optional<std::vector<Keepout>>& keepouts
                                           = std::nullopt) -> void {
             _insert_terminal_impl(point, std::numeric_limits<int>::max(), keepouts);
         }
@@ -282,7 +280,7 @@ namespace recti {
          * @param keepouts Optional keepouts to avoid.
          */
         auto insert_terminal_with_constraints(const IntPoint& point, int allowed_wirelength,
-                                              std::optional<std::vector<Keepout>> keepouts
+                                              const std::optional<std::vector<Keepout>>& keepouts
                                               = std::nullopt) -> void {
             _insert_terminal_impl(point, allowed_wirelength, keepouts);
         }

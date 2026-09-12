@@ -110,33 +110,32 @@ namespace recti {
     }
 
     NodeIdx DMEAlgorithm::build_merging_tree(const std::vector<NodeIdx>& node_ids, bool vertical) {
-        if (node_ids.size() == 1) {
-            return node_ids[0];
+        std::vector<NodeIdx> buffer = node_ids;
+        return build_merging_tree_impl(buffer, 0, buffer.size(), vertical);
+    }
+
+    NodeIdx DMEAlgorithm::build_merging_tree_impl(std::vector<NodeIdx>& buffer, std::size_t lo,
+                                                  std::size_t hi, bool vertical) {
+        if (hi - lo == 1) {
+            return buffer[lo];
         }
 
-        auto sorted = node_ids;
-        size_t mid = sorted.size() / 2;
+        std::size_t mid = lo + (hi - lo) / 2;
+        auto begin = buffer.begin() + static_cast<std::ptrdiff_t>(lo);
+        auto middle = buffer.begin() + static_cast<std::ptrdiff_t>(mid);
+        auto end = buffer.begin() + static_cast<std::ptrdiff_t>(hi);
         if (vertical) {
-            std::nth_element(sorted.begin(), sorted.begin() + static_cast<std::ptrdiff_t>(mid),
-                             sorted.end(), [this](NodeIdx a, NodeIdx b) {
-                                 return tree.get(a).position.xcoord()
-                                        < tree.get(b).position.xcoord();
-                             });
+            std::nth_element(begin, middle, end, [this](NodeIdx a, NodeIdx b) {
+                return tree.get(a).position.xcoord() < tree.get(b).position.xcoord();
+            });
         } else {
-            std::nth_element(sorted.begin(), sorted.begin() + static_cast<std::ptrdiff_t>(mid),
-                             sorted.end(), [this](NodeIdx a, NodeIdx b) {
-                                 return tree.get(a).position.ycoord()
-                                        < tree.get(b).position.ycoord();
-                             });
+            std::nth_element(begin, middle, end, [this](NodeIdx a, NodeIdx b) {
+                return tree.get(a).position.ycoord() < tree.get(b).position.ycoord();
+            });
         }
 
-        std::vector<NodeIdx> left_group(sorted.begin(),
-                                        sorted.begin() + static_cast<std::ptrdiff_t>(mid));
-        std::vector<NodeIdx> right_group(sorted.begin() + static_cast<std::ptrdiff_t>(mid),
-                                         sorted.end());
-
-        NodeIdx left_child = build_merging_tree(left_group, !vertical);
-        NodeIdx right_child = build_merging_tree(right_group, !vertical);
+        NodeIdx left_child = build_merging_tree_impl(buffer, lo, mid, !vertical);
+        NodeIdx right_child = build_merging_tree_impl(buffer, mid, hi, !vertical);
 
         std::string id = fmt::format("n{}", node_id++);
         Point<int> pos = tree.get(left_child).position;
@@ -192,14 +191,14 @@ namespace recti {
                 l_node.wire_length = 0;
                 r_node.wire_length = distance - tp.raw_extend_left;
                 r_node.need_elongation = true;
-                log_with_spdlog(
+                log_with_spdlog_debug(
                     "Warning: Right node needs elongation: extend_left < 0  => extend_left "
                     "set to 0");
             } else if (tp.raw_extend_left > distance) {
                 r_node.wire_length = 0;
                 l_node.wire_length = tp.raw_extend_left;
                 l_node.need_elongation = true;
-                log_with_spdlog(
+                log_with_spdlog_debug(
                     "Warning: Left node needs elongation: extend_left > distance => "
                     "extend_left set to distance");
             }

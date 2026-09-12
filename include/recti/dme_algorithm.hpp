@@ -235,8 +235,7 @@ namespace recti {
          */
         virtual TappingResult calculate_tapping_point(int distance, double left_delay,
                                                       double right_delay, double left_capacitance,
-                                                      double right_capacitance) const
-            = 0;
+                                                      double right_capacitance) const = 0;
     };
 
     /**
@@ -476,6 +475,21 @@ namespace recti {
          * @return The root index of the constructed merging subtree.
          */
         NodeIdx build_merging_tree(const std::vector<NodeIdx>& node_ids, bool vertical);
+
+        /**
+         * @brief In-place range partition helper for build_merging_tree.
+         *
+         * Partitions `buffer[lo, hi)` around the median along the chosen axis via
+         * `std::nth_element` and recurses on the two halves, avoiding the
+         * per-level temporary vector allocations of a copy-based implementation.
+         * @param buffer Scratch buffer holding the node indices for this subtree.
+         * @param lo Inclusive start of the range.
+         * @param hi Exclusive end of the range.
+         * @param vertical If true, partition along the x-axis; otherwise the y-axis.
+         * @return The root index of the constructed merging subtree.
+         */
+        NodeIdx build_merging_tree_impl(std::vector<NodeIdx>& buffer, std::size_t lo,
+                                        std::size_t hi, bool vertical);
 
         /**
          * @brief Recursive helper for merging segment computation.

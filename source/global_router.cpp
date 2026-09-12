@@ -77,85 +77,106 @@ namespace recti {
             current_node = &this->_arena[0];
         }
         std::ostringstream oss;
-        oss << std::string(static_cast<size_t>(level) * 2, ' ') << *current_node << "\n";
-        for (auto child : current_node->children) {
-            oss << this->get_tree_structure(child, level + 1);
-        }
+        struct AppendHelper {
+            std::ostringstream& oss;
+
+            void operator()(const RoutingNode<IntPoint>* node, int lvl) const {
+                oss << std::string(static_cast<size_t>(lvl) * 2, ' ') << *node << "\n";
+                for (auto child : node->children) {
+                    (*this)(child, lvl + 1);
+                }
+            }
+        };
+        AppendHelper{oss}(current_node, level);
         return oss.str();
     }
 
     template <typename IntPoint>
     auto GlobalRoutingTree<IntPoint>::_find_nearest_insertion_with_constraints(
         const IntPoint& pt, int allowed_wirelength,
-        std::optional<std::vector<GlobalRoutingTree<IntPoint>::Keepout>> keepouts)
+        const std::optional<std::vector<GlobalRoutingTree<IntPoint>::Keepout>>& keepouts)
         -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*> {
         RoutingNode<IntPoint>* parent_node = nullptr;
         RoutingNode<IntPoint>* nearest_node = &this->_arena[0];
         int min_distance = this->worst_wirelength;
-        // int min_distance = std::numeric_limits<int>::max();
         bool valid_found = false;
 
-        std::function<void(RoutingNode<IntPoint>*)> traverse = [&](RoutingNode<IntPoint>* node) {
-            for (auto* child : node->children) {
-                auto possible_path = node->pt.hull_with(child->pt);
-                auto distance = possible_path.min_dist_with(pt);
-                auto nearest_pt = possible_path.nearest_to(pt);
-                if (keepouts.has_value()) {
-                    bool block = false;
-                    auto path1 = nearest_pt.hull_with(pt);
-                    auto path2 = nearest_pt.hull_with(node->pt);
-                    auto path3 = nearest_pt.hull_with(child->pt);
-                    for (const auto& keepout : *keepouts) {
-                        if (keepout.contains(nearest_pt)) {
-                            block = true;
-                            break;
+        struct Traverse {
+            const IntPoint& pt;
+            int allowed_wirelength;
+            int worst_wirelength;
+            const std::optional<std::vector<typename GlobalRoutingTree<IntPoint>::Keepout>>&
+                keepouts;
+            RoutingNode<IntPoint>*& parent_node;
+            RoutingNode<IntPoint>*& nearest_node;
+            int& min_distance;
+            bool& valid_found;
+
+            void operator()(RoutingNode<IntPoint>* node) const {
+                for (auto* child : node->children) {
+                    auto possible_path = node->pt.hull_with(child->pt);
+                    auto distance = possible_path.min_dist_with(pt);
+                    auto nearest_pt = possible_path.nearest_to(pt);
+                    if (keepouts.has_value()) {
+                        bool block = false;
+                        auto path1 = nearest_pt.hull_with(pt);
+                        auto path2 = nearest_pt.hull_with(node->pt);
+                        auto path3 = nearest_pt.hull_with(child->pt);
+                        for (const auto& keepout : *keepouts) {
+                            if (keepout.contains(nearest_pt)) {
+                                block = true;
+                                break;
+                            }
+                            if (keepout.blocks(path1) || keepout.blocks(path2)
+                                || keepout.blocks(path3)) {
+                                block = true;
+                                break;
+                            }
                         }
-                        if (keepout.blocks(path1) || keepout.blocks(path2)
-                            || keepout.blocks(path3)) {
-                            block = true;
-                            break;
+                        if (block) {
+                            continue;
                         }
                     }
-                    if (block) {
-                        continue;
-                    }
-                }
-                int path_length = node->path_length + node->pt.min_dist_with(nearest_pt) + distance;
-                bool update = false;
-                if (path_length <= allowed_wirelength) {
-                    if (valid_found) {
-                        if (distance < min_distance) {
+                    int path_length
+                        = node->path_length + node->pt.min_dist_with(nearest_pt) + distance;
+                    bool update = false;
+                    if (path_length <= allowed_wirelength) {
+                        if (valid_found) {
+                            if (distance < min_distance) {
+                                update = true;
+                            }
+                        } else {
+                            valid_found = true;
                             update = true;
                         }
                     } else {
-                        valid_found = true;
-                        update = true;
-                    }
-                } else {
-                    if (!valid_found) {
-                        // don't care allowed_wirelength if we haven't found any valid point yet
-                        if (path_length <= this->worst_wirelength && distance < min_distance) {
-                            update = true;
+                        if (!valid_found) {
+                            // don't care allowed_wirelength if we haven't found any valid point
+                            if (path_length <= worst_wirelength && distance < min_distance) {
+                                update = true;
+                            }
                         }
                     }
-                }
-                if (update) {
-                    min_distance = distance;
-                    if (nearest_pt == node->pt) {
-                        nearest_node = node;
-                        parent_node = nullptr;
-                    } else if (nearest_pt == child->pt) {
-                        nearest_node = child;
-                        parent_node = nullptr;
-                    } else {
-                        parent_node = node;
-                        nearest_node = child;
+                    if (update) {
+                        min_distance = distance;
+                        if (nearest_pt == node->pt) {
+                            nearest_node = node;
+                            parent_node = nullptr;
+                        } else if (nearest_pt == child->pt) {
+                            nearest_node = child;
+                            parent_node = nullptr;
+                        } else {
+                            parent_node = node;
+                            nearest_node = child;
+                        }
                     }
+                    (*this)(child);
                 }
-                traverse(child);
             }
         };
-        traverse(&this->_arena[0]);
+        Traverse{
+            pt,          allowed_wirelength, this->worst_wirelength, keepouts,
+            parent_node, nearest_node,       min_distance,           valid_found}(&this->_arena[0]);
         if (!valid_found) {
             log_with_spdlog(
                 "Warning: No valid insertion point found within allowed wirelength. "
@@ -186,11 +207,11 @@ namespace recti {
     }
 
     template <typename IntPoint> auto GlobalRoutingTree<IntPoint>::_insert_terminal_impl(
-        const IntPoint& point, int allowed_wirelength, std::optional<std::vector<Keepout>> keepouts)
-        -> void {
+        const IntPoint& point, int allowed_wirelength,
+        const std::optional<std::vector<Keepout>>& keepouts) -> void {
         RoutingNode<IntPoint>* terminal_node = this->_create_node(NodeType::Terminal, point);
-        auto [parent_node, nearest_node] = this->_find_nearest_insertion_with_constraints(
-            point, allowed_wirelength, std::move(keepouts));
+        auto [parent_node, nearest_node]
+            = this->_find_nearest_insertion_with_constraints(point, allowed_wirelength, keepouts);
         if (parent_node == nullptr) {
             nearest_node->add_child(terminal_node);
             terminal_node->path_length
@@ -327,32 +348,34 @@ namespace recti {
     template <typename IntPoint>
     auto GlobalRoutingTree<IntPoint>::calculate_total_wirelength() const -> int {
         int total = 0;
-        std::function<void(const RoutingNode<IntPoint>*)> traverse
-            = [&](const RoutingNode<IntPoint>* current_node) -> void {
+        std::vector<const RoutingNode<IntPoint>*> stack;
+        stack.reserve(this->nodes.size());
+        stack.push_back(&this->_arena[0]);
+        while (!stack.empty()) {
+            const RoutingNode<IntPoint>* current_node = stack.back();
+            stack.pop_back();
             for (auto child : current_node->children) {
                 total += current_node->manhattan_distance(child);
-                traverse(child);
+                stack.push_back(child);
             }
-        };
-        traverse(&this->_arena[0]);
+        }
         return total;
     }
 
     template <typename IntPoint>
     auto GlobalRoutingTree<IntPoint>::calculate_worst_wirelength() const -> int {
-        int worst_length = 0;
-        std::function<int(const RoutingNode<IntPoint>*)> traverse
-            = [&](const RoutingNode<IntPoint>* current_node) -> int {
-            for (auto child : current_node->children) {
-                auto length = traverse(child);
-                worst_length
-                    = std::max(worst_length, length + current_node->manhattan_distance(child));
+        struct Traverse {
+            auto operator()(const RoutingNode<IntPoint>* current_node) const -> int {
+                int worst_length = 0;
+                for (auto child : current_node->children) {
+                    auto length = (*this)(child);
+                    worst_length
+                        = std::max(worst_length, length + current_node->manhattan_distance(child));
+                }
+                return worst_length;
             }
-            return worst_length;
         };
-
-        auto length = traverse(&this->_arena[0]);
-        return length;
+        return Traverse{}(&this->_arena[0]);
     }
 
     template <typename IntPoint>

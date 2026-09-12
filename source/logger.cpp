@@ -36,11 +36,23 @@ namespace recti {
      *
      * @param[in] message The message to log
      */
+    namespace {
+        auto file_logger() noexcept -> const std::shared_ptr<spdlog::logger>& {
+            static const auto logger = make_file_logger();
+            return logger;
+        }
+    }  // namespace
+
     void log_with_spdlog(const std::string& message) {
-        // One-time initialization of file logger
-        static const auto logger = make_file_logger();
+        (void)file_logger();
 
         spdlog::info("Recti message: {}", message);
+    }
+
+    void log_with_spdlog_debug(const std::string& message) {
+        (void)file_logger();
+
+        spdlog::debug("Recti message: {}", message);
     }
 
 }  // namespace recti

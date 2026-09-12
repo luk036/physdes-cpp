@@ -101,6 +101,21 @@ target("bench_robust")
     add_files("bench/bench_robust.cpp")
     add_packages("fmt", "spdlog")
 
+target("steiner_forest_grid")
+    set_kind("binary")
+    add_files("experiments/steiner_forest_grid.cpp")
+
+target("bench_steiner")
+    set_kind("binary")
+    add_files("bench/bench_steiner.cpp")
+
+target("bench_router")
+    set_kind("binary")
+    add_deps("Recti")
+    add_includedirs("include", { public = true })
+    add_files("bench/bench_router.cpp")
+    add_packages("fmt", "spdlog")
+
 target("test_spdlogger_simple")
 set_kind("binary")
 add_deps("Recti")
