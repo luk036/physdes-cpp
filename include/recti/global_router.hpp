@@ -203,8 +203,9 @@ namespace recti {
       public:
         std::unordered_map<std::string, RoutingNode<IntPoint>*>
             nodes;                 ///< Map from node ID to RoutingNode<IntPoint> pointer.
-        int worst_wirelength = 0;  ///< The worst-case wirelength constraint for routing (used in
-                                   ///< constrained routing).
+        int worst_wirelength
+            = std::numeric_limits<int>::max();  ///< The worst-case wirelength constraint for
+                                                ///< routing (max = unbounded).
 
         /**
          * @brief Constructs a new GlobalRoutingTree with a specified source position.
@@ -270,7 +271,7 @@ namespace recti {
         auto insert_terminal_with_steiner(const IntPoint& point,
                                           const std::optional<std::vector<Keepout>>& keepouts
                                           = std::nullopt) -> void {
-            _insert_terminal_impl(point, std::numeric_limits<int>::max(), keepouts);
+            _insert_terminal_impl(point, this->worst_wirelength, keepouts);
         }
 
         /**
@@ -384,8 +385,6 @@ namespace recti {
          * @brief Routes terminals, potentially inserting Steiner nodes to optimize connections.
          */
         void route_with_steiners() {
-            this->tree.worst_wirelength = this->worst_wirelength;  // Store the allowed wirelength
-                                                                   // in the tree for reference
             for (const auto& terminal : this->terminal_positions) {
                 this->tree.insert_terminal_with_steiner(terminal, this->keepouts);
             }
