@@ -202,7 +202,7 @@ namespace recti {
 
       public:
         std::unordered_map<std::string, RoutingNode<IntPoint>*>
-            nodes;                 ///< Map from node ID to RoutingNode<IntPoint> pointer.
+            nodes;  ///< Map from node ID to RoutingNode<IntPoint> pointer.
         int worst_wirelength
             = std::numeric_limits<int>::max();  ///< The worst-case wirelength constraint for
                                                 ///< routing (max = unbounded).
