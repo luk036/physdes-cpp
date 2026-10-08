@@ -1,12 +1,15 @@
 #include <algorithm>
 #include <cmath>
+#include <cstddef>
 #include <fstream>
 #include <iostream>
+#include <limits>
 #include <memory>
 #include <set>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 /**
@@ -41,10 +44,16 @@ class UnionFind {
      * @return The representative of the set.
      */
     int find(int node_p) {
-        if (parent[node_p] != node_p) {
-            parent[node_p] = find(parent[node_p]);
+        int root = node_p;
+        while (parent[root] != root) {
+            root = parent[root];
         }
-        return parent[node_p];
+        while (parent[node_p] != root) {
+            int next = parent[node_p];
+            parent[node_p] = root;
+            node_p = next;
+        }
+        return root;
     }
 
     /**
@@ -206,7 +215,7 @@ class SteinerForestGrid {
             }
         }
 
-        std::unordered_map<std::pair<int, int>, double, std::hash<std::pair<int, int>>> paid;
+        std::vector<double> paid(edges.size(), 0.0);
         std::vector<Edge> F;
 
         while (true) {
@@ -254,34 +263,35 @@ class SteinerForestGrid {
                 }
             }
 
-            // Find min_delta and candidate edges
+            // Find the minimum-delta eligible edge (the first one wins ties)
             double minDelta = std::numeric_limits<double>::infinity();
-            std::vector<std::tuple<int, int, double, std::pair<int, int>>> candidateEdges;
+            std::size_t chosenIdx = 0;
+            int chosenU = 0;
+            int chosenV = 0;
+            double chosenC = 0.0;
 
-            for (const auto& edge : edges) {
-                if (uf.find(edge.node_u) == uf.find(edge.node_v)) {
-                    continue;
-                }
-
+            for (std::size_t edge_idx = 0; edge_idx < edges.size(); ++edge_idx) {
+                const auto& edge = edges[edge_idx];
                 int root_u = uf.find(edge.node_u);
                 int root_v = uf.find(edge.node_v);
+                if (root_u == root_v) {
+                    continue;
+                }
                 int num = 0;
                 if (activeComps.count(root_u)) num++;
                 if (activeComps.count(root_v)) num++;
                 if (num == 0) continue;
 
-                auto key = std::make_pair(std::min(edge.node_u, edge.node_v),
-                                          std::max(edge.node_u, edge.node_v));
-                double paidVal = paid[key];
+                double paidVal = paid[edge_idx];
                 if (paidVal > edge.cost) continue;
 
                 double deltaE = (edge.cost - paidVal) / num;
                 if (deltaE < minDelta) {
                     minDelta = deltaE;
-                    candidateEdges.clear();
-                    candidateEdges.emplace_back(edge.node_u, edge.node_v, edge.cost, key);
-                } else if (std::abs(deltaE - minDelta) < 1e-9) {
-                    candidateEdges.emplace_back(edge.node_u, edge.node_v, edge.cost, key);
+                    chosenIdx = edge_idx;
+                    chosenU = edge.node_u;
+                    chosenV = edge.node_v;
+                    chosenC = edge.cost;
                 }
             }
 
@@ -289,58 +299,89 @@ class SteinerForestGrid {
                 throw std::runtime_error("Graph is not connected or cannot connect pairs");
             }
 
-            // Pick first candidate
-            auto [chosenU, chosenV, chosenC, chosenKey] = candidateEdges[0];
-
             // Update paid for all eligible edges
-            for (const auto& edge : edges) {
-                if (uf.find(edge.node_u) == uf.find(edge.node_v)) continue;
-
+            for (std::size_t edge_idx = 0; edge_idx < edges.size(); ++edge_idx) {
+                const auto& edge = edges[edge_idx];
                 int root_u = uf.find(edge.node_u);
                 int root_v = uf.find(edge.node_v);
+                if (root_u == root_v) continue;
                 int num = 0;
                 if (activeComps.count(root_u)) num++;
                 if (activeComps.count(root_v)) num++;
                 if (num == 0) continue;
 
-                auto key = std::make_pair(std::min(edge.node_u, edge.node_v),
-                                          std::max(edge.node_u, edge.node_v));
-                paid[key] += minDelta * num;
-                if (paid[key] > edge.cost + 1e-6) {
-                    paid[key] = edge.cost;
+                double newPaid = paid[edge_idx] + minDelta * num;
+                if (newPaid > edge.cost + 1e-6) {
+                    newPaid = edge.cost;
                 }
+                paid[edge_idx] = newPaid;
             }
 
             // Add chosen edge if not overpaid
-            if (paid[chosenKey] >= chosenC - 1e-6) {
+            if (paid[chosenIdx] >= chosenC - 1e-6) {
                 F.emplace_back(chosenU, chosenV, chosenC);
                 uf.unionSets(chosenU, chosenV);
             }
         }
 
-        // Reverse delete to prune the forest
-        std::vector<Edge> FPruned = F;
-        for (int idx = FPruned.size() - 1; idx >= 0; --idx) {
-            UnionFind tempUF(this->num_nodes);
-            for (int jdx = 0; jdx < static_cast<int>(F.size()); ++jdx) {
-                if (jdx != idx) {
-                    tempUF.unionSets(F[jdx].node_u, F[jdx].node_v);
-                }
-            }
+        // ``F`` is a forest: every added edge merges two distinct components, so
+        // the minimal sub-forest preserving all required pair connections is the
+        // union of the unique paths between each pair. Mark those paths directly
+        // instead of rebuilding a UnionFind for every candidate edge.
+        std::vector<std::vector<std::pair<int, int>>> adjacency(
+            static_cast<std::size_t>(this->num_nodes));
+        for (std::size_t edge_idx = 0; edge_idx < F.size(); ++edge_idx) {
+            adjacency[F[edge_idx].node_u].emplace_back(F[edge_idx].node_v,
+                                                       static_cast<int>(edge_idx));
+            adjacency[F[edge_idx].node_v].emplace_back(F[edge_idx].node_u,
+                                                       static_cast<int>(edge_idx));
+        }
 
-            bool connected = true;
-            for (int source : sources) {
-                for (int terminal : pairDict[source]) {
-                    if (tempUF.find(source) != tempUF.find(terminal)) {
-                        connected = false;
-                        break;
+        std::vector<char> visited(static_cast<std::size_t>(this->num_nodes), 0);
+        std::vector<int> parent_edge(static_cast<std::size_t>(this->num_nodes), -1);
+        std::vector<int> parent_node(static_cast<std::size_t>(this->num_nodes), -1);
+        std::vector<char> needed(F.size(), 0);
+        std::vector<int> stack;
+        std::vector<int> touched;
+
+        for (int source : sources) {
+            stack.clear();
+            touched.clear();
+            stack.push_back(source);
+            visited[source] = 1;
+            touched.push_back(source);
+            while (!stack.empty()) {
+                int node = stack.back();
+                stack.pop_back();
+                for (const auto& [neighbor, edge_idx] : adjacency[node]) {
+                    if (visited[neighbor] == 0) {
+                        visited[neighbor] = 1;
+                        parent_edge[neighbor] = edge_idx;
+                        parent_node[neighbor] = node;
+                        stack.push_back(neighbor);
+                        touched.push_back(neighbor);
                     }
                 }
-                if (!connected) break;
             }
+            for (int target : pairDict[source]) {
+                int current = target;
+                while (current != source) {
+                    int edge_idx = parent_edge[current];
+                    if (edge_idx < 0) break;
+                    needed[edge_idx] = 1;
+                    current = parent_node[current];
+                }
+            }
+            for (int node : touched) {
+                visited[node] = 0;
+            }
+        }
 
-            if (connected) {
-                FPruned.erase(FPruned.begin() + idx);
+        std::vector<Edge> FPruned;
+        FPruned.reserve(F.size());
+        for (std::size_t edge_idx = 0; edge_idx < F.size(); ++edge_idx) {
+            if (needed[edge_idx] != 0) {
+                FPruned.push_back(F[edge_idx]);
             }
         }
 
@@ -459,6 +500,7 @@ void generateSVG(const SteinerForestGrid::Result& result, int height, int width,
  * generates an SVG visualization, and prints the results to the console.
  * @return 0 on success.
  */
+#ifndef RECTI_STEINER_NO_MAIN
 int main() {
     int height = 8;
     int width = 8;
@@ -483,3 +525,4 @@ int main() {
 
     return 0;
 }
+#endif

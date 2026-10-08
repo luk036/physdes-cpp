@@ -18,4 +18,15 @@ namespace recti {
      */
     void log_with_spdlog(const std::string& message);
 
+    /**
+     * @brief Log a message at debug level using spdlog
+     *
+     * Identical to log_with_spdlog but emitted at debug level. The default
+     * logger is configured at info level, so these messages are filtered out
+     * and incur no formatting or file-flush cost in hot paths.
+     *
+     * @param message The message to log
+     */
+    void log_with_spdlog_debug(const std::string& message);
+
 }  // namespace recti

@@ -1,5 +1,6 @@
+#include <fmt/format.h>
+
 #include <chrono>
-#include <cstdio>
 #include <recti/polygon.hpp>
 #include <recti/rpolygon.hpp>
 #include <vector>
@@ -7,11 +8,12 @@
 using namespace recti;
 
 int main() {
-    std::printf("=== C++ (physdes-cpp) — Polygon Area Benchmarks ===\n\n");
+    fmt::print("=== C++ (physdes-cpp) — Polygon Area Benchmarks ===\n\n");
 
     // Polygon signed_area_x2
     {
         std::vector<Polygon<int>> polys;
+        polys.reserve(1000);
         for (int i = 0; i < 1000; ++i) {
             polys.emplace_back(std::vector<Point<int>>{
                 {i * 10, i * 10},
@@ -30,12 +32,13 @@ int main() {
         auto ns = std::chrono::duration<double, std::nano>(std::chrono::steady_clock::now() - start)
                       .count()
                   / (100000.0 * polys.size());
-        std::printf("  %-35s %8.2f ns/op  (accum=%lld)\n", "Polygon signed_area_x2", ns, accum);
+        fmt::print("  {:<35} {:8.2f} ns/op  (accum={})\n", "Polygon signed_area_x2", ns, accum);
     }
 
     // RPolygon signed_area
     {
         std::vector<RPolygon<int>> polys;
+        polys.reserve(1000);
         for (int i = 0; i < 1000; ++i) {
             polys.emplace_back(std::vector<Point<int>>{
                 {i * 10, i * 10},
@@ -52,6 +55,6 @@ int main() {
         auto ns = std::chrono::duration<double, std::nano>(std::chrono::steady_clock::now() - start)
                       .count()
                   / (100000.0 * polys.size());
-        std::printf("  %-35s %8.2f ns/op  (accum=%lld)\n", "RPolygon signed_area", ns, accum);
+        fmt::print("  {:<35} {:8.2f} ns/op  (accum={})\n", "RPolygon signed_area", ns, accum);
     }
 }

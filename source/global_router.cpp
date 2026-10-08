@@ -17,6 +17,8 @@
 
 namespace recti {
 
+    using IntPoint3d = Point<Point<int, int>, int>;
+
     // NodeType functions
     // =============================================================================
 
@@ -75,85 +77,106 @@ namespace recti {
             current_node = &this->_arena[0];
         }
         std::ostringstream oss;
-        oss << std::string(static_cast<size_t>(level) * 2, ' ') << *current_node << "\n";
-        for (auto child : current_node->children) {
-            oss << this->get_tree_structure(child, level + 1);
-        }
+        struct AppendHelper {
+            std::ostringstream& oss;
+
+            void operator()(const RoutingNode<IntPoint>* node, int lvl) const {
+                oss << std::string(static_cast<size_t>(lvl) * 2, ' ') << *node << "\n";
+                for (auto child : node->children) {
+                    (*this)(child, lvl + 1);
+                }
+            }
+        };
+        AppendHelper{oss}(current_node, level);
         return oss.str();
     }
 
     template <typename IntPoint>
     auto GlobalRoutingTree<IntPoint>::_find_nearest_insertion_with_constraints(
         const IntPoint& pt, int allowed_wirelength,
-        std::optional<std::vector<GlobalRoutingTree<IntPoint>::Keepout>> keepouts)
+        const std::optional<std::vector<GlobalRoutingTree<IntPoint>::Keepout>>& keepouts)
         -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*> {
         RoutingNode<IntPoint>* parent_node = nullptr;
         RoutingNode<IntPoint>* nearest_node = &this->_arena[0];
         int min_distance = this->worst_wirelength;
-        // int min_distance = std::numeric_limits<int>::max();
         bool valid_found = false;
 
-        std::function<void(RoutingNode<IntPoint>*)> traverse = [&](RoutingNode<IntPoint>* node) {
-            for (auto* child : node->children) {
-                auto possible_path = node->pt.hull_with(child->pt);
-                auto distance = possible_path.min_dist_with(pt);
-                auto nearest_pt = possible_path.nearest_to(pt);
-                if (keepouts.has_value()) {
-                    bool block = false;
-                    auto path1 = nearest_pt.hull_with(pt);
-                    auto path2 = nearest_pt.hull_with(node->pt);
-                    auto path3 = nearest_pt.hull_with(child->pt);
-                    for (const auto& keepout : *keepouts) {
-                        if (keepout.contains(nearest_pt)) {
-                            block = true;
-                            break;
+        struct Traverse {
+            const IntPoint& pt;
+            int allowed_wirelength;
+            int worst_wirelength;
+            const std::optional<std::vector<typename GlobalRoutingTree<IntPoint>::Keepout>>&
+                keepouts;
+            RoutingNode<IntPoint>*& parent_node;
+            RoutingNode<IntPoint>*& nearest_node;
+            int& min_distance;
+            bool& valid_found;
+
+            void operator()(RoutingNode<IntPoint>* node) const {
+                for (auto* child : node->children) {
+                    auto possible_path = node->pt.hull_with(child->pt);
+                    auto distance = possible_path.min_dist_with(pt);
+                    auto nearest_pt = possible_path.nearest_to(pt);
+                    if (keepouts.has_value()) {
+                        bool block = false;
+                        auto path1 = nearest_pt.hull_with(pt);
+                        auto path2 = nearest_pt.hull_with(node->pt);
+                        auto path3 = nearest_pt.hull_with(child->pt);
+                        for (const auto& keepout : *keepouts) {
+                            if (keepout.contains(nearest_pt)) {
+                                block = true;
+                                break;
+                            }
+                            if (keepout.blocks(path1) || keepout.blocks(path2)
+                                || keepout.blocks(path3)) {
+                                block = true;
+                                break;
+                            }
                         }
-                        if (keepout.blocks(path1) || keepout.blocks(path2)
-                            || keepout.blocks(path3)) {
-                            block = true;
-                            break;
+                        if (block) {
+                            continue;
                         }
                     }
-                    if (block) {
-                        continue;
-                    }
-                }
-                int path_length = node->path_length + node->pt.min_dist_with(nearest_pt) + distance;
-                bool update = false;
-                if (path_length <= allowed_wirelength) {
-                    if (valid_found) {
-                        if (distance < min_distance) {
+                    int path_length
+                        = node->path_length + node->pt.min_dist_with(nearest_pt) + distance;
+                    bool update = false;
+                    if (path_length <= allowed_wirelength) {
+                        if (valid_found) {
+                            if (distance < min_distance) {
+                                update = true;
+                            }
+                        } else {
+                            valid_found = true;
                             update = true;
                         }
                     } else {
-                        valid_found = true;
-                        update = true;
-                    }
-                } else {
-                    if (!valid_found) {
-                        // don't care allowed_wirelength if we haven't found any valid point yet
-                        if (path_length <= this->worst_wirelength && distance < min_distance) {
-                            update = true;
+                        if (!valid_found) {
+                            // don't care allowed_wirelength if we haven't found any valid point
+                            if (path_length <= worst_wirelength && distance < min_distance) {
+                                update = true;
+                            }
                         }
                     }
-                }
-                if (update) {
-                    min_distance = distance;
-                    if (nearest_pt == node->pt) {
-                        nearest_node = node;
-                        parent_node = nullptr;
-                    } else if (nearest_pt == child->pt) {
-                        nearest_node = child;
-                        parent_node = nullptr;
-                    } else {
-                        parent_node = node;
-                        nearest_node = child;
+                    if (update) {
+                        min_distance = distance;
+                        if (nearest_pt == node->pt) {
+                            nearest_node = node;
+                            parent_node = nullptr;
+                        } else if (nearest_pt == child->pt) {
+                            nearest_node = child;
+                            parent_node = nullptr;
+                        } else {
+                            parent_node = node;
+                            nearest_node = child;
+                        }
                     }
+                    (*this)(child);
                 }
-                traverse(child);
             }
         };
-        traverse(&this->_arena[0]);
+        Traverse{
+            pt,          allowed_wirelength, this->worst_wirelength, keepouts,
+            parent_node, nearest_node,       min_distance,           valid_found}(&this->_arena[0]);
         if (!valid_found) {
             log_with_spdlog(
                 "Warning: No valid insertion point found within allowed wirelength. "
@@ -162,26 +185,41 @@ namespace recti {
         return {parent_node, nearest_node};
     }
 
+    template <typename IntPoint>
+    auto GlobalRoutingTree<IntPoint>::_create_node(NodeType type, const IntPoint& pt)
+        -> RoutingNode<IntPoint>* {
+        std::string id;
+        switch (type) {
+            case NodeType::Steiner:
+                id = "steiner_" + std::to_string(this->next_steiner_id++);
+                break;
+            case NodeType::Terminal:
+                id = "terminal_" + std::to_string(this->next_terminal_id++);
+                break;
+            case NodeType::Source:
+                id = "source";
+                break;
+        }
+        this->_arena.emplace_back(id, type, pt);
+        RoutingNode<IntPoint>* node = &this->_arena.back();
+        this->nodes[id] = node;
+        return node;
+    }
+
     template <typename IntPoint> auto GlobalRoutingTree<IntPoint>::_insert_terminal_impl(
-        const IntPoint& point, int allowed_wirelength, std::optional<std::vector<Keepout>> keepouts)
-        -> void {
-        std::string terminal_id = "terminal_" + std::to_string(this->next_terminal_id++);
-        this->_arena.emplace_back(terminal_id, NodeType::Terminal, point);
-        RoutingNode<IntPoint>* terminal_node = &this->_arena.back();
-        this->nodes[terminal_id] = terminal_node;
-        auto [parent_node, nearest_node] = this->_find_nearest_insertion_with_constraints(
-            point, allowed_wirelength, std::move(keepouts));
+        const IntPoint& point, int allowed_wirelength,
+        const std::optional<std::vector<Keepout>>& keepouts) -> void {
+        RoutingNode<IntPoint>* terminal_node = this->_create_node(NodeType::Terminal, point);
+        auto [parent_node, nearest_node]
+            = this->_find_nearest_insertion_with_constraints(point, allowed_wirelength, keepouts);
         if (parent_node == nullptr) {
             nearest_node->add_child(terminal_node);
             terminal_node->path_length
                 = nearest_node->path_length + nearest_node->pt.min_dist_with(point);
         } else {
-            std::string steiner_id = "steiner_" + std::to_string(this->next_steiner_id++);
             auto possible_path = parent_node->pt.hull_with(nearest_node->pt);
             IntPoint nearest_pt = possible_path.nearest_to(point);
-            this->_arena.emplace_back(steiner_id, NodeType::Steiner, nearest_pt);
-            RoutingNode<IntPoint>* new_node = &this->_arena.back();
-            this->nodes[steiner_id] = new_node;
+            RoutingNode<IntPoint>* new_node = this->_create_node(NodeType::Steiner, nearest_pt);
             parent_node->remove_child(nearest_node);
             parent_node->add_child(new_node);
             new_node->path_length
@@ -240,10 +278,8 @@ namespace recti {
     auto GlobalRoutingTree<IntPoint>::insert_steiner_node(const IntPoint& point,
                                                           std::optional<std::string> parent_id)
         -> std::string {
-        std::string steiner_id = "steiner_" + std::to_string(this->next_steiner_id++);
-        this->_arena.emplace_back(steiner_id, NodeType::Steiner, point);
-        RoutingNode<IntPoint>* node = &this->_arena.back();
-        this->nodes[steiner_id] = node;
+        RoutingNode<IntPoint>* node = this->_create_node(NodeType::Steiner, point);
+        std::string steiner_id = node->id;
 
         RoutingNode<IntPoint>* parent_node = nullptr;
         if (!parent_id) {
@@ -263,10 +299,8 @@ namespace recti {
     auto GlobalRoutingTree<IntPoint>::insert_terminal_node(const IntPoint& point,
                                                            std::optional<std::string> parent_id)
         -> std::string {
-        std::string terminal_id = "terminal_" + std::to_string(this->next_terminal_id++);
-        this->_arena.emplace_back(terminal_id, NodeType::Terminal, point);
-        RoutingNode<IntPoint>* node = &this->_arena.back();
-        this->nodes[terminal_id] = node;
+        RoutingNode<IntPoint>* node = this->_create_node(NodeType::Terminal, point);
+        std::string terminal_id = node->id;
 
         RoutingNode<IntPoint>* parent_node = nullptr;
         if (!parent_id) {
@@ -302,15 +336,8 @@ namespace recti {
                                      + branch_start_id);
         }
 
-        std::string node_id;
-        if (new_node_type == NodeType::Steiner) {
-            node_id = "steiner_" + std::to_string(this->next_steiner_id++);
-        } else if (new_node_type == NodeType::Terminal) {
-            node_id = "terminal_" + std::to_string(this->next_terminal_id++);
-        }
-        this->_arena.emplace_back(node_id, new_node_type, point);
-        RoutingNode<IntPoint>* new_node = &this->_arena.back();
-        this->nodes[node_id] = new_node;
+        RoutingNode<IntPoint>* new_node = this->_create_node(new_node_type, point);
+        std::string node_id = new_node->id;
 
         start_node->remove_child(end_node);
         start_node->add_child(new_node);
@@ -321,32 +348,34 @@ namespace recti {
     template <typename IntPoint>
     auto GlobalRoutingTree<IntPoint>::calculate_total_wirelength() const -> int {
         int total = 0;
-        std::function<void(const RoutingNode<IntPoint>*)> traverse
-            = [&](const RoutingNode<IntPoint>* current_node) -> void {
+        std::vector<const RoutingNode<IntPoint>*> stack;
+        stack.reserve(this->nodes.size());
+        stack.push_back(&this->_arena[0]);
+        while (!stack.empty()) {
+            const RoutingNode<IntPoint>* current_node = stack.back();
+            stack.pop_back();
             for (auto child : current_node->children) {
                 total += current_node->manhattan_distance(child);
-                traverse(child);
+                stack.push_back(child);
             }
-        };
-        traverse(&this->_arena[0]);
+        }
         return total;
     }
 
     template <typename IntPoint>
     auto GlobalRoutingTree<IntPoint>::calculate_worst_wirelength() const -> int {
-        int worst_length = 0;
-        std::function<int(const RoutingNode<IntPoint>*)> traverse
-            = [&](const RoutingNode<IntPoint>* current_node) -> int {
-            for (auto child : current_node->children) {
-                auto length = traverse(child);
-                worst_length
-                    = std::max(worst_length, length + current_node->manhattan_distance(child));
+        struct Traverse {
+            auto operator()(const RoutingNode<IntPoint>* current_node) const -> int {
+                int worst_length = 0;
+                for (auto child : current_node->children) {
+                    auto length = (*this)(child);
+                    worst_length
+                        = std::max(worst_length, length + current_node->manhattan_distance(child));
+                }
+                return worst_length;
             }
-            return worst_length;
         };
-
-        auto length = traverse(&this->_arena[0]);
-        return length;
+        return Traverse{}(&this->_arena[0]);
     }
 
     template <typename IntPoint>
@@ -490,11 +519,10 @@ namespace recti {
     }
 
     template <> std::string visualize_routing_tree3d_svg(
-        const GlobalRoutingTree<Point<Point<int, int>, int>>& tree,
-        std::optional<std::vector<GlobalRoutingTree<Point<Point<int, int>, int>>::Keepout>>
-            keepouts,
+        const GlobalRoutingTree<IntPoint3d>& tree,
+        std::optional<std::vector<GlobalRoutingTree<IntPoint3d>::Keepout>> keepouts,
         const int scale_z, const int width, const int height, const int margin) {
-        std::vector<RoutingNode<Point<Point<int, int>, int>>*> all_nodes;
+        std::vector<RoutingNode<IntPoint3d>*> all_nodes;
         all_nodes.reserve(tree.nodes.size());
         for (const auto& [node_id, routing_node] : tree.nodes) {
             all_nodes.emplace_back(routing_node);
@@ -519,8 +547,8 @@ namespace recti {
         svg << "</marker>\n";
         svg << "</defs>\n";
 
-        std::function<void(const RoutingNode<Point<Point<int, int>, int>>*)> draw_connections =
-            [&](const RoutingNode<Point<Point<int, int>, int>>* current_node) {
+        std::function<void(const RoutingNode<IntPoint3d>*)> draw_connections =
+            [&](const RoutingNode<IntPoint3d>* current_node) {
                 for (auto* child : current_node->children) {
                     auto [coord_x1, coord_y1] = detail::scale_coords(
                         current_node->pt.xcoord().xcoord(), current_node->pt.ycoord(), params);
@@ -565,9 +593,8 @@ namespace recti {
     }
 
     template <> void save_routing_tree3d_svg(
-        const GlobalRoutingTree<Point<Point<int, int>, int>>& tree,
-        std::optional<std::vector<GlobalRoutingTree<Point<Point<int, int>, int>>::Keepout>>
-            keepouts,
+        const GlobalRoutingTree<IntPoint3d>& tree,
+        std::optional<std::vector<GlobalRoutingTree<IntPoint3d>::Keepout>> keepouts,
         const int scale_z, const std::string& filename, const int width, const int height) {
         std::string svg_content
             = visualize_routing_tree3d_svg(tree, std::move(keepouts), scale_z, width, height, 50);
@@ -598,13 +625,14 @@ namespace recti {
     }
 
     template class GlobalRoutingTree<Point<int, int>>;
-    template class GlobalRoutingTree<Point<Point<int, int>, int>>;
+    template class GlobalRoutingTree<IntPoint3d>;
     template class GlobalRouter<Point<int, int>>;
-    template class GlobalRouter<Point<Point<int, int>, int>>;
+    template class GlobalRouter<IntPoint3d>;
 
 }  // namespace recti
 
 namespace recti::detail {
+    using IntPoint3d = Point<Point<int, int>, int>;
 
     template <> SvgParams calculate_svg_params<Point<int, int>>(
         const std::vector<RoutingNode<Point<int, int>>*>& nodes, int width, int height,
@@ -646,9 +674,9 @@ namespace recti::detail {
                 .min_y = min_y};
     }
 
-    template <> SvgParams calculate_svg_params<Point<Point<int, int>, int>>(
-        const std::vector<RoutingNode<Point<Point<int, int>, int>>*>& nodes, int width, int height,
-        int margin) {
+    template <>
+    SvgParams calculate_svg_params<IntPoint3d>(const std::vector<RoutingNode<IntPoint3d>*>& nodes,
+                                               int width, int height, int margin) {
         if (nodes.empty()) {
             return {.width = width,
                     .height = height,
@@ -723,9 +751,9 @@ namespace recti::detail {
             << node->pt << ")</text>\n";
     }
 
-    template <> void draw_node<Point<Point<int, int>, int>>(
-        std::ostringstream& svg, const RoutingNode<Point<Point<int, int>, int>>* node,
-        const SvgParams& params) {
+    template <> void draw_node<IntPoint3d>(std::ostringstream& svg,
+                                           const RoutingNode<IntPoint3d>* node,
+                                           const SvgParams& params) {
         auto [x, y] = scale_coords(node->pt.xcoord().xcoord(), node->pt.ycoord(), params);
         std::string color;
         int radius = 0;
@@ -805,8 +833,8 @@ namespace recti::detail {
             << tree.calculate_total_wirelength() << "</text>\n";
     }
 
-    template <> void draw_stats<Point<Point<int, int>, int>>(
-        std::ostringstream& svg, const GlobalRoutingTree<Point<Point<int, int>, int>>& tree) {
+    template <> void draw_stats<IntPoint3d>(std::ostringstream& svg,
+                                            const GlobalRoutingTree<IntPoint3d>& tree) {
         int stats_y = 110;
         svg << R"(<text x="20" y=")" << stats_y
             << "\" font-family=\"Arial\" font-size=\"10\" "

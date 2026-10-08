@@ -14,34 +14,6 @@
 namespace recti {
 
     /**
-     * @brief Rectilinear Polygon
-     *
-     * `RPolygon` is a class template that represents a rectilinear polygon. It
-     * stores the origin point and a vector of edges that define the polygon. The
-     * template parameter `T` specifies the type of the coordinates of the points.
-     *
-     * @code{.txt}
-     * +-----------------------------+
-     * |        RPolygon<T>          |
-     * +-----------------------------+
-     * | _origin: Point<T>           |
-     * | _vecs: vector<Vector2<T>>   |
-     * |                             |
-     * |        +----+               |
-     * |        |    |               |  A rectilinear polygon class
-     * |    +---+    |               |  with origin point and
-     * |    |   |    |               |  vectors defining the polygon
-     * |    |   +----+               |  edges. Supports various
-     * |    |                        |  geometric operations
-     * |    +------------------------+
-     * |            vertices()       |
-     * |            signed_area()    |
-     * +-----------------------------+
-     * @endcode
-     *
-     * @tparam T
-     */
-    /**
      * @brief Forward iterator for RPolygon vertices.
      *
      * Lazily computes vertices from origin + vectors on dereference,
@@ -83,6 +55,34 @@ namespace recti {
         std::size_t _idx;
     };
 
+    /**
+     * @brief Rectilinear Polygon
+     *
+     * `RPolygon` is a class template that represents a rectilinear polygon. It
+     * stores the origin point and a vector of edges that define the polygon. The
+     * template parameter `T` specifies the type of the coordinates of the points.
+     *
+     * @code{.txt}
+     * +-----------------------------+
+     * |        RPolygon<T>          |
+     * +-----------------------------+
+     * | _origin: Point<T>           |
+     * | _vecs: vector<Vector2<T>>   |
+     * |                             |
+     * |        +----+               |
+     * |        |    |               |  A rectilinear polygon class
+     * |    +---+    |               |  with origin point and
+     * |    |   |    |               |  vectors defining the polygon
+     * |    |   +----+               |  edges. Supports various
+     * |    |                        |  geometric operations
+     * |    +------------------------+
+     * |            vertices()       |
+     * |            signed_area()    |
+     * +-----------------------------+
+     * @endcode
+     *
+     * @tparam T
+     */
     template <typename T> class RPolygon {
       private:
         Point<T> _origin{};               ///< Origin point of the polygon
@@ -206,7 +206,7 @@ namespace recti {
          * @brief Calculates the signed area of the rectilinear polygon.
          *
          * This method calculates the signed area of the rectilinear polygon represented by this
-         * `RPolygon` object using the shoelace formula.
+         * `RPolygon` object using the shoelace-like formula.
          *
          * @return The signed area of the rectilinear polygon.
          */
@@ -249,7 +249,7 @@ namespace recti {
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
     template <typename FwIter, typename KeyFn, typename CmpFn>
-    auto create_mono_rpolygon(FwIter&& first, FwIter&& last, const KeyFn& dir, const CmpFn& cmp)
+    auto create_mono_rpolygon(FwIter first, FwIter last, const KeyFn& dir, const CmpFn& cmp)
         -> bool;
 
     /**
@@ -263,7 +263,7 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
-    template <typename FwIter> auto create_xmono_rpolygon(FwIter&& first, FwIter&& last) -> bool;
+    template <typename FwIter> auto create_xmono_rpolygon(FwIter first, FwIter last) -> bool;
 
     /**
      * @brief Create a y-monotone rectilinear polygon (RPolygon) object.
@@ -276,7 +276,7 @@ namespace recti {
      * @param[in] last The end of the range of points.
      * @return `true` if the resulting RPolygon is clockwise, `false` otherwise.
      */
-    template <typename FwIter> auto create_ymono_rpolygon(FwIter&& first, FwIter&& last) -> bool;
+    template <typename FwIter> auto create_ymono_rpolygon(FwIter first, FwIter last) -> bool;
 
     /**
      * @brief Create a test rectilinear polygon (RPolygon) object.
@@ -289,7 +289,7 @@ namespace recti {
      * @param[in] first The beginning of the range of points.
      * @param[in] last The end of the range of points.
      */
-    template <typename FwIter> void create_test_rpolygon_old(FwIter&& first, FwIter&& last);
+    template <typename FwIter> void create_test_rpolygon_old(FwIter first, FwIter last);
 
     /**
      * @brief Create a test rectilinear polygon (RPolygon) object.

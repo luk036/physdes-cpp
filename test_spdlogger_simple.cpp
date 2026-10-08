@@ -16,7 +16,7 @@ int main() {
     // Verify the log file exists
     std::ifstream log_file("recti.log");
     if (log_file.is_open()) {
-        std::cout << "✓ Log file exists and is readable.\n";
+        std::cout << "Log file exists and is readable.\n";
         std::string line;
         int line_count = 0;
         std::cout << "\nLog file contents:\n";
@@ -30,13 +30,13 @@ int main() {
         std::cout << "Total lines: " << line_count << '\n';
 
         if (line_count >= 3) {
-            std::cout << "\n✓ Test PASSED: All messages were logged successfully!\n";
+            std::cout << "\nTest PASSED: All messages were logged successfully!\n";
         } else {
-            std::cout << "\n✗ Test FAILED: Expected at least 3 lines, got " << line_count << '\n';
+            std::cout << "\nTest FAILED: Expected at least 3 lines, got " << line_count << '\n';
             return 1;
         }
     } else {
-        std::cerr << "✗ Test FAILED: Could not open recti.log\n";
+        std::cerr << "Test FAILED: Could not open recti.log\n";
         return 1;
     }
 

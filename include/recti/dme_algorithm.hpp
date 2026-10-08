@@ -175,6 +175,13 @@ namespace recti {
      * `calculate_tapping_point` is a **pure** function that takes scalar values
      * and returns a `TappingResult`.  All node mutation side effects
      * (setting `wire_length`, `need_elongation`) are delegated to the caller.
+     *
+     * Strategy pattern: DelayCalculator is the strategy interface; concrete
+     * strategies (LinearDelayCalculator, ElmoreDelayCalculator) are injected into
+     * DMEAlgorithm, which selects the delay model at runtime. See also the
+     * calculate_* pure virtual methods that define the strategy contract.
+     *
+     * @note Design pattern: **Strategy** (interface).
      */
     class DelayCalculator {
       public:
@@ -228,8 +235,7 @@ namespace recti {
          */
         virtual TappingResult calculate_tapping_point(int distance, double left_delay,
                                                       double right_delay, double left_capacitance,
-                                                      double right_capacitance) const
-            = 0;
+                                                      double right_capacitance) const = 0;
     };
 
     /**
@@ -239,6 +245,9 @@ namespace recti {
      * In this model, delay is directly proportional to the wire length.
      * Delay = delay_per_unit * length.
      * Capacitance = capacitance_per_unit * length.
+     *
+     * Concrete Strategy in the Strategy pattern — used interchangeably via the
+     * `DelayCalculator` interface.
      */
     class LinearDelayCalculator : public DelayCalculator {
       private:
@@ -285,6 +294,9 @@ namespace recti {
      * interconnects.  It considers both the resistance and capacitance of the wires
      * and the downstream load.
      * Delay = R_wire * (C_wire/2 + C_load).
+     *
+     * Concrete Strategy in the Strategy pattern — used interchangeably via the
+     * `DelayCalculator` interface.
      */
     class ElmoreDelayCalculator : public DelayCalculator {
       private:
@@ -463,6 +475,21 @@ namespace recti {
          * @return The root index of the constructed merging subtree.
          */
         NodeIdx build_merging_tree(const std::vector<NodeIdx>& node_ids, bool vertical);
+
+        /**
+         * @brief In-place range partition helper for build_merging_tree.
+         *
+         * Partitions `buffer[lo, hi)` around the median along the chosen axis via
+         * `std::nth_element` and recurses on the two halves, avoiding the
+         * per-level temporary vector allocations of a copy-based implementation.
+         * @param buffer Scratch buffer holding the node indices for this subtree.
+         * @param lo Inclusive start of the range.
+         * @param hi Exclusive end of the range.
+         * @param vertical If true, partition along the x-axis; otherwise the y-axis.
+         * @return The root index of the constructed merging subtree.
+         */
+        NodeIdx build_merging_tree_impl(std::vector<NodeIdx>& buffer, std::size_t lo,
+                                        std::size_t hi, bool vertical);
 
         /**
          * @brief Recursive helper for merging segment computation.

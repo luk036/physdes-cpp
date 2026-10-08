@@ -1,30 +1,26 @@
 #include <doctest/doctest.h>
 #include <fmt/core.h>
 
-#include <cstdlib>          // for rand()
-#include <iostream>         // for operator<<
-#include <ldsgen/ilds.hpp>  // for VdCorput
+#include <cstdlib>       // for rand()
+#include <lds/ilds.hpp>  // for VdCorput
 #include <recti/global_router.hpp>
 #include <recti/interval.hpp>
 #include <recti/point.hpp>
 #include <string>
 #include <vector>
 
-#include "TestGlobalRouter.h"
-
 using namespace recti;
+using IntPoint3d = Point<Point<int, int>, int>;
 
 // Helper function to generate a set of 3D points for testing
 auto generate_3d_points(size_t num_terminals, unsigned int seed)
-    -> std::pair<Point<Point<int, int>, int>, std::vector<Point<Point<int, int>, int>>> {
+    -> std::pair<IntPoint3d, std::vector<IntPoint3d>> {
     constexpr int scale_z = 100;
 
-    ildsgen::VdCorput hgenX(3, 7);
-    ildsgen::VdCorput hgenY(2, 11);
+    ilds::VdCorput<3> hgenX(7);
+    ilds::VdCorput<2> hgenY(11);
     hgenX.reseed(seed);
     hgenY.reseed(seed);
-
-    using IntPoint3d = Point<Point<int, int>, int>;
 
     std::vector<IntPoint3d> terminals;
     terminals.reserve(num_terminals);

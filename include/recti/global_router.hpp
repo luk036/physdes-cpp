@@ -176,31 +176,43 @@ namespace recti {
         auto _find_nearest_node(const IntPoint& point, std::optional<std::string> exclude_id
                                                        = std::nullopt) -> RoutingNode<IntPoint>*;
 
-        auto _find_nearest_insertion_with_constraints(const IntPoint& pt,
-                                                      int allowed_wirelength
-                                                      = std::numeric_limits<int>::max(),
-                                                      std::optional<std::vector<Keepout>> keepouts
-                                                      = std::nullopt)
+        auto _find_nearest_insertion_with_constraints(
+            const IntPoint& pt, int allowed_wirelength = std::numeric_limits<int>::max(),
+            const std::optional<std::vector<Keepout>>& keepouts = std::nullopt)
             -> std::pair<RoutingNode<IntPoint>*, RoutingNode<IntPoint>*>;
 
         auto _insert_terminal_impl(const IntPoint& point,
                                    int allowed_wirelength = std::numeric_limits<int>::max(),
-                                   std::optional<std::vector<Keepout>> keepouts = std::nullopt)
-            -> void;
+                                   const std::optional<std::vector<Keepout>>& keepouts
+                                   = std::nullopt) -> void;
+
+        /**
+         * @brief Creates a new routing node of the given type and registers it in
+         *        the arena and the node map (Factory Method).
+         *
+         * Generates the node ID from the type-specific counter (e.g. "steiner_3"),
+         * allocates the node in the arena, and registers it in the `nodes` map.
+         * All node creation in the tree funnels through this single method.
+         *
+         * @param[in] type The type of node to create (Steiner, Terminal, or Source).
+         * @param[in] pt The position of the new node.
+         * @return A pointer to the newly created node.
+         */
+        auto _create_node(NodeType type, const IntPoint& pt) -> RoutingNode<IntPoint>*;
 
       public:
         std::unordered_map<std::string, RoutingNode<IntPoint>*>
-            nodes;                 ///< Map from node ID to RoutingNode<IntPoint> pointer.
-        int worst_wirelength = 0;  ///< The worst-case wirelength constraint for routing (used in
-                                   ///< constrained routing).
+            nodes;  ///< Map from node ID to RoutingNode<IntPoint> pointer.
+        int worst_wirelength
+            = std::numeric_limits<int>::max();  ///< The worst-case wirelength constraint for
+                                                ///< routing (max = unbounded).
 
         /**
          * @brief Constructs a new GlobalRoutingTree with a specified source position.
          * @param source_position The 2D integer coordinates of the source node.
          */
         GlobalRoutingTree(IntPoint source_position) {
-            _arena.emplace_back("source", NodeType::Source, source_position);
-            nodes["source"] = &this->_arena.back();
+            this->_create_node(NodeType::Source, source_position);
         }
 
         /**
@@ -257,9 +269,9 @@ namespace recti {
          * @param keepouts Optional keepouts to avoid.
          */
         auto insert_terminal_with_steiner(const IntPoint& point,
-                                          std::optional<std::vector<Keepout>> keepouts
+                                          const std::optional<std::vector<Keepout>>& keepouts
                                           = std::nullopt) -> void {
-            _insert_terminal_impl(point, std::numeric_limits<int>::max(), keepouts);
+            _insert_terminal_impl(point, this->worst_wirelength, keepouts);
         }
 
         /**
@@ -269,7 +281,7 @@ namespace recti {
          * @param keepouts Optional keepouts to avoid.
          */
         auto insert_terminal_with_constraints(const IntPoint& point, int allowed_wirelength,
-                                              std::optional<std::vector<Keepout>> keepouts
+                                              const std::optional<std::vector<Keepout>>& keepouts
                                               = std::nullopt) -> void {
             _insert_terminal_impl(point, allowed_wirelength, keepouts);
         }
@@ -373,8 +385,6 @@ namespace recti {
          * @brief Routes terminals, potentially inserting Steiner nodes to optimize connections.
          */
         void route_with_steiners() {
-            this->tree.worst_wirelength = this->worst_wirelength;  // Store the allowed wirelength
-                                                                   // in the tree for reference
             for (const auto& terminal : this->terminal_positions) {
                 this->tree.insert_terminal_with_steiner(terminal, this->keepouts);
             }
