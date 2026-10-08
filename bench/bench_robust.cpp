@@ -13,6 +13,7 @@ int main() {
     // Polygon signed_area_x2
     {
         std::vector<Polygon<int>> polys;
+        polys.reserve(1000);
         for (int i = 0; i < 1000; ++i) {
             polys.emplace_back(std::vector<Point<int>>{
                 {i * 10, i * 10},
@@ -37,6 +38,7 @@ int main() {
     // RPolygon signed_area
     {
         std::vector<RPolygon<int>> polys;
+        polys.reserve(1000);
         for (int i = 0; i < 1000; ++i) {
             polys.emplace_back(std::vector<Point<int>>{
                 {i * 10, i * 10},
