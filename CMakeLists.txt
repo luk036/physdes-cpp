@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14...3.22)
 
 project(
   Recti
-  VERSION 1.2.4
+  VERSION 1.2.5
   LANGUAGES CXX
 )
 
@@ -110,7 +110,7 @@ endif()
 # Lds provides the low-discrepancy sequence generators used by the tests and examples.
 CPMAddPackage(
   NAME Lds
-  GIT_TAG v1.2.5
+  GIT_TAG v1.2.6
   GITHUB_REPOSITORY luk036/lds-cpp
   OPTIONS "LDS_BUILD_TESTS OFF" "LDS_BUILD_STANDALONE OFF"
 )
