@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Recti<span id="projectnumber">&#160;1.2.4</span>
+   <div id="projectname">Recti<span id="projectnumber">&#160;1.2.5</span>
    </div>
   </td>
  </tr>
@@ -88,7 +88,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Rectilinear <a class="el" href="classrecti_1_1Polygon.html" title="Polygon.">Polygon</a>.  
+<p>Forward iterator for <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> vertices.  
  <a href="classrecti_1_1RPolygonVertexIterator.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="rpolygon_8hpp_source.html">rpolygon.hpp</a>&gt;</code></p>
@@ -121,33 +121,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
-class recti::RPolygonVertexIterator&lt; T &gt;</div><p>Rectilinear <a class="el" href="classrecti_1_1Polygon.html" title="Polygon.">Polygon</a>. </p>
-<p><code><a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a></code> is a class template that represents a rectilinear polygon. It stores the origin point and a vector of edges that define the polygon. The template parameter <code>T</code> specifies the type of the coordinates of the points.</p>
-<div class="fragment"><div class="line">+-----------------------------+</div>
-<div class="line">|        <a class="code hl_class" href="classrecti_1_1RPolygon.html">RPolygon&lt;T&gt;</a>          |</div>
-<div class="line">+-----------------------------+</div>
-<div class="line">| _origin: <a class="code hl_class" href="classrecti_1_1Point.html">Point&lt;T&gt;</a>           |</div>
-<div class="line">| _vecs: vector&lt;Vector2&lt;T&gt;&gt;   |</div>
-<div class="line">|                             |</div>
-<div class="line">|        +----+               |</div>
-<div class="line">|        |    |               |  A rectilinear polygon <span class="keyword">class</span></div>
-<div class="line">|    +---+    |               |  with origin point and</div>
-<div class="line">|    |   |    |               |  vectors defining the polygon</div>
-<div class="line">|    |   +----+               |  edges. Supports various</div>
-<div class="line">|    |                        |  geometric operations</div>
-<div class="line">|    +------------------------+</div>
-<div class="line">|            vertices()       |</div>
-<div class="line">|            signed_area()    |</div>
-<div class="line">+-----------------------------+</div>
-<div class="ttc" id="aclassrecti_1_1Point_html"><div class="ttname"><a href="classrecti_1_1Point.html">recti::Point</a></div><div class="ttdoc">Point.</div><div class="ttdef"><b>Definition</b> point.hpp:30</div></div>
-<div class="ttc" id="aclassrecti_1_1RPolygon_html"><div class="ttname"><a href="classrecti_1_1RPolygon.html">recti::RPolygon</a></div><div class="ttdef"><b>Definition</b> rpolygon.hpp:86</div></div>
-</div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Forward iterator for <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> vertices.</p>
+class recti::RPolygonVertexIterator&lt; T &gt;</div><p>Forward iterator for <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> vertices. </p>
 <p>Lazily computes vertices from origin + vectors on dereference, avoiding the heap allocation of <code>vertices()</code>. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="aa424fd8b88ffb2ce09db08cbf4ceff9b" name="aa424fd8b88ffb2ce09db08cbf4ceff9b"></a>

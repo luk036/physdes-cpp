@@ -7,9 +7,9 @@ var searchData=
   ['dmealgorithm_4',['dmealgorithm',['../classrecti_1_1DMEAlgorithm.html#a1871515c59d2fbdb5d845de31c579f05',1,'recti::DMEAlgorithm::DMEAlgorithm(const std::vector&lt; Sink &gt; &amp;sinks, std::unique_ptr&lt; DelayCalculator &gt; calculator, Point&lt; int &gt; source_position)'],['../classrecti_1_1DMEAlgorithm.html#a4046a30f1996f6936e9846ef953cd451',1,'recti::DMEAlgorithm::DMEAlgorithm(const std::vector&lt; Sink &gt; &amp;sinks, std::unique_ptr&lt; DelayCalculator &gt; calculator)']]],
   ['draw_5flegend_5',['draw_legend',['../namespacerecti_1_1detail.html#a2f1a41e567b168b0fe43850084d54762',1,'recti::detail']]],
   ['draw_5fnode_6',['draw_node',['../namespacerecti_1_1detail.html#ae8a94f5b90b770347417b3f06cba8e59',1,'recti::detail']]],
-  ['draw_5fnode_3c_20point_3c_20int_2c_20int_20_3e_20_3e_7',['draw_node&lt; Point&lt; int, int &gt; &gt;',['../namespacerecti_1_1detail.html#abd6688ddf7a3e4eed49da8998d6c2a99',1,'recti::detail']]],
-  ['draw_5fnode_3c_20point_3c_20point_3c_20int_2c_20int_20_3e_2c_20int_20_3e_20_3e_8',['draw_node&lt; Point&lt; Point&lt; int, int &gt;, int &gt; &gt;',['../namespacerecti_1_1detail.html#a294557bde72b59e204ccb7c514411a26',1,'recti::detail']]],
+  ['draw_5fnode_3c_20intpoint3d_20_3e_7',['draw_node&lt; IntPoint3d &gt;',['../namespacerecti_1_1detail.html#ac334b47ef8afea1df7e322c219e17151',1,'recti::detail']]],
+  ['draw_5fnode_3c_20point_3c_20int_2c_20int_20_3e_20_3e_8',['draw_node&lt; Point&lt; int, int &gt; &gt;',['../namespacerecti_1_1detail.html#abd6688ddf7a3e4eed49da8998d6c2a99',1,'recti::detail']]],
   ['draw_5fstats_9',['draw_stats',['../namespacerecti_1_1detail.html#aa8fbd8c055609318fe15f0adad60193b',1,'recti::detail']]],
-  ['draw_5fstats_3c_20point_3c_20int_2c_20int_20_3e_20_3e_10',['draw_stats&lt; Point&lt; int, int &gt; &gt;',['../namespacerecti_1_1detail.html#a13b93e9acc207d7bed087d511ca342b0',1,'recti::detail']]],
-  ['draw_5fstats_3c_20point_3c_20point_3c_20int_2c_20int_20_3e_2c_20int_20_3e_20_3e_11',['draw_stats&lt; Point&lt; Point&lt; int, int &gt;, int &gt; &gt;',['../namespacerecti_1_1detail.html#ac5041d19538fc234761e27c146e57d98',1,'recti::detail']]]
+  ['draw_5fstats_3c_20intpoint3d_20_3e_10',['draw_stats&lt; IntPoint3d &gt;',['../namespacerecti_1_1detail.html#a8d116adfdc3ed6c50e3357347b47d89a',1,'recti::detail']]],
+  ['draw_5fstats_3c_20point_3c_20int_2c_20int_20_3e_20_3e_11',['draw_stats&lt; Point&lt; int, int &gt; &gt;',['../namespacerecti_1_1detail.html#a13b93e9acc207d7bed087d511ca342b0',1,'recti::detail']]]
 ];

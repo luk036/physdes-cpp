@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['_7edelaycalculator_0',['~DelayCalculator',['../classrecti_1_1DelayCalculator.html#a15f12b9a702a56d7b971fa4d630af3cf',1,'recti::DelayCalculator']]],
-  ['_7edllink_1',['~Dllink',['../classDllink.html#a4233c73e0e03747214734152b51235f2',1,'Dllink']]]
+  ['y_0',['y',['../classrecti_1_1Vector2.html#a6e34f2977ea58a1f7d01b8e42607b310',1,'recti::Vector2']]],
+  ['ycoord_1',['ycoord',['../classrecti_1_1Point.html#aefcd6bdf06cbde541121f02866fea423',1,'recti::Point']]]
 ];

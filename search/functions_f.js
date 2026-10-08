@@ -6,5 +6,6 @@ var searchData=
   ['signed_5farea_3',['signed_area',['../classrecti_1_1RPolygon.html#a224e7490f85f9ea21e50d51f66380476',1,'recti::RPolygon']]],
   ['signed_5farea_5fx2_4',['signed_area_x2',['../classrecti_1_1Polygon.html#ad00b6d78edcff7a9a4b7e7533dea512d',1,'recti::Polygon']]],
   ['sink_5',['Sink',['../classrecti_1_1Sink.html#aa77f51f190607f8224b26232ba0ff88a',1,'recti::Sink']]],
-  ['size_6',['size',['../classrecti_1_1Tree.html#a07278fb833d2531ec70c490f1ec857d9',1,'recti::Tree']]]
+  ['sink_5fcolor_6',['sink_color',['../classrecti_1_1ClockTreeVisualizer_1_1Builder.html#a1da6dc1c0886c1819c89426c5386d69c',1,'recti::ClockTreeVisualizer::Builder']]],
+  ['size_7',['size',['../classrecti_1_1Tree.html#a07278fb833d2531ec70c490f1ec857d9',1,'recti::Tree']]]
 ];

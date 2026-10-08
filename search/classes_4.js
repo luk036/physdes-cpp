@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['halton_0',['Halton',['../classilds_1_1Halton.html',1,'ilds']]],
-  ['hsegment_1',['HSegment',['../structrecti_1_1HSegment.html',1,'recti']]]
+  ['globalrouter_0',['GlobalRouter',['../classrecti_1_1GlobalRouter.html',1,'recti']]],
+  ['globalroutingtree_1',['GlobalRoutingTree',['../classrecti_1_1GlobalRoutingTree.html',1,'recti']]]
 ];

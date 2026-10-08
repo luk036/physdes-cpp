@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Recti<span id="projectnumber">&#160;1.2.4</span>
+   <div id="projectname">Recti<span id="projectnumber">&#160;1.2.5</span>
    </div>
   </td>
  </tr>
@@ -134,7 +134,9 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract base class for delay calculation models. </p>
 <p>This class defines the interface for different delay models (e.g., Linear, Elmore) used in the DME algorithm to estimate wire delays and capacitances.</p>
-<p><code>calculate_tapping_point</code> is a <b>pure</b> function that takes scalar values and returns a <code><a class="el" href="structrecti_1_1TappingResult.html" title="Result of a tapping-point calculation.">TappingResult</a></code>. All node mutation side effects (setting <code>wire_length</code>, <code>need_elongation</code>) are delegated to the caller. </p>
+<p><code>calculate_tapping_point</code> is a <b>pure</b> function that takes scalar values and returns a <code><a class="el" href="structrecti_1_1TappingResult.html" title="Result of a tapping-point calculation.">TappingResult</a></code>. All node mutation side effects (setting <code>wire_length</code>, <code>need_elongation</code>) are delegated to the caller.</p>
+<p>Strategy pattern: <a class="el" href="classrecti_1_1DelayCalculator.html" title="Abstract base class for delay calculation models.">DelayCalculator</a> is the strategy interface; concrete strategies (<a class="el" href="classrecti_1_1LinearDelayCalculator.html" title="Implements a simple linear delay model.">LinearDelayCalculator</a>, <a class="el" href="classrecti_1_1ElmoreDelayCalculator.html" title="Implements the Elmore delay model for RC trees.">ElmoreDelayCalculator</a>) are injected into <a class="el" href="classrecti_1_1DMEAlgorithm.html" title="Implements the Deferred Merge Embedding (DME) algorithm for clock tree synthesis.">DMEAlgorithm</a>, which selects the delay model at runtime. See also the calculate_* pure virtual methods that define the strategy contract.</p>
+<dl class="section note"><dt>Note</dt><dd>Design pattern: <b>Strategy</b> (interface). </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac250dbe037894f5aa08407795e9356bc" name="ac250dbe037894f5aa08407795e9356bc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac250dbe037894f5aa08407795e9356bc">&#9670;&#160;</a></span>DelayCalculator() <span class="overload">[1/3]</span></h2>

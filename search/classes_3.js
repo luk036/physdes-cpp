@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['globalrouter_0',['GlobalRouter',['../classrecti_1_1GlobalRouter.html',1,'recti']]],
-  ['globalroutingtree_1',['GlobalRoutingTree',['../classrecti_1_1GlobalRoutingTree.html',1,'recti']]]
+  ['elmoredelaycalculator_0',['ElmoreDelayCalculator',['../classrecti_1_1ElmoreDelayCalculator.html',1,'recti']]]
 ];

@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Recti<span id="projectnumber">&#160;1.2.4</span>
+   <div id="projectname">Recti<span id="projectnumber">&#160;1.2.5</span>
    </div>
   </td>
  </tr>
@@ -136,9 +136,10 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a node in the global routing tree.  <a href="classrecti_1_1RoutingNode.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rectilinear <a class="el" href="classrecti_1_1Polygon.html" title="Polygon.">Polygon</a>.  <a href="classrecti_1_1RPolygon.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrecti_1_1RPolygonVertexIterator.html">RPolygonVertexIterator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rectilinear <a class="el" href="classrecti_1_1Polygon.html" title="Polygon.">Polygon</a>.  <a href="classrecti_1_1RPolygonVertexIterator.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward iterator for <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> vertices.  <a href="classrecti_1_1RPolygonVertexIterator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrecti_1_1Sink.html">Sink</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a clock sink in the clock tree network.  <a href="classrecti_1_1Sink.html#details">More...</a><br /></td></tr>
@@ -260,6 +261,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a56541373611de66cb642f0129869e3d8" id="r_a56541373611de66cb642f0129869e3d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerecti.html#a56541373611de66cb642f0129869e3d8">log_with_spdlog</a> (const std::string &amp;message)</td></tr>
 <tr class="memdesc:a56541373611de66cb642f0129869e3d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log a message using spdlog.  <br /></td></tr>
 <tr class="separator:a56541373611de66cb642f0129869e3d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a088485acbf6e6b14cb878202322fca89" id="r_a088485acbf6e6b14cb878202322fca89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerecti.html#a088485acbf6e6b14cb878202322fca89">log_with_spdlog_debug</a> (const std::string &amp;message)</td></tr>
+<tr class="memdesc:a088485acbf6e6b14cb878202322fca89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log a message at debug level using spdlog.  <br /></td></tr>
+<tr class="separator:a088485acbf6e6b14cb878202322fca89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c72a40cf2ccd462e4dce985919a31f9" id="r_a9c72a40cf2ccd462e4dce985919a31f9"><td class="memTemplParams" colspan="2">template&lt;typename FwIter &gt; </td></tr>
 <tr class="memitem:a9c72a40cf2ccd462e4dce985919a31f9"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerecti.html#a9c72a40cf2ccd462e4dce985919a31f9">create_xmono_polygon</a> (FwIter first, FwIter last) -&gt; void</td></tr>
 <tr class="memdesc:a9c72a40cf2ccd462e4dce985919a31f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a xmono <a class="el" href="classrecti_1_1Polygon.html" title="Polygon.">Polygon</a> object.  <br /></td></tr>
@@ -292,25 +296,25 @@ Functions</h2></td></tr>
 <tr class="memitem:a27e738ce41183f772d7111f52a1127e1"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerecti.html#a27e738ce41183f772d7111f52a1127e1">detect_overlap</a> (const Container &amp;rectangles) -&gt; std::optional&lt; std::pair&lt; typename Container::value_type, typename Container::value_type &gt; &gt;</td></tr>
 <tr class="memdesc:a27e738ce41183f772d7111f52a1127e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detect if any pair of rectangles overlap using the line sweep algorithm.  <br /></td></tr>
 <tr class="separator:a27e738ce41183f772d7111f52a1127e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd213f4553fccb8f566652808c530bab" id="r_abd213f4553fccb8f566652808c530bab"><td class="memTemplParams" colspan="2">template&lt;typename FwIter , typename KeyFn , typename CmpFn &gt; </td></tr>
-<tr class="memitem:abd213f4553fccb8f566652808c530bab"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerecti.html#abd213f4553fccb8f566652808c530bab">create_mono_rpolygon</a> (FwIter &amp;&amp;first, FwIter &amp;&amp;last, const KeyFn &amp;dir, const CmpFn &amp;cmp) -&gt; bool</td></tr>
-<tr class="memdesc:abd213f4553fccb8f566652808c530bab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a x-monotone rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a>) object.  <br /></td></tr>
-<tr class="separator:abd213f4553fccb8f566652808c530bab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05ebd88771cf1a307da8e3664cfbde0a" id="r_a05ebd88771cf1a307da8e3664cfbde0a"><td class="memTemplParams" colspan="2">template&lt;typename FwIter &gt; </td></tr>
-<tr class="memitem:a05ebd88771cf1a307da8e3664cfbde0a"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerecti.html#a05ebd88771cf1a307da8e3664cfbde0a">create_xmono_rpolygon</a> (FwIter &amp;&amp;first, FwIter &amp;&amp;last) -&gt; bool</td></tr>
-<tr class="memdesc:a05ebd88771cf1a307da8e3664cfbde0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a x-monotone rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a>) object.  <br /></td></tr>
-<tr class="separator:a05ebd88771cf1a307da8e3664cfbde0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfeb2a4cb240f13d10ebca43a258b855" id="r_abfeb2a4cb240f13d10ebca43a258b855"><td class="memTemplParams" colspan="2">template&lt;typename FwIter &gt; </td></tr>
-<tr class="memitem:abfeb2a4cb240f13d10ebca43a258b855"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerecti.html#abfeb2a4cb240f13d10ebca43a258b855">create_ymono_rpolygon</a> (FwIter &amp;&amp;first, FwIter &amp;&amp;last) -&gt; bool</td></tr>
-<tr class="memdesc:abfeb2a4cb240f13d10ebca43a258b855"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a y-monotone rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a>) object.  <br /></td></tr>
-<tr class="separator:abfeb2a4cb240f13d10ebca43a258b855"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0286eb813ede0e7033595604295f1ba7" id="r_a0286eb813ede0e7033595604295f1ba7"><td class="memTemplParams" colspan="2">template&lt;typename FwIter &gt; </td></tr>
-<tr class="memitem:a0286eb813ede0e7033595604295f1ba7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerecti.html#a0286eb813ede0e7033595604295f1ba7">create_test_rpolygon_old</a> (FwIter &amp;&amp;first, FwIter &amp;&amp;last)</td></tr>
-<tr class="memdesc:a0286eb813ede0e7033595604295f1ba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a test rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a>) object.  <br /></td></tr>
-<tr class="separator:a0286eb813ede0e7033595604295f1ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fea916b745ea5c12fab8be431273ab4" id="r_a4fea916b745ea5c12fab8be431273ab4"><td class="memTemplParams" colspan="2">template&lt;typename FwIter , typename KeyFn , typename CmpFn &gt; </td></tr>
+<tr class="memitem:a4fea916b745ea5c12fab8be431273ab4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerecti.html#a4fea916b745ea5c12fab8be431273ab4">create_mono_rpolygon</a> (FwIter first, FwIter last, const KeyFn &amp;dir, const CmpFn &amp;cmp) -&gt; bool</td></tr>
+<tr class="memdesc:a4fea916b745ea5c12fab8be431273ab4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a x-monotone rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a>) object.  <br /></td></tr>
+<tr class="separator:a4fea916b745ea5c12fab8be431273ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0656ca9ca916f999cc0b68917c6c11ed" id="r_a0656ca9ca916f999cc0b68917c6c11ed"><td class="memTemplParams" colspan="2">template&lt;typename FwIter &gt; </td></tr>
+<tr class="memitem:a0656ca9ca916f999cc0b68917c6c11ed"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerecti.html#a0656ca9ca916f999cc0b68917c6c11ed">create_xmono_rpolygon</a> (FwIter first, FwIter last) -&gt; bool</td></tr>
+<tr class="memdesc:a0656ca9ca916f999cc0b68917c6c11ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a x-monotone rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a>) object.  <br /></td></tr>
+<tr class="separator:a0656ca9ca916f999cc0b68917c6c11ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed1552a70ca2a271ec456c65c8a0a1ee" id="r_aed1552a70ca2a271ec456c65c8a0a1ee"><td class="memTemplParams" colspan="2">template&lt;typename FwIter &gt; </td></tr>
+<tr class="memitem:aed1552a70ca2a271ec456c65c8a0a1ee"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerecti.html#aed1552a70ca2a271ec456c65c8a0a1ee">create_ymono_rpolygon</a> (FwIter first, FwIter last) -&gt; bool</td></tr>
+<tr class="memdesc:aed1552a70ca2a271ec456c65c8a0a1ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a y-monotone rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a>) object.  <br /></td></tr>
+<tr class="separator:aed1552a70ca2a271ec456c65c8a0a1ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34ca8f8bc55532430489c9dbbf6125fc" id="r_a34ca8f8bc55532430489c9dbbf6125fc"><td class="memTemplParams" colspan="2">template&lt;typename FwIter &gt; </td></tr>
+<tr class="memitem:a34ca8f8bc55532430489c9dbbf6125fc"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerecti.html#a34ca8f8bc55532430489c9dbbf6125fc">create_test_rpolygon_old</a> (FwIter first, FwIter last)</td></tr>
+<tr class="memdesc:a34ca8f8bc55532430489c9dbbf6125fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a test rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a>) object.  <br /></td></tr>
+<tr class="separator:a34ca8f8bc55532430489c9dbbf6125fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22da5554b262ff11f4fe443d2c9f3e66" id="r_a22da5554b262ff11f4fe443d2c9f3e66"><td class="memTemplParams" colspan="2">template&lt;typename FwIter &gt; </td></tr>
 <tr class="memitem:a22da5554b262ff11f4fe443d2c9f3e66"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerecti.html#a22da5554b262ff11f4fe443d2c9f3e66">create_test_rpolygon</a> (FwIter first, FwIter last) -&gt; std::vector&lt; typename std::iterator_traits&lt; FwIter &gt;::value_type &gt;</td></tr>
-<tr class="memdesc:a22da5554b262ff11f4fe443d2c9f3e66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a test rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a>) object.  <br /></td></tr>
+<tr class="memdesc:a22da5554b262ff11f4fe443d2c9f3e66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a test rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a>) object.  <br /></td></tr>
 <tr class="separator:a22da5554b262ff11f4fe443d2c9f3e66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a976f92a86c0b64247780c71b085f48" id="r_a4a976f92a86c0b64247780c71b085f48"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a4a976f92a86c0b64247780c71b085f48"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerecti.html#a4a976f92a86c0b64247780c71b085f48">rpolygon_is_xmonotone</a> (std::span&lt; const <a class="el" href="classrecti_1_1Point.html">Point</a>&lt; T &gt; &gt; pointset) -&gt; bool</td></tr>
@@ -678,8 +682,8 @@ template&lt;typename U1 , typename U2 &gt; </div>
 
 </div>
 </div>
-<a id="abd213f4553fccb8f566652808c530bab" name="abd213f4553fccb8f566652808c530bab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd213f4553fccb8f566652808c530bab">&#9670;&#160;</a></span>create_mono_rpolygon()</h2>
+<a id="a4fea916b745ea5c12fab8be431273ab4" name="a4fea916b745ea5c12fab8be431273ab4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fea916b745ea5c12fab8be431273ab4">&#9670;&#160;</a></span>create_mono_rpolygon()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -689,13 +693,13 @@ template&lt;typename FwIter , typename KeyFn , typename CmpFn &gt; </div>
         <tr>
           <td class="memname">auto recti::create_mono_rpolygon </td>
           <td>(</td>
-          <td class="paramtype">FwIter &amp;&amp;&#160;</td>
+          <td class="paramtype">FwIter&#160;</td>
           <td class="paramname"><em>first</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">FwIter &amp;&amp;&#160;</td>
+          <td class="paramtype">FwIter&#160;</td>
           <td class="paramname"><em>last</em>, </td>
         </tr>
         <tr>
@@ -718,8 +722,8 @@ template&lt;typename FwIter , typename KeyFn , typename CmpFn &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Create a x-monotone rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a>) object. </p>
-<p>This function takes a range of points represented by iterators <code>first</code> and <code>last</code>, and a key function <code>dir</code> that extracts the x and y coordinates of each point. It then creates an monotone <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> object from the given points.</p>
+<p>Create a x-monotone rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a>) object. </p>
+<p>This function takes a range of points represented by iterators <code>first</code> and <code>last</code>, and a key function <code>dir</code> that extracts the x and y coordinates of each point. It then creates an monotone <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> object from the given points.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">FwIter</td><td>The iterator type for the range of points. </td></tr>
@@ -737,7 +741,7 @@ template&lt;typename FwIter , typename KeyFn , typename CmpFn &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the resulting <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> is anti-clockwise, <code>false</code> otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the resulting <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> is anti-clockwise, <code>false</code> otherwise. </dd></dl>
 
 </div>
 </div>
@@ -769,8 +773,8 @@ template&lt;typename FwIter &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Create a test rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a>) object. </p>
-<p>This function takes a range of points represented by iterators <code>first</code> and <code>last</code>, and creates a test <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> object from the given points. The resulting <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> is either clockwise or anti-clockwise depending on the relative positions of the points.</p>
+<p>Create a test rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a>) object. </p>
+<p>This function takes a range of points represented by iterators <code>first</code> and <code>last</code>, and creates a test <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> object from the given points. The resulting <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> is either clockwise or anti-clockwise depending on the relative positions of the points.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">FwIter</td><td>The iterator type for the range of points. </td></tr>
@@ -788,8 +792,8 @@ template&lt;typename FwIter &gt; </div>
 
 </div>
 </div>
-<a id="a0286eb813ede0e7033595604295f1ba7" name="a0286eb813ede0e7033595604295f1ba7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0286eb813ede0e7033595604295f1ba7">&#9670;&#160;</a></span>create_test_rpolygon_old()</h2>
+<a id="a34ca8f8bc55532430489c9dbbf6125fc" name="a34ca8f8bc55532430489c9dbbf6125fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34ca8f8bc55532430489c9dbbf6125fc">&#9670;&#160;</a></span>create_test_rpolygon_old()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -799,13 +803,13 @@ template&lt;typename FwIter &gt; </div>
         <tr>
           <td class="memname">void recti::create_test_rpolygon_old </td>
           <td>(</td>
-          <td class="paramtype">FwIter &amp;&amp;&#160;</td>
+          <td class="paramtype">FwIter&#160;</td>
           <td class="paramname"><em>first</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">FwIter &amp;&amp;&#160;</td>
+          <td class="paramtype">FwIter&#160;</td>
           <td class="paramname"><em>last</em>&#160;</td>
         </tr>
         <tr>
@@ -816,8 +820,8 @@ template&lt;typename FwIter &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Create a test rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a>) object. </p>
-<p>This function takes a range of points represented by iterators <code>first</code> and <code>last</code>, and creates a test <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> object from the given points. The resulting <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> is either clockwise or anti-clockwise depending on the relative positions of the points.</p>
+<p>Create a test rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a>) object. </p>
+<p>This function takes a range of points represented by iterators <code>first</code> and <code>last</code>, and creates a test <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> object from the given points. The resulting <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> is either clockwise or anti-clockwise depending on the relative positions of the points.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">FwIter</td><td>The iterator type for the range of points. </td></tr>
@@ -880,8 +884,8 @@ template&lt;typename FwIter &gt; </div>
 
 </div>
 </div>
-<a id="a05ebd88771cf1a307da8e3664cfbde0a" name="a05ebd88771cf1a307da8e3664cfbde0a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05ebd88771cf1a307da8e3664cfbde0a">&#9670;&#160;</a></span>create_xmono_rpolygon()</h2>
+<a id="a0656ca9ca916f999cc0b68917c6c11ed" name="a0656ca9ca916f999cc0b68917c6c11ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0656ca9ca916f999cc0b68917c6c11ed">&#9670;&#160;</a></span>create_xmono_rpolygon()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -891,13 +895,13 @@ template&lt;typename FwIter &gt; </div>
         <tr>
           <td class="memname">auto recti::create_xmono_rpolygon </td>
           <td>(</td>
-          <td class="paramtype">FwIter &amp;&amp;&#160;</td>
+          <td class="paramtype">FwIter&#160;</td>
           <td class="paramname"><em>first</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">FwIter &amp;&amp;&#160;</td>
+          <td class="paramtype">FwIter&#160;</td>
           <td class="paramname"><em>last</em>&#160;</td>
         </tr>
         <tr>
@@ -908,8 +912,8 @@ template&lt;typename FwIter &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Create a x-monotone rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a>) object. </p>
-<p>This function takes a range of points represented by iterators <code>first</code> and <code>last</code>, and creates an x-monotone <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> object from the given points.</p>
+<p>Create a x-monotone rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a>) object. </p>
+<p>This function takes a range of points represented by iterators <code>first</code> and <code>last</code>, and creates an x-monotone <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> object from the given points.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">FwIter</td><td>The iterator type for the range of points. </td></tr>
@@ -923,7 +927,7 @@ template&lt;typename FwIter &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the resulting <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> is anti-clockwise, <code>false</code> otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the resulting <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> is anti-clockwise, <code>false</code> otherwise. </dd></dl>
 
 </div>
 </div>
@@ -973,8 +977,8 @@ template&lt;typename FwIter &gt; </div>
 
 </div>
 </div>
-<a id="abfeb2a4cb240f13d10ebca43a258b855" name="abfeb2a4cb240f13d10ebca43a258b855"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfeb2a4cb240f13d10ebca43a258b855">&#9670;&#160;</a></span>create_ymono_rpolygon()</h2>
+<a id="aed1552a70ca2a271ec456c65c8a0a1ee" name="aed1552a70ca2a271ec456c65c8a0a1ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed1552a70ca2a271ec456c65c8a0a1ee">&#9670;&#160;</a></span>create_ymono_rpolygon()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -984,13 +988,13 @@ template&lt;typename FwIter &gt; </div>
         <tr>
           <td class="memname">auto recti::create_ymono_rpolygon </td>
           <td>(</td>
-          <td class="paramtype">FwIter &amp;&amp;&#160;</td>
+          <td class="paramtype">FwIter&#160;</td>
           <td class="paramname"><em>first</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">FwIter &amp;&amp;&#160;</td>
+          <td class="paramtype">FwIter&#160;</td>
           <td class="paramname"><em>last</em>&#160;</td>
         </tr>
         <tr>
@@ -1001,8 +1005,8 @@ template&lt;typename FwIter &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Create a y-monotone rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a>) object. </p>
-<p>This function takes a range of points represented by iterators <code>first</code> and <code>last</code>, and creates an y-monotone <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> object from the given points.</p>
+<p>Create a y-monotone rectilinear polygon (<a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a>) object. </p>
+<p>This function takes a range of points represented by iterators <code>first</code> and <code>last</code>, and creates an y-monotone <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> object from the given points.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">FwIter</td><td>The iterator type for the range of points. </td></tr>
@@ -1016,7 +1020,7 @@ template&lt;typename FwIter &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the resulting <a class="el" href="classrecti_1_1RPolygon.html">RPolygon</a> is clockwise, <code>false</code> otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the resulting <a class="el" href="classrecti_1_1RPolygon.html" title="Rectilinear Polygon.">RPolygon</a> is clockwise, <code>false</code> otherwise. </dd></dl>
 
 </div>
 </div>
@@ -1328,6 +1332,33 @@ template&lt;typename U1 , typename U2 &gt; </div>
 
 <p>Log a message using spdlog. </p>
 <p>This function provides a simple wrapper around spdlog for logging messages. It creates a file logger that writes to "recti.log" and logs at the info level.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The message to log </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a088485acbf6e6b14cb878202322fca89" name="a088485acbf6e6b14cb878202322fca89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a088485acbf6e6b14cb878202322fca89">&#9670;&#160;</a></span>log_with_spdlog_debug()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void recti::log_with_spdlog_debug </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Log a message at debug level using spdlog. </p>
+<p>Identical to log_with_spdlog but emitted at debug level. The default logger is configured at info level, so these messages are filtered out and incur no formatting or file-flush cost in hot paths.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">message</td><td>The message to log </td></tr>

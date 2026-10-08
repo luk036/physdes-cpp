@@ -2,9 +2,9 @@ var searchData=
 [
   ['rdllist_0',['RDllist',['../classRDllist.html#a40f019de43b1f8e65fae04180c8ca934',1,'RDllist']]],
   ['rdlliterator_1',['RDllIterator',['../classRDllIterator.html#af7432755ef0c3add69a9546f30c6c09c',1,'RDllIterator']]],
-  ['rectangle_2',['rectangle',['../structrecti_1_1Rectangle.html#a51b2479833984ef400905ac0c8ee6036',1,'recti::Rectangle::Rectangle(Point&lt; Interval&lt; T &gt; &gt; base) noexcept'],['../structrecti_1_1Rectangle.html#a66cb080b25556a3f5d1305a15feaf156',1,'recti::Rectangle::Rectangle(Interval&lt; T &gt; xcoord, Interval&lt; T &gt; ycoord) noexcept']]],
+  ['rectangle_2',['rectangle',['../structrecti_1_1Rectangle.html#a66cb080b25556a3f5d1305a15feaf156',1,'recti::Rectangle::Rectangle(Interval&lt; T &gt; xcoord, Interval&lt; T &gt; ycoord) noexcept'],['../structrecti_1_1Rectangle.html#a51b2479833984ef400905ac0c8ee6036',1,'recti::Rectangle::Rectangle(Point&lt; Interval&lt; T &gt; &gt; base) noexcept']]],
   ['remove_5fchild_3',['remove_child',['../classrecti_1_1RoutingNode.html#a3d7d98172d8390f0a89ec1fd404912bc',1,'recti::RoutingNode']]],
-  ['reseed_4',['reseed',['../classilds_1_1VdCorput.html#ad1ad1c2af5c9ef2513a8dd13ee3d6660',1,'ilds::VdCorput::reseed()'],['../classilds_1_1Halton.html#a6dd86f98480c0be4bb9d9eaa3bed5ac0',1,'ilds::Halton::reseed()']]],
+  ['root_5fcolor_4',['root_color',['../classrecti_1_1ClockTreeVisualizer_1_1Builder.html#a0138f0e723128e68497f270135746110',1,'recti::ClockTreeVisualizer::Builder']]],
   ['rotates_5',['rotates',['../classrecti_1_1Point.html#a0e2eecab66e2556bc9193ad892a8f342',1,'recti::Point']]],
   ['route_5fsimple_6',['route_simple',['../classrecti_1_1GlobalRouter.html#aaa376c37926672fdf5645118eced71f0',1,'recti::GlobalRouter']]],
   ['route_5fwith_5fconstraints_7',['route_with_constraints',['../classrecti_1_1GlobalRouter.html#ad302e52c719683a9f9b29e9bcfac8164',1,'recti::GlobalRouter']]],

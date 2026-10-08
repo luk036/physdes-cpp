@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nodeinfo_0',['NodeInfo',['../structrecti_1_1TreeStatistics_1_1NodeInfo.html',1,'recti::TreeStatistics']]]
+  ['manhattanarc_0',['ManhattanArc',['../classrecti_1_1ManhattanArc.html',1,'recti']]]
 ];

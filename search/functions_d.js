@@ -7,6 +7,5 @@ var searchData=
   ['polygon_5fis_5fanticlockwise_4',['polygon_is_anticlockwise',['../namespacerecti.html#af0acf1fcdfbf8ff391cb3360f93f7e5c',1,'recti']]],
   ['polygon_5fis_5fmonotone_5',['polygon_is_monotone',['../namespacerecti.html#acec41865b89b99f867e694fb9b40ff3b',1,'recti']]],
   ['polygon_5fis_5fxmonotone_6',['polygon_is_xmonotone',['../namespacerecti.html#a5f237b7ca48bfe03950553454ed27c65',1,'recti']]],
-  ['polygon_5fis_5fymonotone_7',['polygon_is_ymonotone',['../namespacerecti.html#aa5bd5990ce1c1a2ea275fc2f58ebca09',1,'recti']]],
-  ['pop_8',['pop',['../classilds_1_1VdCorput.html#aaec845f4e52eb87c479d936f61c4cf29',1,'ilds::VdCorput::pop()'],['../classilds_1_1Halton.html#aebdebc420b9d10175709e97850c28b1b',1,'ilds::Halton::pop()']]]
+  ['polygon_5fis_5fymonotone_7',['polygon_is_ymonotone',['../namespacerecti.html#aa5bd5990ce1c1a2ea275fc2f58ebca09',1,'recti']]]
 ];

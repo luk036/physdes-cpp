@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['tappingresult_0',['TappingResult',['../structrecti_1_1TappingResult.html',1,'recti']]],
-  ['tree_1',['Tree',['../classrecti_1_1Tree.html',1,'recti']]],
-  ['treecomparisondata_2',['TreeComparisonData',['../structrecti_1_1TreeComparisonData.html',1,'recti']]],
-  ['treenode_3',['TreeNode',['../classrecti_1_1TreeNode.html',1,'recti']]],
-  ['treestatistics_4',['TreeStatistics',['../structrecti_1_1TreeStatistics.html',1,'recti']]]
+  ['sink_0',['Sink',['../classrecti_1_1Sink.html',1,'recti']]],
+  ['skewanalysis_1',['SkewAnalysis',['../structrecti_1_1SkewAnalysis.html',1,'recti']]],
+  ['svgparams_2',['SvgParams',['../structrecti_1_1detail_1_1SvgParams.html',1,'recti::detail']]]
 ];

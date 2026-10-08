@@ -21,9 +21,8 @@ var searchData=
   ['polygon_5fis_5fmonotone_18',['polygon_is_monotone',['../namespacerecti.html#acec41865b89b99f867e694fb9b40ff3b',1,'recti']]],
   ['polygon_5fis_5fxmonotone_19',['polygon_is_xmonotone',['../namespacerecti.html#a5f237b7ca48bfe03950553454ed27c65',1,'recti']]],
   ['polygon_5fis_5fymonotone_20',['polygon_is_ymonotone',['../namespacerecti.html#aa5bd5990ce1c1a2ea275fc2f58ebca09',1,'recti']]],
-  ['pop_21',['pop',['../classilds_1_1VdCorput.html#aaec845f4e52eb87c479d936f61c4cf29',1,'ilds::VdCorput::pop()'],['../classilds_1_1Halton.html#aebdebc420b9d10175709e97850c28b1b',1,'ilds::Halton::pop()']]],
-  ['position_22',['position',['../classrecti_1_1Sink.html#aab3b707210642acb0f044130ee63dea7',1,'recti::Sink::position'],['../classrecti_1_1TreeNode.html#a84a148f5e10ac41716e8cda8a21e2391',1,'recti::TreeNode::position'],['../structrecti_1_1TreeStatistics_1_1NodeInfo.html#a2bd4ce7460bd9ed8803a7185147ab6b3',1,'recti::TreeStatistics::NodeInfo::position']]],
-  ['prev_23',['prev',['../classDllink.html#a95c712b185503e27133ceba25d502d2c',1,'Dllink']]],
-  ['projects_20and_20alternatives_24',['Related projects and alternatives',['../index.html#autotoc_md14',1,'']]],
-  ['pt_25',['pt',['../classrecti_1_1RoutingNode.html#ac28915730569ff58cdfe4b75932a802f',1,'recti::RoutingNode']]]
+  ['position_21',['position',['../classrecti_1_1Sink.html#aab3b707210642acb0f044130ee63dea7',1,'recti::Sink::position'],['../classrecti_1_1TreeNode.html#a84a148f5e10ac41716e8cda8a21e2391',1,'recti::TreeNode::position'],['../structrecti_1_1TreeStatistics_1_1NodeInfo.html#a2bd4ce7460bd9ed8803a7185147ab6b3',1,'recti::TreeStatistics::NodeInfo::position']]],
+  ['prev_22',['prev',['../classDllink.html#a95c712b185503e27133ceba25d502d2c',1,'Dllink']]],
+  ['projects_20and_20alternatives_23',['Related projects and alternatives',['../index.html#autotoc_md11',1,'']]],
+  ['pt_24',['pt',['../classrecti_1_1RoutingNode.html#ac28915730569ff58cdfe4b75932a802f',1,'recti::RoutingNode']]]
 ];

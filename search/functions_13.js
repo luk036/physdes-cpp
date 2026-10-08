@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['x_0',['x',['../classrecti_1_1Vector2.html#a6e2b0bbc79156a18ac183b8b6b3d8e47',1,'recti::Vector2']]],
-  ['xcoord_1',['xcoord',['../classrecti_1_1Point.html#a375e984834754c84d7a0534b7227cfbc',1,'recti::Point']]]
+  ['wire_5fcolor_0',['wire_color',['../classrecti_1_1ClockTreeVisualizer_1_1Builder.html#a52356bd13e00a8605a6887db639fb822',1,'recti::ClockTreeVisualizer::Builder']]],
+  ['wire_5fwidth_1',['wire_width',['../classrecti_1_1ClockTreeVisualizer_1_1Builder.html#ac5162887bdec85afcf593c094b79b47e',1,'recti::ClockTreeVisualizer::Builder']]]
 ];
