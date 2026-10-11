@@ -51,6 +51,9 @@ namespace recti {
      */
     template <typename IntPoint> class RoutingNode {
       public:
+        /// Bounding box of a node position (the hull type used by keepout rectangles).
+        using BBox = decltype(std::declval<IntPoint>().hull_with(std::declval<IntPoint>()));
+
         std::string id;      ///< Unique identifier for the node.
         NodeType node_type;  ///< The type of the node.
         IntPoint pt;         ///< The 2D integer coordinates of the node.
@@ -61,6 +64,7 @@ namespace recti {
         double capacitance = 0.0;  ///< Capacitance associated with the node (for future use).
         double delay = 0.0;        ///< Delay associated with the node (for future use).
         int path_length = 0;       ///< Path length from the source to this node.
+        BBox subtree_bbox;         ///< Hull of this node and all descendant positions.
 
         /**
          * @brief Constructs a new RoutingNode<IntPoint>.
@@ -69,7 +73,10 @@ namespace recti {
          * @param node_position The 2D integer coordinates of the node.
          */
         RoutingNode(std::string node_id, NodeType node_type, IntPoint node_position)
-            : id(std::move(node_id)), node_type(node_type), pt(node_position) {}
+            : id(std::move(node_id)),
+              node_type(node_type),
+              pt(node_position),
+              subtree_bbox(node_position.hull_with(node_position)) {}
 
         /**
          * @brief Adds a child node to this node.
@@ -78,6 +85,23 @@ namespace recti {
         void add_child(RoutingNode<IntPoint>* child_node) {
             child_node->parent = this;
             children.emplace_back(child_node);
+            refresh_bbox_upward();
+        }
+
+        /// Recompute this node's subtree bounding box from its position and children.
+        void refresh_bbox() {
+            auto bbox = pt.hull_with(pt);
+            for (auto* child : children) {
+                bbox = bbox.hull_with(child->subtree_bbox);
+            }
+            subtree_bbox = bbox;
+        }
+
+        /// Recompute subtree bounding boxes from this node up to the root.
+        void refresh_bbox_upward() {
+            for (auto* node = this; node != nullptr; node = node->parent) {
+                node->refresh_bbox();
+            }
         }
 
         /**
@@ -89,6 +113,7 @@ namespace recti {
             if (iter != children.end()) {
                 children.erase(iter);
                 child_node->parent = nullptr;
+                refresh_bbox_upward();
             }
         }
 

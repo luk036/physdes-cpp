@@ -113,6 +113,12 @@ namespace recti {
             bool& valid_found;
 
             void operator()(RoutingNode<IntPoint>* node) const {
+                // Once a valid candidate exists, an update needs distance <
+                // min_distance, and the subtree box lower-bounds every distance
+                // inside it, so an equal-or-farther subtree cannot improve.
+                if (valid_found && node->subtree_bbox.min_dist_with(pt) >= min_distance) {
+                    return;
+                }
                 for (auto* child : node->children) {
                     auto possible_path = node->pt.hull_with(child->pt);
                     auto distance = possible_path.min_dist_with(pt);
