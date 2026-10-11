@@ -379,3 +379,33 @@ TEST_CASE("RPolygon rectangle cut - signed area preservation") {
     const int hull_area = hull_rpolygon.signed_area();
     CHECK_EQ(hull_area, total_pieces_area);
 }
+
+TEST_CASE("RPolygon explicit cut on a concave polygon - signed area preservation") {
+    // Regression: the explicit concave-vertex test previously omitted the
+    // direction-reversal guard, so a clockwise L-shape's true corner was
+    // mis-detected and the recursion produced a degenerate (one-vertex) piece.
+    // The other explicit tests only feed rpolygon_make_convex_hull(P), which
+    // never exercises this path.
+    std::vector<Point<int, int>> P;
+    P.reserve(6);
+    for (const auto& [x, y] : std::initializer_list<std::pair<int, int>>{
+             {0, 0}, {0, 2}, {1, 2}, {1, 1}, {2, 1}, {2, 0}}) {
+        P.emplace_back(x, y);
+    }
+    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+
+    const int original_area = RPolygon<int>(P).signed_area();
+
+    const auto explicit_pieces = rpolygon_cut_explicit<int>(P, is_anticlockwise);
+
+    CHECK_GT(explicit_pieces.size(), 0);
+    for (const auto& piece : explicit_pieces) {
+        CHECK(rpolygon_is_convex<int>(piece));
+    }
+
+    int total_pieces_area = 0;
+    for (const auto& piece : explicit_pieces) {
+        total_pieces_area += RPolygon<int>(piece).signed_area();
+    }
+    CHECK_EQ(original_area, total_pieces_area);
+}

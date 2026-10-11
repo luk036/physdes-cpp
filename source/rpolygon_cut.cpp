@@ -151,9 +151,13 @@ namespace recti {
                     auto& p1 = lst[vcurr->data];
                     auto& p2 = lst[vnext->data];
                     auto area_diff = (p1.ycoord() - p0.ycoord()) * (p2.xcoord() - p1.xcoord());
+                    auto v1_vec = p1 - p0;
+                    auto v2_vec = p2 - p1;
 
-                    if (cmp(area_diff)) {
-                        return vcurr;
+                    if (v1_vec.x() * v2_vec.x() < 0 || v1_vec.y() * v2_vec.y() < 0) {
+                        if (cmp(area_diff)) {
+                            return vcurr;
+                        }
                     }
                     vcurr = vnext;
                 } while (vcurr != vstart);
