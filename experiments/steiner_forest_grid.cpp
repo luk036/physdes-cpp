@@ -219,10 +219,18 @@ class SteinerForestGrid {
         std::vector<Edge> F;
 
         while (true) {
+            // Cache every node's component root once per iteration. Both scans
+            // below only read find() results, and no union happens between them,
+            // so this is identical to calling find() per edge, only cheaper.
+            std::vector<int> roots(static_cast<std::size_t>(this->num_nodes));
+            for (int node = 0; node < this->num_nodes; ++node) {
+                roots[node] = uf.find(node);
+            }
+
             // Compute term_root
             std::unordered_map<int, int> termRoot;
             for (int terminal : allTerm) {
-                termRoot[terminal] = uf.find(terminal);
+                termRoot[terminal] = roots[terminal];
             }
 
             // Check feasibility
@@ -263,6 +271,11 @@ class SteinerForestGrid {
                 }
             }
 
+            std::vector<char> activeFlag(static_cast<std::size_t>(this->num_nodes), 0);
+            for (int root : activeComps) {
+                activeFlag[root] = 1;
+            }
+
             // Find the minimum-delta eligible edge (the first one wins ties)
             double minDelta = std::numeric_limits<double>::infinity();
             std::size_t chosenIdx = 0;
@@ -272,14 +285,12 @@ class SteinerForestGrid {
 
             for (std::size_t edge_idx = 0; edge_idx < edges.size(); ++edge_idx) {
                 const auto& edge = edges[edge_idx];
-                int root_u = uf.find(edge.node_u);
-                int root_v = uf.find(edge.node_v);
+                int root_u = roots[edge.node_u];
+                int root_v = roots[edge.node_v];
                 if (root_u == root_v) {
                     continue;
                 }
-                int num = 0;
-                if (activeComps.count(root_u)) num++;
-                if (activeComps.count(root_v)) num++;
+                int num = activeFlag[root_u] + activeFlag[root_v];
                 if (num == 0) continue;
 
                 double paidVal = paid[edge_idx];
@@ -302,12 +313,10 @@ class SteinerForestGrid {
             // Update paid for all eligible edges
             for (std::size_t edge_idx = 0; edge_idx < edges.size(); ++edge_idx) {
                 const auto& edge = edges[edge_idx];
-                int root_u = uf.find(edge.node_u);
-                int root_v = uf.find(edge.node_v);
+                int root_u = roots[edge.node_u];
+                int root_v = roots[edge.node_v];
                 if (root_u == root_v) continue;
-                int num = 0;
-                if (activeComps.count(root_u)) num++;
-                if (activeComps.count(root_v)) num++;
+                int num = activeFlag[root_u] + activeFlag[root_v];
                 if (num == 0) continue;
 
                 double newPaid = paid[edge_idx] + minDelta * num;
