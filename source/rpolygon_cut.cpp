@@ -1,5 +1,6 @@
 #include <functional>
 #include <limits>
+#include <optional>
 #include <recti/dllink.hpp>
 #include <recti/point.hpp>
 #include <recti/rdllist.hpp>
@@ -139,6 +140,52 @@ namespace recti {
             vcurr->prev = v_min;
             v_min->next = vcurr;
             return Point<T>(p_curr.xcoord(), p_min.ycoord());
+        }
+
+        template <typename T, typename RecurFn>
+        static auto try_degenerate_two_node_split(Dllink<size_t>* vcurr, Dllink<size_t>* v_min,
+                                                  bool vertical,
+                                                  const std::vector<Point<T>>& lst,
+                                                  const RecurFn& recur)
+            -> std::optional<std::vector<std::vector<size_t>>> {
+            const auto& p_min = lst[v_min->data];
+            const auto& p_curr = lst[vcurr->data];
+
+            Dllink<size_t>* first = nullptr;
+            Dllink<size_t>* rest = nullptr;
+            if (vertical && v_min->prev == vcurr->next && p_min.ycoord() == p_curr.ycoord()) {
+                first = vcurr->next;
+                rest = v_min->next;
+            } else if (!vertical && v_min->next == vcurr->prev
+                       && p_min.xcoord() == p_curr.xcoord()) {
+                first = v_min->next;
+                rest = v_min->prev;
+            } else {
+                return std::nullopt;
+            }
+
+            const auto& first_point = lst[first->data];
+            if (first_point.xcoord() == p_min.xcoord()
+                || first_point.ycoord() == p_min.ycoord()) {
+                return std::nullopt;
+            }
+
+            first->next = v_min;
+            first->prev = v_min;
+            v_min->next = first;
+            v_min->prev = first;
+            if (vertical) {
+                vcurr->next = rest;
+                rest->prev = vcurr;
+            } else {
+                vcurr->prev = rest;
+                rest->next = vcurr;
+            }
+
+            auto L1 = recur(first);
+            auto L2 = recur(vcurr);
+            L1.insert(L1.end(), L2.begin(), L2.end());
+            return L1;
         }
 
         // ---------------------------------------------------------------------
@@ -331,6 +378,13 @@ namespace recti {
             }
 
             auto [v_min, vertical] = Policy::find_min_dist_point(lst, vcurr);
+            auto recur = [&](Dllink<size_t>* node) {
+                return rpolygon_cut_recur_impl<T, Cmp, Policy>(node, lst, cmp, rdll);
+            };
+            auto split = try_degenerate_two_node_split(vcurr, v_min, vertical, lst, recur);
+            if (split) {
+                return *split;
+            }
             size_t n = lst.size();
             rdll.cycle.emplace_back(n);
             auto* new_node = &rdll.cycle[n];
@@ -393,6 +447,13 @@ namespace recti {
         }
 
         auto [v_min, vertical] = find_min_dist_point_convex(lst, vcurr);
+        auto recur = [&](Dllink<size_t>* node) {
+            return rpolygon_cut_convex_recur<T>(node, lst, cmp, rdll);
+        };
+        auto split = try_degenerate_two_node_split(vcurr, v_min, vertical, lst, recur);
+        if (split) {
+            return *split;
+        }
         size_t n = lst.size();
         rdll.cycle.emplace_back(n);
         auto* new_node = &rdll.cycle[n];

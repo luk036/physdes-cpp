@@ -1,6 +1,7 @@
 #include <doctest/doctest.h>
 #include <fmt/core.h>
 
+#include <algorithm>
 #include <lds/ilds.hpp>        // for VdCorput
 #include <recti/point.hpp>     // for Point
 #include <recti/rpolygon.hpp>  // for create_xmono_rpolygon, create_test_rpolygon
@@ -10,6 +11,24 @@
 #include <vector>
 
 using namespace recti;
+
+static auto twelve_point_even_index_fixture() -> std::vector<Point<int, int>> {
+    const std::vector<Point<int, int>> full{{-1, 1}, {0, 1}, {0, 0}, {1, 0}, {1, -1}, {3, -1},
+                                            {3, 0},  {4, 0}, {4, 1}, {6, 1}, {6, 2},  {5, 2},
+                                            {5, 5},  {4, 5}, {4, 4}, {3, 4}, {3, 2},  {2, 2},
+                                            {2, 3},  {1, 3}, {1, 2}, {0, 2}, {0, 3},  {-1, 3}};
+
+    std::vector<Point<int, int>> points;
+    points.reserve(full.size() / 2);
+    for (std::size_t i = 0; i < full.size(); i += 2) {
+        points.push_back(full[i]);
+    }
+    return points;
+}
+
+static auto is_point(const Point<int, int>& point, int x, int y) -> bool {
+    return point.xcoord() == x && point.ycoord() == y;
+}
 
 TEST_CASE("RPolygon convex cut test") {
     ilds::VdCorput<3> hgenX(7);
@@ -435,6 +454,60 @@ TEST_CASE("RPolygon convex cut with even-index fixture - signed area preservatio
     for (const auto& piece : convex_pieces) {
         CHECK(rpolygon_is_convex<int>(piece));
         total_pieces_area += RPolygon<int>(piece).signed_area();
+    }
+    CHECK_EQ(original_area, total_pieces_area);
+}
+
+TEST_CASE("RPolygon convex cut with twelve-point even-index fixture") {
+    const auto P = twelve_point_even_index_fixture();
+
+    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+    CHECK(is_anticlockwise);
+    CHECK_FALSE(rpolygon_is_convex<int>(P));
+
+    const int original_area = RPolygon<int>(P).signed_area();
+    CHECK_EQ(original_area, 20);
+
+    const auto convex_pieces = rpolygon_cut_convex<int>(P, is_anticlockwise);
+    REQUIRE_EQ(convex_pieces.size(), 3U);
+
+    std::vector<int> piece_areas;
+    int total_pieces_area = 0;
+    for (const auto& piece : convex_pieces) {
+        CHECK(rpolygon_is_convex<int>(piece));
+        const int area = RPolygon<int>(piece).signed_area();
+        piece_areas.push_back(area);
+        total_pieces_area += area;
+        for (const auto& point : piece) {
+            CHECK_FALSE(is_point(point, 2, 2));
+        }
+    }
+    std::sort(piece_areas.begin(), piece_areas.end());
+    CHECK_EQ(piece_areas[0], 1);
+    CHECK_EQ(piece_areas[1], 9);
+    CHECK_EQ(piece_areas[2], 10);
+    CHECK_EQ(original_area, total_pieces_area);
+}
+
+TEST_CASE("RPolygon explicit cut with twelve-point even-index fixture") {
+    const auto P = twelve_point_even_index_fixture();
+
+    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+    CHECK(is_anticlockwise);
+
+    const int original_area = RPolygon<int>(P).signed_area();
+    CHECK_EQ(original_area, 20);
+
+    const auto explicit_pieces = rpolygon_cut_explicit<int>(P, is_anticlockwise);
+    CHECK_GT(explicit_pieces.size(), 0U);
+
+    int total_pieces_area = 0;
+    for (const auto& piece : explicit_pieces) {
+        CHECK(rpolygon_is_convex<int>(piece));
+        total_pieces_area += RPolygon<int>(piece).signed_area();
+        for (const auto& point : piece) {
+            CHECK_FALSE(is_point(point, 2, 2));
+        }
     }
     CHECK_EQ(original_area, total_pieces_area);
 }
