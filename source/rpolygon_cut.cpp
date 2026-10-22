@@ -101,23 +101,6 @@ namespace recti {
         }
 
         template <typename T>
-        static auto even_index_signed_area(const std::vector<Point<T>>& lst,
-                                           const std::vector<size_t>& indices) -> T {
-            if (indices.size() < 2) {
-                return T{0};
-            }
-            const auto& origin = lst[indices[0]];
-            auto prev = lst[indices[1]] - origin;
-            T result = prev.x() * prev.y();
-            for (std::size_t k = 2; k < indices.size(); ++k) {
-                auto curr = lst[indices[k]] - origin;
-                result += curr.x() * (curr.y() - prev.y());
-                prev = curr;
-            }
-            return result;
-        }
-
-        template <typename T>
         static auto insert_cut_convex(Dllink<size_t>* new_node, Dllink<size_t>* vcurr,
                                       Dllink<size_t>* v_min, bool vertical,
                                       const std::vector<Point<T>>& lst) -> Point<T> {
@@ -491,9 +474,6 @@ namespace recti {
 
         std::vector<std::vector<Point<T>>> result;
         for (const auto& indices : index_lists) {
-            if (even_index_signed_area(lst, indices) == T{0}) {
-                continue;
-            }
             std::vector<Point<T>> polygon;
             polygon.reserve(indices.size());
             for (auto index : indices) {
