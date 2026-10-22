@@ -409,3 +409,32 @@ TEST_CASE("RPolygon explicit cut on a concave polygon - signed area preservation
     }
     CHECK_EQ(original_area, total_pieces_area);
 }
+
+TEST_CASE("RPolygon convex cut with even-index fixture - signed area preservation") {
+    const std::vector<Point<int, int>> full{{0, -2}, {1, -2}, {1, -3}, {3, -3}, {3, -2},
+                                            {2, -2}, {2, -1}, {4, -1}, {4, 1},  {3, 1},
+                                            {3, 0},  {2, 0},  {2, 1},  {0, 1}};
+
+    std::vector<Point<int, int>> P;
+    P.reserve(full.size() / 2);
+    for (std::size_t i = 0; i < full.size(); i += 2) {
+        P.push_back(full[i]);
+    }
+
+    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+    CHECK(is_anticlockwise);
+    CHECK_FALSE(rpolygon_is_convex<int>(P));
+
+    const int original_area = RPolygon<int>(P).signed_area();
+    CHECK_EQ(original_area, 11);
+
+    const auto convex_pieces = rpolygon_cut_convex<int>(P, is_anticlockwise);
+    CHECK_GT(convex_pieces.size(), 1U);
+
+    int total_pieces_area = 0;
+    for (const auto& piece : convex_pieces) {
+        CHECK(rpolygon_is_convex<int>(piece));
+        total_pieces_area += RPolygon<int>(piece).signed_area();
+    }
+    CHECK_EQ(original_area, total_pieces_area);
+}

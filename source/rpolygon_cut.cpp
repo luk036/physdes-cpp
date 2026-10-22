@@ -64,11 +64,88 @@ namespace recti {
 
     namespace {
 
+        template <typename T, typename Cmp>
+        static auto find_concave_point_convex(const std::vector<Point<T>>& lst,
+                                              Dllink<size_t>* vstart, const Cmp& cmp)
+            -> Dllink<size_t>* {
+            auto* vcurr = vstart;
+            do {
+                auto* vnext = vcurr->next;
+                auto* vprev = vcurr->prev;
+
+                const auto& prev_point = lst[vprev->data];
+                const auto& curr_point = lst[vcurr->data];
+                const auto& next_point = lst[vnext->data];
+
+                auto vec1 = curr_point - prev_point;
+                auto vec2 = next_point - curr_point;
+
+                if (vec1.x() * vec2.x() < 0 || vec1.y() * vec2.y() < 0) {
+                    auto area_diff = (curr_point.ycoord() - prev_point.ycoord())
+                                     * (next_point.xcoord() - curr_point.xcoord());
+                    if (cmp(area_diff)) {
+                        return vcurr;
+                    }
+                }
+                vcurr = vnext;
+            } while (vcurr != vstart);
+
+            return nullptr;
+        }
+
+        template <typename T> static auto find_min_dist_point_convex(
+            const std::vector<Point<T>>& lst,
+            Dllink<size_t>* vcurr) -> std::pair<Dllink<size_t>*, bool> {
+            return _find_min_dist_point<T>(lst, vcurr, vcurr->next, lst[vcurr->data]);
+        }
+
+        template <typename T>
+        static auto even_index_signed_area(const std::vector<Point<T>>& lst,
+                                           const std::vector<size_t>& indices) -> T {
+            if (indices.size() < 2) {
+                return T{0};
+            }
+            const auto& origin = lst[indices[0]];
+            auto prev = lst[indices[1]] - origin;
+            T result = prev.x() * prev.y();
+            for (std::size_t k = 2; k < indices.size(); ++k) {
+                auto curr = lst[indices[k]] - origin;
+                result += curr.x() * (curr.y() - prev.y());
+                prev = curr;
+            }
+            return result;
+        }
+
+        template <typename T>
+        static auto insert_cut_convex(Dllink<size_t>* new_node, Dllink<size_t>* vcurr,
+                                      Dllink<size_t>* v_min, bool vertical,
+                                      const std::vector<Point<T>>& lst) -> Point<T> {
+            const auto& p_min = lst[v_min->data];
+            const auto& p_curr = lst[vcurr->data];
+
+            if (vertical) {
+                new_node->next = vcurr->next;
+                new_node->prev = v_min->prev;
+                v_min->prev->next = new_node;
+                vcurr->next->prev = new_node;
+                vcurr->next = v_min;
+                v_min->prev = vcurr;
+                return Point<T>(p_min.xcoord(), p_curr.ycoord());
+            }
+            new_node->prev = vcurr->prev;
+            new_node->next = v_min->next;
+            v_min->next->prev = new_node;
+            vcurr->prev->next = new_node;
+            vcurr->prev = v_min;
+            v_min->next = vcurr;
+            return Point<T>(p_curr.xcoord(), p_min.ycoord());
+        }
+
         // ---------------------------------------------------------------------
-        // Template Method: the three decomposition variants (convex / explicit /
-        // implicit) share one recursive skeleton.  Each Policy supplies the
-        // hooks that differ: the concave-vertex test, the min-distance scan, the
-        // list re-wiring, and the first recursion target.
+        // Template Method: the explicit / implicit variants share one recursive
+        // skeleton.  Each Policy supplies the hooks that differ: the
+        // concave-vertex test, the min-distance scan, the list re-wiring, and
+        // the first recursion target.
         // ---------------------------------------------------------------------
 
         template <typename T> struct ConvexCutPolicy {
@@ -295,7 +372,38 @@ namespace recti {
     template <typename T, typename Cmp>
     auto rpolygon_cut_convex_recur(Dllink<size_t>* v1, std::vector<Point<T>>& lst, const Cmp& cmp,
                                    RDllist& rdll) -> std::vector<std::vector<size_t>> {
-        return rpolygon_cut_recur_impl<T, Cmp, ConvexCutPolicy<T>>(v1, lst, cmp, rdll);
+        auto* v2 = v1->next;
+        if (v2->next == v1) {
+            return {{v1->data, v2->data}};
+        }
+        auto* v3 = v2->next;
+        if (v3->next == v1) {
+            return {{v1->data, v2->data, v3->data}};
+        }
+
+        auto* vcurr = find_concave_point_convex(lst, v1, cmp);
+        if (vcurr == nullptr) {
+            std::vector<size_t> indices;
+            auto* current = v1;
+            do {
+                indices.emplace_back(current->data);
+                current = current->next;
+            } while (current != v1);
+            return {std::move(indices)};
+        }
+
+        auto [v_min, vertical] = find_min_dist_point_convex(lst, vcurr);
+        size_t n = lst.size();
+        rdll.cycle.emplace_back(n);
+        auto* new_node = &rdll.cycle[n];
+
+        auto p_new = insert_cut_convex(new_node, vcurr, v_min, vertical, lst);
+        lst.emplace_back(p_new);
+
+        auto L1 = rpolygon_cut_convex_recur<T>(vcurr, lst, cmp, rdll);
+        auto L2 = rpolygon_cut_convex_recur<T>(new_node, lst, cmp, rdll);
+        L1.insert(L1.end(), L2.begin(), L2.end());
+        return L1;
     }
 
     template <typename T, typename Cmp>
@@ -313,7 +421,26 @@ namespace recti {
     template <typename T>
     auto rpolygon_cut_convex(std::span<const Point<T>> pointset, bool is_anticlockwise)
         -> std::vector<std::vector<Point<T>>> {
-        return rpolygon_cut_impl<T, ConvexCutPolicy<T>>(pointset, is_anticlockwise);
+        std::vector<Point<T>> lst(pointset.begin(), pointset.end());
+        RDllist rdll(lst.size());
+
+        auto cmp = is_anticlockwise ? std::function<bool(T)>([](T a) { return a > 0; })
+                                    : std::function<bool(T)>([](T a) { return a < 0; });
+        auto index_lists = rpolygon_cut_convex_recur<T>(&rdll[0], lst, cmp, rdll);
+
+        std::vector<std::vector<Point<T>>> result;
+        for (const auto& indices : index_lists) {
+            if (even_index_signed_area(lst, indices) == T{0}) {
+                continue;
+            }
+            std::vector<Point<T>> polygon;
+            polygon.reserve(indices.size());
+            for (auto index : indices) {
+                polygon.emplace_back(lst[index]);
+            }
+            result.emplace_back(std::move(polygon));
+        }
+        return result;
     }
 
     template <typename T>
@@ -360,16 +487,16 @@ namespace recti {
                                                                const std::function<bool(int)>&,
                                                                RDllist&);
 
-    template auto rpolygon_cut_convex<int>(std::span<const Point<int>>, bool)
-        -> std::vector<std::vector<Point<int>>>;
+    template auto rpolygon_cut_convex<int>(std::span<const Point<int>>,
+                                           bool) -> std::vector<std::vector<Point<int>>>;
 
-    template auto rpolygon_cut_explicit<int>(std::span<const Point<int>>, bool)
-        -> std::vector<std::vector<Point<int>>>;
+    template auto rpolygon_cut_explicit<int>(std::span<const Point<int>>,
+                                             bool) -> std::vector<std::vector<Point<int>>>;
 
-    template auto rpolygon_cut_implicit<int>(std::span<const Point<int>>, bool)
-        -> std::vector<std::vector<Point<int>>>;
+    template auto rpolygon_cut_implicit<int>(std::span<const Point<int>>,
+                                             bool) -> std::vector<std::vector<Point<int>>>;
 
-    template auto rpolygon_cut_rectangle<int>(std::span<const Point<int>>, bool)
-        -> std::vector<std::vector<Point<int>>>;
+    template auto rpolygon_cut_rectangle<int>(std::span<const Point<int>>,
+                                              bool) -> std::vector<std::vector<Point<int>>>;
 
 }  // namespace recti
