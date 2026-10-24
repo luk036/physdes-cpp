@@ -1,0 +1,13 @@
+---
+documentclass: IEEEtran
+classoption: journal
+link-citations: true
+colorlinks: true
+header-includes:
+  - '\usepackage{amsmath,amssymb}'
+  - '\usepackage{graphicx}'
+  - '\usepackage{booktabs}'
+  - '\usepackage{algorithm}'
+  - '\usepackage{algpseudocode}'
+  - '\usepackage{fancyvrb}'
+---
