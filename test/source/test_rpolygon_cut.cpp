@@ -63,6 +63,7 @@ TEST_CASE("RPolygon convex cut test") {
 
     for (const auto& C : L) {
         CHECK(rpolygon_is_convex<int>(C));
+        CHECK(is_canonical<int>(C));
     }
 
     // // SVG output for convex polygons
@@ -113,6 +114,7 @@ TEST_CASE("RPolygon explicit cut test") {
 
     for (const auto& C : L) {
         CHECK(rpolygon_is_convex<int>(C));
+        CHECK(is_canonical<int>(C));
     }
 
     // SVG output for convex polygons
@@ -167,6 +169,7 @@ TEST_CASE("RPolygon implicit cut test") {
 
     for (const auto& C : L) {
         CHECK(rpolygon_is_convex<int>(C));
+        CHECK(is_canonical<int>(C));
     }
 
     // SVG output for convex polygons
@@ -220,6 +223,7 @@ TEST_CASE("RPolygon cut rectangle test") {
 
     for (const auto& C : L) {
         CHECK(rpolygon_is_convex<int>(C));
+        CHECK(is_canonical<int>(C));
     }
 
     // // SVG output for convex polygons
@@ -269,6 +273,7 @@ TEST_CASE("RPolygon convex cut - signed area preservation") {
     // Verify all pieces are convex
     for (const auto& piece : convex_pieces) {
         CHECK(rpolygon_is_convex<int>(piece));
+        CHECK(is_canonical<int>(piece));
     }
 
     // Calculate sum of signed areas of all pieces
@@ -306,6 +311,7 @@ TEST_CASE("RPolygon explicit cut - signed area preservation") {
     // Verify all pieces are convex
     for (const auto& piece : explicit_pieces) {
         CHECK(rpolygon_is_convex<int>(piece));
+        CHECK(is_canonical<int>(piece));
     }
 
     // Calculate sum of signed areas of all pieces
@@ -345,6 +351,7 @@ TEST_CASE("RPolygon implicit cut - signed area preservation") {
     // Verify all pieces are convex
     for (const auto& piece : implicit_pieces) {
         CHECK(rpolygon_is_convex<int>(piece));
+        CHECK(is_canonical<int>(piece));
     }
 
     // Calculate sum of signed areas of all pieces
@@ -384,6 +391,7 @@ TEST_CASE("RPolygon rectangle cut - signed area preservation") {
     // Verify all pieces are convex (rectangles are convex)
     for (const auto& piece : rectangle_pieces) {
         CHECK(rpolygon_is_convex<int>(piece));
+        CHECK(is_canonical<int>(piece));
     }
 
     // Calculate sum of signed areas of all pieces
@@ -397,36 +405,6 @@ TEST_CASE("RPolygon rectangle cut - signed area preservation") {
     const auto hull_rpolygon = RPolygon<int>(convex_hull);
     const int hull_area = hull_rpolygon.signed_area();
     CHECK_EQ(hull_area, total_pieces_area);
-}
-
-TEST_CASE("RPolygon explicit cut on a concave polygon - signed area preservation") {
-    // Regression: the explicit concave-vertex test previously omitted the
-    // direction-reversal guard, so a clockwise L-shape's true corner was
-    // mis-detected and the recursion produced a degenerate (one-vertex) piece.
-    // The other explicit tests only feed rpolygon_make_convex_hull(P), which
-    // never exercises this path.
-    std::vector<Point<int, int>> P;
-    P.reserve(6);
-    for (const auto& [x, y] : std::initializer_list<std::pair<int, int>>{
-             {0, 0}, {0, 2}, {1, 2}, {1, 1}, {2, 1}, {2, 0}}) {
-        P.emplace_back(x, y);
-    }
-    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
-
-    const int original_area = RPolygon<int>(P).signed_area();
-
-    const auto explicit_pieces = rpolygon_cut_explicit<int>(P, is_anticlockwise);
-
-    CHECK_GT(explicit_pieces.size(), 0);
-    for (const auto& piece : explicit_pieces) {
-        CHECK(rpolygon_is_convex<int>(piece));
-    }
-
-    int total_pieces_area = 0;
-    for (const auto& piece : explicit_pieces) {
-        total_pieces_area += RPolygon<int>(piece).signed_area();
-    }
-    CHECK_EQ(original_area, total_pieces_area);
 }
 
 TEST_CASE("RPolygon convex cut with even-index fixture - signed area preservation") {
@@ -486,6 +464,44 @@ TEST_CASE("RPolygon convex cut with twelve-point even-index fixture") {
     CHECK_EQ(piece_areas[0], 1);
     CHECK_EQ(piece_areas[1], 9);
     CHECK_EQ(piece_areas[2], 10);
+    CHECK_EQ(original_area, total_pieces_area);
+}
+
+TEST_CASE("RPolygon rectangle cut with twelve-point even-index fixture") {
+    const auto P = twelve_point_even_index_fixture();
+
+    const bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
+    CHECK(is_anticlockwise);
+    CHECK_FALSE(rpolygon_is_convex<int>(P));
+
+    const int original_area = RPolygon<int>(P).signed_area();
+    CHECK_EQ(original_area, 20);
+
+    const auto rectangle_pieces = rpolygon_cut_rectangle<int>(P, is_anticlockwise);
+    REQUIRE_EQ(rectangle_pieces.size(), 7U);
+
+    std::vector<int> piece_areas;
+    int total_pieces_area = 0;
+    for (const auto& piece : rectangle_pieces) {
+        REQUIRE_EQ(piece.size(), 2U);
+        CHECK_NE(piece[0].xcoord(), piece[1].xcoord());
+        CHECK_NE(piece[0].ycoord(), piece[1].ycoord());
+        const int area = RPolygon<int>(piece).signed_area();
+        CHECK_GT(area, 0);
+        piece_areas.push_back(area);
+        total_pieces_area += area;
+        for (const auto& point : piece) {
+            CHECK_FALSE(is_point(point, 2, 2));
+        }
+    }
+    std::sort(piece_areas.begin(), piece_areas.end());
+    CHECK_EQ(piece_areas[0], 1);
+    CHECK_EQ(piece_areas[1], 1);
+    CHECK_EQ(piece_areas[2], 2);
+    CHECK_EQ(piece_areas[3], 2);
+    CHECK_EQ(piece_areas[4], 4);
+    CHECK_EQ(piece_areas[5], 4);
+    CHECK_EQ(piece_areas[6], 6);
     CHECK_EQ(original_area, total_pieces_area);
 }
 

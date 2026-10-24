@@ -1,10 +1,42 @@
 #include <algorithm>
+#include <cstddef>
 #include <functional>
 #include <recti/rdllist.hpp>
 #include <recti/rpolygon.hpp>
 #include <recti/rpolygon_hull.hpp>
+#include <utility>
 
 namespace recti {
+    namespace {
+        /**
+         * @brief Remove even-index points that lie on a straight boundary edge.
+         *
+         * With the x-first even-index representation, two consecutive points
+         * sharing y make the second point collinear, while sharing x makes the
+         * first point collinear. Removing them leaves the polygon unchanged.
+         */
+        template <typename T>
+        auto drop_collinear_points(std::vector<Point<T>> points) -> std::vector<Point<T>> {
+            bool changed = true;
+            while (changed && points.size() > 2) {
+                changed = false;
+                for (std::size_t i = 0; i < points.size(); ++i) {
+                    const auto j = (i + 1) % points.size();
+                    if (points[i].ycoord() == points[j].ycoord()) {
+                        points.erase(points.begin() + static_cast<std::ptrdiff_t>(j));
+                    } else if (points[i].xcoord() == points[j].xcoord()) {
+                        points.erase(points.begin() + static_cast<std::ptrdiff_t>(i));
+                    } else {
+                        continue;
+                    }
+                    changed = true;
+                    break;
+                }
+            }
+            return points;
+        }
+    }  // namespace
+
     /**
      * @brief Create a monotone hull from a rectilinear polygon.
      *
@@ -18,12 +50,11 @@ namespace recti {
      * @param[in] dir Function extracting comparison coordinates from a point.
      * @return A vector of points forming the monotone hull.
      */
-    template <typename T>
-    auto rpolygon_make_monotone_hull(std::span<const Point<T>> pointset, bool is_anticlockwise,
-                                     const std::function<std::pair<T, T>(const Point<T>&)>& dir)
-        -> std::vector<Point<T>> {
+    template <typename T> auto rpolygon_make_monotone_hull(
+        std::span<const Point<T>> pointset, bool is_anticlockwise,
+        const std::function<std::pair<T, T>(const Point<T>&)>& dir) -> std::vector<Point<T>> {
         if (pointset.size() <= 3) {
-            return std::vector<Point<T>>(pointset.begin(), pointset.end());
+            return drop_collinear_points(std::vector<Point<T>>(pointset.begin(), pointset.end()));
         }
 
         const auto min_it = std::min_element(pointset.begin(), pointset.end(),
@@ -84,7 +115,7 @@ namespace recti {
         for (const auto& v : rdll.from_node(min_index)) {
             result.emplace_back(pointset[v.data]);
         }
-        return result;
+        return drop_collinear_points(std::move(result));
     }
 
     template std::vector<Point<int>> rpolygon_make_monotone_hull<int>(

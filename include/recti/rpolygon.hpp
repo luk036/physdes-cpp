@@ -229,6 +229,37 @@ namespace recti {
          * @brief Checks if the polygon is rectilinear (all edges are horizontal or vertical)
          */
         constexpr auto is_rectilinear() const -> bool { return true; }
+
+        /**
+         * @brief Checks whether the polygon is in canonical even-index form.
+         *
+         * In canonical form every cyclic consecutive pair of stored even-index
+         * vertices differs in both x and y, and no vertex is duplicated.
+         */
+        constexpr auto is_canonical() const -> bool {
+            const auto n = _vecs.size() + 1;
+            if (n < 2) return true;
+
+            for (std::size_t i = 0; i < n; ++i) {
+                const T xi = (i == 0) ? T{0} : _vecs[i - 1].x();
+                const T yi = (i == 0) ? T{0} : _vecs[i - 1].y();
+                for (std::size_t j = i + 1; j < n; ++j) {
+                    const T xj = (j == 0) ? T{0} : _vecs[j - 1].x();
+                    const T yj = (j == 0) ? T{0} : _vecs[j - 1].y();
+                    if (xi == xj && yi == yj) return false;
+                }
+            }
+
+            for (std::size_t i = 0; i < n; ++i) {
+                const auto j = (i + 1) % n;
+                const T xi = (i == 0) ? T{0} : _vecs[i - 1].x();
+                const T yi = (i == 0) ? T{0} : _vecs[i - 1].y();
+                const T xj = (j == 0) ? T{0} : _vecs[j - 1].x();
+                const T yj = (j == 0) ? T{0} : _vecs[j - 1].y();
+                if (xi == xj || yi == yj) return false;
+            }
+            return true;
+        }
     };
 
     /**
@@ -249,8 +280,8 @@ namespace recti {
      * @return `true` if the resulting RPolygon is anti-clockwise, `false` otherwise.
      */
     template <typename FwIter, typename KeyFn, typename CmpFn>
-    auto create_mono_rpolygon(FwIter first, FwIter last, const KeyFn& dir, const CmpFn& cmp)
-        -> bool;
+    auto create_mono_rpolygon(FwIter first, FwIter last, const KeyFn& dir,
+                              const CmpFn& cmp) -> bool;
 
     /**
      * @brief Create a x-monotone rectilinear polygon (RPolygon) object.
@@ -342,6 +373,18 @@ namespace recti {
     template <typename T> auto rpolygon_is_convex(std::span<const Point<T>> pointset) -> bool;
 
     /**
+     * @brief Check whether an even-index rectilinear polygon is in canonical form.
+     *
+     * In canonical form every cyclic consecutive pair of stored even-index
+     * vertices differs in both x and y, and no vertex is duplicated.
+     *
+     * @tparam T The type of the coordinates
+     * @param pointset The even-index vertices of the polygon
+     * @return true if the polygon is canonical, false otherwise
+     */
+    template <typename T> auto is_canonical(std::span<const Point<T>> pointset) -> bool;
+
+    /**
      * @brief Determine if a point is within a rectilinear polygon.
      *
      * This function implements the Wm. Randolph Franklin algorithm to determine if a
@@ -370,6 +413,6 @@ namespace recti {
      * @param pointset The set of points defining the rectilinear polygon.
      * @return true if the polygon is oriented anti-clockwise, false otherwise.
      */
-    template <typename T> auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset)
-        -> bool;
+    template <typename T>
+    auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset) -> bool;
 }  // namespace recti

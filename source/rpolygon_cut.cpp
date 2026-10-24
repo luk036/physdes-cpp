@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <functional>
 #include <limits>
 #include <optional>
@@ -404,6 +405,60 @@ namespace recti {
             return result;
         }
 
+        // A convex rectilinear piece is x-monotone, so the intersection with a
+        // vertical slab between consecutive vertex x-coordinates is one rectangle.
+        template <typename T>
+        auto rpolygon_cut_convex_into_rectangles(std::span<const Point<T>> pointset,
+                                                 bool is_anticlockwise)
+            -> std::vector<std::vector<Point<T>>> {
+            std::vector<std::vector<Point<T>>> result{};
+            if (pointset.size() < 2) {
+                return result;
+            }
+
+            std::vector<T> xcoords;
+            xcoords.reserve(pointset.size());
+            for (const auto& point : pointset) {
+                xcoords.push_back(point.xcoord());
+            }
+            std::sort(xcoords.begin(), xcoords.end());
+            xcoords.erase(std::unique(xcoords.begin(), xcoords.end()), xcoords.end());
+
+            for (size_t index = 0; index + 1 < xcoords.size(); ++index) {
+                const T x_left = xcoords[index];
+                const T x_right = xcoords[index + 1];
+
+                std::vector<T> ycoords;
+                for (size_t i = 0; i < pointset.size(); ++i) {
+                    const auto& current = pointset[i];
+                    const auto& next = pointset[(i + 1) % pointset.size()];
+                    const T x_min = std::min(current.xcoord(), next.xcoord());
+                    const T x_max = std::max(current.xcoord(), next.xcoord());
+                    if (x_min <= x_left && x_right <= x_max) {
+                        ycoords.push_back(current.ycoord());
+                    }
+                }
+                std::sort(ycoords.begin(), ycoords.end());
+
+                for (size_t i = 0; i + 1 < ycoords.size(); i += 2) {
+                    if (ycoords[i] == ycoords[i + 1]) {
+                        continue;
+                    }
+                    std::vector<Point<T>> rectangle;
+                    rectangle.reserve(2);
+                    if (is_anticlockwise) {
+                        rectangle.emplace_back(x_left, ycoords[i]);
+                        rectangle.emplace_back(x_right, ycoords[i + 1]);
+                    } else {
+                        rectangle.emplace_back(x_left, ycoords[i + 1]);
+                        rectangle.emplace_back(x_right, ycoords[i]);
+                    }
+                    result.emplace_back(std::move(rectangle));
+                }
+            }
+            return result;
+        }
+
     }  // namespace
 
     template <typename T, typename Cmp>
@@ -496,18 +551,23 @@ namespace recti {
         return rpolygon_cut_impl<T, ImplicitCutPolicy<T>>(pointset, is_anticlockwise);
     }
 
+    /**
+     * @brief Cut a rectilinear polygon into rectangle pieces
+     *
+     * The polygon is first decomposed into convex pieces; each convex piece is
+     * then sliced into rectangles by vertical slabs.
+     */
     template <typename T>
     auto rpolygon_cut_rectangle(std::span<const Point<T>> pointset, bool is_anticlockwise)
         -> std::vector<std::vector<Point<T>>> {
-        std::vector<std::vector<Point<T>>> res{};
+        std::vector<std::vector<Point<T>>> result{};
 
-        std::vector<Point<T>> lst(pointset.begin(), pointset.end());
-        auto L1 = rpolygon_cut_implicit<T>(lst, is_anticlockwise);
-        for (auto& lst1 : L1) {
-            auto L2 = rpolygon_cut_explicit<T>(lst1, is_anticlockwise);
-            res.insert(res.end(), L2.begin(), L2.end());
+        const auto convex_pieces = rpolygon_cut_convex<T>(pointset, is_anticlockwise);
+        for (const auto& piece : convex_pieces) {
+            auto rectangles = rpolygon_cut_convex_into_rectangles<T>(piece, is_anticlockwise);
+            result.insert(result.end(), rectangles.begin(), rectangles.end());
         }
-        return res;
+        return result;
     }
 
     template std::vector<std::vector<size_t>>

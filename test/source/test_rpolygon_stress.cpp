@@ -36,16 +36,19 @@ TEST_SUITE("RPolygon Stress Tests") {
         SUBCASE("Convex hull") {
             auto hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
             CHECK(rpolygon_is_convex<int>(hull));
+            CHECK(is_canonical<int>(hull));
         }
 
         SUBCASE("X-monotone hull") {
             auto hull = rpolygon_make_xmonotone_hull<int>(P, is_anticlockwise);
             CHECK(rpolygon_is_xmonotone<int>(hull));
+            CHECK(is_canonical<int>(hull));
         }
 
         SUBCASE("Y-monotone hull") {
             auto hull = rpolygon_make_ymonotone_hull<int>(P, is_anticlockwise);
             CHECK(rpolygon_is_ymonotone<int>(hull));
+            CHECK(is_canonical<int>(hull));
         }
     }
 
@@ -60,6 +63,7 @@ TEST_SUITE("RPolygon Stress Tests") {
             bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
             auto hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
             CHECK(rpolygon_is_convex<int>(hull));
+            CHECK(is_canonical<int>(hull));
         }
 
         // SUBCASE("Duplicate points") {
@@ -88,6 +92,7 @@ TEST_SUITE("RPolygon Stress Tests") {
             auto L = rpolygon_cut_convex<int>(P, is_anticlockwise);
             for (const auto& C : L) {
                 CHECK(rpolygon_is_convex<int>(C));
+                CHECK(is_canonical<int>(C));
             }
         }
     }

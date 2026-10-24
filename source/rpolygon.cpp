@@ -12,8 +12,8 @@
 namespace recti {
 
     template <typename FwIter, typename KeyFn, typename CmpFn>
-    auto create_mono_rpolygon(FwIter first, FwIter last, const KeyFn& dir, const CmpFn& cmp)
-        -> bool {
+    auto create_mono_rpolygon(FwIter first, FwIter last, const KeyFn& dir,
+                              const CmpFn& cmp) -> bool {
         assert(first != last);
 
         auto compare_by_direction = [&dir](const auto& right_elem, const auto& left_elem) -> bool {
@@ -73,8 +73,8 @@ namespace recti {
      * @return true if the polygon is monotone, false otherwise
      */
     template <typename T, typename DirFunc>
-    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, const DirFunc& dir)
-        -> bool {
+    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset,
+                                     const DirFunc& dir) -> bool {
         if (pointset.size() <= 3) {
             return true;
         }
@@ -163,6 +163,37 @@ namespace recti {
     }
 
     /**
+     * @brief Check whether an even-index rectilinear polygon is in canonical form.
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Even-index vertices of the polygon.
+     * @return true if every cyclic consecutive pair differs in both x and y
+     * and no vertex is duplicated.
+     */
+    template <typename T> auto is_canonical(std::span<const Point<T>> pointset) -> bool {
+        const auto n = pointset.size();
+        if (n < 2) return true;
+
+        for (std::size_t i = 0; i < n; ++i) {
+            for (std::size_t j = i + 1; j < n; ++j) {
+                if (pointset[i].xcoord() == pointset[j].xcoord()
+                    && pointset[i].ycoord() == pointset[j].ycoord()) {
+                    return false;
+                }
+            }
+        }
+
+        for (std::size_t i = 0; i < n; ++i) {
+            const auto j = (i + 1) % n;
+            if (pointset[i].xcoord() == pointset[j].xcoord()
+                || pointset[i].ycoord() == pointset[j].ycoord()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * @brief Determine if a point is strictly inside a rectilinear polygon.
      *
      * Uses a simplified ray casting algorithm optimized for rectilinear
@@ -204,8 +235,8 @@ namespace recti {
      * @param[in] pointset Polygon vertices.
      * @return true if the polygon is oriented anti-clockwise.
      */
-    template <typename T> auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset)
-        -> bool {
+    template <typename T>
+    auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset) -> bool {
         const auto min_iterator = std::min_element(pointset.begin(), pointset.end());
         const auto prev_iterator = min_iterator != pointset.begin() ? std::prev(min_iterator)
                                                                     : std::prev(pointset.end());
@@ -216,6 +247,7 @@ namespace recti {
     template auto rpolygon_is_xmonotone<int>(std::span<const Point<int>>) -> bool;
     template auto rpolygon_is_ymonotone<int>(std::span<const Point<int>>) -> bool;
     template auto rpolygon_is_convex<int>(std::span<const Point<int>>) -> bool;
+    template auto is_canonical<int>(std::span<const Point<int>>) -> bool;
     template auto point_in_rpolygon<int>(std::span<const Point<int>>, const Point<int>&) -> bool;
     template auto rpolygon_is_anticlockwise<int>(std::span<const Point<int>>) -> bool;
 
@@ -383,7 +415,7 @@ namespace recti {
         std::vector<Point<int>>::iterator, std::vector<Point<int>>::iterator);
 
     template auto create_test_rpolygon<std::vector<Point<int>>::iterator>(
-        std::vector<Point<int>>::iterator, std::vector<Point<int>>::iterator)
-        -> std::vector<Point<int>>;
+        std::vector<Point<int>>::iterator,
+        std::vector<Point<int>>::iterator) -> std::vector<Point<int>>;
 
 }  // namespace recti

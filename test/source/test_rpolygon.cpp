@@ -4,9 +4,10 @@
 #include <ostream>
 
 // #include <span>            // for span
-#include <lds/ilds.hpp>        // for VdCorput
-#include <recti/rpolygon.hpp>  // for RPolygon, RPolygon_is_clockwise, cre...
-#include <vector>              // for vector
+#include <lds/ilds.hpp>             // for VdCorput
+#include <recti/rpolygon.hpp>       // for RPolygon, RPolygon_is_clockwise, cre...
+#include <recti/rpolygon_hull.hpp>  // for rpolygon_make_*monotone_hull
+#include <vector>                   // for vector
 
 #include "recti/point.hpp"  // for Point, operator>
 
@@ -16,6 +17,8 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono)") {
     auto S = std::vector<Point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
                                      {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
     const auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
+    const auto y_hull = rpolygon_make_ymonotone_hull<int>(S, !is_clockwise);
+    CHECK(is_canonical<int>(y_hull));
     CHECK_FALSE(is_clockwise);
     CHECK(rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_ymonotone<int>(S));
@@ -29,6 +32,8 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono)") {
     auto S = std::vector<Point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
                                      {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
     const auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
+    const auto x_hull = rpolygon_make_xmonotone_hull<int>(S, is_anticlockwise);
+    CHECK(is_canonical<int>(x_hull));
 
     CHECK(is_anticlockwise);
     CHECK(rpolygon_is_anticlockwise<int>(S));
@@ -46,6 +51,8 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono 50)") {
         S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
+    const auto x_hull = rpolygon_make_xmonotone_hull<int>(S, is_anticlockwise);
+    CHECK(is_canonical<int>(x_hull));
 
     // SVG output (commented out as per reference)
     // fmt::print("<svg viewBox=\"0 0 2187 2048\" xmlns=\"http://www.w3.org/2000/svg\">\n");
@@ -79,6 +86,8 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono 50)") {
         S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
+    const auto y_hull = rpolygon_make_ymonotone_hull<int>(S, !is_clockwise);
+    CHECK(is_canonical<int>(y_hull));
     CHECK(is_clockwise);
     CHECK_FALSE(rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_ymonotone<int>(S));
@@ -169,4 +178,38 @@ TEST_CASE("RPolygon iterator") {
     CHECK_EQ(iterated[1], Point<int>{5, 0});
     CHECK_EQ(iterated[2], Point<int>{5, 5});
     CHECK_EQ(iterated[3], Point<int>{0, 5});
+}
+
+TEST_CASE("RPolygon is_canonical") {
+    const std::vector<Point<int>> two_vertical{{2, 1}, {2, 0}};
+    CHECK_FALSE(is_canonical<int>(two_vertical));
+
+    const std::vector<Point<int>> two_canonical{{2, 1}, {3, -3}};
+    CHECK(is_canonical<int>(two_canonical));
+
+    const std::vector<Point<int>> three_with_zero{{2, 1}, {2, 0}, {3, -3}};
+    CHECK_FALSE(is_canonical<int>(three_with_zero));
+
+    const std::vector<Point<int>> duplicate{{0, 0}, {0, 0}};
+    CHECK_FALSE(is_canonical<int>(duplicate));
+
+    const std::vector<Point<int>> verticals{{0, 0}, {0, 1}, {0, 2}};
+    CHECK_FALSE(is_canonical<int>(verticals));
+
+    const std::vector<Point<int>> horizontals{{0, 0}, {1, 0}, {2, 0}};
+    CHECK_FALSE(is_canonical<int>(horizontals));
+
+    const std::vector<Point<int>> rectangle{{0, 0}, {1, 1}};
+    CHECK(is_canonical<int>(rectangle));
+}
+
+TEST_CASE("RPolygon is_canonical method") {
+    const std::vector<Point<int>> two_vertical{{2, 1}, {2, 0}};
+    CHECK_FALSE(RPolygon<int>(two_vertical).is_canonical());
+
+    const std::vector<Point<int>> two_canonical{{2, 1}, {3, -3}};
+    CHECK(RPolygon<int>(two_canonical).is_canonical());
+
+    const std::vector<Point<int>> three_with_zero{{2, 1}, {2, 0}, {3, -3}};
+    CHECK_FALSE(RPolygon<int>(three_with_zero).is_canonical());
 }

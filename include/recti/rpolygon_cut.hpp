@@ -71,7 +71,10 @@ namespace recti {
         -> std::vector<std::vector<Point<T>>>;
 
     /**
-     * @brief Cut a convex polygon into rectangle pieces
+     * @brief Cut a rectilinear polygon into rectangle pieces
+     *
+     * The polygon is first decomposed into convex pieces; each convex piece is
+     * then sliced into rectangles by vertical slabs.
      */
     template <typename T>
     auto rpolygon_cut_rectangle(std::span<const Point<T>> pointset, bool is_anticlockwise)
