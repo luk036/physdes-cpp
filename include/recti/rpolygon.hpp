@@ -233,22 +233,14 @@ namespace recti {
         /**
          * @brief Checks whether the polygon is in canonical even-index form.
          *
-         * In canonical form every cyclic consecutive pair of stored even-index
-         * vertices differs in both x and y, and no vertex is duplicated.
+         * Consecutive duplicate points are rejected first.  For three or more
+         * stored points a point is redundant exactly when it lies strictly
+         * between its neighbours on a shared axis; a spike is allowed.  A
+         * two-point list is canonical when its two points are distinct.
          */
         constexpr auto is_canonical() const -> bool {
             const auto n = _vecs.size() + 1;
-            if (n < 2) return true;
-
-            for (std::size_t i = 0; i < n; ++i) {
-                const T xi = (i == 0) ? T{0} : _vecs[i - 1].x();
-                const T yi = (i == 0) ? T{0} : _vecs[i - 1].y();
-                for (std::size_t j = i + 1; j < n; ++j) {
-                    const T xj = (j == 0) ? T{0} : _vecs[j - 1].x();
-                    const T yj = (j == 0) ? T{0} : _vecs[j - 1].y();
-                    if (xi == xj && yi == yj) return false;
-                }
-            }
+            if (n < 2) return false;
 
             for (std::size_t i = 0; i < n; ++i) {
                 const auto j = (i + 1) % n;
@@ -256,7 +248,23 @@ namespace recti {
                 const T yi = (i == 0) ? T{0} : _vecs[i - 1].y();
                 const T xj = (j == 0) ? T{0} : _vecs[j - 1].x();
                 const T yj = (j == 0) ? T{0} : _vecs[j - 1].y();
-                if (xi == xj || yi == yj) return false;
+                if (xi == xj && yi == yj) return false;
+            }
+
+            if (n == 2) return true;
+
+            for (std::size_t i = 0; i < n; ++i) {
+                const auto prev = (i + n - 1) % n;
+                const auto next = (i + 1) % n;
+                const T xp = (prev == 0) ? T{0} : _vecs[prev - 1].x();
+                const T yp = (prev == 0) ? T{0} : _vecs[prev - 1].y();
+                const T xi = (i == 0) ? T{0} : _vecs[i - 1].x();
+                const T yi = (i == 0) ? T{0} : _vecs[i - 1].y();
+                const T xn = (next == 0) ? T{0} : _vecs[next - 1].x();
+                const T yn = (next == 0) ? T{0} : _vecs[next - 1].y();
+                const bool between_x = (xp < xi && xi < xn) || (xn < xi && xi < xp);
+                const bool between_y = (yp < yi && yi < yn) || (yn < yi && yi < yp);
+                if ((yp == yi && between_x) || (xi == xn && between_y)) return false;
             }
             return true;
         }
@@ -373,16 +381,35 @@ namespace recti {
     template <typename T> auto rpolygon_is_convex(std::span<const Point<T>> pointset) -> bool;
 
     /**
-     * @brief Check whether an even-index rectilinear polygon is in canonical form.
+     * @brief Check whether an even-index rectilinear polygon is canonical.
      *
-     * In canonical form every cyclic consecutive pair of stored even-index
-     * vertices differs in both x and y, and no vertex is duplicated.
+     * A stored point is redundant when removing it leaves the represented
+     * boundary unchanged, so both the perimeter and the area are preserved.
+     * Consecutive duplicate points are rejected first.  For three or more
+     * stored points a point is redundant exactly when it lies strictly between
+     * its neighbours on a shared axis; a spike is allowed.  A two-point list
+     * is canonical when its two points are distinct.
      *
      * @tparam T The type of the coordinates
      * @param pointset The even-index vertices of the polygon
      * @return true if the polygon is canonical, false otherwise
      */
     template <typename T> auto is_canonical(std::span<const Point<T>> pointset) -> bool;
+
+    /**
+     * @brief Remove redundant stored points until the polygon is canonical.
+     *
+     * Consecutive duplicate points are removed first, then redundant collinear
+     * points.  Each point is removed at most once, so the reduction is O(m).
+     * Throws std::runtime_error if an unexpected non-canonical configuration
+     * remains.
+     *
+     * @tparam T The type of the coordinates
+     * @param pointset The even-index vertices of the polygon
+     * @return A canonical stored sequence
+     */
+    template <typename T>
+    auto canonicalize(std::span<const Point<T>> pointset) -> std::vector<Point<T>>;
 
     /**
      * @brief Determine if a point is within a rectilinear polygon.

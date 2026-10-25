@@ -17,8 +17,8 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono)") {
     auto S = std::vector<Point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
                                      {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
     const auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
-    const auto y_hull = rpolygon_make_ymonotone_hull<int>(S, !is_clockwise);
-    CHECK(is_canonical<int>(y_hull));
+    const auto repaired = canonicalize<int>(S);
+    CHECK(is_canonical<int>(repaired));
     CHECK_FALSE(is_clockwise);
     CHECK(rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_ymonotone<int>(S));
@@ -32,8 +32,8 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono)") {
     auto S = std::vector<Point<int>>{{-2, 2},  {0, -1}, {-5, 1}, {-2, 4}, {0, -4},  {-4, 3},
                                      {-6, -2}, {5, 1},  {2, 2},  {3, -3}, {-3, -4}, {1, 4}};
     const auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
-    const auto x_hull = rpolygon_make_xmonotone_hull<int>(S, is_anticlockwise);
-    CHECK(is_canonical<int>(x_hull));
+    const auto repaired = canonicalize<int>(S);
+    CHECK(is_canonical<int>(repaired));
 
     CHECK(is_anticlockwise);
     CHECK(rpolygon_is_anticlockwise<int>(S));
@@ -51,8 +51,8 @@ TEST_CASE("Rectilinear Polygon test (xcoord-mono 50)") {
         S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto is_anticlockwise = create_xmono_rpolygon(S.begin(), S.end());
-    const auto x_hull = rpolygon_make_xmonotone_hull<int>(S, is_anticlockwise);
-    CHECK(is_canonical<int>(x_hull));
+    const auto repaired = canonicalize<int>(S);
+    CHECK(is_canonical<int>(repaired));
 
     // SVG output (commented out as per reference)
     // fmt::print("<svg viewBox=\"0 0 2187 2048\" xmlns=\"http://www.w3.org/2000/svg\">\n");
@@ -86,8 +86,8 @@ TEST_CASE("Rectilinear Polygon test (ycoord-mono 50)") {
         S.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
     const auto is_clockwise = create_ymono_rpolygon(S.begin(), S.end());
-    const auto y_hull = rpolygon_make_ymonotone_hull<int>(S, !is_clockwise);
-    CHECK(is_canonical<int>(y_hull));
+    const auto repaired = canonicalize<int>(S);
+    CHECK(is_canonical<int>(repaired));
     CHECK(is_clockwise);
     CHECK_FALSE(rpolygon_is_anticlockwise<int>(S));
     CHECK(rpolygon_is_ymonotone<int>(S));
@@ -181,17 +181,26 @@ TEST_CASE("RPolygon iterator") {
 }
 
 TEST_CASE("RPolygon is_canonical") {
+    const std::vector<Point<int>> empty{};
+    CHECK_FALSE(is_canonical<int>(empty));
+
+    const std::vector<Point<int>> single{{0, 0}};
+    CHECK_FALSE(is_canonical<int>(single));
+
     const std::vector<Point<int>> two_vertical{{2, 1}, {2, 0}};
-    CHECK_FALSE(is_canonical<int>(two_vertical));
+    CHECK(is_canonical<int>(two_vertical));
 
     const std::vector<Point<int>> two_canonical{{2, 1}, {3, -3}};
     CHECK(is_canonical<int>(two_canonical));
 
     const std::vector<Point<int>> three_with_zero{{2, 1}, {2, 0}, {3, -3}};
-    CHECK_FALSE(is_canonical<int>(three_with_zero));
+    CHECK(is_canonical<int>(three_with_zero));
 
     const std::vector<Point<int>> duplicate{{0, 0}, {0, 0}};
     CHECK_FALSE(is_canonical<int>(duplicate));
+
+    const std::vector<Point<int>> repeated{{0, 0}, {1, 1}, {0, 0}, {2, 2}};
+    CHECK(is_canonical<int>(repeated));
 
     const std::vector<Point<int>> verticals{{0, 0}, {0, 1}, {0, 2}};
     CHECK_FALSE(is_canonical<int>(verticals));
@@ -205,11 +214,38 @@ TEST_CASE("RPolygon is_canonical") {
 
 TEST_CASE("RPolygon is_canonical method") {
     const std::vector<Point<int>> two_vertical{{2, 1}, {2, 0}};
-    CHECK_FALSE(RPolygon<int>(two_vertical).is_canonical());
+    CHECK(RPolygon<int>(two_vertical).is_canonical());
 
     const std::vector<Point<int>> two_canonical{{2, 1}, {3, -3}};
     CHECK(RPolygon<int>(two_canonical).is_canonical());
 
     const std::vector<Point<int>> three_with_zero{{2, 1}, {2, 0}, {3, -3}};
-    CHECK_FALSE(RPolygon<int>(three_with_zero).is_canonical());
+    CHECK(RPolygon<int>(three_with_zero).is_canonical());
+}
+
+TEST_CASE("RPolygon canonicalize") {
+    const std::vector<Point<int>> vertical{{2, 1}, {2, 0}};
+    CHECK(canonicalize<int>(vertical) == vertical);
+
+    const std::vector<Point<int>> collinear{{0, 0}, {1, 0}, {2, 1}};
+    const std::vector<Point<int>> cleaned{{0, 0}, {2, 1}};
+    const auto result = canonicalize<int>(collinear);
+    CHECK(result == cleaned);
+    CHECK(is_canonical<int>(result));
+    CHECK_EQ(RPolygon<int>(result).signed_area(), RPolygon<int>(collinear).signed_area());
+
+    const std::vector<Point<int>> consecutive{{0, 0}, {1, 1}, {1, 1}, {2, 2}};
+    const std::vector<Point<int>> deduped{{0, 0}, {1, 1}, {2, 2}};
+    CHECK(canonicalize<int>(consecutive) == deduped);
+
+    const std::vector<Point<int>> nonadjacent{{0, 0}, {1, 1}, {0, 0}, {2, 2}};
+    CHECK(canonicalize<int>(nonadjacent) == nonadjacent);
+    CHECK(is_canonical<int>(nonadjacent));
+
+    const std::vector<Point<int>> duplicate_pair{{0, 0}, {0, 0}};
+    const std::vector<Point<int>> single_point{{0, 0}};
+    CHECK(canonicalize<int>(duplicate_pair) == single_point);
+
+    const std::vector<Point<int>> spike{{0, 0}, {2, 0}, {1, 1}};
+    CHECK(canonicalize<int>(spike) == spike);
 }
