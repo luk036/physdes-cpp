@@ -412,6 +412,19 @@ namespace recti {
     auto canonicalize(std::span<const Point<T>> pointset) -> std::vector<Point<T>>;
 
     /**
+     * @brief Expand an even-index stored sequence to the full boundary.
+     *
+     * The omitted vertex between s_i=(x0,y0) and s_{i+1}=(x1,y1) is
+     * (x1,y0), inserted before s_{i+1} (x-first rule).
+     *
+     * @tparam T The type of the coordinates
+     * @param pointset The even-index stored points
+     * @return The full boundary, with 2m vertices
+     */
+    template <typename T>
+    auto rpolygon_expand(std::span<const Point<T>> pointset) -> std::vector<Point<T>>;
+
+    /**
      * @brief Determine if a point is within a rectilinear polygon.
      *
      * This function implements the Wm. Randolph Franklin algorithm to determine if a

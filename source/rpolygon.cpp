@@ -290,6 +290,32 @@ namespace recti {
     }
 
     /**
+     * @brief Expand an even-index stored sequence to the full boundary.
+     *
+     * The omitted vertex between s_i=(x0,y0) and s_{i+1}=(x1,y1) is
+     * (x1,y0), inserted before s_{i+1} (x-first rule).
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Even-index stored points.
+     * @return The full boundary, with 2m vertices.
+     */
+    template <typename T>
+    auto rpolygon_expand(std::span<const Point<T>> pointset) -> std::vector<Point<T>> {
+        if (pointset.size() < 2) {
+            return {};
+        }
+        std::vector<Point<T>> boundary;
+        boundary.reserve(2 * pointset.size());
+        for (std::size_t i = 0; i < pointset.size(); ++i) {
+            const auto& curr = pointset[i];
+            const auto& next = pointset[(i + 1) % pointset.size()];
+            boundary.push_back(curr);
+            boundary.emplace_back(next.xcoord(), curr.ycoord());
+        }
+        return boundary;
+    }
+
+    /**
      * @brief Determine if a point is strictly inside a rectilinear polygon.
      *
      * Uses a simplified ray casting algorithm optimized for rectilinear
@@ -345,6 +371,7 @@ namespace recti {
     template auto rpolygon_is_convex<int>(std::span<const Point<int>>) -> bool;
     template auto is_canonical<int>(std::span<const Point<int>>) -> bool;
     template auto canonicalize<int>(std::span<const Point<int>>) -> std::vector<Point<int>>;
+    template auto rpolygon_expand<int>(std::span<const Point<int>>) -> std::vector<Point<int>>;
     template auto point_in_rpolygon<int>(std::span<const Point<int>>, const Point<int>&) -> bool;
     template auto rpolygon_is_anticlockwise<int>(std::span<const Point<int>>) -> bool;
 

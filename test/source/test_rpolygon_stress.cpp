@@ -4,6 +4,7 @@
 #include <lds/ilds.hpp>
 #include <random>
 #include <recti/point.hpp>
+#include <recti/polygon.hpp>
 #include <recti/rpolygon.hpp>
 #include <recti/rpolygon_cut.hpp>
 #include <recti/rpolygon_hull.hpp>
@@ -96,4 +97,20 @@ TEST_SUITE("RPolygon Stress Tests") {
             }
         }
     }
+}
+
+TEST_CASE("Full-vertex convex cut on a random polygon") {
+    const auto stored = generate_random_rpolygon(200, 2000);
+    const auto polygon = rpolygon_expand<int>(stored);
+    const auto expected = Polygon<int>{polygon}.signed_area_x2();
+    const bool is_anticlockwise = expected > 0;
+
+    const auto pieces = rpolygon_cut_convex_full<int>(polygon, is_anticlockwise);
+    CHECK(!pieces.empty());
+    int total = 0;
+    for (const auto& piece : pieces) {
+        CHECK(rpolygon_is_convex<int>(piece));
+        total += Polygon<int>{piece}.signed_area_x2();
+    }
+    CHECK_EQ(total, expected);
 }

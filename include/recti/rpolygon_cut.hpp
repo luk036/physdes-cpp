@@ -54,6 +54,23 @@ namespace recti {
         -> std::vector<std::vector<Point<T>>>;
 
     /**
+     * @brief Cut a rectilinear polygon into convex pieces using the full vertex list
+     *
+     * This is the full-vertex baseline of `rpolygon_cut_convex`.  It stores and
+     * traverses every boundary vertex, tests orthogonal convexity on the full
+     * cycle, and cuts at the first reflex vertex when the cycle is not convex.
+     * The output pieces are orthogonally convex and use full vertex lists.
+     *
+     * @tparam T The numeric type for coordinates
+     * @param[in] pointset The full vertex list of the polygon
+     * @param[in] is_anticlockwise Whether the polygon is oriented anti-clockwise
+     * @return A vector of orthogonally convex pieces, each as a full vertex list
+     */
+    template <typename T>
+    auto rpolygon_cut_convex_full(std::span<const Point<T>> pointset, bool is_anticlockwise)
+        -> std::vector<std::vector<Point<T>>>;
+
+    /**
      * @brief Cut a polygon into explicit pieces
      * @param[in] pointset The polygon vertices
      * @param[in] is_anticlockwise Orientation flag
