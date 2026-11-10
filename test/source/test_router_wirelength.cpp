@@ -22,7 +22,11 @@ namespace {
         for (size_t i = 0; i < n; ++i) {
             t.emplace_back(static_cast<int>(hx.pop()), static_cast<int>(hy.pop()));
         }
-        IntPoint s(static_cast<int>(hx.pop()), static_cast<int>(hx.pop()));
+        // Pop sequentially: argument evaluation order is unspecified and differs
+        // between compilers (MSVC right-to-left, AppleClang left-to-right).
+        auto source_x = static_cast<int>(hx.pop());
+        auto source_y = static_cast<int>(hx.pop());
+        IntPoint s(source_x, source_y);
         return {s, t};
     }
 
@@ -37,18 +41,18 @@ namespace {
     // Pinned totals captured from the reference implementation; guards the
     // subtree-bounding-box pruning against any change in the chosen tree.
     const std::array<Case, 12> CASES = {{
-        {19, 7, 5635, 6683, 5635},
-        {19, 20, 9101, 11792, 9101},
-        {19, 50, 14666, 59789, 15040},
-        {23, 7, 4638, 7108, 4638},
-        {23, 20, 9640, 31733, 9640},
-        {23, 50, 15108, 63443, 16671},
-        {42, 7, 5951, 6845, 5951},
-        {42, 20, 9166, 15404, 9166},
-        {42, 50, 14536, 61326, 14518},
-        {101, 7, 5317, 6213, 5317},
-        {101, 20, 9159, 24152, 9159},
-        {101, 50, 15065, 84604, 14977},
+        {19, 7, 5329, 6679, 5329},
+        {19, 20, 9123, 25060, 9123},
+        {19, 50, 14688, 60829, 15062},
+        {23, 7, 5437, 7269, 5437},
+        {23, 20, 9457, 20997, 9459},
+        {23, 50, 15007, 47337, 16248},
+        {42, 7, 5608, 9257, 5608},
+        {42, 20, 8476, 17444, 8995},
+        {42, 50, 14776, 29616, 15138},
+        {101, 7, 5342, 5887, 5342},
+        {101, 20, 8877, 21832, 8877},
+        {101, 50, 15015, 41603, 14823},
     }};
 }  // namespace
 
