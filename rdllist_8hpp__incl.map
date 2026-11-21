@@ -1,13 +1,13 @@
 <map id="recti/rdllist.hpp" name="recti/rdllist.hpp">
-<area shape="rect" id="Node000001" title="Circular doubly&#45;linked list implementation for polygon decomposition." alt="" coords="71,5,191,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,76,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="118,33,68,72,65,68,115,29"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="100,79,163,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="134,31,134,65,129,65,129,31"/>
-<area shape="rect" id="Node000004" href="$dllink_8hpp.html" title="Doubly&#45;linked list node template class." alt="" coords="187,79,273,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="149,29,204,68,201,73,146,33"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="150,152,219,177"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="225,106,202,142,197,139,220,103"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="244,152,304,177"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="240,103,262,139,257,142,235,106"/>
+<area shape="rect" id="Node000001" title="Circular doubly&#45;linked list implementation for polygon decomposition." alt="" coords="70,5,189,33"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,81,75,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,36,69,73,66,69,115,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="98,81,160,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="131,31,132,66,127,65,128,36"/>
+<area shape="rect" id="Node000004" href="$dllink_8hpp.html" title="Doubly&#45;linked list node template class." alt="" coords="184,81,269,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="147,31,200,71,195,72,146,36"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="148,157,217,184"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="221,108,200,145,196,141,217,111"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="241,157,300,184"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="236,107,258,144,252,143,233,112"/>
 </map>

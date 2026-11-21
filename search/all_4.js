@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['elmoredelaycalculator_0',['elmoredelaycalculator',['../classrecti_1_1ElmoreDelayCalculator.html',1,'recti::ElmoreDelayCalculator'],['../classrecti_1_1ElmoreDelayCalculator.html#a2d2cfbd8c8cd27ad2f0362978263c801',1,'recti::ElmoreDelayCalculator::ElmoreDelayCalculator()']]],
+  ['elmoredelaycalculator_0',['ElmoreDelayCalculator',['../classrecti_1_1ElmoreDelayCalculator.html',1,'recti::ElmoreDelayCalculator'],['../classrecti_1_1ElmoreDelayCalculator.html#a2d2cfbd8c8cd27ad2f0362978263c801',1,'recti::ElmoreDelayCalculator::ElmoreDelayCalculator()']]],
   ['empty_1',['empty',['../classrecti_1_1Tree.html#a1f9d0bede5865e217aa01810bdef2b1f',1,'recti::Tree']]],
   ['end_2',['end',['../classRDllIterator.html#a2f16fa08767c479a23705c77d40947a9',1,'RDllIterator::end()'],['../classrecti_1_1RPolygon.html#a1ecadbb78785f4b627cfa9d333e45333',1,'recti::RPolygon::end()']]],
   ['enlarge_3',['enlarge',['../namespacerecti.html#a5fe3a3bfec65a2b75111f37401b428c7',1,'recti']]],

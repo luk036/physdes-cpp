@@ -1,6 +1,6 @@
 <map id="Dllink&lt; T &gt;" name="Dllink&lt; T &gt;">
-<area shape="rect" id="Node000001" title="doubly linked node (that may also be a &quot;head&quot; a list)" alt="" coords="5,112,104,137"/>
-<area shape="rect" id="Node000002" href="$classDllink.html" title="doubly linked node (that may also be a &quot;head&quot; a list)" alt="" coords="5,7,104,33"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="57,47,57,112,52,112,52,47"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="119,9,127,13,131,20,122,29,104,33,104,27,120,25,125,20,123,17,117,14"/>
+<area shape="rect" id="Node000001" title="doubly linked node (that may also be a &quot;head&quot; a list)" alt="" coords="5,148,103,176"/>
+<area shape="rect" id="Node000002" href="$classDllink.html" title="doubly linked node (that may also be a &quot;head&quot; a list)" alt="" coords="5,15,103,43"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="57,58,57,148,51,147,51,59"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="117,16,126,21,129,29,121,41,105,45,102,40,118,36,124,29,122,25,118,21"/>
 </map>

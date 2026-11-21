@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['const_5fiterator_0',['const_iterator',['../classrecti_1_1RPolygon.html#a7d45dfefd4129f8083e6d61dd821e935',1,'recti::RPolygon']]]
+  ['bbox_0',['BBox',['../classrecti_1_1RoutingNode.html#af52560336f33b517848d027479e6c43a',1,'recti::RoutingNode']]]
 ];

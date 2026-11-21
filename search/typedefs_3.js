@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['keepout_0',['keepout',['../classrecti_1_1GlobalRoutingTree.html#ade7e1885f08db1c0e541f5a7d90c6a23',1,'recti::GlobalRoutingTree::Keepout'],['../classrecti_1_1GlobalRouter.html#a174e4753c4b5f6917432e6611efdea05',1,'recti::GlobalRouter::Keepout']]]
+  ['intpoint3d_0',['IntPoint3d',['../namespacerecti_1_1detail.html#a612653cdb460a4ad4cff8808d2739ee8',1,'recti::detail']]],
+  ['iterator_5fcategory_1',['iterator_category',['../classrecti_1_1RPolygonVertexIterator.html#a54a3b65f2401a3c6eceb90cc0682d8b1',1,'recti::RPolygonVertexIterator']]]
 ];

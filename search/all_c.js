@@ -9,7 +9,7 @@ var searchData=
   ['next_6',['next',['../classDllink.html#af4fd13a5eb0b8ebb49e9e718c4d2937b',1,'Dllink']]],
   ['node_5fradius_7',['node_radius',['../classrecti_1_1ClockTreeVisualizer_1_1Builder.html#aa8a25f6b9879af8241942e2c90c39b8b',1,'recti::ClockTreeVisualizer::Builder']]],
   ['node_5ftype_8',['node_type',['../classrecti_1_1RoutingNode.html#a13bbeaae3817f7e9a0e0358a3fcd655d',1,'recti::RoutingNode']]],
-  ['nodeidx_9',['NodeIdx',['../namespacerecti.html#a346c5abf9066d4b007b9d198fa5f69b6',1,'recti']]],
+  ['nodeidx_9',['NodeIdx',['../namespacerecti.html#a3c5377f08bcbd1926d08bc91dc3b2754',1,'recti']]],
   ['nodeinfo_10',['NodeInfo',['../structrecti_1_1TreeStatistics_1_1NodeInfo.html',1,'recti::TreeStatistics']]],
   ['nodes_11',['nodes',['../structrecti_1_1TreeStatistics.html#a466bef56587a4d699c688cc4433ccf93',1,'recti::TreeStatistics::nodes'],['../classrecti_1_1GlobalRoutingTree.html#aa2edcee881568c3a2aaa01d5a5094af4',1,'recti::GlobalRoutingTree::nodes']]],
   ['nodetype_12',['NodeType',['../namespacerecti.html#aa10b643c20623d868438bea3e6978dae',1,'recti']]]

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['manhattan_5fdistance_0',['manhattan_distance',['../classrecti_1_1RoutingNode.html#a273475472115569045a0c782ad03e917',1,'recti::RoutingNode']]],
-  ['manhattanarc_1',['manhattanarc',['../classrecti_1_1ManhattanArc.html#aeca399bd8607c8e48bb905350b5a46a7',1,'recti::ManhattanArc::ManhattanArc()'],['../classrecti_1_1ManhattanArc.html#ada5c7319f9dc18b21bfcfb4e51e0d45a',1,'recti::ManhattanArc::ManhattanArc(T1 xcoord, T2 ycoord)']]],
+  ['manhattanarc_1',['ManhattanArc',['../classrecti_1_1ManhattanArc.html#aeca399bd8607c8e48bb905350b5a46a7',1,'recti::ManhattanArc::ManhattanArc()'],['../classrecti_1_1ManhattanArc.html#ada5c7319f9dc18b21bfcfb4e51e0d45a',1,'recti::ManhattanArc::ManhattanArc(T1 xcoord, T2 ycoord)']]],
   ['margin_2',['margin',['../classrecti_1_1ClockTreeVisualizer_1_1Builder.html#a6f3c152fbf13fe53f1f4d7bab1353cec',1,'recti::ClockTreeVisualizer::Builder']]],
   ['measure_3',['measure',['../classrecti_1_1Interval.html#a43e9a3d465421ea35652ec08b8eae0a6',1,'recti::Interval::measure()'],['../classrecti_1_1Point.html#a96fc816694c21c101e5290534db79938',1,'recti::Point::measure()']]],
   ['measure_5fof_4',['measure_of',['../namespacerecti.html#a97d84ff59bd89509594b545b09949779',1,'recti']]],

@@ -20,9 +20,10 @@ var searchData=
   ['total_5fsinks_17',['total_sinks',['../structrecti_1_1TreeStatistics.html#a7c5566c6dcf20b04735663b3aafb8d78',1,'recti::TreeStatistics']]],
   ['total_5fwirelength_18',['total_wirelength',['../structrecti_1_1SkewAnalysis.html#a5c0f55984ca7475195ee378c67078b2f',1,'recti::SkewAnalysis']]],
   ['total_5fwires_19',['total_wires',['../structrecti_1_1TreeStatistics.html#a131b82e910addedb4466c77a59f58a49',1,'recti::TreeStatistics']]],
-  ['tree_20',['tree',['../classrecti_1_1Tree.html#a5ddcfc0483daaf942a94a362d611b1b0',1,'recti::Tree::Tree()'],['../structrecti_1_1TreeComparisonData.html#a85ca8fa5352cd30ae44afeed439685dd',1,'recti::TreeComparisonData::tree'],['../classrecti_1_1Tree.html',1,'recti::Tree']]],
-  ['treecomparisondata_21',['TreeComparisonData',['../structrecti_1_1TreeComparisonData.html',1,'recti']]],
-  ['treenode_22',['treenode',['../classrecti_1_1TreeNode.html#a89d37e16cc872ad7f1682ea760c91128',1,'recti::TreeNode::TreeNode()'],['../classrecti_1_1TreeNode.html',1,'recti::TreeNode']]],
-  ['treestatistics_23',['TreeStatistics',['../structrecti_1_1TreeStatistics.html',1,'recti']]],
-  ['type_24',['type',['../structrecti_1_1TreeStatistics_1_1NodeInfo.html#a55b48bddcd5741b87a5e92e32848bad8',1,'recti::TreeStatistics::NodeInfo']]]
+  ['tree_20',['Tree',['../classrecti_1_1Tree.html',1,'recti::Tree'],['../classrecti_1_1Tree.html#a5ddcfc0483daaf942a94a362d611b1b0',1,'recti::Tree::Tree()']]],
+  ['tree_21',['tree',['../structrecti_1_1TreeComparisonData.html#a85ca8fa5352cd30ae44afeed439685dd',1,'recti::TreeComparisonData']]],
+  ['treecomparisondata_22',['TreeComparisonData',['../structrecti_1_1TreeComparisonData.html',1,'recti']]],
+  ['treenode_23',['TreeNode',['../classrecti_1_1TreeNode.html',1,'recti::TreeNode'],['../classrecti_1_1TreeNode.html#a89d37e16cc872ad7f1682ea760c91128',1,'recti::TreeNode::TreeNode()']]],
+  ['treestatistics_24',['TreeStatistics',['../structrecti_1_1TreeStatistics.html',1,'recti']]],
+  ['type_25',['type',['../structrecti_1_1TreeStatistics_1_1NodeInfo.html#a55b48bddcd5741b87a5e92e32848bad8',1,'recti::TreeStatistics::NodeInfo']]]
 ];

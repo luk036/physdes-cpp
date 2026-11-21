@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['reference_0',['reference',['../classrecti_1_1RPolygonVertexIterator.html#a919fd43a4509c12b03e31ac7b497254c',1,'recti::RPolygonVertexIterator']]]
+  ['pointer_0',['pointer',['../classrecti_1_1RPolygonVertexIterator.html#a1862e3c7b2a88be45ed5c665faafbd06',1,'recti::RPolygonVertexIterator']]]
 ];

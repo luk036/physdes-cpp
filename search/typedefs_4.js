@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nodeidx_0',['NodeIdx',['../namespacerecti.html#a346c5abf9066d4b007b9d198fa5f69b6',1,'recti']]]
+  ['keepout_0',['Keepout',['../classrecti_1_1GlobalRoutingTree.html#ade7e1885f08db1c0e541f5a7d90c6a23',1,'recti::GlobalRoutingTree::Keepout'],['../classrecti_1_1GlobalRouter.html#a174e4753c4b5f6917432e6611efdea05',1,'recti::GlobalRouter::Keepout']]]
 ];

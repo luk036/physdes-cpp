@@ -1,5 +1,5 @@
 <map id="recti/logger.hpp" name="recti/logger.hpp">
-<area shape="rect" id="Node000001" title="Logger wrapper for spdlog." alt="" coords="5,5,128,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="37,79,96,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="69,31,69,65,64,65,64,31"/>
+<area shape="rect" id="Node000001" title="Logger wrapper for spdlog." alt="" coords="5,5,128,33"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="37,81,96,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="68,31,69,66,64,65,65,36"/>
 </map>

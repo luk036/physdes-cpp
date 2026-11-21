@@ -6,7 +6,7 @@ var searchData=
   ['scale_5fcoords_3',['scale_coords',['../namespacerecti_1_1detail.html#a1d0121eeb1276d3b60c4232703553d68',1,'recti::detail']]],
   ['signed_5farea_4',['signed_area',['../classrecti_1_1RPolygon.html#a224e7490f85f9ea21e50d51f66380476',1,'recti::RPolygon']]],
   ['signed_5farea_5fx2_5',['signed_area_x2',['../classrecti_1_1Polygon.html#ad00b6d78edcff7a9a4b7e7533dea512d',1,'recti::Polygon']]],
-  ['sink_6',['sink',['../classrecti_1_1Sink.html',1,'recti::Sink'],['../classrecti_1_1Sink.html#aa77f51f190607f8224b26232ba0ff88a',1,'recti::Sink::Sink()']]],
+  ['sink_6',['Sink',['../classrecti_1_1Sink.html',1,'recti::Sink'],['../classrecti_1_1Sink.html#aa77f51f190607f8224b26232ba0ff88a',1,'recti::Sink::Sink()']]],
   ['sink_5fcolor_7',['sink_color',['../classrecti_1_1ClockTreeVisualizer_1_1Builder.html#a1da6dc1c0886c1819c89426c5386d69c',1,'recti::ClockTreeVisualizer::Builder']]],
   ['sink_5fdelays_8',['sink_delays',['../structrecti_1_1SkewAnalysis.html#abd38fae1f9580fbc7fdba084506d4fbb',1,'recti::SkewAnalysis']]],
   ['sinks_9',['sinks',['../structrecti_1_1TreeStatistics.html#a1e4c4a91972c84be2fdbefab308564eb',1,'recti::TreeStatistics::sinks'],['../structrecti_1_1TreeComparisonData.html#a332497880290b6528146c7dcf99dc940',1,'recti::TreeComparisonData::sinks']]],
@@ -18,7 +18,8 @@ var searchData=
   ['star_20history_15',['Star History',['../index.html#autotoc_md12',1,'']]],
   ['static_20analysis_16',['Static analysis',['../index.html#autotoc_md9',1,'']]],
   ['steiner_17',['Steiner',['../namespacerecti.html#aa10b643c20623d868438bea3e6978daea94665c88b4a74c52f9467ca5b324c838',1,'recti']]],
-  ['suite_18',['Build and run test suite',['../index.html#autotoc_md5',1,'']]],
-  ['svg_5futils_2ehpp_19',['svg_utils.hpp',['../svg__utils_8hpp.html',1,'']]],
-  ['svgparams_20',['SvgParams',['../structrecti_1_1detail_1_1SvgParams.html',1,'recti::detail']]]
+  ['subtree_5fbbox_18',['subtree_bbox',['../classrecti_1_1RoutingNode.html#a463f045bb278223b0dc1db6bcb1d0621',1,'recti::RoutingNode']]],
+  ['suite_19',['Build and run test suite',['../index.html#autotoc_md5',1,'']]],
+  ['svg_5futils_2ehpp_20',['svg_utils.hpp',['../svg__utils_8hpp.html',1,'']]],
+  ['svgparams_21',['SvgParams',['../structrecti_1_1detail_1_1SvgParams.html',1,'recti::detail']]]
 ];
