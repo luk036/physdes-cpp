@@ -1,19 +1,21 @@
 #include <algorithm>
 #include <cassert>
+#include <deque>
 #include <functional>
 #include <iterator>
 #include <recti/point.hpp>
 #include <recti/rdllist.hpp>
 #include <recti/rpolygon.hpp>
 #include <span>
+#include <stdexcept>
 #include <utility>
 #include <vector>
 
 namespace recti {
 
     template <typename FwIter, typename KeyFn, typename CmpFn>
-    auto create_mono_rpolygon(FwIter first, FwIter last, const KeyFn& dir, const CmpFn& cmp)
-        -> bool {
+    auto create_mono_rpolygon(FwIter first, FwIter last, const KeyFn& dir,
+                              const CmpFn& cmp) -> bool {
         assert(first != last);
 
         auto compare_by_direction = [&dir](const auto& right_elem, const auto& left_elem) -> bool {
@@ -73,8 +75,8 @@ namespace recti {
      * @return true if the polygon is monotone, false otherwise
      */
     template <typename T, typename DirFunc>
-    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset, const DirFunc& dir)
-        -> bool {
+    inline auto rpolygon_is_monotone(std::span<const Point<T>> pointset,
+                                     const DirFunc& dir) -> bool {
         if (pointset.size() <= 3) {
             return true;
         }
@@ -162,6 +164,157 @@ namespace recti {
         return rpolygon_is_xmonotone(pointset) && rpolygon_is_ymonotone(pointset);
     }
 
+    namespace {
+        template <typename T> auto is_between(T low, T value, T high) -> bool {
+            return std::min(low, high) < value && value < std::max(low, high);
+        }
+    }  // namespace
+
+    /**
+     * @brief Check whether an even-index rectilinear polygon is canonical.
+     *
+     * A stored point is redundant when removing it leaves the represented
+     * boundary unchanged, so both the perimeter and the area are preserved.
+     * Consecutive duplicate points are rejected first.  For three or more
+     * stored points a point is redundant exactly when it lies strictly between
+     * its neighbours on a shared axis; a spike (shared axis but not between)
+     * is allowed.  A two-point list is canonical when its points are distinct.
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Even-index vertices of the polygon.
+     * @return true if the polygon is canonical.
+     */
+    template <typename T> auto is_canonical(std::span<const Point<T>> pointset) -> bool {
+        const auto n = pointset.size();
+        if (n < 2) return false;
+
+        for (std::size_t i = 0; i < n; ++i) {
+            const auto j = (i + 1) % n;
+            if (pointset[i].xcoord() == pointset[j].xcoord()
+                && pointset[i].ycoord() == pointset[j].ycoord()) {
+                return false;
+            }
+        }
+
+        if (n == 2) return true;
+
+        for (std::size_t i = 0; i < n; ++i) {
+            const auto prev = (i + n - 1) % n;
+            const auto next = (i + 1) % n;
+            const auto& previous_point = pointset[prev];
+            const auto& current_point = pointset[i];
+            const auto& next_point = pointset[next];
+            if (previous_point.ycoord() == current_point.ycoord()
+                && is_between(previous_point.xcoord(), current_point.xcoord(),
+                              next_point.xcoord())) {
+                return false;
+            }
+            if (current_point.xcoord() == next_point.xcoord()
+                && is_between(previous_point.ycoord(), current_point.ycoord(),
+                              next_point.ycoord())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @brief Remove redundant stored points until the polygon is canonical.
+     *
+     * Consecutive duplicate points are removed first, then redundant collinear
+     * points.  Each point is removed at most once and only the neighbours of a
+     * removed point are revisited, so the reduction is O(m).
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Even-index vertices of the polygon.
+     * @return A canonical stored sequence.
+     * @throws std::runtime_error if an unexpected non-canonical configuration remains.
+     */
+    template <typename T>
+    auto canonicalize(std::span<const Point<T>> pointset) -> std::vector<Point<T>> {
+        std::vector<Point<T>> result;
+        result.reserve(pointset.size());
+        for (const auto& point : pointset) {
+            if (!result.empty() && result.back() == point) continue;
+            result.push_back(point);
+        }
+        if (result.size() > 1 && result.front() == result.back()) {
+            result.pop_back();
+        }
+
+        const auto n = result.size();
+        if (n <= 2) return result;
+
+        std::vector<std::size_t> prev_index(n);
+        std::vector<std::size_t> next_index(n);
+        std::vector<bool> alive(n, true);
+        std::deque<std::size_t> queue;
+        for (std::size_t i = 0; i < n; ++i) {
+            prev_index[i] = (i + n - 1) % n;
+            next_index[i] = (i + 1) % n;
+            queue.push_back(i);
+        }
+
+        std::size_t remaining = n;
+        while (!queue.empty() && remaining > 2) {
+            const auto index = queue.front();
+            queue.pop_front();
+            if (!alive[index]) continue;
+            const auto before = prev_index[index];
+            const auto after = next_index[index];
+            const bool removable
+                = (result[before].ycoord() == result[index].ycoord()
+                   && is_between(result[before].xcoord(), result[index].xcoord(),
+                                 result[after].xcoord()))
+                  || (result[index].xcoord() == result[after].xcoord()
+                      && is_between(result[before].ycoord(), result[index].ycoord(),
+                                    result[after].ycoord()));
+            if (!removable) continue;
+            alive[index] = false;
+            next_index[before] = after;
+            prev_index[after] = before;
+            --remaining;
+            queue.push_back(before);
+            queue.push_back(after);
+        }
+
+        std::vector<Point<T>> canonical;
+        canonical.reserve(remaining);
+        for (std::size_t i = 0; i < n; ++i) {
+            if (alive[i]) canonical.push_back(result[i]);
+        }
+        if (canonical.size() >= 2 && !is_canonical<T>(std::span<const Point<T>>(canonical))) {
+            throw std::runtime_error("input cannot be canonicalized");
+        }
+        return canonical;
+    }
+
+    /**
+     * @brief Expand an even-index stored sequence to the full boundary.
+     *
+     * The omitted vertex between s_i=(x0,y0) and s_{i+1}=(x1,y1) is
+     * (x1,y0), inserted before s_{i+1} (x-first rule).
+     *
+     * @tparam T Coordinate type.
+     * @param[in] pointset Even-index stored points.
+     * @return The full boundary, with 2m vertices.
+     */
+    template <typename T>
+    auto rpolygon_expand(std::span<const Point<T>> pointset) -> std::vector<Point<T>> {
+        if (pointset.size() < 2) {
+            return {};
+        }
+        std::vector<Point<T>> boundary;
+        boundary.reserve(2 * pointset.size());
+        for (std::size_t i = 0; i < pointset.size(); ++i) {
+            const auto& curr = pointset[i];
+            const auto& next = pointset[(i + 1) % pointset.size()];
+            boundary.push_back(curr);
+            boundary.emplace_back(next.xcoord(), curr.ycoord());
+        }
+        return boundary;
+    }
+
     /**
      * @brief Determine if a point is strictly inside a rectilinear polygon.
      *
@@ -204,8 +357,8 @@ namespace recti {
      * @param[in] pointset Polygon vertices.
      * @return true if the polygon is oriented anti-clockwise.
      */
-    template <typename T> auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset)
-        -> bool {
+    template <typename T>
+    auto rpolygon_is_anticlockwise(std::span<const Point<T>> pointset) -> bool {
         const auto min_iterator = std::min_element(pointset.begin(), pointset.end());
         const auto prev_iterator = min_iterator != pointset.begin() ? std::prev(min_iterator)
                                                                     : std::prev(pointset.end());
@@ -216,6 +369,9 @@ namespace recti {
     template auto rpolygon_is_xmonotone<int>(std::span<const Point<int>>) -> bool;
     template auto rpolygon_is_ymonotone<int>(std::span<const Point<int>>) -> bool;
     template auto rpolygon_is_convex<int>(std::span<const Point<int>>) -> bool;
+    template auto is_canonical<int>(std::span<const Point<int>>) -> bool;
+    template auto canonicalize<int>(std::span<const Point<int>>) -> std::vector<Point<int>>;
+    template auto rpolygon_expand<int>(std::span<const Point<int>>) -> std::vector<Point<int>>;
     template auto point_in_rpolygon<int>(std::span<const Point<int>>, const Point<int>&) -> bool;
     template auto rpolygon_is_anticlockwise<int>(std::span<const Point<int>>) -> bool;
 
@@ -383,7 +539,7 @@ namespace recti {
         std::vector<Point<int>>::iterator, std::vector<Point<int>>::iterator);
 
     template auto create_test_rpolygon<std::vector<Point<int>>::iterator>(
-        std::vector<Point<int>>::iterator, std::vector<Point<int>>::iterator)
-        -> std::vector<Point<int>>;
+        std::vector<Point<int>>::iterator,
+        std::vector<Point<int>>::iterator) -> std::vector<Point<int>>;
 
 }  // namespace recti

@@ -209,6 +209,95 @@ TEST_CASE("Vector2 operations") {
 #endif
 ```
 
+## RPolygon Representation
+
+The canonical point-sequence representation of a rectilinear polygon is the
+**even-index representation**, not a full vertex list.
+
+The `RPolygon<T>` class is a separate explicit representation. It stores
+`origin + edge vectors`, its point-set constructor treats the input as a full
+vertex list, and `vertices()` returns the full boundary.
+
+### Canonical encoding
+
+Start from a simple rectilinear polygon with `n` corner vertices (remove
+collinear vertices first). Rotate the full vertex list so that its first edge
+is horizontal. Store every other vertex:
+
+```text
+S[i] = full[(start + 2*i) % n],   i = 0 .. n/2 - 1
+```
+
+The omitted vertex between two stored vertices is recovered by moving
+**x first, then y**:
+
+```text
+S[i]   = (x0, y0)
+S[i+1] = (x1, y1)
+implicit vertex = (x1, y0)
+```
+
+Therefore the full boundary is:
+
+```text
+S0, (S1.x, S0.y), S1, (S2.x, S1.y), S2, ...
+```
+
+Example:
+
+```text
+stored:  (0,0) (3,3) (2,1) (1,3)
+full:    (0,0) (3,0) (3,3) (2,3),
+         (2,1) (1,1) (1,3) (0,3)
+```
+
+Do **not** use the y-first form `(x0, y1)`; that reconstructs a different
+polygon.
+
+### Invariants
+
+- The list has at least **2** stored points.
+- Consecutive stored points differ in **both** `x` and `y`. If they share an
+  axis, the list is not a canonical even-index representation.
+- The stored order follows the boundary order; do not reverse it.
+- Start on a vertex whose outgoing edge is horizontal. Starting on a vertical
+  edge makes the x-first rule reconstruct a different polygon.
+- A rectangle is stored as **2** opposite corners. A 2-point representation
+  whose points share `x` or `y` is invalid, not a thin rectangle.
+- A monotone/L-shaped (orthogonally convex) polygon is stored as **3** points.
+- More stored points describe a larger orthogonally convex polygon.
+- The full boundary is reconstructed on demand; it is not the stored form.
+
+### Representation forms
+
+- 2 stored points: rectangle, stored as opposite corners.
+- 3 stored points: L-shaped / orthogonally convex polygon.
+- More stored points: larger orthogonally convex polygon.
+- A 2-point or 3-point representation is valid, not degenerate.
+
+### Deriving test fixtures
+
+Build fixtures from the canonical full vertex list for every RPolygon test. Do
+not hand-write stored points or pass a raw full boundary.
+
+```cpp
+const std::vector<Point<int, int>> full = {
+    {0, 0}, {3, 0}, {3, 3}, {2, 3},
+    {2, 1}, {1, 1}, {1, 3}, {0, 3}};
+
+// full[0] -> full[1] is horizontal, so start = 0
+std::vector<Point<int, int>> stored;
+for (std::size_t i = 0; i < full.size(); i += 2) {
+    stored.push_back(full[i]);
+}
+// stored == {(0,0), (3,3), (2,1), (1,3)}
+```
+
+If the full list starts with a vertical edge, rotate it until the first edge is
+horizontal before taking every other vertex. `create_test_rpolygon` returns a
+full boundary; convert its output with the same procedure before using it as an
+even-index fixture.
+
 ## Key Dependencies (CPM.cmake)
 
 | Package | Version | Purpose |

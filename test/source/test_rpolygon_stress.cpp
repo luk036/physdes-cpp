@@ -4,6 +4,7 @@
 #include <lds/ilds.hpp>
 #include <random>
 #include <recti/point.hpp>
+#include <recti/polygon.hpp>
 #include <recti/rpolygon.hpp>
 #include <recti/rpolygon_cut.hpp>
 #include <recti/rpolygon_hull.hpp>
@@ -36,16 +37,19 @@ TEST_SUITE("RPolygon Stress Tests") {
         SUBCASE("Convex hull") {
             auto hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
             CHECK(rpolygon_is_convex<int>(hull));
+            CHECK(is_canonical<int>(hull));
         }
 
         SUBCASE("X-monotone hull") {
             auto hull = rpolygon_make_xmonotone_hull<int>(P, is_anticlockwise);
             CHECK(rpolygon_is_xmonotone<int>(hull));
+            CHECK(is_canonical<int>(hull));
         }
 
         SUBCASE("Y-monotone hull") {
             auto hull = rpolygon_make_ymonotone_hull<int>(P, is_anticlockwise);
             CHECK(rpolygon_is_ymonotone<int>(hull));
+            CHECK(is_canonical<int>(hull));
         }
     }
 
@@ -60,6 +64,7 @@ TEST_SUITE("RPolygon Stress Tests") {
             bool is_anticlockwise = rpolygon_is_anticlockwise<int>(P);
             auto hull = rpolygon_make_convex_hull<int>(P, is_anticlockwise);
             CHECK(rpolygon_is_convex<int>(hull));
+            CHECK(is_canonical<int>(hull));
         }
 
         // SUBCASE("Duplicate points") {
@@ -88,7 +93,24 @@ TEST_SUITE("RPolygon Stress Tests") {
             auto L = rpolygon_cut_convex<int>(P, is_anticlockwise);
             for (const auto& C : L) {
                 CHECK(rpolygon_is_convex<int>(C));
+                CHECK(is_canonical<int>(C));
             }
         }
     }
+}
+
+TEST_CASE("Full-vertex convex cut on a random polygon") {
+    const auto stored = generate_random_rpolygon(200, 2000);
+    const auto polygon = rpolygon_expand<int>(stored);
+    const auto expected = Polygon<int>{polygon}.signed_area_x2();
+    const bool is_anticlockwise = expected > 0;
+
+    const auto pieces = rpolygon_cut_convex_full<int>(polygon, is_anticlockwise);
+    CHECK(!pieces.empty());
+    int total = 0;
+    for (const auto& piece : pieces) {
+        CHECK(rpolygon_is_convex<int>(piece));
+        total += Polygon<int>{piece}.signed_area_x2();
+    }
+    CHECK_EQ(total, expected);
 }

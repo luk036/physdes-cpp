@@ -55,6 +55,7 @@ TEST_CASE("RPolygon make x-monotone hull test") {
     // fmt::print("</svg>\n");
 
     CHECK(rpolygon_is_xmonotone<int>(C));
+    CHECK(is_canonical<int>(C));
 }
 
 TEST_CASE("RPolygon make y-monotone hull test") {
@@ -90,6 +91,7 @@ TEST_CASE("RPolygon make y-monotone hull test") {
     // fmt::print("</svg>\n");
 
     CHECK(rpolygon_is_ymonotone<int>(C));
+    CHECK(is_canonical<int>(C));
 }
 
 TEST_CASE("RPolygon make convex hull test with Halton points") {
@@ -131,6 +133,7 @@ TEST_CASE("RPolygon make convex hull test with Halton points") {
     // fmt::print("</svg>\n");
 
     CHECK(rpolygon_is_convex<int>(C));
+    CHECK(is_canonical<int>(C));
 }
 
 TEST_CASE("RPolygon make xmono hull test") {
@@ -172,6 +175,7 @@ TEST_CASE("RPolygon make xmono hull test") {
     // fmt::print("</svg>\n");
 
     CHECK(rpolygon_is_xmonotone<int>(C));
+    CHECK(is_canonical<int>(C));
 
     // CHECK(rpolygon_is_convex<int>(C));
 }
@@ -215,6 +219,7 @@ TEST_CASE("RPolygon make ymono hull test") {
     // fmt::print("</svg>\n");
 
     CHECK(rpolygon_is_ymonotone<int>(C));
+    CHECK(is_canonical<int>(C));
 
     // CHECK(rpolygon_is_convex<int>(C));
 }

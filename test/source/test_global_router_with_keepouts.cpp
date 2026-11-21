@@ -28,7 +28,11 @@ auto generate_points_and_keepouts(size_t num_terminals, unsigned int seed)
     for (size_t i = 0; i < num_terminals; ++i) {
         terminals.emplace_back(static_cast<int>(hgenX.pop()), static_cast<int>(hgenY.pop()));
     }
-    IntPoint source(static_cast<int>(hgenX.pop()), static_cast<int>(hgenX.pop()));
+    // Pop sequentially: argument evaluation order is unspecified and differs
+    // between compilers (MSVC right-to-left, AppleClang left-to-right).
+    auto source_x = static_cast<int>(hgenX.pop());
+    auto source_y = static_cast<int>(hgenX.pop());
+    IntPoint source(source_x, source_y);
 
     std::vector<Keepout> keepouts = {
         {Interval<int>(1600, 1900), Interval<int>(1000, 1500)},

@@ -201,6 +201,7 @@ TEST_CASE("Polygon convex decomposition - signed area preservation") {
     // Verify all pieces are convex
     for (const auto& piece : convex_pieces) {
         CHECK(rpolygon_is_convex<int>(piece));
+        CHECK(is_canonical<int>(piece));
     }
 
     // Calculate sum of signed areas of all pieces
@@ -240,6 +241,7 @@ TEST_CASE("Polygon explicit cut - signed area preservation") {
     // Verify all pieces are convex
     for (const auto& piece : explicit_pieces) {
         CHECK(rpolygon_is_convex<int>(piece));
+        CHECK(is_canonical<int>(piece));
     }
 
     // Calculate sum of signed areas of all pieces
@@ -279,6 +281,7 @@ TEST_CASE("Polygon implicit cut - signed area preservation") {
     // Verify all pieces are convex
     for (const auto& piece : implicit_pieces) {
         CHECK(rpolygon_is_convex<int>(piece));
+        CHECK(is_canonical<int>(piece));
     }
 
     // Calculate sum of signed areas of all pieces
