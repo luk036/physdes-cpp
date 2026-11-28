@@ -15,8 +15,7 @@ physdes-cpp/
 ├── source/             # Implementation files (*.cpp)
 ├── test/source/        # Unit tests (*.cpp)
 ├── standalone/         # Standalone executable
-├── cmake/              # CMake modules
-├── all/                # Combined build (all targets)
+├── experiments/        # Experiments
 ├── bench/              # Benchmarks
 └── .github/workflows/  # CI pipelines
 ```
@@ -86,17 +85,13 @@ pip install clang-format==18.1.2 cmake_format==0.6.13 pyyaml
 ### Code Coverage
 
 ```bash
-cmake -B build -DENABLE_TEST_COVERAGE=1
-cmake --build build
-./build/RectiTests
+cmake --build build --target coverage   # after configuring with -DRECTI_ENABLE_COVERAGE=ON
 ```
 
 ### Sanitizers
 
-```bash
-cmake -B build -DUSE_SANITIZER=Address
-cmake -B build -DUSE_SANITIZER='Address;Undefined'
-```
+No CMake option; pass the flags yourself, e.g.
+`-DCMAKE_CXX_FLAGS="-fsanitize=address,undefined" -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"`.
 
 ### Static Analyzers
 ```bash
